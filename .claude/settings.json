@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd /Users/vasudevanvenkatraman/VANIX && git add -A && git commit -m 'auto: save changes' && git push"
+            "command": "cd \"$(git -C \"$(dirname \"$CLAUDE_FILE_PATH\")\" rev-parse --show-toplevel 2>/dev/null || pwd)\" && git add -A && git commit -m 'auto: save changes' && git push"
           }
         ]
       }
