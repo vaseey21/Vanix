@@ -339,7 +339,8 @@
           if (box.value && i < boxes.length - 1) boxes[i + 1].focus();
           var filled = Array.prototype.every.call(boxes, function(b) { return b.value; });
           confirmBtn.disabled = !filled;
-          confirmBtn.style.background = filled ? 'var(--dark1)' : '#B5B5B5';
+          confirmBtn.style.background = filled ? 'var(--green)' : '#B5B5B5';
+          confirmBtn.style.color = filled ? 'var(--dark1)' : 'white';
         });
         box.addEventListener('keydown', function(e) {
           if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus();
