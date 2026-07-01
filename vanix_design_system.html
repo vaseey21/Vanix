@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanix Design System v1.0</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:      #4DDE95;
+      --dark1:      #111111;
+      --dark2:      #1C1C1C;
+      --bgwarm:     #F2EDE4;
+      --bgcard:     #FFFFFF;
+      --activebg:   #E8F5EE;
+      --text1:      #111111;
+      --text2:      #8C8780;
+      --textdark:   #FFFFFF;
+      --border:     #D8D0C5;
+      --warning:    #E8A020;
+      --danger:     #D44C3A;
+      --warnbg:     #FFF8E8;
+      --dangerbg:   #FDEAE3;
+      --font-en:    'Noto Sans', sans-serif;
+      --font-hi:    'Noto Sans Devanagari', sans-serif;
+      --font-mono:  'SF Mono', 'Fira Code', monospace;
+    }
+    body {
+      background: var(--bgwarm);
+      font-family: var(--font-en);
+      color: var(--text1);
+      line-height: 1.6;
+      padding: 40px 20px 80px;
+    }
+    .wrap { max-width: 860px; margin: 0 auto; }
+
+    /* ── Section ── */
+    .section { margin-bottom: 48px; }
+    .section-title {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text2);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bgcard);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .card-dark {
+      background: var(--dark1);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .card-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 14px;
+    }
+
+    /* ── Token row ── */
+    .token-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .token-row:last-child { border-bottom: none; }
+    .swatch {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .token-name {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text1);
+      min-width: 150px;
+    }
+    .token-hex {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text2);
+      min-width: 88px;
+    }
+    .token-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+    /* ── Grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    /* ── Type scale ── */
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text2); white-space: nowrap; }
+
+    /* ── Components ── */
+    .component-group { margin-bottom: 28px; }
+    .component-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 12px;
+    }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .btn {
+      height: 44px;
+      padding: 0 22px;
+      border-radius: 22px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font-en);
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .btn-primary   { background: var(--dark1); color: white; }
+    .btn-cta       { background: var(--green); color: var(--dark1); font-weight: 600; }
+    .btn-secondary { background: transparent; color: var(--text1); border: 1.5px solid var(--border); }
+    .fab {
+      width: 52px; height: 52px;
+      background: var(--dark1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+      cursor: pointer;
+    }
+    .fab-icon { font-size: 28px; color: var(--green); line-height: 1; }
+
+    /* Badges */
+    .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 600;
+      padding: 4px 11px;
+      border-radius: 20px;
+    }
+    .badge-success  { background: var(--activebg); color: var(--dark1); border: 1px solid var(--green); }
+    .badge-warning  { background: var(--warnbg); color: #7A4F00; border: 1px solid var(--warning); }
+    .badge-danger   { background: var(--dangerbg); color: #8B2800; border: 1px solid var(--danger); }
+    .badge-dark     { background: var(--dark1); color: var(--green); }
+    .badge-neutral  { background: #F0EBE2; color: var(--text2); font-weight: 400; }
+    .badge-am       { background: var(--activebg); color: var(--dark1); font-weight: 400; }
+    .badge-pm       { background: var(--warnbg); color: #7A4F00; font-weight: 400; }
+
+    /* Inputs */
+    .input-demo {
+      height: 48px;
+      border-radius: 12px;
+      padding: 0 16px;
+      font-size: 14px;
+      font-family: var(--font-en);
+      width: 100%;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+    .input-default  { background: white; border: 1.5px solid var(--border); color: var(--text2); }
+    .input-focused  { background: white; border: 1.5px solid var(--green); color: var(--text1); }
+    .input-locked   { background: var(--bgwarm); border: 1.5px solid var(--bgwarm); color: var(--text2); justify-content: space-between; }
+    .input-error    { background: white; border: 1.5px solid var(--danger); color: var(--text1); }
+
+    /* Banners */
+    .banner {
+      border-radius: 10px;
+      padding: 11px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .banner-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .banner-success { background: var(--activebg); border-left: 3px solid var(--green); }
+    .banner-warning { background: var(--warnbg); border-left: 3px solid var(--warning); }
+    .banner-danger  { background: var(--dangerbg); border-left: 3px solid var(--danger); }
+    .banner-offline { background: var(--dark1); }
+    .banner-offline .banner-icon, .banner-offline .banner-text { color: var(--textdark); }
+    .banner-offline .banner-icon { color: var(--text2); }
+
+    /* Nav bar */
+    .nav-bar {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 4px 12px;
+    }
+    .nav-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      border-radius: 24px;
+      cursor: pointer;
+      position: relative;
+    }
+    .nav-tab.active { background: var(--activebg); }
+    .nav-icon { font-size: 22px; }
+    .nav-tab.active .nav-icon { color: var(--dark1); }
+    .nav-tab:not(.active) .nav-icon { color: var(--text2); }
+    .nav-label { font-size: 10px; }
+    .nav-tab.active .nav-label { color: var(--dark1); font-weight: 600; }
+    .nav-tab:not(.active) .nav-label { color: var(--text2); }
+    .notif-badge {
+      position: absolute; top: 4px; right: 8px;
+      background: var(--danger); color: white;
+      font-size: 8px; font-weight: 700;
+      width: 15px; height: 15px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--bgwarm);
+    }
+
+    /* Lifecycle */
+    .lifecycle {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .lifecycle-node {
+      border-radius: 10px;
+      padding: 8px 12px;
+      text-align: center;
+    }
+    .lifecycle-node p { margin: 0; }
+    .lifecycle-arrow { color: var(--border); font-size: 14px; }
+    .lc-idle        { background: #F0EBE2; }
+    .lc-heat-alert  { background: var(--warnbg); border: 1px solid var(--warning); }
+    .lc-in-heat     { background: var(--dangerbg); border: 1px solid var(--danger); }
+    .lc-inseminated { background: var(--activebg); border: 1px solid var(--green); }
+    .lc-pregnant    { background: var(--activebg); border: 1px solid var(--green); }
+    .lc-calved      { background: var(--dark1); }
+    .lc-milking     { background: var(--dark1); }
+
+    /* Rules */
+    .rule-row {
+      display: flex;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .rule-row:last-child { border-bottom: none; }
+    .rule-label { font-size: 12px; font-weight: 600; color: var(--text1); min-width: 140px; flex-shrink: 0; }
+    .rule-desc  { font-size: 12px; color: var(--text2); line-height: 1.6; }
+    .do   { color: #1A6640; font-weight: 700; }
+    .dont { color: #8B2800; font-weight: 700; }
+    code  { font-family: var(--font-mono); font-size: 11px; background: #F0EBE2; padding: 1px 5px; border-radius: 3px; }
+
+    /* Spacing & radius visual */
+    .spacing-vis { display: flex; flex-direction: column; gap: 8px; }
+    .sp-row { display: flex; align-items: center; gap: 12px; }
+    .sp-bar { background: var(--green); border-radius: 2px; height: 10px; flex-shrink: 0; }
+    .sp-name { font-family: var(--font-mono); font-size: 12px; color: var(--text1); min-width: 80px; }
+    .sp-val  { font-family: var(--font-mono); font-size: 11px; color: var(--text2); }
+
+    .radius-vis { display: flex; gap: 12px; flex-wrap: wrap; }
+    .r-box {
+      background: var(--dark1);
+      width: 56px; height: 56px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 2px;
+    }
+    .r-label { font-family: var(--font-mono); font-size: 9px; color: var(--green); text-align: center; line-height: 1.4; }
+
+    /* Milk log card preview */
+    .milk-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .milk-card-left { display: flex; flex-direction: column; gap: 4px; }
+    .milk-card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+    /* Header */
+    .ds-header {
+      background: var(--dark1);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .ds-header-right { text-align: right; }
+
+    /* Footer */
+    .ds-footer {
+      background: var(--dark1);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    /* Devanagari sample */
+    .hi { font-family: var(--font-hi); }
+    .en { font-family: var(--font-en); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="ds-header">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+        <svg width="32" height="31" viewBox="0 0 47 45" fill="none" aria-label="Vanix logo">
+          <path d="M22.2156 27.216L33.9459 38.4604L46.4526 41.6408L32.2697 44.6276L20.5944 33.9413L9.03955 31.0253L22.2156 27.216Z" fill="#4DDE95"/>
+          <path d="M24.6116 25.0391L9.00788 29.5751L0 38.817L4.5045 25.0403L19.5975 20.2725L27.9 11.7236L24.6116 25.0391Z" fill="#4DDE95"/>
+          <path d="M25.2979 28.2015L29.1712 12.4211L25.6725 0L35.3509 10.7899L31.9331 26.2429L35.1855 37.7078L25.2979 28.2015Z" fill="#4DDE95"/>
+        </svg>
+        <span style="font-size:24px;font-weight:600;color:white;" class="en">Vanix</span>
+        <span style="background:var(--green);color:var(--dark1);font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;" class="en">Design System v1.0</span>
+      </div>
+      <p style="color:var(--text2);font-size:13px;" class="en">Farmer mobile app &nbsp;·&nbsp; Flutter &nbsp;·&nbsp; Hindi / Bhojpuri / English</p>
+    </div>
+    <div class="ds-header-right">
+      <p style="color:var(--text2);font-size:12px;" class="en">July 2026</p>
+      <p style="color:var(--text2);font-size:11px;margin-top:4px;" class="en">Minfy Technologies</p>
+    </div>
+  </div>
+
+  <!-- ── 1. COLORS ── -->
+  <div class="section">
+    <p class="section-title">1 — Color tokens</p>
+
+    <div class="card">
+      <p class="card-label">Brand — two-hue system only. No other hue.</p>
+      <div class="token-row">
+        <div class="swatch" style="background:#4DDE95;"></div>
+        <span class="token-name">brandGreen</span>
+        <span class="token-hex">#4DDE95</span>
+        <span class="token-desc">Logo color. Accent only. <strong>Never on white</strong> — fails WCAG AA (2.5:1). Use on #111 or on #E8F5EE pill bg.</span>
+      </div>
+      <div class="token-row">
+        <div class="swatch" style="background:#111111;border:1px solid #333;"></div>
+        <span class="token-name">darkPrimary</span>
+        <span class="token-hex">#111111</span>
+        <span class="token-desc">Dark cards, screen headers, FAB background, primary button fill.</span>
+      </div>
+      <div class="token-row">
+        <div class="swatch" style="background:#1C1C1C;border:1px solid #333;"></div>
+        <span class="token-name">darkSecondary</span>
+        <span class="token-hex">#1C1C1C</span>
+        <span class="token-desc">Sub-cards on dark surfaces (e.g. stat tiles inside a dark summary card).</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-label">Surfaces</p>
+      <div class="token-row">
+        <div class="swatch" style="background:#F2EDE4;border:1px solid #D8D0C5;"></div>
+        <span class="token-name">bgWarm</span>
+        <span class="token-hex">#F2EDE4</span>
+        <span class="token-desc">Scaffold / page background. Warm cream. <strong>Never use pure white</strong> as scaffold.</span>
+      </div>
+      <div class="token-row">
+        <div class="swatch" style="background:#FFFFFF;border:1px solid #D8D0C5;"></div>
+        <span class="token-name">bgCard</span>
+        <span class="token-hex">#FFFFFF</span>
+        <span class="token-desc">Card surface on bgWarm. White creates hierarchy without harshness.</span>
+      </div>
+      <div class="token-row">
+        <div class="swatch" style="background:#E8F5EE;border:1px solid #4DDE95;"></div>
+        <span class="token-name">activeBg</span>
+        <span class="token-hex">#E8F5EE</span>
+        <span class="token-desc">Active nav pill bg, success banner bg, selected state tint.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-label">Text</p>
+      <div class="token-row">
+        <div class="swatch" style="background:#111111;border:1px solid #333;"></div>
+        <span class="token-name">textPrimary</span>
+        <span class="token-hex">#111111</span>
+        <span class="token-desc">All body text, headings, labels on bgWarm and bgCard. 16.1:1 contrast on bgWarm.</span>
+      </div>
+      <div class="token-row">
+        <div class="swatch" style="background:#8C8780;"></div>
+        <span class="token-name">textHint</span>
+        <span class="token-hex">#8C8780</span>
+        <span class="token-desc">Placeholders, timestamps, captions, secondary labels. 3.6:1 on bgWarm — large text only.</span>
+      </div>
+      <div class="token-row">
+        <div class="swatch" style="background:#FFFFFF;border:1px solid #333;"></div>
+        <span class="token-name">textOnDark</span>
+        <span class="token-hex">#FFFFFF</span>
+        <span class="token-desc">All text placed on darkPrimary / darkSecondary surfaces.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-label">Semantic</p>
+      <div class="token-row">
+        <div class="swatch" style="background:#4DDE95;"></div>
+        <span class="token-name">success</span>
+        <span class="token-hex">#4DDE95</span>
+        <span class="token-desc">Confirmed actions, positive trends, MILKING / CALVED status.</span>
+      </div>
+      <div class="token-row">
+        <div class="swatch" style="background:#E8A020;"></div>
+        <span class="token-name">warning</span>
+        <span class="token-hex">#E8A020</span>
+        <span class="token-desc">Low yield badges, caution alerts, 1hr escalation, heat-alert initial state.</span>
+      </div>
+      <div class="token-row">
+        <div class="swatch" style="background:#D44C3A;"></div>
+        <span class="token-name">danger</span>
+        <span class="token-hex">#D44C3A</span>
+        <span class="token-desc">Critical alerts, 2hr+ escalation, notification badges, form errors.</span>
+      </div>
+      <div class="token-row">
+        <div class="swatch" style="background:#D8D0C5;"></div>
+        <span class="token-name">border</span>
+        <span class="token-hex">#D8D0C5</span>
+        <span class="token-desc">Card borders, input outlines, dividers. Warm-tinted to harmonise with bgWarm.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. TYPOGRAPHY ── -->
+  <div class="section">
+    <p class="section-title">2 — Typography</p>
+    <div class="card" style="margin-bottom:14px;">
+      <div class="token-row">
+        <span class="token-name">Latin / English</span>
+        <span style="font-family:var(--font-en);font-size:14px;color:var(--text1);">Noto Sans</span>
+        <span class="token-desc">Bundled in assets/fonts/. Weights 400, 500, 600. Never load from network.</span>
+      </div>
+      <div class="token-row">
+        <span class="token-name">Devanagari</span>
+        <span style="font-family:var(--font-hi);font-size:14px;color:var(--text1);" class="hi">Noto Sans Devanagari</span>
+        <span class="token-desc">Hindi + Bhojpuri share this file (same script). Bundled. Weights 400, 500, 600.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-label">Type scale — Latin</p>
+      <div class="type-row">
+        <span style="font-size:28px;font-weight:600;line-height:1.2;" class="en">Display heading</span>
+        <span class="type-meta">28px · 600 · lh 1.2</span>
+      </div>
+      <div class="type-row">
+        <span style="font-size:22px;font-weight:600;line-height:1.3;" class="en">Screen title</span>
+        <span class="type-meta">22px · 600 · lh 1.3</span>
+      </div>
+      <div class="type-row">
+        <span style="font-size:18px;font-weight:500;line-height:1.4;" class="en">Section subheading</span>
+        <span class="type-meta">18px · 500 · lh 1.4</span>
+      </div>
+      <div class="type-row">
+        <span style="font-size:16px;font-weight:400;line-height:1.7;" class="en">Body — primary reading text in cards and lists</span>
+        <span class="type-meta">16px · 400 · lh 1.7</span>
+      </div>
+      <div class="type-row">
+        <span style="font-size:14px;font-weight:400;line-height:1.6;color:var(--text2);" class="en">Small — timestamps, secondary info, captions</span>
+        <span class="type-meta">14px · 400 · lh 1.6</span>
+      </div>
+      <div class="type-row">
+        <span style="font-size:12px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text2);" class="en">LABEL / TAG / SECTION DIVIDER</span>
+        <span class="type-meta">12px · 500 · uppercase</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <p class="card-label">Same scale — Devanagari (Hindi / Bhojpuri)</p>
+      <div class="type-row">
+        <span style="font-size:28px;font-weight:600;line-height:1.2;" class="hi">दूध लॉग</span>
+        <span class="type-meta">Display 28px</span>
+      </div>
+      <div class="type-row">
+        <span style="font-size:22px;font-weight:600;line-height:1.3;" class="hi">खेत का विवरण</span>
+        <span class="type-meta">Heading 22px</span>
+      </div>
+      <div class="type-row">
+        <span style="font-size:16px;font-weight:400;line-height:1.7;" class="hi">मिट्टी की नमी ६२% — इस सप्ताह गेहूं बोने के लिए उत्तम समय है।</span>
+        <span class="type-meta">Body 16px</span>
+      </div>
+      <div class="type-row">
+        <span style="font-size:14px;color:var(--text2);line-height:1.6;" class="hi">२ घंटे पहले अपडेट किया गया</span>
+        <span class="type-meta">Small 14px</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. SPACING & RADIUS ── -->
+  <div class="section">
+    <p class="section-title">3 — Spacing &amp; Radius</p>
+    <div class="grid-2">
+      <div class="card">
+        <p class="card-label">Spacing — 4dp base grid</p>
+        <div class="spacing-vis">
+          <div class="sp-row"><span class="sp-name">xs — 4dp</span><div class="sp-bar" style="width:4px;"></div><span class="sp-val">Icon gaps, badge padding</span></div>
+          <div class="sp-row"><span class="sp-name">sm — 8dp</span><div class="sp-bar" style="width:8px;"></div><span class="sp-val">Label gap, chip padding</span></div>
+          <div class="sp-row"><span class="sp-name">md — 12dp</span><div class="sp-bar" style="width:12px;"></div><span class="sp-val">Internal card padding</span></div>
+          <div class="sp-row"><span class="sp-name">lg — 16dp</span><div class="sp-bar" style="width:16px;"></div><span class="sp-val">Screen margin, card padding</span></div>
+          <div class="sp-row"><span class="sp-name">xl — 20dp</span><div class="sp-bar" style="width:20px;"></div><span class="sp-val">Between cards</span></div>
+          <div class="sp-row"><span class="sp-name">xxl — 24dp</span><div class="sp-bar" style="width:24px;"></div><span class="sp-val">Section gap</span></div>
+          <div class="sp-row"><span class="sp-name" style="color:var(--danger);">touch — 48dp</span><div class="sp-bar" style="width:48px;background:var(--danger);"></div><span class="sp-val" style="color:var(--danger);font-weight:600;">Min tap target</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <p class="card-label">Border radius</p>
+        <div class="radius-vis">
+          <div class="r-box" style="border-radius:4px;"><span class="r-label">r=4<br>xs</span></div>
+          <div class="r-box" style="border-radius:8px;"><span class="r-label">r=8<br>sm</span></div>
+          <div class="r-box" style="border-radius:12px;"><span class="r-label">r=12<br>md</span></div>
+          <div class="r-box" style="border-radius:16px;"><span class="r-label">r=16<br>lg</span></div>
+          <div class="r-box" style="border-radius:28px;"><span class="r-label">r=24<br>pill</span></div>
+        </div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--text2);">
+          <span><code>xs=4</code> — tags, small badges</span>
+          <span><code>sm=8</code> — chips, inner buttons</span>
+          <span><code>md=12</code> — inputs, bottom sheets</span>
+          <span><code>lg=16</code> — primary card radius</span>
+          <span><code>pill=24</code> — buttons, nav pill</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. COMPONENTS ── -->
+  <div class="section">
+    <p class="section-title">4 — Components</p>
+
+    <!-- Buttons -->
+    <div class="card">
+      <div class="component-group">
+        <p class="component-label">Buttons — all 48dp height minimum</p>
+        <div class="btn-row">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-cta">CTA / Confirm</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <div class="fab" title="FAB — Floating Action Button"><span class="fab-icon">+</span></div>
+          <span style="font-size:11px;color:var(--text2);">FAB</span>
+        </div>
+        <div style="margin-top:12px;font-size:11px;color:var(--text2);line-height:1.8;">
+          <strong style="color:var(--text1);">Primary</strong> — dark bg (#111), white text, pill radius. Destructive / main actions.<br>
+          <strong style="color:var(--text1);">CTA</strong> — green bg (#4DDE95), dark text, pill. Confirm milk entry, save form.<br>
+          <strong style="color:var(--text1);">Secondary</strong> — transparent bg, border, dark text. Cancel, back, secondary action.<br>
+          <strong style="color:var(--text1);">FAB</strong> — 56dp circle, dark bg, green + icon. Fixed bottom-right. Add milk entry.
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="card">
+      <p class="component-label">Cards</p>
+      <div class="grid-2" style="margin-bottom:12px;">
+        <div style="background:white;border-radius:14px;padding:14px;border:1px solid var(--border);">
+          <p style="font-size:11px;color:var(--text2);margin-bottom:4px;">Light card</p>
+          <p style="font-size:13px;font-weight:500;">bgCard · r=16 · border</p>
+        </div>
+        <div style="background:var(--dark1);border-radius:14px;padding:14px;">
+          <p style="font-size:11px;color:var(--text2);margin-bottom:4px;">Dark card</p>
+          <p style="font-size:13px;font-weight:500;color:white;">darkPrimary · r=16 · no border</p>
+        </div>
+        <div style="background:white;border-radius:14px;padding:14px;border:1.5px solid var(--warning);">
+          <p style="font-size:11px;color:var(--text2);margin-bottom:4px;">Warning card</p>
+          <p style="font-size:13px;font-weight:500;">amber border only</p>
+        </div>
+        <div style="background:white;border-radius:14px;padding:14px;border:1.5px solid var(--danger);">
+          <p style="font-size:11px;color:var(--text2);margin-bottom:4px;">Danger card</p>
+          <p style="font-size:13px;font-weight:500;">red border only</p>
+        </div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <p style="font-size:11px;color:var(--text2);margin-bottom:10px;">Milk log card example</p>
+        <div class="milk-card">
+          <div class="milk-card-left">
+            <p style="font-size:14px;font-weight:600;">Gauri — HF Cross</p>
+            <p style="font-size:12px;color:var(--text2);">Ravi Kumar Farm</p>
+          </div>
+          <div class="milk-card-right">
+            <span style="font-size:16px;font-weight:700;">12.5 L</span>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <span class="badge badge-am">🌅 AM</span>
+              <span style="font-size:11px;color:var(--text2);">07:30 · Today</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Banners -->
+    <div class="card">
+      <p class="component-label">Banners — left accent border + icon</p>
+      <div class="banner banner-success">
+        <span class="banner-icon">✓</span>
+        <div>
+          <strong style="font-size:13px;">Entry saved</strong>
+          <p style="font-size:12px;color:var(--text2);margin-top:2px;">12.5 L logged for Gauri · AM session</p>
+        </div>
+      </div>
+      <div class="banner banner-warning">
+        <span class="banner-icon">⚠</span>
+        <div>
+          <strong style="font-size:13px;">Low yield</strong>
+          <p style="font-size:12px;color:var(--text2);margin-top:2px;">Gauri is 30% below 7-day average</p>
+        </div>
+      </div>
+      <div class="banner banner-danger">
+        <span class="banner-icon">!</span>
+        <div>
+          <strong style="font-size:13px;">Heat alert — Lakshmi</strong>
+          <p style="font-size:12px;color:var(--text2);margin-top:2px;">Insemination window closes in 6h · Act now</p>
+        </div>
+      </div>
+      <div class="banner banner-offline">
+        <span class="banner-icon" style="color:var(--text2);">⊘</span>
+        <div>
+          <strong style="font-size:13px;color:white;">You're offline</strong>
+          <p style="font-size:12px;color:var(--text2);margin-top:2px;">Entries saved locally · Will sync when connected</p>
+        </div>
+      </div>
+      <div style="background:var(--warnbg);border-radius:10px;padding:10px 14px;border:1px solid var(--warning);margin-top:8px;font-size:12px;color:var(--text1);border-left:3px solid var(--warning);">
+        <strong>Audit note</strong> — You are editing a Farmer's entry. Changes will be logged with your name and timestamp.
+      </div>
+    </div>
+
+    <!-- Inputs -->
+    <div class="card">
+      <p class="component-label">Inputs — 48dp height · r=12</p>
+      <div class="input-demo input-default">Placeholder text…</div>
+      <div class="input-demo input-focused">Focused state — green border</div>
+      <div class="input-demo input-locked">
+        <span>Locked / read-only field</span>
+        <span style="font-size:16px;color:var(--border);">🔒</span>
+      </div>
+      <div class="input-demo input-error">Error state — red border</div>
+      <p style="font-size:11px;color:var(--text2);margin-top:6px;">Lock Farm + Cow on edit forms to preserve audit integrity. Users must delete and re-add to change assignment.</p>
+    </div>
+
+    <!-- Badges -->
+    <div class="card">
+      <p class="component-label">Badges &amp; tags — pill r=20</p>
+      <div class="badge-row">
+        <span class="badge badge-success">● Milking</span>
+        <span class="badge badge-warning">⚠ Heat Alert</span>
+        <span class="badge badge-danger">✕ Critical</span>
+        <span class="badge badge-dark">New</span>
+        <span class="badge badge-neutral">Idle</span>
+        <span class="badge badge-am">🌅 AM</span>
+        <span class="badge badge-pm">🌇 PM</span>
+      </div>
+      <p style="font-size:11px;color:var(--text2);margin-top:10px;">Low-yield badge (amber) triggers when cow is &lt;80% of its 7-day average.</p>
+    </div>
+
+    <!-- Nav bar -->
+    <div class="card">
+      <p class="component-label">Bottom navigation — 5 tabs</p>
+      <div class="nav-bar">
+        <div class="nav-tab active">
+          <span class="nav-icon">⊞</span>
+          <span class="nav-label en">Home</span>
+        </div>
+        <div class="nav-tab">
+          <span class="nav-icon">⌂</span>
+          <span class="nav-label en">Farms</span>
+        </div>
+        <div class="nav-tab">
+          <span class="nav-icon">◉</span>
+          <span class="nav-label en">Milk Log</span>
+        </div>
+        <div class="nav-tab" style="position:relative;">
+          <span class="nav-icon">◻</span>
+          <span class="nav-label en">Events</span>
+          <span class="notif-badge">3</span>
+        </div>
+        <div class="nav-tab">
+          <span class="nav-icon">◯</span>
+          <span class="nav-label en">Account</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text2);margin-top:12px;line-height:1.8;">
+        <strong style="color:var(--text1);">Active</strong> — activeBg pill, dark label, darker icon tint.<br>
+        <strong style="color:var(--text1);">Inactive</strong> — no bg, textHint label and icon.<br>
+        <strong style="color:var(--text1);">Badge</strong> — danger red (#D44C3A), max "9+", border matches scaffold bg. Events + Home tabs only.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. COW LIFECYCLE ── -->
+  <div class="section">
+    <p class="section-title">5 — Cow status lifecycle</p>
+    <div class="card">
+      <div class="lifecycle">
+        <div class="lifecycle-node lc-idle">
+          <p style="font-size:11px;font-weight:600;color:var(--text2);">IDLE</p>
+          <p style="font-size:10px;color:var(--text2);margin-top:2px;">Normal vitals</p>
+        </div>
+        <span class="lifecycle-arrow">→</span>
+        <div class="lifecycle-node lc-heat-alert">
+          <p style="font-size:11px;font-weight:600;color:var(--warning);">HEAT ALERT</p>
+          <p style="font-size:10px;color:var(--text2);margin-top:2px;">Temp spike</p>
+        </div>
+        <span class="lifecycle-arrow">→</span>
+        <div class="lifecycle-node lc-in-heat">
+          <p style="font-size:11px;font-weight:600;color:var(--danger);">IN HEAT</p>
+          <p style="font-size:10px;color:var(--text2);margin-top:2px;">Confirmed</p>
+        </div>
+        <span class="lifecycle-arrow">→</span>
+        <div class="lifecycle-node lc-inseminated">
+          <p style="font-size:11px;font-weight:600;color:var(--text1);">INSEMINATED</p>
+          <p style="font-size:10px;color:var(--text2);margin-top:2px;">Logged</p>
+        </div>
+        <span class="lifecycle-arrow">→</span>
+        <div class="lifecycle-node lc-pregnant">
+          <p style="font-size:11px;font-weight:600;color:var(--text1);">PREGNANT</p>
+          <p style="font-size:10px;color:var(--text2);margin-top:2px;">~280 days</p>
+        </div>
+        <span class="lifecycle-arrow">→</span>
+        <div class="lifecycle-node lc-calved">
+          <p style="font-size:11px;font-weight:600;color:var(--green);">CALVED</p>
+          <p style="font-size:10px;color:var(--text2);margin-top:2px;">Birth logged</p>
+        </div>
+        <span class="lifecycle-arrow">→</span>
+        <div class="lifecycle-node lc-milking">
+          <p style="font-size:11px;font-weight:600;color:var(--green);">MILKING</p>
+          <p style="font-size:10px;color:var(--text2);margin-top:2px;">Active yield</p>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--text2);margin-top:14px;line-height:1.7;">
+        Only <strong style="color:var(--text1);">CALVED</strong> and <strong style="color:var(--text1);">MILKING</strong> cows appear in Milk Log entry forms.
+        PREGNANT / IDLE are greyed out with hint "Showing milking cows only" — not hidden.
+        FEVER is a parallel alert path separate from the heat cycle.
+      </p>
+    </div>
+
+    <!-- Alert escalation -->
+    <div class="card" style="margin-top:14px;">
+      <p class="card-label">Alert escalation timeline</p>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <span style="background:var(--activebg);border:1px solid var(--green);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;white-space:nowrap;">0 h</span>
+          <p style="font-size:12px;color:var(--text2);line-height:1.5;">IoT detects temperature/behaviour anomaly. <strong style="color:var(--text1);">Farmer notified</strong> — push + in-app.</p>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <span style="background:var(--warnbg);border:1px solid var(--warning);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;white-space:nowrap;">1 h</span>
+          <p style="font-size:12px;color:var(--text2);line-height:1.5;">No farmer acknowledgement. Escalates to <strong style="color:var(--text1);">Farm Owner</strong>.</p>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <span style="background:var(--dangerbg);border:1px solid var(--danger);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;white-space:nowrap;">2 h</span>
+          <p style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--danger);">Farm Owner must act.</strong> Critical alert state — red border card, countdown timer visible.</p>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <span style="background:var(--dark1);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;white-space:nowrap;color:var(--green);">6 h</span>
+          <p style="font-size:12px;color:var(--text2);line-height:1.5;">Heat cycle <strong style="color:var(--text1);">confirmed</strong> in system. Status transitions to IN HEAT.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 6. RULES ── -->
+  <div class="section">
+    <p class="section-title">6 — Rules</p>
+    <div class="card">
+      <div class="rule-row">
+        <span class="rule-label">Tap targets</span>
+        <span class="rule-desc"><span class="do">DO</span> — every tappable element min 48×48dp. Farmers use phones outdoors, often with wet or gloved hands.</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-label">Font size floor</span>
+        <span class="rule-desc"><span class="do">DO</span> — 14px absolute minimum. 16px for body. <span class="dont">NEVER</span> use 12px for anything the user must read to act on.</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-label">Line height</span>
+        <span class="rule-desc"><span class="do">DO</span> — 1.7 for Devanagari body text. 1.5 minimum for Latin. The shirorekha (top bar) needs vertical clearance or letters collide.</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-label">brandGreen on white</span>
+        <span class="rule-desc"><span class="dont">NEVER</span> — #4DDE95 on white fails WCAG AA (2.5:1 ratio). Use it on #111 or on #E8F5EE pill backgrounds only.</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-label">String expansion</span>
+        <span class="rule-desc"><span class="do">DO</span> — Hindi/Bhojpuri strings run 20–40% longer than English. <span class="dont">NEVER</span> fixed-width containers for translated text. Use flexible layouts everywhere.</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-label">RTL readiness</span>
+        <span class="rule-desc"><span class="do">DO</span> — use <code>EdgeInsetsDirectional</code> and <code>start/end</code> everywhere. Urdu (Phase 4) will break all left/right hardcoded spacing.</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-label">Offline state</span>
+        <span class="rule-desc"><span class="do">DO</span> — every screen must have an offline state. Show dark banner with wifi-off icon. A blank screen is never acceptable.</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-label">Scaffold background</span>
+        <span class="rule-desc"><span class="dont">NEVER</span> use #FFFFFF as scaffold background. Always bgWarm (#F2EDE4). Cards use white — the contrast is how visual hierarchy works.</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-label">Audit on edit</span>
+        <span class="rule-desc"><span class="do">DO</span> — always show the amber audit banner when Farm Owner edits a Farmer's entry. Farm + Cow fields locked. Only volume/session editable.</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-label">Default locale</span>
+        <span class="rule-desc">Hindi (<code>hi</code>), not English. Fall back to <code>hi</code> for any unrecognised Indian locale. Bhojpuri code: <code>bho</code> → arb file: <code>app_bho.arb</code>.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 7. FLUTTER QUICKSTART ── -->
+  <div class="section">
+    <p class="section-title">7 — Flutter quickstart</p>
+    <div class="card-dark">
+      <p style="font-size:11px;color:var(--text2);margin-bottom:10px;font-weight:600;">pubspec.yaml — font declaration</p>
+      <pre style="font-family:var(--font-mono);font-size:11px;color:#4DDE95;white-space:pre-wrap;line-height:1.8;">flutter:
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/NotoSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/NotoSans-SemiBold.ttf
+          weight: 600
+    - family: NotoSansDevanagari
+      fonts:
+        - asset: assets/fonts/NotoSansDevanagari-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/NotoSansDevanagari-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/NotoSansDevanagari-SemiBold.ttf
+          weight: 600</pre>
+    </div>
+    <div class="card-dark" style="margin-top:14px;">
+      <p style="font-size:11px;color:var(--text2);margin-bottom:10px;font-weight:600;">main.dart — MaterialApp locale setup</p>
+      <pre style="font-family:var(--font-mono);font-size:11px;color:#4DDE95;white-space:pre-wrap;line-height:1.8;">MaterialApp(
+  theme: vanixTheme(languageCode: 'hi'),
+  localizationsDelegates: AppLocalizations.localizationsDelegates,
+  supportedLocales: const [
+    Locale('hi'),   // Hindi (default)
+    Locale('bho'),  // Bhojpuri
+    Locale('en'),   // English
+  ],
+  localeResolutionCallback: (locale, supported) {
+    if (locale == null) return const Locale('hi');
+    for (final s in supported) {
+      if (s.languageCode == locale.languageCode) return s;
+    }
+    return const Locale('hi'); // fallback → Hindi
+  },
+)</pre>
+    </div>
+  </div>
+
+  <div class="ds-footer">
+    <p style="color:var(--text2);font-size:12px;">Vanix Design System v1.0 · July 2026</p>
+    <p style="color:var(--green);font-size:12px;font-weight:500;">Flutter · Hindi / Bhojpuri / English</p>
+  </div>
+
+</div>
+</body>
+</html>
