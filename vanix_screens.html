@@ -372,6 +372,13 @@
 
       resendEl.addEventListener('click', startTimer);
 
+      // Confirm → dashboard placeholder slides up over the whole screen
+      confirmBtn.addEventListener('click', function() {
+        if (confirmBtn.disabled) return;
+        clearInterval(countdown);
+        document.getElementById('s1-dash').style.transform = 'translateY(0)';
+      });
+
       boxes.forEach(function(box, i) {
         box.addEventListener('input', function() {
           box.value = box.value.replace(/\D/g, '');
