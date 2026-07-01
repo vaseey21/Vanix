@@ -121,6 +121,24 @@
     /* Brand-green focus accents (green fill/border only — never green text on white) */
     #s1-login-panel input:focus { border-bottom-color: var(--greendeep) !important; }
     #s1-otp-boxes input:focus   { border-color: var(--greendeep) !important; box-shadow: 0 0 0 1px var(--greendeep); }
+
+    /* Readability on glass: darker labels + underlines than plain-white sheet */
+    #s1-sheet p[id^="s1-l-"], #s1-sheet #s1-v-desc, #s1-sheet #s1-nootp { color: #5F5A52 !important; }
+    #s1-sheet input { border-bottom-color: #9A948A !important; }
+    #s1-otp-boxes input { border-color: #9A948A !important; }
+
+    /* ── Dark mode (toggle at top-right) ── */
+    #s1-sheet.dark { background: rgba(16,16,16,0.62) !important; border-top-color: rgba(255,255,255,0.18) !important; }
+    #s1-sheet.dark h2, #s1-sheet.dark input, #s1-sheet.dark select,
+    #s1-sheet.dark #s1-forgot, #s1-sheet.dark #s1-v-title,
+    #s1-sheet.dark #s1-otp-timer, #s1-sheet.dark #s1-v-sent,
+    #s1-sheet.dark p { color: #FFFFFF !important; }
+    #s1-sheet.dark p[id^="s1-l-"], #s1-sheet.dark #s1-v-desc, #s1-sheet.dark #s1-nootp { color: rgba(255,255,255,0.65) !important; }
+    #s1-sheet.dark input { border-bottom-color: rgba(255,255,255,0.4) !important; }
+    #s1-sheet.dark #s1-otp-boxes input { border-color: rgba(255,255,255,0.4) !important; }
+    #s1-sheet.dark input::placeholder { color: rgba(255,255,255,0.45); }
+    #s1-sheet.dark #s1-otp-back { border-color: rgba(255,255,255,0.4) !important; color: #FFFFFF !important; }
+    #s1-sheet.dark select option { color: #111111; }
   </style>
 </head>
 <body>
