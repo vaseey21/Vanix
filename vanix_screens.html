@@ -156,30 +156,58 @@
           </div>
 
           <!-- BOTTOM SHEET — slides up after video appears -->
-          <div id="s1-sheet" style="position:absolute; bottom:0; left:0; right:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:0 28px 36px; transform:translateY(100%); transition: transform 0.55s cubic-bezier(0.32,0.72,0,1); z-index:3;">
-            <div style="display:flex; justify-content:center; padding:12px 0 4px;">
-              <div style="width:36px; height:4px; background:#E0E0E0; border-radius:2px;"></div>
-            </div>
-            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin:16px 0 28px;">
-              <div>
-                <p style="font-size:11px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--text2); margin:0 0 4px;" class="en">LOGIN / SIGN UP</p>
-                <h2 style="font-size:28px; font-weight:600; color:var(--text1); margin:0; line-height:1.2;" class="hi">साइन इन करें</h2>
+          <div id="s1-sheet" style="position:absolute; bottom:0; left:0; right:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:0 32px 40px; transform:translateY(100%); transition: transform 0.55s cubic-bezier(0.32,0.72,0,1); z-index:3;">
+
+            <!-- ── PANEL A: Login ── -->
+            <div id="s1-login-panel">
+              <div style="display:flex; justify-content:flex-end; padding-top:22px;">
+                <select id="s1-lang" style="border:none; background:transparent; font-size:13px; font-weight:600; letter-spacing:0.04em; color:var(--text1); font-family:var(--font-en); cursor:pointer; -webkit-appearance:none; appearance:none; padding-right:2px;">
+                  <option selected>ENGLISH ▾</option>
+                  <option>हिंदी ▾</option>
+                  <option>भोजपुरी ▾</option>
+                </select>
               </div>
-              <div style="display:inline-flex; gap:2px; background:#F5F5F5; border-radius:20px; padding:3px; margin-top:4px;">
-                <button style="height:26px; padding:0 10px; background:var(--dark1); color:white; border:none; border-radius:14px; font-size:11px; font-family:var(--font-hi); font-weight:500;">हिंदी</button>
-                <button style="height:26px; padding:0 8px; background:transparent; color:var(--text2); border:none; font-size:11px; font-family:var(--font-hi);">भोज</button>
-                <button style="height:26px; padding:0 8px; background:transparent; color:var(--text2); border:none; font-size:11px; font-family:var(--font-en);">EN</button>
+              <h2 style="font-size:26px; font-weight:600; color:var(--text1); margin:26px 0 0; line-height:1.2;" class="en">Login/SignUp</h2>
+
+              <div style="margin-top:36px;">
+                <p style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;" class="en">EMAIL</p>
+                <input type="email" placeholder="you@example.com" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-en); padding:0 0 10px;">
               </div>
-            </div>
-            <div style="margin-bottom:36px;">
-              <p style="font-size:11px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--text2); margin:0 0 14px;" class="en">MOBILE NUMBER</p>
-              <div style="display:flex; align-items:flex-end; border-bottom:1.5px solid #CCCCCC; padding-bottom:12px; gap:12px;">
-                <span style="font-size:22px; font-weight:500; color:var(--text1); line-height:1;" class="en">+91</span>
-                <input type="tel" placeholder="98765 43210" style="flex:1; background:transparent; border:none; font-size:22px; color:var(--text1); font-family:var(--font-en); padding:0; line-height:1;">
+              <div style="margin-top:28px;">
+                <p style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;" class="en">PASSWORD</p>
+                <input type="password" placeholder="••••••••" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-en); padding:0 0 10px;">
               </div>
+
+              <button id="s1-continue" style="width:100%; height:52px; background:var(--dark1); color:white; border:none; border-radius:26px; font-size:16px; font-weight:500; font-family:var(--font-en); margin-top:44px; cursor:pointer;">Continue</button>
+              <p style="font-size:13px; font-weight:500; color:var(--text1); margin:22px 0 0; text-align:center; text-decoration:underline; text-underline-offset:3px; cursor:pointer;" class="en">Forgot password?</p>
             </div>
-            <button style="width:100%; height:56px; background:var(--dark1); color:white; border:none; border-radius:28px; font-size:17px; font-weight:500; font-family:var(--font-hi);">जारी रखें</button>
-            <p style="font-size:12px; color:var(--text2); margin:20px 0 0; text-align:center; line-height:1.7;" class="hi">साइन इन करके आप हमारी <span style="color:var(--text1); font-weight:600; text-decoration:underline; text-underline-offset:2px;">गोपनीयता नीति</span> से सहमत हैं</p>
+
+            <!-- ── PANEL B: OTP (hidden until Continue) ── -->
+            <div id="s1-otp-panel" style="display:none;">
+              <div style="display:flex; align-items:center; gap:14px; padding-top:22px;">
+                <button id="s1-otp-back" style="width:34px; height:34px; border-radius:50%; border:1px solid #DDDDDD; background:transparent; font-size:16px; color:var(--text1); cursor:pointer; line-height:1;">‹</button>
+                <span style="font-size:15px; font-weight:600; color:var(--text1);" class="en">Verification</span>
+              </div>
+              <p style="font-size:14px; color:var(--text1); margin:28px 0 0;" class="en">OTP was sent to <span style="font-weight:600; text-decoration:underline; text-underline-offset:2px;">you@example.com</span></p>
+              <p style="font-size:13px; color:var(--text2); margin:6px 0 0;" class="en">Enter the code to log in securely to your account.</p>
+
+              <p style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:32px 0 12px;" class="en">ENTER OTP</p>
+              <div id="s1-otp-boxes" style="display:flex; gap:10px;">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top:16px;">
+                <span id="s1-otp-timer" style="font-size:13px; color:var(--text1);" class="en">Time Remaining 0:30s</span>
+                <span style="font-size:13px; color:var(--text2);" class="en">Didn't receive OTP? <span id="s1-resend" style="text-decoration:underline; text-underline-offset:2px; color:#BBBBBB;">Resend</span></span>
+              </div>
+
+              <button id="s1-confirm" disabled style="width:100%; height:52px; background:#B5B5B5; color:white; border:none; border-radius:26px; font-size:16px; font-weight:500; font-family:var(--font-en); margin-top:40px; transition: background 0.3s ease;">Confirm</button>
+            </div>
+
           </div>
 
           <!-- SPLASH BG — off-white, fades out -->
