@@ -116,6 +116,10 @@
 
     input { outline: none; }
     button { cursor: pointer; }
+
+    /* Brand-green focus accents (green fill/border only — never green text on white) */
+    #s1-login-panel input:focus { border-bottom-color: var(--green) !important; }
+    #s1-otp-boxes input:focus   { border-color: var(--green) !important; box-shadow: 0 0 0 1px var(--green); }
   </style>
 </head>
 <body>
