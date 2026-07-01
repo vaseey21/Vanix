@@ -146,20 +146,20 @@
           </div>
         </div>
 
-        <!-- Hero — video background, logo + tagline centred -->
-        <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 28px 64px; text-align:center; position:relative; overflow:hidden; min-height:340px;">
+        <!-- Hero — full bleed video, logo centred, no box -->
+        <div style="height:420px; position:relative; overflow:hidden; flex-shrink:0;">
 
-          <!-- Background video -->
-          <video autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;">
+          <!-- Video -->
+          <video autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
             <source src="assets/hero.mp4" type="video/mp4">
           </video>
 
-          <!-- Dark overlay so text stays readable -->
-          <div style="position:absolute; inset:0; background:rgba(0,0,0,0.55); z-index:1;"></div>
+          <!-- Dark overlay — heavy like Starbucks -->
+          <div style="position:absolute; inset:0; background:rgba(0,0,0,0.65);"></div>
 
-          <!-- Logo on frosted tile -->
-          <div style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); border-radius:16px; padding:14px 22px; margin-bottom:32px; display:inline-block; position:relative; z-index:2; backdrop-filter:blur(6px);">
-            <svg width="110" height="34" viewBox="0 0 138 43" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="MyBovine.ai powered by Vanix">
+          <!-- Logo + tagline centred -->
+          <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; padding:0 32px;">
+            <svg width="130" height="40" viewBox="0 0 138 43" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 19.7466V2.4899H3.74717L10.0335 12.7207L7.34643 12.696L13.7068 2.4899H17.306V19.7466H13.2384V14.3724C13.2384 12.8932 13.2712 11.562 13.337 10.3787C13.4191 9.19536 13.5506 8.02026 13.7314 6.85338L14.1998 8.1353L9.41723 15.5557H7.79017L3.10621 8.18461L3.5746 6.85338C3.75539 7.95452 3.87865 9.08853 3.94439 10.2554C4.02656 11.4059 4.06765 12.7782 4.06765 14.3724V19.7466H0Z" fill="white"/>
               <path d="M21.6431 25.4167L24.626 18.3907L24.6754 20.4122L18.3643 6.65616H22.8264L25.5875 13.2384C25.7354 13.5671 25.8751 13.9204 26.0066 14.2984C26.1381 14.6764 26.2367 15.038 26.3024 15.3831L25.7601 15.7036C25.8587 15.4571 25.9655 15.153 26.0805 14.7915C26.212 14.4135 26.3517 14.0108 26.4996 13.5835L28.9156 6.65616H33.4023L27.8309 19.7466L25.5628 25.4167H21.6431Z" fill="white"/>
               <path d="M34.4653 19.7466V2.4899H42.0829C43.2662 2.4899 44.2687 2.66246 45.0905 3.0076C45.9122 3.3363 46.5285 3.82113 46.9394 4.46209C47.3667 5.08662 47.5804 5.84263 47.5804 6.73012C47.5804 7.71621 47.3338 8.54618 46.8408 9.22001C46.3642 9.89384 45.6657 10.3458 44.7453 10.5759L44.696 10.1075C45.4685 10.2718 46.1341 10.5595 46.6929 10.9703C47.2681 11.3812 47.7118 11.8907 48.0241 12.4988C48.3364 13.0904 48.4925 13.7643 48.4925 14.5203C48.4925 15.3913 48.3446 16.1556 48.0487 16.813C47.7529 17.4539 47.3256 17.9963 46.7668 18.44C46.208 18.8838 45.5506 19.2125 44.7946 19.4261C44.0551 19.6398 43.2333 19.7466 42.3294 19.7466H34.4653ZM38.4096 16.246H42.1815C42.6417 16.246 43.0279 16.172 43.3401 16.0241C43.6688 15.8762 43.9236 15.6625 44.1044 15.3831C44.2851 15.0873 44.3755 14.7339 44.3755 14.3231C44.3755 13.9451 44.2769 13.6246 44.0797 13.3616C43.8989 13.0987 43.636 12.9014 43.2908 12.77C42.9457 12.622 42.5348 12.5481 42.0582 12.5481H38.4096V16.246ZM38.4096 9.41723H41.4912C41.9185 9.41723 42.2801 9.35149 42.5759 9.22001C42.8882 9.0721 43.1183 8.87488 43.2662 8.62835C43.4305 8.36539 43.5127 8.05313 43.5127 7.69156C43.5127 7.16564 43.3319 6.75477 42.9703 6.45894C42.6088 6.14667 42.0664 5.99054 41.3433 5.99054H38.4096V9.41723Z" fill="white"/>
@@ -175,62 +175,48 @@
               <path d="M124.715 32.8564V29.0403H125.862L125.9 29.8165L125.658 29.9026C125.813 29.5734 125.956 29.4318C126.272 29.1767 126.473 29.0905C126.674 29.0043 126.885 28.9611 127.107 28.9611C127.663 29.0197 127.869 29.1371C128.075 29.2544 128.337 29.6617C128.443 29.8942 128.495 30.178 128.495 30.5135V32.8564H127.281V30.607C127.168 30.1256 127.098 30.05 127.005 29.9998C126.912 29.9496 126.662 29.9316C126.368 29.9782 126.199 30.0548 126.134 30.1146C125.979 30.3195 125.941 30.3962 125.923 30.4801V32.8564H124.715Z" fill="white"/>
               <path d="M130.609 32.8563L132.224 30.7147L132.873 31.455L132.036 32.8563H130.609ZM133.477 32.8563L132.625 31.6273L132.232 31.1026L130.648 29.0402H132.096L132.919 30.2116L133.349 30.7723L134.911 32.8563H133.477Z" fill="white"/>
             </svg>
-          </div>
-          <!-- Tagline -->
-          <p style="font-size:14px; color:rgba(255,255,255,0.7); margin:0; letter-spacing:0.01em; position:relative; z-index:2;" class="hi">आपके खेत का डिजिटल साथी</p>
-
-          <!-- Decorative cow silhouette -->
-          <div style="margin-top:28px; opacity:0.15; position:relative; z-index:2;">
-            <svg width="96" height="64" viewBox="0 0 96 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="48" cy="40" rx="28" ry="18" fill="white"/>
-              <ellipse cx="26" cy="30" rx="10" ry="12" fill="white"/>
-              <ellipse cx="70" cy="30" rx="10" ry="12" fill="white"/>
-              <rect x="31" y="55" width="7" height="9" rx="3.5" fill="white"/>
-              <rect x="43" y="56" width="7" height="8" rx="3.5" fill="white"/>
-              <rect x="55" y="56" width="7" height="8" rx="3.5" fill="white"/>
-              <rect x="67" y="55" width="7" height="9" rx="3.5" fill="white"/>
-              <circle cx="22" cy="26" r="3" fill="#111"/>
-              <circle cx="30" cy="26" r="3" fill="#111"/>
-              <path d="M20 20 Q22 14 24 20" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-              <path d="M28 20 Q30 14 32 20" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            </svg>
+            <p style="font-size:13px; color:rgba(255,255,255,0.55); margin:0; letter-spacing:0.02em;" class="hi">आपके खेत का डिजिटल साथी</p>
           </div>
         </div>
 
-        <!-- Bottom sheet slides up over hero -->
-        <div style="background:var(--bgwarm); border-radius:28px 28px 0 0; padding:28px 28px 32px; margin-top:-28px; flex-shrink:0;">
+        <!-- Bottom sheet — pure white, rounded top, slides over video -->
+        <div style="background:#FFFFFF; border-radius:24px 24px 0 0; padding:0 28px 36px; margin-top:-24px; flex:1; flex-shrink:0;">
 
-          <!-- Language selector — compact pill row, top right -->
-          <div style="display:flex; justify-content:flex-end; margin-bottom:20px;">
-            <div style="display:inline-flex; gap:4px; background:white; border-radius:20px; padding:4px; border:1px solid var(--border);">
-              <button style="height:28px; padding:0 14px; background:var(--dark1); color:white; border:none; border-radius:16px; font-size:12px; font-family:var(--font-hi); font-weight:500; white-space:nowrap;">हिंदी</button>
-              <button style="height:28px; padding:0 10px; background:transparent; color:var(--text2); border:none; font-size:12px; font-family:var(--font-hi); white-space:nowrap;">भोजपुरी</button>
-              <button style="height:28px; padding:0 10px; background:transparent; color:var(--text2); border:none; font-size:12px; font-family:var(--font-en); white-space:nowrap;">EN</button>
+          <!-- Drag handle -->
+          <div style="display:flex; justify-content:center; padding:12px 0 4px;">
+            <div style="width:36px; height:4px; background:#E0E0E0; border-radius:2px;"></div>
+          </div>
+
+          <!-- Top row: heading left, language right -->
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; margin:16px 0 28px;">
+            <div>
+              <p style="font-size:11px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--text2); margin:0 0 4px;" class="en">LOGIN / SIGN UP</p>
+              <h2 style="font-size:28px; font-weight:600; color:var(--text1); margin:0; line-height:1.2;" class="hi">साइन इन करें</h2>
+            </div>
+            <div style="display:inline-flex; gap:2px; background:#F5F5F5; border-radius:20px; padding:3px; margin-top:4px;">
+              <button style="height:26px; padding:0 10px; background:var(--dark1); color:white; border:none; border-radius:14px; font-size:11px; font-family:var(--font-hi); font-weight:500;">हिंदी</button>
+              <button style="height:26px; padding:0 8px; background:transparent; color:var(--text2); border:none; font-size:11px; font-family:var(--font-hi);">भोज</button>
+              <button style="height:26px; padding:0 8px; background:transparent; color:var(--text2); border:none; font-size:11px; font-family:var(--font-en);">EN</button>
             </div>
           </div>
 
-          <!-- Heading -->
-          <p style="font-size:11px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--text2); margin:0 0 4px;" class="en">LOGIN / SIGN UP</p>
-          <h2 style="font-size:28px; font-weight:600; color:var(--text1); margin:0 0 32px; line-height:1.2;" class="hi">साइन इन करें</h2>
-
-          <!-- Phone field — underline style à la Starbucks -->
-          <div style="margin-bottom:32px;">
-            <p style="font-size:11px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--text2); margin:0 0 12px;" class="en">MOBILE NUMBER</p>
-            <div style="display:flex; align-items:flex-end; border-bottom:2px solid var(--text1); padding-bottom:10px; gap:10px;">
-              <span style="font-size:20px; font-weight:500; color:var(--text1); line-height:1;" class="en">+91</span>
-              <input type="tel" placeholder="98765 43210" style="flex:1; background:transparent; border:none; font-size:20px; color:var(--text1); font-family:var(--font-en); font-weight:400; padding:0; line-height:1;">
+          <!-- Phone field — underline only -->
+          <div style="margin-bottom:36px;">
+            <p style="font-size:11px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--text2); margin:0 0 14px;" class="en">MOBILE NUMBER</p>
+            <div style="display:flex; align-items:flex-end; border-bottom:1.5px solid #CCCCCC; padding-bottom:12px; gap:12px;">
+              <span style="font-size:22px; font-weight:500; color:var(--text1); line-height:1;" class="en">+91</span>
+              <input type="tel" placeholder="98765 43210" style="flex:1; background:transparent; border:none; font-size:22px; color:var(--text1); font-family:var(--font-en); font-weight:400; padding:0; line-height:1;">
             </div>
-            <p style="font-size:13px; color:var(--text2); margin:8px 0 0;" class="hi">हम इस नंबर पर OTP भेजेंगे</p>
           </div>
 
-          <!-- CTA -->
+          <!-- CTA button -->
           <button style="width:100%; height:56px; background:var(--dark1); color:white; border:none; border-radius:28px; font-size:17px; font-weight:500; font-family:var(--font-hi);">
-            जारी रखें →
+            जारी रखें
           </button>
 
-          <!-- Privacy note -->
+          <!-- Privacy -->
           <p style="font-size:12px; color:var(--text2); margin:20px 0 0; text-align:center; line-height:1.7;" class="hi">
-            साइन इन करके आप हमारी <span style="color:var(--text1); font-weight:500; text-decoration:underline; text-underline-offset:2px;">गोपनीयता नीति</span> से सहमत हैं
+            साइन इन करके आप हमारी <span style="color:var(--text1); font-weight:600; text-decoration:underline; text-underline-offset:2px;">गोपनीयता नीति</span> से सहमत हैं
           </p>
         </div>
 
