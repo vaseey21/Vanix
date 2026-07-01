@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /Users/vasudevanvenkatraman/VANIX && git add -A && git commit -m 'auto: save changes' && git push"
+          }
+        ]
+      }
+    ]
+  }
+}
