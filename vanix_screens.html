@@ -261,15 +261,51 @@
       var boxes      = document.getElementById('s1-otp-boxes').querySelectorAll('input');
       var countdown  = null;
 
+      // ── i18n ──
+      var STRINGS = {
+        en:  { title:'Login', email:'EMAIL', pass:'PASSWORD', cont:'Continue', forgot:'Forgot password?',
+               vtitle:'Verification', sent:'OTP was sent to', desc:'Enter the code to log in securely to your account.',
+               enterotp:'ENTER OTP', timer:'Time Remaining', nootp:"Didn't receive OTP?", resend:'Resend', confirm:'Confirm' },
+        hi:  { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'जारी रखें', forgot:'पासवर्ड भूल गए?',
+               vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
+               enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें' },
+        bho: { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'आगे बढ़ीं', forgot:'पासवर्ड भुला गइनी?',
+               vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
+               enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं' }
+      };
+      var lang = 'en';
+      function t() { return STRINGS[lang]; }
+
+      function applyLang() {
+        document.getElementById('s1-title').textContent   = t().title;
+        document.getElementById('s1-l-email').textContent = t().email;
+        document.getElementById('s1-l-pass').textContent  = t().pass;
+        document.getElementById('s1-continue').textContent = t().cont;
+        document.getElementById('s1-forgot').textContent  = t().forgot;
+        document.getElementById('s1-v-title').textContent = t().vtitle;
+        document.getElementById('s1-v-sent').textContent  = t().sent;
+        document.getElementById('s1-v-desc').textContent  = t().desc;
+        document.getElementById('s1-l-otp').textContent   = t().enterotp;
+        document.getElementById('s1-nootp').textContent   = t().nootp;
+        resendEl.textContent = t().resend;
+        confirmBtn.textContent = t().confirm;
+      }
+
+      document.getElementById('s1-lang').addEventListener('change', function(e) {
+        lang = e.target.value;
+        applyLang();
+      });
+
       function startTimer() {
-        var t = 30;
+        var timeLeft = 30;
         resendEl.style.color = '#BBBBBB';
         resendEl.style.pointerEvents = 'none';
         clearInterval(countdown);
-        timerEl.textContent = 'Time Remaining 0:30s';
+        timerEl.textContent = t().timer + ' 0:30s';
         countdown = setInterval(function() {
-          t--;
-          timerEl.textContent = 'Time Remaining 0:' + (t < 10 ? '0' : '') + t + 's';
+          timeLeft--;
+          var tl = timeLeft;
+          timerEl.textContent = t().timer + ' 0:' + (tl < 10 ? '0' : '') + tl + 's';
           if (t <= 0) {
             clearInterval(countdown);
             timerEl.textContent = '';
