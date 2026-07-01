@@ -171,55 +171,62 @@
               <path d="M130.609 32.8563L132.224 30.7147L132.873 31.455L132.036 32.8563H130.609ZM133.477 32.8563L132.625 31.6273L132.232 31.1026L130.648 29.0402H132.096L132.919 30.2116L133.349 30.7723L134.911 32.8563H133.477Z" fill="white"/>
             </svg>
           </div>
-          <p style="font-size:26px; font-weight:600; color:white; margin:0 0 8px;" class="hi">नमस्ते</p>
-          <p style="font-size:15px; color:rgba(255,255,255,0.5); margin:0;" class="hi">अपने खेत में साइन इन करें</p>
+          <!-- Tagline -->
+          <p style="font-size:14px; color:rgba(255,255,255,0.4); margin:0; letter-spacing:0.01em;" class="hi">आपके खेत का डिजिटल साथी</p>
+
+          <!-- Decorative cow silhouette -->
+          <div style="margin-top:28px; opacity:0.1;">
+            <svg width="96" height="64" viewBox="0 0 96 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="48" cy="40" rx="28" ry="18" fill="white"/>
+              <ellipse cx="26" cy="30" rx="10" ry="12" fill="white"/>
+              <ellipse cx="70" cy="30" rx="10" ry="12" fill="white"/>
+              <rect x="31" y="55" width="7" height="9" rx="3.5" fill="white"/>
+              <rect x="43" y="56" width="7" height="8" rx="3.5" fill="white"/>
+              <rect x="55" y="56" width="7" height="8" rx="3.5" fill="white"/>
+              <rect x="67" y="55" width="7" height="9" rx="3.5" fill="white"/>
+              <circle cx="22" cy="26" r="3" fill="#111"/>
+              <circle cx="30" cy="26" r="3" fill="#111"/>
+              <path d="M20 20 Q22 14 24 20" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+              <path d="M28 20 Q30 14 32 20" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
         </div>
 
-        <!-- Form -->
-        <div style="padding:28px 24px 24px; display:flex; flex-direction:column; gap:22px; flex:1;">
+        <!-- Bottom sheet slides up over hero -->
+        <div style="background:var(--bgwarm); border-radius:28px 28px 0 0; padding:28px 28px 32px; margin-top:-28px; flex-shrink:0;">
 
-          <!-- Language toggle -->
-          <div>
-            <p style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;" class="en">Language / भाषा</p>
-            <div style="display:flex; gap:10px;">
-              <button style="flex:1; height:44px; background:var(--dark1); color:white; border:1.5px solid var(--dark1); border-radius:10px; font-size:14px; font-family:var(--font-hi);">हिंदी</button>
-              <button style="flex:1; height:44px; background:white; color:var(--text2); border:1.5px solid var(--border); border-radius:10px; font-size:14px; font-family:var(--font-hi);">भोजपुरी</button>
-              <button style="flex:1; height:44px; background:white; color:var(--text2); border:1.5px solid var(--border); border-radius:10px; font-size:14px; font-family:var(--font-en);">English</button>
+          <!-- Language selector — compact pill row, top right -->
+          <div style="display:flex; justify-content:flex-end; margin-bottom:20px;">
+            <div style="display:inline-flex; gap:4px; background:white; border-radius:20px; padding:4px; border:1px solid var(--border);">
+              <button style="height:28px; padding:0 14px; background:var(--dark1); color:white; border:none; border-radius:16px; font-size:12px; font-family:var(--font-hi); font-weight:500; white-space:nowrap;">हिंदी</button>
+              <button style="height:28px; padding:0 10px; background:transparent; color:var(--text2); border:none; font-size:12px; font-family:var(--font-hi); white-space:nowrap;">भोजपुरी</button>
+              <button style="height:28px; padding:0 10px; background:transparent; color:var(--text2); border:none; font-size:12px; font-family:var(--font-en); white-space:nowrap;">EN</button>
             </div>
           </div>
 
-          <!-- Phone -->
-          <div>
-            <p style="font-size:15px; font-weight:500; color:var(--text1); margin:0 0 10px;" class="hi">मोबाइल नंबर</p>
-            <div style="display:flex;">
-              <div style="height:52px; min-width:64px; background:var(--bgwarm); border:1.5px solid var(--border); border-right:none; border-radius:14px 0 0 14px; display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--text1); font-weight:500;" class="en">+91</div>
-              <input type="tel" placeholder="98765 43210" style="height:52px; flex:1; background:white; border:1.5px solid var(--border); border-left:none; border-radius:0 14px 14px 0; padding:0 16px; font-size:17px; color:var(--text1); font-family:var(--font-en);">
+          <!-- Heading -->
+          <p style="font-size:11px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--text2); margin:0 0 4px;" class="en">LOGIN / SIGN UP</p>
+          <h2 style="font-size:28px; font-weight:600; color:var(--text1); margin:0 0 32px; line-height:1.2;" class="hi">साइन इन करें</h2>
+
+          <!-- Phone field — underline style à la Starbucks -->
+          <div style="margin-bottom:32px;">
+            <p style="font-size:11px; font-weight:600; letter-spacing:0.09em; text-transform:uppercase; color:var(--text2); margin:0 0 12px;" class="en">MOBILE NUMBER</p>
+            <div style="display:flex; align-items:flex-end; border-bottom:2px solid var(--text1); padding-bottom:10px; gap:10px;">
+              <span style="font-size:20px; font-weight:500; color:var(--text1); line-height:1;" class="en">+91</span>
+              <input type="tel" placeholder="98765 43210" style="flex:1; background:transparent; border:none; font-size:20px; color:var(--text1); font-family:var(--font-en); font-weight:400; padding:0; line-height:1;">
             </div>
-            <p style="font-size:13px; color:var(--text2); margin:8px 0 0;" class="hi">हम एक OTP भेजेंगे</p>
+            <p style="font-size:13px; color:var(--text2); margin:8px 0 0;" class="hi">हम इस नंबर पर OTP भेजेंगे</p>
           </div>
 
           <!-- CTA -->
-          <button style="width:100%; height:56px; background:var(--dark1); color:white; border:none; border-radius:28px; font-size:17px; font-weight:500; font-family:var(--font-hi); display:flex; align-items:center; justify-content:center; gap:8px;">
-            OTP भेजें →
+          <button style="width:100%; height:56px; background:var(--dark1); color:white; border:none; border-radius:28px; font-size:17px; font-weight:500; font-family:var(--font-hi);">
+            जारी रखें →
           </button>
 
-          <!-- Divider -->
-          <div style="display:flex; align-items:center; gap:12px;">
-            <div style="flex:1; height:1px; background:var(--border);"></div>
-            <span style="font-size:13px; color:var(--text2);" class="hi">या</span>
-            <div style="flex:1; height:1px; background:var(--border);"></div>
-          </div>
-
-          <!-- Register -->
-          <div style="text-align:center;">
-            <p style="font-size:15px; color:var(--text2); margin:0 0 6px;" class="hi">नया खाता नहीं है?</p>
-            <p style="font-size:15px; font-weight:600; color:var(--text1); text-decoration:underline;" class="hi">अपना खेत जोड़ें</p>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div style="padding:16px 24px; border-top:1px solid var(--border); background:#EDE8DF; text-align:center;">
-          <p style="font-size:12px; color:var(--text2);" class="hi">साइन इन करके आप हमारी <span style="color:var(--text1); font-weight:500;">गोपनीयता नीति</span> से सहमत हैं</p>
+          <!-- Privacy note -->
+          <p style="font-size:12px; color:var(--text2); margin:20px 0 0; text-align:center; line-height:1.7;" class="hi">
+            साइन इन करके आप हमारी <span style="color:var(--text1); font-weight:500; text-decoration:underline; text-underline-offset:2px;">गोपनीयता नीति</span> से सहमत हैं
+          </p>
         </div>
 
       </div><!-- /phone -->
