@@ -306,7 +306,7 @@
           timeLeft--;
           var tl = timeLeft;
           timerEl.textContent = t().timer + ' 0:' + (tl < 10 ? '0' : '') + tl + 's';
-          if (t <= 0) {
+          if (timeLeft <= 0) {
             clearInterval(countdown);
             timerEl.textContent = '';
             resendEl.style.color = 'var(--text1)';
