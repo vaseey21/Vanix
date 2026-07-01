@@ -237,8 +237,59 @@
           </div>
 
           <!-- DASHBOARD PLACEHOLDER — slides up over everything after OTP confirm -->
-          <div id="s1-dash" style="position:absolute; inset:0; background:var(--bgwarm); z-index:6; transform:translateY(100%); transition: transform 0.6s cubic-bezier(0.32,0.72,0,1); display:flex; align-items:center; justify-content:center;">
-            <p style="font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2);" class="en">Dashboard — Screen 03</p>
+          <div id="s1-dash" style="position:absolute; inset:0; background:var(--bgwarm); z-index:6; transform:translateY(100%); transition: transform 0.6s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column;">
+
+            <!-- Empty content area (dashboard builds here) -->
+            <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+              <p style="font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2);" class="en">Dashboard — Screen 03</p>
+            </div>
+
+            <!-- ── BOTTOM NAV — 5 tabs ── -->
+            <nav style="background:var(--bgcard); border-top:1px solid var(--border); display:flex; padding:8px 8px 20px; flex-shrink:0;">
+
+              <!-- Home (active) -->
+              <button class="s1-nav-item" style="flex:1; min-height:48px; background:transparent; border:none; display:flex; flex-direction:column; align-items:center; gap:3px; padding:6px 0;">
+                <span style="position:relative; background:var(--activebg); border-radius:16px; padding:5px 18px; display:flex;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
+                  <span style="position:absolute; top:2px; right:10px; width:8px; height:8px; border-radius:50%; background:var(--danger); border:1.5px solid var(--bgcard);"></span>
+                </span>
+                <span class="s1-nav-l" data-k="navHome" style="font-size:12px; font-weight:600; color:var(--text1);">Home</span>
+              </button>
+
+              <!-- Farms -->
+              <button class="s1-nav-item" style="flex:1; min-height:48px; background:transparent; border:none; display:flex; flex-direction:column; align-items:center; gap:3px; padding:6px 0;">
+                <span style="border-radius:16px; padding:5px 18px; display:flex;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8C8780" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-8h6v8"/><path d="M3 21h18"/></svg>
+                </span>
+                <span class="s1-nav-l" data-k="navFarms" style="font-size:12px; font-weight:500; color:var(--text2);">Farms</span>
+              </button>
+
+              <!-- Milk Log -->
+              <button class="s1-nav-item" style="flex:1; min-height:48px; background:transparent; border:none; display:flex; flex-direction:column; align-items:center; gap:3px; padding:6px 0;">
+                <span style="border-radius:16px; padding:5px 18px; display:flex;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8C8780" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg>
+                </span>
+                <span class="s1-nav-l" data-k="navMilk" style="font-size:12px; font-weight:500; color:var(--text2);">Milk</span>
+              </button>
+
+              <!-- Events -->
+              <button class="s1-nav-item" style="flex:1; min-height:48px; background:transparent; border:none; display:flex; flex-direction:column; align-items:center; gap:3px; padding:6px 0;">
+                <span style="position:relative; border-radius:16px; padding:5px 18px; display:flex;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8C8780" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  <span style="position:absolute; top:-2px; right:8px; min-width:16px; height:16px; border-radius:8px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px; border:1.5px solid var(--bgcard);" class="en">3</span>
+                </span>
+                <span class="s1-nav-l" data-k="navEvents" style="font-size:12px; font-weight:500; color:var(--text2);">Events</span>
+              </button>
+
+              <!-- Account -->
+              <button class="s1-nav-item" style="flex:1; min-height:48px; background:transparent; border:none; display:flex; flex-direction:column; align-items:center; gap:3px; padding:6px 0;">
+                <span style="border-radius:16px; padding:5px 18px; display:flex;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8C8780" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                </span>
+                <span class="s1-nav-l" data-k="navAccount" style="font-size:12px; font-weight:500; color:var(--text2);">Account</span>
+              </button>
+
+            </nav>
           </div>
 
           <!-- SPLASH BG — off-white, fades out -->
