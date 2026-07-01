@@ -322,6 +322,13 @@
         applyLang();
       });
 
+      // ── Dark / light mode toggle ──
+      var themeBtn = document.getElementById('s1-theme');
+      themeBtn.addEventListener('click', function() {
+        var dark = sheet.classList.toggle('dark');
+        themeBtn.textContent = dark ? '☀' : '☾';
+      });
+
       function startTimer() {
         var timeLeft = 30;
         resendEl.style.color = '#BBBBBB';
