@@ -31,22 +31,26 @@
     body {
       background: #1A1A1A;
       font-family: var(--font-hi);
-      padding: 40px 20px 80px;
+      padding: 48px 24px 80px;
+      min-height: 100vh;
     }
 
     /* ── Layout ── */
     .screen-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 40px;
+      gap: 48px;
       justify-content: center;
+      align-items: flex-start;
+      max-width: 1600px;
+      margin: 0 auto;
     }
 
     .screen-wrap {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
     .screen-label {
@@ -60,40 +64,49 @@
 
     /* ── Phone frame ── */
     .phone {
-      width: 320px;
+      width: 390px;
       background: var(--bgwarm);
-      border-radius: 36px;
+      border-radius: 48px;
       overflow: hidden;
-      border: 6px solid #2A2A2A;
-      box-shadow: 0 0 0 1px #333;
-      min-height: 580px;
+      border: 8px solid #2A2A2A;
+      box-shadow: 0 0 0 1px #3A3A3A, 0 32px 64px rgba(0,0,0,0.5);
+      min-height: 720px;
       display: flex;
       flex-direction: column;
+    }
+
+    /* Responsive: shrink phone on smaller viewports */
+    @media (max-width: 500px) {
+      .phone {
+        width: calc(100vw - 48px);
+        border-radius: 36px;
+        min-height: 640px;
+      }
     }
 
     /* ── Status bar ── */
     .status-bar {
       background: var(--dark1);
-      height: 36px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 18px;
+      padding: 0 24px;
       flex-shrink: 0;
     }
     .status-time {
       font-family: var(--font-en);
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       color: white;
     }
     .status-icons {
       display: flex;
-      gap: 5px;
+      gap: 6px;
       align-items: center;
     }
     .status-icons span {
-      font-size: 11px;
+      font-size: 12px;
       color: white;
     }
 
@@ -134,8 +147,8 @@
         </div>
 
         <!-- Dark header -->
-        <div style="background:var(--dark1); padding:28px 24px 24px; text-align:center;">
-          <div style="display:inline-block; background:white; border-radius:10px; padding:8px 14px; margin-bottom:16px;">
+        <div style="background:var(--dark1); padding:36px 28px 28px; text-align:center;">
+          <div style="display:inline-block; background:white; border-radius:12px; padding:10px 18px; margin-bottom:20px;">
             <svg width="110" height="34" viewBox="0 0 138 43" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="MyBovine.ai powered by Vanix">
               <path d="M0 19.7466V2.4899H3.74717L10.0335 12.7207L7.34643 12.696L13.7068 2.4899H17.306V19.7466H13.2384V14.3724C13.2384 12.8932 13.2712 11.562 13.337 10.3787C13.4191 9.19536 13.5506 8.02026 13.7314 6.85338L14.1998 8.1353L9.41723 15.5557H7.79017L3.10621 8.18461L3.5746 6.85338C3.75539 7.95452 3.87865 9.08853 3.94439 10.2554C4.02656 11.4059 4.06765 12.7782 4.06765 14.3724V19.7466H0Z" fill="#004F7D"/>
               <path d="M21.6431 25.4167L24.626 18.3907L24.6754 20.4122L18.3643 6.65616H22.8264L25.5875 13.2384C25.7354 13.5671 25.8751 13.9204 26.0066 14.2984C26.1381 14.6764 26.2367 15.038 26.3024 15.3831L25.7601 15.7036C25.8587 15.4571 25.9655 15.153 26.0805 14.7915C26.212 14.4135 26.3517 14.0108 26.4996 13.5835L28.9156 6.65616H33.4023L27.8309 19.7466L25.5628 25.4167H21.6431Z" fill="#004F7D"/>
@@ -153,55 +166,55 @@
               <path d="M130.609 32.8563L132.224 30.7147L132.873 31.455L132.036 32.8563H130.609ZM133.477 32.8563L132.625 31.6273L132.232 31.1026L130.648 29.0402H132.096L132.919 30.2116L133.349 30.7723L134.911 32.8563H133.477Z" fill="white"/>
             </svg>
           </div>
-          <p style="font-size:22px; font-weight:600; color:white; margin:0 0 6px;" class="hi">नमस्ते</p>
-          <p style="font-size:14px; color:rgba(255,255,255,0.5); margin:0;" class="hi">अपने खेत में साइन इन करें</p>
+          <p style="font-size:26px; font-weight:600; color:white; margin:0 0 8px;" class="hi">नमस्ते</p>
+          <p style="font-size:15px; color:rgba(255,255,255,0.5); margin:0;" class="hi">अपने खेत में साइन इन करें</p>
         </div>
 
         <!-- Form -->
-        <div style="padding:24px 20px 20px; display:flex; flex-direction:column; gap:18px; flex:1;">
+        <div style="padding:28px 24px 24px; display:flex; flex-direction:column; gap:22px; flex:1;">
 
           <!-- Language toggle -->
           <div>
-            <p style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0 0 8px;" class="en">Language / भाषा</p>
-            <div style="display:flex; gap:8px;">
-              <button style="flex:1; height:36px; background:var(--dark1); color:white; border:1.5px solid var(--dark1); border-radius:8px; font-size:13px; font-family:var(--font-hi);">हिंदी</button>
-              <button style="flex:1; height:36px; background:white; color:var(--text2); border:1.5px solid var(--border); border-radius:8px; font-size:13px; font-family:var(--font-hi);">भोजपुरी</button>
-              <button style="flex:1; height:36px; background:white; color:var(--text2); border:1.5px solid var(--border); border-radius:8px; font-size:13px; font-family:var(--font-en);">English</button>
+            <p style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;" class="en">Language / भाषा</p>
+            <div style="display:flex; gap:10px;">
+              <button style="flex:1; height:44px; background:var(--dark1); color:white; border:1.5px solid var(--dark1); border-radius:10px; font-size:14px; font-family:var(--font-hi);">हिंदी</button>
+              <button style="flex:1; height:44px; background:white; color:var(--text2); border:1.5px solid var(--border); border-radius:10px; font-size:14px; font-family:var(--font-hi);">भोजपुरी</button>
+              <button style="flex:1; height:44px; background:white; color:var(--text2); border:1.5px solid var(--border); border-radius:10px; font-size:14px; font-family:var(--font-en);">English</button>
             </div>
           </div>
 
           <!-- Phone -->
           <div>
-            <p style="font-size:14px; font-weight:500; color:var(--text1); margin:0 0 8px;" class="hi">मोबाइल नंबर</p>
+            <p style="font-size:15px; font-weight:500; color:var(--text1); margin:0 0 10px;" class="hi">मोबाइल नंबर</p>
             <div style="display:flex;">
-              <div style="height:48px; min-width:56px; background:var(--bgwarm); border:1.5px solid var(--border); border-right:none; border-radius:12px 0 0 12px; display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--text1); font-weight:500;" class="en">+91</div>
-              <input type="tel" placeholder="98765 43210" style="height:48px; flex:1; background:white; border:1.5px solid var(--border); border-left:none; border-radius:0 12px 12px 0; padding:0 14px; font-size:16px; color:var(--text1); font-family:var(--font-en);">
+              <div style="height:52px; min-width:64px; background:var(--bgwarm); border:1.5px solid var(--border); border-right:none; border-radius:14px 0 0 14px; display:flex; align-items:center; justify-content:center; font-size:15px; color:var(--text1); font-weight:500;" class="en">+91</div>
+              <input type="tel" placeholder="98765 43210" style="height:52px; flex:1; background:white; border:1.5px solid var(--border); border-left:none; border-radius:0 14px 14px 0; padding:0 16px; font-size:17px; color:var(--text1); font-family:var(--font-en);">
             </div>
-            <p style="font-size:12px; color:var(--text2); margin:6px 0 0;" class="hi">हम एक OTP भेजेंगे</p>
+            <p style="font-size:13px; color:var(--text2); margin:8px 0 0;" class="hi">हम एक OTP भेजेंगे</p>
           </div>
 
           <!-- CTA -->
-          <button style="width:100%; height:52px; background:var(--dark1); color:white; border:none; border-radius:26px; font-size:16px; font-weight:500; font-family:var(--font-hi); display:flex; align-items:center; justify-content:center; gap:8px;">
+          <button style="width:100%; height:56px; background:var(--dark1); color:white; border:none; border-radius:28px; font-size:17px; font-weight:500; font-family:var(--font-hi); display:flex; align-items:center; justify-content:center; gap:8px;">
             OTP भेजें →
           </button>
 
           <!-- Divider -->
-          <div style="display:flex; align-items:center; gap:10px;">
+          <div style="display:flex; align-items:center; gap:12px;">
             <div style="flex:1; height:1px; background:var(--border);"></div>
-            <span style="font-size:12px; color:var(--text2);" class="hi">या</span>
+            <span style="font-size:13px; color:var(--text2);" class="hi">या</span>
             <div style="flex:1; height:1px; background:var(--border);"></div>
           </div>
 
           <!-- Register -->
           <div style="text-align:center;">
-            <p style="font-size:14px; color:var(--text2); margin:0 0 4px;" class="hi">नया खाता नहीं है?</p>
-            <p style="font-size:14px; font-weight:600; color:var(--text1); text-decoration:underline;" class="hi">अपना खेत जोड़ें</p>
+            <p style="font-size:15px; color:var(--text2); margin:0 0 6px;" class="hi">नया खाता नहीं है?</p>
+            <p style="font-size:15px; font-weight:600; color:var(--text1); text-decoration:underline;" class="hi">अपना खेत जोड़ें</p>
           </div>
         </div>
 
         <!-- Footer -->
-        <div style="padding:12px 20px; border-top:1px solid var(--border); background:#EDE8DF; text-align:center;">
-          <p style="font-size:11px; color:var(--text2);" class="hi">साइन इन करके आप हमारी <span style="color:var(--text1); font-weight:500;">गोपनीयता नीति</span> से सहमत हैं</p>
+        <div style="padding:16px 24px; border-top:1px solid var(--border); background:#EDE8DF; text-align:center;">
+          <p style="font-size:12px; color:var(--text2);" class="hi">साइन इन करके आप हमारी <span style="color:var(--text1); font-weight:500;">गोपनीयता नीति</span> से सहमत हैं</p>
         </div>
 
       </div><!-- /phone -->
