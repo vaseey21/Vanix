@@ -374,6 +374,9 @@
         document.getElementById('s1-nootp').textContent   = t().nootp;
         resendEl.textContent = t().resend;
         confirmBtn.textContent = t().confirm;
+        document.querySelectorAll('.s1-nav-l').forEach(function(el) {
+          el.textContent = t()[el.getAttribute('data-k')];
+        });
       }
 
       document.getElementById('s1-lang').addEventListener('change', function(e) {
