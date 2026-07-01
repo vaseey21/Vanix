@@ -119,8 +119,8 @@
     button { cursor: pointer; }
 
     /* Brand-green focus accents (green fill/border only — never green text on white) */
-    #s1-login-panel input:focus { border-bottom-color: var(--green) !important; }
-    #s1-otp-boxes input:focus   { border-color: var(--green) !important; box-shadow: 0 0 0 1px var(--green); }
+    #s1-login-panel input:focus { border-bottom-color: var(--greendeep) !important; }
+    #s1-otp-boxes input:focus   { border-color: var(--greendeep) !important; box-shadow: 0 0 0 1px var(--greendeep); }
   </style>
 </head>
 <body>
@@ -183,7 +183,7 @@
                 <input type="password" placeholder="••••••••" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-en); padding:0 0 10px;">
               </div>
 
-              <button id="s1-continue" style="width:100%; height:52px; background:var(--green); color:var(--dark1); border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:44px; cursor:pointer;">Continue</button>
+              <button id="s1-continue" style="width:100%; height:52px; background:var(--greendeep); color:var(--dark1); border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:44px; cursor:pointer;">Continue</button>
               <p id="s1-forgot" style="font-size:13px; font-weight:500; color:var(--text1); margin:22px 0 0; text-align:center; text-decoration:underline; text-underline-offset:3px; cursor:pointer;">Forgot password?</p>
             </div>
 
@@ -345,7 +345,7 @@
           if (box.value && i < boxes.length - 1) boxes[i + 1].focus();
           var filled = Array.prototype.every.call(boxes, function(b) { return b.value; });
           confirmBtn.disabled = !filled;
-          confirmBtn.style.background = filled ? 'var(--green)' : '#B5B5B5';
+          confirmBtn.style.background = filled ? 'var(--greendeep)' : '#B5B5B5';
           confirmBtn.style.color = filled ? 'var(--dark1)' : 'white';
         });
         box.addEventListener('keydown', function(e) {
