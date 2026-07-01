@@ -186,12 +186,12 @@
             <div id="s1-otp-panel" style="display:none;">
               <div style="display:flex; align-items:center; gap:14px; padding-top:22px;">
                 <button id="s1-otp-back" style="width:34px; height:34px; border-radius:50%; border:1px solid #DDDDDD; background:transparent; font-size:16px; color:var(--text1); cursor:pointer; line-height:1;">‹</button>
-                <span style="font-size:15px; font-weight:600; color:var(--text1);" class="en">Verification</span>
+                <span id="s1-v-title" style="font-size:15px; font-weight:600; color:var(--text1);">Verification</span>
               </div>
-              <p style="font-size:14px; color:var(--text1); margin:28px 0 0;" class="en">OTP was sent to <span style="font-weight:600; text-decoration:underline; text-underline-offset:2px;">you@example.com</span></p>
-              <p style="font-size:13px; color:var(--text2); margin:6px 0 0;" class="en">Enter the code to log in securely to your account.</p>
+              <p style="font-size:14px; color:var(--text1); margin:28px 0 0;"><span id="s1-v-sent">OTP was sent to</span> <span style="font-weight:600; text-decoration:underline; text-underline-offset:2px;" class="en">you@example.com</span></p>
+              <p id="s1-v-desc" style="font-size:13px; color:var(--text2); margin:6px 0 0;">Enter the code to log in securely to your account.</p>
 
-              <p style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:32px 0 12px;" class="en">ENTER OTP</p>
+              <p id="s1-l-otp" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:32px 0 12px;">ENTER OTP</p>
               <div id="s1-otp-boxes" style="display:flex; gap:10px;">
                 <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
                 <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
