@@ -240,15 +240,17 @@
           <div id="s1-dash" style="position:absolute; inset:0; background:var(--bgwarm); z-index:6; transform:translateY(100%); transition: transform 0.6s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column;">
 
             <!-- Empty content area (dashboard builds here) -->
-            <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+            <div style="flex:1; display:flex; align-items:center; justify-content:center; position:relative;">
               <p style="font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2);" class="en">Dashboard — Screen 03</p>
+              <!-- temp: colour blocks behind nav so the frosted blur is visible until real content exists -->
+              <div style="position:absolute; bottom:0; left:0; right:0; height:190px; background: linear-gradient(115deg, #C89B6B 0%, #8FBF9A 40%, #6E4F35 75%, #D9C9A8 100%); opacity:0.9;"></div>
             </div>
 
             <!-- ── BOTTOM NAV — frosted floating bar, active tab = white capsule (Starbucks style) ── -->
             <nav style="position:absolute; left:14px; right:14px; bottom:16px; background:rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); border:1px solid rgba(255,255,255,0.55); border-radius:44px; display:flex; padding:6px; box-shadow: 0 14px 36px rgba(0,0,0,0.20);">
 
               <!-- Home (active — solid white capsule, green icon+label) -->
-              <button class="s1-nav-item" style="flex:1.25; min-height:76px; background:#FFFFFF; border:none; border-radius:38px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; box-shadow: 0 4px 14px rgba(0,0,0,0.10);">
+              <button class="s1-nav-item" style="flex:1.7; min-height:76px; background:#FFFFFF; border:none; border-radius:38px; padding:0 10px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; box-shadow: 0 4px 14px rgba(0,0,0,0.10);">
                 <span style="position:relative; display:flex;">
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="#1E7A52" stroke="#1E7A52" stroke-width="0.5" stroke-linejoin="round"><path d="M12 2.6L2.8 10.8h2.4V21h5.3v-6.2h3v6.2h5.3V10.8h2.4L12 2.6z"/></svg>
                   <span style="position:absolute; top:-2px; right:-4px; width:9px; height:9px; border-radius:50%; background:var(--danger); border:1.5px solid #FFFFFF;"></span>
