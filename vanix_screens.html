@@ -161,16 +161,16 @@
             <!-- ── PANEL A: Login ── -->
             <div id="s1-login-panel">
               <div style="display:flex; justify-content:flex-end; padding-top:22px;">
-                <select id="s1-lang" style="border:none; background:transparent; font-size:13px; font-weight:600; letter-spacing:0.04em; color:var(--text1); font-family:var(--font-en); cursor:pointer; -webkit-appearance:none; appearance:none; padding-right:2px;">
-                  <option selected>ENGLISH ▾</option>
-                  <option>हिंदी ▾</option>
-                  <option>भोजपुरी ▾</option>
+                <select id="s1-lang" style="border:none; background:transparent; font-size:13px; font-weight:600; letter-spacing:0.04em; color:var(--text1); font-family:var(--font-hi); cursor:pointer; -webkit-appearance:none; appearance:none; padding-right:2px;">
+                  <option value="en" selected>ENGLISH ▾</option>
+                  <option value="hi">हिंदी ▾</option>
+                  <option value="bho">भोजपुरी ▾</option>
                 </select>
               </div>
-              <h2 style="font-size:26px; font-weight:600; color:var(--text1); margin:26px 0 0; line-height:1.2;" class="en">Login/SignUp</h2>
+              <h2 id="s1-title" style="font-size:26px; font-weight:600; color:var(--text1); margin:26px 0 0; line-height:1.2;">Login</h2>
 
               <div style="margin-top:36px;">
-                <p style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;" class="en">EMAIL</p>
+                <p id="s1-l-email" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">EMAIL</p>
                 <input type="email" placeholder="you@example.com" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-en); padding:0 0 10px;">
               </div>
               <div style="margin-top:28px;">
