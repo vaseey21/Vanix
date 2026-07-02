@@ -128,9 +128,9 @@ xs=4  sm=8  md=12  lg=16  pill=24
 | 04 | Farms list | Pending |
 | 05 | Farm detail (cow list) | Pending |
 | 06 | Cow profile (vitals, cycle, yield) | Pending |
-| 07 | Milk Log | Done — cream hero (dropdown/download/filter outline buttons), outline banners, date-grouped cards w/ coloured yield box + on-time ✓ / late ⏱ pill, filter bottom sheet, black FAB. Sessions: Morning + Evening only |
-| 08 | Add milk entry | Done — same-phone page: farm (owner only) + cow (Name—Breed—Belt no.) + date (no future) + session pills (Evening locked till 17:00 today, past-session warning modal) + litres, Save/Cancel |
-| 09 | Edit milk entry (bottom sheet) | Pending |
+| 07 | Milk Log | Done — cream hero, milk-scoped tinted banners (NO heat alerts here), date-grouped cards w/ coloured yield box + ✓/⏱, two-pane filter sheet (category rail left, tinted option rows right — never white), tap card → Edit/Delete action sheet, black FAB. Sessions: Morning + Evening only |
+| 08 | Add milk entry | Done — same-phone page: farm (owner only) + cow (Name—Breed—Belt no.) + date (no future) + session pills (Evening locked till 17:00 today, past-session warning modal) + litres, Save/Cancel. Duplicate guard: same cow+session+date → confirm modal |
+| 09 | Edit milk entry | Done — reuses Add-entry page prefilled ("Edit Milk Entry"); delete via confirm modal. Farmer add-to-existing/edit/delete → pending sub-card on the entry card, owner Approve/✕; approve merges/replaces litres, updates time, adds "↻ Updated" badge |
 | 10 | Events / alert centre | Pending |
 | 11 | Account | Pending |
 | 12 | Farmer persona (stripped views) | Pending |
