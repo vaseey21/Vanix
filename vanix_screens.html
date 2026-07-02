@@ -152,7 +152,15 @@
     #s1-sheet input::placeholder { font-size: 13px; }
     #s1-sheet.dark #s1-otp-back, #s1-sheet.dark #s1-fp-back { color: #FFFFFF !important; }
     #s1-sheet.dark #s1-lang { background: rgba(0,0,0,0.30) !important; border-color: rgba(255,255,255,0.30) !important; color: #FFFFFF !important; }
-    #s1-sheet.dark select option { color: #111111; }
+    /* language bottom sheet — dark mode (sibling of #s1-sheet) */
+    #s1-sheet.dark ~ #s1-lang-sheet { background: rgba(20,20,20,0.92) !important; border-top-color: rgba(255,255,255,0.18) !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet #s1-ls-title { color: #FFFFFF !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet #s1-ls-search { color: #FFFFFF !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet #s1-ls-search::placeholder { color: rgba(255,255,255,0.45); }
+    #s1-sheet.dark ~ #s1-lang-sheet .s1-ls-row > span > span:first-child { color: #FFFFFF !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet .s1-ls-row > span > span:last-child { color: rgba(255,255,255,0.55) !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet .s1-ls-row { border-bottom-color: rgba(255,255,255,0.10) !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet > div[style*="align-items:center"] { background: rgba(0,0,0,0.30) !important; border-color: rgba(255,255,255,0.25) !important; }
 
     /* ── App-wide dark mode (tap Account tab anywhere to toggle) ── */
     #flow-root.dark #s1-dash { background: #111111 !important; }
