@@ -128,8 +128,8 @@ xs=4  sm=8  md=12  lg=16  pill=24
 | 04 | Farms list | Pending |
 | 05 | Farm detail (cow list) | Pending |
 | 06 | Cow profile (vitals, cycle, yield) | Pending |
-| 07 | Milk Log | Done — period dropdown, stats card (total ±% vs last period, cows milked, max, min), status banners, date-grouped cards w/ coloured yield box, owner filter chips (farm/session/sort), FAB |
-| 08 | Add milk entry | Done — full page: cow dropdown (CALVED/MILKING only), large litres input, Save/Cancel |
+| 07 | Milk Log | Done — cream hero (dropdown/download/filter outline buttons), outline banners, date-grouped cards w/ coloured yield box + on-time ✓ / late ⏱ pill, filter bottom sheet, black FAB. Sessions: Morning + Evening only |
+| 08 | Add milk entry | Done — same-phone page: farm (owner only) + cow (Name—Breed—Belt no.) + date (no future) + session pills (Evening locked till 17:00 today, past-session warning modal) + litres, Save/Cancel |
 | 09 | Edit milk entry (bottom sheet) | Pending |
 | 10 | Events / alert centre | Pending |
 | 11 | Account | Pending |
@@ -146,6 +146,9 @@ xs=4  sm=8  md=12  lg=16  pill=24
 - ALWAYS use `EdgeInsetsDirectional` not `EdgeInsets.only left/right`
 - Farm + Cow fields locked on edit — audit trail required
 - Every screen needs an offline state — dark banner, never blank
+- Milking sessions are Morning and Evening only — no Afternoon anywhere
+- Milk entries: no future dates or future sessions, ever — date picker max = today, Evening locked until 17:00
+- Dark mode is app-wide (temporary toggle on Account tab) — every new screen needs dark styles
 - Hindi/Bhojpuri strings run 20–40% longer than English — no fixed-width containers
 - EVERY visual/component change in `vanix_screens.html` must be reflected in `vanix_design_system.html` (and new tokens in `vanix_theme.dart`) in the same session — the design system is the source of truth
 
