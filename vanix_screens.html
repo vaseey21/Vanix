@@ -938,7 +938,9 @@
       var themeBtn = document.getElementById('s1-theme');
       themeBtn.addEventListener('click', function() {
         var dark = sheet.classList.toggle('dark');
-        themeBtn.textContent = dark ? '☀' : '☾';
+        document.getElementById('s1-theme-knob').style.transform = dark ? 'translateX(24px)' : 'translateX(0)';
+        document.getElementById('s1-theme-moon').style.display = dark ? 'none' : 'block';
+        document.getElementById('s1-theme-sun').style.display = dark ? 'block' : 'none';
       });
 
       // timer and resend are mutually exclusive: countdown first, then resend replaces it
