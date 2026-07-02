@@ -94,7 +94,7 @@ xs=4  sm=8  md=12  lg=16  pill=24
 | Account | खाता | user-circle |
 
 - Style: frosted floating bar (rgba(255,255,255,0.42) + blur 18px, radius 36, 16px edge margins), equal-width tabs
-- Active: solid white capsule, filled icon + label in greenInk #1E7A52 (the only green allowed as text/icon on white)
+- Active: single sliding white capsule (droplet squish animation, exactly 1/5 bar width); icons/labels never move — 20px outline icon + 11px label recoloured greenInk #1E7A52 (the only green allowed as text/icon on white), label weight 600
 - Inactive: 20px dark #111 stroke icon + 11px dark label on frost, no pill
 - Badge: red (#D44C3A) — count pill on Events, dot on Home, nowhere else
 
