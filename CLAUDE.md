@@ -128,8 +128,8 @@ xs=4  sm=8  md=12  lg=16  pill=24
 | 04 | Farms list | Pending |
 | 05 | Farm detail (cow list) | Pending |
 | 06 | Cow profile (vitals, cycle, yield) | Pending |
-| 07 | Milk Log | Pending |
-| 08 | Add milk entry (bottom sheet) | Pending |
+| 07 | Milk Log | Done — period dropdown, stats card (total ±% vs last period, cows milked, max, min), status banners, date-grouped cards w/ coloured yield box, owner filter chips (farm/session/sort), FAB |
+| 08 | Add milk entry | Done — full page: cow dropdown (CALVED/MILKING only), large litres input, Save/Cancel |
 | 09 | Edit milk entry (bottom sheet) | Pending |
 | 10 | Events / alert centre | Pending |
 | 11 | Account | Pending |

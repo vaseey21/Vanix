@@ -618,19 +618,29 @@
         </div>
       </div>
       <div style="margin-bottom:10px;">
-        <p style="font-size:11px;color:var(--text2);margin-bottom:10px;">Milk log card example</p>
-        <div class="milk-card">
-          <div class="milk-card-left">
-            <p style="font-size:14px;font-weight:600;">Gauri — HF Cross</p>
-            <p style="font-size:12px;color:var(--text2);">Ravi Kumar Farm</p>
+        <p style="font-size:11px;color:var(--text2);margin-bottom:10px;">Milk log card — cow, session, timestamp, farm + manager (Farm Owner only), yield box right</p>
+        <div style="background:white; border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; max-width:400px;">
+          <div style="min-width:0;">
+            <p style="font-size:16px;font-weight:600;margin:0;">Gauri — HF Cross</p>
+            <p style="font-size:13px;margin:4px 0 0;">🌅 Morning · <span style="color:var(--text2);">07:30</span></p>
+            <p style="font-size:12px;color:var(--text2);margin:6px 0 0;">Ravi Kumar Farm · Mgr: Suresh</p>
           </div>
-          <div class="milk-card-right">
-            <span style="font-size:16px;font-weight:700;">12.5 L</span>
-            <div style="display:flex;gap:6px;align-items:center;">
-              <span class="badge badge-am">🌅 AM</span>
-              <span style="font-size:11px;color:var(--text2);">07:30 · Today</span>
-            </div>
+          <div style="width:64px; min-height:64px; background:#1E7A52; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
+            <span style="font-size:22px; font-weight:700; color:#FFFFFF; line-height:1;">12.5</span>
+            <span style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
           </div>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:10px;">
+          <div style="width:64px; height:64px; background:#1E7A52; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center;"><span style="font-size:22px;font-weight:700;color:#fff;line-height:1;">12.5</span><span style="font-size:10px;color:rgba(255,255,255,0.85);margin-top:2px;">Ltrs</span></div>
+          <div style="width:64px; height:64px; background:#C07E10; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center;"><span style="font-size:22px;font-weight:700;color:#fff;line-height:1;">4.1</span><span style="font-size:10px;color:rgba(255,255,255,0.85);margin-top:2px;">Ltrs</span></div>
+          <div style="width:64px; height:64px; background:#D44C3A; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center;"><span style="font-size:22px;font-weight:700;color:#fff;line-height:1;">2.0</span><span style="font-size:10px;color:rgba(255,255,255,0.85);margin-top:2px;">Ltrs</span></div>
+        </div>
+        <div style="font-size:11px;color:var(--text2);margin-top:10px;line-height:1.8;">
+          <strong style="color:var(--text1);">Yield box</strong> — 64px, radius 14, big value 22/700 white + "Ltrs" 10/500 below. Colours (white text needs dark fills — NOT #4DDE95 / #E8A020):<br>
+          green = greenInk #1E7A52 (at/above 7-day avg) · amber = #C07E10 (80–99% of avg) · red = danger #D44C3A (&lt;80% of avg).<br>
+          <strong style="color:var(--text1);">Cards grouped by date</strong> — uppercase 12px date header ("TODAY — 2 JUL"). Farm + manager line hidden for Farmer persona.<br>
+          <strong style="color:var(--text1);">Milk Log header</strong> — period dropdown (Today / This Week / This Month / This Year / Custom); dark stats card: total litres 32/700 white + ▲/▼ % vs previous period in brandGreen/danger, 3 tiles (cows milked · max · min) on darkSecondary. Owner-only filter chips: farm, session, sort — active chip dark fill.<br>
+          <strong style="color:var(--text1);">Add entry</strong> — cow dropdown (CALVED + MILKING only), litres 40/700 underline input, Save (greenDeep, dark text) over Cancel (outline). FAB (56dp dark, green +) opens it, sits above nav.
         </div>
       </div>
     </div>
