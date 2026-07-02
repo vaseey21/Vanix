@@ -762,7 +762,7 @@
 
       <div style="font-size:11px;color:var(--text2);margin-top:12px;line-height:1.8;">
         <strong style="color:var(--text1);">Bar</strong> — floats 16px from edges &amp; bottom. rgba(255,255,255,0.42) + backdrop-blur(18px) sat(1.4), radius 36, hairline rgba(255,255,255,0.55) border, soft drop shadow. Content scrolls behind it.<br>
-        <strong style="color:var(--text1);">Active</strong> — solid white capsule (radius 28, full bar height, equal flex width), icon <em>filled</em> + label in greenInk #1E7A52 (NOT #4DDE95 — fails on white).<br>
+        <strong style="color:var(--text1);">Active</strong> — a single sliding white capsule (radius 28, full bar height, exactly 1/5 of the bar) glides to the tapped tab with a droplet squish (translateX 0.45s overshoot bezier + scaleX 1.16→0.94→1 keyframes). Icons and labels NEVER move — only the capsule does. Active tab: same 20px outline icon and 11px label, recoloured greenInk #1E7A52, label weight 600.<br>
         <strong style="color:var(--text1);">Inactive</strong> — 20px dark #111 stroke icon + 11px dark label directly on frost. No pill.<br>
         <strong style="color:var(--text1);">Badges</strong> — Home: 9px red dot on capsule icon. Events: red count pill, max "9+". danger #D44C3A, white border on capsule only.<br>
         <strong style="color:var(--text1);">Icons</strong> — Home: house · Farms: cow head (custom) · Milk: droplet · Events: calendar · Account: person. All 20px, stroke ~1.9.<br>
