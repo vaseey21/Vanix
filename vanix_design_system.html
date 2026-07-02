@@ -589,7 +589,7 @@
         </div>
         <div style="margin-top:12px;font-size:11px;color:var(--text2);line-height:1.8;">
           <strong style="color:var(--text1);">Primary</strong> — dark bg (#111), white text, pill radius. Destructive / main actions.<br>
-          <strong style="color:var(--text1);">CTA</strong> — green bg (#4DDE95), dark text, pill. Confirm milk entry, save form.<br>
+          <strong style="color:var(--text1);">CTA / Primary action</strong> — greenInk bg (#1E7A52), white text, pill. Continue, Save, Confirm, Apply. (Was #4DDE95 + dark text — changed: dark felt awkward, white on greenInk passes AA.)<br>
           <strong style="color:var(--text1);">Secondary</strong> — transparent bg, border, dark text. Cancel, back, secondary action.<br>
           <strong style="color:var(--text1);">FAB</strong> — 56dp circle, dark bg, green + icon. Fixed bottom-right. Add milk entry.
         </div>
@@ -638,9 +638,14 @@
         <div style="font-size:11px;color:var(--text2);margin-top:10px;line-height:1.8;">
           <strong style="color:var(--text1);">Yield box</strong> — 64px, radius 14, big value 22/700 white + "Ltrs" 10/500 below. Colours (white text needs dark fills — NOT #4DDE95 / #E8A020):<br>
           green = greenInk #1E7A52 (at/above 7-day avg) · amber = #C07E10 (80–99% of avg) · red = danger #D44C3A (&lt;80% of avg).<br>
-          <strong style="color:var(--text1);">Cards grouped by date</strong> — uppercase 12px date header ("TODAY — 2 JUL"). Farm + manager line hidden for Farmer persona.<br>
-          <strong style="color:var(--text1);">Milk Log header</strong> — period dropdown (Today / This Week / This Month / This Year / Custom); dark stats card: total litres 32/700 white + ▲/▼ % vs previous period in brandGreen/danger, 3 tiles (cows milked · max · min) on darkSecondary. Owner-only filter chips: farm, session, sort — active chip dark fill.<br>
-          <strong style="color:var(--text1);">Add entry</strong> — cow dropdown (CALVED + MILKING only), litres 40/700 underline input, Save (greenDeep, dark text) over Cancel (outline). FAB (56dp dark, green +) opens it, sits above nav.
+          <strong style="color:var(--text1);">Cards grouped by date</strong> — uppercase 12px date header ("TODAY — 2 JUL"). Session shown as a small pill (11px, bgWarm fill, border) followed by timestamp — no emoji. Farm + manager line hidden for Farmer persona.<br>
+          <strong style="color:var(--text1);">Milk Log header</strong> — title left; right: period dropdown (Today default / This Week / This Month / This Year / Custom) + round filter icon button. Filter opens a bottom sheet: FARM, MILKING TIME, SORT BY chip groups (single-select, active = greenInk fill white text) + Apply.<br>
+          <strong style="color:var(--text1);">Stats card</strong> — "milk" surface #FFFDF7 + border (not dark — too harsh): total litres 32/700 dark + ▲/▼ % vs previous period in greenInk/danger; 3 tiles (cows milked · max · min) on bgWarm.<br>
+          <strong style="color:var(--text1);">Status banners</strong> — horizontal scroll row, 262px wide each, ✕ dismiss top-right.<br>
+          <strong style="color:var(--text1);">FAB</strong> — 56dp greenInk circle, centered white 24px plus (SVG, not text glyph). Sits above nav, opens Add entry.<br>
+          <strong style="color:var(--text1);">Add entry</strong> — cow dropdown (CALVED + MILKING only) · MILKING SESSION pills (Morning/Afternoon/Evening, defaults to current time of day) · litres 40/700 underline input · Save (greenInk, white text) over Cancel (outline).<br>
+          <strong style="color:var(--text1);">Session mismatch warning</strong> — selecting a session that isn't the current one opens a centered modal card (radius 20, dim backdrop 45%): warning icon chip, "This is X hours before/after the usual [Session] milking time. Are you sure?", Proceed (greenInk) over Cancel (outline).<br>
+          <strong style="color:var(--text1);">Dark mode</strong> — temporary switch lives on the Account tab (direct toggle). Scaffold #111, nav frost rgba(28,28,28,0.55), inactive icons/labels #F5F5F5, active capsule unchanged.
         </div>
       </div>
     </div>
