@@ -468,36 +468,36 @@
 
 
     <!-- ─────────────────────────────────────────────
-         SCREEN 07 — Milk Log (Farm Owner)
+         SCREEN 07+08 — Milk Log flow (list → filter sheet → add entry)
          ───────────────────────────────────────────── -->
     <div class="screen-wrap">
-      <span class="screen-label">07 — Milk Log (Farm Owner)</span>
+      <span class="screen-label">07+08 — Milk Log flow (Farm Owner)</span>
       <div class="phone" style="min-height:800px; position:relative;">
         <div class="status-bar"><span class="status-time en">9:41</span><div class="status-icons"><span>●●●</span><span>WiFi</span><span>100%</span></div></div>
 
         <div style="position:relative; flex:1; overflow:hidden;">
-          <div style="position:absolute; inset:0; overflow-y:auto; padding:20px 16px 120px;">
+          <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
 
-            <!-- Header: title + period dropdown -->
+            <!-- HERO — borderless white card, edge to edge, rounded bottom -->
+            <div style="background:var(--bgcard); border-radius:0 0 24px 24px; padding:18px 16px 20px; box-shadow:0 6px 18px rgba(0,0,0,0.05);">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
               <h2 style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Milk Log</h2>
               <div style="display:flex; gap:8px; align-items:center;">
-                <select style="border:1px solid var(--border); background:var(--bgcard); border-radius:20px; height:40px; padding:0 14px; font-size:13px; font-weight:600; color:var(--text1); font-family:var(--font-hi); -webkit-appearance:none; appearance:none;">
+                <select style="border:1px solid var(--border); background:var(--bgwarm); border-radius:16px; height:32px; padding:0 12px; font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); -webkit-appearance:none; appearance:none;">
                   <option selected>Today ▾</option>
                   <option>This Week ▾</option>
                   <option>This Month ▾</option>
                   <option>This Year ▾</option>
                   <option>Custom… ▾</option>
                 </select>
-                <button id="s7-filter" title="Filters" style="width:40px; height:40px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); display:flex; align-items:center; justify-content:center; padding:0;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+                <button id="s7-filter" title="Filters" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:var(--bgwarm); display:flex; align-items:center; justify-content:center; padding:0;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8.5V19l-4 2v-7.5L3 5z"/></svg>
                 </button>
               </div>
             </div>
 
             <!-- Stats: total + 3 tiles -->
-            <!-- Stats card — "milk" surface: soft warm white, works on light & dark scaffolds -->
-            <div style="background:#FFFDF7; border:1px solid var(--border); border-radius:16px; padding:18px; margin-top:14px;">
+            <div style="margin-top:16px;">
               <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0;">Total Milk</p>
               <div style="display:flex; align-items:baseline; gap:10px; margin-top:6px;">
                 <span class="en" style="font-size:32px; font-weight:700; color:var(--text1); line-height:1;">38.6 L</span>
@@ -518,31 +518,33 @@
                 </div>
               </div>
             </div>
+            </div><!-- /hero -->
 
-            <!-- Status banners — horizontal row, dismissible -->
-            <div style="display:flex; gap:8px; margin-top:14px; overflow-x:auto; padding-bottom:2px;">
+            <div style="padding:12px 16px 0;">
+            <!-- Status banners — horizontal row, dismissible; row removes itself when empty -->
+            <div id="s7-banners" style="display:flex; gap:8px; margin:0; overflow-x:auto; padding-bottom:2px;">
               <div style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:var(--warnbg); border:1px solid var(--warning); border-left:3px solid var(--warning); border-radius:12px; padding:12px 12px 12px 14px;">
                 <div style="min-width:0; flex:1;">
                   <strong style="font-size:13px; color:var(--text1);">3 cows below 7-day average</strong>
                   <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Kajri, Dhauli and Mohini need attention</p>
                 </div>
-                <button onclick="this.parentElement.remove()" style="border:none; background:transparent; color:var(--text2); font-size:15px; line-height:1; padding:2px;">✕</button>
+                <button onclick="var r=document.getElementById('s7-banners'); this.parentElement.remove(); if(!r.children.length) r.remove();" style="border:none; background:transparent; color:var(--text2); font-size:15px; line-height:1; padding:2px;">✕</button>
               </div>
               <div style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:var(--activebg); border:1px solid var(--greendeep); border-left:3px solid var(--greendeep); border-radius:12px; padding:12px 12px 12px 14px;">
                 <div style="min-width:0; flex:1;">
                   <strong style="font-size:13px; color:var(--text1);">Morning session complete</strong>
                   <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">All 18 assigned cows logged before 09:00</p>
                 </div>
-                <button onclick="this.parentElement.remove()" style="border:none; background:transparent; color:var(--text2); font-size:15px; line-height:1; padding:2px;">✕</button>
+                <button onclick="var r=document.getElementById('s7-banners'); this.parentElement.remove(); if(!r.children.length) r.remove();" style="border:none; background:transparent; color:var(--text2); font-size:15px; line-height:1; padding:2px;">✕</button>
               </div>
             </div>
 
             <!-- Log cards by date -->
-            <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">Today — 2 Jul</p>
+            <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:12px 0 10px;">Today — 2 Jul</p>
               <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Gauri — HF Cross</p>
-                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:30</span></p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:30</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm · Mgr: Suresh</p>
                 </div>
                 <div style="width:64px; min-height:64px; background:#1E7A52; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
@@ -553,7 +555,7 @@
               <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Lakshmi — Gir</p>
-                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:45</span></p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:45</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm · Mgr: Suresh</p>
                 </div>
                 <div style="width:64px; min-height:64px; background:#1E7A52; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
@@ -564,7 +566,7 @@
               <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Dhauli — Sahiwal</p>
-                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Afternoon</span><span class="en" style="font-size:13px; color:var(--text2);">13:10</span></p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Afternoon</span><span class="en" style="font-size:13px; color:var(--text2);">13:10</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Mgr: Anita</p>
                 </div>
                 <div style="width:64px; min-height:64px; background:#C07E10; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
@@ -577,7 +579,7 @@
               <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Kajri — HF Cross</p>
-                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Evening</span><span class="en" style="font-size:13px; color:var(--text2);">18:20</span></p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Evening</span><span class="en" style="font-size:13px; color:var(--text2);">18:20</span><span class="en" title="Logged 4h 25m after milking" style="background:var(--warnbg); border:1px solid var(--warning); border-radius:10px; padding:2px 8px; font-size:10px; font-weight:600; color:#8A5A00;">⏱ logged 22:45</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Mgr: Anita</p>
                 </div>
                 <div style="width:64px; min-height:64px; background:#D44C3A; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
@@ -588,7 +590,7 @@
               <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Mohini — Gir</p>
-                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:15</span></p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:15</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm · Mgr: Suresh</p>
                 </div>
                 <div style="width:64px; min-height:64px; background:#C07E10; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
@@ -597,12 +599,70 @@
                   </div>
               </div>
 
+            </div><!-- /list -->
           </div>
 
           <!-- FAB -->
-          <button title="Add milk entry" style="position:absolute; right:18px; bottom:104px; width:56px; height:56px; border-radius:50%; background:var(--greenink); border:none; box-shadow:0 10px 24px rgba(0,0,0,0.28); padding:0; display:flex; align-items:center; justify-content:center;">
+          <button id="s7-fab" title="Add milk entry" style="position:absolute; right:18px; bottom:104px; width:56px; height:56px; border-radius:50%; background:var(--dark1); border:none; box-shadow:0 10px 24px rgba(0,0,0,0.28); padding:0; display:flex; align-items:center; justify-content:center;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
           </button>
+
+          <!-- ADD ENTRY PAGE — slides up over the log (FAB opens) -->
+          <div id="s8-page" style="position:absolute; inset:0; background:var(--bgwarm); z-index:12; transform:translateY(100%); transition:transform 0.5s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column; overflow-y:auto;">
+<div id="s8-body" style="position:relative; flex:1; display:flex; flex-direction:column; padding:20px 24px 28px;">
+
+          <!-- SESSION MISMATCH WARNING — centered card, Starbucks sign-in style -->
+          <div id="s8-warn-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity 0.25s ease; z-index:20; display:flex; align-items:center; justify-content:center; padding:28px;">
+            <div style="background:#FFFFFF; border-radius:20px; padding:26px 22px; width:100%; box-shadow:0 24px 60px rgba(0,0,0,0.30); text-align:center;">
+              <div style="width:46px; height:46px; border-radius:50%; background:var(--warnbg); border:1px solid var(--warning); display:flex; align-items:center; justify-content:center; margin:0 auto;">
+                <span style="font-size:20px;">⚠</span>
+              </div>
+              <h3 style="font-size:17px; font-weight:600; color:var(--text1); margin:14px 0 0;">Logging a past session?</h3>
+              <p id="s8-warn-text" style="font-size:13px; color:var(--text2); margin:8px 0 0; line-height:1.6;">This is 7 hours after the usual Morning milking time. Are you sure?</p>
+              <button id="s8-warn-proceed" style="width:100%; height:48px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:24px; font-size:15px; font-weight:600; font-family:var(--font-hi); margin-top:20px;">Proceed</button>
+              <button id="s8-warn-cancel" style="width:100%; height:48px; background:transparent; color:var(--text1); border:1px solid var(--border); border-radius:24px; font-size:15px; font-weight:500; font-family:var(--font-hi); margin-top:8px;">Cancel</button>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:14px;">
+            <button id="s8-back" style="width:40px; height:40px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); font-size:16px; color:var(--text1); line-height:1;">‹</button>
+            <h2 style="font-size:20px; font-weight:600; color:var(--text1); margin:0;">Add Milk Entry</h2>
+          </div>
+
+          <div style="margin-top:36px;">
+            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">COW</p>
+            <select style="width:100%; height:52px; border:1px solid var(--border); background:var(--bgcard); border-radius:12px; padding:0 14px; font-size:16px; color:var(--text1); font-family:var(--font-hi); -webkit-appearance:none; appearance:none;">
+              <option selected>Gauri — HF Cross ▾</option>
+              <option>Lakshmi — Gir ▾</option>
+              <option>Dhauli — Sahiwal ▾</option>
+            </select>
+            <p style="font-size:11px; color:var(--text2); margin:6px 0 0;">Only CALVED and MILKING cows are listed</p>
+          </div>
+
+          <div style="margin-top:28px;">
+            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">MILKING SESSION</p>
+            <div id="s8-sessions" style="display:flex; gap:8px;">
+              <button data-sess="Morning" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Morning</button>
+              <button data-sess="Afternoon" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Afternoon</button>
+              <button data-sess="Evening" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Evening</button>
+            </div>
+            <p style="font-size:11px; color:var(--text2); margin:6px 0 0;">Defaults to the current time of day</p>
+          </div>
+
+          <div style="margin-top:28px;">
+            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">LITRES</p>
+            <div style="display:flex; align-items:baseline; gap:10px; border-bottom:1.5px solid #9A948A; padding-bottom:10px;">
+              <input type="number" inputmode="decimal" placeholder="0.0" style="flex:1; background:transparent; border:none; font-size:40px; font-weight:700; color:var(--text1); font-family:var(--font-en); padding:0; min-width:0;">
+              <span class="en" style="font-size:16px; font-weight:500; color:var(--text2);">Ltrs</span>
+            </div>
+          </div>
+
+          <div style="flex:1;"></div>
+
+          <button style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi);" id="s8-save">Save</button>
+          <button style="width:100%; height:52px; background:transparent; color:var(--text1); border:1px solid var(--border); border-radius:26px; font-size:16px; font-weight:500; font-family:var(--font-hi); margin-top:10px;" id="s8-cancel">Cancel</button>
+        </div>
+          </div>
 
           <!-- FILTER BOTTOM SHEET (opens from filter button) -->
           <div id="s7-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:8;"></div>
@@ -614,25 +674,25 @@
             </div>
             <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">FARM</p>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--greenink); background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:500; font-family:var(--font-hi);">All farms</button>
+              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:500; font-family:var(--font-hi);">All farms</button>
               <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Ravi Kumar Farm</button>
               <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Green Valley Farm</button>
             </div>
             <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">MILKING TIME</p>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--greenink); background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:500; font-family:var(--font-hi);">All</button>
+              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:500; font-family:var(--font-hi);">All</button>
               <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Morning</button>
               <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Afternoon</button>
               <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Evening</button>
             </div>
             <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">SORT BY</p>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--greenink); background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:500; font-family:var(--font-hi);">Newest</button>
+              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:500; font-family:var(--font-hi);">Newest</button>
               <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Oldest</button>
               <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Highest yield</button>
               <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Lowest yield</button>
             </div>
-            <button id="s7-apply" style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:24px;">Apply filters</button>
+            <button id="s7-apply" style="width:100%; height:52px; background:var(--dark1); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:24px;">Apply filters</button>
           </div>
 
           <!-- Frosted nav — Milk active -->
@@ -668,70 +728,6 @@
       </div>
     </div>
 
-    <!-- ─────────────────────────────────────────────
-         SCREEN 08 — Add Milk Entry
-         ───────────────────────────────────────────── -->
-    <div class="screen-wrap">
-      <span class="screen-label">08 — Add Milk Entry</span>
-      <div class="phone" style="min-height:800px; position:relative;">
-        <div class="status-bar"><span class="status-time en">9:41</span><div class="status-icons"><span>●●●</span><span>WiFi</span><span>100%</span></div></div>
-
-        <div id="s8-body" style="position:relative; flex:1; display:flex; flex-direction:column; padding:20px 24px 28px;">
-
-          <!-- SESSION MISMATCH WARNING — centered card, Starbucks sign-in style -->
-          <div id="s8-warn-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity 0.25s ease; z-index:20; display:flex; align-items:center; justify-content:center; padding:28px;">
-            <div style="background:#FFFFFF; border-radius:20px; padding:26px 22px; width:100%; box-shadow:0 24px 60px rgba(0,0,0,0.30); text-align:center;">
-              <div style="width:46px; height:46px; border-radius:50%; background:var(--warnbg); border:1px solid var(--warning); display:flex; align-items:center; justify-content:center; margin:0 auto;">
-                <span style="font-size:20px;">⚠</span>
-              </div>
-              <h3 style="font-size:17px; font-weight:600; color:var(--text1); margin:14px 0 0;">Logging a past session?</h3>
-              <p id="s8-warn-text" style="font-size:13px; color:var(--text2); margin:8px 0 0; line-height:1.6;">This is 7 hours after the usual Morning milking time. Are you sure?</p>
-              <button id="s8-warn-proceed" style="width:100%; height:48px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:24px; font-size:15px; font-weight:600; font-family:var(--font-hi); margin-top:20px;">Proceed</button>
-              <button id="s8-warn-cancel" style="width:100%; height:48px; background:transparent; color:var(--text1); border:1px solid var(--border); border-radius:24px; font-size:15px; font-weight:500; font-family:var(--font-hi); margin-top:8px;">Cancel</button>
-            </div>
-          </div>
-
-          <div style="display:flex; align-items:center; gap:14px;">
-            <button style="width:40px; height:40px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); font-size:16px; color:var(--text1); line-height:1;">‹</button>
-            <h2 style="font-size:20px; font-weight:600; color:var(--text1); margin:0;">Add Milk Entry</h2>
-          </div>
-
-          <div style="margin-top:36px;">
-            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">COW</p>
-            <select style="width:100%; height:52px; border:1px solid var(--border); background:var(--bgcard); border-radius:12px; padding:0 14px; font-size:16px; color:var(--text1); font-family:var(--font-hi); -webkit-appearance:none; appearance:none;">
-              <option selected>Gauri — HF Cross ▾</option>
-              <option>Lakshmi — Gir ▾</option>
-              <option>Dhauli — Sahiwal ▾</option>
-            </select>
-            <p style="font-size:11px; color:var(--text2); margin:6px 0 0;">Only CALVED and MILKING cows are listed</p>
-          </div>
-
-          <div style="margin-top:28px;">
-            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">MILKING SESSION</p>
-            <div id="s8-sessions" style="display:flex; gap:8px;">
-              <button data-sess="Morning" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Morning</button>
-              <button data-sess="Afternoon" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Afternoon</button>
-              <button data-sess="Evening" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Evening</button>
-            </div>
-            <p style="font-size:11px; color:var(--text2); margin:6px 0 0;">Defaults to the current time of day</p>
-          </div>
-
-          <div style="margin-top:28px;">
-            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">LITRES</p>
-            <div style="display:flex; align-items:baseline; gap:10px; border-bottom:1.5px solid #9A948A; padding-bottom:10px;">
-              <input type="number" inputmode="decimal" placeholder="0.0" style="flex:1; background:transparent; border:none; font-size:40px; font-weight:700; color:var(--text1); font-family:var(--font-en); padding:0; min-width:0;">
-              <span class="en" style="font-size:16px; font-weight:500; color:var(--text2);">Ltrs</span>
-            </div>
-          </div>
-
-          <div style="flex:1;"></div>
-
-          <button style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi);">Save</button>
-          <button style="width:100%; height:52px; background:transparent; color:var(--text1); border:1px solid var(--border); border-radius:26px; font-size:16px; font-weight:500; font-family:var(--font-hi); margin-top:10px;">Cancel</button>
-        </div>
-      </div>
-    </div>
-
     <script>
     (function() {
       // ── Screen 07: filter bottom sheet ──
@@ -741,6 +737,15 @@
       function openF()  { fSheet.style.transform = 'translateY(0)'; fBack.style.opacity = '1'; fBack.style.pointerEvents = 'auto'; }
       function closeF() { fSheet.style.transform = 'translateY(100%)'; fBack.style.opacity = '0'; fBack.style.pointerEvents = 'none'; }
       fBtn.addEventListener('click', openF);
+
+      // ── FAB → add-entry page (same phone, full flow) ──
+      var addPage = document.getElementById('s8-page');
+      function openAdd()  { addPage.style.transform = 'translateY(0)'; }
+      function closeAdd() { addPage.style.transform = 'translateY(100%)'; }
+      document.getElementById('s7-fab').addEventListener('click', openAdd);
+      document.getElementById('s8-back').addEventListener('click', closeAdd);
+      document.getElementById('s8-cancel').addEventListener('click', closeAdd);
+      document.getElementById('s8-save').addEventListener('click', closeAdd);
       fBack.addEventListener('click', closeF);
       document.getElementById('s7-close').addEventListener('click', closeF);
       document.getElementById('s7-apply').addEventListener('click', closeF);
@@ -750,7 +755,7 @@
           chip.parentElement.querySelectorAll('.s7-chip').forEach(function(c) {
             c.style.background = 'var(--bgcard)'; c.style.color = 'var(--text1)'; c.style.borderColor = 'var(--border)'; c.style.fontWeight = '400';
           });
-          chip.style.background = 'var(--greenink)'; chip.style.color = '#FFFFFF'; chip.style.borderColor = 'var(--greenink)'; chip.style.fontWeight = '500';
+          chip.style.background = 'var(--dark1)'; chip.style.color = '#FFFFFF'; chip.style.borderColor = 'var(--dark1)'; chip.style.fontWeight = '500';
         });
       });
 
