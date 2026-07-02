@@ -11,7 +11,6 @@
       --green:    #4DDE95;
       --greendeep:#2EBD7E; /* focus accents, success accents */
       --greenink: #1E7A52; /* primary button fill w/ white text; green text/icon on white */
-      --heroblue: #274C77; /* hero surfaces (Milk Log header card) — white text on it */
       --dark1:    #111111;
       --dark2:    #1C1C1C;
       --bgwarm:   #F2EDE4;
@@ -164,10 +163,10 @@
   <div class="screen-grid">
 
     <!-- ─────────────────────────────────────────────
-         SCREEN 1 — Splash → Login
+         FULL FLOW — splash → login → OTP → dashboard → milk log (single phone)
          ───────────────────────────────────────────── -->
     <div class="screen-wrap">
-      <span class="screen-label">01 — Splash → Login</span>
+      <span class="screen-label">Full flow — splash → login → OTP → dashboard → milk log</span>
       <div class="phone" id="s1-phone" style="min-height:800px; background:var(--bgwarm); position:relative;">
 
         <!-- Status bar -->
@@ -320,204 +319,48 @@
             <img src="https://mybovine.ai/assets/logos/vanix-logo.svg" alt="MyBovine" style="width:250px; height:auto; display:block;">
           </div>
 
-        </div><!-- /layer stack -->
-
-      </div><!-- /phone -->
-    </div><!-- /screen-wrap -->
-
-    <script>
-    (function() {
-      var video   = document.getElementById('s1-video');
-      var splash  = document.getElementById('s1-splash-bg');
-      var logo    = document.getElementById('s1-logo');
-      var sheet   = document.getElementById('s1-sheet');
-
-      // ── Splash sequence — runs ONCE ──
-      // Logo holds centre on off-white, video fades in slowly,
-      // logo floats up + shrinks + turns white, sheet slides up.
-      setTimeout(function() {
-        video.style.opacity  = '1';
-        splash.style.opacity = '0';
-        logo.style.transform = 'translate(-50%, calc(-50% - 280px)) scale(0.78)';
-        logo.style.filter    = 'brightness(0) invert(1)';
-
-        setTimeout(function() {
-          sheet.style.transform = 'translateY(0)';
-          setTimeout(function() { splash.style.display = 'none'; }, 800);
-        }, 1100);
-      }, 1200);
-
-      // ── Sheet panel swap: Login → OTP → back ──
-      var loginPanel = document.getElementById('s1-login-panel');
-      var otpPanel   = document.getElementById('s1-otp-panel');
-      var timerEl    = document.getElementById('s1-otp-timer');
-      var resendEl   = document.getElementById('s1-resend');
-      var confirmBtn = document.getElementById('s1-confirm');
-      var boxes      = document.getElementById('s1-otp-boxes').querySelectorAll('input');
-      var countdown  = null;
-
-      // ── i18n ──
-      var STRINGS = {
-        en:  { title:'Login', email:'EMAIL', pass:'PASSWORD', cont:'Continue', forgot:'Forgot password?',
-               vtitle:'Verification', sent:'OTP was sent to', desc:'Enter the code to log in securely to your account.',
-               enterotp:'ENTER OTP', timer:'Time Remaining', nootp:"Didn't receive OTP?", resend:'Resend', confirm:'Confirm',
-               navHome:'Home', navFarms:'Farms', navMilk:'Milk', navEvents:'Events', navAccount:'Account' },
-        hi:  { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'जारी रखें', forgot:'पासवर्ड भूल गए?',
-               vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
-               enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
-               navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' },
-        bho: { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'आगे बढ़ीं', forgot:'पासवर्ड भुला गइनी?',
-               vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
-               enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
-               navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' }
-      };
-      var lang = 'en';
-      function t() { return STRINGS[lang]; }
-
-      function applyLang() {
-        document.getElementById('s1-title').textContent   = t().title;
-        document.getElementById('s1-l-email').textContent = t().email;
-        document.getElementById('s1-l-pass').textContent  = t().pass;
-        document.getElementById('s1-continue').textContent = t().cont;
-        document.getElementById('s1-forgot').textContent  = t().forgot;
-        document.getElementById('s1-v-title').textContent = t().vtitle;
-        document.getElementById('s1-v-sent').textContent  = t().sent;
-        document.getElementById('s1-v-desc').textContent  = t().desc;
-        document.getElementById('s1-l-otp').textContent   = t().enterotp;
-        document.getElementById('s1-nootp').textContent   = t().nootp;
-        resendEl.textContent = t().resend;
-        confirmBtn.textContent = t().confirm;
-        document.querySelectorAll('.s1-nav-l').forEach(function(el) {
-          el.textContent = t()[el.getAttribute('data-k')];
-        });
-      }
-
-      document.getElementById('s1-lang').addEventListener('change', function(e) {
-        lang = e.target.value;
-        applyLang();
-      });
-
-      // ── Dashboard dark mode: tap Account tab (temporary home for the switch) ──
-      document.getElementById('s1-acct').addEventListener('click', function() {
-        document.getElementById('s1-dash').classList.toggle('dark');
-      });
-
-      // ── Dark / light mode toggle ──
-      var themeBtn = document.getElementById('s1-theme');
-      themeBtn.addEventListener('click', function() {
-        var dark = sheet.classList.toggle('dark');
-        themeBtn.textContent = dark ? '☀' : '☾';
-      });
-
-      function startTimer() {
-        var timeLeft = 30;
-        resendEl.style.color = '#BBBBBB';
-        resendEl.style.pointerEvents = 'none';
-        clearInterval(countdown);
-        timerEl.textContent = t().timer + ' 0:30s';
-        countdown = setInterval(function() {
-          timeLeft--;
-          var tl = timeLeft;
-          timerEl.textContent = t().timer + ' 0:' + (tl < 10 ? '0' : '') + tl + 's';
-          if (timeLeft <= 0) {
-            clearInterval(countdown);
-            timerEl.textContent = '';
-            resendEl.style.color = 'var(--text1)';
-            resendEl.style.pointerEvents = 'auto';
-          }
-        }, 1000);
-      }
-
-      document.getElementById('s1-continue').addEventListener('click', function() {
-        loginPanel.style.display = 'none';
-        otpPanel.style.display = 'block';
-        boxes.forEach(function(b) { b.value = ''; });
-        confirmBtn.disabled = true;
-        confirmBtn.style.background = '#B5B5B5';
-        confirmBtn.style.color = 'white';
-        boxes[0].focus();
-        startTimer();
-      });
-
-      document.getElementById('s1-otp-back').addEventListener('click', function() {
-        clearInterval(countdown);
-        otpPanel.style.display = 'none';
-        loginPanel.style.display = 'block';
-      });
-
-      resendEl.addEventListener('click', startTimer);
-
-      // Confirm → dashboard placeholder slides up over the whole screen
-      confirmBtn.addEventListener('click', function() {
-        if (confirmBtn.disabled) return;
-        clearInterval(countdown);
-        document.getElementById('s1-dash').style.transform = 'translateY(0)';
-      });
-
-      boxes.forEach(function(box, i) {
-        box.addEventListener('input', function() {
-          box.value = box.value.replace(/\D/g, '');
-          if (box.value && i < boxes.length - 1) boxes[i + 1].focus();
-          var filled = Array.prototype.every.call(boxes, function(b) { return b.value; });
-          confirmBtn.disabled = !filled;
-          confirmBtn.style.background = filled ? 'var(--greenink)' : '#B5B5B5';
-        });
-        box.addEventListener('keydown', function(e) {
-          if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus();
-        });
-      });
-    })();
-    </script>
-
-
-    <!-- ─────────────────────────────────────────────
-         SCREEN 07+08 — Milk Log flow (list → filter sheet → add entry)
-         ───────────────────────────────────────────── -->
-    <div class="screen-wrap">
-      <span class="screen-label">07+08 — Milk Log flow (Farm Owner)</span>
-      <div class="phone" style="min-height:800px; position:relative;">
-        <div class="status-bar"><span class="status-time en">9:41</span><div class="status-icons"><span>●●●</span><span>WiFi</span><span>100%</span></div></div>
-
-        <div style="position:relative; flex:1; overflow:hidden;">
+          <!-- MILK LOG PAGE — opened from the Milk tab -->
+          <div id="page-milk" style="position:absolute; inset:0; background:var(--bgwarm); z-index:40; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
           <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
 
             <!-- HERO — borderless white card, edge to edge, rounded bottom -->
-            <div style="background:var(--heroblue); border-radius:0 0 24px 24px; padding:18px 16px 20px; box-shadow:0 6px 18px rgba(0,0,0,0.10);">
+            <div style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 20px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-              <h2 style="font-size:24px; font-weight:600; color:#FFFFFF; margin:0;">Milk Log</h2>
+              <h2 style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Milk Log</h2>
               <div style="display:flex; gap:8px; align-items:center;">
-                <select style="border:1px solid rgba(255,255,255,0.35); background:rgba(255,255,255,0.14); border-radius:16px; height:32px; padding:0 12px; font-size:12px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi); -webkit-appearance:none; appearance:none;">
+                <select style="border:1px solid var(--border); background:var(--bgcard); border-radius:16px; height:32px; padding:0 12px; font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); -webkit-appearance:none; appearance:none;">
                   <option selected>Today ▾</option>
                   <option>This Week ▾</option>
                   <option>This Month ▾</option>
                   <option>This Year ▾</option>
                   <option>Custom… ▾</option>
                 </select>
-                <button id="s7-filter" title="Filters" style="width:32px; height:32px; border-radius:50%; border:1px solid rgba(255,255,255,0.35); background:rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; padding:0;">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8.5V19l-4 2v-7.5L3 5z"/></svg>
+                <button id="s7-filter" title="Filters" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); display:flex; align-items:center; justify-content:center; padding:0;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8.5V19l-4 2v-7.5L3 5z"/></svg>
                 </button>
               </div>
             </div>
 
             <!-- Stats: total + 3 tiles -->
             <div style="margin-top:16px;">
-              <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.65); margin:0;">Total Milk</p>
+              <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0;">Total Milk</p>
               <div style="display:flex; align-items:baseline; gap:10px; margin-top:6px;">
-                <span class="en" style="font-size:32px; font-weight:700; color:#FFFFFF; line-height:1;">38.6 L</span>
-                <span class="en" style="font-size:13px; font-weight:600; color:#7FE0AE;">▲ 8% vs yesterday</span>
+                <span class="en" style="font-size:32px; font-weight:700; color:var(--text1); line-height:1;">38.6 L</span>
+                <span class="en" style="font-size:13px; font-weight:600; color:var(--greenink);">▲ 8% vs yesterday</span>
               </div>
               <div style="display:flex; gap:8px; margin-top:16px;">
-                <div style="flex:1; background:rgba(255,255,255,0.12); border-radius:12px; padding:10px;">
-                  <p class="en" style="font-size:18px; font-weight:700; color:#FFFFFF; margin:0;">18</p>
-                  <p style="font-size:11px; color:rgba(255,255,255,0.65); margin:2px 0 0;">Cows milked</p>
+                <div style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px;">
+                  <p class="en" style="font-size:18px; font-weight:700; color:var(--text1); margin:0;">18</p>
+                  <p style="font-size:11px; color:var(--text2); margin:2px 0 0;">Cows milked</p>
                 </div>
-                <div style="flex:1; background:rgba(255,255,255,0.12); border-radius:12px; padding:10px;">
-                  <p class="en" style="font-size:18px; font-weight:700; color:#FFFFFF; margin:0;">12.5 L</p>
-                  <p style="font-size:11px; color:rgba(255,255,255,0.65); margin:2px 0 0;">Max — Gauri</p>
+                <div style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px;">
+                  <p class="en" style="font-size:18px; font-weight:700; color:var(--text1); margin:0;">12.5 L</p>
+                  <p style="font-size:11px; color:var(--text2); margin:2px 0 0;">Max — Gauri</p>
                 </div>
-                <div style="flex:1; background:rgba(255,255,255,0.12); border-radius:12px; padding:10px;">
-                  <p class="en" style="font-size:18px; font-weight:700; color:#FFFFFF; margin:0;">2.0 L</p>
-                  <p style="font-size:11px; color:rgba(255,255,255,0.65); margin:2px 0 0;">Min — Kajri</p>
+                <div style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px;">
+                  <p class="en" style="font-size:18px; font-weight:700; color:var(--text1); margin:0;">2.0 L</p>
+                  <p style="font-size:11px; color:var(--text2); margin:2px 0 0;">Min — Kajri</p>
                 </div>
               </div>
             </div>
@@ -727,7 +570,160 @@
               <span class="en" style="font-size:11px; font-weight:500; color:#111111;">Account</span>
             </div>
           </nav>
-        </div>
+          </div>
+          </div>
+
+        </div><!-- /layer stack -->
+
+      </div><!-- /phone -->
+    </div><!-- /screen-wrap -->
+
+    <script>
+    (function() {
+      var video   = document.getElementById('s1-video');
+      var splash  = document.getElementById('s1-splash-bg');
+      var logo    = document.getElementById('s1-logo');
+      var sheet   = document.getElementById('s1-sheet');
+
+      // ── Splash sequence — runs ONCE ──
+      // Logo holds centre on off-white, video fades in slowly,
+      // logo floats up + shrinks + turns white, sheet slides up.
+      setTimeout(function() {
+        video.style.opacity  = '1';
+        splash.style.opacity = '0';
+        logo.style.transform = 'translate(-50%, calc(-50% - 280px)) scale(0.78)';
+        logo.style.filter    = 'brightness(0) invert(1)';
+
+        setTimeout(function() {
+          sheet.style.transform = 'translateY(0)';
+          setTimeout(function() { splash.style.display = 'none'; }, 800);
+        }, 1100);
+      }, 1200);
+
+      // ── Sheet panel swap: Login → OTP → back ──
+      var loginPanel = document.getElementById('s1-login-panel');
+      var otpPanel   = document.getElementById('s1-otp-panel');
+      var timerEl    = document.getElementById('s1-otp-timer');
+      var resendEl   = document.getElementById('s1-resend');
+      var confirmBtn = document.getElementById('s1-confirm');
+      var boxes      = document.getElementById('s1-otp-boxes').querySelectorAll('input');
+      var countdown  = null;
+
+      // ── i18n ──
+      var STRINGS = {
+        en:  { title:'Login', email:'EMAIL', pass:'PASSWORD', cont:'Continue', forgot:'Forgot password?',
+               vtitle:'Verification', sent:'OTP was sent to', desc:'Enter the code to log in securely to your account.',
+               enterotp:'ENTER OTP', timer:'Time Remaining', nootp:"Didn't receive OTP?", resend:'Resend', confirm:'Confirm',
+               navHome:'Home', navFarms:'Farms', navMilk:'Milk', navEvents:'Events', navAccount:'Account' },
+        hi:  { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'जारी रखें', forgot:'पासवर्ड भूल गए?',
+               vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
+               enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
+               navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' },
+        bho: { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'आगे बढ़ीं', forgot:'पासवर्ड भुला गइनी?',
+               vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
+               enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
+               navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' }
+      };
+      var lang = 'en';
+      function t() { return STRINGS[lang]; }
+
+      function applyLang() {
+        document.getElementById('s1-title').textContent   = t().title;
+        document.getElementById('s1-l-email').textContent = t().email;
+        document.getElementById('s1-l-pass').textContent  = t().pass;
+        document.getElementById('s1-continue').textContent = t().cont;
+        document.getElementById('s1-forgot').textContent  = t().forgot;
+        document.getElementById('s1-v-title').textContent = t().vtitle;
+        document.getElementById('s1-v-sent').textContent  = t().sent;
+        document.getElementById('s1-v-desc').textContent  = t().desc;
+        document.getElementById('s1-l-otp').textContent   = t().enterotp;
+        document.getElementById('s1-nootp').textContent   = t().nootp;
+        resendEl.textContent = t().resend;
+        confirmBtn.textContent = t().confirm;
+        document.querySelectorAll('.s1-nav-l').forEach(function(el) {
+          el.textContent = t()[el.getAttribute('data-k')];
+        });
+      }
+
+      document.getElementById('s1-lang').addEventListener('change', function(e) {
+        lang = e.target.value;
+        applyLang();
+      });
+
+      // ── Dashboard dark mode: tap Account tab (temporary home for the switch) ──
+      document.getElementById('s1-acct').addEventListener('click', function() {
+        document.getElementById('s1-dash').classList.toggle('dark');
+      });
+
+      // ── Dark / light mode toggle ──
+      var themeBtn = document.getElementById('s1-theme');
+      themeBtn.addEventListener('click', function() {
+        var dark = sheet.classList.toggle('dark');
+        themeBtn.textContent = dark ? '☀' : '☾';
+      });
+
+      function startTimer() {
+        var timeLeft = 30;
+        resendEl.style.color = '#BBBBBB';
+        resendEl.style.pointerEvents = 'none';
+        clearInterval(countdown);
+        timerEl.textContent = t().timer + ' 0:30s';
+        countdown = setInterval(function() {
+          timeLeft--;
+          var tl = timeLeft;
+          timerEl.textContent = t().timer + ' 0:' + (tl < 10 ? '0' : '') + tl + 's';
+          if (timeLeft <= 0) {
+            clearInterval(countdown);
+            timerEl.textContent = '';
+            resendEl.style.color = 'var(--text1)';
+            resendEl.style.pointerEvents = 'auto';
+          }
+        }, 1000);
+      }
+
+      document.getElementById('s1-continue').addEventListener('click', function() {
+        loginPanel.style.display = 'none';
+        otpPanel.style.display = 'block';
+        boxes.forEach(function(b) { b.value = ''; });
+        confirmBtn.disabled = true;
+        confirmBtn.style.background = '#B5B5B5';
+        confirmBtn.style.color = 'white';
+        boxes[0].focus();
+        startTimer();
+      });
+
+      document.getElementById('s1-otp-back').addEventListener('click', function() {
+        clearInterval(countdown);
+        otpPanel.style.display = 'none';
+        loginPanel.style.display = 'block';
+      });
+
+      resendEl.addEventListener('click', startTimer);
+
+      // Confirm → dashboard placeholder slides up over the whole screen
+      confirmBtn.addEventListener('click', function() {
+        if (confirmBtn.disabled) return;
+        clearInterval(countdown);
+        document.getElementById('s1-dash').style.transform = 'translateY(0)';
+      });
+
+      boxes.forEach(function(box, i) {
+        box.addEventListener('input', function() {
+          box.value = box.value.replace(/\D/g, '');
+          if (box.value && i < boxes.length - 1) boxes[i + 1].focus();
+          var filled = Array.prototype.every.call(boxes, function(b) { return b.value; });
+          confirmBtn.disabled = !filled;
+          confirmBtn.style.background = filled ? 'var(--greenink)' : '#B5B5B5';
+        });
+        box.addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus();
+        });
+      });
+    })();
+    </script>
+
+
+
       </div>
     </div>
 
@@ -806,6 +802,13 @@
         pending = null;
         warn.style.opacity = '0'; warn.style.pointerEvents = 'none';
       });
+
+      // ── Flow navigation: dashboard nav ⇄ milk log page ──
+      var milkPage = document.getElementById('page-milk');
+      var dashTabs = document.querySelectorAll('#s1-dash .s1-nav-item');
+      if (dashTabs[2]) dashTabs[2].addEventListener('click', function() { milkPage.style.display = 'block'; });
+      var milkTabs = milkPage.querySelectorAll('nav > div');
+      if (milkTabs[0]) { milkTabs[0].style.cursor = 'pointer'; milkTabs[0].addEventListener('click', function() { milkPage.style.display = 'none'; }); }
     })();
     </script>
 

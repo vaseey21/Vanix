@@ -385,12 +385,6 @@
         <span class="token-desc">Green as <strong>text/icon on white</strong> — the only green allowed on white (passes AA). Active nav label + icon.</span>
       </div>
       <div class="token-row">
-        <div class="swatch" style="background:#274C77;"></div>
-        <span class="token-name">heroBlue</span>
-        <span class="token-hex">#274C77</span>
-        <span class="token-desc">Hero surfaces (Milk Log header card). White text/controls on it; tiles rgba(255,255,255,0.12); positive delta #7FE0AE.</span>
-      </div>
-      <div class="token-row">
         <div class="swatch" style="background:#111111;border:1px solid #333;"></div>
         <span class="token-name">darkPrimary</span>
         <span class="token-hex">#111111</span>
@@ -645,7 +639,7 @@
           <strong style="color:var(--text1);">Yield box</strong> — 64px, radius 14, big value 22/700 white + "Ltrs" 10/500 below. Colours (white text needs dark fills — NOT #4DDE95 / #E8A020):<br>
           green = greenInk #1E7A52 (at/above 7-day avg) · amber = #C07E10 (80–99% of avg) · red = danger #D44C3A (&lt;80% of avg).<br>
           <strong style="color:var(--text1);">Cards grouped by date</strong> — uppercase 12px date header ("TODAY — 2 JUL"). Session shown as a small pill (11px, bgWarm fill, border) followed by timestamp — no emoji. Farm + manager line hidden for Farmer persona.<br>
-          <strong style="color:var(--text1);">Milk Log hero</strong> — borderless heroBlue (#274C77) card, edge-to-edge, radius 0 0 24 24, encapsulates: white title + period dropdown &amp; funnel button (32px, rgba(255,255,255,0.14) fill, white text/stroke), Total Milk 32/700 white with ▲/▼ % in #7FE0AE/danger, 3 tiles on rgba(255,255,255,0.12). List scrolls on bgWarm below it.<br>
+          <strong style="color:var(--text1);">Milk Log hero</strong> — borderless cream (bgWarm) card, edge-to-edge, radius 0 0 14 14, elevated shadow 0 12 28 rgba(0,0,0,0.18) to separate from the list. Title + period dropdown &amp; funnel button (32px, white fill, border), Total Milk 32/700 dark with ▲/▼ % in greenInk/danger, 3 white tiles. (Blue hero tried and rejected.)<br>
           <strong style="color:var(--text1);">Filter bottom sheet</strong> — FARM, MILKING TIME, SORT BY chip groups (single-select, active = dark #111 fill white text) + dark Apply button.<br>
           <strong style="color:var(--text1);">Status banners</strong> — horizontal scroll row under hero, 262px each, ✕ dismiss; the row removes itself when the last banner is dismissed (no leftover gap).<br>
           <strong style="color:var(--text1);">Log-time indicator</strong> — on-time entries: small greenInk ✓ after timestamp; late entries: amber pill "⏱ logged HH:MM" (warnbg fill, warning border, #8A5A00 text).<br>
