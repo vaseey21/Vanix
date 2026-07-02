@@ -593,26 +593,75 @@
               <h3 style="font-size:18px; font-weight:600; color:var(--text1); margin:0;">Filters</h3>
               <button id="s7-close" style="border:none; background:transparent; font-size:16px; color:var(--text2); padding:6px;">✕</button>
             </div>
-            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">FARM</p>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">All farms</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Ravi Kumar Farm</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Green Valley Farm</button>
+            <!-- Two-pane: categories left, options right -->
+            <div style="display:flex; margin-top:14px; height:272px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-left:-24px; margin-right:-24px;">
+              <div id="s7-cats" style="width:126px; flex-shrink:0; background:var(--bgwarm); display:flex; flex-direction:column; padding:8px 0;">
+                <button class="s7-cat on" data-cat="farm" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);">Farm</button>
+                <button class="s7-cat" data-cat="time" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);">Milking time</button>
+                <button class="s7-cat" data-cat="sort" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);">Sort by</button>
+              </div>
+              <div style="flex:1; padding:12px 20px; overflow-y:auto; background:#FFFFFF;">
+                <div class="s7-pane" data-pane="farm">
+                  <button class="s7-chip on">All farms</button>
+                  <button class="s7-chip">Ravi Kumar Farm</button>
+                  <button class="s7-chip">Green Valley Farm</button>
+                </div>
+                <div class="s7-pane" data-pane="time" style="display:none;">
+                  <button class="s7-chip on">All</button>
+                  <button class="s7-chip">Morning</button>
+                  <button class="s7-chip">Evening</button>
+                </div>
+                <div class="s7-pane" data-pane="sort" style="display:none;">
+                  <button class="s7-chip on">Newest</button>
+                  <button class="s7-chip">Oldest</button>
+                  <button class="s7-chip">Highest yield</button>
+                  <button class="s7-chip">Lowest yield</button>
+                </div>
+              </div>
             </div>
-            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">MILKING TIME</p>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">All</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Morning</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Evening</button>
+            <button id="s7-apply" style="width:100%; height:52px; background:var(--dark1); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:18px;">Apply filters</button>
+          </div>
+
+          <!-- ENTRY ACTION SHEET — tap a log card (farmer) -->
+          <div id="s7-act-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:14;"></div>
+          <div id="s7-act" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); z-index:15; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:#E0E0E0; border-radius:2px;"></div></div>
+            <p id="s7-act-title" class="en" style="font-size:15px; font-weight:600; color:var(--text1); margin:12px 0 2px;">Gauri — Morning · 12.5 L</p>
+            <p style="font-size:12px; color:var(--text2); margin:0 0 14px;">Changes are sent to the Farm Owner for approval</p>
+            <button id="s7-act-edit" style="width:100%; min-height:50px; display:flex; align-items:center; gap:12px; background:var(--bgwarm); border:1px solid var(--border); border-radius:14px; padding:0 16px; font-size:15px; font-weight:500; color:var(--text1); font-family:var(--font-hi); margin-bottom:8px;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
+              Edit entry
+            </button>
+            <button id="s7-act-del" style="width:100%; min-height:50px; display:flex; align-items:center; gap:12px; background:var(--dangerbg); border:1px solid var(--danger); border-radius:14px; padding:0 16px; font-size:15px; font-weight:500; color:var(--danger); font-family:var(--font-hi);">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#D44C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+              Delete entry
+            </button>
+          </div>
+
+          <!-- DELETE CONFIRMATION — centered card -->
+          <div id="s7-del-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity 0.25s ease; z-index:16; display:flex; align-items:center; justify-content:center; padding:28px;">
+            <div class="m-modal" style="background:#FFFFFF; border-radius:20px; padding:26px 22px; width:100%; box-shadow:0 24px 60px rgba(0,0,0,0.30); text-align:center;">
+              <div style="width:46px; height:46px; border-radius:50%; background:var(--dangerbg); border:1px solid var(--danger); display:flex; align-items:center; justify-content:center; margin:0 auto;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D44C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+              </div>
+              <h3 style="font-size:17px; font-weight:600; color:var(--text1); margin:14px 0 0;">Delete this entry?</h3>
+              <p id="s7-del-text" style="font-size:13px; color:var(--text2); margin:8px 0 0; line-height:1.6;">Gauri — Morning · 12.5 L will be removed after the Farm Owner approves.</p>
+              <button id="s7-del-confirm" style="width:100%; height:48px; background:var(--danger); color:#FFFFFF; border:none; border-radius:24px; font-size:15px; font-weight:600; font-family:var(--font-hi); margin-top:20px;">Delete</button>
+              <button id="s7-del-cancel" style="width:100%; height:48px; background:transparent; color:var(--text1); border:1px solid var(--border); border-radius:24px; font-size:15px; font-weight:500; font-family:var(--font-hi); margin-top:8px;">Cancel</button>
             </div>
-            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">SORT BY</p>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Newest</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Oldest</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Highest yield</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Lowest yield</button>
+          </div>
+
+          <!-- DUPLICATE ENTRY CONFIRMATION — centered card -->
+          <div id="s7-dup-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity 0.25s ease; z-index:16; display:flex; align-items:center; justify-content:center; padding:28px;">
+            <div class="m-modal" style="background:#FFFFFF; border-radius:20px; padding:26px 22px; width:100%; box-shadow:0 24px 60px rgba(0,0,0,0.30); text-align:center;">
+              <div style="width:46px; height:46px; border-radius:50%; background:var(--warnbg); border:1px solid var(--warning); display:flex; align-items:center; justify-content:center; margin:0 auto;">
+                <span style="font-size:20px;">⚠</span>
+              </div>
+              <h3 style="font-size:17px; font-weight:600; color:var(--text1); margin:14px 0 0;">Entry already exists</h3>
+              <p id="s7-dup-text" style="font-size:13px; color:var(--text2); margin:8px 0 0; line-height:1.6;">Gauri already has a Morning entry today (12.5 L). Your entry will be added to it after the Farm Owner approves. Continue?</p>
+              <button id="s7-dup-proceed" style="width:100%; height:48px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:24px; font-size:15px; font-weight:600; font-family:var(--font-hi); margin-top:20px;">Yes, continue</button>
+              <button id="s7-dup-cancel" style="width:100%; height:48px; background:transparent; color:var(--text1); border:1px solid var(--border); border-radius:24px; font-size:15px; font-weight:500; font-family:var(--font-hi); margin-top:8px;">Cancel</button>
             </div>
-            <button id="s7-apply" style="width:100%; height:52px; background:var(--dark1); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:24px;">Apply filters</button>
           </div>
 
           <!-- Frosted nav — Milk active -->
