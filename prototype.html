@@ -116,8 +116,32 @@
     #flow-root.dark .m-banner { border-color: #3A3A3A !important; box-shadow: 0 3px 10px rgba(0,0,0,0.4) !important; }
     #flow-root.dark .m-banner strong { color: #F5F5F5 !important; }
 
-    .s7-chip.on { background: var(--dark1) !important; color: #FFFFFF !important; border-color: var(--dark1) !important; }
+    /* filter sheet — option rows (tinted, never white) + category rail */
+    .s7-chip { display:block; width:100%; text-align:start; min-height:44px; padding:0 14px; margin-bottom:8px; border-radius:12px; border:1px solid var(--border); background:var(--bgwarm); color:var(--text1); font-size:13px; font-weight:400; font-family:var(--font-hi); }
+    .s7-chip.on { background: var(--dark1) !important; color: #FFFFFF !important; border-color: var(--dark1) !important; font-weight:500; }
+    .s7-cat { background:transparent; color:var(--text2); border-inline-start:3px solid transparent !important; }
+    .s7-cat.on { background:#FFFFFF; color:var(--text1); font-weight:600; border-inline-start:3px solid var(--greenink) !important; }
     #flow-root.dark .m-late { cursor: pointer; }
+
+    /* pending approval sub-card + updated badge */
+    .m-sub { flex-basis:100%; border-top:1px dashed var(--border); margin-top:2px; padding-top:10px; }
+    .m-upd { background:var(--activebg); border:1px solid var(--greendeep); border-radius:10px; padding:2px 8px; font-size:10px; font-weight:600; color:var(--greenink); }
+    #flow-root.dark .m-sub { border-top-color:#3A3A3A; }
+    #flow-root.dark .m-upd { background:#0F2A1E !important; border-color:var(--greendeep) !important; color:var(--greendeep) !important; }
+
+    /* action sheet + modals dark */
+    #flow-root.dark #s7-act, #flow-root.dark .m-modal { background:#1C1C1C !important; }
+    #flow-root.dark #s7-act p, #flow-root.dark .m-modal h3 { color:#F5F5F5 !important; }
+    #flow-root.dark #s7-act p + p, #flow-root.dark .m-modal p { color:#8C8780 !important; }
+    #flow-root.dark #s7-act-edit { background:#262626 !important; border-color:#3A3A3A !important; color:#F5F5F5 !important; }
+    #flow-root.dark #s7-act-edit svg { stroke:#F5F5F5 !important; }
+    #flow-root.dark #s7-act-del { background:#2A1512 !important; }
+    #flow-root.dark #s7-del-cancel, #flow-root.dark #s7-dup-cancel { color:#F5F5F5 !important; border-color:#3A3A3A !important; }
+    #flow-root.dark .s7-chip { background:#262626; border-color:#3A3A3A; color:#F5F5F5; }
+    #flow-root.dark #s7-cats { background:#111111 !important; }
+    #flow-root.dark .s7-cat.on { background:#1C1C1C; color:#F5F5F5; }
+    #flow-root.dark #s7-sheet > div > div[style*="overflow-y"] { background:#1C1C1C !important; }
+    #flow-root.dark #s7-sheet div[style*="border-top"] { border-color:#3A3A3A !important; }
 
     /* popups: filter sheet + warning modal */
     #flow-root.dark #s7-sheet { background: #1C1C1C !important; }
@@ -344,13 +368,6 @@
             <div style="padding:12px 16px 0;">
             <!-- Status banners — horizontal row, dismissible; row removes itself when empty -->
             <div id="s7-banners" style="display:flex; gap:8px; margin:0; overflow-x:auto; padding-bottom:2px;">
-              <div class="m-banner" style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:var(--dangerbg); border:1px solid var(--danger); border-left:3px solid var(--danger); border-radius:12px; padding:12px 12px 12px 14px;">
-                <div style="min-width:0; flex:1;">
-                  <strong style="font-size:13px; color:var(--text1);">Heat alert — Lakshmi</strong>
-                  <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Insemination window closes in 6h</p>
-                </div>
-                <button onclick="var r=document.getElementById('s7-banners'); this.parentElement.remove(); if(!r.children.length) r.remove();" style="border:none; background:transparent; color:var(--text2); font-size:15px; line-height:1; padding:2px;">✕</button>
-              </div>
               <div class="m-banner" style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:var(--warnbg); border:1px solid var(--warning); border-left:3px solid var(--warning); border-radius:12px; padding:12px 12px 12px 14px;">
                 <div style="min-width:0; flex:1;">
                   <strong style="font-size:13px; color:var(--text1);">3 cows below 7-day average</strong>
@@ -369,7 +386,7 @@
 
             <!-- Log cards by date -->
             <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:12px 0 10px;">Today — 2 Jul</p>
-              <div class="m-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+              <div class="m-card m-entry" data-cow="Gauri" data-breed="HF Cross" data-belt="112" data-sess="Morning" data-time="07:30" data-litres="12.5" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Gauri — HF Cross</p>
                   <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:30</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
@@ -380,7 +397,7 @@
                     <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
                   </div>
               </div>
-              <div class="m-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+              <div class="m-card m-entry" data-cow="Lakshmi" data-breed="Gir" data-belt="47" data-sess="Morning" data-time="07:45" data-litres="8.2" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Lakshmi — Gir</p>
                   <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:45</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
@@ -391,7 +408,7 @@
                     <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
                   </div>
               </div>
-              <div class="m-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+              <div class="m-card m-entry" data-cow="Dhauli" data-breed="Sahiwal" data-belt="208" data-sess="Evening" data-time="17:40" data-litres="4.1" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Dhauli — Sahiwal</p>
                   <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Evening</span><span class="en" style="font-size:13px; color:var(--text2);">17:40</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
@@ -404,7 +421,7 @@
               </div>
 
             <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Yesterday — 1 Jul</p>
-              <div class="m-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+              <div class="m-card m-entry" data-cow="Kajri" data-breed="HF Cross" data-belt="63" data-sess="Evening" data-time="18:20" data-litres="2.0" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Kajri — HF Cross</p>
                   <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Evening</span><span class="en" style="font-size:13px; color:var(--text2);">18:20</span><span class="en m-late" role="button" onclick="this.textContent = this.textContent === '⏱' ? 'Logged 22:45 — 4h 25m after milking' : '⏱';" title="Tap for details" style="background:var(--warnbg); border:1px solid var(--warning); border-radius:10px; padding:2px 8px; font-size:10px; font-weight:600; color:#8A5A00; cursor:pointer;">⏱</span></p>
@@ -415,7 +432,7 @@
                     <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
                   </div>
               </div>
-              <div class="m-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+              <div class="m-card m-entry" data-cow="Mohini" data-breed="Gir" data-belt="91" data-sess="Morning" data-time="07:15" data-litres="5.0" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Mohini — Gir</p>
                   <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:15</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
@@ -454,7 +471,7 @@
 
           <div style="display:flex; align-items:center; gap:14px;">
             <button id="s8-back" style="width:40px; height:40px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); font-size:18px; color:var(--text1); padding:0; display:flex; align-items:center; justify-content:center; line-height:1;">‹</button>
-            <h2 style="font-size:20px; font-weight:600; color:var(--text1); margin:0; line-height:40px;">Add Milk Entry</h2>
+            <h2 id="s8-title" style="font-size:20px; font-weight:600; color:var(--text1); margin:0; line-height:40px;">Add Milk Entry</h2>
           </div>
 
           <div style="margin-top:18px;">
@@ -467,10 +484,12 @@
 
           <div style="margin-top:14px;">
             <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 6px;">COW</p>
-            <select class="sel" style="width:100%; height:46px; border:1px solid var(--border); background:var(--bgcard); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
+            <select id="s8-cow" class="sel" style="width:100%; height:46px; border:1px solid var(--border); background:var(--bgcard); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
               <option selected>Gauri — HF Cross — 112</option>
               <option>Lakshmi — Gir — 47</option>
               <option>Dhauli — Sahiwal — 208</option>
+              <option>Kajri — HF Cross — 63</option>
+              <option>Mohini — Gir — 91</option>
             </select>
             <p style="font-size:10px; color:var(--text2); margin:4px 0 0;">Only CALVED and MILKING cows are listed</p>
           </div>
@@ -493,7 +512,7 @@
           <div style="margin-top:28px;">
             <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">LITRES</p>
             <div style="display:flex; align-items:baseline; gap:10px; border-bottom:1.5px solid #9A948A; padding-bottom:10px;">
-              <input type="number" inputmode="decimal" placeholder="0.0" style="flex:1; background:transparent; border:none; font-size:32px; font-weight:700; color:var(--text1); font-family:var(--font-en); padding:0; min-width:0;">
+              <input type="number" id="s8-litres" inputmode="decimal" placeholder="0.0" style="flex:1; background:transparent; border:none; font-size:32px; font-weight:700; color:var(--text1); font-family:var(--font-en); padding:0; min-width:0;">
               <span class="en" style="font-size:16px; font-weight:500; color:var(--text2);">Ltrs</span>
             </div>
           </div>
@@ -515,26 +534,75 @@
               <h3 style="font-size:18px; font-weight:600; color:var(--text1); margin:0;">Filters</h3>
               <button id="s7-close" style="border:none; background:transparent; font-size:16px; color:var(--text2); padding:6px;">✕</button>
             </div>
-            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">FARM</p>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">All farms</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Ravi Kumar Farm</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Green Valley Farm</button>
+            <!-- Two-pane: categories left, options right -->
+            <div style="display:flex; margin-top:14px; height:272px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-left:-24px; margin-right:-24px;">
+              <div id="s7-cats" style="width:126px; flex-shrink:0; background:var(--bgwarm); display:flex; flex-direction:column; padding:8px 0;">
+                <button class="s7-cat on" data-cat="farm" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);">Farm</button>
+                <button class="s7-cat" data-cat="time" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);">Milking time</button>
+                <button class="s7-cat" data-cat="sort" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);">Sort by</button>
+              </div>
+              <div style="flex:1; padding:12px 20px; overflow-y:auto; background:#FFFFFF;">
+                <div class="s7-pane" data-pane="farm">
+                  <button class="s7-chip on">All farms</button>
+                  <button class="s7-chip">Ravi Kumar Farm</button>
+                  <button class="s7-chip">Green Valley Farm</button>
+                </div>
+                <div class="s7-pane" data-pane="time" style="display:none;">
+                  <button class="s7-chip on">All</button>
+                  <button class="s7-chip">Morning</button>
+                  <button class="s7-chip">Evening</button>
+                </div>
+                <div class="s7-pane" data-pane="sort" style="display:none;">
+                  <button class="s7-chip on">Newest</button>
+                  <button class="s7-chip">Oldest</button>
+                  <button class="s7-chip">Highest yield</button>
+                  <button class="s7-chip">Lowest yield</button>
+                </div>
+              </div>
             </div>
-            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">MILKING TIME</p>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">All</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Morning</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Evening</button>
+            <button id="s7-apply" style="width:100%; height:52px; background:var(--dark1); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:18px;">Apply filters</button>
+          </div>
+
+          <!-- ENTRY ACTION SHEET — tap a log card (farmer) -->
+          <div id="s7-act-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:14;"></div>
+          <div id="s7-act" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); z-index:15; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:#E0E0E0; border-radius:2px;"></div></div>
+            <p id="s7-act-title" class="en" style="font-size:15px; font-weight:600; color:var(--text1); margin:12px 0 2px;">Gauri — Morning · 12.5 L</p>
+            <p style="font-size:12px; color:var(--text2); margin:0 0 14px;">Changes are sent to the Farm Owner for approval</p>
+            <button id="s7-act-edit" style="width:100%; min-height:50px; display:flex; align-items:center; gap:12px; background:var(--bgwarm); border:1px solid var(--border); border-radius:14px; padding:0 16px; font-size:15px; font-weight:500; color:var(--text1); font-family:var(--font-hi); margin-bottom:8px;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
+              Edit entry
+            </button>
+            <button id="s7-act-del" style="width:100%; min-height:50px; display:flex; align-items:center; gap:12px; background:var(--dangerbg); border:1px solid var(--danger); border-radius:14px; padding:0 16px; font-size:15px; font-weight:500; color:var(--danger); font-family:var(--font-hi);">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#D44C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+              Delete entry
+            </button>
+          </div>
+
+          <!-- DELETE CONFIRMATION — centered card -->
+          <div id="s7-del-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity 0.25s ease; z-index:16; display:flex; align-items:center; justify-content:center; padding:28px;">
+            <div class="m-modal" style="background:#FFFFFF; border-radius:20px; padding:26px 22px; width:100%; box-shadow:0 24px 60px rgba(0,0,0,0.30); text-align:center;">
+              <div style="width:46px; height:46px; border-radius:50%; background:var(--dangerbg); border:1px solid var(--danger); display:flex; align-items:center; justify-content:center; margin:0 auto;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D44C3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+              </div>
+              <h3 style="font-size:17px; font-weight:600; color:var(--text1); margin:14px 0 0;">Delete this entry?</h3>
+              <p id="s7-del-text" style="font-size:13px; color:var(--text2); margin:8px 0 0; line-height:1.6;">Gauri — Morning · 12.5 L will be removed after the Farm Owner approves.</p>
+              <button id="s7-del-confirm" style="width:100%; height:48px; background:var(--danger); color:#FFFFFF; border:none; border-radius:24px; font-size:15px; font-weight:600; font-family:var(--font-hi); margin-top:20px;">Delete</button>
+              <button id="s7-del-cancel" style="width:100%; height:48px; background:transparent; color:var(--text1); border:1px solid var(--border); border-radius:24px; font-size:15px; font-weight:500; font-family:var(--font-hi); margin-top:8px;">Cancel</button>
             </div>
-            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">SORT BY</p>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Newest</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Oldest</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Highest yield</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-family:var(--font-hi);">Lowest yield</button>
+          </div>
+
+          <!-- DUPLICATE ENTRY CONFIRMATION — centered card -->
+          <div id="s7-dup-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity 0.25s ease; z-index:16; display:flex; align-items:center; justify-content:center; padding:28px;">
+            <div class="m-modal" style="background:#FFFFFF; border-radius:20px; padding:26px 22px; width:100%; box-shadow:0 24px 60px rgba(0,0,0,0.30); text-align:center;">
+              <div style="width:46px; height:46px; border-radius:50%; background:var(--warnbg); border:1px solid var(--warning); display:flex; align-items:center; justify-content:center; margin:0 auto;">
+                <span style="font-size:20px;">⚠</span>
+              </div>
+              <h3 style="font-size:17px; font-weight:600; color:var(--text1); margin:14px 0 0;">Entry already exists</h3>
+              <p id="s7-dup-text" style="font-size:13px; color:var(--text2); margin:8px 0 0; line-height:1.6;">Gauri already has a Morning entry today (12.5 L). Your entry will be added to it after the Farm Owner approves. Continue?</p>
+              <button id="s7-dup-proceed" style="width:100%; height:48px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:24px; font-size:15px; font-weight:600; font-family:var(--font-hi); margin-top:20px;">Yes, continue</button>
+              <button id="s7-dup-cancel" style="width:100%; height:48px; background:transparent; color:var(--text1); border:1px solid var(--border); border-radius:24px; font-size:15px; font-weight:500; font-family:var(--font-hi); margin-top:8px;">Cancel</button>
             </div>
-            <button id="s7-apply" style="width:100%; height:52px; background:var(--dark1); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:24px;">Apply filters</button>
           </div>
 
           <!-- Frosted nav — Milk active -->
@@ -728,22 +796,27 @@
       var addPage = document.getElementById('s8-page');
       function openAdd()  { addPage.style.transform = 'translateY(0)'; }
       function closeAdd() { addPage.style.transform = 'translateY(100%)'; }
-      document.getElementById('s7-fab').addEventListener('click', openAdd);
+      document.getElementById('s7-fab').addEventListener('click', function() { editTarget = null; resetAddPage(); openAdd(); });
       document.getElementById('s8-back').addEventListener('click', closeAdd);
       document.getElementById('s8-cancel').addEventListener('click', closeAdd);
-      document.getElementById('s8-save').addEventListener('click', closeAdd);
       fBack.addEventListener('click', closeF);
       document.getElementById('s7-close').addEventListener('click', closeF);
       document.getElementById('s7-apply').addEventListener('click', closeF);
-      // single-select chips within each group
-      document.querySelectorAll('#s7-sheet > div > .s7-chip').forEach(function(chip) {
-        chip.addEventListener('click', function() {
-          chip.parentElement.querySelectorAll('.s7-chip').forEach(function(c) {
-            c.classList.remove('on');
-            c.style.background = ''; c.style.color = ''; c.style.borderColor = ''; c.style.fontWeight = '400';
+      // two-pane filter: left rail switches the visible pane
+      document.querySelectorAll('.s7-cat').forEach(function(cat) {
+        cat.addEventListener('click', function() {
+          document.querySelectorAll('.s7-cat').forEach(function(c) { c.classList.remove('on'); });
+          cat.classList.add('on');
+          document.querySelectorAll('.s7-pane').forEach(function(p) {
+            p.style.display = p.getAttribute('data-pane') === cat.getAttribute('data-cat') ? 'block' : 'none';
           });
+        });
+      });
+      // single-select options within each pane
+      document.querySelectorAll('.s7-pane .s7-chip').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          chip.parentElement.querySelectorAll('.s7-chip').forEach(function(c) { c.classList.remove('on'); });
           chip.classList.add('on');
-          chip.style.background = ''; chip.style.color = ''; chip.style.borderColor = ''; chip.style.fontWeight = '500';
         });
       });
 
@@ -812,6 +885,137 @@
         pending = null;
         warn.style.opacity = '0'; warn.style.pointerEvents = 'none';
       });
+
+      // ── Entry actions: tap card → edit/delete (farmer) + owner approval ──
+      var actBack  = document.getElementById('s7-act-backdrop');
+      var actSheet = document.getElementById('s7-act');
+      var delBack  = document.getElementById('s7-del-backdrop');
+      var dupBack  = document.getElementById('s7-dup-backdrop');
+      var activeCard  = null;  // card the action sheet is open for
+      var editTarget  = null;  // card being edited via the add page
+      var pendingSave = null;  // save awaiting duplicate confirmation
+
+      function show(m) { m.style.opacity = '1'; m.style.pointerEvents = 'auto'; }
+      function hide(m) { m.style.opacity = '0'; m.style.pointerEvents = 'none'; }
+      function cardLabel(c) { return c.dataset.cow + ' — ' + c.dataset.sess + ' · ' + c.dataset.litres + ' L'; }
+      function nowHM() { var d = new Date(); return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); }
+
+      function closeAct() { actSheet.style.transform = 'translateY(100%)'; actBack.style.opacity = '0'; actBack.style.pointerEvents = 'none'; }
+      actBack.addEventListener('click', closeAct);
+
+      document.querySelectorAll('.m-entry').forEach(function(card) {
+        card.addEventListener('click', function(e) {
+          if (e.target.closest('.m-sub') || e.target.closest('.m-late')) return;
+          activeCard = card;
+          document.getElementById('s7-act-title').textContent = cardLabel(card);
+          actSheet.style.transform = 'translateY(0)'; actBack.style.opacity = '1'; actBack.style.pointerEvents = 'auto';
+        });
+      });
+
+      // delete → confirm → pending owner approval
+      document.getElementById('s7-act-del').addEventListener('click', function() {
+        closeAct();
+        document.getElementById('s7-del-text').textContent = cardLabel(activeCard) + ' will be removed after the Farm Owner approves.';
+        show(delBack);
+      });
+      document.getElementById('s7-del-cancel').addEventListener('click', function() { hide(delBack); });
+      document.getElementById('s7-del-confirm').addEventListener('click', function() {
+        hide(delBack);
+        addPending(activeCard, 'delete', null);
+      });
+
+      // edit → same page as add, prefilled
+      document.getElementById('s7-act-edit').addEventListener('click', function() {
+        closeAct();
+        editTarget = activeCard;
+        document.getElementById('s8-title').textContent = 'Edit Milk Entry';
+        var cowSel = document.getElementById('s8-cow');
+        Array.prototype.forEach.call(cowSel.options, function(o) {
+          if (o.textContent.indexOf(editTarget.dataset.cow) === 0) o.selected = true;
+        });
+        document.getElementById('s8-litres').value = editTarget.dataset.litres;
+        selected = editTarget.dataset.sess; paint();
+        openAdd();
+      });
+
+      function resetAddPage() {
+        document.getElementById('s8-title').textContent = 'Add Milk Entry';
+        document.getElementById('s8-litres').value = '';
+        dateInput.value = todayStr;
+        selected = current; paint();
+      }
+
+      // save — edit goes to approval; new entry checks for same cow+session+date
+      document.getElementById('s8-save').addEventListener('click', function() {
+        var litres = Math.round((parseFloat(document.getElementById('s8-litres').value) || 0) * 10) / 10;
+        if (editTarget) {
+          addPending(editTarget, 'edit', litres);
+          editTarget = null; closeAdd(); return;
+        }
+        var cow = document.getElementById('s8-cow').value.split(' — ')[0];
+        var dup = null;
+        if (dateInput.value === todayStr) {
+          document.querySelectorAll('.m-entry').forEach(function(c) {
+            if (c.dataset.cow === cow && c.dataset.sess === selected) dup = c;
+          });
+        }
+        if (dup) {
+          document.getElementById('s7-dup-text').textContent =
+            cow + ' already has a ' + selected + ' entry today (' + dup.dataset.litres + ' L). Your entry will be added to it after the Farm Owner approves. Continue?';
+          pendingSave = { card: dup, litres: litres };
+          show(dupBack); return;
+        }
+        closeAdd();
+      });
+      document.getElementById('s7-dup-cancel').addEventListener('click', function() { pendingSave = null; hide(dupBack); });
+      document.getElementById('s7-dup-proceed').addEventListener('click', function() {
+        hide(dupBack); closeAdd();
+        if (pendingSave) { addPending(pendingSave.card, 'add', pendingSave.litres); pendingSave = null; }
+      });
+
+      // pending sub-card — farmer's change nested under the cow's entry, owner approves/rejects
+      function addPending(card, kind, litres) {
+        var old = card.querySelector('.m-sub'); if (old) old.remove();
+        var label = kind === 'delete' ? 'Delete entry'
+                  : kind === 'edit'   ? 'Edit to ' + litres + ' L'
+                  : '+' + litres + ' L (second entry)';
+        var sub = document.createElement('div');
+        sub.className = 'm-sub';
+        sub.innerHTML =
+          '<div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">' +
+            '<div style="min-width:0;">' +
+              '<p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;">' + label + '</p>' +
+              '<p style="font-size:11px; color:var(--text2); margin:2px 0 0;">By Suresh · ' + nowHM() + ' · Pending owner approval</p>' +
+            '</div>' +
+            '<div style="display:flex; gap:6px; flex-shrink:0;">' +
+              '<button class="m-approve" style="height:34px; padding:0 14px; border-radius:17px; border:none; background:var(--greenink); color:#FFFFFF; font-size:12px; font-weight:600; font-family:var(--font-hi);">Approve</button>' +
+              '<button class="m-reject" style="height:34px; padding:0 14px; border-radius:17px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi);">✕</button>' +
+            '</div>' +
+          '</div>';
+        card.appendChild(sub);
+        sub.querySelector('.m-reject').addEventListener('click', function(e) { e.stopPropagation(); sub.remove(); });
+        sub.querySelector('.m-approve').addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (kind === 'delete') { card.remove(); return; }
+          var total = kind === 'edit' ? litres : parseFloat(card.dataset.litres) + litres;
+          card.dataset.litres = String(Math.round(total * 10) / 10);
+          var big = card.querySelector('div[style*="width:64px"] span.en');
+          if (big) big.textContent = card.dataset.litres;
+          var row = card.querySelector('p[style*="align-items:center"]');
+          if (row) {
+            var timeEl = row.querySelector('span.en:not(.m-pill)');
+            if (timeEl) timeEl.textContent = nowHM();
+            if (!row.querySelector('.m-upd')) {
+              var updEl = document.createElement('span');
+              updEl.className = 'en m-upd';
+              updEl.title = 'Updated after owner approval';
+              updEl.textContent = '↻ Updated';
+              row.appendChild(updEl);
+            }
+          }
+          sub.remove();
+        });
+      }
 
       // ── Flow navigation: dashboard nav ⇄ milk log page ──
       var milkPage = document.getElementById('page-milk');
