@@ -890,22 +890,27 @@
       var addPage = document.getElementById('s8-page');
       function openAdd()  { addPage.style.transform = 'translateY(0)'; }
       function closeAdd() { addPage.style.transform = 'translateY(100%)'; }
-      document.getElementById('s7-fab').addEventListener('click', openAdd);
+      document.getElementById('s7-fab').addEventListener('click', function() { editTarget = null; resetAddPage(); openAdd(); });
       document.getElementById('s8-back').addEventListener('click', closeAdd);
       document.getElementById('s8-cancel').addEventListener('click', closeAdd);
-      document.getElementById('s8-save').addEventListener('click', closeAdd);
       fBack.addEventListener('click', closeF);
       document.getElementById('s7-close').addEventListener('click', closeF);
       document.getElementById('s7-apply').addEventListener('click', closeF);
-      // single-select chips within each group
-      document.querySelectorAll('#s7-sheet > div > .s7-chip').forEach(function(chip) {
-        chip.addEventListener('click', function() {
-          chip.parentElement.querySelectorAll('.s7-chip').forEach(function(c) {
-            c.classList.remove('on');
-            c.style.background = ''; c.style.color = ''; c.style.borderColor = ''; c.style.fontWeight = '400';
+      // two-pane filter: left rail switches the visible pane
+      document.querySelectorAll('.s7-cat').forEach(function(cat) {
+        cat.addEventListener('click', function() {
+          document.querySelectorAll('.s7-cat').forEach(function(c) { c.classList.remove('on'); });
+          cat.classList.add('on');
+          document.querySelectorAll('.s7-pane').forEach(function(p) {
+            p.style.display = p.getAttribute('data-pane') === cat.getAttribute('data-cat') ? 'block' : 'none';
           });
+        });
+      });
+      // single-select options within each pane
+      document.querySelectorAll('.s7-pane .s7-chip').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          chip.parentElement.querySelectorAll('.s7-chip').forEach(function(c) { c.classList.remove('on'); });
           chip.classList.add('on');
-          chip.style.background = ''; chip.style.color = ''; chip.style.borderColor = ''; chip.style.fontWeight = '500';
         });
       });
 
