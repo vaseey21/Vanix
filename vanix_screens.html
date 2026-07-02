@@ -989,6 +989,25 @@
         }, 1000);
       }
 
+      // forgot password: email panel → same OTP flow
+      document.getElementById('s1-forgot').addEventListener('click', function() {
+        loginPanel.style.display = 'none';
+        document.getElementById('s1-forgot-panel').style.display = 'block';
+      });
+      document.getElementById('s1-fp-back').addEventListener('click', function() {
+        document.getElementById('s1-forgot-panel').style.display = 'none';
+        loginPanel.style.display = 'block';
+      });
+      document.getElementById('s1-fp-send').addEventListener('click', function() {
+        document.getElementById('s1-forgot-panel').style.display = 'none';
+        otpPanel.style.display = 'block';
+        boxes.forEach(function(b) { b.value = ''; });
+        confirmBtn.disabled = true;
+        confirmBtn.style.background = '#B5B5B5';
+        boxes[0].focus();
+        startTimer();
+      });
+
       document.getElementById('s1-continue').addEventListener('click', function() {
         loginPanel.style.display = 'none';
         otpPanel.style.display = 'block';
