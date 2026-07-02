@@ -11,7 +11,9 @@
   <style>
     :root {
       --green:    #4DDE95;
-      --greendeep:#2EBD7E; /* darker CTA shade — screen 01 buttons */
+      --greendeep:#2EBD7E; /* focus accents, success accents */
+      --greenink: #1E7A52; /* primary button fill w/ white text; green text/icon on white */
+      --heroblue: #274C77; /* hero surfaces (Milk Log header card) — white text on it */
       --dark1:    #111111;
       --dark2:    #1C1C1C;
       --bgwarm:   #F2EDE4;
@@ -49,11 +51,9 @@
       padding: 0 !important;
       min-height: 0 !important;
     }
-    #app {
-      position: relative;
-      height: 100dvh;
-      overflow: hidden;
-    }
+    #app { position: relative; height: 100dvh; overflow: hidden; }
+    #page-milk { position: absolute; inset: 0; background: var(--bgwarm); z-index: 40; display: none; }
+    #page-milk > div { height: 100% !important; }
     /* ── Components ── */
     .hi { font-family: var(--font-hi); }
     .en { font-family: var(--font-en); }
@@ -82,6 +82,15 @@
     #s1-sheet.dark input::placeholder { color: rgba(255,255,255,0.45); }
     #s1-sheet.dark #s1-otp-back { border-color: rgba(255,255,255,0.4) !important; color: #FFFFFF !important; }
     #s1-sheet.dark select option { color: #111111; }
+
+    /* ── Dashboard dark mode (tap Account tab to toggle — temporary switch) ── */
+    #s1-dash.dark { background: #111111 !important; }
+    #s1-dash.dark > div > p { color: #8C8780 !important; }
+    #s1-dash.dark nav { background: rgba(28,28,28,0.55) !important; border-color: rgba(255,255,255,0.16) !important; }
+    #s1-dash.dark .s1-nav-item:not(.cap) svg { stroke: #F5F5F5 !important; }
+    #s1-dash.dark .s1-nav-item:not(.cap) .s1-nav-l { color: #F5F5F5 !important; }
+    #s1-dash.dark .cap .s1-nav-l { color: var(--greenink) !important; }
+    #s1-dash.dark .cap svg { fill: var(--greenink) !important; stroke: var(--greenink) !important; }
   
   </style>
 </head>
@@ -124,7 +133,7 @@
                 <input type="password" placeholder="••••••••" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-en); padding:0 0 10px;">
               </div>
 
-              <button id="s1-continue" style="width:100%; height:52px; background:var(--greendeep); color:var(--dark1); border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:44px; cursor:pointer;">Continue</button>
+              <button id="s1-continue" style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:44px; cursor:pointer;">Continue</button>
               <p id="s1-forgot" style="font-size:13px; font-weight:500; color:var(--text1); margin:22px 0 0; text-align:center; text-decoration:underline; text-underline-offset:3px; cursor:pointer;">Forgot password?</p>
             </div>
 
@@ -176,7 +185,7 @@
             <nav style="position:absolute; left:14px; right:14px; bottom:16px; background:rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); border:1px solid rgba(255,255,255,0.55); border-radius:36px; display:flex; padding:5px; box-shadow: 0 14px 36px rgba(0,0,0,0.20);">
 
               <!-- Home (active — solid white capsule, green icon+label) -->
-              <button class="s1-nav-item" style="flex:1; min-height:56px; background:#FFFFFF; border:none; border-radius:28px; padding:0 6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; box-shadow: 0 4px 14px rgba(0,0,0,0.10);">
+              <button class="s1-nav-item cap" style="flex:1; min-height:56px; background:#FFFFFF; border:none; border-radius:28px; padding:0 6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; box-shadow: 0 4px 14px rgba(0,0,0,0.10);">
                 <span style="position:relative; display:flex;">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="#1E7A52" stroke="#1E7A52" stroke-width="0.5" stroke-linejoin="round"><path d="M12 2.6L2.8 10.8h2.4V21h5.3v-6.2h3v6.2h5.3V10.8h2.4L12 2.6z"/></svg>
                   <span style="position:absolute; top:-2px; right:-4px; width:9px; height:9px; border-radius:50%; background:var(--danger); border:1.5px solid #FFFFFF;"></span>
@@ -205,8 +214,8 @@
                 <span class="s1-nav-l" data-k="navEvents" style="font-size:11px; font-weight:500; color:#111111;">Events</span>
               </button>
 
-              <!-- Account -->
-              <button class="s1-nav-item" style="flex:1; min-height:56px; background:transparent; border:none; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
+              <!-- Account (tap = dark mode toggle, temporary) -->
+              <button class="s1-nav-item" id="s1-acct" style="flex:1; min-height:56px; background:transparent; border:none; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
                 <span class="s1-nav-l" data-k="navAccount" style="font-size:11px; font-weight:500; color:#111111;">Account</span>
               </button>
@@ -230,8 +239,262 @@
           </div>
 
         </div><!-- /layer stack -->
+
+    <!-- MILK LOG PAGE — opened from the Milk tab -->
+    <div id="page-milk">
+      <div style="position:relative; flex:1; overflow:hidden;">
+          <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
+
+            <!-- HERO — borderless white card, edge to edge, rounded bottom -->
+            <div style="background:var(--heroblue); border-radius:0 0 24px 24px; padding:18px 16px 20px; box-shadow:0 6px 18px rgba(0,0,0,0.10);">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+              <h2 style="font-size:24px; font-weight:600; color:#FFFFFF; margin:0;">Milk Log</h2>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <select style="border:1px solid rgba(255,255,255,0.35); background:rgba(255,255,255,0.14); border-radius:16px; height:32px; padding:0 12px; font-size:12px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi); -webkit-appearance:none; appearance:none;">
+                  <option selected>Today ▾</option>
+                  <option>This Week ▾</option>
+                  <option>This Month ▾</option>
+                  <option>This Year ▾</option>
+                  <option>Custom… ▾</option>
+                </select>
+                <button id="s7-filter" title="Filters" style="width:32px; height:32px; border-radius:50%; border:1px solid rgba(255,255,255,0.35); background:rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; padding:0;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8.5V19l-4 2v-7.5L3 5z"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Stats: total + 3 tiles -->
+            <div style="margin-top:16px;">
+              <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.65); margin:0;">Total Milk</p>
+              <div style="display:flex; align-items:baseline; gap:10px; margin-top:6px;">
+                <span class="en" style="font-size:32px; font-weight:700; color:#FFFFFF; line-height:1;">38.6 L</span>
+                <span class="en" style="font-size:13px; font-weight:600; color:#7FE0AE;">▲ 8% vs yesterday</span>
+              </div>
+              <div style="display:flex; gap:8px; margin-top:16px;">
+                <div style="flex:1; background:rgba(255,255,255,0.12); border-radius:12px; padding:10px;">
+                  <p class="en" style="font-size:18px; font-weight:700; color:#FFFFFF; margin:0;">18</p>
+                  <p style="font-size:11px; color:rgba(255,255,255,0.65); margin:2px 0 0;">Cows milked</p>
+                </div>
+                <div style="flex:1; background:rgba(255,255,255,0.12); border-radius:12px; padding:10px;">
+                  <p class="en" style="font-size:18px; font-weight:700; color:#FFFFFF; margin:0;">12.5 L</p>
+                  <p style="font-size:11px; color:rgba(255,255,255,0.65); margin:2px 0 0;">Max — Gauri</p>
+                </div>
+                <div style="flex:1; background:rgba(255,255,255,0.12); border-radius:12px; padding:10px;">
+                  <p class="en" style="font-size:18px; font-weight:700; color:#FFFFFF; margin:0;">2.0 L</p>
+                  <p style="font-size:11px; color:rgba(255,255,255,0.65); margin:2px 0 0;">Min — Kajri</p>
+                </div>
+              </div>
+            </div>
+            </div><!-- /hero -->
+
+            <div style="padding:12px 16px 0;">
+            <!-- Status banners — horizontal row, dismissible; row removes itself when empty -->
+            <div id="s7-banners" style="display:flex; gap:8px; margin:0; overflow-x:auto; padding-bottom:2px;">
+              <div style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:var(--warnbg); border:1px solid var(--warning); border-left:3px solid var(--warning); border-radius:12px; padding:12px 12px 12px 14px;">
+                <div style="min-width:0; flex:1;">
+                  <strong style="font-size:13px; color:var(--text1);">3 cows below 7-day average</strong>
+                  <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Kajri, Dhauli and Mohini need attention</p>
+                </div>
+                <button onclick="var r=document.getElementById('s7-banners'); this.parentElement.remove(); if(!r.children.length) r.remove();" style="border:none; background:transparent; color:var(--text2); font-size:15px; line-height:1; padding:2px;">✕</button>
+              </div>
+              <div style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:var(--activebg); border:1px solid var(--greendeep); border-left:3px solid var(--greendeep); border-radius:12px; padding:12px 12px 12px 14px;">
+                <div style="min-width:0; flex:1;">
+                  <strong style="font-size:13px; color:var(--text1);">Morning session complete</strong>
+                  <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">All 18 assigned cows logged before 09:00</p>
+                </div>
+                <button onclick="var r=document.getElementById('s7-banners'); this.parentElement.remove(); if(!r.children.length) r.remove();" style="border:none; background:transparent; color:var(--text2); font-size:15px; line-height:1; padding:2px;">✕</button>
+              </div>
+            </div>
+
+            <!-- Log cards by date -->
+            <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:12px 0 10px;">Today — 2 Jul</p>
+              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+                <div style="min-width:0;">
+                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Gauri — HF Cross</p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:30</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
+                  <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm · Mgr: Suresh</p>
+                </div>
+                <div style="width:64px; min-height:64px; background:#1E7A52; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
+                    <span class="en" style="font-size:22px; font-weight:700; color:#FFFFFF; line-height:1;">12.5</span>
+                    <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
+                  </div>
+              </div>
+              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+                <div style="min-width:0;">
+                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Lakshmi — Gir</p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:45</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
+                  <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm · Mgr: Suresh</p>
+                </div>
+                <div style="width:64px; min-height:64px; background:#1E7A52; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
+                    <span class="en" style="font-size:22px; font-weight:700; color:#FFFFFF; line-height:1;">8.2</span>
+                    <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
+                  </div>
+              </div>
+              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+                <div style="min-width:0;">
+                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Dhauli — Sahiwal</p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Afternoon</span><span class="en" style="font-size:13px; color:var(--text2);">13:10</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
+                  <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Mgr: Anita</p>
+                </div>
+                <div style="width:64px; min-height:64px; background:#C07E10; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
+                    <span class="en" style="font-size:22px; font-weight:700; color:#FFFFFF; line-height:1;">4.1</span>
+                    <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
+                  </div>
+              </div>
+
+            <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Yesterday — 1 Jul</p>
+              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+                <div style="min-width:0;">
+                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Kajri — HF Cross</p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Evening</span><span class="en" style="font-size:13px; color:var(--text2);">18:20</span><span class="en" title="Logged 4h 25m after milking" style="background:var(--warnbg); border:1px solid var(--warning); border-radius:10px; padding:2px 8px; font-size:10px; font-weight:600; color:#8A5A00;">⏱ logged 22:45</span></p>
+                  <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Mgr: Anita</p>
+                </div>
+                <div style="width:64px; min-height:64px; background:#D44C3A; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
+                    <span class="en" style="font-size:22px; font-weight:700; color:#FFFFFF; line-height:1;">2.0</span>
+                    <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
+                  </div>
+              </div>
+              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+                <div style="min-width:0;">
+                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Mohini — Gir</p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:15</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
+                  <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm · Mgr: Suresh</p>
+                </div>
+                <div style="width:64px; min-height:64px; background:#C07E10; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
+                    <span class="en" style="font-size:22px; font-weight:700; color:#FFFFFF; line-height:1;">5.0</span>
+                    <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
+                  </div>
+              </div>
+
+            </div><!-- /list -->
+          </div>
+
+          <!-- FAB -->
+          <button id="s7-fab" title="Add milk entry" style="position:absolute; right:18px; bottom:104px; width:56px; height:56px; border-radius:50%; background:var(--dark1); border:none; box-shadow:0 10px 24px rgba(0,0,0,0.28); padding:0; display:flex; align-items:center; justify-content:center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+
+          <!-- ADD ENTRY PAGE — slides up over the log (FAB opens) -->
+          <div id="s8-page" style="position:absolute; inset:0; background:var(--bgwarm); z-index:12; transform:translateY(100%); transition:transform 0.5s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column; overflow-y:auto;">
+<div id="s8-body" style="position:relative; flex:1; display:flex; flex-direction:column; padding:20px 24px 28px;">
+
+          <!-- SESSION MISMATCH WARNING — centered card, Starbucks sign-in style -->
+          <div id="s8-warn-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity 0.25s ease; z-index:20; display:flex; align-items:center; justify-content:center; padding:28px;">
+            <div style="background:#FFFFFF; border-radius:20px; padding:26px 22px; width:100%; box-shadow:0 24px 60px rgba(0,0,0,0.30); text-align:center;">
+              <div style="width:46px; height:46px; border-radius:50%; background:var(--warnbg); border:1px solid var(--warning); display:flex; align-items:center; justify-content:center; margin:0 auto;">
+                <span style="font-size:20px;">⚠</span>
+              </div>
+              <h3 style="font-size:17px; font-weight:600; color:var(--text1); margin:14px 0 0;">Logging a past session?</h3>
+              <p id="s8-warn-text" style="font-size:13px; color:var(--text2); margin:8px 0 0; line-height:1.6;">This is 7 hours after the usual Morning milking time. Are you sure?</p>
+              <button id="s8-warn-proceed" style="width:100%; height:48px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:24px; font-size:15px; font-weight:600; font-family:var(--font-hi); margin-top:20px;">Proceed</button>
+              <button id="s8-warn-cancel" style="width:100%; height:48px; background:transparent; color:var(--text1); border:1px solid var(--border); border-radius:24px; font-size:15px; font-weight:500; font-family:var(--font-hi); margin-top:8px;">Cancel</button>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:14px;">
+            <button id="s8-back" style="width:40px; height:40px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); font-size:16px; color:var(--text1); line-height:1;">‹</button>
+            <h2 style="font-size:20px; font-weight:600; color:var(--text1); margin:0;">Add Milk Entry</h2>
+          </div>
+
+          <div style="margin-top:36px;">
+            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">COW</p>
+            <select style="width:100%; height:52px; border:1px solid var(--border); background:var(--bgcard); border-radius:12px; padding:0 14px; font-size:16px; color:var(--text1); font-family:var(--font-hi); -webkit-appearance:none; appearance:none;">
+              <option selected>Gauri — HF Cross ▾</option>
+              <option>Lakshmi — Gir ▾</option>
+              <option>Dhauli — Sahiwal ▾</option>
+            </select>
+            <p style="font-size:11px; color:var(--text2); margin:6px 0 0;">Only CALVED and MILKING cows are listed</p>
+          </div>
+
+          <div style="margin-top:28px;">
+            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">MILKING SESSION</p>
+            <div id="s8-sessions" style="display:flex; gap:8px;">
+              <button data-sess="Morning" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Morning</button>
+              <button data-sess="Afternoon" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Afternoon</button>
+              <button data-sess="Evening" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Evening</button>
+            </div>
+            <p style="font-size:11px; color:var(--text2); margin:6px 0 0;">Defaults to the current time of day</p>
+          </div>
+
+          <div style="margin-top:28px;">
+            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">LITRES</p>
+            <div style="display:flex; align-items:baseline; gap:10px; border-bottom:1.5px solid #9A948A; padding-bottom:10px;">
+              <input type="number" inputmode="decimal" placeholder="0.0" style="flex:1; background:transparent; border:none; font-size:40px; font-weight:700; color:var(--text1); font-family:var(--font-en); padding:0; min-width:0;">
+              <span class="en" style="font-size:16px; font-weight:500; color:var(--text2);">Ltrs</span>
+            </div>
+          </div>
+
+          <div style="flex:1;"></div>
+
+          <button style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi);" id="s8-save">Save</button>
+          <button style="width:100%; height:52px; background:transparent; color:var(--text1); border:1px solid var(--border); border-radius:26px; font-size:16px; font-weight:500; font-family:var(--font-hi); margin-top:10px;" id="s8-cancel">Cancel</button>
+        </div>
+          </div>
+
+          <!-- FILTER BOTTOM SHEET (opens from filter button) -->
+          <div id="s7-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:8;"></div>
+          <div id="s7-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:9; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:#E0E0E0; border-radius:2px;"></div></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:10px;">
+              <h3 style="font-size:18px; font-weight:600; color:var(--text1); margin:0;">Filters</h3>
+              <button id="s7-close" style="border:none; background:transparent; font-size:16px; color:var(--text2); padding:6px;">✕</button>
+            </div>
+            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">FARM</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:500; font-family:var(--font-hi);">All farms</button>
+              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Ravi Kumar Farm</button>
+              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Green Valley Farm</button>
+            </div>
+            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">MILKING TIME</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:500; font-family:var(--font-hi);">All</button>
+              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Morning</button>
+              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Afternoon</button>
+              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Evening</button>
+            </div>
+            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">SORT BY</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:500; font-family:var(--font-hi);">Newest</button>
+              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Oldest</button>
+              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Highest yield</button>
+              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Lowest yield</button>
+            </div>
+            <button id="s7-apply" style="width:100%; height:52px; background:var(--dark1); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:24px;">Apply filters</button>
+          </div>
+
+          <!-- Frosted nav — Milk active -->
+          <nav style="position:absolute; left:14px; right:14px; bottom:16px; background:rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); border:1px solid rgba(255,255,255,0.55); border-radius:36px; display:flex; padding:5px; box-shadow: 0 14px 36px rgba(0,0,0,0.20);">
+            <div style="flex:1; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
+              <span style="position:relative; display:flex;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
+                <span style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
+              </span>
+              <span class="en" style="font-size:11px; font-weight:500; color:#111111;">Home</span>
+            </div>
+            <div style="flex:1; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+              <span class="en" style="font-size:11px; font-weight:500; color:#111111;">Farms</span>
+            </div>
+            <div style="flex:1; min-height:56px; background:#FFFFFF; border-radius:28px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; box-shadow: 0 4px 14px rgba(0,0,0,0.10);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#1E7A52" stroke="#1E7A52" stroke-width="0.5" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg>
+              <span class="en" style="font-size:11px; font-weight:600; color:#1E7A52;">Milk</span>
+            </div>
+            <div style="flex:1; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
+              <span style="position:relative; display:flex;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <span class="en" style="position:absolute; top:-5px; right:-8px; min-width:15px; height:15px; border-radius:8px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px;">3</span>
+              </span>
+              <span class="en" style="font-size:11px; font-weight:500; color:#111111;">Events</span>
+            </div>
+            <div style="flex:1; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+              <span class="en" style="font-size:11px; font-weight:500; color:#111111;">Account</span>
+            </div>
+          </nav>
+        </div>
+    </div>
   </div>
-    <script>
+<script>
     (function() {
       var video   = document.getElementById('s1-video');
       var splash  = document.getElementById('s1-splash-bg');
@@ -303,6 +566,11 @@
         applyLang();
       });
 
+      // ── Dashboard dark mode: tap Account tab (temporary home for the switch) ──
+      document.getElementById('s1-acct').addEventListener('click', function() {
+        document.getElementById('s1-dash').classList.toggle('dark');
+      });
+
       // ── Dark / light mode toggle ──
       var themeBtn = document.getElementById('s1-theme');
       themeBtn.addEventListener('click', function() {
@@ -361,8 +629,7 @@
           if (box.value && i < boxes.length - 1) boxes[i + 1].focus();
           var filled = Array.prototype.every.call(boxes, function(b) { return b.value; });
           confirmBtn.disabled = !filled;
-          confirmBtn.style.background = filled ? 'var(--greendeep)' : '#B5B5B5';
-          confirmBtn.style.color = filled ? 'var(--dark1)' : 'white';
+          confirmBtn.style.background = filled ? 'var(--greenink)' : '#B5B5B5';
         });
         box.addEventListener('keydown', function(e) {
           if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus();
@@ -370,5 +637,94 @@
       });
     })();
     </script>
+<script>
+    (function() {
+      // ── Screen 07: filter bottom sheet ──
+      var fBtn = document.getElementById('s7-filter');
+      var fSheet = document.getElementById('s7-sheet');
+      var fBack = document.getElementById('s7-backdrop');
+      function openF()  { fSheet.style.transform = 'translateY(0)'; fBack.style.opacity = '1'; fBack.style.pointerEvents = 'auto'; }
+      function closeF() { fSheet.style.transform = 'translateY(100%)'; fBack.style.opacity = '0'; fBack.style.pointerEvents = 'none'; }
+      fBtn.addEventListener('click', openF);
+
+      // ── FAB → add-entry page (same phone, full flow) ──
+      var addPage = document.getElementById('s8-page');
+      function openAdd()  { addPage.style.transform = 'translateY(0)'; }
+      function closeAdd() { addPage.style.transform = 'translateY(100%)'; }
+      document.getElementById('s7-fab').addEventListener('click', openAdd);
+      document.getElementById('s8-back').addEventListener('click', closeAdd);
+      document.getElementById('s8-cancel').addEventListener('click', closeAdd);
+      document.getElementById('s8-save').addEventListener('click', closeAdd);
+      fBack.addEventListener('click', closeF);
+      document.getElementById('s7-close').addEventListener('click', closeF);
+      document.getElementById('s7-apply').addEventListener('click', closeF);
+      // single-select chips within each group
+      document.querySelectorAll('#s7-sheet > div > .s7-chip').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          chip.parentElement.querySelectorAll('.s7-chip').forEach(function(c) {
+            c.style.background = 'var(--bgcard)'; c.style.color = 'var(--text1)'; c.style.borderColor = 'var(--border)'; c.style.fontWeight = '400';
+          });
+          chip.style.background = 'var(--dark1)'; chip.style.color = '#FFFFFF'; chip.style.borderColor = 'var(--dark1)'; chip.style.fontWeight = '500';
+        });
+      });
+
+      // ── Screen 08: milking session default + mismatch warning ──
+      var SESS_HOURS = { Morning: 7, Afternoon: 13, Evening: 18 };
+      var sessBtns = document.querySelectorAll('#s8-sessions button');
+      var now = new Date();
+      var h = now.getHours();
+      var current = h < 11 ? 'Morning' : (h < 16 ? 'Afternoon' : 'Evening');
+      var selected = current;
+
+      function paint() {
+        sessBtns.forEach(function(b) {
+          var on = b.getAttribute('data-sess') === selected;
+          b.style.background = on ? 'var(--greenink)' : 'var(--bgcard)';
+          b.style.color = on ? '#FFFFFF' : 'var(--text1)';
+          b.style.borderColor = on ? 'var(--greenink)' : 'var(--border)';
+          b.style.fontWeight = on ? '600' : '500';
+        });
+      }
+      paint();
+
+      var warn = document.getElementById('s8-warn-backdrop');
+      var warnText = document.getElementById('s8-warn-text');
+      var pending = null;
+
+      sessBtns.forEach(function(b) {
+        b.addEventListener('click', function() {
+          var target = b.getAttribute('data-sess');
+          if (target === selected) return;
+          if (target === current) { selected = target; paint(); return; }
+          // mismatch → warn with hour distance from the session's usual time
+          var diff = h - SESS_HOURS[target];
+          var when = diff > 0 ? Math.abs(diff) + ' hours after' : Math.abs(diff) + ' hours before';
+          warnText.textContent = 'This is ' + when + ' the usual ' + target + ' milking time. Are you sure?';
+          pending = target;
+          warn.style.opacity = '1'; warn.style.pointerEvents = 'auto';
+        });
+      });
+      document.getElementById('s8-warn-proceed').addEventListener('click', function() {
+        if (pending) { selected = pending; pending = null; paint(); }
+        warn.style.opacity = '0'; warn.style.pointerEvents = 'none';
+      });
+      document.getElementById('s8-warn-cancel').addEventListener('click', function() {
+        pending = null;
+        warn.style.opacity = '0'; warn.style.pointerEvents = 'none';
+      });
+    })();
+    </script>
+  <script>
+  // ── Prototype navigation: dashboard nav ⇄ milk log page ──
+  (function() {
+    var milkPage = document.getElementById('page-milk');
+    // dashboard nav: [home, farms, milk, events, account]
+    var dashTabs = document.querySelectorAll('#s1-dash .s1-nav-item');
+    if (dashTabs[2]) dashTabs[2].addEventListener('click', function() { milkPage.style.display = 'block'; });
+    // milk log nav: first tab (Home) returns to dashboard
+    var milkTabs = milkPage.querySelectorAll('nav > div');
+    if (milkTabs[0]) { milkTabs[0].style.cursor = 'pointer'; milkTabs[0].addEventListener('click', function() { milkPage.style.display = 'none'; }); }
+  })();
+  </script>
 </body>
 </html>
