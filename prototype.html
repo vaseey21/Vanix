@@ -35,21 +35,14 @@
     body {
       background: #1A1A1A;
       font-family: var(--font-hi);
-      padding: 48px 24px 80px;
+      padding: 32px 24px 48px;
       min-height: 100vh;
     }
 
     
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; overscroll-behavior: none; }
-    body {
-      background: var(--bgwarm) !important;
-      font-family: var(--font-hi);
-      height: 100dvh;
-      overflow: hidden;
-      padding: 0 !important;
-      min-height: 0 !important;
-    }
+    body { background: var(--bgwarm) !important; font-family: var(--font-hi); height: 100dvh; overflow: hidden; padding: 0 !important; min-height: 0 !important; }
     #app { position: relative; height: 100dvh; overflow: hidden; }
     /* ── Components ── */
     .hi { font-family: var(--font-hi); }
@@ -57,6 +50,17 @@
 
     input { outline: none; }
     button { cursor: pointer; }
+
+    /* selects: chevron pinned right, none in the option text */
+    .sel {
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888888' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center;
+      padding-right: 32px !important;
+    }
+    /* no number spinners */
+    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
 
     /* Brand-green focus accents (green fill/border only — never green text on white) */
     #s1-login-panel input:focus { border-bottom-color: var(--greendeep) !important; }
@@ -80,21 +84,55 @@
     #s1-sheet.dark #s1-otp-back { border-color: rgba(255,255,255,0.4) !important; color: #FFFFFF !important; }
     #s1-sheet.dark select option { color: #111111; }
 
-    /* ── Dashboard dark mode (tap Account tab to toggle — temporary switch) ── */
-    #s1-dash.dark { background: #111111 !important; }
-    #s1-dash.dark > div > p { color: #8C8780 !important; }
-    #s1-dash.dark nav { background: rgba(28,28,28,0.55) !important; border-color: rgba(255,255,255,0.16) !important; }
-    #s1-dash.dark .s1-nav-item:not(.cap) svg { stroke: #F5F5F5 !important; }
-    #s1-dash.dark .s1-nav-item:not(.cap) .s1-nav-l { color: #F5F5F5 !important; }
-    #s1-dash.dark .cap .s1-nav-l { color: var(--greenink) !important; }
-    #s1-dash.dark .cap svg { fill: var(--greenink) !important; stroke: var(--greenink) !important; }
+    /* ── App-wide dark mode (tap Account tab anywhere to toggle) ── */
+    #flow-root.dark #s1-dash { background: #111111 !important; }
+    #flow-root.dark #s1-dash > div > p { color: #8C8780 !important; }
+    #flow-root.dark #s1-dash nav, #flow-root.dark #milk-nav { background: rgba(28,28,28,0.55) !important; border-color: rgba(255,255,255,0.16) !important; }
+    #flow-root.dark .s1-nav-item:not(.cap) svg { stroke: #F5F5F5 !important; }
+    #flow-root.dark .s1-nav-item:not(.cap) .s1-nav-l { color: #F5F5F5 !important; }
+    #flow-root.dark .cap .s1-nav-l { color: var(--greenink) !important; }
+    #flow-root.dark .cap svg { fill: var(--greenink) !important; stroke: var(--greenink) !important; }
+    #flow-root.dark #milk-nav > div:not(.mcap) svg { stroke: #F5F5F5 !important; }
+    #flow-root.dark #milk-nav > div:not(.mcap) span { color: #F5F5F5 !important; }
+
+    /* milk log page */
+    #flow-root.dark #page-milk > div { background: #111111 !important; }
+    #flow-root.dark .m-hero { background: #1C1C1C !important; box-shadow: 0 12px 28px rgba(0,0,0,0.55) !important; }
+    #flow-root.dark .m-hero h2, #flow-root.dark .m-hero span, #flow-root.dark .m-hero p { color: #F5F5F5 !important; }
+    #flow-root.dark .m-hero p[class~="en"] { color: #8C8780 !important; }
+    #flow-root.dark .m-hero select, #flow-root.dark .m-hero button { border-color: #3A3A3A !important; color: #F5F5F5 !important; box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important; }
+    #flow-root.dark .m-hero button svg { stroke: #F5F5F5 !important; }
+    #flow-root.dark .m-delta { color: var(--greendeep) !important; }
+    #flow-root.dark .m-tile { background: #262626 !important; border-color: #3A3A3A !important; }
+    #flow-root.dark .m-tile p { color: #F5F5F5 !important; }
+    #flow-root.dark .m-tile p.en { color: #F5F5F5 !important; }
+    #flow-root.dark .m-tile p + p { color: #8C8780 !important; }
+    #flow-root.dark .m-card { background: #1C1C1C !important; border-color: #3A3A3A !important; }
+    #flow-root.dark .m-card p { color: #F5F5F5 !important; }
+    #flow-root.dark .m-card p[style*="text2"] { color: #8C8780 !important; }
+    #flow-root.dark .m-pill { background: #262626 !important; border-color: #3A3A3A !important; color: #EDEDED !important; }
+    #flow-root.dark .m-ok { color: var(--greendeep) !important; }
+    #flow-root.dark .m-late { background: #33290F !important; border-color: #8A6A1F !important; color: #E8C87A !important; }
+    #flow-root.dark .m-banner { border-color: #3A3A3A !important; box-shadow: 0 3px 10px rgba(0,0,0,0.4) !important; }
+    #flow-root.dark .m-banner strong { color: #F5F5F5 !important; }
+
+    /* add entry page */
+    #flow-root.dark #s8-page { background: #111111 !important; }
+    #flow-root.dark #s8-page h2 { color: #F5F5F5 !important; }
+    #flow-root.dark #s8-page p { color: #8C8780 !important; }
+    #flow-root.dark #s8-page select, #flow-root.dark #s8-page input[type="date"] { background: #1C1C1C !important; border-color: #3A3A3A !important; color: #F5F5F5 !important; }
+    #flow-root.dark #s8-page input[type="number"] { color: #F5F5F5 !important; }
+    #flow-root.dark #s8-sessions button { border-color: #3A3A3A; color: #F5F5F5; }
+    #flow-root.dark #s8-page #s8-back { background: #1C1C1C !important; border-color: #3A3A3A !important; color: #F5F5F5 !important; }
+    #flow-root.dark #s8-page #s8-cancel { color: #F5F5F5 !important; border-color: #3A3A3A !important; }
+    #flow-root.dark #s8-page .en[style*="baseline"] { border-bottom-color: #3A3A3A !important; }
   
   </style>
 </head>
 <body>
   <div id="app">
         <!-- ── Layer stack (sits below status bar, fills rest of phone) ── -->
-        <div style="position:relative; height:100%; overflow:hidden;">
+        <div id="flow-root" style="position:relative; height:100%; overflow:hidden;">
 
           <!-- THEME TOGGLE — top-right over video -->
           <button id="s1-theme" title="Dark / light mode" style="position:absolute; top:14px; right:14px; z-index:5; width:48px; height:48px; border-radius:50%; border:1px solid rgba(255,255,255,0.35); background:rgba(0,0,0,0.28); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size:19px; line-height:1; color:#FFFFFF;">☾</button>
@@ -241,18 +279,21 @@
           <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
 
             <!-- HERO — borderless white card, edge to edge, rounded bottom -->
-            <div style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 20px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+            <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 20px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
               <h2 style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Milk Log</h2>
               <div style="display:flex; gap:8px; align-items:center;">
-                <select style="border:1px solid var(--border); background:var(--bgcard); border-radius:16px; height:32px; padding:0 12px; font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); -webkit-appearance:none; appearance:none;">
-                  <option selected>Today ▾</option>
-                  <option>This Week ▾</option>
-                  <option>This Month ▾</option>
-                  <option>This Year ▾</option>
-                  <option>Custom… ▾</option>
+                <select class="sel" style="border:1px solid var(--border); background:transparent; box-shadow:0 2px 6px rgba(0,0,0,0.08); border-radius:16px; height:32px; padding:0 12px; font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">
+                  <option selected>Today</option>
+                  <option>This Week</option>
+                  <option>This Month</option>
+                  <option>This Year</option>
+                  <option>Custom…</option>
                 </select>
-                <button id="s7-filter" title="Filters" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); display:flex; align-items:center; justify-content:center; padding:0;">
+                <button id="s7-download" title="Download report" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:transparent; box-shadow:0 2px 6px rgba(0,0,0,0.08); display:flex; align-items:center; justify-content:center; padding:0;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+                </button>
+                <button id="s7-filter" title="Filters" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:transparent; box-shadow:0 2px 6px rgba(0,0,0,0.08); display:flex; align-items:center; justify-content:center; padding:0;">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8.5V19l-4 2v-7.5L3 5z"/></svg>
                 </button>
               </div>
@@ -263,18 +304,18 @@
               <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0;">Total Milk</p>
               <div style="display:flex; align-items:baseline; gap:10px; margin-top:6px;">
                 <span class="en" style="font-size:32px; font-weight:700; color:var(--text1); line-height:1;">38.6 L</span>
-                <span class="en" style="font-size:13px; font-weight:600; color:var(--greenink);">▲ 8% vs yesterday</span>
+                <span class="en m-delta" style="font-size:13px; font-weight:600; color:var(--greenink);">▲ 8% vs yesterday</span>
               </div>
               <div style="display:flex; gap:8px; margin-top:16px;">
-                <div style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px;">
+                <div class="m-tile" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px;">
                   <p class="en" style="font-size:18px; font-weight:700; color:var(--text1); margin:0;">18</p>
                   <p style="font-size:11px; color:var(--text2); margin:2px 0 0;">Cows milked</p>
                 </div>
-                <div style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px;">
+                <div class="m-tile" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px;">
                   <p class="en" style="font-size:18px; font-weight:700; color:var(--text1); margin:0;">12.5 L</p>
                   <p style="font-size:11px; color:var(--text2); margin:2px 0 0;">Max — Gauri</p>
                 </div>
-                <div style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px;">
+                <div class="m-tile" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px;">
                   <p class="en" style="font-size:18px; font-weight:700; color:var(--text1); margin:0;">2.0 L</p>
                   <p style="font-size:11px; color:var(--text2); margin:2px 0 0;">Min — Kajri</p>
                 </div>
@@ -285,14 +326,14 @@
             <div style="padding:12px 16px 0;">
             <!-- Status banners — horizontal row, dismissible; row removes itself when empty -->
             <div id="s7-banners" style="display:flex; gap:8px; margin:0; overflow-x:auto; padding-bottom:2px;">
-              <div style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:var(--warnbg); border:1px solid var(--warning); border-left:3px solid var(--warning); border-radius:12px; padding:12px 12px 12px 14px;">
+              <div class="m-banner" style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:transparent; border:1px solid var(--border); border-radius:12px; padding:12px 12px 12px 14px; box-shadow:0 3px 10px rgba(0,0,0,0.10);">
                 <div style="min-width:0; flex:1;">
                   <strong style="font-size:13px; color:var(--text1);">3 cows below 7-day average</strong>
                   <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Kajri, Dhauli and Mohini need attention</p>
                 </div>
                 <button onclick="var r=document.getElementById('s7-banners'); this.parentElement.remove(); if(!r.children.length) r.remove();" style="border:none; background:transparent; color:var(--text2); font-size:15px; line-height:1; padding:2px;">✕</button>
               </div>
-              <div style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:var(--activebg); border:1px solid var(--greendeep); border-left:3px solid var(--greendeep); border-radius:12px; padding:12px 12px 12px 14px;">
+              <div class="m-banner" style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:transparent; border:1px solid var(--border); border-radius:12px; padding:12px 12px 12px 14px; box-shadow:0 3px 10px rgba(0,0,0,0.10);">
                 <div style="min-width:0; flex:1;">
                   <strong style="font-size:13px; color:var(--text1);">Morning session complete</strong>
                   <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">All 18 assigned cows logged before 09:00</p>
@@ -303,10 +344,10 @@
 
             <!-- Log cards by date -->
             <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:12px 0 10px;">Today — 2 Jul</p>
-              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+              <div class="m-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Gauri — HF Cross</p>
-                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:30</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:30</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm · Mgr: Suresh</p>
                 </div>
                 <div style="width:64px; min-height:64px; background:#1E7A52; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
@@ -314,10 +355,10 @@
                     <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
                   </div>
               </div>
-              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+              <div class="m-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Lakshmi — Gir</p>
-                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:45</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:45</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm · Mgr: Suresh</p>
                 </div>
                 <div style="width:64px; min-height:64px; background:#1E7A52; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
@@ -325,10 +366,10 @@
                     <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
                   </div>
               </div>
-              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+              <div class="m-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Dhauli — Sahiwal</p>
-                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Afternoon</span><span class="en" style="font-size:13px; color:var(--text2);">13:10</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Evening</span><span class="en" style="font-size:13px; color:var(--text2);">17:40</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Mgr: Anita</p>
                 </div>
                 <div style="width:64px; min-height:64px; background:#C07E10; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
@@ -338,10 +379,10 @@
               </div>
 
             <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Yesterday — 1 Jul</p>
-              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+              <div class="m-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Kajri — HF Cross</p>
-                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Evening</span><span class="en" style="font-size:13px; color:var(--text2);">18:20</span><span class="en" title="Logged 4h 25m after milking" style="background:var(--warnbg); border:1px solid var(--warning); border-radius:10px; padding:2px 8px; font-size:10px; font-weight:600; color:#8A5A00;">⏱ logged 22:45</span></p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Evening</span><span class="en" style="font-size:13px; color:var(--text2);">18:20</span><span class="en m-late" title="Logged 4h 25m after milking" style="background:var(--warnbg); border:1px solid var(--warning); border-radius:10px; padding:2px 8px; font-size:10px; font-weight:600; color:#8A5A00;">⏱ logged 22:45</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Mgr: Anita</p>
                 </div>
                 <div style="width:64px; min-height:64px; background:#D44C3A; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
@@ -349,10 +390,10 @@
                     <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
                   </div>
               </div>
-              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
+              <div class="m-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; justify-content:space-between; gap:12px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Mohini — Gir</p>
-                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:15</span><span class="en" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
+                  <p style="margin:6px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:15</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm · Mgr: Suresh</p>
                 </div>
                 <div style="width:64px; min-height:64px; background:#C07E10; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0;">
@@ -391,22 +432,35 @@
             <h2 style="font-size:20px; font-weight:600; color:var(--text1); margin:0;">Add Milk Entry</h2>
           </div>
 
-          <div style="margin-top:36px;">
+          <div style="margin-top:30px;">
+            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">FARM <span style="text-transform:none; letter-spacing:0; font-weight:400;">· Farm Owner only</span></p>
+            <select class="sel" style="width:100%; height:52px; border:1px solid var(--border); background:var(--bgcard); border-radius:12px; padding:0 14px; font-size:16px; color:var(--text1); font-family:var(--font-hi);">
+              <option selected>Ravi Kumar Farm</option>
+              <option>Green Valley Farm</option>
+            </select>
+          </div>
+
+          <div style="margin-top:22px;">
             <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">COW</p>
-            <select style="width:100%; height:52px; border:1px solid var(--border); background:var(--bgcard); border-radius:12px; padding:0 14px; font-size:16px; color:var(--text1); font-family:var(--font-hi); -webkit-appearance:none; appearance:none;">
-              <option selected>Gauri — HF Cross ▾</option>
-              <option>Lakshmi — Gir ▾</option>
-              <option>Dhauli — Sahiwal ▾</option>
+            <select class="sel" style="width:100%; height:52px; border:1px solid var(--border); background:var(--bgcard); border-radius:12px; padding:0 14px; font-size:16px; color:var(--text1); font-family:var(--font-hi);">
+              <option selected>Gauri — HF Cross — 112</option>
+              <option>Lakshmi — Gir — 47</option>
+              <option>Dhauli — Sahiwal — 208</option>
             </select>
             <p style="font-size:11px; color:var(--text2); margin:6px 0 0;">Only CALVED and MILKING cows are listed</p>
           </div>
 
-          <div style="margin-top:28px;">
+          <div style="margin-top:22px;">
+            <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">DATE</p>
+            <input type="date" id="s8-date" class="en" style="width:100%; height:52px; border:1px solid var(--border); background:var(--bgcard); border-radius:12px; padding:0 14px; font-size:16px; color:var(--text1);">
+            <p style="font-size:11px; color:var(--text2); margin:6px 0 0;">Defaults to today · future dates not allowed</p>
+          </div>
+
+          <div style="margin-top:22px;">
             <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">MILKING SESSION</p>
             <div id="s8-sessions" style="display:flex; gap:8px;">
-              <button data-sess="Morning" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Morning</button>
-              <button data-sess="Afternoon" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Afternoon</button>
-              <button data-sess="Evening" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Evening</button>
+              <button data-sess="Morning" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Morning</button>
+              <button data-sess="Evening" style="flex:1; height:44px; border-radius:22px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi);">Evening</button>
             </div>
             <p style="font-size:11px; color:var(--text2); margin:6px 0 0;">Defaults to the current time of day</p>
           </div>
@@ -444,7 +498,6 @@
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
               <button class="s7-chip on" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:500; font-family:var(--font-hi);">All</button>
               <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Morning</button>
-              <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Afternoon</button>
               <button class="s7-chip" style="height:38px; padding:0 16px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Evening</button>
             </div>
             <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">SORT BY</p>
@@ -458,7 +511,7 @@
           </div>
 
           <!-- Frosted nav — Milk active -->
-          <nav style="position:absolute; left:14px; right:14px; bottom:16px; background:rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); border:1px solid rgba(255,255,255,0.55); border-radius:36px; display:flex; padding:5px; box-shadow: 0 14px 36px rgba(0,0,0,0.20);">
+          <nav id="milk-nav" style="position:absolute; left:14px; right:14px; bottom:16px; background:rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); border:1px solid rgba(255,255,255,0.55); border-radius:36px; display:flex; padding:5px; box-shadow: 0 14px 36px rgba(0,0,0,0.20);">
             <div style="flex:1; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
               <span style="position:relative; display:flex;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
@@ -470,7 +523,7 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
               <span class="en" style="font-size:11px; font-weight:500; color:#111111;">Farms</span>
             </div>
-            <div style="flex:1; min-height:56px; background:#FFFFFF; border-radius:28px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; box-shadow: 0 4px 14px rgba(0,0,0,0.10);">
+            <div class="mcap" style="flex:1; min-height:56px; background:#FFFFFF; border-radius:28px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; box-shadow: 0 4px 14px rgba(0,0,0,0.10);">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="#1E7A52" stroke="#1E7A52" stroke-width="0.5" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg>
               <span class="en" style="font-size:11px; font-weight:600; color:#1E7A52;">Milk</span>
             </div>
@@ -563,9 +616,9 @@
         applyLang();
       });
 
-      // ── Dashboard dark mode: tap Account tab (temporary home for the switch) ──
+      // ── App dark mode: tap Account tab anywhere (temporary home for the switch) ──
       document.getElementById('s1-acct').addEventListener('click', function() {
-        document.getElementById('s1-dash').classList.toggle('dark');
+        document.getElementById('flow-root').classList.toggle('dark');
       });
 
       // ── Dark / light mode toggle ──
@@ -665,24 +718,44 @@
         });
       });
 
-      // ── Screen 08: milking session default + mismatch warning ──
-      var SESS_HOURS = { Morning: 7, Afternoon: 13, Evening: 18 };
+      // ── Screen 08: milking session default + date + no-future rule ──
+      var SESS_HOURS = { Morning: 7, Evening: 18 };
       var sessBtns = document.querySelectorAll('#s8-sessions button');
       var now = new Date();
       var h = now.getHours();
-      var current = h < 11 ? 'Morning' : (h < 16 ? 'Afternoon' : 'Evening');
+      var current = h < 16 ? 'Morning' : 'Evening';
       var selected = current;
+
+      // date: default today, future blocked
+      var dateInput = document.getElementById('s8-date');
+      var todayStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+      dateInput.value = todayStr;
+      dateInput.max = todayStr;
+      function isToday() { return dateInput.value === todayStr; }
 
       function paint() {
         sessBtns.forEach(function(b) {
-          var on = b.getAttribute('data-sess') === selected;
-          b.style.background = on ? 'var(--greenink)' : 'var(--bgcard)';
-          b.style.color = on ? '#FFFFFF' : 'var(--text1)';
-          b.style.borderColor = on ? 'var(--greenink)' : 'var(--border)';
+          var sess = b.getAttribute('data-sess');
+          var on = sess === selected;
+          b.style.background = on ? 'var(--greenink)' : 'transparent';
+          b.style.color = on ? '#FFFFFF' : '';
+          b.style.borderColor = on ? 'var(--greenink)' : '';
           b.style.fontWeight = on ? '600' : '500';
+          // no future sessions: Evening locked while today + before 17:00
+          var locked = sess === 'Evening' && isToday() && h < 17;
+          b.style.opacity = locked ? '0.4' : '1';
+          b.style.pointerEvents = locked ? 'none' : 'auto';
+          b.title = locked ? "Evening session hasn't started yet" : '';
         });
       }
       paint();
+
+      dateInput.addEventListener('change', function() {
+        if (dateInput.value > todayStr) dateInput.value = todayStr; // hard block future
+        if (!isToday() && selected === 'Evening') { /* past date: both sessions fine */ }
+        if (isToday() && h < 17) selected = 'Morning';
+        paint();
+      });
 
       var warn = document.getElementById('s8-warn-backdrop');
       var warnText = document.getElementById('s8-warn-text');
@@ -692,8 +765,9 @@
         b.addEventListener('click', function() {
           var target = b.getAttribute('data-sess');
           if (target === selected) return;
+          if (!isToday()) { selected = target; paint(); return; } // past date: no warning
           if (target === current) { selected = target; paint(); return; }
-          // mismatch → warn with hour distance from the session's usual time
+          // logging a past session today → warn with hour distance
           var diff = h - SESS_HOURS[target];
           var when = diff > 0 ? Math.abs(diff) + ' hours after' : Math.abs(diff) + ' hours before';
           warnText.textContent = 'This is ' + when + ' the usual ' + target + ' milking time. Are you sure?';
@@ -716,6 +790,8 @@
       if (dashTabs[2]) dashTabs[2].addEventListener('click', function() { milkPage.style.display = 'block'; });
       var milkTabs = milkPage.querySelectorAll('nav > div');
       if (milkTabs[0]) { milkTabs[0].style.cursor = 'pointer'; milkTabs[0].addEventListener('click', function() { milkPage.style.display = 'none'; }); }
+      var acctTab = milkTabs[milkTabs.length - 1];
+      if (acctTab) { acctTab.style.cursor = 'pointer'; acctTab.addEventListener('click', function() { document.getElementById('flow-root').classList.toggle('dark'); }); }
     })();
     </script>
 </body>
