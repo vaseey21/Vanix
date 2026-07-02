@@ -84,6 +84,15 @@
     #s1-sheet input::placeholder { font-size: 13px; }
     #s1-sheet.dark #s1-otp-back, #s1-sheet.dark #s1-fp-back { color: #FFFFFF !important; }
     #s1-sheet.dark #s1-lang { background: rgba(0,0,0,0.30) !important; border-color: rgba(255,255,255,0.30) !important; color: #FFFFFF !important; }
+    /* language bottom sheet — dark mode (sibling of #s1-sheet) */
+    #s1-sheet.dark ~ #s1-lang-sheet { background: rgba(20,20,20,0.92) !important; border-top-color: rgba(255,255,255,0.18) !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet #s1-ls-title { color: #FFFFFF !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet #s1-ls-search { color: #FFFFFF !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet #s1-ls-search::placeholder { color: rgba(255,255,255,0.45); }
+    #s1-sheet.dark ~ #s1-lang-sheet .s1-ls-row > span > span:first-child { color: #FFFFFF !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet .s1-ls-row > span > span:last-child { color: rgba(255,255,255,0.55) !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet .s1-ls-row { border-bottom-color: rgba(255,255,255,0.10) !important; }
+    #s1-sheet.dark ~ #s1-lang-sheet > div[style*="align-items:center"] { background: rgba(0,0,0,0.30) !important; border-color: rgba(255,255,255,0.25) !important; }
     #s1-sheet.dark select option { color: #111111; }
 
     /* ── App-wide dark mode (tap Account tab anywhere to toggle) ── */
@@ -91,9 +100,9 @@
     #flow-root.dark #s1-dash > div > p { color: #8C8780 !important; }
     /* ── Unified frosted nav: identical metrics everywhere; sliding droplet capsule ── */
     .vnav { position:absolute; left:14px; right:14px; bottom:16px; background:rgba(255,255,255,0.42); -webkit-backdrop-filter:blur(18px) saturate(1.4); backdrop-filter:blur(18px) saturate(1.4); border:1px solid rgba(255,255,255,0.55); border-radius:36px; display:flex; padding:5px; box-shadow:0 14px 36px rgba(0,0,0,0.20); }
-    .vcap { position:absolute; top:5px; inset-inline-start:5px; width:calc((100% - 10px) / 5); height:56px; background:#FFFFFF; border-radius:28px; box-shadow:0 4px 14px rgba(0,0,0,0.10); transition:transform 0.45s cubic-bezier(0.34,1.25,0.4,1); will-change:transform; }
-    .vcap.squish { animation: vsquish 0.45s cubic-bezier(0.34,1.25,0.4,1); }
-    @keyframes vsquish { 0% { scale:1 1; } 35% { scale:1.16 0.86; } 70% { scale:0.94 1.05; } 100% { scale:1 1; } }
+    .vcap { position:absolute; top:5px; inset-inline-start:5px; width:calc((100% - 10px) / 5); height:56px; background:#FFFFFF; border-radius:28px; box-shadow:0 4px 14px rgba(0,0,0,0.10); transition:transform 0.6s cubic-bezier(0.32,1.04,0.36,1); will-change:transform; }
+    .vcap.squish { animation: vsquish 0.6s cubic-bezier(0.32,1.04,0.36,1); }
+    @keyframes vsquish { 0% { scale:1 1; } 40% { scale:1.08 0.94; } 75% { scale:0.99 1.01; } 100% { scale:1 1; } }
     .vtab { flex:1; min-height:56px; background:transparent; border:none; padding:0 6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; position:relative; z-index:1; cursor:pointer; }
     .vtab svg { stroke:#111111; transition:stroke 0.25s; }
     .vtab .vlab { font-size:11px; font-weight:500; color:#111111; transition:color 0.25s; }
@@ -249,11 +258,10 @@
             <div id="s1-login-panel">
               <div style="display:flex; align-items:center; justify-content:space-between; padding-top:26px;">
                 <h2 id="s1-title" style="font-size:26px; font-weight:600; color:var(--text1); margin:0; line-height:1.2;">Login</h2>
-                <select id="s1-lang" class="sel" style="border:1px solid var(--border); background:rgba(255,255,255,0.55); border-radius:16px; height:32px; padding:0 12px; font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">
-                  <option value="en" selected>English</option>
-                  <option value="hi">हिंदी</option>
-                  <option value="bho">भोजपुरी</option>
-                </select>
+                <button id="s1-lang" style="display:flex; align-items:center; gap:6px; border:1px solid var(--border); background:rgba(255,255,255,0.55); border-radius:16px; height:32px; padding:0 12px; font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">
+                  <span id="s1-lang-cur">English</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
               </div>
 
               <div style="margin-top:36px;">
@@ -309,6 +317,31 @@
               <button id="s1-confirm" disabled style="width:100%; height:52px; background:#B5B5B5; color:white; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:40px; transition: background 0.3s ease, color 0.3s ease;">Confirm</button>
             </div>
 
+          </div>
+
+          <!-- LANGUAGE BOTTOM SHEET — searchable, scales for future languages -->
+          <div id="s1-lang-scrim" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:4;"></div>
+          <div id="s1-lang-sheet" style="position:absolute; bottom:0; left:0; right:0; background:rgba(255,255,255,0.92); -webkit-backdrop-filter:blur(26px) saturate(1.5); backdrop-filter:blur(26px) saturate(1.5); border-top:1px solid rgba(255,255,255,0.55); border-radius:24px 24px 0 0; padding:0 24px 32px; transform:translateY(100%); transition:transform 0.5s cubic-bezier(0.32,0.72,0,1); z-index:5; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+            <div style="width:36px; height:4px; border-radius:2px; background:var(--border); margin:12px auto 0;"></div>
+            <p id="s1-ls-title" style="font-size:16px; font-weight:600; color:var(--text1); margin:18px 0 0;">Choose language</p>
+            <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--border); border-radius:14px; height:44px; padding:0 14px; margin-top:14px; background:rgba(255,255,255,0.6);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input type="text" id="s1-ls-search" placeholder="Search language" style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
+            </div>
+            <div id="s1-ls-list" style="margin-top:10px; max-height:240px; overflow-y:auto;">
+              <button class="s1-ls-row" data-lang="en" data-search="english" style="width:100%; display:flex; align-items:center; justify-content:space-between; min-height:52px; padding:0 6px; border:none; background:transparent; cursor:pointer; border-bottom:1px solid rgba(0,0,0,0.06);">
+                <span style="text-align:start;"><span style="display:block; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">English</span><span style="display:block; font-size:12px; color:var(--text2); margin-top:1px;">English</span></span>
+                <svg class="s1-ls-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              </button>
+              <button class="s1-ls-row" data-lang="hi" data-search="hindi हिंदी" style="width:100%; display:flex; align-items:center; justify-content:space-between; min-height:52px; padding:0 6px; border:none; background:transparent; cursor:pointer; border-bottom:1px solid rgba(0,0,0,0.06);">
+                <span style="text-align:start;"><span style="display:block; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">हिंदी</span><span style="display:block; font-size:12px; color:var(--text2); margin-top:1px;">Hindi</span></span>
+                <svg class="s1-ls-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M20 6L9 17l-5-5"/></svg>
+              </button>
+              <button class="s1-ls-row" data-lang="bho" data-search="bhojpuri भोजपुरी" style="width:100%; display:flex; align-items:center; justify-content:space-between; min-height:52px; padding:0 6px; border:none; background:transparent; cursor:pointer;">
+                <span style="text-align:start;"><span style="display:block; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">भोजपुरी</span><span style="display:block; font-size:12px; color:var(--text2); margin-top:1px;">Bhojpuri</span></span>
+                <svg class="s1-ls-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M20 6L9 17l-5-5"/></svg>
+              </button>
+            </div>
           </div>
 
           <!-- DASHBOARD PLACEHOLDER — slides up over everything after OTP confirm -->
@@ -756,26 +789,26 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
                 <span style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
               </span>
-              <span class="vlab en">Home</span>
+              <span class="vlab s1-nav-l en" data-k="navHome">Home</span>
             </button>
             <button class="vtab" data-i="1">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
-              <span class="vlab en">Farms</span>
+              <span class="vlab s1-nav-l en" data-k="navFarms">Farms</span>
             </button>
             <button class="vtab on" data-i="2">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg>
-              <span class="vlab en">Milk</span>
+              <span class="vlab s1-nav-l en" data-k="navMilk">Milk</span>
             </button>
             <button class="vtab" data-i="3">
               <span style="position:relative; display:flex;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
                 <span class="en" style="position:absolute; top:-5px; right:-8px; min-width:15px; height:15px; border-radius:8px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px;">3</span>
               </span>
-              <span class="vlab en">Events</span>
+              <span class="vlab s1-nav-l en" data-k="navEvents">Events</span>
             </button>
             <button class="vtab" data-i="4">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
-              <span class="vlab en">Account</span>
+              <span class="vlab s1-nav-l en" data-k="navAccount">Account</span>
             </button>
           </nav>
           </div>
@@ -863,9 +896,41 @@
         });
       }
 
-      document.getElementById('s1-lang').addEventListener('change', function(e) {
-        lang = e.target.value;
-        applyLang();
+      // ── Language bottom sheet ──
+      var langSheet = document.getElementById('s1-lang-sheet');
+      var langScrim = document.getElementById('s1-lang-scrim');
+      var langSearch = document.getElementById('s1-ls-search');
+      var LANG_LABEL = { en:'English', hi:'हिंदी', bho:'भोजपुरी' };
+      function openLangSheet() {
+        langSheet.style.transform = 'translateY(0)';
+        langScrim.style.opacity = '1';
+        langScrim.style.pointerEvents = 'auto';
+      }
+      function closeLangSheet() {
+        langSheet.style.transform = 'translateY(100%)';
+        langScrim.style.opacity = '0';
+        langScrim.style.pointerEvents = 'none';
+        langSearch.value = '';
+        document.querySelectorAll('.s1-ls-row').forEach(function(r) { r.style.display = 'flex'; });
+      }
+      document.getElementById('s1-lang').addEventListener('click', openLangSheet);
+      langScrim.addEventListener('click', closeLangSheet);
+      langSearch.addEventListener('input', function() {
+        var q = langSearch.value.trim().toLowerCase();
+        document.querySelectorAll('.s1-ls-row').forEach(function(r) {
+          r.style.display = (!q || r.getAttribute('data-search').toLowerCase().indexOf(q) !== -1) ? 'flex' : 'none';
+        });
+      });
+      document.querySelectorAll('.s1-ls-row').forEach(function(row) {
+        row.addEventListener('click', function() {
+          lang = row.getAttribute('data-lang');
+          document.getElementById('s1-lang-cur').textContent = LANG_LABEL[lang];
+          document.querySelectorAll('.s1-ls-row').forEach(function(r) {
+            r.querySelector('.s1-ls-check').style.display = r === row ? 'block' : 'none';
+          });
+          applyLang();
+          closeLangSheet();
+        });
       });
 
       // ── App dark mode: tap Account tab anywhere (temporary home for the switch) ──
@@ -1187,12 +1252,18 @@
               var updEl = document.createElement('span');
               updEl.className = 'en m-upd';
               updEl.title = 'Tap for details';
-              updEl.textContent = '↻';
+              var updIcon = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>';
+              updEl.innerHTML = updIcon;
               updEl.style.cursor = 'pointer';
+              updEl.style.display = 'inline-flex';
+              updEl.style.alignItems = 'center';
+              updEl.style.gap = '4px';
               var updAt = nowHM();
+              var updOpen = false;
               updEl.addEventListener('click', function(e) {
                 e.stopPropagation();
-                updEl.textContent = updEl.textContent === '↻' ? '↻ Updated ' + updAt : '↻';
+                updOpen = !updOpen;
+                updEl.innerHTML = updOpen ? updIcon + '<span>Updated ' + updAt + '</span>' : updIcon;
               });
               row.appendChild(updEl);
             }
