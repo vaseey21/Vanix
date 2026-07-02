@@ -1423,14 +1423,49 @@
         document.getElementById('s7-topbreeds-card').style.display = d.breeds.length > 1 ? 'block' : 'none';
       }
 
-      // ── Flow navigation: dashboard nav ⇄ milk log page ──
+      // ── Unified nav: sliding droplet capsule + page routing ──
       var milkPage = document.getElementById('page-milk');
-      var dashTabs = document.querySelectorAll('#s1-dash .s1-nav-item');
-      if (dashTabs[2]) dashTabs[2].addEventListener('click', function() { milkPage.style.display = 'block'; });
-      var milkTabs = milkPage.querySelectorAll('nav > div');
-      if (milkTabs[0]) { milkTabs[0].style.cursor = 'pointer'; milkTabs[0].addEventListener('click', function() { milkPage.style.display = 'none'; }); }
-      var acctTab = milkTabs[milkTabs.length - 1];
-      if (acctTab) { acctTab.style.cursor = 'pointer'; acctTab.addEventListener('click', function() { document.getElementById('flow-root').classList.toggle('dark'); }); }
+      var dashNav = document.getElementById('dash-nav');
+      var milkNav = document.getElementById('milk-nav');
+
+      function wireNav(nav, onSelect) {
+        var cap = nav.querySelector('.vcap');
+        var tabs = nav.querySelectorAll('.vtab');
+        tabs.forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            var i = +tab.getAttribute('data-i');
+            cap.style.transform = 'translateX(' + (i * 100) + '%)';
+            cap.classList.remove('squish'); void cap.offsetWidth; cap.classList.add('squish');
+            tabs.forEach(function(x) { x.classList.remove('on'); });
+            tab.classList.add('on');
+            if (onSelect) onSelect(i);
+          });
+        });
+      }
+      function resetNav(nav, i) {
+        var cap = nav.querySelector('.vcap');
+        cap.classList.remove('squish');
+        cap.style.transition = 'none';
+        cap.style.transform = 'translateX(' + (i * 100) + '%)';
+        void cap.offsetWidth;
+        cap.style.transition = '';
+        nav.querySelectorAll('.vtab').forEach(function(x) { x.classList.toggle('on', +x.getAttribute('data-i') === i); });
+      }
+
+      wireNav(dashNav, function(i) {
+        if (i === 2) setTimeout(function() {
+          milkPage.style.display = 'block';
+          resetNav(dashNav, 0); // dashboard shows Home again on return
+        }, 280);
+        // i === 4 (Account) dark toggle is handled by the #s1-acct listener
+      });
+      wireNav(milkNav, function(i) {
+        if (i === 0) setTimeout(function() {
+          milkPage.style.display = 'none';
+          resetNav(milkNav, 2); // milk page re-opens with Milk active
+        }, 280);
+        if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+      });
     })();
     </script>
 
