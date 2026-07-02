@@ -1206,6 +1206,115 @@
         });
       }
 
+      // ── Complete summary / analytics page ──
+      var statsPage = document.getElementById('s7-stats');
+      document.getElementById('s7-open-stats').addEventListener('click', function() { statsPage.style.transform = 'translateY(0)'; renderStats(); });
+      document.getElementById('s7-stats-back').addEventListener('click', function() { statsPage.style.transform = 'translateY(100%)'; });
+
+      var WEEKS = ['12 May','19 May','26 May','2 Jun','9 Jun','16 Jun','23 Jun','30 Jun'];
+      var STATS = {
+        'all':      { trend:[512,498,540,567,531,588,549,471],
+                      cows:[['Gauri',88.4],['Lakshmi',76.2],['Mohini',64.9],['Dhauli',58.3],['Kajri',41.7]],
+                      breeds:[['HF Cross',214],['Gir',187],['Sahiwal',96]] },
+        'HF Cross': { trend:[221,208,230,246,228,262,240,198],
+                      cows:[['Gauri',88.4],['Kajri',41.7],['Rani',38.2],['Heera',29.6],['Chandni',16.1]],
+                      breeds:[['HF Cross',214]] },
+        'Gir':      { trend:[186,182,198,205,192,214,200,171],
+                      cows:[['Lakshmi',76.2],['Mohini',64.9],['Ganga',24.8],['Radha',21.1]],
+                      breeds:[['Gir',187]] },
+        'Sahiwal':  { trend:[105,108,112,116,111,112,109,102],
+                      cows:[['Dhauli',58.3],['Sona',22.4],['Badal',15.3]],
+                      breeds:[['Sahiwal',96]] }
+      };
+      var curBreed = 'all';
+
+      document.querySelectorAll('.s7-bchip').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          document.querySelectorAll('.s7-bchip').forEach(function(c) { c.classList.remove('on'); });
+          chip.classList.add('on');
+          curBreed = chip.getAttribute('data-breed');
+          renderStats();
+        });
+      });
+
+      function renderBars(el, rows) {
+        var max = 0;
+        rows.forEach(function(r) { if (r[1] > max) max = r[1]; });
+        el.innerHTML = rows.map(function(r) {
+          var pct = Math.max(4, Math.round(r[1] / max * 100));
+          return '<div class="m-brow"><span class="m-bname">' + r[0] + '</span>' +
+                 '<span class="m-btrack"><span class="m-bfill" style="width:' + pct + '%;"></span>' +
+                 '<span class="m-bval en">' + r[1] + ' L</span></span></div>';
+        }).join('');
+      }
+
+      function renderTrend(data) {
+        var W = 320, H = 150, padL = 6, padR = 10, padT = 24, padB = 22;
+        var min = Math.min.apply(null, data), max = Math.max.apply(null, data);
+        var span = (max - min) || 1;
+        var iw = W - padL - padR, ih = H - padT - padB;
+        function x(i) { return padL + i * iw / (data.length - 1); }
+        function y(v) { return padT + (max - v) / span * ih; }
+        var iMax = data.indexOf(max), iMin = data.indexOf(min);
+        var pts = data.map(function(v, i) { return x(i) + ',' + y(v); }).join(' ');
+        var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%; display:block; overflow:visible;">';
+        [0.0, 0.5, 1.0].forEach(function(f) {
+          var gy = padT + f * ih;
+          svg += '<line class="gline" x1="' + padL + '" y1="' + gy + '" x2="' + (W - padR) + '" y2="' + gy + '"/>';
+        });
+        svg += '<polygon class="tarea" points="' + padL + ',' + (H - padB) + ' ' + pts + ' ' + (W - padR) + ',' + (H - padB) + '"/>';
+        svg += '<polyline class="tline" points="' + pts + '"/>';
+        data.forEach(function(v, i) {
+          var lbl = (i === 0 || i === iMax || i === iMin || i === data.length - 1);
+          if (i === iMax || i === iMin) svg += '<circle class="tdot" cx="' + x(i) + '" cy="' + y(v) + '" r="4"/>';
+          if (lbl) {
+            var tx = Math.min(Math.max(x(i), 14), W - 18);
+            svg += '<text class="tval" text-anchor="middle" x="' + tx + '" y="' + (y(v) - 8) + '">' + v + '</text>';
+          }
+          if (i === 0 || i === iMax || i === iMin || i === data.length - 1) {
+            var ax = Math.min(Math.max(x(i), 20), W - 22);
+            svg += '<text class="tlabel" text-anchor="middle" x="' + ax + '" y="' + (H - 6) + '">' + WEEKS[i] + '</text>';
+          }
+          // invisible hover/touch target per point
+          svg += '<rect data-i="' + i + '" x="' + (x(i) - iw / (data.length - 1) / 2) + '" y="0" width="' + (iw / (data.length - 1)) + '" height="' + H + '" fill="transparent"/>';
+        });
+        svg += '</svg>';
+        var host = document.getElementById('s7-trend');
+        host.innerHTML = svg;
+        var tip = document.getElementById('s7-tip');
+        host.querySelectorAll('rect[data-i]').forEach(function(r) {
+          function showTip() {
+            var i = +r.getAttribute('data-i');
+            tip.textContent = WEEKS[i] + ' · ' + data[i] + ' L';
+            tip.style.display = 'block';
+            var hostRect = host.getBoundingClientRect();
+            var cardRect = host.parentElement.getBoundingClientRect();
+            var px = hostRect.left - cardRect.left + x(i) / W * hostRect.width;
+            tip.style.left = Math.min(Math.max(px - 40, 4), cardRect.width - 96) + 'px';
+            tip.style.top = (hostRect.top - cardRect.top + y(data[i]) / H * hostRect.height - 34) + 'px';
+          }
+          function hideTip() { tip.style.display = 'none'; }
+          r.addEventListener('mouseenter', showTip);
+          r.addEventListener('mouseleave', hideTip);
+          r.addEventListener('touchstart', function(e) { showTip(); }, { passive: true });
+          r.addEventListener('touchend', hideTip);
+        });
+      }
+
+      function renderStats() {
+        var d = STATS[curBreed];
+        renderTrend(d.trend);
+        renderBars(document.getElementById('s7-topcows'), d.cows);
+        renderBars(document.getElementById('s7-topbreeds'), d.breeds);
+        var max = Math.max.apply(null, d.trend), min = Math.min.apply(null, d.trend);
+        document.querySelector('.s7-hi-val').textContent = max + ' L';
+        document.querySelector('.s7-hi-week').textContent = 'Week of ' + WEEKS[d.trend.indexOf(max)];
+        document.querySelector('.s7-lo-val').textContent = min + ' L';
+        document.querySelector('.s7-lo-week').textContent = 'Week of ' + WEEKS[d.trend.indexOf(min)];
+        // single-breed view: breed bar restates the filter — hide the card
+        document.getElementById('s7-topbreeds-card').style.display = d.breeds.length > 1 ? 'block' : 'none';
+      }
+
       // ── Flow navigation: dashboard nav ⇄ milk log page ──
       var milkPage = document.getElementById('page-milk');
       var dashTabs = document.querySelectorAll('#s1-dash .s1-nav-item');
