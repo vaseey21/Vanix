@@ -147,6 +147,7 @@ xs=4  sm=8  md=12  lg=16  pill=24
 - Farm + Cow fields locked on edit — audit trail required
 - Every screen needs an offline state — dark banner, never blank
 - Hindi/Bhojpuri strings run 20–40% longer than English — no fixed-width containers
+- EVERY visual/component change in `vanix_screens.html` must be reflected in `vanix_design_system.html` (and new tokens in `vanix_theme.dart`) in the same session — the design system is the source of truth
 
 ---
 
