@@ -1259,11 +1259,14 @@
           statsPage.style.clipPath = 'inset(0px 0px 0px 0px round 0px)';
         }); });
       });
-      document.getElementById('s7-stats-back').addEventListener('click', function() {
+      function closeStats() {
+        statsPage.scrollTop = 0;
         statsPage.style.clipPath = heroClip();
         statsTimer = setTimeout(function() { statsPage.style.visibility = 'hidden'; }, 500);
-      });
-      document.getElementById('s7-stats-print').addEventListener('click', function() { window.print(); });
+      }
+      document.getElementById('s7-stats-back').addEventListener('click', closeStats);
+      document.getElementById('s7-stats-collapse').addEventListener('click', closeStats);
+      document.getElementById('s7-stats-dl').addEventListener('click', function() { window.print(); });
 
       var WEEKS = ['12 May','19 May','26 May','2 Jun','9 Jun','16 Jun','23 Jun','30 Jun'];
       var STATS = {
