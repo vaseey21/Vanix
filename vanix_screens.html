@@ -612,6 +612,68 @@
         </div>
           </div>
 
+          <!-- COMPLETE SUMMARY / ANALYTICS PAGE — expands from the hero summary -->
+          <div id="s7-stats" style="position:absolute; inset:0; background:var(--bgwarm); z-index:11; transform:translateY(100%); transition:transform 0.5s cubic-bezier(0.32,0.72,0,1); overflow-y:auto;">
+            <div style="padding:14px 20px 120px;">
+              <div style="display:flex; align-items:center; gap:14px;">
+                <button id="s7-stats-back" style="width:40px; height:40px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); font-size:18px; color:var(--text1); padding:0; display:flex; align-items:center; justify-content:center; line-height:1;">‹</button>
+                <h2 style="font-size:20px; font-weight:600; color:var(--text1); margin:0; line-height:40px;">Milk Summary</h2>
+              </div>
+
+              <!-- retained top portion -->
+              <div class="m-stat-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:16px; margin-top:14px;">
+                <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0;">TOTAL MILK — TODAY</p>
+                <p class="en" style="font-size:30px; font-weight:700; color:var(--text1); margin:4px 0 0;">38.6 L <span class="en m-delta" style="font-size:13px; font-weight:600; color:var(--greenink);">▲ 8% vs yesterday</span></p>
+                <div style="display:flex; gap:8px; margin-top:12px;">
+                  <div class="m-tile" style="flex:1; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:8px 10px;"><p class="en" style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">18</p><p style="font-size:10px; color:var(--text2); margin:2px 0 0;">Cows milked</p></div>
+                  <div class="m-tile" style="flex:1; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:8px 10px;"><p class="en" style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">12.5 L</p><p style="font-size:10px; color:var(--text2); margin:2px 0 0;">Max — Gauri</p></div>
+                  <div class="m-tile" style="flex:1; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:8px 10px;"><p class="en" style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">2.0 L</p><p style="font-size:10px; color:var(--text2); margin:2px 0 0;">Min — Kajri</p></div>
+                </div>
+              </div>
+
+              <!-- breed filter -->
+              <div id="s7-breed-chips" style="display:flex; gap:8px; margin-top:16px; overflow-x:auto; padding-bottom:2px;">
+                <button class="s7-bchip on" data-breed="all" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">All breeds</button>
+                <button class="s7-bchip" data-breed="HF Cross" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">HF Cross</button>
+                <button class="s7-bchip" data-breed="Gir" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Gir</button>
+                <button class="s7-bchip" data-breed="Sahiwal" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Sahiwal</button>
+              </div>
+
+              <!-- weekly trend -->
+              <div class="m-stat-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:16px; margin-top:12px; position:relative;">
+                <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0;">WEEKLY YIELD — LAST 8 WEEKS</p>
+                <div id="s7-trend" style="margin-top:10px;"></div>
+                <div id="s7-tip" class="en" style="position:absolute; display:none; background:var(--dark1); color:#FFFFFF; font-size:11px; font-weight:600; padding:5px 9px; border-radius:8px; pointer-events:none; white-space:nowrap; z-index:2;"></div>
+              </div>
+
+              <!-- highest / lowest week -->
+              <div style="display:flex; gap:8px; margin-top:12px;">
+                <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
+                  <p class="en" style="font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0;">HIGHEST WEEK</p>
+                  <p class="en s7-hi-val" style="font-size:20px; font-weight:700; color:var(--text1); margin:4px 0 0;">588 L</p>
+                  <p class="s7-hi-week" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Week of 16 Jun</p>
+                </div>
+                <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
+                  <p class="en" style="font-size:10px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0;">LOWEST WEEK</p>
+                  <p class="en s7-lo-val" style="font-size:20px; font-weight:700; color:var(--text1); margin:4px 0 0;">471 L</p>
+                  <p class="s7-lo-week" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Week of 30 Jun</p>
+                </div>
+              </div>
+
+              <!-- top cows -->
+              <div class="m-stat-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:16px; margin-top:12px;">
+                <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 12px;">TOP 5 COWS — THIS WEEK</p>
+                <div id="s7-topcows"></div>
+              </div>
+
+              <!-- top breeds -->
+              <div class="m-stat-card" id="s7-topbreeds-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:16px; margin-top:12px;">
+                <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 12px;">YIELD BY BREED — THIS WEEK</p>
+                <div id="s7-topbreeds"></div>
+              </div>
+            </div>
+          </div>
+
           <!-- FILTER BOTTOM SHEET (opens from filter button) -->
           <div id="s7-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:8;"></div>
           <div id="s7-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:9; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
