@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#111111" />
+  <title>MyBovine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green:    #4DDE95;
+      --greendeep:#2EBD7E; /* darker CTA shade — screen 01 buttons */
+      --dark1:    #111111;
+      --dark2:    #1C1C1C;
+      --bgwarm:   #F2EDE4;
+      --bgcard:   #FFFFFF;
+      --activebg: #E8F5EE;
+      --text1:    #111111;
+      --text2:    #8C8780;
+      --textdark: #FFFFFF;
+      --border:   #D8D0C5;
+      --warning:  #E8A020;
+      --danger:   #D44C3A;
+      --warnbg:   #FFF8E8;
+      --dangerbg: #FDEAE3;
+      --font-en:  'Noto Sans', sans-serif;
+      --font-hi:  'Noto Sans Devanagari', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1A1A1A;
+      font-family: var(--font-hi);
+      padding: 48px 24px 80px;
+      min-height: 100vh;
+    }
+
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overscroll-behavior: none; }
+    body {
+      background: var(--bgwarm) !important;
+      font-family: var(--font-hi);
+      height: 100dvh;
+      overflow: hidden;
+      padding: 0 !important;
+      min-height: 0 !important;
+    }
+    #app {
+      position: relative;
+      height: 100dvh;
+      overflow: hidden;
+    }
+    /* ── Components ── */
+    .hi { font-family: var(--font-hi); }
+    .en { font-family: var(--font-en); }
+
+    input { outline: none; }
+    button { cursor: pointer; }
+
+    /* Brand-green focus accents (green fill/border only — never green text on white) */
+    #s1-login-panel input:focus { border-bottom-color: var(--greendeep) !important; }
+    #s1-otp-boxes input:focus   { border-color: var(--greendeep) !important; box-shadow: 0 0 0 1px var(--greendeep); }
+
+    /* Readability on glass: darker labels + underlines than plain-white sheet */
+    #s1-sheet p[id^="s1-l-"], #s1-sheet #s1-v-desc, #s1-sheet #s1-nootp { color: #5F5A52 !important; }
+    #s1-sheet input { border-bottom-color: #9A948A !important; }
+    #s1-otp-boxes input { border-color: #9A948A !important; }
+
+    /* ── Dark mode (toggle at top-right) ── */
+    #s1-sheet.dark { background: rgba(16,16,16,0.62) !important; border-top-color: rgba(255,255,255,0.18) !important; }
+    #s1-sheet.dark h2, #s1-sheet.dark input, #s1-sheet.dark select,
+    #s1-sheet.dark #s1-forgot, #s1-sheet.dark #s1-v-title,
+    #s1-sheet.dark #s1-otp-timer, #s1-sheet.dark #s1-v-sent,
+    #s1-sheet.dark p { color: #FFFFFF !important; }
+    #s1-sheet.dark p[id^="s1-l-"], #s1-sheet.dark #s1-v-desc, #s1-sheet.dark #s1-nootp { color: rgba(255,255,255,0.65) !important; }
+    #s1-sheet.dark input { border-bottom-color: rgba(255,255,255,0.4) !important; }
+    #s1-sheet.dark #s1-otp-boxes input { border-color: rgba(255,255,255,0.4) !important; }
+    #s1-sheet.dark input::placeholder { color: rgba(255,255,255,0.45); }
+    #s1-sheet.dark #s1-otp-back { border-color: rgba(255,255,255,0.4) !important; color: #FFFFFF !important; }
+    #s1-sheet.dark select option { color: #111111; }
+  
+  </style>
+</head>
+<body>
+  <div id="app">
+        <!-- ── Layer stack (sits below status bar, fills rest of phone) ── -->
+        <div style="position:relative; height:100%; overflow:hidden;">
+
+          <!-- THEME TOGGLE — top-right over video -->
+          <button id="s1-theme" title="Dark / light mode" style="position:absolute; top:14px; right:14px; z-index:5; width:48px; height:48px; border-radius:50%; border:1px solid rgba(255,255,255,0.35); background:rgba(0,0,0,0.28); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size:19px; line-height:1; color:#FFFFFF;">☾</button>
+
+          <!-- VIDEO LAYER — fades in during transition -->
+          <div id="s1-video" style="position:absolute; inset:0; opacity:0; transition: opacity 2.2s ease; z-index:1;">
+            <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; object-position:center top; position:absolute; inset:0;">
+              <source src="assets/hero.mp4" type="video/mp4">
+            </video>
+            <div style="position:absolute; inset:0; background:rgba(0,0,0,0.45);"></div>
+          </div>
+
+          <!-- BOTTOM SHEET — slides up after video appears -->
+          <div id="s1-sheet" style="position:absolute; bottom:0; left:0; right:0; background:rgba(255,255,255,0.72); -webkit-backdrop-filter: blur(26px) saturate(1.5); backdrop-filter: blur(26px) saturate(1.5); border-top:1px solid rgba(255,255,255,0.55); transition: background 0.4s ease; border-radius:24px 24px 0 0; padding:0 32px 40px; transform:translateY(100%); transition: transform 0.55s cubic-bezier(0.32,0.72,0,1); z-index:3; box-shadow: 0 -8px 32px rgba(0,0,0,0.18);">
+
+            <!-- ── PANEL A: Login ── -->
+            <div id="s1-login-panel">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:26px;">
+                <h2 id="s1-title" style="font-size:26px; font-weight:600; color:var(--text1); margin:0; line-height:1.2;">Login</h2>
+                <select id="s1-lang" style="border:none; background:transparent; font-size:13px; font-weight:600; letter-spacing:0.04em; color:var(--text1); font-family:var(--font-hi); cursor:pointer; -webkit-appearance:none; appearance:none; padding-right:2px; text-decoration:underline; text-underline-offset:4px; text-decoration-thickness:1px;">
+                  <option value="en" selected>ENGLISH ▾</option>
+                  <option value="hi">हिंदी ▾</option>
+                  <option value="bho">भोजपुरी ▾</option>
+                </select>
+              </div>
+
+              <div style="margin-top:36px;">
+                <p id="s1-l-email" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">EMAIL</p>
+                <input type="email" placeholder="you@example.com" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-en); padding:0 0 10px;">
+              </div>
+              <div style="margin-top:28px;">
+                <p id="s1-l-pass" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">PASSWORD</p>
+                <input type="password" placeholder="••••••••" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-en); padding:0 0 10px;">
+              </div>
+
+              <button id="s1-continue" style="width:100%; height:52px; background:var(--greendeep); color:var(--dark1); border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:44px; cursor:pointer;">Continue</button>
+              <p id="s1-forgot" style="font-size:13px; font-weight:500; color:var(--text1); margin:22px 0 0; text-align:center; text-decoration:underline; text-underline-offset:3px; cursor:pointer;">Forgot password?</p>
+            </div>
+
+            <!-- ── PANEL B: OTP (hidden until Continue) ── -->
+            <div id="s1-otp-panel" style="display:none;">
+              <div style="display:flex; align-items:center; gap:14px; padding-top:22px;">
+                <button id="s1-otp-back" style="width:34px; height:34px; border-radius:50%; border:1px solid #DDDDDD; background:transparent; font-size:16px; color:var(--text1); cursor:pointer; line-height:1;">‹</button>
+                <span id="s1-v-title" style="font-size:15px; font-weight:600; color:var(--text1);">Verification</span>
+              </div>
+              <p style="font-size:14px; color:var(--text1); margin:28px 0 0;"><span id="s1-v-sent">OTP was sent to</span> <span style="font-weight:600; text-decoration:underline; text-underline-offset:2px;" class="en">you@example.com</span></p>
+              <p id="s1-v-desc" style="font-size:13px; color:var(--text2); margin:6px 0 0;">Enter the code to log in securely to your account.</p>
+
+              <p id="s1-l-otp" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:32px 0 12px;">ENTER OTP</p>
+              <div id="s1-otp-boxes" style="display:flex; gap:10px;">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+                <input maxlength="1" inputmode="numeric" style="width:44px; height:52px; border:1px solid #BBBBBB; border-radius:10px; background:transparent; text-align:center; font-size:20px; font-family:var(--font-en); color:var(--text1);">
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top:16px;">
+                <span id="s1-otp-timer" style="font-size:13px; color:var(--text1);">Time Remaining 0:30s</span>
+                <span style="font-size:13px; color:var(--text2);"><span id="s1-nootp">Didn't receive OTP?</span> <span id="s1-resend" style="text-decoration:underline; text-underline-offset:2px; color:#BBBBBB;">Resend</span></span>
+              </div>
+
+              <button id="s1-confirm" disabled style="width:100%; height:52px; background:#B5B5B5; color:white; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:40px; transition: background 0.3s ease, color 0.3s ease;">Confirm</button>
+            </div>
+
+          </div>
+
+          <!-- DASHBOARD PLACEHOLDER — slides up over everything after OTP confirm -->
+          <div id="s1-dash" style="position:absolute; inset:0; background:var(--bgwarm); z-index:6; transform:translateY(100%); transition: transform 0.6s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column;">
+
+            <!-- Empty content area (dashboard builds here) -->
+            <div style="flex:1; display:flex; align-items:center; justify-content:center; position:relative;">
+              <p style="font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2);" class="en">Dashboard — Screen 03</p>
+              <!-- temp: colour blocks behind nav so the frosted blur is visible until real content exists -->
+              <div style="position:absolute; bottom:-20px; left:16px; right:16px; height:200px; display:flex; gap:12px;">
+                <div style="flex:1.2; background:#111111; border-radius:16px;"></div>
+                <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
+                  <div style="flex:1; background:#FFFFFF; border-radius:16px; border:1px solid var(--border);"></div>
+                  <div style="flex:1; background:#DCEEDF; border-radius:16px;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── BOTTOM NAV — frosted floating bar, active tab = white capsule (Starbucks style) ── -->
+            <nav style="position:absolute; left:14px; right:14px; bottom:16px; background:rgba(255,255,255,0.42); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); border:1px solid rgba(255,255,255,0.55); border-radius:36px; display:flex; padding:5px; box-shadow: 0 14px 36px rgba(0,0,0,0.20);">
+
+              <!-- Home (active — solid white capsule, green icon+label) -->
+              <button class="s1-nav-item" style="flex:1; min-height:56px; background:#FFFFFF; border:none; border-radius:28px; padding:0 6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; box-shadow: 0 4px 14px rgba(0,0,0,0.10);">
+                <span style="position:relative; display:flex;">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#1E7A52" stroke="#1E7A52" stroke-width="0.5" stroke-linejoin="round"><path d="M12 2.6L2.8 10.8h2.4V21h5.3v-6.2h3v6.2h5.3V10.8h2.4L12 2.6z"/></svg>
+                  <span style="position:absolute; top:-2px; right:-4px; width:9px; height:9px; border-radius:50%; background:var(--danger); border:1.5px solid #FFFFFF;"></span>
+                </span>
+                <span class="s1-nav-l" data-k="navHome" style="font-size:11px; font-weight:600; color:#1E7A52;">Home</span>
+              </button>
+
+              <!-- Farms -->
+              <button class="s1-nav-item" style="flex:1; min-height:56px; background:transparent; border:none; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+                <span class="s1-nav-l" data-k="navFarms" style="font-size:11px; font-weight:500; color:#111111;">Farms</span>
+              </button>
+
+              <!-- Milk Log -->
+              <button class="s1-nav-item" style="flex:1; min-height:56px; background:transparent; border:none; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg>
+                <span class="s1-nav-l" data-k="navMilk" style="font-size:11px; font-weight:500; color:#111111;">Milk</span>
+              </button>
+
+              <!-- Events -->
+              <button class="s1-nav-item" style="flex:1; min-height:56px; background:transparent; border:none; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
+                <span style="position:relative; display:flex;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  <span style="position:absolute; top:-5px; right:-8px; min-width:15px; height:15px; border-radius:8px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px;" class="en">3</span>
+                </span>
+                <span class="s1-nav-l" data-k="navEvents" style="font-size:11px; font-weight:500; color:#111111;">Events</span>
+              </button>
+
+              <!-- Account -->
+              <button class="s1-nav-item" style="flex:1; min-height:56px; background:transparent; border:none; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                <span class="s1-nav-l" data-k="navAccount" style="font-size:11px; font-weight:500; color:#111111;">Account</span>
+              </button>
+
+            </nav>
+          </div>
+
+          <!-- SPLASH BG — off-white, fades out -->
+          <div id="s1-splash-bg" style="position:absolute; inset:0; background:var(--bgwarm); transition: opacity 0.8s ease; z-index:2; pointer-events:none;"></div>
+
+          <!-- ANIMATED LOGO — sits above splash bg, moves from centre → hero position -->
+          <div id="s1-logo" style="
+            position:absolute; left:50%; top:50%;
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.85s cubic-bezier(0.4,0,0.2,1), filter 0.85s ease;
+            z-index:4; text-align:center;
+            filter: none;
+          ">
+            <!-- Dark logo for splash (on bgWarm) -->
+            <img src="https://mybovine.ai/assets/logos/vanix-logo.svg" alt="MyBovine" style="width:250px; height:auto; display:block;">
+          </div>
+
+        </div><!-- /layer stack -->
+  </div>
+    <script>
+    (function() {
+      var video   = document.getElementById('s1-video');
+      var splash  = document.getElementById('s1-splash-bg');
+      var logo    = document.getElementById('s1-logo');
+      var sheet   = document.getElementById('s1-sheet');
+
+      // ── Splash sequence — runs ONCE ──
+      // Logo holds centre on off-white, video fades in slowly,
+      // logo floats up + shrinks + turns white, sheet slides up.
+      setTimeout(function() {
+        video.style.opacity  = '1';
+        splash.style.opacity = '0';
+        logo.style.transform = 'translate(-50%, calc(-50% - 280px)) scale(0.78)';
+        logo.style.filter    = 'brightness(0) invert(1)';
+
+        setTimeout(function() {
+          sheet.style.transform = 'translateY(0)';
+          setTimeout(function() { splash.style.display = 'none'; }, 800);
+        }, 1100);
+      }, 1200);
+
+      // ── Sheet panel swap: Login → OTP → back ──
+      var loginPanel = document.getElementById('s1-login-panel');
+      var otpPanel   = document.getElementById('s1-otp-panel');
+      var timerEl    = document.getElementById('s1-otp-timer');
+      var resendEl   = document.getElementById('s1-resend');
+      var confirmBtn = document.getElementById('s1-confirm');
+      var boxes      = document.getElementById('s1-otp-boxes').querySelectorAll('input');
+      var countdown  = null;
+
+      // ── i18n ──
+      var STRINGS = {
+        en:  { title:'Login', email:'EMAIL', pass:'PASSWORD', cont:'Continue', forgot:'Forgot password?',
+               vtitle:'Verification', sent:'OTP was sent to', desc:'Enter the code to log in securely to your account.',
+               enterotp:'ENTER OTP', timer:'Time Remaining', nootp:"Didn't receive OTP?", resend:'Resend', confirm:'Confirm',
+               navHome:'Home', navFarms:'Farms', navMilk:'Milk', navEvents:'Events', navAccount:'Account' },
+        hi:  { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'जारी रखें', forgot:'पासवर्ड भूल गए?',
+               vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
+               enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
+               navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' },
+        bho: { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'आगे बढ़ीं', forgot:'पासवर्ड भुला गइनी?',
+               vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
+               enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
+               navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' }
+      };
+      var lang = 'en';
+      function t() { return STRINGS[lang]; }
+
+      function applyLang() {
+        document.getElementById('s1-title').textContent   = t().title;
+        document.getElementById('s1-l-email').textContent = t().email;
+        document.getElementById('s1-l-pass').textContent  = t().pass;
+        document.getElementById('s1-continue').textContent = t().cont;
+        document.getElementById('s1-forgot').textContent  = t().forgot;
+        document.getElementById('s1-v-title').textContent = t().vtitle;
+        document.getElementById('s1-v-sent').textContent  = t().sent;
+        document.getElementById('s1-v-desc').textContent  = t().desc;
+        document.getElementById('s1-l-otp').textContent   = t().enterotp;
+        document.getElementById('s1-nootp').textContent   = t().nootp;
+        resendEl.textContent = t().resend;
+        confirmBtn.textContent = t().confirm;
+        document.querySelectorAll('.s1-nav-l').forEach(function(el) {
+          el.textContent = t()[el.getAttribute('data-k')];
+        });
+      }
+
+      document.getElementById('s1-lang').addEventListener('change', function(e) {
+        lang = e.target.value;
+        applyLang();
+      });
+
+      // ── Dark / light mode toggle ──
+      var themeBtn = document.getElementById('s1-theme');
+      themeBtn.addEventListener('click', function() {
+        var dark = sheet.classList.toggle('dark');
+        themeBtn.textContent = dark ? '☀' : '☾';
+      });
+
+      function startTimer() {
+        var timeLeft = 30;
+        resendEl.style.color = '#BBBBBB';
+        resendEl.style.pointerEvents = 'none';
+        clearInterval(countdown);
+        timerEl.textContent = t().timer + ' 0:30s';
+        countdown = setInterval(function() {
+          timeLeft--;
+          var tl = timeLeft;
+          timerEl.textContent = t().timer + ' 0:' + (tl < 10 ? '0' : '') + tl + 's';
+          if (timeLeft <= 0) {
+            clearInterval(countdown);
+            timerEl.textContent = '';
+            resendEl.style.color = 'var(--text1)';
+            resendEl.style.pointerEvents = 'auto';
+          }
+        }, 1000);
+      }
+
+      document.getElementById('s1-continue').addEventListener('click', function() {
+        loginPanel.style.display = 'none';
+        otpPanel.style.display = 'block';
+        boxes.forEach(function(b) { b.value = ''; });
+        confirmBtn.disabled = true;
+        confirmBtn.style.background = '#B5B5B5';
+        confirmBtn.style.color = 'white';
+        boxes[0].focus();
+        startTimer();
+      });
+
+      document.getElementById('s1-otp-back').addEventListener('click', function() {
+        clearInterval(countdown);
+        otpPanel.style.display = 'none';
+        loginPanel.style.display = 'block';
+      });
+
+      resendEl.addEventListener('click', startTimer);
+
+      // Confirm → dashboard placeholder slides up over the whole screen
+      confirmBtn.addEventListener('click', function() {
+        if (confirmBtn.disabled) return;
+        clearInterval(countdown);
+        document.getElementById('s1-dash').style.transform = 'translateY(0)';
+      });
+
+      boxes.forEach(function(box, i) {
+        box.addEventListener('input', function() {
+          box.value = box.value.replace(/\D/g, '');
+          if (box.value && i < boxes.length - 1) boxes[i + 1].focus();
+          var filled = Array.prototype.every.call(boxes, function(b) { return b.value; });
+          confirmBtn.disabled = !filled;
+          confirmBtn.style.background = filled ? 'var(--greendeep)' : '#B5B5B5';
+          confirmBtn.style.color = filled ? 'var(--dark1)' : 'white';
+        });
+        box.addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus();
+        });
+      });
+    })();
+    </script>
+</body>
+</html>
