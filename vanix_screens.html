@@ -157,13 +157,19 @@
     /* ── App-wide dark mode (tap Account tab anywhere to toggle) ── */
     #flow-root.dark #s1-dash { background: #111111 !important; }
     #flow-root.dark #s1-dash > div > p { color: #8C8780 !important; }
-    #flow-root.dark #s1-dash nav, #flow-root.dark #milk-nav { background: rgba(28,28,28,0.55) !important; border-color: rgba(255,255,255,0.16) !important; }
-    #flow-root.dark .s1-nav-item:not(.cap) svg { stroke: #F5F5F5 !important; }
-    #flow-root.dark .s1-nav-item:not(.cap) .s1-nav-l { color: #F5F5F5 !important; }
-    #flow-root.dark .cap .s1-nav-l { color: var(--greenink) !important; }
-    #flow-root.dark .cap svg { fill: var(--greenink) !important; stroke: var(--greenink) !important; }
-    #flow-root.dark #milk-nav > div:not(.mcap) svg { stroke: #F5F5F5 !important; }
-    #flow-root.dark #milk-nav > div:not(.mcap) span { color: #F5F5F5 !important; }
+    /* ── Unified frosted nav: identical metrics everywhere; sliding droplet capsule ── */
+    .vnav { position:absolute; left:14px; right:14px; bottom:16px; background:rgba(255,255,255,0.42); -webkit-backdrop-filter:blur(18px) saturate(1.4); backdrop-filter:blur(18px) saturate(1.4); border:1px solid rgba(255,255,255,0.55); border-radius:36px; display:flex; padding:5px; box-shadow:0 14px 36px rgba(0,0,0,0.20); }
+    .vcap { position:absolute; top:5px; inset-inline-start:5px; width:calc((100% - 10px) / 5); height:56px; background:#FFFFFF; border-radius:28px; box-shadow:0 4px 14px rgba(0,0,0,0.10); transition:transform 0.45s cubic-bezier(0.34,1.25,0.4,1); will-change:transform; }
+    .vcap.squish { animation: vsquish 0.45s cubic-bezier(0.34,1.25,0.4,1); }
+    @keyframes vsquish { 0% { scale:1 1; } 35% { scale:1.16 0.86; } 70% { scale:0.94 1.05; } 100% { scale:1 1; } }
+    .vtab { flex:1; min-height:56px; background:transparent; border:none; padding:0 6px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; position:relative; z-index:1; cursor:pointer; }
+    .vtab svg { stroke:#111111; transition:stroke 0.25s; }
+    .vtab .vlab { font-size:11px; font-weight:500; color:#111111; transition:color 0.25s; }
+    .vtab.on svg { stroke:var(--greenink); }
+    .vtab.on .vlab { color:var(--greenink); font-weight:600; }
+    #flow-root.dark .vnav { background: rgba(28,28,28,0.55) !important; border-color: rgba(255,255,255,0.16) !important; }
+    #flow-root.dark .vtab:not(.on) svg { stroke: #F5F5F5 !important; }
+    #flow-root.dark .vtab:not(.on) .vlab { color: #F5F5F5 !important; }
 
     /* milk log page */
     #flow-root.dark #page-milk > div { background: #111111 !important; }
