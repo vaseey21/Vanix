@@ -1279,8 +1279,14 @@
             if (!row.querySelector('.m-upd')) {
               var updEl = document.createElement('span');
               updEl.className = 'en m-upd';
-              updEl.title = 'Updated after owner approval';
-              updEl.textContent = '↻ Updated';
+              updEl.title = 'Tap for details';
+              updEl.textContent = '↻';
+              updEl.style.cursor = 'pointer';
+              var updAt = nowHM();
+              updEl.addEventListener('click', function(e) {
+                e.stopPropagation();
+                updEl.textContent = updEl.textContent === '↻' ? '↻ Updated ' + updAt : '↻';
+              });
               row.appendChild(updEl);
             }
           }
