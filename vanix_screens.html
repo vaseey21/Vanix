@@ -986,6 +986,7 @@
       var delBack  = document.getElementById('s7-del-backdrop');
       var dupBack  = document.getElementById('s7-dup-backdrop');
       var activeCard  = null;  // card the action sheet is open for
+      var editTarget  = null;  // card being edited via the add page
       var pendingSave = null;  // save awaiting duplicate confirmation
 
       function show(m) { m.style.opacity = '1'; m.style.pointerEvents = 'auto'; }
