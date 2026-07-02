@@ -11,6 +11,8 @@ class VanixColors {
 
   // Brand — two-hue system only
   static const Color brandGreen   = Color(0xFF4DDE95); // logo color; accent only — NEVER on white bg
+  static const Color greenDeep    = Color(0xFF2EBD7E); // CTA fill (Continue/Confirm) w/ dark text; input focus accents
+  static const Color greenInk     = Color(0xFF1E7A52); // green as text/icon on white — only green passing AA on white
   static const Color darkPrimary  = Color(0xFF111111); // dark cards, headers, FAB bg
   static const Color darkSecond   = Color(0xFF1C1C1C); // sub-cards on dark surfaces
 
