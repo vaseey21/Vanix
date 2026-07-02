@@ -85,14 +85,16 @@ xs=4  sm=8  md=12  lg=16  pill=24
 
 | Tab | Hindi | Icon |
 |---|---|---|
-| Home | होम | dashboard |
-| Farms | खेत | barn |
+| Home | होम | house |
+| Farms | खेत | cow head (custom) |
 | Milk Log | दूध | droplet |
 | Events | कार्यक्रम | calendar |
 | Account | खाता | user-circle |
 
-- Active: green pill bg (#E8F5EE), dark label + icon
-- Badge: red (#D44C3A) on Events + Home only
+- Style: frosted floating bar (rgba(255,255,255,0.42) + blur 18px, radius 36, 16px edge margins), equal-width tabs
+- Active: solid white capsule, filled icon + label in greenInk #1E7A52 (the only green allowed as text/icon on white)
+- Inactive: 20px dark #111 stroke icon + 11px dark label on frost, no pill
+- Badge: red (#D44C3A) — count pill on Events, dot on Home, nowhere else
 
 ---
 
