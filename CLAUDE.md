@@ -54,6 +54,8 @@ border       = #D8D0C5
 success      = #4DDE95
 warning      = #E8A020
 danger       = #D44C3A
+greenDeep    = #2EBD7E  // CTA fill (Continue/Confirm) with dark text; input focus accents
+greenInk     = #1E7A52  // green as text/icon on white — the only green that passes AA on white
 
 // Spacing (dp)
 xs=4  sm=8  md=12  lg=16  xl=20  xxl=24  touch=48
