@@ -975,9 +975,41 @@
         });
       }
 
-      document.getElementById('s1-lang').addEventListener('change', function(e) {
-        lang = e.target.value;
-        applyLang();
+      // ── Language bottom sheet ──
+      var langSheet = document.getElementById('s1-lang-sheet');
+      var langScrim = document.getElementById('s1-lang-scrim');
+      var langSearch = document.getElementById('s1-ls-search');
+      var LANG_LABEL = { en:'English', hi:'हिंदी', bho:'भोजपुरी' };
+      function openLangSheet() {
+        langSheet.style.transform = 'translateY(0)';
+        langScrim.style.opacity = '1';
+        langScrim.style.pointerEvents = 'auto';
+      }
+      function closeLangSheet() {
+        langSheet.style.transform = 'translateY(100%)';
+        langScrim.style.opacity = '0';
+        langScrim.style.pointerEvents = 'none';
+        langSearch.value = '';
+        document.querySelectorAll('.s1-ls-row').forEach(function(r) { r.style.display = 'flex'; });
+      }
+      document.getElementById('s1-lang').addEventListener('click', openLangSheet);
+      langScrim.addEventListener('click', closeLangSheet);
+      langSearch.addEventListener('input', function() {
+        var q = langSearch.value.trim().toLowerCase();
+        document.querySelectorAll('.s1-ls-row').forEach(function(r) {
+          r.style.display = (!q || r.getAttribute('data-search').toLowerCase().indexOf(q) !== -1) ? 'flex' : 'none';
+        });
+      });
+      document.querySelectorAll('.s1-ls-row').forEach(function(row) {
+        row.addEventListener('click', function() {
+          lang = row.getAttribute('data-lang');
+          document.getElementById('s1-lang-cur').textContent = LANG_LABEL[lang];
+          document.querySelectorAll('.s1-ls-row').forEach(function(r) {
+            r.querySelector('.s1-ls-check').style.display = r === row ? 'block' : 'none';
+          });
+          applyLang();
+          closeLangSheet();
+        });
       });
 
       // ── App dark mode: tap Account tab anywhere (temporary home for the switch) ──
