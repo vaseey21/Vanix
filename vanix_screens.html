@@ -919,21 +919,21 @@
         themeBtn.textContent = dark ? '☀' : '☾';
       });
 
+      // timer and resend are mutually exclusive: countdown first, then resend replaces it
+      var resendWrap = document.getElementById('s1-resend-wrap');
       function startTimer() {
         var timeLeft = 30;
-        resendEl.style.color = '#8C8780';
-        resendEl.style.pointerEvents = 'none';
         clearInterval(countdown);
+        resendWrap.style.display = 'none';
+        timerEl.style.display = 'inline';
         timerEl.textContent = t().timer + ' 0:30s';
         countdown = setInterval(function() {
           timeLeft--;
-          var tl = timeLeft;
-          timerEl.textContent = t().timer + ' 0:' + (tl < 10 ? '0' : '') + tl + 's';
+          timerEl.textContent = t().timer + ' 0:' + (timeLeft < 10 ? '0' : '') + timeLeft + 's';
           if (timeLeft <= 0) {
             clearInterval(countdown);
-            timerEl.textContent = '';
-            resendEl.style.color = 'var(--text1)';
-            resendEl.style.pointerEvents = 'auto';
+            timerEl.style.display = 'none';
+            resendWrap.style.display = 'inline';
           }
         }, 1000);
       }
