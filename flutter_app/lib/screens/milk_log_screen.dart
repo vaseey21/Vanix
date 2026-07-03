@@ -252,7 +252,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                             width: 262,
                             margin: const EdgeInsets.only(right: 8),
                             padding: const EdgeInsets.fromLTRB(14, 12, 8, 12),
-                            decoration: BoxDecoration(color: b.bg, border: Border.all(color: b.border), borderRadius: BorderRadius.circular(12), border2Fix: null),
+                            decoration: BoxDecoration(color: b.bg, border: Border.all(color: b.border), borderRadius: BorderRadius.circular(12)),
                             child: Row(
                               children: [
                                 Expanded(
