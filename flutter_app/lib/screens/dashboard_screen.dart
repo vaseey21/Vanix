@@ -3,6 +3,7 @@ import '../i18n/strings.dart';
 import '../state/app_state.dart';
 import '../theme/vanix_theme.dart';
 import '../widgets/vanix_bottom_nav.dart';
+import '../widgets/vanix_nav_items.dart';
 import 'milk_log_screen.dart';
 import 'events_screen.dart';
 
