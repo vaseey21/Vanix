@@ -131,7 +131,7 @@ xs=4  sm=8  md=12  lg=16  pill=24
 | 07 | Milk Log | Done — cream hero, milk-scoped tinted banners (NO heat alerts here), date-grouped cards w/ coloured yield box + ✓/⏱, two-pane filter sheet (category rail left, tinted option rows right — never white), tap card → Edit/Delete action sheet, black FAB. Sessions: Morning + Evening only. "View complete summary" → analytics page: retained totals, breed filter, 8-week trend w/ tooltip, highest/lowest week tiles, top-5 cows + yield-by-breed bars (single-hue greenInk/greenDeep) |
 | 08 | Add milk entry | Done — same-phone page: farm (owner only) + cow (Name—Breed—Belt no.) + date (no future) + session pills (Evening locked till 17:00 today, past-session warning modal) + litres, Save/Cancel. Duplicate guard: same cow+session+date → confirm modal |
 | 09 | Edit milk entry | Done — reuses Add-entry page prefilled ("Edit Milk Entry"); delete via confirm modal. Farmer add-to-existing/edit/delete → pending sub-card on the entry card, owner Approve/✕; approve merges/replaces litres, updates time, adds "↻ Updated" badge |
-| 10 | Events / alert centre | Pending |
+| 10 | Events / alert centre | Done — pinned action cards (fever confirm → vet email → appointment; heat confirm → 18h insemination window → 21-day watch; pregnancy check → pregnant/failed) w/ in-place card morphing, ESCALATED chip, live badge/dot sync across navs ("All clear" at zero), reminders (delivery/vaccination/vet check-up), date-grouped history w/ lifecycle stage chips. Action tints stay light in dark mode |
 | 11 | Account | Pending |
 | 12 | Farmer persona (stripped views) | Pending |
 
