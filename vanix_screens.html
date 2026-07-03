@@ -150,7 +150,7 @@
     #s1-sheet.dark #s1-otp-boxes input { border-color: rgba(255,255,255,0.4) !important; }
     #s1-sheet.dark input::placeholder { color: rgba(255,255,255,0.45); }
     #s1-sheet input::placeholder { font-size: 13px; }
-    #s1-sheet.dark #s1-otp-back, #s1-sheet.dark #s1-fp-back { color: #FFFFFF !important; }
+    #s1-sheet.dark #s1-otp-back, #s1-sheet.dark #s1-fp-back, #s1-sheet.dark #s1-rp-back { color: #FFFFFF !important; }
     #s1-sheet.dark #s1-lang { background: rgba(0,0,0,0.30) !important; border-color: rgba(255,255,255,0.30) !important; color: #FFFFFF !important; }
     /* language bottom sheet — dark mode (sibling of #s1-sheet) */
     #s1-sheet.dark ~ #s1-lang-sheet { background: rgba(20,20,20,0.92) !important; border-top-color: rgba(255,255,255,0.18) !important; }
@@ -388,6 +388,25 @@
                 <input type="email" id="s1-in-fpemail" placeholder="you@example.com" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-hi); padding:0 0 10px;">
               </div>
               <button id="s1-fp-send" style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:40px; cursor:pointer;">Send OTP</button>
+            </div>
+
+
+            <!-- ── PANEL D: Reset password (after forgot-password OTP) ── -->
+            <div id="s1-reset-panel" style="display:none;">
+              <div style="display:flex; align-items:center; gap:10px; padding-top:22px;">
+                <button id="s1-rp-back" style="width:34px; height:34px; border:none; background:transparent; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text1);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+                <span id="s1-rp-title" style="font-size:15px; font-weight:600; color:var(--text1);">Set new password</span>
+              </div>
+              <div style="margin-top:28px;">
+                <p id="s1-l-newpass" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">NEW PASSWORD</p>
+                <input type="password" id="s1-in-newpass" placeholder="••••••••" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-hi); padding:0 0 10px;">
+              </div>
+              <div style="margin-top:24px;">
+                <p id="s1-l-repass" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">RE-ENTER PASSWORD</p>
+                <input type="password" id="s1-in-repass" placeholder="••••••••" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-hi); padding:0 0 10px;">
+                <p id="s1-rp-err" style="display:none; font-size:12px; color:var(--danger); margin:8px 0 0;">Passwords don't match</p>
+              </div>
+              <button id="s1-rp-save" style="width:100%; height:52px; background:#B5B5B5; color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:36px; cursor:pointer;" disabled>Save password</button>
             </div>
 
             <!-- ── PANEL B: OTP (hidden until Continue) ── -->
@@ -1156,18 +1175,21 @@
                enterotp:'ENTER OTP', timer:'Time Remaining', nootp:"Didn't receive OTP?", resend:'Resend', confirm:'Confirm',
                ftitle:'Forgot password', fdesc:"Enter your registered email and we'll send you an OTP to reset your password.", fsend:'Send OTP',
                phEmail:'you@example.com', phPass:'Enter your password',
+               rptitle:'Set new password', newpass:'NEW PASSWORD', repass:'RE-ENTER PASSWORD', nomatch:"Passwords don't match", rpsave:'Save password', pwSaved:'Password updated — log in with your new password',
                navHome:'Home', navFarms:'Farms', navMilk:'Milk', navEvents:'Events', navAccount:'Account' },
         hi:  { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'जारी रखें', forgot:'पासवर्ड भूल गए?',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
                ftitle:'पासवर्ड भूल गए', fdesc:'अपना पंजीकृत ईमेल डालें, हम पासवर्ड रीसेट के लिए OTP भेजेंगे।', fsend:'OTP भेजें',
                phEmail:'अपना ईमेल डालें', phPass:'अपना पासवर्ड डालें',
+               rptitle:'नया पासवर्ड सेट करें', newpass:'नया पासवर्ड', repass:'पासवर्ड फिर से डालें', nomatch:'पासवर्ड मेल नहीं खाते', rpsave:'पासवर्ड सहेजें', pwSaved:'पासवर्ड बदल गया — नए पासवर्ड से लॉगिन करें',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' },
         bho: { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'आगे बढ़ीं', forgot:'पासवर्ड भुला गइनी?',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
                ftitle:'पासवर्ड भुला गइनी', fdesc:'आपन पंजीकृत ईमेल डालीं, हम पासवर्ड रीसेट खातिर OTP भेजब।', fsend:'OTP भेजीं',
                phEmail:'आपन ईमेल डालीं', phPass:'आपन पासवर्ड डालीं',
+               rptitle:'नया पासवर्ड सेट करीं', newpass:'नया पासवर्ड', repass:'पासवर्ड फिर से डालीं', nomatch:'पासवर्ड मेल ना खाला', rpsave:'पासवर्ड सहेजीं', pwSaved:'पासवर्ड बदल गइल — नया पासवर्ड से लॉगिन करीं',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' }
       };
       var lang = 'en';
@@ -1186,6 +1208,11 @@
         document.getElementById('s1-in-email').placeholder = t().phEmail;
         document.getElementById('s1-in-pass').placeholder  = t().phPass;
         document.getElementById('s1-in-fpemail').placeholder = t().phEmail;
+        document.getElementById('s1-rp-title').textContent = t().rptitle;
+        document.getElementById('s1-l-newpass').textContent = t().newpass;
+        document.getElementById('s1-l-repass').textContent = t().repass;
+        document.getElementById('s1-rp-err').textContent = t().nomatch;
+        document.getElementById('s1-rp-save').textContent = t().rpsave;
         document.getElementById('s1-v-title').textContent = t().vtitle;
         document.getElementById('s1-v-sent').textContent  = t().sent;
         document.getElementById('s1-v-desc').textContent  = t().desc;
@@ -1283,6 +1310,7 @@
         loginPanel.style.display = 'block';
       });
       document.getElementById('s1-fp-send').addEventListener('click', function() {
+        fromForgot = true;
         document.getElementById('s1-forgot-panel').style.display = 'none';
         otpPanel.style.display = 'block';
         boxes.forEach(function(b) { b.value = ''; });
@@ -1293,6 +1321,7 @@
       });
 
       document.getElementById('s1-continue').addEventListener('click', function() {
+        fromForgot = false;
         loginPanel.style.display = 'none';
         otpPanel.style.display = 'block';
         boxes.forEach(function(b) { b.value = ''; });
@@ -1311,10 +1340,54 @@
 
       resendEl.addEventListener('click', startTimer);
 
-      // Confirm → dashboard placeholder slides up over the whole screen
+
+      // ── Reset password panel (forgot-password flow only) ──
+      var fromForgot = false;
+      var resetPanel = document.getElementById('s1-reset-panel');
+      var npIn = document.getElementById('s1-in-newpass');
+      var rpIn = document.getElementById('s1-in-repass');
+      var rpErr = document.getElementById('s1-rp-err');
+      var rpSave = document.getElementById('s1-rp-save');
+      function rpValidate() {
+        var filled = npIn.value.length >= 4 && rpIn.value.length >= 4;
+        var match = npIn.value === rpIn.value;
+        rpErr.style.display = (rpIn.value && !match) ? 'block' : 'none';
+        var ok = filled && match;
+        rpSave.disabled = !ok;
+        rpSave.style.background = ok ? 'var(--greenink)' : '#B5B5B5';
+      }
+      npIn.addEventListener('input', rpValidate);
+      rpIn.addEventListener('input', rpValidate);
+      document.getElementById('s1-rp-back').addEventListener('click', function() {
+        resetPanel.style.display = 'none';
+        otpPanel.style.display = 'block';
+      });
+      rpSave.addEventListener('click', function() {
+        if (rpSave.disabled) return;
+        fromForgot = false;
+        resetPanel.style.display = 'none';
+        loginPanel.style.display = 'block';
+        var note = document.getElementById('s1-pw-note');
+        if (!note) {
+          note = document.createElement('p');
+          note.id = 's1-pw-note';
+          note.style.cssText = 'font-size:12px; font-weight:600; color:var(--greenink); background:var(--activebg); border:1px solid var(--greendeep); border-radius:12px; padding:10px 14px; margin:16px 0 0;';
+          loginPanel.insertBefore(note, loginPanel.children[1]);
+        }
+        note.textContent = t().pwSaved;
+        npIn.value = ''; rpIn.value = ''; rpValidate();
+      });
+
+      // Confirm → dashboard (login) or reset-password panel (forgot flow)
       confirmBtn.addEventListener('click', function() {
         if (confirmBtn.disabled) return;
         clearInterval(countdown);
+        if (fromForgot) {
+          otpPanel.style.display = 'none';
+          resetPanel.style.display = 'block';
+          npIn.focus();
+          return;
+        }
         document.getElementById('s1-dash').style.transform = 'translateY(0)';
       });
 
