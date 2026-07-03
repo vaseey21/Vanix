@@ -3,6 +3,7 @@ import '../i18n/strings.dart';
 import '../state/app_state.dart';
 import '../theme/vanix_theme.dart';
 import '../widgets/vanix_bottom_nav.dart';
+import '../widgets/vanix_nav_items.dart';
 import 'milk_log_screen.dart';
 import 'events_screen.dart';
 
@@ -58,13 +59,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     isDark: isDark,
                     selectedIndex: _navIndex,
                     onTap: _onNavTap,
-                    items: [
-                      VanixNavItem(icon: Icons.home_outlined, label: t.navHome, showDot: true),
-                      VanixNavItem(icon: Icons.pets_outlined, label: t.navFarms),
-                      VanixNavItem(icon: Icons.water_drop_outlined, label: t.navMilk),
-                      VanixNavItem(icon: Icons.event_note_outlined, label: t.navEvents, badgeCount: 3),
-                      VanixNavItem(icon: Icons.person_outline, label: t.navAccount),
-                    ],
+                    items: buildVanixNavItems(t, widget.appState),
                   ),
                 ),
               ],

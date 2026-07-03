@@ -129,6 +129,8 @@ xs=4  sm=8  md=12  lg=16  pill=24
 
 ## Screens plan
 
+"Done" below means ported to **both** `vanix_screens.html` and `flutter_app/` — see `flutter_app/README.md` for the authoritative per-screen Flutter status table.
+
 | # | Screen | Status |
 |---|---|---|
 | 01 | Login — phone OTP | Done |
