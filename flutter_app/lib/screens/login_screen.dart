@@ -1,0 +1,621 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import '../i18n/strings.dart';
+import '../state/app_state.dart';
+import '../theme/vanix_theme.dart';
+import '../widgets/language_sheet.dart';
+import 'dashboard_screen.dart';
+
+enum _Panel { login, forgot, otp, reset }
+
+/// Login → OTP → Dashboard, plus the Forgot-password → OTP → Reset-password
+/// side path. Mirrors the #s1-sheet flow in vanix_screens.html panel-for-panel.
+///
+/// NOTE for dev: the HTML version plays a looping hero video behind the sheet
+/// (assets/hero.mp4) that fades in before the sheet slides up. Swap the
+/// `_HeroBackground` placeholder below for a real video_player widget once
+/// the asset pipeline is wired up — the timing/opacity choreography is a
+/// straightforward port of the CSS transition (`opacity 2.2s ease`).
+class LoginScreen extends StatefulWidget {
+  final AppState appState;
+  const LoginScreen({super.key, required this.appState});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  _Panel _panel = _Panel.login;
+  bool _fromForgot = false;
+
+  final _emailCtrl = TextEditingController();
+  final _passCtrl = TextEditingController();
+  final _fpEmailCtrl = TextEditingController();
+  final _newPassCtrl = TextEditingController();
+  final _rePassCtrl = TextEditingController();
+  final List<TextEditingController> _otpCtrls = List.generate(6, (_) => TextEditingController());
+  final List<FocusNode> _otpFocus = List.generate(6, (_) => FocusNode());
+
+  Timer? _timer;
+  int _secondsLeft = 30;
+  bool _showResend = false;
+  String? _pwSavedNote;
+
+  VanixStrings get t => VanixStrings.of(widget.appState.languageCode);
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    for (final c in _otpCtrls) {
+      c.dispose();
+    }
+    for (final f in _otpFocus) {
+      f.dispose();
+    }
+    _emailCtrl.dispose();
+    _passCtrl.dispose();
+    _fpEmailCtrl.dispose();
+    _newPassCtrl.dispose();
+    _rePassCtrl.dispose();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+    setState(() {
+      _secondsLeft = 30;
+      _showResend = false;
+    });
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _secondsLeft--;
+        if (_secondsLeft <= 0) {
+          timer.cancel();
+          _showResend = true;
+        }
+      });
+    });
+  }
+
+  void _goToOtp({required bool fromForgot}) {
+    setState(() {
+      _fromForgot = fromForgot;
+      _panel = _Panel.otp;
+      for (final c in _otpCtrls) {
+        c.clear();
+      }
+    });
+    _startTimer();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _otpFocus.first.requestFocus());
+  }
+
+  bool get _otpFilled => _otpCtrls.every((c) => c.text.isNotEmpty);
+
+  void _confirmOtp() {
+    if (!_otpFilled) return;
+    _timer?.cancel();
+    if (_fromForgot) {
+      setState(() => _panel = _Panel.reset);
+      return;
+    }
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => DashboardScreen(appState: widget.appState)),
+    );
+  }
+
+  bool get _rePassMatches => _newPassCtrl.text == _rePassCtrl.text;
+  bool get _rePassValid => _newPassCtrl.text.length >= 4 && _rePassCtrl.text.length >= 4 && _rePassMatches;
+
+  void _savePassword() {
+    if (!_rePassValid) return;
+    setState(() {
+      _fromForgot = false;
+      _panel = _Panel.login;
+      _pwSavedNote = t.pwSaved;
+      _newPassCtrl.clear();
+      _rePassCtrl.clear();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = widget.appState.isDark;
+    return AnimatedBuilder(
+      animation: widget.appState,
+      builder: (context, _) {
+        final theme = isDark ? vanixDarkTheme(languageCode: widget.appState.languageCode) : vanixLightTheme(languageCode: widget.appState.languageCode);
+        return Theme(
+          data: theme,
+          child: Scaffold(
+            backgroundColor: VanixColors.darkPrimary,
+            body: Stack(
+              children: [
+                const Positioned.fill(child: _HeroBackground()),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 14, top: 4),
+                      child: _ThemeToggle(isDark: isDark, onTap: widget.appState.toggleDark),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: _SheetContainer(isDark: isDark, child: _buildPanel(isDark)),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildPanel(bool isDark) {
+    switch (_panel) {
+      case _Panel.login:
+        return _LoginPanel(
+          key: const ValueKey('login'),
+          t: t,
+          isDark: isDark,
+          emailCtrl: _emailCtrl,
+          passCtrl: _passCtrl,
+          currentLanguage: widget.appState.languageCode,
+          pwSavedNote: _pwSavedNote,
+          onLanguageTap: () => showLanguageSheet(context, current: widget.appState.languageCode, onSelect: widget.appState.setLanguage),
+          onForgot: () => setState(() => _panel = _Panel.forgot),
+          onContinue: () => _goToOtp(fromForgot: false),
+        );
+      case _Panel.forgot:
+        return _ForgotPanel(
+          key: const ValueKey('forgot'),
+          t: t,
+          isDark: isDark,
+          emailCtrl: _fpEmailCtrl,
+          onBack: () => setState(() => _panel = _Panel.login),
+          onSend: () => _goToOtp(fromForgot: true),
+        );
+      case _Panel.otp:
+        return _OtpPanel(
+          key: const ValueKey('otp'),
+          t: t,
+          isDark: isDark,
+          otpCtrls: _otpCtrls,
+          otpFocus: _otpFocus,
+          secondsLeft: _secondsLeft,
+          showResend: _showResend,
+          confirmEnabled: _otpFilled,
+          targetEmail: _fromForgot ? _fpEmailCtrl.text : _emailCtrl.text,
+          onBack: () {
+            _timer?.cancel();
+            setState(() => _panel = _fromForgot ? _Panel.forgot : _Panel.login);
+          },
+          onResend: _startTimer,
+          onChanged: () => setState(() {}),
+          onConfirm: _confirmOtp,
+        );
+      case _Panel.reset:
+        return _ResetPanel(
+          key: const ValueKey('reset'),
+          t: t,
+          isDark: isDark,
+          newPassCtrl: _newPassCtrl,
+          rePassCtrl: _rePassCtrl,
+          showMismatch: _rePassCtrl.text.isNotEmpty && !_rePassMatches,
+          saveEnabled: _rePassValid,
+          onBack: () => setState(() => _panel = _Panel.otp),
+          onChanged: () => setState(() {}),
+          onSave: _savePassword,
+        );
+    }
+  }
+}
+
+/// Placeholder for the looping hero video + 45% dark scrim from the HTML.
+/// Dev: replace with a VideoPlayerController playing assets/hero.mp4.
+class _HeroBackground extends StatelessWidget {
+  const _HeroBackground();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFF203A2C), Color(0xFF0E1A14)]),
+      ),
+      child: Container(color: Colors.black.withOpacity(0.45)),
+    );
+  }
+}
+
+class _ThemeToggle extends StatelessWidget {
+  final bool isDark;
+  final VoidCallback onTap;
+  const _ThemeToggle({required this.isDark, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 350),
+        width: 54,
+        height: 30,
+        padding: const EdgeInsets.symmetric(horizontal: 2),
+        decoration: BoxDecoration(
+          color: isDark ? Colors.black.withOpacity(0.60) : Colors.black.withOpacity(0.28),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: isDark ? Colors.white.withOpacity(0.20) : Colors.white.withOpacity(0.35)),
+        ),
+        child: AnimatedAlign(
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeOutCubic,
+          alignment: isDark ? Alignment.centerRight : Alignment.centerLeft,
+          child: Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF333333) : Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.30), blurRadius: 6, offset: const Offset(0, 2))],
+            ),
+            child: Icon(isDark ? Icons.dark_mode : Icons.wb_sunny_outlined, size: 13, color: isDark ? const Color(0xFFF5F5F5) : const Color(0xFF555555)),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SheetContainer extends StatelessWidget {
+  final bool isDark;
+  final Widget child;
+  const _SheetContainer({required this.isDark, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 400),
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(32, 0, 32, 40),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0x9E101010) : Colors.white.withOpacity(0.72),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        border: Border(top: BorderSide(color: Colors.white.withOpacity(isDark ? 0.10 : 0.55))),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.18), blurRadius: 32, offset: const Offset(0, -8))],
+      ),
+      child: SafeArea(
+        top: false,
+        child: AnimatedSwitcher(duration: const Duration(milliseconds: 250), child: child),
+      ),
+    );
+  }
+}
+
+class _LoginPanel extends StatelessWidget {
+  final VanixStrings t;
+  final bool isDark;
+  final TextEditingController emailCtrl, passCtrl;
+  final String currentLanguage;
+  final String? pwSavedNote;
+  final VoidCallback onLanguageTap, onForgot, onContinue;
+
+  const _LoginPanel({
+    super.key,
+    required this.t,
+    required this.isDark,
+    required this.emailCtrl,
+    required this.passCtrl,
+    required this.currentLanguage,
+    required this.pwSavedNote,
+    required this.onLanguageTap,
+    required this.onForgot,
+    required this.onContinue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    final native = VanixLanguage.supported.firstWhere((l) => l.code == currentLanguage).native;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 26),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(t.title, style: TextStyle(fontSize: 26, fontWeight: FontWeight.w600, color: textColor)),
+            _PillButton(label: native, onTap: onLanguageTap, isDark: isDark),
+          ],
+        ),
+        if (pwSavedNote != null) ...[
+          const SizedBox(height: 16),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(color: VanixColors.activeBg, border: Border.all(color: VanixColors.greenDeep), borderRadius: BorderRadius.circular(12)),
+            child: Text(pwSavedNote!, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+          ),
+        ],
+        const SizedBox(height: 36),
+        _FieldLabel(t.email, isDark: isDark),
+        _UnderlineField(controller: emailCtrl, hint: t.phEmail, isDark: isDark),
+        const SizedBox(height: 28),
+        _FieldLabel(t.pass, isDark: isDark),
+        _UnderlineField(controller: passCtrl, hint: t.phPass, isDark: isDark, obscure: true),
+        const SizedBox(height: 44),
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onContinue, child: Text(t.cont))),
+        const SizedBox(height: 22),
+        Center(
+          child: GestureDetector(
+            onTap: onForgot,
+            child: Text(t.forgot, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: textColor, decoration: TextDecoration.underline)),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ForgotPanel extends StatelessWidget {
+  final VanixStrings t;
+  final bool isDark;
+  final TextEditingController emailCtrl;
+  final VoidCallback onBack, onSend;
+
+  const _ForgotPanel({super.key, required this.t, required this.isDark, required this.emailCtrl, required this.onBack, required this.onSend});
+
+  @override
+  Widget build(BuildContext context) {
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 22),
+        _BackRow(title: t.ftitle, isDark: isDark, onBack: onBack),
+        Padding(
+          padding: const EdgeInsets.only(top: 24),
+          child: Text(t.fdesc, style: TextStyle(fontSize: 13, color: textColor.withOpacity(0.65), height: 1.6)),
+        ),
+        const SizedBox(height: 28),
+        _FieldLabel(t.email, isDark: isDark),
+        _UnderlineField(controller: emailCtrl, hint: t.phEmail, isDark: isDark),
+        const SizedBox(height: 40),
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onSend, child: Text(t.fsend))),
+      ],
+    );
+  }
+}
+
+class _OtpPanel extends StatelessWidget {
+  final VanixStrings t;
+  final bool isDark;
+  final List<TextEditingController> otpCtrls;
+  final List<FocusNode> otpFocus;
+  final int secondsLeft;
+  final bool showResend, confirmEnabled;
+  final String targetEmail;
+  final VoidCallback onBack, onResend, onChanged, onConfirm;
+
+  const _OtpPanel({
+    super.key,
+    required this.t,
+    required this.isDark,
+    required this.otpCtrls,
+    required this.otpFocus,
+    required this.secondsLeft,
+    required this.showResend,
+    required this.confirmEnabled,
+    required this.targetEmail,
+    required this.onBack,
+    required this.onResend,
+    required this.onChanged,
+    required this.onConfirm,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    final hintColor = isDark ? const Color(0xA6FFFFFF) : VanixColors.textHint;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 22),
+        _BackRow(title: t.vtitle, isDark: isDark, onBack: onBack),
+        Padding(
+          padding: const EdgeInsets.only(top: 28),
+          child: RichText(
+            text: TextSpan(
+              style: TextStyle(fontSize: 14, color: textColor, fontFamily: Theme.of(context).textTheme.bodyMedium?.fontFamily),
+              children: [
+                TextSpan(text: '${t.sent} '),
+                TextSpan(text: targetEmail.isEmpty ? 'you@example.com' : targetEmail, style: const TextStyle(fontWeight: FontWeight.w600, decoration: TextDecoration.underline)),
+              ],
+            ),
+          ),
+        ),
+        Padding(padding: const EdgeInsets.only(top: 6), child: Text(t.desc, style: TextStyle(fontSize: 13, color: hintColor))),
+        const SizedBox(height: 20),
+        _FieldLabel(t.enterotp, isDark: isDark),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            for (var i = 0; i < 6; i++)
+              SizedBox(
+                width: 42,
+                height: 52,
+                child: TextField(
+                  controller: otpCtrls[i],
+                  focusNode: otpFocus[i],
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  maxLength: 1,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: textColor),
+                  decoration: InputDecoration(counterText: '', contentPadding: EdgeInsets.zero, enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: isDark ? const Color(0x66FFFFFF) : const Color(0xFF9A948A)))),
+                  onChanged: (v) {
+                    if (v.isNotEmpty && i < 5) otpFocus[i + 1].requestFocus();
+                    onChanged();
+                  },
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 14),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(t.nootp, style: TextStyle(fontSize: 12, color: hintColor)),
+            if (!showResend)
+              Text('${t.timer} 0:${secondsLeft < 10 ? '0$secondsLeft' : secondsLeft}s', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: hintColor))
+            else
+              GestureDetector(onTap: onResend, child: Text(t.resend, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.greenInk))),
+          ],
+        ),
+        const SizedBox(height: 30),
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: confirmEnabled ? onConfirm : null, child: Text(t.confirm))),
+      ],
+    );
+  }
+}
+
+class _ResetPanel extends StatelessWidget {
+  final VanixStrings t;
+  final bool isDark;
+  final TextEditingController newPassCtrl, rePassCtrl;
+  final bool showMismatch, saveEnabled;
+  final VoidCallback onBack, onChanged, onSave;
+
+  const _ResetPanel({
+    super.key,
+    required this.t,
+    required this.isDark,
+    required this.newPassCtrl,
+    required this.rePassCtrl,
+    required this.showMismatch,
+    required this.saveEnabled,
+    required this.onBack,
+    required this.onChanged,
+    required this.onSave,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 22),
+        _BackRow(title: t.rptitle, isDark: isDark, onBack: onBack),
+        const SizedBox(height: 28),
+        _FieldLabel(t.newpass, isDark: isDark),
+        _UnderlineField(controller: newPassCtrl, hint: '••••••••', isDark: isDark, obscure: true, onChanged: onChanged),
+        const SizedBox(height: 24),
+        _FieldLabel(t.repass, isDark: isDark),
+        _UnderlineField(controller: rePassCtrl, hint: '••••••••', isDark: isDark, obscure: true, onChanged: onChanged),
+        if (showMismatch) Padding(padding: const EdgeInsets.only(top: 8), child: Text(t.nomatch, style: const TextStyle(fontSize: 12, color: VanixColors.danger))),
+        const SizedBox(height: 36),
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: saveEnabled ? onSave : null, child: Text(t.rpsave))),
+      ],
+    );
+  }
+}
+
+// ── shared bits ──────────────────────────────────────────────
+
+class _BackRow extends StatelessWidget {
+  final String title;
+  final bool isDark;
+  final VoidCallback onBack;
+  const _BackRow({required this.title, required this.isDark, required this.onBack});
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isDark ? Colors.white : VanixColors.textPrimary;
+    return Row(
+      children: [
+        IconButton(onPressed: onBack, icon: Icon(Icons.chevron_left, color: color), padding: EdgeInsets.zero, constraints: const BoxConstraints(minWidth: 34, minHeight: 34)),
+        const SizedBox(width: 4),
+        Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: color)),
+      ],
+    );
+  }
+}
+
+class _FieldLabel extends StatelessWidget {
+  final String label;
+  final bool isDark;
+  const _FieldLabel(this.label, {required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: isDark ? const Color(0xA6FFFFFF) : VanixColors.textHint)),
+    );
+  }
+}
+
+class _UnderlineField extends StatelessWidget {
+  final TextEditingController controller;
+  final String hint;
+  final bool isDark, obscure;
+  final VoidCallback? onChanged;
+  const _UnderlineField({required this.controller, required this.hint, required this.isDark, this.obscure = false, this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    final lineColor = isDark ? const Color(0x66FFFFFF) : const Color(0xFFCCCCCC);
+    return TextField(
+      controller: controller,
+      obscureText: obscure,
+      style: TextStyle(fontSize: 17, color: textColor),
+      onChanged: (_) => onChanged?.call(),
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: TextStyle(fontSize: 13, color: isDark ? const Color(0x73FFFFFF) : VanixColors.textHint),
+        filled: false,
+        contentPadding: const EdgeInsets.only(bottom: 10),
+        border: UnderlineInputBorder(borderSide: BorderSide(color: lineColor)),
+        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: lineColor)),
+        focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: VanixColors.greenDeep)),
+      ),
+    );
+  }
+}
+
+class _PillButton extends StatelessWidget {
+  final String label;
+  final bool isDark;
+  final VoidCallback onTap;
+  const _PillButton({required this.label, required this.isDark, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        height: 32,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          border: Border.all(color: isDark ? const Color(0x4DFFFFFF) : VanixColors.border),
+          color: isDark ? Colors.black.withOpacity(0.30) : Colors.white.withOpacity(0.55),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: textColor)),
+            const SizedBox(width: 6),
+            Icon(Icons.keyboard_arrow_down, size: 14, color: textColor),
+          ],
+        ),
+      ),
+    );
+  }
+}

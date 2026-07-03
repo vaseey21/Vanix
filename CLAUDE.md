@@ -28,12 +28,21 @@ This repo contains the **design system and screen mockups** for the MyBovine far
 
 ## Files in this repo
 
+Two tracks, both maintained every session:
+
+1. **HTML mockups** — fast-iteration design spec + live preview (GitHub Pages). Build/change things here first.
+2. **`flutter_app/`** — the real Flutter app a dev builds from. Every HTML change in the same session must be ported here too, or `flutter_app/` silently drifts from the spec.
+
 | File | Purpose |
 |---|---|
 | `vanix_design_system.html` | Visual design reference — tokens, components, rules. Do not edit casually. |
-| `vanix_theme.dart` | Flutter theme file — VanixColors, VanixSpacing, VanixRadius, VanixTextTheme, vanixTheme() |
+| `vanix_theme.dart` | Root-level Flutter theme reference (kept in sync with `flutter_app/lib/theme/vanix_theme.dart`) |
 | `vanix_screens.html` | All screen mockups — this is the active build file |
+| `prototype.html` | Full-viewport (no phone frame) mirror of `vanix_screens.html`, synced every session |
 | `index.html` | GitHub Pages landing page — links to screens + design system |
+| `flutter_app/` | Real Flutter app — see `flutter_app/README.md` for what's ported vs. pending |
+
+**Session rule:** any interaction/visual change made in `vanix_screens.html` gets ported into `flutter_app/` (or added to its README's pending list if the target screen isn't built yet) in the same session — don't let the two tracks diverge.
 
 ---
 
