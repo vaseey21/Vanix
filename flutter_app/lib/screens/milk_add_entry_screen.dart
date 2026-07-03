@@ -210,7 +210,7 @@ class _MilkAddEntryScreenState extends State<MilkAddEntryScreen> {
               Text('FARM', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
-                initialValue: _farm,
+                value: _farm,
                 items: [for (final f in MilkSeed.farms) DropdownMenuItem(value: f, child: Text(f))],
                 onChanged: (v) => setState(() => _farm = v!),
               ),
@@ -218,7 +218,7 @@ class _MilkAddEntryScreenState extends State<MilkAddEntryScreen> {
               Text('COW', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
               const SizedBox(height: 8),
               DropdownButtonFormField<Cow>(
-                initialValue: _cow,
+                value: _cow,
                 items: [for (final c in MilkSeed.cows) DropdownMenuItem(value: c, child: Text(c.display, overflow: TextOverflow.ellipsis))],
                 onChanged: (v) => setState(() => _cow = v!),
               ),

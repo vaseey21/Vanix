@@ -176,7 +176,7 @@ class _EventsScreenState extends State<EventsScreen> {
               const Padding(padding: EdgeInsets.only(top: 12, bottom: 10), child: Text('Does Kajri look unwell to you?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
               Row(
                 children: [
-                  Expanded(child: OutlinedButton(onPressed: () => setState(() => _fever = _FeverState.falseAlarm), child: const Text("No, she's fine"))),
+                  Expanded(child: OutlinedButton(onPressed: () => setState(() { _fever = _FeverState.falseAlarm; widget.appState.resolveEvent(); }), child: const Text("No, she's fine"))),
                   const SizedBox(width: 8),
                   Expanded(
                     flex: 2,
@@ -192,7 +192,6 @@ class _EventsScreenState extends State<EventsScreen> {
           ),
         );
       case _FeverState.falseAlarm:
-        widget.appState.resolveEvent();
         return _ActionCard(
           bg: VanixColors.bgCard,
           border: VanixColors.border,
@@ -224,7 +223,7 @@ class _EventsScreenState extends State<EventsScreen> {
                   style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger),
                   onPressed: () {
                     if (!_vetEmailCtrl.text.contains('@')) return;
-                    setState(() => _fever = _FeverState.requested);
+                    setState(() { _fever = _FeverState.requested; widget.appState.resolveEvent(); });
                   },
                   child: const Text('Send appointment request'),
                 ),
@@ -233,7 +232,6 @@ class _EventsScreenState extends State<EventsScreen> {
           ),
         );
       case _FeverState.requested:
-        widget.appState.resolveEvent();
         return _ActionCard(
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
@@ -269,7 +267,7 @@ class _EventsScreenState extends State<EventsScreen> {
               const Padding(padding: EdgeInsets.only(top: 12, bottom: 10), child: Text('Is Gauri in heat?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
               Row(
                 children: [
-                  Expanded(child: OutlinedButton(onPressed: () => setState(() => _heat = _HeatState.dismissed), child: const Text('No'))),
+                  Expanded(child: OutlinedButton(onPressed: () => setState(() { _heat = _HeatState.dismissed; widget.appState.resolveEvent(); }), child: const Text('No'))),
                   const SizedBox(width: 8),
                   Expanded(
                     flex: 2,
@@ -285,7 +283,6 @@ class _EventsScreenState extends State<EventsScreen> {
           ),
         );
       case _HeatState.dismissed:
-        widget.appState.resolveEvent();
         return _ActionCard(
           bg: VanixColors.bgCard,
           border: VanixColors.border,
@@ -317,14 +314,13 @@ class _EventsScreenState extends State<EventsScreen> {
                 const SizedBox(height: 10),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(onPressed: () => setState(() => _heat = _HeatState.watching), child: const Text('Log insemination')),
+                  child: ElevatedButton(onPressed: () => setState(() { _heat = _HeatState.watching; widget.appState.resolveEvent(); }), child: const Text('Log insemination')),
                 ),
               ],
             ),
           ),
         );
       case _HeatState.watching:
-        widget.appState.resolveEvent();
         return _ActionCard(
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
@@ -358,18 +354,17 @@ class _EventsScreenState extends State<EventsScreen> {
             padding: const EdgeInsets.only(top: 12),
             child: Row(
               children: [
-                Expanded(child: OutlinedButton(onPressed: () => setState(() => _preg = _PregState.failed), child: const Text('Not pregnant'))),
+                Expanded(child: OutlinedButton(onPressed: () => setState(() { _preg = _PregState.failed; widget.appState.resolveEvent(); }), child: const Text('Not pregnant'))),
                 const SizedBox(width: 8),
                 Expanded(
                   flex: 2,
-                  child: ElevatedButton(onPressed: () => setState(() => _preg = _PregState.confirmed), child: const Text('Vet confirmed — pregnant')),
+                  child: ElevatedButton(onPressed: () => setState(() { _preg = _PregState.confirmed; widget.appState.resolveEvent(); }), child: const Text('Vet confirmed — pregnant')),
                 ),
               ],
             ),
           ),
         );
       case _PregState.failed:
-        widget.appState.resolveEvent();
         return _ActionCard(
           bg: VanixColors.bgCard,
           border: VanixColors.border,
@@ -388,7 +383,6 @@ class _EventsScreenState extends State<EventsScreen> {
           ),
         );
       case _PregState.confirmed:
-        widget.appState.resolveEvent();
         return _ActionCard(
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
