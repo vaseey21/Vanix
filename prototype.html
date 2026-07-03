@@ -253,8 +253,8 @@
           <!-- THEME TOGGLE — top-right over video -->
           <button id="s1-theme" title="Dark / light mode" style="position:absolute; top:16px; right:14px; z-index:5; width:54px; height:30px; border-radius:15px; border:1px solid rgba(255,255,255,0.35); background:rgba(0,0,0,0.28); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding:0; display:flex; align-items:center;">
             <span id="s1-theme-knob" style="width:24px; height:24px; border-radius:50%; background:#FFFFFF; margin-inline-start:2px; box-shadow:0 2px 6px rgba(0,0,0,0.30); transition:transform 0.35s cubic-bezier(0.32,0.72,0,1); display:flex; align-items:center; justify-content:center;">
-              <svg id="s1-theme-moon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-              <svg id="s1-theme-sun" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="2" stroke-linecap="round" style="display:none;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+              <svg id="s1-theme-sun" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+              <svg id="s1-theme-moon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F5F5F5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
             </span>
           </button>
 
@@ -1157,9 +1157,14 @@
       var themeBtn = document.getElementById('s1-theme');
       themeBtn.addEventListener('click', function() {
         var dark = sheet.classList.toggle('dark');
-        document.getElementById('s1-theme-knob').style.transform = dark ? 'translateX(24px)' : 'translateX(0)';
-        document.getElementById('s1-theme-moon').style.display = dark ? 'none' : 'block';
-        document.getElementById('s1-theme-sun').style.display = dark ? 'block' : 'none';
+        var knob = document.getElementById('s1-theme-knob');
+        knob.style.transform = dark ? 'translateX(24px)' : 'translateX(0)';
+        // sun in light mode, moon in dark mode; the pill itself goes dark too
+        document.getElementById('s1-theme-sun').style.display = dark ? 'none' : 'block';
+        document.getElementById('s1-theme-moon').style.display = dark ? 'block' : 'none';
+        knob.style.background = dark ? '#333333' : '#FFFFFF';
+        themeBtn.style.background = dark ? 'rgba(0,0,0,0.60)' : 'rgba(0,0,0,0.28)';
+        themeBtn.style.borderColor = dark ? 'rgba(255,255,255,0.20)' : 'rgba(255,255,255,0.35)';
       });
 
       // timer and resend are mutually exclusive: countdown first, then resend replaces it
