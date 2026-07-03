@@ -199,6 +199,9 @@
     #flow-root.dark .m-late { background: #33290F !important; border-color: #8A6A1F !important; color: #E8C87A !important; }
     /* status banners keep their light tint colours in dark mode — no override */
     /* ── Events page ── */
+    .ev-tab.on { background:var(--dark1) !important; color:#FFFFFF !important; border-color:var(--dark1) !important; font-weight:600; }
+    #flow-root.dark .ev-tab { background:#1C1C1C; border-color:#3A3A3A; color:#F5F5F5; }
+    #flow-root.dark .ev-tab.on { background:#F5F5F5 !important; color:#111111 !important; border-color:#F5F5F5 !important; }
     #flow-root.dark #ev-count-pill { background: var(--dangerbg) !important; color: #8B2800 !important; border-color: var(--danger) !important; }
     #flow-root.dark #page-events > div { background: #111111 !important; }
     /* action cards keep their light tint colours in dark mode (same rule as milk banners) */
@@ -943,6 +946,13 @@
             <div style="padding:14px 16px 0;">
 
               <!-- ── NEEDS ACTION — prominent pinned cards ── -->
+              <div id="ev-tabs" style="display:flex; gap:8px; margin:0 0 14px; overflow-x:auto; padding-bottom:2px;">
+                <button class="ev-tab on" data-tab="all" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">All</button>
+                <button class="ev-tab" data-tab="action" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Needs action</button>
+                <button class="ev-tab" data-tab="rem" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Reminders</button>
+              </div>
+
+              <div id="ev-sec-action">
               <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs action</p>
 
               <!-- 1. Suspected fever -->
@@ -995,6 +1005,9 @@
                 </div>
               </div>
 
+              </div><!-- /sec-action -->
+
+              <div id="ev-sec-rem">
               <!-- ── REMINDERS ── -->
               <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Reminders</p>
 
@@ -1020,6 +1033,9 @@
                 </div>
               </div>
 
+              </div><!-- /sec-rem -->
+
+              <div id="ev-sec-hist">
               <!-- ── TIMELINE ── -->
               <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">History</p>
               <div id="ev-timeline">
@@ -1058,6 +1074,8 @@
                   <span class="en" style="font-size:11px; color:var(--text2); flex-shrink:0;">09:15</span>
                 </div>
               </div>
+
+            </div><!-- /sec-hist -->
 
             </div><!-- /inner padding -->
             </div><!-- /scroll -->
@@ -1747,6 +1765,19 @@
         }
       }
       function evResolve() { evOpen = Math.max(0, evOpen - 1); evUpdateBadges(); }
+
+      // Events tabs: All / Needs action / Reminders
+      document.querySelectorAll('.ev-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.ev-tab').forEach(function(t) { t.classList.remove('on'); });
+          tab.classList.add('on');
+          var v = tab.getAttribute('data-tab');
+          document.getElementById('ev-sec-action').style.display = (v === 'all' || v === 'action') ? 'block' : 'none';
+          document.getElementById('ev-sec-rem').style.display = (v === 'all' || v === 'rem') ? 'block' : 'none';
+          document.getElementById('ev-sec-hist').style.display = v === 'all' ? 'block' : 'none';
+        });
+      });
+
 
       // card morph helpers: swap card body + tint
       function evSetTint(card, bg, border) {
