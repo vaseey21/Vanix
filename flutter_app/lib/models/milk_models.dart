@@ -55,14 +55,16 @@ class Cow {
 /// Seed data matching the values already locked in vanix_screens.html
 /// (Gauri = today's max, Kajri = today's min, 18 cows milked, 38.6 L total).
 class MilkSeed {
+  // Breed set matches the Cattle Health Logic v3.1 breed matrix
+  // (Ongole, Jersey, Gir/Sahiwal, Desi) — not the earlier invented "HF Cross".
   static const cows = [
-    Cow('Gauri', 'HF Cross', '41'),
-    Cow('Kajri', 'HF Cross', '63'),
-    Cow('Mohini', 'Gir', '91'),
-    Cow('Dhauli', 'Sahiwal', '18'),
-    Cow('Ganga', 'Gir', '27'),
-    Cow('Lakshmi', 'HF Cross', '52'),
-    Cow('Bhoori', 'Sahiwal', '09'),
+    Cow('Gauri', 'Jersey', '41'),
+    Cow('Kajri', 'Jersey', '63'),
+    Cow('Mohini', 'Desi', '91'),
+    Cow('Dhauli', 'Gir/Sahiwal', '18'),
+    Cow('Ganga', 'Ongole', '27'),
+    Cow('Lakshmi', 'Ongole', '52'),
+    Cow('Bhoori', 'Gir/Sahiwal', '09'),
   ];
 
   static const farms = ['Green Valley Farm', 'Sunrise Dairy'];
