@@ -8,15 +8,29 @@ import 'milk_log_screen.dart';
 
 enum _Tab { all, action, reminders }
 
-enum _FeverState { initial, falseAlarm, awaitingEmail, requested }
+/// Shared by every P0 card (Fever / Abortion / Fresh Cow) — diagnostic
+/// confirm -> vet email -> requested. Mirrors evVetRequestFlow() in
+/// vanix_screens.html.
+enum _VetFlowState { initial, falseAlarm, awaitingEmail, requested }
+
 enum _HeatState { initial, dismissed, windowOpen, watching }
 enum _PregState { initial, failed, confirmed }
 
+/// Shared by every P2 diagnostic card (Mastitis / Lameness / Ketosis) —
+/// confirm -> flagged for physical inspection, no vet email. Mirrors
+/// evInspectionFlow() in vanix_screens.html.
+enum _InspectState { initial, falseAlarm, flagged }
+
+/// Shared by every single-acknowledge card (Proestrus / Herd Heat Stress /
+/// Calibration Complete). Mirrors evAcknowledgeFlow() in vanix_screens.html.
+enum _AckState { initial, acknowledged }
+
 /// Events — mirrors #page-events in vanix_screens.html: All / Needs action /
-/// Reminders tabs, three morphing action cards (fever, heat, pregnancy
-/// check), reminders, and a date-grouped history timeline. Card resolution
-/// calls AppState.resolveEvent() so the badge/dot stays synced with every
-/// other nav on screen (Home, Milk Log) exactly like the JS evUpdateBadges().
+/// Reminders tabs, 11 action cards spanning the P0-P3 priority matrix from
+/// Cattle Health Logic v3.1 (Block 7 — Alert & Feedback), reminders, and a
+/// date-grouped history timeline. Card resolution calls
+/// AppState.resolveEvent() so the badge/dot stays synced with every other
+/// nav on screen (Home, Milk Log) exactly like the JS evUpdateBadges().
 class EventsScreen extends StatefulWidget {
   final AppState appState;
   const EventsScreen({super.key, required this.appState});
@@ -29,14 +43,33 @@ class _EventsScreenState extends State<EventsScreen> {
   final int _navIndex = 3;
   _Tab _tab = _Tab.all;
 
-  _FeverState _fever = _FeverState.initial;
+  // P0 — critical
+  _VetFlowState _fever = _VetFlowState.initial;
+  _VetFlowState _abort = _VetFlowState.initial;
+  _VetFlowState _freshCow = _VetFlowState.initial;
+  final _feverEmailCtrl = TextEditingController();
+  final _abortEmailCtrl = TextEditingController();
+  final _freshCowEmailCtrl = TextEditingController();
+
+  // P1 — actionable
   _HeatState _heat = _HeatState.initial;
   _PregState _preg = _PregState.initial;
-  final _vetEmailCtrl = TextEditingController();
+
+  // P2 — warning
+  _InspectState _mastitis = _InspectState.initial;
+  _InspectState _lameness = _InspectState.initial;
+  _InspectState _ketosis = _InspectState.initial;
+  _AckState _proestrus = _AckState.initial;
+
+  // P3 — info
+  _AckState _herdStress = _AckState.initial;
+  _AckState _calib = _AckState.initial;
 
   @override
   void dispose() {
-    _vetEmailCtrl.dispose();
+    _feverEmailCtrl.dispose();
+    _abortEmailCtrl.dispose();
+    _freshCowEmailCtrl.dispose();
     super.dispose();
   }
 
@@ -106,9 +139,25 @@ class _EventsScreenState extends State<EventsScreen> {
                         const SizedBox(height: 10),
                         _buildFeverCard(isDark),
                         const SizedBox(height: 10),
+                        _buildAbortCard(isDark),
+                        const SizedBox(height: 10),
+                        _buildFreshCowCard(isDark),
+                        const SizedBox(height: 10),
                         _buildHeatCard(isDark),
                         const SizedBox(height: 10),
                         _buildPregCard(isDark),
+                        const SizedBox(height: 10),
+                        _buildMastitisCard(isDark),
+                        const SizedBox(height: 10),
+                        _buildLamenessCard(isDark),
+                        const SizedBox(height: 10),
+                        _buildKetosisCard(isDark),
+                        const SizedBox(height: 10),
+                        _buildProestrusCard(isDark),
+                        const SizedBox(height: 10),
+                        _buildHerdStressCard(isDark),
+                        const SizedBox(height: 10),
+                        _buildCalibCard(isDark),
                       ],
                     ),
                   ),
@@ -160,13 +209,16 @@ class _EventsScreenState extends State<EventsScreen> {
     );
   }
 
+  // ── P0: Fever ──
   Widget _buildFeverCard(bool isDark) {
     switch (_fever) {
-      case _FeverState.initial:
+      case _VetFlowState.initial:
         return _ActionCard(
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           escalated: true,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
@@ -176,88 +228,201 @@ class _EventsScreenState extends State<EventsScreen> {
               const Padding(padding: EdgeInsets.only(top: 12, bottom: 10), child: Text('Does Kajri look unwell to you?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
               Row(
                 children: [
-                  Expanded(child: OutlinedButton(onPressed: () => setState(() { _fever = _FeverState.falseAlarm; widget.appState.resolveEvent(); }), child: const Text("No, she's fine"))),
+                  Expanded(child: OutlinedButton(onPressed: () => setState(() { _fever = _VetFlowState.falseAlarm; widget.appState.resolveEvent(); }), child: const Text("No, she's fine"))),
                   const SizedBox(width: 8),
-                  Expanded(
-                    flex: 2,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger),
-                      onPressed: () => setState(() => _fever = _FeverState.awaitingEmail),
-                      child: const Text("Yes, it's fever"),
-                    ),
-                  ),
+                  Expanded(flex: 2, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger), onPressed: () => setState(() => _fever = _VetFlowState.awaitingEmail), child: const Text("Yes, it's fever"))),
                 ],
               ),
             ],
           ),
         );
-      case _FeverState.falseAlarm:
+      case _VetFlowState.falseAlarm:
         return _ActionCard(
           bg: VanixColors.bgCard,
           border: VanixColors.border,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
           child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Marked as false alarm — monitoring continues. The owner has been notified.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
         );
-      case _FeverState.awaitingEmail:
+      case _VetFlowState.awaitingEmail:
         return _ActionCard(
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(padding: EdgeInsets.only(top: 12, bottom: 8), child: Text('Request a vet appointment', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
-              TextField(
-                controller: _vetEmailCtrl,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(hintText: "Vet's email — vet@example.com"),
-              ),
-              const SizedBox(height: 8),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger),
-                  onPressed: () {
-                    if (!_vetEmailCtrl.text.contains('@')) return;
-                    setState(() { _fever = _FeverState.requested; widget.appState.resolveEvent(); });
-                  },
-                  child: const Text('Send appointment request'),
-                ),
-              ),
-            ],
-          ),
+          child: _vetEmailForm(_feverEmailCtrl, () => setState(() { _fever = _VetFlowState.requested; widget.appState.resolveEvent(); })),
         );
-      case _FeverState.requested:
+      case _VetFlowState.requested:
         return _ActionCard(
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
-          child: Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Vet appointment requested ✓', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-                Text("Sent to ${_vetEmailCtrl.text} — Kajri · Fever · Green Valley Farm. You'll be notified when the vet confirms.", style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
-              ],
-            ),
-          ),
+          child: _vetRequestedMessage('Kajri · Fever · Green Valley Farm', _feverEmailCtrl.text),
         );
     }
   }
 
+  // ── P0: Abortion / pregnancy loss ──
+  Widget _buildAbortCard(bool isDark) {
+    switch (_abort) {
+      case _VetFlowState.initial:
+        return _ActionCard(
+          bg: VanixColors.dangerBg,
+          border: VanixColors.danger,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
+          title: 'Possible pregnancy loss — Mohini',
+          sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
+          meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(padding: EdgeInsets.only(top: 12, bottom: 10), child: Text('Does Mohini show these signs?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
+              Row(
+                children: [
+                  Expanded(child: OutlinedButton(onPressed: () => setState(() { _abort = _VetFlowState.falseAlarm; widget.appState.resolveEvent(); }), child: const Text("No, she's fine"))),
+                  const SizedBox(width: 8),
+                  Expanded(flex: 2, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger), onPressed: () => setState(() => _abort = _VetFlowState.awaitingEmail), child: const Text('Yes, report to vet'))),
+                ],
+              ),
+            ],
+          ),
+        );
+      case _VetFlowState.falseAlarm:
+        return _ActionCard(
+          bg: VanixColors.bgCard,
+          border: VanixColors.border,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
+          title: 'Possible pregnancy loss — Mohini',
+          sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
+          meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
+          child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Marked as false alarm — monitoring continues.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+        );
+      case _VetFlowState.awaitingEmail:
+        return _ActionCard(
+          bg: VanixColors.dangerBg,
+          border: VanixColors.danger,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
+          title: 'Possible pregnancy loss — Mohini',
+          sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
+          meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
+          child: _vetEmailForm(_abortEmailCtrl, () => setState(() { _abort = _VetFlowState.requested; widget.appState.resolveEvent(); })),
+        );
+      case _VetFlowState.requested:
+        return _ActionCard(
+          bg: VanixColors.activeBg,
+          border: VanixColors.greenDeep,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
+          title: 'Possible pregnancy loss — Mohini',
+          sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
+          meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
+          child: _vetRequestedMessage('Mohini · Pregnancy loss · Sunrise Dairy', _abortEmailCtrl.text),
+        );
+    }
+  }
+
+  // ── P0: Fresh cow / post-calving monitor ──
+  Widget _buildFreshCowCard(bool isDark) {
+    switch (_freshCow) {
+      case _VetFlowState.initial:
+        return _ActionCard(
+          bg: VanixColors.dangerBg,
+          border: VanixColors.danger,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
+          title: 'Fresh cow health dip — Ganga',
+          sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
+          meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(padding: EdgeInsets.only(top: 12, bottom: 10), child: Text('Does Ganga seem off to you?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
+              Row(
+                children: [
+                  Expanded(child: OutlinedButton(onPressed: () => setState(() { _freshCow = _VetFlowState.falseAlarm; widget.appState.resolveEvent(); }), child: const Text("No, she's fine"))),
+                  const SizedBox(width: 8),
+                  Expanded(flex: 2, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger), onPressed: () => setState(() => _freshCow = _VetFlowState.awaitingEmail), child: const Text('Yes, report to vet'))),
+                ],
+              ),
+            ],
+          ),
+        );
+      case _VetFlowState.falseAlarm:
+        return _ActionCard(
+          bg: VanixColors.bgCard,
+          border: VanixColors.border,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
+          title: 'Fresh cow health dip — Ganga',
+          sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
+          meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
+          child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Marked as false alarm — monitoring continues.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+        );
+      case _VetFlowState.awaitingEmail:
+        return _ActionCard(
+          bg: VanixColors.dangerBg,
+          border: VanixColors.danger,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
+          title: 'Fresh cow health dip — Ganga',
+          sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
+          meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
+          child: _vetEmailForm(_freshCowEmailCtrl, () => setState(() { _freshCow = _VetFlowState.requested; widget.appState.resolveEvent(); })),
+        );
+      case _VetFlowState.requested:
+        return _ActionCard(
+          bg: VanixColors.activeBg,
+          border: VanixColors.greenDeep,
+          priority: _Priority.p0,
+          channel: 'Push + SMS · Immediate vet visit',
+          title: 'Fresh cow health dip — Ganga',
+          sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
+          meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
+          child: _vetRequestedMessage('Ganga · Post-calving · Green Valley Farm', _freshCowEmailCtrl.text),
+        );
+    }
+  }
+
+  // shared vet-email input + send button (P0 cards)
+  Widget _vetEmailForm(TextEditingController ctrl, VoidCallback onSent) {
+    return _VetEmailForm(controller: ctrl, onSent: onSent);
+  }
+
+  Widget _vetRequestedMessage(String context, String email) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Vet appointment requested ✓', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+          Text("Sent to ${email.isEmpty ? 'the vet' : email} — $context. You'll be notified when the vet confirms.", style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+        ],
+      ),
+    );
+  }
+
+  // ── P1: Heat cycle → insemination window ──
   Widget _buildHeatCard(bool isDark) {
     switch (_heat) {
       case _HeatState.initial:
         return _ActionCard(
           bg: VanixColors.warningBg,
           border: VanixColors.warning,
+          priority: _Priority.p1,
+          channel: 'App notification · Schedule inseminator',
           title: 'Heat cycle detected — Gauri',
           sub: 'Temperature swinging up and down with high movement since 04:30 this morning.',
           meta: 'Green Valley Farm · Belt 41 · auto-confirms in 4h',
@@ -269,14 +434,7 @@ class _EventsScreenState extends State<EventsScreen> {
                 children: [
                   Expanded(child: OutlinedButton(onPressed: () => setState(() { _heat = _HeatState.dismissed; widget.appState.resolveEvent(); }), child: const Text('No'))),
                   const SizedBox(width: 8),
-                  Expanded(
-                    flex: 2,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: VanixColors.warningInk),
-                      onPressed: () => setState(() => _heat = _HeatState.windowOpen),
-                      child: const Text('Yes, in heat'),
-                    ),
-                  ),
+                  Expanded(flex: 2, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: VanixColors.warningInk), onPressed: () => setState(() => _heat = _HeatState.windowOpen), child: const Text('Yes, in heat'))),
                 ],
               ),
             ],
@@ -286,6 +444,8 @@ class _EventsScreenState extends State<EventsScreen> {
         return _ActionCard(
           bg: VanixColors.bgCard,
           border: VanixColors.border,
+          priority: _Priority.p1,
+          channel: 'App notification · Schedule inseminator',
           title: 'Heat cycle detected — Gauri',
           sub: 'Temperature swinging up and down with high movement since 04:30 this morning.',
           meta: 'Green Valley Farm · Belt 41',
@@ -295,6 +455,8 @@ class _EventsScreenState extends State<EventsScreen> {
         return _ActionCard(
           bg: VanixColors.warningBg,
           border: VanixColors.warning,
+          priority: _Priority.p1,
+          channel: 'App notification · Schedule inseminator',
           title: 'Heat cycle detected — Gauri',
           sub: 'Temperature swinging up and down with high movement since 04:30 this morning.',
           meta: 'Green Valley Farm · Belt 41',
@@ -303,19 +465,16 @@ class _EventsScreenState extends State<EventsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Insemination window open — 17h 45m left', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                const Text('Optimal window — 11h 30m left', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
                 const SizedBox(height: 8),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(3),
-                  child: LinearProgressIndicator(value: 0.08, minHeight: 6, backgroundColor: Colors.black.withOpacity(0.10), valueColor: const AlwaysStoppedAnimation(VanixColors.warningInk)),
+                  child: LinearProgressIndicator(value: 0.52, minHeight: 6, backgroundColor: Colors.black.withOpacity(0.10), valueColor: const AlwaysStoppedAnimation(VanixColors.warningInk)),
                 ),
                 const SizedBox(height: 6),
-                const Text('Best results within 18 hours of heat onset. Log the insemination once done.', style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
+                const Text("T+6h to T+18h: peak fertility. Before T+6h the window hasn't opened yet; after T+18h fertility drops (late window). Log the insemination once done.", style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
                 const SizedBox(height: 10),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(onPressed: () => setState(() { _heat = _HeatState.watching; widget.appState.resolveEvent(); }), child: const Text('Log insemination')),
-                ),
+                SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => setState(() { _heat = _HeatState.watching; widget.appState.resolveEvent(); }), child: const Text('Log insemination'))),
               ],
             ),
           ),
@@ -324,6 +483,8 @@ class _EventsScreenState extends State<EventsScreen> {
         return _ActionCard(
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
+          priority: _Priority.p1,
+          channel: 'App notification · Schedule inseminator',
           title: 'Heat cycle detected — Gauri',
           sub: 'Temperature swinging up and down with high movement since 04:30 this morning.',
           meta: 'Green Valley Farm · Belt 41',
@@ -341,12 +502,15 @@ class _EventsScreenState extends State<EventsScreen> {
     }
   }
 
+  // ── P1: Pregnancy check due ──
   Widget _buildPregCard(bool isDark) {
     switch (_preg) {
       case _PregState.initial:
         return _ActionCard(
           bg: VanixColors.warningBg,
           border: VanixColors.warning,
+          priority: _Priority.p1,
+          channel: 'App notification · Confirm with vet',
           title: 'Pregnancy check due — Mohini',
           sub: '21 days since insemination and no heat detected. Call your vet to confirm the pregnancy.',
           meta: 'Sunrise Dairy · Belt 91 · inseminated 12 Jun',
@@ -356,10 +520,7 @@ class _EventsScreenState extends State<EventsScreen> {
               children: [
                 Expanded(child: OutlinedButton(onPressed: () => setState(() { _preg = _PregState.failed; widget.appState.resolveEvent(); }), child: const Text('Not pregnant'))),
                 const SizedBox(width: 8),
-                Expanded(
-                  flex: 2,
-                  child: ElevatedButton(onPressed: () => setState(() { _preg = _PregState.confirmed; widget.appState.resolveEvent(); }), child: const Text('Vet confirmed — pregnant')),
-                ),
+                Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() { _preg = _PregState.confirmed; widget.appState.resolveEvent(); }), child: const Text('Vet confirmed — pregnant'))),
               ],
             ),
           ),
@@ -368,6 +529,8 @@ class _EventsScreenState extends State<EventsScreen> {
         return _ActionCard(
           bg: VanixColors.bgCard,
           border: VanixColors.border,
+          priority: _Priority.p1,
+          channel: 'App notification · Confirm with vet',
           title: 'Pregnancy check due — Mohini',
           sub: '21 days since insemination and no heat detected.',
           meta: 'Sunrise Dairy · Belt 91',
@@ -386,6 +549,8 @@ class _EventsScreenState extends State<EventsScreen> {
         return _ActionCard(
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
+          priority: _Priority.p1,
+          channel: 'App notification · Confirm with vet',
           title: 'Pregnancy check due — Mohini',
           sub: '21 days since insemination and no heat detected.',
           meta: 'Sunrise Dairy · Belt 91',
@@ -401,6 +566,262 @@ class _EventsScreenState extends State<EventsScreen> {
           ),
         );
     }
+  }
+
+  // shared: P2 diagnostic card builder (Mastitis / Lameness / Ketosis)
+  Widget _buildInspectCard({
+    required bool isDark,
+    required _InspectState state,
+    required ValueChanged<_InspectState> onChange,
+    required String title,
+    required String sub,
+    required String meta,
+    required String question,
+  }) {
+    switch (state) {
+      case _InspectState.initial:
+        return _ActionCard(
+          bg: VanixColors.bgCard,
+          border: VanixColors.border,
+          leftAccentColor: VanixColors.warning,
+          leftAccentWidth: 2,
+          priority: _Priority.p2,
+          channel: 'App inbox · Physical inspection',
+          title: title,
+          sub: sub,
+          meta: meta,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(padding: const EdgeInsets.only(top: 12, bottom: 10), child: Text(question, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
+              Row(
+                children: [
+                  Expanded(child: OutlinedButton(onPressed: () => onChange(_InspectState.falseAlarm), child: const Text('No'))),
+                  const SizedBox(width: 8),
+                  Expanded(flex: 2, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: VanixColors.warning, foregroundColor: VanixColors.darkPrimary), onPressed: () => onChange(_InspectState.flagged), child: const Text('Yes, flag it'))),
+                ],
+              ),
+            ],
+          ),
+        );
+      case _InspectState.falseAlarm:
+        return _ActionCard(
+          bg: VanixColors.bgCard,
+          border: VanixColors.border,
+          priority: _Priority.p2,
+          channel: 'App inbox · Physical inspection',
+          title: title,
+          sub: sub,
+          meta: meta,
+          child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Marked as false alarm — monitoring continues.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+        );
+      case _InspectState.flagged:
+        return _ActionCard(
+          bg: VanixColors.bgCard,
+          border: VanixColors.border,
+          priority: _Priority.p2,
+          channel: 'App inbox · Physical inspection',
+          title: title,
+          sub: sub,
+          meta: meta,
+          child: const Padding(
+            padding: EdgeInsets.only(top: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Flagged for inspection ✓', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.warningInk)),
+                Text('She has been flagged for a physical check at the next milking.', style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
+              ],
+            ),
+          ),
+        );
+    }
+  }
+
+  Widget _buildMastitisCard(bool isDark) => _buildInspectCard(
+        isDark: isDark,
+        state: _mastitis,
+        onChange: (s) => setState(() { _mastitis = s; if (s != _InspectState.initial) widget.appState.resolveEvent(); }),
+        title: 'Possible mastitis — Bhoori',
+        sub: 'Temperature up and feeding down — possible udder infection.',
+        meta: 'Green Valley Farm · Belt 09',
+        question: 'Does Bhoori show swelling or milk changes?',
+      );
+
+  Widget _buildLamenessCard(bool isDark) => _buildInspectCard(
+        isDark: isDark,
+        state: _lameness,
+        onChange: (s) => setState(() { _lameness = s; if (s != _InspectState.initial) widget.appState.resolveEvent(); }),
+        title: 'Possible lameness — Dhauli',
+        sub: 'Barely standing and resting far more than usual — possible leg or hoof issue.',
+        meta: 'Green Valley Farm · Belt 18',
+        question: 'Does Dhauli seem to be limping?',
+      );
+
+  Widget _buildKetosisCard(bool isDark) => _buildInspectCard(
+        isDark: isDark,
+        state: _ketosis,
+        onChange: (s) => setState(() { _ketosis = s; if (s != _InspectState.initial) widget.appState.resolveEvent(); }),
+        title: 'Possible ketosis — Lakshmi',
+        sub: 'Reduced rumination this early in her milking cycle — a metabolic condition common just after calving.',
+        meta: 'Green Valley Farm · Belt 52 · Day 12 in milk',
+        question: 'Does Lakshmi seem lethargic or off her feed?',
+      );
+
+  // shared: single-acknowledge card builder (Proestrus / Herd Heat Stress / Calibration)
+  Widget _buildAckCard({
+    required bool isDark,
+    required _AckState state,
+    required ValueChanged<_AckState> onChange,
+    required _Priority priority,
+    required String title,
+    required String sub,
+    String? meta,
+    required String buttonLabel,
+    required String resolvedMessage,
+  }) {
+    final isP2 = priority == _Priority.p2;
+    if (state == _AckState.initial) {
+      return _ActionCard(
+        bg: VanixColors.bgCard,
+        border: VanixColors.border,
+        leftAccentColor: isP2 ? VanixColors.warning : null,
+        leftAccentWidth: isP2 ? 2 : 0,
+        priority: priority,
+        channel: isP2 ? 'App inbox · Monitor closely' : 'App inbox · Info only',
+        title: title,
+        sub: sub,
+        meta: meta,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () => onChange(_AckState.acknowledged), child: Text(buttonLabel))),
+        ),
+      );
+    }
+    return _ActionCard(
+      bg: VanixColors.bgCard,
+      border: VanixColors.border,
+      priority: priority,
+      channel: isP2 ? 'App inbox · Monitor closely' : 'App inbox · Info only',
+      title: title,
+      sub: sub,
+      meta: meta,
+      child: Padding(padding: const EdgeInsets.only(top: 12), child: Text(resolvedMessage, style: const TextStyle(fontSize: 13, color: VanixColors.textHint))),
+    );
+  }
+
+  Widget _buildProestrusCard(bool isDark) => _buildAckCard(
+        isDark: isDark,
+        state: _proestrus,
+        onChange: (s) => setState(() { _proestrus = s; widget.appState.resolveEvent(); }),
+        priority: _Priority.p2,
+        title: 'Early heat signs — Kajri',
+        sub: "Mild temperature and activity rise — possible early signs of heat starting. We'll alert you again if it strengthens.",
+        meta: 'Green Valley Farm · Belt 63',
+        buttonLabel: 'Got it, watching',
+        resolvedMessage: "Watching Kajri closely — you'll get a separate alert if this strengthens to confirmed heat.",
+      );
+
+  Widget _buildHerdStressCard(bool isDark) => _buildAckCard(
+        isDark: isDark,
+        state: _herdStress,
+        onChange: (s) => setState(() { _herdStress = s; widget.appState.resolveEvent(); }),
+        priority: _Priority.p3,
+        title: 'Herd heat stress — Green Valley Farm',
+        sub: '20%+ of cows in this zone are showing a temperature rise together — likely the weather, not individual cows.',
+        buttonLabel: 'Checked cooling / shade',
+        resolvedMessage: "Thanks — logged. Herd heat stress alerts don't need a vet visit.",
+      );
+
+  Widget _buildCalibCard(bool isDark) => _buildAckCard(
+        isDark: isDark,
+        state: _calib,
+        onChange: (s) => setState(() { _calib = s; widget.appState.resolveEvent(); }),
+        priority: _Priority.p3,
+        title: 'Collar calibrated — Ganga',
+        sub: 'Her new collar has finished calibrating and is now live-monitored.',
+        buttonLabel: 'Got it',
+        resolvedMessage: 'Ganga is now fully live-monitored.',
+      );
+}
+
+// ── Priority chip (P0-P3) — reuses only the locked color tokens ──
+enum _Priority { p0, p1, p2, p3 }
+
+class _PriorityChip extends StatelessWidget {
+  final _Priority priority;
+  const _PriorityChip({required this.priority});
+
+  @override
+  Widget build(BuildContext context) {
+    switch (priority) {
+      case _Priority.p0:
+        return _chip('P0 · CRITICAL', bg: const Color(0xFF8B2800), fg: Colors.white, outline: false);
+      case _Priority.p1:
+        return _chip('P1 · ACTIONABLE', bg: VanixColors.warningInk, fg: Colors.white, outline: false);
+      case _Priority.p2:
+        return _chip('P2 · WARNING', bg: VanixColors.warningBg, fg: VanixColors.warningInk, outline: true, borderColor: VanixColors.warning);
+      case _Priority.p3:
+        return _chip('P3 · INFO', bg: VanixColors.bgCard, fg: VanixColors.textHint, outline: true, borderColor: VanixColors.border);
+    }
+  }
+
+  Widget _chip(String label, {required Color bg, required Color fg, required bool outline, Color? borderColor}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(10), border: outline ? Border.all(color: borderColor!) : null),
+      child: Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: fg)),
+    );
+  }
+}
+
+class _VetEmailForm extends StatefulWidget {
+  final TextEditingController controller;
+  final VoidCallback onSent;
+  const _VetEmailForm({required this.controller, required this.onSent});
+
+  @override
+  State<_VetEmailForm> createState() => _VetEmailFormState();
+}
+
+class _VetEmailFormState extends State<_VetEmailForm> {
+  bool _invalid = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Request a vet appointment', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+          const SizedBox(height: 8),
+          TextField(
+            controller: widget.controller,
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              hintText: "Vet's email — vet@example.com",
+              enabledBorder: _invalid ? OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: VanixColors.danger, width: 1.5)) : null,
+            ),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger),
+              onPressed: () {
+                if (!widget.controller.text.contains('@')) {
+                  setState(() => _invalid = true);
+                  return;
+                }
+                widget.onSent();
+              },
+              child: const Text('Send appointment request'),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -452,18 +873,50 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) => Text(text.toUpperCase(), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.5, color: VanixColors.textHint));
 }
 
+/// A single event card. P0/P1 use a full tint wash (bg + border) with a
+/// solid priority chip; P2/P3 stay neutral (bgCard/border) with a thin or
+/// no left accent and an outline chip — same visual hierarchy the HTML
+/// version uses. All tints stay light in dark mode (locked design rule).
 class _ActionCard extends StatelessWidget {
   final Color bg, border;
-  final String title, sub, meta;
+  final Color? leftAccentColor;
+  final double leftAccentWidth;
+  final _Priority priority;
+  final String channel;
+  final String title, sub;
+  final String? meta;
   final Widget child;
   final bool escalated;
-  const _ActionCard({required this.bg, required this.border, required this.title, required this.sub, required this.meta, required this.child, this.escalated = false});
+
+  const _ActionCard({
+    required this.bg,
+    required this.border,
+    this.leftAccentColor,
+    this.leftAccentWidth = 4,
+    required this.priority,
+    required this.channel,
+    required this.title,
+    required this.sub,
+    this.meta,
+    required this.child,
+    this.escalated = false,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final accentColor = leftAccentColor ?? border;
     return Container(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(color: bg, border: Border.all(color: border), borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: border.withOpacity(0.35), blurRadius: 1, spreadRadius: 3)]),
+      decoration: BoxDecoration(
+        color: bg,
+        border: Border(
+          top: BorderSide(color: border),
+          bottom: BorderSide(color: border),
+          left: BorderSide(color: accentColor, width: leftAccentWidth == 0 ? 1 : leftAccentWidth),
+          right: BorderSide(color: border),
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -476,18 +929,28 @@ class _ActionCard extends StatelessWidget {
                   children: [
                     Text(title, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: VanixColors.textPrimary)),
                     Padding(padding: const EdgeInsets.only(top: 3), child: Text(sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint, height: 1.5))),
-                    Padding(padding: const EdgeInsets.only(top: 6), child: Text(meta, style: const TextStyle(fontSize: 11, color: VanixColors.textHint))),
+                    if (meta != null) Padding(padding: const EdgeInsets.only(top: 6), child: Text(meta!, style: const TextStyle(fontSize: 11, color: VanixColors.textHint))),
                   ],
                 ),
               ),
-              if (escalated)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(color: const Color(0xFF8B2800), borderRadius: BorderRadius.circular(10)),
-                  child: const Text('ESCALATED', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Colors.white)),
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  _PriorityChip(priority: priority),
+                  if (escalated)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(color: const Color(0xFF8B2800), borderRadius: BorderRadius.circular(10)),
+                        child: const Text('ESCALATED', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Colors.white)),
+                      ),
+                    ),
+                ],
+              ),
             ],
           ),
+          Padding(padding: const EdgeInsets.only(top: 2), child: Text(channel, style: const TextStyle(fontSize: 11, color: VanixColors.textHint))),
           child,
         ],
       ),
