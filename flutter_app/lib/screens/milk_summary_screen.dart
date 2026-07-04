@@ -19,9 +19,10 @@ class _MilkSummaryScreenState extends State<MilkSummaryScreen> {
   static const _allTrend = [520.0, 588.0, 540.0, 560.0, 575.0, 610.0, 590.0, 605.0];
 
   static const _breedTrend = {
-    'HF Cross': [220.0, 250.0, 230.0, 240.0, 245.0, 260.0, 250.0, 255.0],
-    'Gir': [160.0, 180.0, 165.0, 172.0, 178.0, 190.0, 182.0, 188.0],
-    'Sahiwal': [140.0, 158.0, 145.0, 148.0, 152.0, 160.0, 158.0, 162.0],
+    'Jersey': [220.0, 250.0, 230.0, 240.0, 245.0, 260.0, 250.0, 255.0],
+    'Ongole': [160.0, 180.0, 165.0, 172.0, 178.0, 190.0, 182.0, 188.0],
+    'Gir/Sahiwal': [140.0, 158.0, 145.0, 148.0, 152.0, 160.0, 158.0, 162.0],
+    'Desi': [34.0, 38.0, 36.0, 37.0, 39.0, 41.0, 38.0, 40.0],
   };
 
   String _breed = 'All breeds';
@@ -38,9 +39,10 @@ class _MilkSummaryScreenState extends State<MilkSummaryScreen> {
   ];
 
   static const _byBreed = [
-    ('HF Cross', 255.0),
-    ('Gir', 188.0),
-    ('Sahiwal', 162.0),
+    ('Jersey', 255.0),
+    ('Ongole', 188.0),
+    ('Gir/Sahiwal', 162.0),
+    ('Desi', 40.0),
   ];
 
   @override
@@ -76,11 +78,13 @@ class _MilkSummaryScreenState extends State<MilkSummaryScreen> {
               children: [
                 _BreedChip(label: 'All breeds', active: _breed == 'All breeds', onTap: () => setState(() { _breed = 'All breeds'; _tooltipIndex = null; })),
                 const SizedBox(width: 8),
-                _BreedChip(label: 'HF Cross', active: _breed == 'HF Cross', onTap: () => setState(() { _breed = 'HF Cross'; _tooltipIndex = null; })),
+                _BreedChip(label: 'Jersey', active: _breed == 'Jersey', onTap: () => setState(() { _breed = 'Jersey'; _tooltipIndex = null; })),
                 const SizedBox(width: 8),
-                _BreedChip(label: 'Gir', active: _breed == 'Gir', onTap: () => setState(() { _breed = 'Gir'; _tooltipIndex = null; })),
+                _BreedChip(label: 'Ongole', active: _breed == 'Ongole', onTap: () => setState(() { _breed = 'Ongole'; _tooltipIndex = null; })),
                 const SizedBox(width: 8),
-                _BreedChip(label: 'Sahiwal', active: _breed == 'Sahiwal', onTap: () => setState(() { _breed = 'Sahiwal'; _tooltipIndex = null; })),
+                _BreedChip(label: 'Gir/Sahiwal', active: _breed == 'Gir/Sahiwal', onTap: () => setState(() { _breed = 'Gir/Sahiwal'; _tooltipIndex = null; })),
+                const SizedBox(width: 8),
+                _BreedChip(label: 'Desi', active: _breed == 'Desi', onTap: () => setState(() { _breed = 'Desi'; _tooltipIndex = null; })),
               ],
             ),
           ),

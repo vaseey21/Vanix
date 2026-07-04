@@ -131,6 +131,16 @@
     #flow-root.dark .m-ok { color: var(--greendeep) !important; }
     #flow-root.dark .m-late { background: #33290F !important; border-color: #8A6A1F !important; color: #E8C87A !important; }
     /* status banners keep their light tint colours in dark mode — no override */
+    /* ── Events priority chips (P0-P3) — reuse existing tokens only ── */
+    .ev-chip { flex-shrink:0; border-radius:10px; padding:3px 8px; font-size:10px; font-weight:600; white-space:nowrap; }
+    .ev-chip-p0 { background:#8B2800; color:#FFFFFF; }
+    .ev-chip-p1 { background:#8A5A00; color:#FFFFFF; }
+    .ev-chip-p2 { background:var(--warnbg); border:1px solid var(--warning); color:#8A5A00; }
+    .ev-chip-p3 { background:var(--bgcard); border:1px solid var(--border); color:var(--text2); }
+    .ev-channel { font-size:11px; color:var(--text2); margin:2px 0 0; }
+    .ev-card-p2 { background:var(--bgcard); border:1px solid var(--border); border-left:2px solid var(--warning); }
+    .ev-card-p3 { background:var(--bgcard); border:1px solid var(--border); }
+    /* P2/P3 cards keep their light tint in dark mode too — same rule as P0/P1 action cards */
     /* ── Events page ── */
     .ev-tab.on { background:var(--dark1) !important; color:#FFFFFF !important; border-color:var(--dark1) !important; font-weight:600; }
     #flow-root.dark .ev-tab { background:#1C1C1C; border-color:#3A3A3A; color:#F5F5F5; }
@@ -507,9 +517,9 @@
 
             <!-- Log cards by date -->
             <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:12px 0 10px;">Today — 2 Jul</p>
-              <div class="m-card m-entry" data-cow="Gauri" data-breed="HF Cross" data-belt="112" data-sess="Morning" data-time="07:30" data-litres="12.5" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
+              <div class="m-card m-entry" data-cow="Gauri" data-breed="Jersey" data-belt="112" data-sess="Morning" data-time="07:30" data-litres="12.5" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
                 <div style="min-width:0;">
-                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Gauri — HF Cross</p>
+                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Gauri — Jersey</p>
                   <p style="margin:2px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:30</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm — Suresh</p>
                 </div>
@@ -518,9 +528,9 @@
                     <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
                   </div>
               </div>
-              <div class="m-card m-entry" data-cow="Lakshmi" data-breed="Gir" data-belt="47" data-sess="Morning" data-time="07:45" data-litres="8.2" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
+              <div class="m-card m-entry" data-cow="Lakshmi" data-breed="Ongole" data-belt="47" data-sess="Morning" data-time="07:45" data-litres="8.2" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
                 <div style="min-width:0;">
-                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Lakshmi — Gir</p>
+                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Lakshmi — Ongole</p>
                   <p style="margin:2px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:45</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm — Suresh</p>
                 </div>
@@ -529,9 +539,9 @@
                     <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
                   </div>
               </div>
-              <div class="m-card m-entry" data-cow="Dhauli" data-breed="Sahiwal" data-belt="208" data-sess="Evening" data-time="17:40" data-litres="4.1" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
+              <div class="m-card m-entry" data-cow="Dhauli" data-breed="Gir/Sahiwal" data-belt="208" data-sess="Evening" data-time="17:40" data-litres="4.1" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
                 <div style="min-width:0;">
-                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Dhauli — Sahiwal</p>
+                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Dhauli — Gir/Sahiwal</p>
                   <p style="margin:2px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Evening</span><span class="en" style="font-size:13px; color:var(--text2);">17:40</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Green Valley Farm — Anita</p>
                 </div>
@@ -542,9 +552,9 @@
               </div>
 
             <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Yesterday — 1 Jul</p>
-              <div class="m-card m-entry" data-cow="Kajri" data-breed="HF Cross" data-belt="63" data-sess="Evening" data-time="18:20" data-litres="2.0" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
+              <div class="m-card m-entry" data-cow="Kajri" data-breed="Jersey" data-belt="63" data-sess="Evening" data-time="18:20" data-litres="2.0" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
                 <div style="min-width:0;">
-                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Kajri — HF Cross</p>
+                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Kajri — Jersey</p>
                   <p style="margin:2px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Evening</span><span class="en" style="font-size:13px; color:var(--text2);">18:20</span><span class="en m-late" role="button" onclick="this.textContent = this.textContent === '⏱' ? 'Logged 22:45 — 4h 25m after milking' : '⏱';" title="Tap for details" style="background:var(--warnbg); border:1px solid var(--warning); border-radius:10px; padding:2px 8px; font-size:10px; font-weight:600; color:#8A5A00; cursor:pointer;">⏱</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Green Valley Farm — Anita</p>
                 </div>
@@ -553,9 +563,9 @@
                     <span class="en" style="font-size:10px; font-weight:500; color:rgba(255,255,255,0.85); margin-top:2px;">Ltrs</span>
                   </div>
               </div>
-              <div class="m-card m-entry" data-cow="Mohini" data-breed="Gir" data-belt="91" data-sess="Morning" data-time="07:15" data-litres="5.0" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
+              <div class="m-card m-entry" data-cow="Mohini" data-breed="Desi" data-belt="91" data-sess="Morning" data-time="07:15" data-litres="5.0" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
                 <div style="min-width:0;">
-                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Mohini — Gir</p>
+                  <p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Mohini — Desi</p>
                   <p style="margin:2px 0 0; display:flex; align-items:center; gap:8px;"><span class="en m-pill" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:2px 10px; font-size:11px; font-weight:600; color:var(--text1);">Morning</span><span class="en" style="font-size:13px; color:var(--text2);">07:15</span><span class="en m-ok" title="Logged at milking time" style="font-size:12px; color:var(--greenink);">✓</span></p>
                   <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Ravi Kumar Farm — Suresh</p>
                 </div>
@@ -606,11 +616,11 @@
           <div style="margin-top:14px;">
             <p class="en" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 6px;">COW</p>
             <select id="s8-cow" class="sel" style="width:100%; height:46px; border:1px solid var(--border); background:var(--bgcard); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
-              <option selected>Gauri — HF Cross — 112</option>
-              <option>Lakshmi — Gir — 47</option>
-              <option>Dhauli — Sahiwal — 208</option>
-              <option>Kajri — HF Cross — 63</option>
-              <option>Mohini — Gir — 91</option>
+              <option selected>Gauri — Jersey — 112</option>
+              <option>Lakshmi — Ongole — 47</option>
+              <option>Dhauli — Gir/Sahiwal — 208</option>
+              <option>Kajri — Jersey — 63</option>
+              <option>Mohini — Desi — 91</option>
             </select>
             <p style="font-size:10px; color:var(--text2); margin:4px 0 0;">Only CALVED and MILKING cows are listed</p>
           </div>
@@ -683,9 +693,10 @@
               <!-- breed filter -->
               <div id="s7-breed-chips" style="display:flex; gap:8px; margin-top:16px; overflow-x:auto; padding-bottom:2px;">
                 <button class="s7-bchip on" data-breed="all" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">All breeds</button>
-                <button class="s7-bchip" data-breed="HF Cross" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">HF Cross</button>
-                <button class="s7-bchip" data-breed="Gir" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Gir</button>
-                <button class="s7-bchip" data-breed="Sahiwal" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Sahiwal</button>
+                <button class="s7-bchip" data-breed="Jersey" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Jersey</button>
+                <button class="s7-bchip" data-breed="Ongole" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Ongole</button>
+                <button class="s7-bchip" data-breed="Gir/Sahiwal" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Gir/Sahiwal</button>
+                <button class="s7-bchip" data-breed="Desi" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">Desi</button>
               </div>
 
               <!-- weekly trend -->
@@ -873,7 +884,7 @@
             <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
               <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
                 <h2 style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Events</h2>
-                <span id="ev-count-pill" class="en" style="background:var(--dangerbg); border:1px solid var(--danger); border-radius:14px; padding:4px 12px; font-size:12px; font-weight:600; color:#8B2800;">3 need action</span>
+                <span id="ev-count-pill" class="en" style="background:var(--dangerbg); border:1px solid var(--danger); border-radius:14px; padding:4px 12px; font-size:12px; font-weight:600; color:#8B2800;">11 need action</span>
               </div>
               <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Health, breeding and reminders across all your farms</p>
             </div>
@@ -898,8 +909,12 @@
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.</p>
                     <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 63 · since 30 Jun</p>
                   </div>
-                  <span class="en ev-esc" style="flex-shrink:0; background:#8B2800; color:#FFFFFF; border-radius:10px; padding:3px 8px; font-size:10px; font-weight:600;">ESCALATED</span>
+                  <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+                    <span class="en ev-chip ev-chip-p0">P0 · CRITICAL</span>
+                    <span class="en ev-esc" style="flex-shrink:0; background:#8B2800; color:#FFFFFF; border-radius:10px; padding:3px 8px; font-size:10px; font-weight:600;">ESCALATED</span>
+                  </div>
                 </div>
+                <p class="en ev-channel">Push + SMS · Immediate vet visit</p>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Kajri look unwell to you?</p>
                   <div style="display:flex; gap:8px; margin-top:10px;">
@@ -915,6 +930,10 @@
                   <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Heat cycle detected — Gauri</p>
                   <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Temperature swinging up and down with high movement since 04:30 this morning.</p>
                   <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 41 · auto-confirms in 4h</p>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+                  <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
+                  <span class="en ev-channel" style="margin:0;">App notification · Schedule inseminator</span>
                 </div>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Is Gauri in heat?</p>
@@ -932,11 +951,162 @@
                   <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">21 days since insemination and no heat detected. Call your vet to confirm the pregnancy.</p>
                   <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Sunrise Dairy · Belt 91 · inseminated 12 Jun</p>
                 </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+                  <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
+                  <span class="en ev-channel" style="margin:0;">App notification · Confirm with vet</span>
+                </div>
                 <div class="ev-body">
                   <div style="display:flex; gap:8px; margin-top:12px;">
                     <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Not pregnant</button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Vet confirmed — pregnant</button>
                   </div>
+                </div>
+              </div>
+
+
+              <!-- 4. Abortion / pregnancy loss -->
+              <div class="ev-card" id="ev-abort" style="background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
+                  <div style="min-width:0;">
+                    <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible pregnancy loss — Mohini</p>
+                    <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Sudden drop in rumination with a sustained temperature rise over the last 3 hours.</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Sunrise Dairy · Belt 91 · Day 48 of pregnancy</p>
+                  </div>
+                  <span class="en ev-chip ev-chip-p0">P0 · CRITICAL</span>
+                </div>
+                <p class="en ev-channel">Push + SMS · Immediate vet visit</p>
+                <div class="ev-body">
+                  <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Mohini show these signs?</p>
+                  <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No, she's fine</button>
+                    <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--danger); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, report to vet</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 5. Fresh cow / post-calving monitor -->
+              <div class="ev-card" id="ev-freshcow" style="background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
+                  <div style="min-width:0;">
+                    <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Fresh cow health dip — Ganga</p>
+                    <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 27 · Day 6 post-calving</p>
+                  </div>
+                  <span class="en ev-chip ev-chip-p0">P0 · CRITICAL</span>
+                </div>
+                <p class="en ev-channel">Push + SMS · Immediate vet visit</p>
+                <div class="ev-body">
+                  <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Ganga seem off to you?</p>
+                  <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No, she's fine</button>
+                    <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--danger); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, report to vet</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 6. Mastitis -->
+              <div class="ev-card ev-card-p2" id="ev-mastitis" style="border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
+                  <div style="min-width:0;">
+                    <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible mastitis — Bhoori</p>
+                    <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Temperature up and feeding down — possible udder infection.</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 09</p>
+                  </div>
+                  <span class="en ev-chip ev-chip-p2">P2 · WARNING</span>
+                </div>
+                <p class="en ev-channel">App inbox · Physical inspection</p>
+                <div class="ev-body">
+                  <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Bhoori show swelling or milk changes?</p>
+                  <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No</button>
+                    <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--warning); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#111111; font-family:var(--font-hi);">Yes, flag it</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 7. Lameness -->
+              <div class="ev-card ev-card-p2" id="ev-lameness" style="border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
+                  <div style="min-width:0;">
+                    <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible lameness — Dhauli</p>
+                    <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Barely standing and resting far more than usual — possible leg or hoof issue.</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 18</p>
+                  </div>
+                  <span class="en ev-chip ev-chip-p2">P2 · WARNING</span>
+                </div>
+                <p class="en ev-channel">App inbox · Physical inspection</p>
+                <div class="ev-body">
+                  <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Dhauli seem to be limping?</p>
+                  <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No</button>
+                    <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--warning); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#111111; font-family:var(--font-hi);">Yes, flag it</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 8. Ketosis -->
+              <div class="ev-card ev-card-p2" id="ev-ketosis" style="border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
+                  <div style="min-width:0;">
+                    <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible ketosis — Lakshmi</p>
+                    <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Reduced rumination this early in her milking cycle — a metabolic condition common just after calving.</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 52 · Day 12 in milk</p>
+                  </div>
+                  <span class="en ev-chip ev-chip-p2">P2 · WARNING</span>
+                </div>
+                <p class="en ev-channel">App inbox · Physical inspection</p>
+                <div class="ev-body">
+                  <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Lakshmi seem lethargic or off her feed?</p>
+                  <div style="display:flex; gap:8px; margin-top:10px;">
+                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No</button>
+                    <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--warning); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#111111; font-family:var(--font-hi);">Yes, flag it</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 9. Proestrus — early heat signs -->
+              <div class="ev-card ev-card-p2" id="ev-proestrus" style="border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
+                  <div style="min-width:0;">
+                    <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Early heat signs — Kajri</p>
+                    <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Mild temperature and activity rise — possible early signs of heat starting. We'll alert you again if it strengthens.</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 63</p>
+                  </div>
+                  <span class="en ev-chip ev-chip-p2">P2 · WARNING</span>
+                </div>
+                <p class="en ev-channel">App inbox · Monitor closely</p>
+                <div class="ev-body">
+                  <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Got it, watching</button>
+                </div>
+              </div>
+
+              <!-- 10. Herd heat stress -->
+              <div class="ev-card ev-card-p3" id="ev-herdstress" style="border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
+                  <div style="min-width:0;">
+                    <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Herd heat stress — Green Valley Farm</p>
+                    <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">20%+ of cows in this zone are showing a temperature rise together — likely the weather, not individual cows.</p>
+                  </div>
+                  <span class="en ev-chip ev-chip-p3">P3 · INFO</span>
+                </div>
+                <p class="en ev-channel">App inbox · Info only</p>
+                <div class="ev-body">
+                  <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Checked cooling / shade</button>
+                </div>
+              </div>
+
+              <!-- 11. Calibration complete -->
+              <div class="ev-card ev-card-p3" id="ev-calib" style="border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
+                  <div style="min-width:0;">
+                    <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Collar calibrated — Ganga</p>
+                    <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Her new collar has finished calibrating and is now live-monitored.</p>
+                  </div>
+                  <span class="en ev-chip ev-chip-p3">P3 · INFO</span>
+                </div>
+                <p class="en ev-channel">App inbox · Info only</p>
+                <div class="ev-body">
+                  <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Got it</button>
                 </div>
               </div>
 
@@ -1625,18 +1795,21 @@
 
       var WEEKS = ['12 May','19 May','26 May','2 Jun','9 Jun','16 Jun','23 Jun','30 Jun'];
       var STATS = {
-        'all':      { trend:[512,498,540,567,531,588,549,471],
-                      cows:[['Gauri',88.4],['Lakshmi',76.2],['Mohini',64.9],['Dhauli',58.3],['Kajri',41.7]],
-                      breeds:[['HF Cross',214],['Gir',187],['Sahiwal',96]] },
-        'HF Cross': { trend:[221,208,230,246,228,262,240,198],
-                      cows:[['Gauri',88.4],['Kajri',41.7],['Rani',38.2],['Heera',29.6],['Chandni',16.1]],
-                      breeds:[['HF Cross',214]] },
-        'Gir':      { trend:[186,182,198,205,192,214,200,171],
-                      cows:[['Lakshmi',76.2],['Mohini',64.9],['Ganga',24.8],['Radha',21.1]],
-                      breeds:[['Gir',187]] },
-        'Sahiwal':  { trend:[105,108,112,116,111,112,109,102],
-                      cows:[['Dhauli',58.3],['Sona',22.4],['Badal',15.3]],
-                      breeds:[['Sahiwal',96]] }
+        'all':         { trend:[512,498,540,567,531,588,549,471],
+                         cows:[['Gauri',88.4],['Lakshmi',76.2],['Mohini',64.9],['Dhauli',58.3],['Kajri',41.7]],
+                         breeds:[['Jersey',214],['Ongole',150],['Gir/Sahiwal',96],['Desi',37]] },
+        'Jersey':      { trend:[221,208,230,246,228,262,240,198],
+                         cows:[['Gauri',88.4],['Kajri',41.7],['Rani',38.2],['Heera',29.6],['Chandni',16.1]],
+                         breeds:[['Jersey',214]] },
+        'Ongole':      { trend:[186,182,198,205,192,214,200,171],
+                         cows:[['Lakshmi',76.2],['Ganga',24.8],['Radha',21.1]],
+                         breeds:[['Ongole',150]] },
+        'Gir/Sahiwal': { trend:[105,108,112,116,111,112,109,102],
+                         cows:[['Dhauli',58.3],['Sona',22.4],['Badal',15.3]],
+                         breeds:[['Gir/Sahiwal',96]] },
+        'Desi':        { trend:[36,34,38,40,37,42,39,35],
+                         cows:[['Mohini',64.9],['Kesar',12.3]],
+                         breeds:[['Desi',37]] }
       };
       var curBreed = 'all';
 
@@ -1732,7 +1905,7 @@
       var eventsPage = document.getElementById('page-events');
       var eventsNav = document.getElementById('events-nav');
 
-      var evOpen = 3;
+      var evOpen = 11;
       function evUpdateBadges() {
         document.querySelectorAll('.ev-badge').forEach(function(b) {
           b.textContent = evOpen;
@@ -1809,9 +1982,9 @@
         });
         card.querySelector('.ev-yes').addEventListener('click', function() {
           body.innerHTML =
-            '<p style="font-size:13px; font-weight:600; color:var(--text1); margin:12px 0 0;">Insemination window open — <span class="en">17h 45m</span> left</p>' +
-            '<div style="height:6px; background:rgba(0,0,0,0.10); border-radius:3px; margin-top:8px; overflow:hidden;"><div style="width:8%; height:100%; background:#8A5A00; border-radius:3px;"></div></div>' +
-            '<p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Best results within 18 hours of heat onset. Log the insemination once done.</p>' +
+            '<p style="font-size:13px; font-weight:600; color:var(--text1); margin:12px 0 0;">Optimal window — <span class="en">11h 30m</span> left</p>' +
+            '<div style="height:6px; background:rgba(0,0,0,0.10); border-radius:3px; margin-top:8px; overflow:hidden;"><div style="width:52%; height:100%; background:#8A5A00; border-radius:3px;"></div></div>' +
+            '<p style="font-size:12px; color:var(--text2); margin:6px 0 0;">T+6h to T+18h: peak fertility. Before T+6h the window hasn\'t opened yet; after T+18h fertility drops (late window). Log the insemination once done.</p>' +
             '<button id="ev-insem-log" style="width:100%; min-height:44px; margin-top:10px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log insemination</button>';
           document.getElementById('ev-insem-log').addEventListener('click', function() {
             evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
@@ -1836,6 +2009,111 @@
           body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Mohini is pregnant ✓</p>' +
             '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Delivery expected around 3 Apr 2027 — you\'ll get a reminder as calving approaches, then she joins the Milk Log after calving.</p>';
           evResolve();
+        });
+      })();
+
+      // reusable: diagnostic Yes -> vet-email request -> "requested" (Fever/Abortion/Fresh Cow, all P0)
+      function evVetRequestFlow(card, body, cowLabel, farmLabel) {
+        body.innerHTML =
+          '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Request a vet appointment</p>' +
+          '<input type="email" id="ev-vet-email-' + card.id + '" placeholder="Vet\'s email — vet@example.com" style="width:100%; min-height:44px; margin-top:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi);">' +
+          '<button id="ev-vet-send-' + card.id + '" style="width:100%; min-height:44px; margin-top:8px; background:var(--danger); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Send appointment request</button>';
+        document.getElementById('ev-vet-send-' + card.id).addEventListener('click', function() {
+          var em = document.getElementById('ev-vet-email-' + card.id);
+          if (!em.value || em.value.indexOf('@') === -1) { em.style.borderColor = 'var(--danger)'; em.focus(); return; }
+          evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
+          var esc = card.querySelector('.ev-esc'); if (esc) esc.style.display = 'none';
+          body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Vet appointment requested ✓</p>' +
+            '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Sent to ' + em.value + ' — ' + cowLabel + ' · ' + farmLabel + '. You\'ll be notified when the vet confirms.</p>';
+          evResolve();
+        });
+      }
+
+      // reusable: diagnostic No -> false alarm (all cards)
+      function evFalseAlarm(card, body) {
+        evSetTint(card, 'var(--bgcard)', 'var(--border)');
+        var esc = card.querySelector('.ev-esc'); if (esc) esc.style.display = 'none';
+        body.innerHTML = '<p style="font-size:13px; color:var(--text2); margin:12px 0 0;">Marked as false alarm — monitoring continues.</p>';
+        evResolve();
+      }
+
+      // reusable: diagnostic Yes -> flagged for physical inspection (Mastitis/Lameness/Ketosis, all P2)
+      function evInspectionFlow(card, body, cowLabel) {
+        card.className = 'ev-card';
+        evSetTint(card, 'var(--bgcard)', 'var(--border)');
+        body.innerHTML = '<p style="font-size:13px; font-weight:600; color:#8A5A00; margin:12px 0 0;">Flagged for inspection ✓</p>' +
+          '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">' + cowLabel + ' has been flagged for a physical check at the next milking.</p>';
+        evResolve();
+      }
+
+      // reusable: single acknowledge (Proestrus/Herd Heat Stress/Calibration)
+      function evAcknowledgeFlow(card, body, message) {
+        card.className = 'ev-card';
+        evSetTint(card, 'var(--bgcard)', 'var(--border)');
+        body.innerHTML = '<p style="font-size:13px; color:var(--text2); margin:12px 0 0;">' + message + '</p>';
+        evResolve();
+      }
+
+      // reveal the 8 new cards (they start hidden so the default 3-card demo still reads cleanly)
+      ['ev-abort', 'ev-freshcow', 'ev-mastitis', 'ev-lameness', 'ev-ketosis', 'ev-proestrus', 'ev-herdstress', 'ev-calib'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.style.display = 'block';
+      });
+
+      // 4. Abortion / pregnancy loss (P0)
+      (function() {
+        var card = document.getElementById('ev-abort');
+        if (!card) return;
+        var body = card.querySelector('.ev-body');
+        card.querySelector('.ev-no').addEventListener('click', function() { evFalseAlarm(card, body); });
+        card.querySelector('.ev-yes').addEventListener('click', function() { evVetRequestFlow(card, body, 'Mohini · Pregnancy loss', 'Sunrise Dairy'); });
+      })();
+
+      // 5. Fresh cow / post-calving monitor (P0)
+      (function() {
+        var card = document.getElementById('ev-freshcow');
+        if (!card) return;
+        var body = card.querySelector('.ev-body');
+        card.querySelector('.ev-no').addEventListener('click', function() { evFalseAlarm(card, body); });
+        card.querySelector('.ev-yes').addEventListener('click', function() { evVetRequestFlow(card, body, 'Ganga · Post-calving', 'Green Valley Farm'); });
+      })();
+
+      // 6-8. Mastitis / Lameness / Ketosis (P2, inspection flow)
+      [['ev-mastitis', 'Bhoori'], ['ev-lameness', 'Dhauli'], ['ev-ketosis', 'Lakshmi']].forEach(function(pair) {
+        var card = document.getElementById(pair[0]);
+        if (!card) return;
+        var body = card.querySelector('.ev-body');
+        card.querySelector('.ev-no').addEventListener('click', function() { evFalseAlarm(card, body); });
+        card.querySelector('.ev-yes').addEventListener('click', function() { evInspectionFlow(card, body, pair[1]); });
+      });
+
+      // 9. Proestrus — single acknowledge (P2)
+      (function() {
+        var card = document.getElementById('ev-proestrus');
+        if (!card) return;
+        var body = card.querySelector('.ev-body');
+        card.querySelector('.ev-ack').addEventListener('click', function() {
+          evAcknowledgeFlow(card, body, 'Watching Kajri closely — you\'ll get a separate alert if this strengthens to confirmed heat.');
+        });
+      })();
+
+      // 10. Herd heat stress — single acknowledge (P3)
+      (function() {
+        var card = document.getElementById('ev-herdstress');
+        if (!card) return;
+        var body = card.querySelector('.ev-body');
+        card.querySelector('.ev-ack').addEventListener('click', function() {
+          evAcknowledgeFlow(card, body, 'Thanks — logged. Herd heat stress alerts don\'t need a vet visit.');
+        });
+      })();
+
+      // 11. Calibration complete — single acknowledge (P3)
+      (function() {
+        var card = document.getElementById('ev-calib');
+        if (!card) return;
+        var body = card.querySelector('.ev-body');
+        card.querySelector('.ev-ack').addEventListener('click', function() {
+          evAcknowledgeFlow(card, body, 'Ganga is now fully live-monitored.');
         });
       })();
 
