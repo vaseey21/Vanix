@@ -39,9 +39,10 @@ class _MilkSummaryScreenState extends State<MilkSummaryScreen> {
   ];
 
   static const _byBreed = [
-    ('HF Cross', 255.0),
-    ('Gir', 188.0),
-    ('Sahiwal', 162.0),
+    ('Jersey', 255.0),
+    ('Ongole', 188.0),
+    ('Gir/Sahiwal', 162.0),
+    ('Desi', 40.0),
   ];
 
   @override
