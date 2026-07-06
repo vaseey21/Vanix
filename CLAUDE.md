@@ -128,8 +128,12 @@ Sensor comparison basis: cow's own **10-day** rolling temperature/behaviour base
 | Phase | Window | State |
 |---|---|---|
 | Pre-insemination | T+0–6h | Window not open yet |
-| Optimal | T+6–18h (12h) | Peak fertility — insemination-detail form appears (Method: AI/Natural + optional technician name) |
+| Optimal | T+6–18h (12h) | Peak fertility — insemination-detail form appears (Method: Artificial / Conventional / IVF / Embryo Transfer + optional technician name) |
 | Suboptimal | T+18–24h (6h) | Fertility dropping, still loggable |
+
+## Vets
+
+3 vets are onboarded: Dr. Sharma, Dr. Rao, Dr. Iyer. Every P0 vet-request card (Fever, Abortion/Pregnancy Loss, Fresh Cow Monitor) has the farmer pick one from this list — no email entry.
 
 ## Alert escalation
 
