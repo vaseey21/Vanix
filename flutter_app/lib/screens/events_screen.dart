@@ -609,7 +609,10 @@ class _EventsScreenState extends State<EventsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text('Insemination logged ✓ — 21-day watch started', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-              Text("Method: $_heatMethod${_heatTechCtrl.text.isNotEmpty ? ' · ${_heatTechCtrl.text}' : ''}. If no heat returns by 24 Jul, you'll get a pregnancy-check alert. If heat returns earlier, the cycle restarts.", style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+              Text(
+                "Method: $_heatMethod${_heatShowLateForm && _heatLateTimeCtrl.text.isNotEmpty ? ' · ${_heatLateTimeCtrl.text}' : ''}${(_heatShowLateForm ? _heatLateTechCtrl.text : _heatTechCtrl.text).isNotEmpty ? ' · ${_heatShowLateForm ? _heatLateTechCtrl.text : _heatTechCtrl.text}' : ''}. If no heat returns by 24 Jul, you'll get a pregnancy-check alert. If heat returns earlier, the cycle restarts.",
+                style: const TextStyle(fontSize: 12, color: VanixColors.textHint),
+              ),
             ],
           ),
         ),
