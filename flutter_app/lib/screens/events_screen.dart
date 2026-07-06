@@ -1084,7 +1084,7 @@ class _ActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accentColor = leftAccentColor ?? border;
-    return Container(
+    final card = Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: bg,
@@ -1112,27 +1112,45 @@ class _ActionCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  _PriorityChip(priority: priority),
-                  if (escalated)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                        decoration: BoxDecoration(color: const Color(0xFF8B2800), borderRadius: BorderRadius.circular(10)),
-                        child: const Text('ESCALATED', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: Colors.white)),
-                      ),
-                    ),
-                ],
-              ),
+              // P0 cards signal severity via the red card tint + corner badge
+              // instead of a text chip (see _CornerBadge below).
+              if (priority != _Priority.p0) _PriorityChip(priority: priority),
             ],
           ),
           Padding(padding: const EdgeInsets.only(top: 2), child: Text(channel, style: const TextStyle(fontSize: 11, color: VanixColors.textHint))),
           child,
         ],
       ),
+    );
+    if (priority != _Priority.p0) return card;
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        card,
+        if (escalated) const Positioned(top: -6, right: -6, child: _CornerBadge()),
+      ],
+    );
+  }
+}
+
+/// Single red circle + "!" badge for escalated P0 cards, replacing the old
+/// stacked "P0 · CRITICAL" + "ESCALATED" chips. Mirrors .ev-corner-badge in
+/// vanix_screens.html.
+class _CornerBadge extends StatelessWidget {
+  const _CornerBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 20,
+      height: 20,
+      decoration: BoxDecoration(
+        color: const Color(0xFF8B2800),
+        shape: BoxShape.circle,
+        boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 3, offset: Offset(0, 1))],
+      ),
+      alignment: Alignment.center,
+      child: const Text('!', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white, height: 1)),
     );
   }
 }
