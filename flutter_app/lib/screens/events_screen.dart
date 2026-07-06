@@ -18,6 +18,72 @@ const List<String> kOnboardedVets = ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'];
 /// vanix_screens.html.
 const List<String> kInseminationMethods = ['Artificial', 'Conventional', 'IVF', 'Embryo Transfer'];
 
+/// Segmented 24h heat-window bar — 6h pre / 12h optimal / 6h suboptimal with
+/// zone labels, detection/end times, and a single fill travelling across all
+/// three segments. Mirrors #ev-heat-bar-wrap in vanix_screens.html.
+class _HeatWindowBar extends StatelessWidget {
+  final double simHours;
+  final Color fillColor;
+  const _HeatWindowBar({required this.simHours, required this.fillColor});
+
+  @override
+  Widget build(BuildContext context) {
+    const labelStyle = TextStyle(fontSize: 9, fontWeight: FontWeight.w600, letterSpacing: 0.4, color: VanixColors.textHint);
+    const timeStyle = TextStyle(fontSize: 10, color: VanixColors.textHint);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Row(
+          children: [
+            Expanded(flex: 25, child: Text('PRE 6h', textAlign: TextAlign.center, style: labelStyle)),
+            Expanded(flex: 50, child: Text('OPTIMAL 12h', textAlign: TextAlign.center, style: labelStyle)),
+            Expanded(flex: 25, child: Text('SUBOPT 6h', textAlign: TextAlign.center, style: labelStyle)),
+          ],
+        ),
+        const SizedBox(height: 3),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: SizedBox(
+            height: 8,
+            child: Stack(
+              children: [
+                const Row(
+                  children: [
+                    Expanded(flex: 25, child: ColoredBox(color: VanixColors.warningBg)),
+                    Expanded(flex: 50, child: ColoredBox(color: VanixColors.activeBg)),
+                    Expanded(flex: 25, child: ColoredBox(color: VanixColors.dangerBg)),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Spacer(flex: 25),
+                    Container(width: 1, color: Colors.black.withOpacity(0.18)),
+                    const Spacer(flex: 50),
+                    Container(width: 1, color: Colors.black.withOpacity(0.18)),
+                    const Spacer(flex: 25),
+                  ],
+                ),
+                FractionallySizedBox(
+                  widthFactor: (simHours / 24).clamp(0.0, 1.0),
+                  child: Opacity(opacity: 0.85, child: ColoredBox(color: fillColor)),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 3),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('04:30 detected', style: timeStyle),
+            Text('+24h · 04:30', style: timeStyle),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 /// 2x2 grid of method-select buttons, shared by the real Heat card and the
 /// "View full cycle" walkthrough's own heat step. Mirrors seqMethodBtn() in
 /// vanix_screens.html.
