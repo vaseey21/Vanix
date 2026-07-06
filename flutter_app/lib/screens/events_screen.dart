@@ -1744,13 +1744,15 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
         return _interstitial(
           textColor, hintColor,
           title: '9-month gestation',
-          text: 'Carrying to term for roughly 9 months.',
+          text: 'Carrying to term for roughly 9 months, with vet checks at 3, 6, and 9 months.',
           onContinue: () => _goTo(_SeqStep.delivery),
         );
       case _SeqStep.delivery:
         return _deliveryStepBody(textColor, hintColor);
       case _SeqStep.milking:
         return _milkingStepBody(textColor, hintColor);
+      case _SeqStep.lactationCheck:
+        return _lactationCheckStepBody(textColor, hintColor);
       case _SeqStep.dry:
         return _dryStepBody(textColor, hintColor);
       case _SeqStep.interrupted:
