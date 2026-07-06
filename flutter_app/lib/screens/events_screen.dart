@@ -185,6 +185,8 @@ class _EventsScreenState extends State<EventsScreen> {
                         const SizedBox(height: 10),
                         _buildPregCard(isDark),
                         const SizedBox(height: 10),
+                        _buildGestationCard(isDark),
+                        const SizedBox(height: 10),
                         _buildMastitisCard(isDark),
                         const SizedBox(height: 10),
                         _buildLamenessCard(isDark),
