@@ -111,11 +111,15 @@ xs=4  sm=8  md=12  lg=16  pill=24
 
 ## Cow status lifecycle
 
-`IDLE → HEAT ALERT → IN HEAT → INSEMINATED → PREGNANT → CALVED → MILKING`
+`IDLE → HEAT ALERT → IN HEAT → INSEMINATED → PREGNANT → CALVED → MILKING → DRY → IDLE (cycle repeats)`
 
 - Only **CALVED** and **MILKING** cows appear in Milk Log entry forms
 - FEVER is a parallel alert path, separate from heat cycle
 - **CALVED → MILKING** trigger: the farmer taps **"Delivery confirmed"** on the 9-month vet-check Events card — this is a farmer action, not automatic
+- **MILKING** lasts **305 days** (the lactation period) — cow is actively producing milk and logged in the Milk Log
+- **MILKING → DRY** trigger: automatic at day 305. The **DRY** (resting) period lasts **60 days** — no milk produced, not shown in Milk Log entry forms during this window
+- **DRY → IDLE** trigger: automatic at day 60 — the cow re-enters the heat-eligible pool, closing the reproductive loop back to the top of the lifecycle
+- The full loop (Heat → Insemination → Pregnancy Check → Delivery → 305-day Milking → 60-day Dry) can be walked through end-to-end via the **"View full cycle"** link on the Events page — see below
 
 ## Heat → insemination window
 
