@@ -18,6 +18,82 @@ const List<String> kOnboardedVets = ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'];
 /// vanix_screens.html.
 const List<String> kInseminationMethods = ['Artificial', 'Conventional', 'IVF', 'Embryo Transfer'];
 
+/// Segmented 24h heat-window bar — 6h pre / 12h optimal / 6h suboptimal with
+/// zone labels, detection/end times, and a single fill travelling across all
+/// three segments. Mirrors #ev-heat-bar-wrap in vanix_screens.html.
+class _HeatWindowBar extends StatelessWidget {
+  final double simHours;
+  final Color fillColor;
+  const _HeatWindowBar({required this.simHours, required this.fillColor});
+
+  @override
+  Widget build(BuildContext context) {
+    const labelStyle = TextStyle(fontSize: 9, fontWeight: FontWeight.w600, letterSpacing: 0.4, color: VanixColors.textHint);
+    const timeStyle = TextStyle(fontSize: 10, color: VanixColors.textHint);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Row(
+          children: [
+            Expanded(flex: 25, child: Text('PRE 6h', textAlign: TextAlign.center, style: labelStyle)),
+            Expanded(flex: 50, child: Text('OPTIMAL 12h', textAlign: TextAlign.center, style: labelStyle)),
+            Expanded(flex: 25, child: Text('SUBOPT 6h', textAlign: TextAlign.center, style: labelStyle)),
+          ],
+        ),
+        const SizedBox(height: 3),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: SizedBox(
+            height: 8,
+            child: Stack(
+              children: [
+                const Positioned.fill(
+                  child: Row(
+                    children: [
+                      Expanded(flex: 25, child: ColoredBox(color: VanixColors.warningBg)),
+                      Expanded(flex: 50, child: ColoredBox(color: VanixColors.activeBg)),
+                      Expanded(flex: 25, child: ColoredBox(color: VanixColors.dangerBg)),
+                    ],
+                  ),
+                ),
+                Positioned.fill(
+                  child: Row(
+                    children: [
+                      const Spacer(flex: 25),
+                      Container(width: 1, color: Colors.black.withOpacity(0.18)),
+                      const Spacer(flex: 50),
+                      Container(width: 1, color: Colors.black.withOpacity(0.18)),
+                      const Spacer(flex: 25),
+                    ],
+                  ),
+                ),
+                Positioned.fill(
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: FractionallySizedBox(
+                      widthFactor: (simHours / 24).clamp(0.0, 1.0),
+                      heightFactor: 1,
+                      child: Opacity(opacity: 0.85, child: ColoredBox(color: fillColor)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 3),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('04:30 detected', style: timeStyle),
+            Text('+24h · 04:30', style: timeStyle),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 /// 2x2 grid of method-select buttons, shared by the real Heat card and the
 /// "View full cycle" walkthrough's own heat step. Mirrors seqMethodBtn() in
 /// vanix_screens.html.
@@ -114,11 +190,14 @@ class _EventsScreenState extends State<EventsScreen> {
   bool _heatShowLateForm = false;
   late final DateTime _heatStartedAt;
   Timer? _heatTimer;
-  // DEMO: 24 real hours compressed into 24 real seconds (1s = 1 simulated
-  // hour) purely so the phase transitions are demoable live — replace with
-  // the real backend peak_timestamp once wired up (Cattle Health Logic v3.1,
+  // DEMO: 1 simulated hour = 4 real seconds (24h cycle plays out in 96s)
+  // purely so the phase transitions are demoable live — replace with the
+  // real backend peak_timestamp once wired up (Cattle Health Logic v3.1,
   // Block 7).
-  static const double _simHoursPerSecond = 1;
+  static const double _simHoursPerSecond = 0.25;
+  // Start-insemination flow: idle (button showing) | confirm (off-window
+  // warning) | form (method/technician entry). Mirrors the JS substates.
+  String _heatFormStage = 'idle';
 
   _PregState _preg = _PregState.initial;
 
@@ -675,19 +754,15 @@ class _EventsScreenState extends State<EventsScreen> {
     // _HeatState.initial or .active — same evolving display, driven by _heatElapsedSimHours.
     final h = _heatElapsedSimHours;
     String label;
-    double pct;
     Color color;
     if (h < 6) {
       label = 'Pre-insemination — window opens in ${(6 - h).ceil()}h';
-      pct = h / 6;
       color = VanixColors.warningInk;
     } else if (h < 18) {
       label = 'Optimal window — ${(18 - h).ceil()}h left';
-      pct = (h - 6) / 12;
       color = VanixColors.greenInk;
     } else {
       label = 'Suboptimal window — act soon, ${(24 - h).ceil()}h left';
-      pct = (h - 18) / 6;
       color = VanixColors.danger;
     }
 
@@ -709,13 +784,10 @@ class _EventsScreenState extends State<EventsScreen> {
             const SizedBox(height: 8),
             Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: color)),
             const SizedBox(height: 6),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(3),
-              child: LinearProgressIndicator(value: pct.clamp(0, 1), minHeight: 6, backgroundColor: Colors.black.withOpacity(0.10), valueColor: AlwaysStoppedAnimation(color)),
-            ),
+            _HeatWindowBar(simHours: h, fillColor: color),
             const SizedBox(height: 6),
             Text(
-              _heatConfirmed ? 'Enter the insemination details once done.' : 'Best results within 6-18h of detection. The window opens automatically — no need to refresh.',
+              _heatFormStage == 'form' ? 'Enter the insemination details once done.' : 'Best results within 6-18h of detection. The window opens automatically — no need to refresh.',
               style: const TextStyle(fontSize: 12, color: VanixColors.textHint),
             ),
             if (!_heatConfirmed) ...[
@@ -734,8 +806,29 @@ class _EventsScreenState extends State<EventsScreen> {
                   ),
                 ],
               ),
-            ],
-            if (_heatConfirmed && h >= 6) ...[
+            ] else if (_heatFormStage == 'idle') ...[
+              // Start insemination is available in every phase — outside the
+              // optimal window it interposes a confirmation step first.
+              const SizedBox(height: 10),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => setState(() => _heatFormStage = (h >= 6 && h < 18) ? 'form' : 'confirm'),
+                  child: const Text('Start insemination'),
+                ),
+              ),
+            ] else if (_heatFormStage == 'confirm') ...[
+              const SizedBox(height: 10),
+              const Text("You're outside the optimal window (best results 6–18h after detection). Continue anyway?", style: TextStyle(fontSize: 12, height: 1.5)),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(child: OutlinedButton(onPressed: () => setState(() => _heatFormStage = 'idle'), child: const Text('Cancel'))),
+                  const SizedBox(width: 8),
+                  Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatFormStage = 'form'), child: const Text('Continue'))),
+                ],
+              ),
+            ] else ...[
               const SizedBox(height: 10),
               const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
               const SizedBox(height: 6),
@@ -1629,8 +1722,10 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
   DateTime? _heatStartedAt;
   bool _heatConfirmed = false;
   String _heatMethod = kInseminationMethods.first;
+  String _heatFormStage = 'idle'; // idle | confirm | form
   Timer? _heatTimer;
-  static const double _simHoursPerSecond = 1;
+  // Walkthrough demo speed — 24h plays out in 48s.
+  static const double _simHoursPerSecond = 0.5;
 
   @override
   void initState() {
@@ -1647,6 +1742,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
     _heatStartedAt = DateTime.now();
     _heatConfirmed = widget.heatPreDecision == 'yes';
     _heatMethod = kInseminationMethods.first;
+    _heatFormStage = 'idle';
     _heatTimer?.cancel();
     _heatTimer = Timer.periodic(const Duration(milliseconds: 200), (_) {
       if (_step == _SeqStep.heat) setState(() {});
@@ -1790,19 +1886,15 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
   Widget _heatStepBody(Color textColor, Color hintColor) {
     final h = _heatElapsedSimHours;
     String label;
-    double pct;
     Color color;
     if (h < 6) {
       label = 'Pre-insemination — window opens in ${(6 - h).ceil()}h';
-      pct = h / 6;
       color = VanixColors.warningInk;
     } else if (h < 18) {
       label = 'Optimal window — ${(18 - h).ceil()}h left';
-      pct = (h - 6) / 12;
       color = VanixColors.greenInk;
     } else {
       label = 'Suboptimal window — act soon, ${(24 - h).ceil()}h left';
-      pct = (h - 18) / 6;
       color = VanixColors.danger;
     }
 
@@ -1819,10 +1911,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
           const SizedBox(height: 8),
           Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: color)),
           const SizedBox(height: 6),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(3),
-            child: LinearProgressIndicator(value: pct.clamp(0, 1), minHeight: 6, backgroundColor: Colors.black.withOpacity(0.10), valueColor: AlwaysStoppedAnimation(color)),
-          ),
+          _HeatWindowBar(simHours: h, fillColor: color),
         ],
         if (!_heatConfirmed) ...[
           const SizedBox(height: 10),
@@ -1851,15 +1940,33 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
               ),
             ],
           ),
-        ] else if (h >= 6) ...[
+        ] else if (_heatFormStage == 'idle') ...[
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => setState(() => _heatFormStage = (h >= 6 && h < 18) ? 'form' : 'confirm'),
+              child: const Text('Start insemination'),
+            ),
+          ),
+        ] else if (_heatFormStage == 'confirm') ...[
+          const SizedBox(height: 10),
+          const Text("You're outside the optimal window (best results 6–18h after detection). Continue anyway?", style: TextStyle(fontSize: 12, height: 1.5)),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(child: OutlinedButton(onPressed: () => setState(() => _heatFormStage = 'idle'), child: const Text('Cancel'))),
+              const SizedBox(width: 8),
+              Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatFormStage = 'form'), child: const Text('Continue'))),
+            ],
+          ),
+        ] else ...[
           const SizedBox(height: 10),
           const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
           const SizedBox(height: 6),
           _inseminationMethodGrid(_heatMethod, (m) => setState(() => _heatMethod = m)),
           const SizedBox(height: 8),
           SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.watch21), child: const Text('Log insemination'))),
-        ] else ...[
-          Padding(padding: const EdgeInsets.only(top: 8), child: Text('Acknowledged — waiting for the optimal window to open.', style: TextStyle(fontSize: 12, color: hintColor))),
         ],
       ],
     );
