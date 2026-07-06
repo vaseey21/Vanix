@@ -2159,19 +2159,71 @@
 
         function elapsedSimHours() { return (Date.now() - startedAt) / 1000 * SIM_HOURS_PER_SEC; }
 
+        var HEAT_METHODS = ['Artificial', 'Conventional', 'IVF', 'Embryo Transfer'];
+
+        function showExpiredChoice() {
+          card.querySelector('.ev-body').innerHTML =
+            '<p style="font-size:13px; font-weight:600; color:var(--text1); margin:12px 0 0;">Window expired</p>' +
+            '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Insemination window has closed. Was Gauri inseminated?</p>' +
+            '<div style="display:flex; gap:8px; margin-top:10px;">' +
+              '<button id="ev-heat-missed" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Insemination missed</button>' +
+              '<button id="ev-heat-late-log" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Cow inseminated</button>' +
+            '</div>';
+          document.getElementById('ev-heat-missed').addEventListener('click', function() {
+            evSetTint(card, 'var(--bgcard)', 'var(--border)');
+            card.querySelector('.ev-body').innerHTML = '<p style="font-size:13px; color:var(--text2); margin:12px 0 0;">Insemination missed — logged. Heat cycle monitoring resumes.</p>';
+            evResolve();
+          });
+          document.getElementById('ev-heat-late-log').addEventListener('click', function() {
+            var lateMethod = HEAT_METHODS[0];
+            card.querySelector('.ev-body').innerHTML =
+              '<p style="font-size:12px; font-weight:600; color:var(--text1); margin:12px 0 0;">Log insemination</p>' +
+              '<div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">' +
+                HEAT_METHODS.map(function(m, i) {
+                  var on = i === 0;
+                  return '<button class="ev-late-method' + (on ? ' on' : '') + '" data-method="' + m + '" style="min-height:40px; border-radius:20px; border:1px solid ' + (on ? 'var(--dark1)' : 'var(--border)') + '; background:' + (on ? 'var(--dark1)' : 'transparent') + '; color:' + (on ? '#FFFFFF' : 'var(--text1)') + '; font-size:13px; font-weight:' + (on ? '600' : '500') + '; font-family:var(--font-hi);">' + m + '</button>';
+                }).join('') +
+              '</div>' +
+              '<input type="time" id="ev-heat-late-time" style="width:100%; min-height:44px; margin-top:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi);">' +
+              '<input type="text" id="ev-heat-late-tech" placeholder="Technician / vet name (optional)" style="width:100%; min-height:44px; margin-top:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi);">' +
+              '<button id="ev-heat-late-submit" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log insemination</button>';
+            card.querySelectorAll('.ev-late-method').forEach(function(btn) {
+              btn.addEventListener('click', function() {
+                lateMethod = btn.getAttribute('data-method');
+                card.querySelectorAll('.ev-late-method').forEach(function(b) {
+                  var on = b === btn;
+                  b.classList.toggle('on', on);
+                  b.style.background = on ? 'var(--dark1)' : 'transparent';
+                  b.style.color = on ? '#FFFFFF' : 'var(--text1)';
+                  b.style.borderColor = on ? 'var(--dark1)' : 'var(--border)';
+                  b.style.fontWeight = on ? '600' : '500';
+                });
+              });
+            });
+            document.getElementById('ev-heat-late-submit').addEventListener('click', function() {
+              var time = document.getElementById('ev-heat-late-time').value;
+              var tech = document.getElementById('ev-heat-late-tech').value.trim();
+              evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
+              card.querySelector('.ev-body').innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Insemination logged ✓ — 21-day watch started</p>' +
+                '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Method: ' + lateMethod + (time ? ' · ' + time : '') + (tech ? ' · ' + tech : '') + '. If no heat returns by 24 Jul, you\'ll get a pregnancy-check alert. If heat returns earlier, the cycle restarts.</p>';
+              evResolve();
+            });
+          });
+        }
+
         function render() {
           if (resolved) return;
           var h = elapsedSimHours();
           if (h >= 24) {
             resolved = true;
             clearInterval(ticker);
-            evSetTint(card, 'var(--bgcard)', 'var(--border)');
+            evSetTint(card, 'var(--warnbg)', 'var(--warning)');
             phaseEl.textContent = '';
             barEl.parentElement.style.display = 'none';
-            noteEl.textContent = 'Window closed — no insemination logged. Heat cycle monitoring resumes.';
+            noteEl.style.display = 'none';
             confirmEl.style.display = 'none';
             formEl.style.display = 'none';
-            evResolve();
+            showExpiredChoice();
             return;
           }
           var pct, label, color;
