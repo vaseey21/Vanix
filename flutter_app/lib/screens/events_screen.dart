@@ -759,7 +759,7 @@ class _EventsScreenState extends State<EventsScreen> {
           priority: _Priority.p1,
           channel: 'App notification · Confirm with vet',
           title: 'Pregnancy check due — Mohini',
-          sub: '21 days since insemination and no heat detected. Call your vet to confirm the pregnancy.',
+          sub: '21 days since insemination and no heat detected — confirm if she appears pregnant.',
           meta: 'Sunrise Dairy · Belt 91 · inseminated 12 Jun',
           child: Padding(
             padding: const EdgeInsets.only(top: 12),
@@ -767,7 +767,7 @@ class _EventsScreenState extends State<EventsScreen> {
               children: [
                 Expanded(child: OutlinedButton(onPressed: () => setState(() { _preg = _PregState.failed; widget.appState.resolveEvent(); }), child: const Text('Not pregnant'))),
                 const SizedBox(width: 8),
-                Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() { _preg = _PregState.confirmed; widget.appState.resolveEvent(); }), child: const Text('Vet confirmed — pregnant'))),
+                Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() { _preg = _PregState.confirmed; widget.appState.resolveEvent(); }), child: const Text('Confirm — pregnant'))),
               ],
             ),
           ),
@@ -1848,7 +1848,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Pregnancy check due — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
-        Padding(padding: const EdgeInsets.only(top: 3), child: Text('21 days since insemination and no heat detected. Call your vet to confirm the pregnancy.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('21 days since insemination and no heat detected — confirm if she appears pregnant.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
         const SizedBox(height: 12),
         Row(
           children: [
@@ -1862,7 +1862,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
               ),
             ),
             const SizedBox(width: 8),
-            Expanded(flex: 2, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.gestation9), child: const Text('Vet confirmed — pregnant'))),
+            Expanded(flex: 2, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.gestation9), child: const Text('Confirm — pregnant'))),
           ],
         ),
       ],
