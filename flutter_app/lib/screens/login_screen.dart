@@ -192,7 +192,14 @@ class _LoginScreenState extends State<LoginScreen> {
             setState(() => _panel = _fromForgot ? _Panel.forgot : _Panel.login);
           },
           onResend: _startTimer,
-          onChanged: () => setState(() {}),
+          onChanged: () {
+            setState(() {});
+            // all 6 digits in — advance automatically, no Confirm tap needed
+            if (_otpFilled) {
+              FocusScope.of(context).unfocus();
+              Future.delayed(const Duration(milliseconds: 250), _confirmOtp);
+            }
+          },
           onConfirm: _confirmOtp,
         );
       case _Panel.reset:

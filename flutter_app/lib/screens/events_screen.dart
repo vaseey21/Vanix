@@ -141,7 +141,7 @@ enum _AckState { initial, acknowledged }
 /// Gestation is its own evolving card (like Heat) — 3/6/9-month vet checks,
 /// call-vet-for-delivery (vet picker), then delivery confirmed w/ notes.
 /// Only the final `delivered` state calls resolveEvent().
-enum _GestationState { check3, check6, callVet, deliveryForm, delivered }
+enum _GestationState { check3, check6, callVet, deliveryAsk, deliveryForm, deliveryFailed, delivered }
 
 /// Milking notification — fires once gestation resolves. "Remind me later"
 /// loops back to pending on a compressed timer without touching the badge;
@@ -265,7 +265,7 @@ class _EventsScreenState extends State<EventsScreen> {
   }
 
   Future<void> _showFullCycleSheet(BuildContext context) async {
-    final result = await Navigator.of(context).push<String?>(MaterialPageRoute(builder: (_) => const HeatAlertScreen(), fullscreenDialog: true));
+    final result = await Navigator.of(context).push<String?>(MaterialPageRoute(builder: (_) => HeatAlertScreen(isDark: widget.appState.isDark), fullscreenDialog: true));
     if (!context.mounted) return;
     showModalBottomSheet(
       context: context,
@@ -807,14 +807,15 @@ class _EventsScreenState extends State<EventsScreen> {
                 ],
               ),
             ] else if (_heatFormStage == 'idle') ...[
-              // Start insemination is available in every phase — outside the
-              // optimal window it interposes a confirmation step first.
+              // "Call vet" is available in every phase — outside the optimal
+              // window it interposes a confirmation step first. Picking one of
+              // the 3 onboarded vets then opens the log form.
               const SizedBox(height: 10),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => setState(() => _heatFormStage = (h >= 6 && h < 18) ? 'form' : 'confirm'),
-                  child: const Text('Start insemination'),
+                  onPressed: () => setState(() => _heatFormStage = (h >= 6 && h < 18) ? 'vet' : 'confirm'),
+                  child: const Text('Call vet'),
                 ),
               ),
             ] else if (_heatFormStage == 'confirm') ...[
@@ -825,9 +826,11 @@ class _EventsScreenState extends State<EventsScreen> {
                 children: [
                   Expanded(child: OutlinedButton(onPressed: () => setState(() => _heatFormStage = 'idle'), child: const Text('Cancel'))),
                   const SizedBox(width: 8),
-                  Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatFormStage = 'form'), child: const Text('Continue'))),
+                  Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatFormStage = 'vet'), child: const Text('Continue'))),
                 ],
               ),
+            ] else if (_heatFormStage == 'vet') ...[
+              _vetPicker((vetName) => setState(() { _heatTechCtrl.text = vetName; _heatFormStage = 'form'; })),
             ] else ...[
               const SizedBox(height: 10),
               const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
@@ -955,7 +958,36 @@ class _EventsScreenState extends State<EventsScreen> {
         title: '9-month check — call your vet for delivery',
         sub: 'Approaching her due date — call a vet to be on hand for delivery.',
         meta: meta,
-        child: _vetPicker((vetName) => setState(() { _gestationVetName = vetName; _gestation = _GestationState.deliveryForm; })),
+        child: _vetPicker((vetName) => setState(() { _gestationVetName = vetName; _gestation = _GestationState.deliveryAsk; })),
+      );
+    }
+    if (_gestation == _GestationState.deliveryAsk) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: channel,
+        title: 'Vet on the way — Lakshmi',
+        sub: '$_gestationVetName has been called for the delivery.',
+        meta: meta,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Was the delivery successful?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(child: OutlinedButton(onPressed: () => setState(() { _gestation = _GestationState.deliveryFailed; widget.appState.resolveEvent(); }), child: const Text('No'))),
+                  const SizedBox(width: 8),
+                  Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _gestation = _GestationState.deliveryForm), child: const Text('Yes, successful'))),
+                ],
+              ),
+            ],
+          ),
+        ),
       );
     }
     if (_gestation == _GestationState.deliveryForm) {
@@ -965,8 +997,8 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.warning,
         priority: _Priority.p1,
         channel: channel,
-        title: 'Vet on the way — confirm once delivered',
-        sub: '$_gestationVetName has been called. Confirm once Lakshmi has delivered.',
+        title: 'Delivery successful — log it',
+        sub: 'Add any notes from $_gestationVetName before logging the delivery.',
         meta: meta,
         child: Padding(
           padding: const EdgeInsets.only(top: 10),
@@ -983,12 +1015,25 @@ class _EventsScreenState extends State<EventsScreen> {
                     widget.appState.resolveEvent();
                     _milkingNotifShown = true;
                   }),
-                  child: const Text('Delivery confirmed'),
+                  child: const Text('Log delivery'),
                 ),
               ),
             ],
           ),
         ),
+      );
+    }
+    if (_gestation == _GestationState.deliveryFailed) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.dangerBg,
+        border: VanixColors.danger,
+        priority: _Priority.p1,
+        channel: channel,
+        title: 'Delivery unsuccessful — recorded',
+        sub: '$_gestationVetName has been notified for an urgent check. Lakshmi will not enter the milking pool.',
+        meta: meta,
+        child: const SizedBox.shrink(),
       );
     }
     // delivered
@@ -998,7 +1043,7 @@ class _EventsScreenState extends State<EventsScreen> {
       border: VanixColors.greenDeep,
       priority: _Priority.p1,
       channel: channel,
-      title: 'Delivery confirmed ✓',
+      title: 'Delivery logged ✓',
       sub: 'Lakshmi has moved to Calved. She\'ll appear in the Milk Log once you add her from the new lactation notification.',
       meta: meta,
       child: const SizedBox.shrink(),
@@ -1945,8 +1990,8 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => setState(() => _heatFormStage = (h >= 6 && h < 18) ? 'form' : 'confirm'),
-              child: const Text('Start insemination'),
+              onPressed: () => setState(() => _heatFormStage = (h >= 6 && h < 18) ? 'vet' : 'confirm'),
+              child: const Text('Call vet'),
             ),
           ),
         ] else if (_heatFormStage == 'confirm') ...[
@@ -1957,9 +2002,11 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
             children: [
               Expanded(child: OutlinedButton(onPressed: () => setState(() => _heatFormStage = 'idle'), child: const Text('Cancel'))),
               const SizedBox(width: 8),
-              Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatFormStage = 'form'), child: const Text('Continue'))),
+              Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatFormStage = 'vet'), child: const Text('Continue'))),
             ],
           ),
+        ] else if (_heatFormStage == 'vet') ...[
+          _VetPicker(onSent: (_) => setState(() => _heatFormStage = 'form')),
         ] else ...[
           const SizedBox(height: 10),
           const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
@@ -1998,14 +2045,53 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
     );
   }
 
+  // Gestation walkthrough sub-steps: vet (pick a vet) → ask (was it successful?)
+  // → log (notes) → milking; "No" interrupts the walkthrough.
+  String _seqGestStage = 'vet';
+
   Widget _deliveryStepBody(Color textColor, Color hintColor) {
+    Widget header = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('9-month check — call your vet for delivery', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('Approaching her due date — call a vet to be on hand for delivery.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+      ],
+    );
+    if (_seqGestStage == 'vet') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [header, _VetPicker(onSent: (_) => setState(() => _seqGestStage = 'ask'))],
+      );
+    }
+    if (_seqGestStage == 'ask') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          header,
+          const Padding(padding: EdgeInsets.only(top: 12), child: Text('Was the delivery successful?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(child: OutlinedButton(onPressed: () => setState(() {
+                _interruptedMessage = 'Cycle interrupted — delivery unsuccessful. The vet has been notified for an urgent check.';
+                _step = _SeqStep.interrupted;
+              }), child: const Text('No'))),
+              const SizedBox(width: 8),
+              Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _seqGestStage = 'log'), child: const Text('Yes, successful'))),
+            ],
+          ),
+        ],
+      );
+    }
+    // log
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('9-month vet check due — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
-        Padding(padding: const EdgeInsets.only(top: 3), child: Text('Approaching her due date — schedule a vet check and confirm delivery once she calves.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
-        const SizedBox(height: 12),
-        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.milking), child: const Text('Delivery confirmed'))),
+        Text('Delivery successful — log it', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        const SizedBox(height: 10),
+        const TextField(maxLines: 3, decoration: InputDecoration(hintText: 'Delivery notes (optional)')),
+        const SizedBox(height: 8),
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.milking), child: const Text('Log delivery'))),
       ],
     );
   }

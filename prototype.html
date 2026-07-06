@@ -2,7 +2,7 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#111111" />
@@ -136,6 +136,25 @@
     .ev-chip-p1 { background:#8A5A00; color:#FFFFFF; }
     .ev-chip-p2 { background:var(--warnbg); border:1px solid var(--warning); color:#8A5A00; }
     .ev-chip-p3 { background:var(--bgcard); border:1px solid var(--border); color:var(--text2); }
+    /* Full-screen heat alert carousel — follows light/dark mode */
+    #ev-alert-fullscreen { background:var(--bgwarm); }
+    #flow-root.dark #ev-alert-fullscreen { background:linear-gradient(180deg, var(--dark1) 0%, #1C1C1C 100%); }
+    .fs-circle-btn { background:rgba(0,0,0,0.08); color:var(--text1); }
+    #flow-root.dark .fs-circle-btn { background:rgba(255,255,255,0.14); color:#FFFFFF; }
+    .fs-meta { color:var(--text2); }
+    #flow-root.dark .fs-meta { color:rgba(255,255,255,0.75); }
+    .fs-title { color:var(--text1); }
+    #flow-root.dark .fs-title { color:#FFFFFF; }
+    .fs-panel { background:var(--bgcard); border:1px solid var(--border); }
+    #flow-root.dark .fs-panel { background:rgba(255,255,255,0.06); border-color:transparent; }
+    .fs-panel-label { color:var(--text2); }
+    #flow-root.dark .fs-panel-label { color:rgba(255,255,255,0.6); }
+    .fs-no-btn { border:1px solid var(--border); color:var(--text1); }
+    #flow-root.dark .fs-no-btn { border-color:rgba(255,255,255,0.4); color:#FFFFFF; }
+    .fs-link { color:var(--greenink); }
+    #flow-root.dark .fs-link { color:var(--greendeep); }
+    .fs-ack { color:var(--greenink); }
+    #flow-root.dark .fs-ack { color:var(--greendeep); }
     /* P0 cards use a single corner badge instead of a chip — card tint already signals "critical" */
     .ev-corner-badge { position:absolute; top:-6px; right:-6px; width:20px; height:20px; border-radius:50%; background:#8B2800; color:#FFFFFF; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 1px 3px rgba(0,0,0,0.25); }
     .ev-channel { font-size:11px; color:var(--text2); margin:2px 0 0; }
@@ -972,7 +991,8 @@
                     <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No</button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:#8A5A00; border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, in heat</button>
                   </div>
-                  <button id="ev-heat-start" style="display:none; width:100%; min-height:44px; margin-top:10px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Start insemination</button>
+                  <button id="ev-heat-start" style="display:none; width:100%; min-height:44px; margin-top:10px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Call vet</button>
+                  <div id="ev-heat-vet" style="display:none; margin-top:10px;"></div>
                   <div id="ev-heat-offwin" style="display:none; margin-top:10px;">
                     <p style="font-size:12px; color:var(--text1); margin:0; line-height:1.6;">You're outside the optimal window (best results 6–18h after detection). Continue anyway?</p>
                     <div style="display:flex; gap:8px; margin-top:8px;">
@@ -1289,18 +1309,18 @@
 
           <!-- Full-screen "push notification" heat alert carousel — View full cycle entry point.
                Multiple heat alerts swipe left/right; cards are injected by JS from FS_ALERTS. -->
-          <div id="ev-alert-fullscreen" style="display:none; position:absolute; inset:0; z-index:30; background:linear-gradient(180deg, var(--dark1) 0%, #1C1C1C 100%); flex-direction:column; padding:20px 0;">
+          <div id="ev-alert-fullscreen" style="display:none; position:absolute; inset:0; z-index:30; flex-direction:column; padding:20px 0;">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:0 20px;">
-              <button id="ev-fs-close" style="width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.14); border:none; color:#FFFFFF; font-size:16px; line-height:1;">✕</button>
-              <span id="ev-fs-count" class="en" style="font-size:12px; font-weight:600; color:rgba(255,255,255,0.75);">1 of 3</span>
+              <button id="ev-fs-close" class="fs-circle-btn" style="width:32px; height:32px; border-radius:50%; border:none; font-size:16px; line-height:1;">✕</button>
+              <span id="ev-fs-count" class="en fs-meta" style="font-size:12px; font-weight:600;">1 of 3</span>
             </div>
             <div style="flex:1; position:relative; overflow:hidden; margin-top:4px;">
               <div id="ev-fs-strip" style="display:flex; height:100%; transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);"></div>
-              <button id="ev-fs-prev" style="position:absolute; left:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.14); border:none; color:#FFFFFF; font-size:18px; line-height:1;">‹</button>
-              <button id="ev-fs-next" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.14); border:none; color:#FFFFFF; font-size:18px; line-height:1;">›</button>
+              <button id="ev-fs-prev" class="fs-circle-btn" style="position:absolute; left:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; border:none; font-size:18px; line-height:1;">‹</button>
+              <button id="ev-fs-next" class="fs-circle-btn" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; border:none; font-size:18px; line-height:1;">›</button>
             </div>
             <div style="text-align:center; padding:6px 20px 0;">
-              <button id="ev-fs-viewinapp" style="background:transparent; border:none; padding:0; font-size:13px; font-weight:600; color:var(--greendeep); font-family:var(--font-hi);">View in app instead ›</button>
+              <button id="ev-fs-viewinapp" class="fs-link" style="background:transparent; border:none; padding:0; font-size:13px; font-weight:600; font-family:var(--font-hi);">View in app instead ›</button>
             </div>
           </div>
 
@@ -1605,12 +1625,18 @@
       });
 
       boxes.forEach(function(box, i) {
+        // keep the OTP boxes visible above the on-screen keyboard
+        box.addEventListener('focus', function() {
+          setTimeout(function() { box.scrollIntoView({ block: 'center', behavior: 'smooth' }); }, 250);
+        });
         box.addEventListener('input', function() {
           box.value = box.value.replace(/\D/g, '');
           if (box.value && i < boxes.length - 1) boxes[i + 1].focus();
           var filled = Array.prototype.every.call(boxes, function(b) { return b.value; });
           confirmBtn.disabled = !filled;
           confirmBtn.style.background = filled ? 'var(--greenink)' : '#B5B5B5';
+          // all 6 digits in — advance automatically, no Confirm tap needed
+          if (filled) { box.blur(); setTimeout(function() { confirmBtn.click(); }, 250); }
         });
         box.addEventListener('keydown', function(e) {
           if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus();
@@ -2143,6 +2169,7 @@
         var formEl = document.getElementById('ev-heat-form');
         var startBtn = document.getElementById('ev-heat-start');
         var offwinEl = document.getElementById('ev-heat-offwin');
+        var vetEl = document.getElementById('ev-heat-vet');
         var barWrap = document.getElementById('ev-heat-bar-wrap');
         var method = 'Artificial';
         var confirmed = false;
@@ -2217,6 +2244,7 @@
             confirmEl.style.display = 'none';
             startBtn.style.display = 'none';
             offwinEl.style.display = 'none';
+            vetEl.style.display = 'none';
             formEl.style.display = 'none';
             showExpiredChoice();
             return;
@@ -2247,14 +2275,24 @@
           startBtn.style.display = 'block';
           render();
         });
-        // "Start insemination" is available in every phase — but outside the
-        // optimal window (pre / suboptimal) it interposes a confirmation step.
+        // "Call vet" is available in every phase — but outside the optimal
+        // window (pre / suboptimal) it interposes a confirmation step first.
+        // Picking one of the 3 onboarded vets then opens the log form.
+        function showHeatVetPicker() {
+          vetEl.innerHTML = vetPickerHtml('heat');
+          vetEl.style.display = 'block';
+          wireVetPicker('heat', function(vetName) {
+            vetEl.style.display = 'none';
+            formEl.style.display = 'block';
+            document.getElementById('ev-heat-tech').value = vetName;
+            noteEl.textContent = vetName + ' called — enter the insemination details once done.';
+          });
+        }
         startBtn.addEventListener('click', function() {
           var h = elapsedSimHours();
           startBtn.style.display = 'none';
           if (h >= 6 && h < 18) {
-            formEl.style.display = 'block';
-            noteEl.textContent = 'Enter the insemination details once done.';
+            showHeatVetPicker();
           } else {
             offwinEl.style.display = 'block';
           }
@@ -2265,8 +2303,7 @@
         });
         document.getElementById('ev-heat-offwin-continue').addEventListener('click', function() {
           offwinEl.style.display = 'none';
-          formEl.style.display = 'block';
-          noteEl.textContent = 'Enter the insemination details once done.';
+          showHeatVetPicker();
         });
         card.querySelectorAll('.ev-method').forEach(function(btn) {
           btn.addEventListener('click', function() {
@@ -2374,19 +2411,37 @@
           subEl.textContent = 'Approaching her due date — call a vet to be on hand for delivery.';
           body.innerHTML = vetPickerHtml('gestation');
           wireVetPicker('gestation', function(vetName) {
-            renderDeliveryForm(vetName);
+            renderDeliveryAsk(vetName);
           });
         }
 
-        function renderDeliveryForm(vetName) {
-          titleEl.textContent = 'Vet on the way — confirm once delivered';
-          subEl.textContent = vetName + ' has been called. Confirm once Lakshmi has delivered.';
+        function renderDeliveryAsk(vetName) {
+          titleEl.textContent = 'Vet on the way — Lakshmi';
+          subEl.textContent = vetName + ' has been called for the delivery.';
+          body.innerHTML =
+            '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Was the delivery successful?</p>' +
+            '<div style="display:flex; gap:8px; margin-top:10px;">' +
+              '<button id="ev-gestation-fail" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No</button>' +
+              '<button id="ev-gestation-ok" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, successful</button>' +
+            '</div>';
+          document.getElementById('ev-gestation-fail').addEventListener('click', function() {
+            evSetTint(card, 'var(--dangerbg)', 'var(--danger)');
+            body.innerHTML = '<p style="font-size:13px; font-weight:600; color:#8B2800; margin:12px 0 0;">Delivery unsuccessful — recorded</p>' +
+              '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">' + vetName + ' has been notified for an urgent check. Lakshmi will not enter the milking pool.</p>';
+            evResolve();
+          });
+          document.getElementById('ev-gestation-ok').addEventListener('click', function() { renderDeliveryLog(vetName); });
+        }
+
+        function renderDeliveryLog(vetName) {
+          titleEl.textContent = 'Delivery successful — log it';
+          subEl.textContent = 'Add any notes from ' + vetName + ' before logging the delivery.';
           body.innerHTML =
             '<textarea id="ev-gestation-notes" placeholder="Delivery notes (optional)" rows="3" style="width:100%; margin-top:10px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
-            '<button id="ev-gestation-deliver" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Delivery confirmed</button>';
+            '<button id="ev-gestation-deliver" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log delivery</button>';
           document.getElementById('ev-gestation-deliver').addEventListener('click', function() {
             evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
-            body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Delivery confirmed ✓</p>' +
+            body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Delivery logged ✓</p>' +
               '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Lakshmi has moved to Calved. She\'ll appear in the Milk Log once you add her from the new lactation notification.</p>';
             evResolve();
             showMilkingNotif('Lakshmi');
@@ -2531,7 +2586,8 @@
         var heatStartedAt = 0;
         var heatConfirmed = false;
         var heatMethod = 'Artificial';
-        var heatFormStage = 'idle'; // idle | confirm | form — Start-insemination flow
+        var heatFormStage = 'idle'; // idle | confirm | vet | form — Call-vet flow
+        var heatVetSel = ONBOARDED_VETS[0];
         var SIM_HOURS_PER_SEC = 0.5; // walkthrough demo speed — 24h plays out in 48s
         var INSEM_METHODS = ['Artificial', 'Conventional', 'IVF', 'Embryo Transfer'];
         function seqMethodBtn(label) {
@@ -2570,10 +2626,10 @@
             var y = 26 - ((t - min) / (max - min || 1)) * 22;
             return x.toFixed(1) + ',' + y.toFixed(1);
           }).join(' ');
-          return '<div style="background:rgba(255,255,255,0.06); border-radius:12px; padding:10px 12px; margin-top:12px; text-align:start;">' +
-            '<p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; color:rgba(255,255,255,0.6); margin:0;">TEMPERATURE — LAST 10 READINGS</p>' +
+          return '<div class="fs-panel" style="border-radius:12px; padding:10px 12px; margin-top:12px; text-align:start;">' +
+            '<p class="en fs-panel-label" style="font-size:10px; font-weight:600; letter-spacing:0.06em; margin:0;">TEMPERATURE — LAST 10 READINGS</p>' +
             '<svg viewBox="0 0 100 30" preserveAspectRatio="none" style="display:block; width:100%; height:34px; margin-top:4px;"><polyline points="' + pts + '" fill="none" stroke="var(--warning)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>' +
-            '<div class="en" style="display:flex; justify-content:space-between; font-size:10px; color:rgba(255,255,255,0.6);"><span>' + min.toFixed(1) + '°C</span><span>' + max.toFixed(1) + '°C</span></div>' +
+            '<div class="en fs-panel-label" style="display:flex; justify-content:space-between; font-size:10px;"><span>' + min.toFixed(1) + '°C</span><span>' + max.toFixed(1) + '°C</span></div>' +
           '</div>';
         }
 
@@ -2582,8 +2638,8 @@
           var bars = moves.map(function(m) {
             return '<div style="flex:1; height:' + Math.round(m / max * 100) + '%; background:var(--greendeep); border-radius:2px;"></div>';
           }).join('');
-          return '<div style="background:rgba(255,255,255,0.06); border-radius:12px; padding:10px 12px; margin-top:8px; text-align:start;">' +
-            '<p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; color:rgba(255,255,255,0.6); margin:0;">MOVEMENT — ACTIVITY INDEX</p>' +
+          return '<div class="fs-panel" style="border-radius:12px; padding:10px 12px; margin-top:8px; text-align:start;">' +
+            '<p class="en fs-panel-label" style="font-size:10px; font-weight:600; letter-spacing:0.06em; margin:0;">MOVEMENT — ACTIVITY INDEX</p>' +
             '<div style="display:flex; align-items:flex-end; gap:3px; height:34px; margin-top:4px;">' + bars + '</div>' +
           '</div>';
         }
@@ -2592,15 +2648,15 @@
           fsStrip.innerHTML = FS_ALERTS.map(function(a, i) {
             return '<div class="ev-fs-card" data-i="' + i + '" style="flex:0 0 100%; display:flex; flex-direction:column; padding:8px 44px 4px;">' +
               '<div style="flex:1; overflow-y:auto; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">' +
-                '<span class="en" style="font-size:12px; font-weight:500; color:rgba(255,255,255,0.75);">' + a.farm + ' · detected ' + a.time + '</span>' +
+                '<span class="en fs-meta" style="font-size:12px; font-weight:500;">' + a.farm + ' · detected ' + a.time + '</span>' +
                 '<div style="width:84px; height:84px; border-radius:50%; background:var(--warnbg); border:2px solid var(--warning); display:flex; align-items:center; justify-content:center; font-size:36px; margin-top:12px; flex-shrink:0;">🐄</div>' +
-                '<p style="font-size:18px; font-weight:600; color:#FFFFFF; margin:12px 0 0;">Heat cycle detected — ' + a.name + '</p>' +
-                '<p style="font-size:12px; color:rgba(255,255,255,0.75); margin:6px 0 0; line-height:1.6;">' + a.reason + '</p>' +
+                '<p class="fs-title" style="font-size:18px; font-weight:600; margin:12px 0 0;">Heat cycle detected — ' + a.name + '</p>' +
+                '<p class="fs-meta" style="font-size:12px; margin:6px 0 0; line-height:1.6;">' + a.reason + '</p>' +
                 '<div style="width:100%;">' + fsSparkline(a.temps) + fsMovement(a.moves) + '</div>' +
               '</div>' +
               '<div class="ev-fs-actions" style="width:100%; margin-top:14px; padding-bottom:6px;">' +
                 '<button class="ev-fs-yes" style="width:100%; min-height:48px; background:var(--greendeep); border:none; border-radius:24px; font-size:14px; font-weight:600; color:#111111; font-family:var(--font-hi);">Yes, in heat</button>' +
-                '<button class="ev-fs-no" style="width:100%; min-height:48px; margin-top:8px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:24px; font-size:14px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">No</button>' +
+                '<button class="ev-fs-no fs-no-btn" style="width:100%; min-height:48px; margin-top:8px; background:transparent; border-radius:24px; font-size:14px; font-weight:600; font-family:var(--font-hi);">No</button>' +
               '</div>' +
             '</div>';
           }).join('');
@@ -2630,7 +2686,7 @@
           if (i === 0) heatPreDecision = decision; // Gauri drives the walkthrough
           var cardEl = fsStrip.querySelector('.ev-fs-card[data-i="' + i + '"]');
           cardEl.querySelector('.ev-fs-actions').innerHTML =
-            '<p style="font-size:13px; font-weight:600; color:var(--greendeep); margin:6px 0 0;">Acknowledged ✓ — ' + FS_ALERTS[i].name + ' marked ' + (decision === 'yes' ? 'in heat' : 'not in heat') + '</p>';
+            '<p class="fs-ack" style="font-size:13px; font-weight:600; margin:6px 0 0;">Acknowledged ✓ — ' + FS_ALERTS[i].name + ' marked ' + (decision === 'yes' ? 'in heat' : 'not in heat') + '</p>';
           setTimeout(function() {
             var next = -1;
             for (var j = 0; j < FS_ALERTS.length; j++) { if (!fsResolved[j]) { next = j; break; } }
@@ -2738,6 +2794,7 @@
           heatConfirmed = (heatPreDecision === 'yes');
           heatMethod = 'Artificial';
           heatFormStage = 'idle';
+          heatVetSel = ONBOARDED_VETS[0];
           paintHeat();
           heatTicker = setInterval(paintHeat, 200);
         }
@@ -2782,7 +2839,15 @@
               '<button id="ev-seq-heat-yes" style="flex:1.3; min-height:44px; background:#8A5A00; border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, in heat</button>' +
               '</div>';
           } else if (heatFormStage === 'idle') {
-            html += '<button id="ev-seq-heat-start" style="width:100%; min-height:44px; margin-top:10px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Start insemination</button>';
+            html += '<button id="ev-seq-heat-start" style="width:100%; min-height:44px; margin-top:10px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Call vet</button>';
+          } else if (heatFormStage === 'vet') {
+            html += '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:10px 0 0;">Call a vet for insemination</p>' +
+              ONBOARDED_VETS.map(function(name) {
+                var on = name === heatVetSel;
+                return '<button class="ev-seq-vet-row" data-vet="' + name + '" style="width:100%; display:flex; align-items:center; gap:10px; min-height:44px; padding:0 12px; margin-top:6px; border-radius:12px; border:1px solid ' + (on ? 'var(--greendeep)' : 'var(--border)') + '; background:' + (on ? 'var(--activebg)' : 'var(--bgcard)') + '; font-size:14px; font-weight:' + (on ? '600' : '500') + '; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
+                  '<span style="width:16px; height:16px; border-radius:50%; border:2px solid ' + (on ? 'var(--greendeep)' : 'var(--border)') + '; background:' + (on ? 'var(--greendeep)' : 'transparent') + '; flex-shrink:0;"></span>' + name + '</button>';
+              }).join('') +
+              '<button id="ev-seq-heat-vet-send" style="width:100%; min-height:44px; margin-top:10px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Call vet</button>';
           } else if (heatFormStage === 'confirm') {
             html += '<p style="font-size:12px; color:var(--text1); margin:10px 0 0; line-height:1.6;">You\'re outside the optimal window (best results 6–18h after detection). Continue anyway?</p>' +
               '<div style="display:flex; gap:8px; margin-top:8px;">' +
@@ -2804,12 +2869,17 @@
           } else if (heatFormStage === 'idle') {
             document.getElementById('ev-seq-heat-start').addEventListener('click', function() {
               var hh = (Date.now() - heatStartedAt) / 1000 * SIM_HOURS_PER_SEC;
-              heatFormStage = (hh >= 6 && hh < 18) ? 'form' : 'confirm';
+              heatFormStage = (hh >= 6 && hh < 18) ? 'vet' : 'confirm';
               paintHeat();
             });
+          } else if (heatFormStage === 'vet') {
+            document.querySelectorAll('.ev-seq-vet-row').forEach(function(row) {
+              row.addEventListener('click', function() { heatVetSel = row.getAttribute('data-vet'); paintHeat(); });
+            });
+            document.getElementById('ev-seq-heat-vet-send').addEventListener('click', function() { heatFormStage = 'form'; paintHeat(); });
           } else if (heatFormStage === 'confirm') {
             document.getElementById('ev-seq-heat-offwin-cancel').addEventListener('click', function() { heatFormStage = 'idle'; paintHeat(); });
-            document.getElementById('ev-seq-heat-offwin-continue').addEventListener('click', function() { heatFormStage = 'form'; paintHeat(); });
+            document.getElementById('ev-seq-heat-offwin-continue').addEventListener('click', function() { heatFormStage = 'vet'; paintHeat(); });
           } else {
             document.querySelectorAll('.ev-seq-method').forEach(function(btn) {
               btn.addEventListener('click', function() { heatMethod = btn.getAttribute('data-method'); paintHeat(); });
@@ -2831,11 +2901,30 @@
         }
 
         function renderGestationStep() {
+          // 9-month checkpoint: call a vet for delivery -> was it successful? -> log it.
           body.innerHTML =
-            '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">9-month vet check due — Gauri</p>' +
-            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — schedule a vet check and confirm delivery once she calves.</p>' +
-            '<button id="ev-seq-delivery" style="width:100%; min-height:44px; margin-top:12px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Delivery confirmed</button>';
-          document.getElementById('ev-seq-delivery').addEventListener('click', function() { goTo(6); });
+            '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">9-month check — call your vet for delivery</p>' +
+            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — call a vet to be on hand for delivery.</p>' +
+            '<div id="ev-seq-gest-body"></div>';
+          var gestBody = document.getElementById('ev-seq-gest-body');
+          gestBody.innerHTML = vetPickerHtml('seqgest');
+          wireVetPicker('seqgest', function(vetName) {
+            gestBody.innerHTML =
+              '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">' + vetName + ' called. Was the delivery successful?</p>' +
+              '<div style="display:flex; gap:8px; margin-top:10px;">' +
+                '<button id="ev-seq-gest-fail" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No</button>' +
+                '<button id="ev-seq-gest-ok" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, successful</button>' +
+              '</div>';
+            document.getElementById('ev-seq-gest-fail').addEventListener('click', function() {
+              interrupt('Cycle interrupted — delivery unsuccessful. ' + vetName + ' has been notified for an urgent check.');
+            });
+            document.getElementById('ev-seq-gest-ok').addEventListener('click', function() {
+              gestBody.innerHTML =
+                '<textarea id="ev-seq-gest-notes" placeholder="Delivery notes (optional)" rows="3" style="width:100%; margin-top:10px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
+                '<button id="ev-seq-gest-log" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log delivery</button>';
+              document.getElementById('ev-seq-gest-log').addEventListener('click', function() { goTo(6); });
+            });
+          });
         }
 
         function renderMilkingStep() {

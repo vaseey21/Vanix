@@ -42,7 +42,9 @@ const List<_HeatAlertData> _kAlerts = [
 /// walkthrough narrates. Dismissing via ✕ or "View in app instead" pops null,
 /// and the caller opens the walkthrough in "restricted" detail mode.
 class HeatAlertScreen extends StatefulWidget {
-  const HeatAlertScreen({super.key});
+  /// Follows the app-wide theme — light farmers get a light alert screen.
+  final bool isDark;
+  const HeatAlertScreen({super.key, required this.isDark});
 
   @override
   State<HeatAlertScreen> createState() => _HeatAlertScreenState();
@@ -82,8 +84,11 @@ class _HeatAlertScreenState extends State<HeatAlertScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [VanixColors.darkPrimary, VanixColors.darkSecond]),
+        decoration: BoxDecoration(
+          gradient: widget.isDark
+              ? const LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [VanixColors.darkPrimary, VanixColors.darkSecond])
+              : null,
+          color: widget.isDark ? null : VanixColors.bgWarm,
         ),
         child: SafeArea(
           child: Column(
@@ -99,12 +104,12 @@ class _HeatAlertScreenState extends State<HeatAlertScreen> {
                       child: Container(
                         width: 32,
                         height: 32,
-                        decoration: BoxDecoration(color: Colors.white.withOpacity(0.14), shape: BoxShape.circle),
+                        decoration: BoxDecoration(color: widget.isDark ? Colors.white.withOpacity(0.14) : Colors.black.withOpacity(0.08), shape: BoxShape.circle),
                         alignment: Alignment.center,
-                        child: const Icon(Icons.close, color: Colors.white, size: 16),
+                        child: Icon(Icons.close, color: widget.isDark ? Colors.white : VanixColors.textPrimary, size: 16),
                       ),
                     ),
-                    Text('${_index + 1} of ${_kAlerts.length}', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white.withOpacity(0.75))),
+                    Text('${_index + 1} of ${_kAlerts.length}', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: widget.isDark ? Colors.white.withOpacity(0.75) : VanixColors.textHint)),
                   ],
                 ),
               ),
@@ -116,6 +121,7 @@ class _HeatAlertScreenState extends State<HeatAlertScreen> {
                       itemCount: _kAlerts.length,
                       onPageChanged: (i) => setState(() => _index = i),
                       itemBuilder: (context, i) => _AlertCard(
+                        isDark: widget.isDark,
                         data: _kAlerts[i],
                         decision: _decisions[i],
                         onYes: () => _action(i, 'yes'),
@@ -128,13 +134,13 @@ class _HeatAlertScreenState extends State<HeatAlertScreen> {
                       start: 8,
                       top: 0,
                       bottom: 0,
-                      child: Center(child: _ArrowButton(icon: Icons.chevron_left, onTap: () => _goTo(_index - 1))),
+                      child: Center(child: _ArrowButton(isDark: widget.isDark, icon: Icons.chevron_left, onTap: () => _goTo(_index - 1))),
                     ),
                     PositionedDirectional(
                       end: 8,
                       top: 0,
                       bottom: 0,
-                      child: Center(child: _ArrowButton(icon: Icons.chevron_right, onTap: () => _goTo(_index + 1))),
+                      child: Center(child: _ArrowButton(isDark: widget.isDark, icon: Icons.chevron_right, onTap: () => _goTo(_index + 1))),
                     ),
                   ],
                 ),
@@ -143,7 +149,7 @@ class _HeatAlertScreenState extends State<HeatAlertScreen> {
                 padding: const EdgeInsets.only(top: 6, bottom: 10),
                 child: TextButton(
                   onPressed: () => Navigator.of(context).pop(null),
-                  child: const Text('View in app instead ›', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenDeep)),
+                  child: Text('View in app instead ›', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: widget.isDark ? VanixColors.greenDeep : VanixColors.greenInk)),
                 ),
               ),
             ],
@@ -155,9 +161,10 @@ class _HeatAlertScreenState extends State<HeatAlertScreen> {
 }
 
 class _ArrowButton extends StatelessWidget {
+  final bool isDark;
   final IconData icon;
   final VoidCallback onTap;
-  const _ArrowButton({required this.icon, required this.onTap});
+  const _ArrowButton({required this.isDark, required this.icon, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -167,19 +174,20 @@ class _ArrowButton extends StatelessWidget {
       child: Container(
         width: 32,
         height: 32,
-        decoration: BoxDecoration(color: Colors.white.withOpacity(0.14), shape: BoxShape.circle),
+        decoration: BoxDecoration(color: isDark ? Colors.white.withOpacity(0.14) : Colors.black.withOpacity(0.08), shape: BoxShape.circle),
         alignment: Alignment.center,
-        child: Icon(icon, color: Colors.white, size: 20),
+        child: Icon(icon, color: isDark ? Colors.white : VanixColors.textPrimary, size: 20),
       ),
     );
   }
 }
 
 class _AlertCard extends StatelessWidget {
+  final bool isDark;
   final _HeatAlertData data;
   final String? decision;
   final VoidCallback onYes, onNo;
-  const _AlertCard({required this.data, required this.decision, required this.onYes, required this.onNo});
+  const _AlertCard({required this.isDark, required this.data, required this.decision, required this.onYes, required this.onNo});
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +202,7 @@ class _AlertCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-          Text('${data.farm} · detected ${data.time}', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withOpacity(0.75))),
+          Text('${data.farm} · detected ${data.time}', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: isDark ? Colors.white.withOpacity(0.75) : VanixColors.textHint)),
           const SizedBox(height: 12),
           Container(
             width: 84,
@@ -204,11 +212,12 @@ class _AlertCard extends StatelessWidget {
             child: const Text('🐄', style: TextStyle(fontSize: 36)),
           ),
           const SizedBox(height: 12),
-          Text('Heat cycle detected — ${data.name}', textAlign: TextAlign.center, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white)),
+          Text('Heat cycle detected — ${data.name}', textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: isDark ? Colors.white : VanixColors.textPrimary)),
           const SizedBox(height: 6),
-          Text(data.reason, textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.75), height: 1.6)),
+          Text(data.reason, textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: isDark ? Colors.white.withOpacity(0.75) : VanixColors.textHint, height: 1.6)),
           const SizedBox(height: 12),
           _GraphPanel(
+            isDark: isDark,
             label: 'TEMPERATURE — LAST 10 READINGS',
             child: SizedBox(
               height: 34,
@@ -218,13 +227,14 @@ class _AlertCard extends StatelessWidget {
             footer: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('${data.temps.reduce((a, b) => a < b ? a : b).toStringAsFixed(1)}°C', style: TextStyle(fontSize: 10, color: Colors.white.withOpacity(0.6))),
-                Text('${data.temps.reduce((a, b) => a > b ? a : b).toStringAsFixed(1)}°C', style: TextStyle(fontSize: 10, color: Colors.white.withOpacity(0.6))),
+                Text('${data.temps.reduce((a, b) => a < b ? a : b).toStringAsFixed(1)}°C', style: TextStyle(fontSize: 10, color: isDark ? Colors.white.withOpacity(0.6) : VanixColors.textHint)),
+                Text('${data.temps.reduce((a, b) => a > b ? a : b).toStringAsFixed(1)}°C', style: TextStyle(fontSize: 10, color: isDark ? Colors.white.withOpacity(0.6) : VanixColors.textHint)),
               ],
             ),
           ),
           const SizedBox(height: 8),
           _GraphPanel(
+            isDark: isDark,
             label: 'MOVEMENT — ACTIVITY INDEX',
             child: SizedBox(
               height: 34,
@@ -252,7 +262,7 @@ class _AlertCard extends StatelessWidget {
           if (decision != null)
             Padding(
               padding: const EdgeInsets.only(bottom: 12),
-              child: Text('Acknowledged ✓ — ${data.name} marked ${decision == 'yes' ? 'in heat' : 'not in heat'}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenDeep)),
+              child: Text('Acknowledged ✓ — ${data.name} marked ${decision == 'yes' ? 'in heat' : 'not in heat'}', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? VanixColors.greenDeep : VanixColors.greenInk)),
             )
           else ...[
             SizedBox(
@@ -268,7 +278,7 @@ class _AlertCard extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
-                style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48), side: BorderSide(color: Colors.white.withOpacity(0.4)), foregroundColor: Colors.white),
+                style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48), side: BorderSide(color: isDark ? Colors.white.withOpacity(0.4) : VanixColors.border), foregroundColor: isDark ? Colors.white : VanixColors.textPrimary),
                 onPressed: onNo,
                 child: const Text('No'),
               ),
@@ -282,21 +292,26 @@ class _AlertCard extends StatelessWidget {
 }
 
 class _GraphPanel extends StatelessWidget {
+  final bool isDark;
   final String label;
   final Widget child;
   final Widget? footer;
-  const _GraphPanel({required this.label, required this.child, this.footer});
+  const _GraphPanel({required this.isDark, required this.label, required this.child, this.footer});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(color: Colors.white.withOpacity(0.06), borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(
+        color: isDark ? Colors.white.withOpacity(0.06) : VanixColors.bgCard,
+        border: isDark ? null : Border.all(color: VanixColors.border),
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.6, color: Colors.white.withOpacity(0.6))),
+          Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.6, color: isDark ? Colors.white.withOpacity(0.6) : VanixColors.textHint)),
           const SizedBox(height: 4),
           child,
           if (footer != null) footer!,
