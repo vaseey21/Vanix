@@ -139,6 +139,8 @@ class _EventsScreenState extends State<EventsScreen> {
   void dispose() {
     _heatTimer?.cancel();
     _heatTechCtrl.dispose();
+    _heatLateTimeCtrl.dispose();
+    _heatLateTechCtrl.dispose();
     super.dispose();
   }
 
