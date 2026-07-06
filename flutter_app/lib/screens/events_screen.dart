@@ -265,7 +265,7 @@ class _EventsScreenState extends State<EventsScreen> {
   }
 
   Future<void> _showFullCycleSheet(BuildContext context) async {
-    final result = await Navigator.of(context).push<String?>(MaterialPageRoute(builder: (_) => const HeatAlertScreen(), fullscreenDialog: true));
+    final result = await Navigator.of(context).push<String?>(MaterialPageRoute(builder: (_) => HeatAlertScreen(isDark: widget.appState.isDark), fullscreenDialog: true));
     if (!context.mounted) return;
     showModalBottomSheet(
       context: context,
