@@ -88,12 +88,14 @@ class _EventsScreenState extends State<EventsScreen> {
     super.initState();
     _heatStartedAt = DateTime.now();
     _heatTimer = Timer.periodic(const Duration(milliseconds: 200), (_) {
-      if (_heat == _HeatState.active && _heatElapsedSimHours >= 24) {
+      final ticking = _heat == _HeatState.initial || _heat == _HeatState.active;
+      if (!ticking) return;
+      if (_heatElapsedSimHours >= 24) {
         setState(() { _heat = _HeatState.expired; widget.appState.resolveEvent(); });
         _heatTimer?.cancel();
         return;
       }
-      if (_heat == _HeatState.active) setState(() {});
+      setState(() {});
     });
   }
 
