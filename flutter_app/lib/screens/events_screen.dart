@@ -326,7 +326,7 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
-          child: _vetEmailForm(_feverEmailCtrl, () => setState(() { _fever = _VetFlowState.requested; widget.appState.resolveEvent(); })),
+          child: _vetPicker((vetName) => setState(() { _feverVetName = vetName; _fever = _VetFlowState.requested; widget.appState.resolveEvent(); })),
         );
       case _VetFlowState.requested:
         return _ActionCard(
@@ -337,7 +337,7 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
-          child: _vetRequestedMessage('Kajri · Fever · Green Valley Farm', _feverEmailCtrl.text),
+          child: _vetRequestedMessage('Kajri · Fever · Green Valley Farm', _feverVetName),
         );
     }
   }
