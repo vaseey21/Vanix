@@ -2582,8 +2582,8 @@
 
         function renderHeatStep() {
           heatStartedAt = Date.now();
-          heatConfirmed = false;
-          heatMethod = 'AI';
+          heatConfirmed = (heatPreDecision === 'yes');
+          heatMethod = 'Artificial';
           paintHeat();
           heatTicker = setInterval(paintHeat, 200);
         }
@@ -2595,12 +2595,16 @@
           else if (h < 18) { pct = (h - 6) / 12 * 100; label = 'Optimal window — ' + Math.ceil(18 - h) + 'h left'; color = 'var(--greenink)'; }
           else { pct = (h - 18) / 6 * 100; label = 'Suboptimal window — act soon, ' + Math.ceil(24 - h) + 'h left'; color = 'var(--danger)'; }
 
-          var html =
-            '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Heat cycle detected — Gauri</p>' +
-            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Temperature swinging up and down with high movement since 04:30 this morning.</p>' +
-            '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Is Gauri in heat?</p>' +
-            '<p style="font-size:13px; font-weight:600; color:' + color + '; margin:8px 0 0;">' + label + '</p>' +
-            '<div style="height:6px; background:rgba(0,0,0,0.10); border-radius:3px; margin-top:6px; overflow:hidden;"><div style="width:' + Math.min(100, pct) + '%; height:100%; background:' + color + '; border-radius:3px;"></div></div>';
+          var html = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Heat cycle detected — Gauri</p>';
+          if (restrictedHeat && !heatConfirmed) {
+            html += '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Is Gauri in heat?</p>';
+          } else {
+            html +=
+              '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Temperature swinging up and down with high movement since 04:30 this morning.</p>' +
+              '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Is Gauri in heat?</p>' +
+              '<p style="font-size:13px; font-weight:600; color:' + color + '; margin:8px 0 0;">' + label + '</p>' +
+              '<div style="height:6px; background:rgba(0,0,0,0.10); border-radius:3px; margin-top:6px; overflow:hidden;"><div style="width:' + Math.min(100, pct) + '%; height:100%; background:' + color + '; border-radius:3px;"></div></div>';
+          }
 
           if (!heatConfirmed) {
             html += '<div style="display:flex; gap:8px; margin-top:10px;">' +
