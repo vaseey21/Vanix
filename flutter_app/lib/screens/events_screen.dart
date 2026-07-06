@@ -813,18 +813,263 @@ class _EventsScreenState extends State<EventsScreen> {
 
   // ── P1: 9-month vet check / delivery confirmed — the farmer-tapped action
   // that moves the cow's status to CALVED -> MILKING ──
-  Widget _buildGestationCard(bool isDark) => _buildAckCard(
+  // ── P1: Gestation — 3/6/9-month vet checks -> call vet for delivery
+  // (vet picker) -> delivery confirmed w/ notes. Single evolving card, like
+  // Heat — only resolves (decrements badge) once, at final delivery confirm.
+  Widget _buildGestationCard(bool isDark) {
+    const meta = 'Green Valley Farm · Belt 52 · confirmed pregnant 4 Oct';
+    const channel = 'App notification · Confirm with vet';
+
+    if (_gestation == _GestationState.check3 || _gestation == _GestationState.check6) {
+      final is3 = _gestation == _GestationState.check3;
+      return _ActionCard(
         isDark: isDark,
-        state: _gestation,
-        onChange: (s) => setState(() { _gestation = s; widget.appState.resolveEvent(); }),
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
         priority: _Priority.p1,
-        channel: 'App notification · Confirm with vet',
-        title: '9-month vet check due — Lakshmi',
-        sub: 'Approaching her due date — schedule a vet check and confirm delivery once she calves.',
-        meta: 'Green Valley Farm · Belt 52 · confirmed pregnant 4 Oct',
-        buttonLabel: 'Delivery confirmed',
-        resolvedMessage: 'Lakshmi has moved to Calved / Milking — she now appears in the Milk Log.',
+        channel: channel,
+        title: is3 ? '3-month vet check due — Lakshmi' : '6-month vet check due — Lakshmi',
+        sub: 'Routine pregnancy vet check — confirm once done.',
+        meta: meta,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => setState(() => _gestation = is3 ? _GestationState.check6 : _GestationState.callVet),
+              child: const Text('Vet check completed'),
+            ),
+          ),
+        ),
       );
+    }
+    if (_gestation == _GestationState.callVet) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: channel,
+        title: '9-month check — call your vet for delivery',
+        sub: 'Approaching her due date — call a vet to be on hand for delivery.',
+        meta: meta,
+        child: _vetPicker((vetName) => setState(() { _gestationVetName = vetName; _gestation = _GestationState.deliveryForm; })),
+      );
+    }
+    if (_gestation == _GestationState.deliveryForm) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: channel,
+        title: 'Vet on the way — confirm once delivered',
+        sub: '$_gestationVetName has been called. Confirm once Lakshmi has delivered.',
+        meta: meta,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(controller: _gestationNotesCtrl, maxLines: 3, decoration: const InputDecoration(hintText: 'Delivery notes (optional)')),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => setState(() {
+                    _gestation = _GestationState.delivered;
+                    widget.appState.resolveEvent();
+                    _milkingNotifShown = true;
+                  }),
+                  child: const Text('Delivery confirmed'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    // delivered
+    return _ActionCard(
+      isDark: isDark,
+      bg: VanixColors.activeBg,
+      border: VanixColors.greenDeep,
+      priority: _Priority.p1,
+      channel: channel,
+      title: 'Delivery confirmed ✓',
+      sub: 'Lakshmi has moved to Calved. She\'ll appear in the Milk Log once you add her from the new lactation notification.',
+      meta: meta,
+      child: const SizedBox.shrink(),
+    );
+  }
+
+  // ── P1: Milking notification — fires once, right after delivery is
+  // confirmed. DEMO NOTE: "Remind me later" uses a compressed 24-simulated-
+  // hour timer that flips back to pending without touching the badge — only
+  // "Yes, add" resolves it. ──
+  Widget _buildMilkingNotifCard(bool isDark) {
+    const meta = 'Green Valley Farm · Belt 52';
+    if (_milkingNotif == _MilkingNotifState.reminded) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: 'App notification · Add to Milk Log',
+        title: 'Lakshmi is now in her lactation period (250 days)',
+        sub: 'Add her to the milking list?',
+        meta: meta,
+        child: const Padding(padding: EdgeInsets.only(top: 12), child: Text("We'll remind you in 24 hours.", style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      );
+    }
+    if (_milkingNotif == _MilkingNotifState.added) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.activeBg,
+        border: VanixColors.greenDeep,
+        priority: _Priority.p1,
+        channel: 'App notification · Add to Milk Log',
+        title: 'Lakshmi is now in her lactation period (250 days)',
+        sub: 'Add her to the milking list?',
+        meta: meta,
+        child: const Padding(
+          padding: EdgeInsets.only(top: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Added to Milk Log ✓', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+              Text('Lakshmi now appears in Milk Log entries.', style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
+            ],
+          ),
+        ),
+      );
+    }
+    return _ActionCard(
+      isDark: isDark,
+      bg: VanixColors.warningBg,
+      border: VanixColors.warning,
+      priority: _Priority.p1,
+      channel: 'App notification · Add to Milk Log',
+      title: 'Lakshmi is now in her lactation period (250 days)',
+      sub: 'Add her to the milking list?',
+      meta: meta,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () {
+                  setState(() => _milkingNotif = _MilkingNotifState.reminded);
+                  _milkingRemindTimer?.cancel();
+                  _milkingRemindTimer = Timer(const Duration(seconds: 24), () {
+                    if (mounted) setState(() => _milkingNotif = _MilkingNotifState.pending);
+                  });
+                },
+                child: const Text('Remind me later'),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              flex: 2,
+              child: ElevatedButton(
+                onPressed: () {
+                  _milkingRemindTimer?.cancel();
+                  setState(() { _milkingNotif = _MilkingNotifState.added; widget.appState.resolveEvent(); });
+                },
+                child: const Text('Yes, add'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ── P1: End-of-lactation check-in — reached via the walkthrough's
+  // skip-ahead. DEMO NOTE: "Still milking" loops on a compressed 10-
+  // simulated-day timer without touching the badge — only "Entered resting
+  // period" resolves it. ──
+  Widget _buildLactationCheckCard(bool isDark) {
+    const meta = 'Green Valley Farm · Belt 52';
+    const title = 'Lactation period ending — Lakshmi';
+    const sub = 'Is Lakshmi still milking, or has she entered her resting period?';
+    if (_lactationCheck == _LactationCheckState.stillMilking) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: 'App notification · Confirm status',
+        title: title,
+        sub: sub,
+        meta: meta,
+        child: const Padding(padding: EdgeInsets.only(top: 12), child: Text("Got it — we'll check again in 10 days.", style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      );
+    }
+    if (_lactationCheck == _LactationCheckState.resting) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.activeBg,
+        border: VanixColors.greenDeep,
+        priority: _Priority.p1,
+        channel: 'App notification · Confirm status',
+        title: title,
+        sub: sub,
+        meta: meta,
+        child: const Padding(
+          padding: EdgeInsets.only(top: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Resting period started', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+              Text("60-day cool-down begins. She won't appear in Milk Log entries during this time.", style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
+            ],
+          ),
+        ),
+      );
+    }
+    return _ActionCard(
+      isDark: isDark,
+      bg: VanixColors.warningBg,
+      border: VanixColors.warning,
+      priority: _Priority.p1,
+      channel: 'App notification · Confirm status',
+      title: title,
+      sub: sub,
+      meta: meta,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () {
+                  setState(() => _lactationCheck = _LactationCheckState.stillMilking);
+                  _lactationRecheckTimer?.cancel();
+                  _lactationRecheckTimer = Timer(const Duration(seconds: 10), () {
+                    if (mounted) setState(() => _lactationCheck = _LactationCheckState.pending);
+                  });
+                },
+                child: const Text('Still milking'),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              flex: 2,
+              child: ElevatedButton(
+                onPressed: () {
+                  _lactationRecheckTimer?.cancel();
+                  setState(() { _lactationCheck = _LactationCheckState.resting; widget.appState.resolveEvent(); });
+                },
+                child: const Text('Entered resting period'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   // shared: P2 diagnostic card builder (Mastitis / Lameness / Ketosis)
   Widget _buildInspectCard({
