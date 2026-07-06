@@ -677,6 +677,7 @@ class _EventsScreenState extends State<EventsScreen> {
         state: _gestation,
         onChange: (s) => setState(() { _gestation = s; widget.appState.resolveEvent(); }),
         priority: _Priority.p1,
+        channel: 'App notification · Confirm with vet',
         title: '9-month vet check due — Lakshmi',
         sub: 'Approaching her due date — schedule a vet check and confirm delivery once she calves.',
         meta: 'Green Valley Farm · Belt 52 · confirmed pregnant 4 Oct',
