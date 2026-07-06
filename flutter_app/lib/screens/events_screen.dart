@@ -273,6 +273,12 @@ class _EventsScreenState extends State<EventsScreen> {
                         const SizedBox(height: 10),
                         _buildGestationCard(isDark),
                         const SizedBox(height: 10),
+                        if (_milkingNotifShown) ...[
+                          _buildMilkingNotifCard(isDark),
+                          const SizedBox(height: 10),
+                        ],
+                        _buildLactationCheckCard(isDark),
+                        const SizedBox(height: 10),
                         _buildMastitisCard(isDark),
                         const SizedBox(height: 10),
                         _buildLamenessCard(isDark),
