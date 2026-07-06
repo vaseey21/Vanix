@@ -112,9 +112,6 @@ class _EventsScreenState extends State<EventsScreen> {
   @override
   void dispose() {
     _heatTimer?.cancel();
-    _feverEmailCtrl.dispose();
-    _abortEmailCtrl.dispose();
-    _freshCowEmailCtrl.dispose();
     _heatTechCtrl.dispose();
     super.dispose();
   }
