@@ -59,7 +59,19 @@ class _EventsScreenState extends State<EventsScreen> {
 
   // P1 — actionable
   _HeatState _heat = _HeatState.initial;
+  bool _heatConfirmed = false;
+  String _heatMethod = 'AI';
+  final _heatTechCtrl = TextEditingController();
+  late final DateTime _heatStartedAt;
+  Timer? _heatTimer;
+  // DEMO: 24 real hours compressed into 24 real seconds (1s = 1 simulated
+  // hour) purely so the phase transitions are demoable live — replace with
+  // the real backend peak_timestamp once wired up (Cattle Health Logic v3.1,
+  // Block 7).
+  static const double _simHoursPerSecond = 1;
+
   _PregState _preg = _PregState.initial;
+  _AckState _gestation = _AckState.initial;
 
   // P2 — warning
   _InspectState _mastitis = _InspectState.initial;
@@ -72,10 +84,28 @@ class _EventsScreenState extends State<EventsScreen> {
   _AckState _calib = _AckState.initial;
 
   @override
+  void initState() {
+    super.initState();
+    _heatStartedAt = DateTime.now();
+    _heatTimer = Timer.periodic(const Duration(milliseconds: 200), (_) {
+      if (_heat == _HeatState.active && _heatElapsedSimHours >= 24) {
+        setState(() { _heat = _HeatState.expired; widget.appState.resolveEvent(); });
+        _heatTimer?.cancel();
+        return;
+      }
+      if (_heat == _HeatState.active) setState(() {});
+    });
+  }
+
+  double get _heatElapsedSimHours => DateTime.now().difference(_heatStartedAt).inMilliseconds / 1000 * _simHoursPerSecond;
+
+  @override
   void dispose() {
+    _heatTimer?.cancel();
     _feverEmailCtrl.dispose();
     _abortEmailCtrl.dispose();
     _freshCowEmailCtrl.dispose();
+    _heatTechCtrl.dispose();
     super.dispose();
   }
 
