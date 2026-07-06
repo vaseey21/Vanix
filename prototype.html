@@ -2037,8 +2037,7 @@
           evResolve();
         });
         card.querySelector('.ev-yes').addEventListener('click', function() {
-          body.innerHTML =
-            vetPickerHtml('fever');
+          body.innerHTML = vetPickerHtml('fever');
           wireVetPicker('fever', function(vetName) {
             evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
             card.querySelector('.ev-esc').style.display = 'none';
