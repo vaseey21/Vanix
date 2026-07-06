@@ -807,14 +807,15 @@ class _EventsScreenState extends State<EventsScreen> {
                 ],
               ),
             ] else if (_heatFormStage == 'idle') ...[
-              // Start insemination is available in every phase — outside the
-              // optimal window it interposes a confirmation step first.
+              // "Call vet" is available in every phase — outside the optimal
+              // window it interposes a confirmation step first. Picking one of
+              // the 3 onboarded vets then opens the log form.
               const SizedBox(height: 10),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => setState(() => _heatFormStage = (h >= 6 && h < 18) ? 'form' : 'confirm'),
-                  child: const Text('Start insemination'),
+                  onPressed: () => setState(() => _heatFormStage = (h >= 6 && h < 18) ? 'vet' : 'confirm'),
+                  child: const Text('Call vet'),
                 ),
               ),
             ] else if (_heatFormStage == 'confirm') ...[
@@ -825,9 +826,11 @@ class _EventsScreenState extends State<EventsScreen> {
                 children: [
                   Expanded(child: OutlinedButton(onPressed: () => setState(() => _heatFormStage = 'idle'), child: const Text('Cancel'))),
                   const SizedBox(width: 8),
-                  Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatFormStage = 'form'), child: const Text('Continue'))),
+                  Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatFormStage = 'vet'), child: const Text('Continue'))),
                 ],
               ),
+            ] else if (_heatFormStage == 'vet') ...[
+              _vetPicker((vetName) => setState(() { _heatTechCtrl.text = vetName; _heatFormStage = 'form'; })),
             ] else ...[
               const SizedBox(height: 10),
               const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
