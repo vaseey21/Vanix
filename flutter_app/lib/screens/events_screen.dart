@@ -61,14 +61,14 @@ class _EventsScreenState extends State<EventsScreen> {
   _VetFlowState _fever = _VetFlowState.initial;
   _VetFlowState _abort = _VetFlowState.initial;
   _VetFlowState _freshCow = _VetFlowState.initial;
-  final _feverEmailCtrl = TextEditingController();
-  final _abortEmailCtrl = TextEditingController();
-  final _freshCowEmailCtrl = TextEditingController();
+  String _feverVetName = '';
+  String _abortVetName = '';
+  String _freshCowVetName = '';
 
   // P1 — actionable
   _HeatState _heat = _HeatState.initial;
   bool _heatConfirmed = false;
-  String _heatMethod = 'AI';
+  String _heatMethod = kInseminationMethods.first;
   final _heatTechCtrl = TextEditingController();
   late final DateTime _heatStartedAt;
   Timer? _heatTimer;
