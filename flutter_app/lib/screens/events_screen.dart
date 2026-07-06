@@ -1451,25 +1451,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
           const SizedBox(height: 10),
           const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
           const SizedBox(height: 6),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(backgroundColor: _heatMethod == 'AI' ? VanixColors.darkPrimary : null, foregroundColor: _heatMethod == 'AI' ? Colors.white : VanixColors.textPrimary),
-                  onPressed: () => setState(() => _heatMethod = 'AI'),
-                  child: const Text('AI'),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(backgroundColor: _heatMethod == 'Natural' ? VanixColors.darkPrimary : null, foregroundColor: _heatMethod == 'Natural' ? Colors.white : VanixColors.textPrimary),
-                  onPressed: () => setState(() => _heatMethod = 'Natural'),
-                  child: const Text('Natural'),
-                ),
-              ),
-            ],
-          ),
+          _inseminationMethodGrid(_heatMethod, (m) => setState(() => _heatMethod = m)),
           const SizedBox(height: 8),
           SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.watch21), child: const Text('Log insemination'))),
         ] else ...[
