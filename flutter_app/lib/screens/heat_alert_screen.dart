@@ -244,10 +244,14 @@ class _AlertCard extends StatelessWidget {
               ),
             ),
           ),
+                ],
+              ),
+            ),
+          ),
           const SizedBox(height: 14),
           if (decision != null)
             Padding(
-              padding: const EdgeInsets.only(top: 6),
+              padding: const EdgeInsets.only(bottom: 12),
               child: Text('Acknowledged ✓ — ${data.name} marked ${decision == 'yes' ? 'in heat' : 'not in heat'}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenDeep)),
             )
           else ...[
@@ -269,6 +273,7 @@ class _AlertCard extends StatelessWidget {
                 child: const Text('No'),
               ),
             ),
+            const SizedBox(height: 6),
           ],
         ],
       ),
