@@ -115,6 +115,17 @@ xs=4  sm=8  md=12  lg=16  pill=24
 
 - Only **CALVED** and **MILKING** cows appear in Milk Log entry forms
 - FEVER is a parallel alert path, separate from heat cycle
+- **CALVED → MILKING** trigger: the farmer taps **"Delivery confirmed"** on the 9-month vet-check Events card — this is a farmer action, not automatic
+
+## Heat → insemination window
+
+Sensor comparison basis: cow's own **10-day** rolling temperature/behaviour baseline (Cattle Health Logic v3.1, Block 4). Detection starts a single, real **24-hour clock** immediately — the farmer's Yes/No is just an acknowledgement, it does not pause or reset the clock. One Events card evolves through all three phases automatically (no separate alert fires at each stage):
+
+| Phase | Window | State |
+|---|---|---|
+| Pre-insemination | T+0–6h | Window not open yet |
+| Optimal | T+6–18h (12h) | Peak fertility — insemination-detail form appears (Method: AI/Natural + optional technician name) |
+| Suboptimal | T+18–24h (6h) | Fertility dropping, still loggable |
 
 ## Alert escalation
 
