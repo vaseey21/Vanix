@@ -92,6 +92,10 @@ class _EventsScreenState extends State<EventsScreen> {
   bool _heatConfirmed = false;
   String _heatMethod = kInseminationMethods.first;
   final _heatTechCtrl = TextEditingController();
+  String _heatLateMethod = kInseminationMethods.first;
+  final _heatLateTimeCtrl = TextEditingController();
+  final _heatLateTechCtrl = TextEditingController();
+  bool _heatShowLateForm = false;
   late final DateTime _heatStartedAt;
   Timer? _heatTimer;
   // DEMO: 24 real hours compressed into 24 real seconds (1s = 1 simulated
