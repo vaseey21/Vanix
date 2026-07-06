@@ -47,25 +47,35 @@ class _HeatWindowBar extends StatelessWidget {
             height: 8,
             child: Stack(
               children: [
-                const Row(
-                  children: [
-                    Expanded(flex: 25, child: ColoredBox(color: VanixColors.warningBg)),
-                    Expanded(flex: 50, child: ColoredBox(color: VanixColors.activeBg)),
-                    Expanded(flex: 25, child: ColoredBox(color: VanixColors.dangerBg)),
-                  ],
+                const Positioned.fill(
+                  child: Row(
+                    children: [
+                      Expanded(flex: 25, child: ColoredBox(color: VanixColors.warningBg)),
+                      Expanded(flex: 50, child: ColoredBox(color: VanixColors.activeBg)),
+                      Expanded(flex: 25, child: ColoredBox(color: VanixColors.dangerBg)),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    const Spacer(flex: 25),
-                    Container(width: 1, color: Colors.black.withOpacity(0.18)),
-                    const Spacer(flex: 50),
-                    Container(width: 1, color: Colors.black.withOpacity(0.18)),
-                    const Spacer(flex: 25),
-                  ],
+                Positioned.fill(
+                  child: Row(
+                    children: [
+                      const Spacer(flex: 25),
+                      Container(width: 1, color: Colors.black.withOpacity(0.18)),
+                      const Spacer(flex: 50),
+                      Container(width: 1, color: Colors.black.withOpacity(0.18)),
+                      const Spacer(flex: 25),
+                    ],
+                  ),
                 ),
-                FractionallySizedBox(
-                  widthFactor: (simHours / 24).clamp(0.0, 1.0),
-                  child: Opacity(opacity: 0.85, child: ColoredBox(color: fillColor)),
+                Positioned.fill(
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: FractionallySizedBox(
+                      widthFactor: (simHours / 24).clamp(0.0, 1.0),
+                      heightFactor: 1,
+                      child: Opacity(opacity: 0.85, child: ColoredBox(color: fillColor)),
+                    ),
+                  ),
                 ),
               ],
             ),
