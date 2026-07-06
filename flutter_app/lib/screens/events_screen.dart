@@ -17,6 +17,28 @@ const List<String> kOnboardedVets = ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'];
 /// vanix_screens.html.
 const List<String> kInseminationMethods = ['Artificial', 'Conventional', 'IVF', 'Embryo Transfer'];
 
+/// 2x2 grid of method-select buttons, shared by the real Heat card and the
+/// "View full cycle" walkthrough's own heat step. Mirrors seqMethodBtn() in
+/// vanix_screens.html.
+Widget _inseminationMethodGrid(String selected, ValueChanged<String> onSelect) {
+  return GridView.count(
+    crossAxisCount: 2,
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    mainAxisSpacing: 8,
+    crossAxisSpacing: 8,
+    childAspectRatio: 2.6,
+    children: kInseminationMethods.map((m) {
+      final on = m == selected;
+      return OutlinedButton(
+        style: OutlinedButton.styleFrom(backgroundColor: on ? VanixColors.darkPrimary : null, foregroundColor: on ? Colors.white : VanixColors.textPrimary),
+        onPressed: () => onSelect(m),
+        child: Text(m, textAlign: TextAlign.center),
+      );
+    }).toList(),
+  );
+}
+
 /// Shared by every P0 card (Fever / Abortion / Fresh Cow) — diagnostic
 /// confirm -> vet email -> requested. Mirrors evVetRequestFlow() in
 /// vanix_screens.html.
