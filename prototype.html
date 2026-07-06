@@ -988,11 +988,11 @@
                 </div>
               </div>
 
-              <!-- 3b. 9-month vet check / delivery confirmed -->
+              <!-- 3b. Gestation: 3/6/9-month vet checks -> call vet for delivery -> delivery confirmed -->
               <div class="ev-card" id="ev-gestation" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
                 <div style="min-width:0;">
-                  <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">9-month vet check due — Lakshmi</p>
-                  <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — schedule a vet check and confirm delivery once she calves.</p>
+                  <p id="ev-gestation-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">3-month vet check due — Lakshmi</p>
+                  <p id="ev-gestation-sub" style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Routine pregnancy vet check — confirm once done.</p>
                   <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 52 · confirmed pregnant 4 Oct</p>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
@@ -1000,7 +1000,43 @@
                   <span class="en ev-channel" style="margin:0;">App notification · Confirm with vet</span>
                 </div>
                 <div class="ev-body">
-                  <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Delivery confirmed</button>
+                  <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Vet check completed</button>
+                </div>
+              </div>
+
+              <!-- 3c. Milking notification — fires after delivery is confirmed -->
+              <div class="ev-card" id="ev-milk-notif" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <div style="min-width:0;">
+                  <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;" id="ev-milk-notif-title">Lakshmi is now in her lactation period (250 days)</p>
+                  <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Add her to the milking list?</p>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+                  <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
+                  <span class="en ev-channel" style="margin:0;">App notification · Add to Milk Log</span>
+                </div>
+                <div class="ev-body">
+                  <div style="display:flex; gap:8px; margin-top:12px;">
+                    <button id="ev-milk-remind" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Remind me later</button>
+                    <button id="ev-milk-add" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, add</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3d. End-of-lactation check-in — reached via demo skip-ahead -->
+              <div class="ev-card" id="ev-lactation-check" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <div style="min-width:0;">
+                  <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Lactation period ending — Lakshmi</p>
+                  <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Is Lakshmi still milking, or has she entered her resting period?</p>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+                  <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
+                  <span class="en ev-channel" style="margin:0;">App notification · Confirm status</span>
+                </div>
+                <div class="ev-body">
+                  <div style="display:flex; gap:8px; margin-top:12px;">
+                    <button id="ev-lact-still" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Still milking</button>
+                    <button id="ev-lact-resting" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Entered resting period</button>
+                  </div>
                 </div>
               </div>
 
