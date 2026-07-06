@@ -1608,16 +1608,22 @@ class _HistoryRow extends StatelessWidget {
 /// consumes any of the farmer's actual pending alerts.
 class _FullCycleSheet extends StatefulWidget {
   final bool isDark;
-  const _FullCycleSheet({required this.isDark});
+  /// 'yes' / 'no' if the farmer already resolved the heat question on the
+  /// full-screen alert; null if they dismissed it (close/"View in app").
+  final String? heatPreDecision;
+  /// True when entered via dismiss-without-resolving — the heat step renders
+  /// a trimmed "restricted" detail view until the farmer taps Yes/No here.
+  final bool restricted;
+  const _FullCycleSheet({required this.isDark, this.heatPreDecision, this.restricted = false});
 
   @override
   State<_FullCycleSheet> createState() => _FullCycleSheetState();
 }
 
-enum _SeqStep { heat, watch21, preg, gestation9, delivery, milking, dry, interrupted, complete }
+enum _SeqStep { heat, watch21, preg, gestation9, delivery, milking, lactationCheck, dry, interrupted, complete }
 
 class _FullCycleSheetState extends State<_FullCycleSheet> {
-  static const int totalSteps = 7;
+  static const int totalSteps = 8;
   _SeqStep _step = _SeqStep.heat;
 
   DateTime? _heatStartedAt;
@@ -1629,12 +1635,17 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
   @override
   void initState() {
     super.initState();
-    _startHeat();
+    if (widget.heatPreDecision == 'no') {
+      _interruptedMessage = 'Cycle interrupted — heat not confirmed. Closing walkthrough.';
+      _step = _SeqStep.interrupted;
+    } else {
+      _startHeat();
+    }
   }
 
   void _startHeat() {
     _heatStartedAt = DateTime.now();
-    _heatConfirmed = false;
+    _heatConfirmed = widget.heatPreDecision == 'yes';
     _heatMethod = kInseminationMethods.first;
     _heatTimer?.cancel();
     _heatTimer = Timer.periodic(const Duration(milliseconds: 200), (_) {
