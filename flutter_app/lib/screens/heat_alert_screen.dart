@@ -119,7 +119,9 @@ class _HeatAlertScreenState extends State<HeatAlertScreen> {
                         data: _kAlerts[i],
                         decision: _decisions[i],
                         onYes: () => _action(i, 'yes'),
-                        onNo: () => _action(i, 'no'),
+                        // "No" defers the decision to the in-app card — pop
+                        // null so the caller opens the restricted sheet view.
+                        onNo: () => Navigator.of(context).pop(null),
                       ),
                     ),
                     PositionedDirectional(
@@ -181,10 +183,17 @@ class _AlertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    // Content fills the remaining height and centers; the action buttons stay
+    // pinned at the bottom of the screen for easy thumb reach.
+    return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(48, 8, 48, 4),
       child: Column(
         children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
           Text('${data.farm} · detected ${data.time}', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withOpacity(0.75))),
           const SizedBox(height: 12),
           Container(
@@ -235,10 +244,14 @@ class _AlertCard extends StatelessWidget {
               ),
             ),
           ),
+                ],
+              ),
+            ),
+          ),
           const SizedBox(height: 14),
           if (decision != null)
             Padding(
-              padding: const EdgeInsets.only(top: 6),
+              padding: const EdgeInsets.only(bottom: 12),
               child: Text('Acknowledged ✓ — ${data.name} marked ${decision == 'yes' ? 'in heat' : 'not in heat'}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenDeep)),
             )
           else ...[
@@ -260,6 +273,7 @@ class _AlertCard extends StatelessWidget {
                 child: const Text('No'),
               ),
             ),
+            const SizedBox(height: 6),
           ],
         ],
       ),
