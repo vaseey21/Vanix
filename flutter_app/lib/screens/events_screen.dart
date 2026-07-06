@@ -1714,17 +1714,16 @@ class _HistoryRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Flexible(child: Text(title, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? Colors.white : VanixColors.textPrimary), overflow: TextOverflow.ellipsis)),
-                    const SizedBox(width: 6),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-                      decoration: BoxDecoration(color: stageColor.withOpacity(0.12), border: Border.all(color: stageColor), borderRadius: BorderRadius.circular(9)),
-                      child: Text(stage, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: stageColor)),
-                    ),
-                  ],
+                // Title on its own line, stage chip on the next — avoids the
+                // chip wrapping/clipping when the cow name is long.
+                Text(title, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? Colors.white : VanixColors.textPrimary)),
+                const SizedBox(height: 5),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+                  decoration: BoxDecoration(color: stageColor.withOpacity(0.12), border: Border.all(color: stageColor), borderRadius: BorderRadius.circular(9)),
+                  child: Text(stage, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: stageColor)),
                 ),
+                const SizedBox(height: 4),
                 Text(sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
               ],
             ),
