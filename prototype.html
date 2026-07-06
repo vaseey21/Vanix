@@ -955,9 +955,11 @@
                   </div>
                   <div id="ev-heat-form" style="display:none; margin-top:10px;">
                     <p style="font-size:12px; font-weight:600; color:var(--text1); margin:0 0 6px;">Log insemination</p>
-                    <div style="display:flex; gap:8px;">
-                      <button class="ev-method on" data-method="AI" style="flex:1; min-height:40px; border-radius:20px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi);">AI</button>
-                      <button class="ev-method" data-method="Natural" style="flex:1; min-height:40px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Natural</button>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                      <button class="ev-method on" data-method="Artificial" style="min-height:40px; border-radius:20px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi);">Artificial</button>
+                      <button class="ev-method" data-method="Conventional" style="min-height:40px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Conventional</button>
+                      <button class="ev-method" data-method="IVF" style="min-height:40px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">IVF</button>
+                      <button class="ev-method" data-method="Embryo Transfer" style="min-height:40px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Embryo Transfer</button>
                     </div>
                     <input type="text" id="ev-heat-tech" placeholder="Technician / vet name (optional)" style="width:100%; min-height:44px; margin-top:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi);">
                     <button id="ev-insem-log" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log insemination</button>
@@ -1985,6 +1987,38 @@
       });
 
 
+      // Onboarded vets — contacting a vet is now a pick, not a manual email entry.
+      var ONBOARDED_VETS = ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'];
+      function vetPickerHtml(idPrefix) {
+        var rows = ONBOARDED_VETS.map(function(name, i) {
+          var on = i === 0;
+          return '<button class="ev-vet-row' + (on ? ' on' : '') + '" data-vet="' + name + '" style="width:100%; display:flex; align-items:center; gap:10px; min-height:44px; padding:0 12px; margin-top:6px; border-radius:12px; border:1px solid ' + (on ? 'var(--greendeep)' : 'var(--border)') + '; background:' + (on ? 'var(--activebg)' : 'var(--bgcard)') + '; font-size:14px; font-weight:' + (on ? '600' : '500') + '; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
+            '<span style="width:16px; height:16px; border-radius:50%; border:2px solid ' + (on ? 'var(--greendeep)' : 'var(--border)') + '; background:' + (on ? 'var(--greendeep)' : 'transparent') + '; flex-shrink:0;"></span>' + name + '</button>';
+        }).join('');
+        return '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Request a vet appointment</p>' +
+          '<div id="ev-vet-picker-' + idPrefix + '">' + rows + '</div>' +
+          '<button id="ev-vet-send-' + idPrefix + '" style="width:100%; min-height:44px; margin-top:10px; background:var(--danger); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Send appointment request</button>';
+      }
+      function wireVetPicker(idPrefix, onSend) {
+        var selected = ONBOARDED_VETS[0];
+        var picker = document.getElementById('ev-vet-picker-' + idPrefix);
+        picker.querySelectorAll('.ev-vet-row').forEach(function(row) {
+          row.addEventListener('click', function() {
+            selected = row.getAttribute('data-vet');
+            picker.querySelectorAll('.ev-vet-row').forEach(function(r) {
+              var on = r === row;
+              r.classList.toggle('on', on);
+              r.style.borderColor = on ? 'var(--greendeep)' : 'var(--border)';
+              r.style.background = on ? 'var(--activebg)' : 'var(--bgcard)';
+              r.style.fontWeight = on ? '600' : '500';
+              r.querySelector('span').style.borderColor = on ? 'var(--greendeep)' : 'var(--border)';
+              r.querySelector('span').style.background = on ? 'var(--greendeep)' : 'transparent';
+            });
+          });
+        });
+        document.getElementById('ev-vet-send-' + idPrefix).addEventListener('click', function() { onSend(selected); });
+      }
+
       // card morph helpers: swap card body + tint
       function evSetTint(card, bg, border) {
         card.style.background = bg;
@@ -2003,17 +2037,12 @@
           evResolve();
         });
         card.querySelector('.ev-yes').addEventListener('click', function() {
-          body.innerHTML =
-            '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Request a vet appointment</p>' +
-            '<input type="email" id="ev-vet-email" placeholder="Vet\'s email — vet@example.com" style="width:100%; min-height:44px; margin-top:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi);">' +
-            '<button id="ev-vet-send" style="width:100%; min-height:44px; margin-top:8px; background:var(--danger); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Send appointment request</button>';
-          document.getElementById('ev-vet-send').addEventListener('click', function() {
-            var em = document.getElementById('ev-vet-email');
-            if (!em.value || em.value.indexOf('@') === -1) { em.style.borderColor = 'var(--danger)'; em.focus(); return; }
+          body.innerHTML = vetPickerHtml('fever');
+          wireVetPicker('fever', function(vetName) {
             evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
             card.querySelector('.ev-esc').style.display = 'none';
             body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Vet appointment requested ✓</p>' +
-              '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Sent to ' + em.value + ' — Kajri · Fever · Green Valley Farm. You\'ll be notified when the vet confirms.</p>';
+              '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Sent to ' + vetName + ' — Kajri · Fever · Green Valley Farm. You\'ll be notified when the vet confirms.</p>';
             evResolve();
           });
         });
@@ -2031,7 +2060,7 @@
         var noteEl = document.getElementById('ev-heat-note');
         var confirmEl = document.getElementById('ev-heat-confirm');
         var formEl = document.getElementById('ev-heat-form');
-        var method = 'AI';
+        var method = 'Artificial';
         var confirmed = false;
         var resolved = false;
         var startedAt = Date.now();
@@ -2125,17 +2154,12 @@
 
       // reusable: diagnostic Yes -> vet-email request -> "requested" (Fever/Abortion/Fresh Cow, all P0)
       function evVetRequestFlow(card, body, cowLabel, farmLabel) {
-        body.innerHTML =
-          '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Request a vet appointment</p>' +
-          '<input type="email" id="ev-vet-email-' + card.id + '" placeholder="Vet\'s email — vet@example.com" style="width:100%; min-height:44px; margin-top:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi);">' +
-          '<button id="ev-vet-send-' + card.id + '" style="width:100%; min-height:44px; margin-top:8px; background:var(--danger); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Send appointment request</button>';
-        document.getElementById('ev-vet-send-' + card.id).addEventListener('click', function() {
-          var em = document.getElementById('ev-vet-email-' + card.id);
-          if (!em.value || em.value.indexOf('@') === -1) { em.style.borderColor = 'var(--danger)'; em.focus(); return; }
+        body.innerHTML = vetPickerHtml(card.id);
+        wireVetPicker(card.id, function(vetName) {
           evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
           var esc = card.querySelector('.ev-esc'); if (esc) esc.style.display = 'none';
           body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Vet appointment requested ✓</p>' +
-            '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Sent to ' + em.value + ' — ' + cowLabel + ' · ' + farmLabel + '. You\'ll be notified when the vet confirms.</p>';
+            '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Sent to ' + vetName + ' — ' + cowLabel + ' · ' + farmLabel + '. You\'ll be notified when the vet confirms.</p>';
           evResolve();
         });
       }
@@ -2253,8 +2277,13 @@
         var heatTicker = null;
         var heatStartedAt = 0;
         var heatConfirmed = false;
-        var heatMethod = 'AI';
+        var heatMethod = 'Artificial';
         var SIM_HOURS_PER_SEC = 1;
+        var INSEM_METHODS = ['Artificial', 'Conventional', 'IVF', 'Embryo Transfer'];
+        function seqMethodBtn(label) {
+          var on = heatMethod === label;
+          return '<button class="ev-seq-method' + (on ? ' on' : '') + '" data-method="' + label + '" style="min-height:40px; border-radius:20px; border:1px solid ' + (on ? 'var(--dark1)' : 'var(--border)') + '; background:' + (on ? 'var(--dark1)' : 'transparent') + '; color:' + (on ? '#FFFFFF' : 'var(--text1)') + '; font-size:13px; font-weight:600; font-family:var(--font-hi);">' + label + '</button>';
+        }
 
         function openSeq() {
           step = 1;
@@ -2336,9 +2365,8 @@
               '</div>';
           } else if (h >= 6) {
             html += '<p style="font-size:12px; font-weight:600; color:var(--text1); margin:10px 0 6px;">Log insemination</p>' +
-              '<div style="display:flex; gap:8px;">' +
-              '<button class="ev-seq-method' + (heatMethod === 'AI' ? ' on' : '') + '" data-method="AI" style="flex:1; min-height:40px; border-radius:20px; border:1px solid ' + (heatMethod === 'AI' ? 'var(--dark1)' : 'var(--border)') + '; background:' + (heatMethod === 'AI' ? 'var(--dark1)' : 'transparent') + '; color:' + (heatMethod === 'AI' ? '#FFFFFF' : 'var(--text1)') + '; font-size:13px; font-weight:600; font-family:var(--font-hi);">AI</button>' +
-              '<button class="ev-seq-method' + (heatMethod === 'Natural' ? ' on' : '') + '" data-method="Natural" style="flex:1; min-height:40px; border-radius:20px; border:1px solid ' + (heatMethod === 'Natural' ? 'var(--dark1)' : 'var(--border)') + '; background:' + (heatMethod === 'Natural' ? 'var(--dark1)' : 'transparent') + '; color:' + (heatMethod === 'Natural' ? '#FFFFFF' : 'var(--text1)') + '; font-size:13px; font-weight:600; font-family:var(--font-hi);">Natural</button>' +
+              '<div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">' +
+              INSEM_METHODS.map(seqMethodBtn).join('') +
               '</div>' +
               '<button id="ev-seq-heat-log" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log insemination</button>';
           } else {

@@ -9,6 +9,36 @@ import 'milk_log_screen.dart';
 
 enum _Tab { all, action, reminders }
 
+/// Onboarded vets — contacting a vet is a pick, not a manual email entry.
+/// Mirrors ONBOARDED_VETS in vanix_screens.html.
+const List<String> kOnboardedVets = ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'];
+
+/// The four insemination methods a farmer can log. Mirrors INSEM_METHODS in
+/// vanix_screens.html.
+const List<String> kInseminationMethods = ['Artificial', 'Conventional', 'IVF', 'Embryo Transfer'];
+
+/// 2x2 grid of method-select buttons, shared by the real Heat card and the
+/// "View full cycle" walkthrough's own heat step. Mirrors seqMethodBtn() in
+/// vanix_screens.html.
+Widget _inseminationMethodGrid(String selected, ValueChanged<String> onSelect) {
+  return GridView.count(
+    crossAxisCount: 2,
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    mainAxisSpacing: 8,
+    crossAxisSpacing: 8,
+    childAspectRatio: 2.6,
+    children: kInseminationMethods.map((m) {
+      final on = m == selected;
+      return OutlinedButton(
+        style: OutlinedButton.styleFrom(backgroundColor: on ? VanixColors.darkPrimary : null, foregroundColor: on ? Colors.white : VanixColors.textPrimary),
+        onPressed: () => onSelect(m),
+        child: Text(m, textAlign: TextAlign.center),
+      );
+    }).toList(),
+  );
+}
+
 /// Shared by every P0 card (Fever / Abortion / Fresh Cow) — diagnostic
 /// confirm -> vet email -> requested. Mirrors evVetRequestFlow() in
 /// vanix_screens.html.
@@ -53,14 +83,14 @@ class _EventsScreenState extends State<EventsScreen> {
   _VetFlowState _fever = _VetFlowState.initial;
   _VetFlowState _abort = _VetFlowState.initial;
   _VetFlowState _freshCow = _VetFlowState.initial;
-  final _feverEmailCtrl = TextEditingController();
-  final _abortEmailCtrl = TextEditingController();
-  final _freshCowEmailCtrl = TextEditingController();
+  String _feverVetName = '';
+  String _abortVetName = '';
+  String _freshCowVetName = '';
 
   // P1 — actionable
   _HeatState _heat = _HeatState.initial;
   bool _heatConfirmed = false;
-  String _heatMethod = 'AI';
+  String _heatMethod = kInseminationMethods.first;
   final _heatTechCtrl = TextEditingController();
   late final DateTime _heatStartedAt;
   Timer? _heatTimer;
@@ -104,9 +134,6 @@ class _EventsScreenState extends State<EventsScreen> {
   @override
   void dispose() {
     _heatTimer?.cancel();
-    _feverEmailCtrl.dispose();
-    _abortEmailCtrl.dispose();
-    _freshCowEmailCtrl.dispose();
     _heatTechCtrl.dispose();
     super.dispose();
   }
@@ -321,7 +348,7 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
-          child: _vetEmailForm(_feverEmailCtrl, () => setState(() { _fever = _VetFlowState.requested; widget.appState.resolveEvent(); })),
+          child: _vetPicker((vetName) => setState(() { _feverVetName = vetName; _fever = _VetFlowState.requested; widget.appState.resolveEvent(); })),
         );
       case _VetFlowState.requested:
         return _ActionCard(
@@ -332,7 +359,7 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
-          child: _vetRequestedMessage('Kajri · Fever · Green Valley Farm', _feverEmailCtrl.text),
+          child: _vetRequestedMessage('Kajri · Fever · Green Valley Farm', _feverVetName),
         );
     }
   }
@@ -383,7 +410,7 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Possible pregnancy loss — Mohini',
           sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
           meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
-          child: _vetEmailForm(_abortEmailCtrl, () => setState(() { _abort = _VetFlowState.requested; widget.appState.resolveEvent(); })),
+          child: _vetPicker((vetName) => setState(() { _abortVetName = vetName; _abort = _VetFlowState.requested; widget.appState.resolveEvent(); })),
         );
       case _VetFlowState.requested:
         return _ActionCard(
@@ -394,7 +421,7 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Possible pregnancy loss — Mohini',
           sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
           meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
-          child: _vetRequestedMessage('Mohini · Pregnancy loss · Sunrise Dairy', _abortEmailCtrl.text),
+          child: _vetRequestedMessage('Mohini · Pregnancy loss · Sunrise Dairy', _abortVetName),
         );
     }
   }
@@ -445,7 +472,7 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Fresh cow health dip — Ganga',
           sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
           meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
-          child: _vetEmailForm(_freshCowEmailCtrl, () => setState(() { _freshCow = _VetFlowState.requested; widget.appState.resolveEvent(); })),
+          child: _vetPicker((vetName) => setState(() { _freshCowVetName = vetName; _freshCow = _VetFlowState.requested; widget.appState.resolveEvent(); })),
         );
       case _VetFlowState.requested:
         return _ActionCard(
@@ -456,24 +483,24 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Fresh cow health dip — Ganga',
           sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
           meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
-          child: _vetRequestedMessage('Ganga · Post-calving · Green Valley Farm', _freshCowEmailCtrl.text),
+          child: _vetRequestedMessage('Ganga · Post-calving · Green Valley Farm', _freshCowVetName),
         );
     }
   }
 
-  // shared vet-email input + send button (P0 cards)
-  Widget _vetEmailForm(TextEditingController ctrl, VoidCallback onSent) {
-    return _VetEmailForm(controller: ctrl, onSent: onSent);
+  // shared onboarded-vet picker + send button (P0 cards)
+  Widget _vetPicker(ValueChanged<String> onSent) {
+    return _VetPicker(onSent: onSent);
   }
 
-  Widget _vetRequestedMessage(String context, String email) {
+  Widget _vetRequestedMessage(String context, String vetName) {
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('Vet appointment requested ✓', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-          Text("Sent to ${email.isEmpty ? 'the vet' : email} — $context. You'll be notified when the vet confirms.", style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+          Text("Sent to ${vetName.isEmpty ? kOnboardedVets.first : vetName} — $context. You'll be notified when the vet confirms.", style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
         ],
       ),
     );
@@ -601,25 +628,7 @@ class _EventsScreenState extends State<EventsScreen> {
               const SizedBox(height: 10),
               const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
               const SizedBox(height: 6),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(backgroundColor: _heatMethod == 'AI' ? VanixColors.darkPrimary : null, foregroundColor: _heatMethod == 'AI' ? Colors.white : VanixColors.textPrimary),
-                      onPressed: () => setState(() => _heatMethod = 'AI'),
-                      child: const Text('AI'),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(backgroundColor: _heatMethod == 'Natural' ? VanixColors.darkPrimary : null, foregroundColor: _heatMethod == 'Natural' ? Colors.white : VanixColors.textPrimary),
-                      onPressed: () => setState(() => _heatMethod = 'Natural'),
-                      child: const Text('Natural'),
-                    ),
-                  ),
-                ],
-              ),
+              _inseminationMethodGrid(_heatMethod, (m) => setState(() => _heatMethod = m)),
               const SizedBox(height: 8),
               TextField(controller: _heatTechCtrl, decoration: const InputDecoration(hintText: 'Technician / vet name (optional)')),
               const SizedBox(height: 8),
@@ -924,17 +933,18 @@ class _PriorityChip extends StatelessWidget {
   }
 }
 
-class _VetEmailForm extends StatefulWidget {
-  final TextEditingController controller;
-  final VoidCallback onSent;
-  const _VetEmailForm({required this.controller, required this.onSent});
+/// Picks one of the onboarded vets instead of typing an email. Mirrors
+/// vetPickerHtml()/wireVetPicker() in vanix_screens.html.
+class _VetPicker extends StatefulWidget {
+  final ValueChanged<String> onSent;
+  const _VetPicker({required this.onSent});
 
   @override
-  State<_VetEmailForm> createState() => _VetEmailFormState();
+  State<_VetPicker> createState() => _VetPickerState();
 }
 
-class _VetEmailFormState extends State<_VetEmailForm> {
-  bool _invalid = false;
+class _VetPickerState extends State<_VetPicker> {
+  String _selected = kOnboardedVets.first;
 
   @override
   Widget build(BuildContext context) {
@@ -944,27 +954,47 @@ class _VetEmailFormState extends State<_VetEmailForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('Request a vet appointment', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
-          const SizedBox(height: 8),
-          TextField(
-            controller: widget.controller,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              hintText: "Vet's email — vet@example.com",
-              enabledBorder: _invalid ? OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: VanixColors.danger, width: 1.5)) : null,
-            ),
-          ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
+          ...kOnboardedVets.map((name) {
+            final on = name == _selected;
+            return Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => setState(() => _selected = name),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: on ? VanixColors.greenDeep : VanixColors.border),
+                    color: on ? VanixColors.activeBg : VanixColors.bgCard,
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 16,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: on ? VanixColors.greenDeep : VanixColors.border, width: 2),
+                          color: on ? VanixColors.greenDeep : Colors.transparent,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(name, style: TextStyle(fontSize: 14, fontWeight: on ? FontWeight.w600 : FontWeight.w500, color: VanixColors.textPrimary)),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
+          const SizedBox(height: 10),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger),
-              onPressed: () {
-                if (!widget.controller.text.contains('@')) {
-                  setState(() => _invalid = true);
-                  return;
-                }
-                widget.onSent();
-              },
+              onPressed: () => widget.onSent(_selected),
               child: const Text('Send appointment request'),
             ),
           ),
@@ -1207,7 +1237,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
 
   DateTime? _heatStartedAt;
   bool _heatConfirmed = false;
-  String _heatMethod = 'AI';
+  String _heatMethod = kInseminationMethods.first;
   Timer? _heatTimer;
   static const double _simHoursPerSecond = 1;
 
@@ -1220,7 +1250,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
   void _startHeat() {
     _heatStartedAt = DateTime.now();
     _heatConfirmed = false;
-    _heatMethod = 'AI';
+    _heatMethod = kInseminationMethods.first;
     _heatTimer?.cancel();
     _heatTimer = Timer.periodic(const Duration(milliseconds: 200), (_) {
       if (_step == _SeqStep.heat) setState(() {});
@@ -1421,25 +1451,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
           const SizedBox(height: 10),
           const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
           const SizedBox(height: 6),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(backgroundColor: _heatMethod == 'AI' ? VanixColors.darkPrimary : null, foregroundColor: _heatMethod == 'AI' ? Colors.white : VanixColors.textPrimary),
-                  onPressed: () => setState(() => _heatMethod = 'AI'),
-                  child: const Text('AI'),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(backgroundColor: _heatMethod == 'Natural' ? VanixColors.darkPrimary : null, foregroundColor: _heatMethod == 'Natural' ? Colors.white : VanixColors.textPrimary),
-                  onPressed: () => setState(() => _heatMethod = 'Natural'),
-                  child: const Text('Natural'),
-                ),
-              ),
-            ],
-          ),
+          _inseminationMethodGrid(_heatMethod, (m) => setState(() => _heatMethod = m)),
           const SizedBox(height: 8),
           SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.watch21), child: const Text('Log insemination'))),
         ] else ...[
