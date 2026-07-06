@@ -136,7 +136,7 @@ The card shows a **single segmented bar** (PRE 6h · OPTIMAL 12h · SUBOPT 6h, d
 
 If the window closes with no insemination logged, the card asks directly whether the cow was inseminated — **"Cow inseminated"** opens the same method/technician form plus a time field; **"Insemination missed"** logs it and resumes monitoring.
 
-The heat alert also surfaces as a **full-screen "push notification" style carousel** (dark background; one card per cow currently in heat — swipe or arrows to move, "N of 3" counter; each card has the cow avatar, a reasoning line, last-10-readings temperature sparkline, movement bar graph, and stacked buttons with **"Yes, in heat" as the greenDeep primary on top**) the first time a farmer taps **"View full cycle"** — actioning a card auto-advances to the next; dismissing without answering (✕ or "View in app instead") drops into the normal in-app walkthrough sheet with a lighter, "restricted" detail view of the heat card.
+The heat alert also surfaces as a **full-screen "push notification" style carousel** (follows light/dark mode — bgWarm in light, dark gradient in dark; one card per cow currently in heat — swipe or arrows to move, "N of 3" counter; each card has the cow avatar, a reasoning line, last-10-readings temperature sparkline, movement bar graph, and stacked buttons with **"Yes, in heat" as the greenDeep primary on top**) the first time a farmer taps **"View full cycle"** — actioning a card auto-advances to the next; dismissing without answering (✕ or "View in app instead") drops into the normal in-app walkthrough sheet with a lighter, "restricted" detail view of the heat card.
 
 ## Vets
 
