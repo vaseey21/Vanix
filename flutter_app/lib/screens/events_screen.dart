@@ -451,91 +451,155 @@ class _EventsScreenState extends State<EventsScreen> {
   }
 
   // ── P1: Heat cycle → insemination window ──
+  // Single evolving card: the confirm question and the ticking phase display
+  // appear together (detection already started the clock). Yes/No only
+  // acknowledges; it does not pause/reset the automatic pre→optimal→
+  // suboptimal progression.
   Widget _buildHeatCard(bool isDark) {
-    switch (_heat) {
-      case _HeatState.initial:
-        return _ActionCard(
-          bg: VanixColors.warningBg,
-          border: VanixColors.warning,
-          priority: _Priority.p1,
-          channel: 'App notification · Schedule inseminator',
-          title: 'Heat cycle detected — Gauri',
-          sub: 'Temperature swinging up and down with high movement since 04:30 this morning.',
-          meta: 'Green Valley Farm · Belt 41 · auto-confirms in 4h',
+    const title = 'Heat cycle detected — Gauri';
+    const sub = 'Temperature swinging up and down with high movement since 04:30 this morning.';
+    const meta = 'Green Valley Farm · Belt 41 · detected 04:30';
+
+    if (_heat == _HeatState.dismissed) {
+      return _ActionCard(
+        bg: VanixColors.bgCard,
+        border: VanixColors.border,
+        priority: _Priority.p1,
+        channel: 'App notification · Schedule inseminator',
+        title: title,
+        sub: sub,
+        meta: 'Green Valley Farm · Belt 41',
+        child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Marked as not in heat — monitoring continues.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      );
+    }
+    if (_heat == _HeatState.expired) {
+      return _ActionCard(
+        bg: VanixColors.bgCard,
+        border: VanixColors.border,
+        priority: _Priority.p1,
+        channel: 'App notification · Schedule inseminator',
+        title: title,
+        sub: sub,
+        meta: 'Green Valley Farm · Belt 41',
+        child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Window closed — no insemination logged. Heat cycle monitoring resumes.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      );
+    }
+    if (_heat == _HeatState.logged) {
+      return _ActionCard(
+        bg: VanixColors.activeBg,
+        border: VanixColors.greenDeep,
+        priority: _Priority.p1,
+        channel: 'App notification · Schedule inseminator',
+        title: title,
+        sub: sub,
+        meta: 'Green Valley Farm · Belt 41',
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(padding: EdgeInsets.only(top: 12, bottom: 10), child: Text('Is Gauri in heat?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
+              const Text('Insemination logged ✓ — 21-day watch started', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+              Text("Method: $_heatMethod${_heatTechCtrl.text.isNotEmpty ? ' · ${_heatTechCtrl.text}' : ''}. If no heat returns by 24 Jul, you'll get a pregnancy-check alert. If heat returns earlier, the cycle restarts.", style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // _HeatState.initial or .active — same evolving display, driven by _heatElapsedSimHours.
+    final h = _heatElapsedSimHours;
+    String label;
+    double pct;
+    Color color;
+    if (h < 6) {
+      label = 'Pre-insemination — window opens in ${(6 - h).ceil()}h';
+      pct = h / 6;
+      color = VanixColors.warningInk;
+    } else if (h < 18) {
+      label = 'Optimal window — ${(18 - h).ceil()}h left';
+      pct = (h - 6) / 12;
+      color = VanixColors.greenInk;
+    } else {
+      label = 'Suboptimal window — act soon, ${(24 - h).ceil()}h left';
+      pct = (h - 18) / 6;
+      color = VanixColors.danger;
+    }
+
+    return _ActionCard(
+      bg: VanixColors.warningBg,
+      border: VanixColors.warning,
+      priority: _Priority.p1,
+      channel: 'App notification · Schedule inseminator',
+      title: title,
+      sub: sub,
+      meta: meta,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Is Gauri in heat?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+            const SizedBox(height: 8),
+            Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: color)),
+            const SizedBox(height: 6),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(3),
+              child: LinearProgressIndicator(value: pct.clamp(0, 1), minHeight: 6, backgroundColor: Colors.black.withOpacity(0.10), valueColor: AlwaysStoppedAnimation(color)),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              _heatConfirmed ? 'Enter the insemination details once done.' : 'Best results within 6-18h of detection. The window opens automatically — no need to refresh.',
+              style: const TextStyle(fontSize: 12, color: VanixColors.textHint),
+            ),
+            if (!_heatConfirmed) ...[
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(child: OutlinedButton(onPressed: () => setState(() { _heat = _HeatState.dismissed; widget.appState.resolveEvent(); }), child: const Text('No'))),
                   const SizedBox(width: 8),
-                  Expanded(flex: 2, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: VanixColors.warningInk), onPressed: () => setState(() => _heat = _HeatState.windowOpen), child: const Text('Yes, in heat'))),
+                  Expanded(
+                    flex: 2,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(backgroundColor: VanixColors.warningInk),
+                      onPressed: () => setState(() { _heatConfirmed = true; _heat = _HeatState.active; }),
+                      child: const Text('Yes, in heat'),
+                    ),
+                  ),
                 ],
               ),
             ],
-          ),
-        );
-      case _HeatState.dismissed:
-        return _ActionCard(
-          bg: VanixColors.bgCard,
-          border: VanixColors.border,
-          priority: _Priority.p1,
-          channel: 'App notification · Schedule inseminator',
-          title: 'Heat cycle detected — Gauri',
-          sub: 'Temperature swinging up and down with high movement since 04:30 this morning.',
-          meta: 'Green Valley Farm · Belt 41',
-          child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Marked as not in heat — monitoring continues.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
-        );
-      case _HeatState.windowOpen:
-        return _ActionCard(
-          bg: VanixColors.warningBg,
-          border: VanixColors.warning,
-          priority: _Priority.p1,
-          channel: 'App notification · Schedule inseminator',
-          title: 'Heat cycle detected — Gauri',
-          sub: 'Temperature swinging up and down with high movement since 04:30 this morning.',
-          meta: 'Green Valley Farm · Belt 41',
-          child: Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Optimal window — 11h 30m left', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
-                const SizedBox(height: 8),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(3),
-                  child: LinearProgressIndicator(value: 0.52, minHeight: 6, backgroundColor: Colors.black.withOpacity(0.10), valueColor: const AlwaysStoppedAnimation(VanixColors.warningInk)),
-                ),
-                const SizedBox(height: 6),
-                const Text("T+6h to T+18h: peak fertility. Before T+6h the window hasn't opened yet; after T+18h fertility drops (late window). Log the insemination once done.", style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
-                const SizedBox(height: 10),
-                SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => setState(() { _heat = _HeatState.watching; widget.appState.resolveEvent(); }), child: const Text('Log insemination'))),
-              ],
-            ),
-          ),
-        );
-      case _HeatState.watching:
-        return _ActionCard(
-          bg: VanixColors.activeBg,
-          border: VanixColors.greenDeep,
-          priority: _Priority.p1,
-          channel: 'App notification · Schedule inseminator',
-          title: 'Heat cycle detected — Gauri',
-          sub: 'Temperature swinging up and down with high movement since 04:30 this morning.',
-          meta: 'Green Valley Farm · Belt 41',
-          child: const Padding(
-            padding: EdgeInsets.only(top: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Insemination logged ✓ — 21-day watch started', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-                Text("If no heat returns by 24 Jul, you'll get a pregnancy-check alert. If heat returns earlier, the cycle restarts.", style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
-              ],
-            ),
-          ),
-        );
-    }
+            if (_heatConfirmed && h >= 6) ...[
+              const SizedBox(height: 10),
+              const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(backgroundColor: _heatMethod == 'AI' ? VanixColors.darkPrimary : null, foregroundColor: _heatMethod == 'AI' ? Colors.white : VanixColors.textPrimary),
+                      onPressed: () => setState(() => _heatMethod = 'AI'),
+                      child: const Text('AI'),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(backgroundColor: _heatMethod == 'Natural' ? VanixColors.darkPrimary : null, foregroundColor: _heatMethod == 'Natural' ? Colors.white : VanixColors.textPrimary),
+                      onPressed: () => setState(() => _heatMethod = 'Natural'),
+                      child: const Text('Natural'),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              TextField(controller: _heatTechCtrl, decoration: const InputDecoration(hintText: 'Technician / vet name (optional)')),
+              const SizedBox(height: 8),
+              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => setState(() { _heat = _HeatState.logged; widget.appState.resolveEvent(); }), child: const Text('Log insemination'))),
+            ],
+          ],
+        ),
+      ),
+    );
   }
 
   // ── P1: Pregnancy check due ──
