@@ -2683,13 +2683,15 @@
 
         function fsBuildCards() {
           fsStrip.innerHTML = FS_ALERTS.map(function(a, i) {
-            return '<div class="ev-fs-card" data-i="' + i + '" style="flex:0 0 100%; overflow-y:auto; display:flex; flex-direction:column; align-items:center; text-align:center; padding:8px 44px 4px;">' +
-              '<span class="en" style="font-size:12px; font-weight:500; color:rgba(255,255,255,0.75);">' + a.farm + ' · detected ' + a.time + '</span>' +
-              '<div style="width:84px; height:84px; border-radius:50%; background:var(--warnbg); border:2px solid var(--warning); display:flex; align-items:center; justify-content:center; font-size:36px; margin-top:12px;">🐄</div>' +
-              '<p style="font-size:18px; font-weight:600; color:#FFFFFF; margin:12px 0 0;">Heat cycle detected — ' + a.name + '</p>' +
-              '<p style="font-size:12px; color:rgba(255,255,255,0.75); margin:6px 0 0; line-height:1.6;">' + a.reason + '</p>' +
-              '<div style="width:100%;">' + fsSparkline(a.temps) + fsMovement(a.moves) + '</div>' +
-              '<div class="ev-fs-actions" style="width:100%; margin-top:14px;">' +
+            return '<div class="ev-fs-card" data-i="' + i + '" style="flex:0 0 100%; display:flex; flex-direction:column; padding:8px 44px 4px;">' +
+              '<div style="flex:1; overflow-y:auto; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">' +
+                '<span class="en" style="font-size:12px; font-weight:500; color:rgba(255,255,255,0.75);">' + a.farm + ' · detected ' + a.time + '</span>' +
+                '<div style="width:84px; height:84px; border-radius:50%; background:var(--warnbg); border:2px solid var(--warning); display:flex; align-items:center; justify-content:center; font-size:36px; margin-top:12px; flex-shrink:0;">🐄</div>' +
+                '<p style="font-size:18px; font-weight:600; color:#FFFFFF; margin:12px 0 0;">Heat cycle detected — ' + a.name + '</p>' +
+                '<p style="font-size:12px; color:rgba(255,255,255,0.75); margin:6px 0 0; line-height:1.6;">' + a.reason + '</p>' +
+                '<div style="width:100%;">' + fsSparkline(a.temps) + fsMovement(a.moves) + '</div>' +
+              '</div>' +
+              '<div class="ev-fs-actions" style="width:100%; margin-top:14px; padding-bottom:6px;">' +
                 '<button class="ev-fs-yes" style="width:100%; min-height:48px; background:var(--greendeep); border:none; border-radius:24px; font-size:14px; font-weight:600; color:#111111; font-family:var(--font-hi);">Yes, in heat</button>' +
                 '<button class="ev-fs-no" style="width:100%; min-height:48px; margin-top:8px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:24px; font-size:14px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">No</button>' +
               '</div>' +
@@ -2699,7 +2701,13 @@
           fsStrip.querySelectorAll('.ev-fs-card').forEach(function(cardEl) {
             var i = parseInt(cardEl.getAttribute('data-i'), 10);
             cardEl.querySelector('.ev-fs-yes').addEventListener('click', function() { fsAction(i, 'yes'); });
-            cardEl.querySelector('.ev-fs-no').addEventListener('click', function() { fsAction(i, 'no'); });
+            // "No" defers the decision to the in-app card — close the carousel
+            // and drop into the walkthrough sheet's restricted heat view.
+            cardEl.querySelector('.ev-fs-no').addEventListener('click', function() {
+              restrictedHeat = true;
+              closeFullScreenAlert();
+              openWalkthroughSheet();
+            });
           });
         }
 

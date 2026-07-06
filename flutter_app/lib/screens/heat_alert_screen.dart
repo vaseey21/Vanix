@@ -119,7 +119,9 @@ class _HeatAlertScreenState extends State<HeatAlertScreen> {
                         data: _kAlerts[i],
                         decision: _decisions[i],
                         onYes: () => _action(i, 'yes'),
-                        onNo: () => _action(i, 'no'),
+                        // "No" defers the decision to the in-app card — pop
+                        // null so the caller opens the restricted sheet view.
+                        onNo: () => Navigator.of(context).pop(null),
                       ),
                     ),
                     PositionedDirectional(
