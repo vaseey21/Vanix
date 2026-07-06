@@ -450,7 +450,7 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Fresh cow health dip — Ganga',
           sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
           meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
-          child: _vetEmailForm(_freshCowEmailCtrl, () => setState(() { _freshCow = _VetFlowState.requested; widget.appState.resolveEvent(); })),
+          child: _vetPicker((vetName) => setState(() { _freshCowVetName = vetName; _freshCow = _VetFlowState.requested; widget.appState.resolveEvent(); })),
         );
       case _VetFlowState.requested:
         return _ActionCard(
@@ -461,7 +461,7 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Fresh cow health dip — Ganga',
           sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
           meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
-          child: _vetRequestedMessage('Ganga · Post-calving · Green Valley Farm', _freshCowEmailCtrl.text),
+          child: _vetRequestedMessage('Ganga · Post-calving · Green Valley Farm', _freshCowVetName),
         );
     }
   }
