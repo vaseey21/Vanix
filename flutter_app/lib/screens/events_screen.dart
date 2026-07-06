@@ -120,7 +120,17 @@ class _EventsScreenState extends State<EventsScreen> {
   static const double _simHoursPerSecond = 1;
 
   _PregState _preg = _PregState.initial;
-  _AckState _gestation = _AckState.initial;
+
+  _GestationState _gestation = _GestationState.check3;
+  String _gestationVetName = '';
+  final _gestationNotesCtrl = TextEditingController();
+
+  bool _milkingNotifShown = false;
+  _MilkingNotifState _milkingNotif = _MilkingNotifState.pending;
+  Timer? _milkingRemindTimer;
+
+  _LactationCheckState _lactationCheck = _LactationCheckState.pending;
+  Timer? _lactationRecheckTimer;
 
   // P2 — warning
   _InspectState _mastitis = _InspectState.initial;
