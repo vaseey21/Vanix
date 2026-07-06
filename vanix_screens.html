@@ -200,10 +200,11 @@
     /* status banners keep their light tint colours in dark mode — no override */
     /* ── Events priority chips (P0-P3) — reuse existing tokens only ── */
     .ev-chip { flex-shrink:0; border-radius:10px; padding:3px 8px; font-size:10px; font-weight:600; white-space:nowrap; }
-    .ev-chip-p0 { background:#8B2800; color:#FFFFFF; }
     .ev-chip-p1 { background:#8A5A00; color:#FFFFFF; }
     .ev-chip-p2 { background:var(--warnbg); border:1px solid var(--warning); color:#8A5A00; }
     .ev-chip-p3 { background:var(--bgcard); border:1px solid var(--border); color:var(--text2); }
+    /* P0 cards use a single corner badge instead of a chip — card tint already signals "critical" */
+    .ev-corner-badge { position:absolute; top:-6px; right:-6px; width:20px; height:20px; border-radius:50%; background:#8B2800; color:#FFFFFF; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 1px 3px rgba(0,0,0,0.25); }
     .ev-channel { font-size:11px; color:var(--text2); margin:2px 0 0; }
     .ev-card-p2 { background:var(--bgcard); border:1px solid var(--border); border-left:2px solid var(--warning); }
     .ev-card-p3 { background:var(--bgcard); border:1px solid var(--border); }
