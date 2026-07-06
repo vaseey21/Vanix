@@ -222,14 +222,14 @@ class _AlertCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  for (final m in data.moves) ...[
+                  for (var i = 0; i < data.moves.length; i++) ...[
+                    if (i > 0) const SizedBox(width: 3),
                     Expanded(
                       child: FractionallySizedBox(
-                        heightFactor: m / data.moves.reduce((a, b) => a > b ? a : b),
+                        heightFactor: data.moves[i] / data.moves.reduce((a, b) => a > b ? a : b),
                         child: Container(decoration: BoxDecoration(color: VanixColors.greenDeep, borderRadius: BorderRadius.circular(2))),
                       ),
                     ),
-                    if (m != data.moves.last || data.moves.indexOf(m) != data.moves.length - 1) const SizedBox(width: 3),
                   ],
                 ],
               ),
