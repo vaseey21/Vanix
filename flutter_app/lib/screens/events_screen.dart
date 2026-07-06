@@ -1678,7 +1678,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
       case _SeqStep.dry: return 8;
       case _SeqStep.interrupted:
       case _SeqStep.complete:
-        return 7;
+        return totalSteps;
     }
   }
 
