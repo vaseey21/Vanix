@@ -115,11 +115,12 @@ xs=4  sm=8  md=12  lg=16  pill=24
 
 - Only **CALVED** and **MILKING** cows appear in Milk Log entry forms
 - FEVER is a parallel alert path, separate from heat cycle
-- **CALVED → MILKING** trigger: the farmer taps **"Delivery confirmed"** on the 9-month vet-check Events card — this is a farmer action, not automatic
-- **MILKING** lasts **305 days** (the lactation period) — cow is actively producing milk and logged in the Milk Log
-- **MILKING → DRY** trigger: automatic at day 305. The **DRY** (resting) period lasts **60 days** — no milk produced, not shown in Milk Log entry forms during this window
+- **CALVED → MILKING** trigger: after the farmer taps **"Delivery confirmed"** on the gestation Events card, a separate **milking notification** card fires — the cow only actually joins the Milk Log once the farmer taps **"Yes, add"** on that card (a "Remind me later" option defers it 24h without losing the alert)
+- Pregnancy confirmation is **farmer self-confirmed** — no vet required. Gestation itself has **3 checkpoints**: vet checks at 3 and 6 months (single acknowledge each), then at 9 months the farmer **calls a vet for delivery** (pick one of the 3 onboarded vets) before tapping **"Delivery confirmed"** with optional doc notes
+- **MILKING** lasts **250 days** (the lactation period) — cow is actively producing milk and logged in the Milk Log
+- **MILKING → DRY** trigger: at the end of the 250 days, an **end-of-lactation check-in** card asks whether the cow is still milking or has entered her resting period — **"Still milking"** re-checks in 10 days (loops, doesn't dead-end); **"Entered resting period"** starts the **DRY** period, which lasts **60 days** — no milk produced, not shown in Milk Log entry forms during this window
 - **DRY → IDLE** trigger: automatic at day 60 — the cow re-enters the heat-eligible pool, closing the reproductive loop back to the top of the lifecycle
-- The full loop (Heat → Insemination → Pregnancy Check → Delivery → 305-day Milking → 60-day Dry) can be walked through end-to-end via the **"View full cycle"** link on the Events page — see below
+- The full loop (Heat → Insemination → Pregnancy Check → Delivery → 250-day Milking → 60-day Dry) can be walked through end-to-end via the **"View full cycle"** link on the Events page — see below
 
 ## Heat → insemination window
 
@@ -131,9 +132,13 @@ Sensor comparison basis: cow's own **10-day** rolling temperature/behaviour base
 | Optimal | T+6–18h (12h) | Peak fertility — insemination-detail form appears (Method: Artificial / Conventional / IVF / Embryo Transfer + optional technician name) |
 | Suboptimal | T+18–24h (6h) | Fertility dropping, still loggable |
 
+If the window closes with no insemination logged, the card asks directly whether the cow was inseminated — **"Cow inseminated"** opens the same method/technician form plus a time field; **"Insemination missed"** logs it and resumes monitoring.
+
+The heat alert also surfaces as a **full-screen "push notification" style page** (dark background, cow avatar, temperature/movement detail rows, stacked Yes/No) the first time a farmer taps **"View full cycle"** — dismissing it without answering (✕ or "View in app instead") drops into the normal in-app walkthrough sheet with a lighter, "restricted" detail view of the same card.
+
 ## Vets
 
-3 vets are onboarded: Dr. Sharma, Dr. Rao, Dr. Iyer. Every P0 vet-request card (Fever, Abortion/Pregnancy Loss, Fresh Cow Monitor) has the farmer pick one from this list — no email entry.
+3 vets are onboarded: Dr. Sharma, Dr. Rao, Dr. Iyer. Every P0 vet-request card (Fever, Abortion/Pregnancy Loss, Fresh Cow Monitor) has the farmer pick one from this list — no email entry. The 9-month gestation checkpoint also uses this picker when calling a vet for delivery.
 
 ## Alert escalation
 
@@ -161,7 +166,7 @@ Sensor comparison basis: cow's own **10-day** rolling temperature/behaviour base
 | 07 | Milk Log | Done — cream hero, milk-scoped tinted banners (NO heat alerts here), date-grouped cards w/ coloured yield box + ✓/⏱, two-pane filter sheet (category rail left, tinted option rows right — never white), tap card → Edit/Delete action sheet, black FAB. Sessions: Morning + Evening only. "View complete summary" → analytics page: retained totals, breed filter, 8-week trend w/ tooltip, highest/lowest week tiles, top-5 cows + yield-by-breed bars (single-hue greenInk/greenDeep) |
 | 08 | Add milk entry | Done — same-phone page: farm (owner only) + cow (Name—Breed—Belt no.) + date (no future) + session pills (Evening locked till 17:00 today, past-session warning modal) + litres, Save/Cancel. Duplicate guard: same cow+session+date → confirm modal |
 | 09 | Edit milk entry | Done — reuses Add-entry page prefilled ("Edit Milk Entry"); delete via confirm modal. Farmer add-to-existing/edit/delete → pending sub-card on the entry card, owner Approve/✕; approve merges/replaces litres, updates time, adds "↻ Updated" badge |
-| 10 | Events / alert centre | Done — 12-card P0–P3 alert taxonomy aligned to the Cattle Health Logic v3.1 backend spec (Block 7): P0 Fever/Abortion/Fresh-Cow-Monitor (vet-request flow), P1 Heat→Insemination-Window (single evolving card, real 24h clock: Pre 0–6h → Optimal 6–18h w/ method+technician form → Suboptimal 18–24h)/Pregnancy-Check-Due/9-Month-Vet-Check-&-Delivery-Confirmed, P2 Mastitis/Lameness/Ketosis (inspection flow)/Proestrus, P3 Herd-Heat-Stress/Calibration-Complete (single acknowledge). In-place card morphing, ESCALATED chip, live badge/dot sync across navs ("All clear" at zero), reminders, date-grouped history. All tints stay light in dark mode; P2/P3 stay neutral (never dark-flip). Plus "View full cycle" — a 7-step bottom-sheet walkthrough of the whole breeding/lactation year (Heat → Insemination → Pregnancy Check → Delivery → 305-day Milking → 60-day Dry), self-contained demo state, doesn't touch the live badge counter |
+| 10 | Events / alert centre | Done — 14-card P0–P3 alert taxonomy aligned to the Cattle Health Logic v3.1 backend spec (Block 7): P0 Fever/Abortion/Fresh-Cow-Monitor (vet-picker flow, no email), P1 Heat→Insemination-Window (single evolving card, real 24h clock: Pre 0–6h → Optimal 6–18h w/ method+technician form → Suboptimal 18–24h → Window-expired choice of "Cow inseminated"/"Insemination missed")/Pregnancy-Check-Due (farmer self-confirm, no vet)/Gestation (3-month → 6-month → call-vet-for-delivery → delivery-confirmed w/ notes, single evolving card)/Milking-notification (Remind-later/Yes-add)/End-of-lactation-check-in (Still-milking loops/Entered-resting-period), P2 Mastitis/Lameness/Ketosis (inspection flow)/Proestrus, P3 Herd-Heat-Stress/Calibration-Complete (single acknowledge). In-place card morphing, single red corner badge for escalated P0 cards, live badge/dot sync across navs ("All clear" at zero), reminders, date-grouped history. Dark mode: action cards flatten to the dark neutral surface (#1C1C1C) with white titles and colour-preserved priority borders — P0's corner badge stays legible either way. Plus a full-screen "push notification" style Heat alert (dark bg, cow avatar, temp/movement detail rows, stacked Yes/No, "View in app" link) as the entry point of "View full cycle" — an 8-step bottom-sheet walkthrough of the whole breeding/lactation year (Heat → Insemination → Pregnancy Check → Gestation → Delivery → 250-day Milking → End-of-lactation check-in → 60-day Dry), self-contained demo state, doesn't touch the live badge counter |
 | 11 | Account | Pending |
 | 12 | Farmer persona (stripped views) | Pending |
 

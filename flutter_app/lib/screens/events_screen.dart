@@ -5,6 +5,7 @@ import '../state/app_state.dart';
 import '../theme/vanix_theme.dart';
 import '../widgets/vanix_bottom_nav.dart';
 import '../widgets/vanix_nav_items.dart';
+import 'heat_alert_screen.dart';
 import 'milk_log_screen.dart';
 
 enum _Tab { all, action, reminders }
@@ -49,7 +50,7 @@ enum _VetFlowState { initial, falseAlarm, awaitingEmail, requested }
 /// is just the farmer's acknowledgement and does not pause/reset the clock.
 /// `dismissed`/`logged`/`expired` are terminal; while `active`, the visible
 /// phase (pre/optimal/suboptimal) is derived from elapsed time every tick.
-enum _HeatState { initial, dismissed, active, logged, expired }
+enum _HeatState { initial, dismissed, active, logged, expired, missed }
 enum _PregState { initial, failed, confirmed }
 
 /// Shared by every P2 diagnostic card (Mastitis / Lameness / Ketosis) —
@@ -60,6 +61,21 @@ enum _InspectState { initial, falseAlarm, flagged }
 /// Shared by every single-acknowledge card (Proestrus / Herd Heat Stress /
 /// Calibration Complete). Mirrors evAcknowledgeFlow() in vanix_screens.html.
 enum _AckState { initial, acknowledged }
+
+/// Gestation is its own evolving card (like Heat) — 3/6/9-month vet checks,
+/// call-vet-for-delivery (vet picker), then delivery confirmed w/ notes.
+/// Only the final `delivered` state calls resolveEvent().
+enum _GestationState { check3, check6, callVet, deliveryForm, delivered }
+
+/// Milking notification — fires once gestation resolves. "Remind me later"
+/// loops back to pending on a compressed timer without touching the badge;
+/// only "Yes, add" resolves it.
+enum _MilkingNotifState { pending, reminded, added }
+
+/// End-of-lactation check-in — reached via the walkthrough's skip-ahead.
+/// "Still milking" loops back to pending on a compressed timer without
+/// touching the badge; only "Entered resting period" resolves it.
+enum _LactationCheckState { pending, stillMilking, resting }
 
 /// Events — mirrors #page-events in vanix_screens.html: All / Needs action /
 /// Reminders tabs, 11 action cards spanning the P0-P3 priority matrix from
@@ -92,6 +108,10 @@ class _EventsScreenState extends State<EventsScreen> {
   bool _heatConfirmed = false;
   String _heatMethod = kInseminationMethods.first;
   final _heatTechCtrl = TextEditingController();
+  String _heatLateMethod = kInseminationMethods.first;
+  final _heatLateTimeCtrl = TextEditingController();
+  final _heatLateTechCtrl = TextEditingController();
+  bool _heatShowLateForm = false;
   late final DateTime _heatStartedAt;
   Timer? _heatTimer;
   // DEMO: 24 real hours compressed into 24 real seconds (1s = 1 simulated
@@ -101,7 +121,17 @@ class _EventsScreenState extends State<EventsScreen> {
   static const double _simHoursPerSecond = 1;
 
   _PregState _preg = _PregState.initial;
-  _AckState _gestation = _AckState.initial;
+
+  _GestationState _gestation = _GestationState.check3;
+  String _gestationVetName = '';
+  final _gestationNotesCtrl = TextEditingController();
+
+  bool _milkingNotifShown = false;
+  _MilkingNotifState _milkingNotif = _MilkingNotifState.pending;
+  Timer? _milkingRemindTimer;
+
+  _LactationCheckState _lactationCheck = _LactationCheckState.pending;
+  Timer? _lactationRecheckTimer;
 
   // P2 — warning
   _InspectState _mastitis = _InspectState.initial;
@@ -121,7 +151,7 @@ class _EventsScreenState extends State<EventsScreen> {
       final ticking = _heat == _HeatState.initial || _heat == _HeatState.active;
       if (!ticking) return;
       if (_heatElapsedSimHours >= 24) {
-        setState(() { _heat = _HeatState.expired; widget.appState.resolveEvent(); });
+        setState(() => _heat = _HeatState.expired);
         _heatTimer?.cancel();
         return;
       }
@@ -135,6 +165,11 @@ class _EventsScreenState extends State<EventsScreen> {
   void dispose() {
     _heatTimer?.cancel();
     _heatTechCtrl.dispose();
+    _heatLateTimeCtrl.dispose();
+    _heatLateTechCtrl.dispose();
+    _gestationNotesCtrl.dispose();
+    _milkingRemindTimer?.cancel();
+    _lactationRecheckTimer?.cancel();
     super.dispose();
   }
 
@@ -150,12 +185,14 @@ class _EventsScreenState extends State<EventsScreen> {
     if (i == 4) widget.appState.toggleDark();
   }
 
-  void _showFullCycleSheet(BuildContext context) {
+  Future<void> _showFullCycleSheet(BuildContext context) async {
+    final result = await Navigator.of(context).push<String?>(MaterialPageRoute(builder: (_) => const HeatAlertScreen(), fullscreenDialog: true));
+    if (!context.mounted) return;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => _FullCycleSheet(isDark: widget.appState.isDark),
+      builder: (context) => _FullCycleSheet(isDark: widget.appState.isDark, heatPreDecision: result, restricted: result == null),
     );
   }
 
@@ -239,6 +276,12 @@ class _EventsScreenState extends State<EventsScreen> {
                         const SizedBox(height: 10),
                         _buildGestationCard(isDark),
                         const SizedBox(height: 10),
+                        if (_milkingNotifShown) ...[
+                          _buildMilkingNotifCard(isDark),
+                          const SizedBox(height: 10),
+                        ],
+                        _buildLactationCheckCard(isDark),
+                        const SizedBox(height: 10),
                         _buildMastitisCard(isDark),
                         const SizedBox(height: 10),
                         _buildLamenessCard(isDark),
@@ -306,6 +349,7 @@ class _EventsScreenState extends State<EventsScreen> {
     switch (_fever) {
       case _VetFlowState.initial:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           escalated: true,
@@ -330,6 +374,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.falseAlarm:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p0,
@@ -341,6 +386,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.awaitingEmail:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           priority: _Priority.p0,
@@ -352,6 +398,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.requested:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
           priority: _Priority.p0,
@@ -369,6 +416,7 @@ class _EventsScreenState extends State<EventsScreen> {
     switch (_abort) {
       case _VetFlowState.initial:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           priority: _Priority.p0,
@@ -392,6 +440,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.falseAlarm:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p0,
@@ -403,6 +452,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.awaitingEmail:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           priority: _Priority.p0,
@@ -414,6 +464,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.requested:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
           priority: _Priority.p0,
@@ -431,6 +482,7 @@ class _EventsScreenState extends State<EventsScreen> {
     switch (_freshCow) {
       case _VetFlowState.initial:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           priority: _Priority.p0,
@@ -454,6 +506,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.falseAlarm:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p0,
@@ -465,6 +518,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.awaitingEmail:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           priority: _Priority.p0,
@@ -476,6 +530,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.requested:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
           priority: _Priority.p0,
@@ -518,6 +573,7 @@ class _EventsScreenState extends State<EventsScreen> {
 
     if (_heat == _HeatState.dismissed) {
       return _ActionCard(
+        isDark: isDark,
         bg: VanixColors.bgCard,
         border: VanixColors.border,
         priority: _Priority.p1,
@@ -528,8 +584,9 @@ class _EventsScreenState extends State<EventsScreen> {
         child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Marked as not in heat — monitoring continues.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
       );
     }
-    if (_heat == _HeatState.expired) {
+    if (_heat == _HeatState.missed) {
       return _ActionCard(
+        isDark: isDark,
         bg: VanixColors.bgCard,
         border: VanixColors.border,
         priority: _Priority.p1,
@@ -537,11 +594,61 @@ class _EventsScreenState extends State<EventsScreen> {
         title: title,
         sub: sub,
         meta: 'Green Valley Farm · Belt 41',
-        child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Window closed — no insemination logged. Heat cycle monitoring resumes.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+        child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Insemination missed — logged. Heat cycle monitoring resumes.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      );
+    }
+    if (_heat == _HeatState.expired) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: 'App notification · Schedule inseminator',
+        title: title,
+        sub: sub,
+        meta: 'Green Valley Farm · Belt 41',
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Window expired', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+              const Padding(padding: EdgeInsets.only(top: 4), child: Text('Insemination window has closed. Was Gauri inseminated?', style: TextStyle(fontSize: 12, color: VanixColors.textHint))),
+              if (!_heatShowLateForm) ...[
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(child: OutlinedButton(onPressed: () => setState(() { _heat = _HeatState.missed; widget.appState.resolveEvent(); }), child: const Text('Insemination missed'))),
+                    const SizedBox(width: 8),
+                    Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatShowLateForm = true), child: const Text('Cow inseminated'))),
+                  ],
+                ),
+              ] else ...[
+                const SizedBox(height: 10),
+                const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                const SizedBox(height: 6),
+                _inseminationMethodGrid(_heatLateMethod, (m) => setState(() => _heatLateMethod = m)),
+                const SizedBox(height: 8),
+                TextField(controller: _heatLateTimeCtrl, decoration: const InputDecoration(hintText: 'Time of insemination (e.g. 14:30)')),
+                const SizedBox(height: 8),
+                TextField(controller: _heatLateTechCtrl, decoration: const InputDecoration(hintText: 'Technician / vet name (optional)')),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => setState(() { _heatMethod = _heatLateMethod; _heat = _HeatState.logged; widget.appState.resolveEvent(); }),
+                    child: const Text('Log insemination'),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
       );
     }
     if (_heat == _HeatState.logged) {
       return _ActionCard(
+        isDark: isDark,
         bg: VanixColors.activeBg,
         border: VanixColors.greenDeep,
         priority: _Priority.p1,
@@ -555,7 +662,10 @@ class _EventsScreenState extends State<EventsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text('Insemination logged ✓ — 21-day watch started', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-              Text("Method: $_heatMethod${_heatTechCtrl.text.isNotEmpty ? ' · ${_heatTechCtrl.text}' : ''}. If no heat returns by 24 Jul, you'll get a pregnancy-check alert. If heat returns earlier, the cycle restarts.", style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+              Text(
+                "Method: $_heatMethod${_heatShowLateForm && _heatLateTimeCtrl.text.isNotEmpty ? ' · ${_heatLateTimeCtrl.text}' : ''}${(_heatShowLateForm ? _heatLateTechCtrl.text : _heatTechCtrl.text).isNotEmpty ? ' · ${_heatShowLateForm ? _heatLateTechCtrl.text : _heatTechCtrl.text}' : ''}. If no heat returns by 24 Jul, you'll get a pregnancy-check alert. If heat returns earlier, the cycle restarts.",
+                style: const TextStyle(fontSize: 12, color: VanixColors.textHint),
+              ),
             ],
           ),
         ),
@@ -582,6 +692,7 @@ class _EventsScreenState extends State<EventsScreen> {
     }
 
     return _ActionCard(
+      isDark: isDark,
       bg: VanixColors.warningBg,
       border: VanixColors.warning,
       priority: _Priority.p1,
@@ -645,12 +756,13 @@ class _EventsScreenState extends State<EventsScreen> {
     switch (_preg) {
       case _PregState.initial:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.warningBg,
           border: VanixColors.warning,
           priority: _Priority.p1,
           channel: 'App notification · Confirm with vet',
           title: 'Pregnancy check due — Mohini',
-          sub: '21 days since insemination and no heat detected. Call your vet to confirm the pregnancy.',
+          sub: '21 days since insemination and no heat detected — confirm if she appears pregnant.',
           meta: 'Sunrise Dairy · Belt 91 · inseminated 12 Jun',
           child: Padding(
             padding: const EdgeInsets.only(top: 12),
@@ -658,13 +770,14 @@ class _EventsScreenState extends State<EventsScreen> {
               children: [
                 Expanded(child: OutlinedButton(onPressed: () => setState(() { _preg = _PregState.failed; widget.appState.resolveEvent(); }), child: const Text('Not pregnant'))),
                 const SizedBox(width: 8),
-                Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() { _preg = _PregState.confirmed; widget.appState.resolveEvent(); }), child: const Text('Vet confirmed — pregnant'))),
+                Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() { _preg = _PregState.confirmed; widget.appState.resolveEvent(); }), child: const Text('Confirm — pregnant'))),
               ],
             ),
           ),
         );
       case _PregState.failed:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p1,
@@ -685,6 +798,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _PregState.confirmed:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
           priority: _Priority.p1,
@@ -708,18 +822,263 @@ class _EventsScreenState extends State<EventsScreen> {
 
   // ── P1: 9-month vet check / delivery confirmed — the farmer-tapped action
   // that moves the cow's status to CALVED -> MILKING ──
-  Widget _buildGestationCard(bool isDark) => _buildAckCard(
+  // ── P1: Gestation — 3/6/9-month vet checks -> call vet for delivery
+  // (vet picker) -> delivery confirmed w/ notes. Single evolving card, like
+  // Heat — only resolves (decrements badge) once, at final delivery confirm.
+  Widget _buildGestationCard(bool isDark) {
+    const meta = 'Green Valley Farm · Belt 52 · confirmed pregnant 4 Oct';
+    const channel = 'App notification · Confirm with vet';
+
+    if (_gestation == _GestationState.check3 || _gestation == _GestationState.check6) {
+      final is3 = _gestation == _GestationState.check3;
+      return _ActionCard(
         isDark: isDark,
-        state: _gestation,
-        onChange: (s) => setState(() { _gestation = s; widget.appState.resolveEvent(); }),
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
         priority: _Priority.p1,
-        channel: 'App notification · Confirm with vet',
-        title: '9-month vet check due — Lakshmi',
-        sub: 'Approaching her due date — schedule a vet check and confirm delivery once she calves.',
-        meta: 'Green Valley Farm · Belt 52 · confirmed pregnant 4 Oct',
-        buttonLabel: 'Delivery confirmed',
-        resolvedMessage: 'Lakshmi has moved to Calved / Milking — she now appears in the Milk Log.',
+        channel: channel,
+        title: is3 ? '3-month vet check due — Lakshmi' : '6-month vet check due — Lakshmi',
+        sub: 'Routine pregnancy vet check — confirm once done.',
+        meta: meta,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => setState(() => _gestation = is3 ? _GestationState.check6 : _GestationState.callVet),
+              child: const Text('Vet check completed'),
+            ),
+          ),
+        ),
       );
+    }
+    if (_gestation == _GestationState.callVet) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: channel,
+        title: '9-month check — call your vet for delivery',
+        sub: 'Approaching her due date — call a vet to be on hand for delivery.',
+        meta: meta,
+        child: _vetPicker((vetName) => setState(() { _gestationVetName = vetName; _gestation = _GestationState.deliveryForm; })),
+      );
+    }
+    if (_gestation == _GestationState.deliveryForm) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: channel,
+        title: 'Vet on the way — confirm once delivered',
+        sub: '$_gestationVetName has been called. Confirm once Lakshmi has delivered.',
+        meta: meta,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(controller: _gestationNotesCtrl, maxLines: 3, decoration: const InputDecoration(hintText: 'Delivery notes (optional)')),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => setState(() {
+                    _gestation = _GestationState.delivered;
+                    widget.appState.resolveEvent();
+                    _milkingNotifShown = true;
+                  }),
+                  child: const Text('Delivery confirmed'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    // delivered
+    return _ActionCard(
+      isDark: isDark,
+      bg: VanixColors.activeBg,
+      border: VanixColors.greenDeep,
+      priority: _Priority.p1,
+      channel: channel,
+      title: 'Delivery confirmed ✓',
+      sub: 'Lakshmi has moved to Calved. She\'ll appear in the Milk Log once you add her from the new lactation notification.',
+      meta: meta,
+      child: const SizedBox.shrink(),
+    );
+  }
+
+  // ── P1: Milking notification — fires once, right after delivery is
+  // confirmed. DEMO NOTE: "Remind me later" uses a compressed 24-simulated-
+  // hour timer that flips back to pending without touching the badge — only
+  // "Yes, add" resolves it. ──
+  Widget _buildMilkingNotifCard(bool isDark) {
+    const meta = 'Green Valley Farm · Belt 52';
+    if (_milkingNotif == _MilkingNotifState.reminded) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: 'App notification · Add to Milk Log',
+        title: 'Lakshmi is now in her lactation period (250 days)',
+        sub: 'Add her to the milking list?',
+        meta: meta,
+        child: const Padding(padding: EdgeInsets.only(top: 12), child: Text("We'll remind you in 24 hours.", style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      );
+    }
+    if (_milkingNotif == _MilkingNotifState.added) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.activeBg,
+        border: VanixColors.greenDeep,
+        priority: _Priority.p1,
+        channel: 'App notification · Add to Milk Log',
+        title: 'Lakshmi is now in her lactation period (250 days)',
+        sub: 'Add her to the milking list?',
+        meta: meta,
+        child: const Padding(
+          padding: EdgeInsets.only(top: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Added to Milk Log ✓', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+              Text('Lakshmi now appears in Milk Log entries.', style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
+            ],
+          ),
+        ),
+      );
+    }
+    return _ActionCard(
+      isDark: isDark,
+      bg: VanixColors.warningBg,
+      border: VanixColors.warning,
+      priority: _Priority.p1,
+      channel: 'App notification · Add to Milk Log',
+      title: 'Lakshmi is now in her lactation period (250 days)',
+      sub: 'Add her to the milking list?',
+      meta: meta,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () {
+                  setState(() => _milkingNotif = _MilkingNotifState.reminded);
+                  _milkingRemindTimer?.cancel();
+                  _milkingRemindTimer = Timer(const Duration(seconds: 24), () {
+                    if (mounted) setState(() => _milkingNotif = _MilkingNotifState.pending);
+                  });
+                },
+                child: const Text('Remind me later'),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              flex: 2,
+              child: ElevatedButton(
+                onPressed: () {
+                  _milkingRemindTimer?.cancel();
+                  setState(() { _milkingNotif = _MilkingNotifState.added; widget.appState.resolveEvent(); });
+                },
+                child: const Text('Yes, add'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ── P1: End-of-lactation check-in — reached via the walkthrough's
+  // skip-ahead. DEMO NOTE: "Still milking" loops on a compressed 10-
+  // simulated-day timer without touching the badge — only "Entered resting
+  // period" resolves it. ──
+  Widget _buildLactationCheckCard(bool isDark) {
+    const meta = 'Green Valley Farm · Belt 52';
+    const title = 'Lactation period ending — Lakshmi';
+    const sub = 'Is Lakshmi still milking, or has she entered her resting period?';
+    if (_lactationCheck == _LactationCheckState.stillMilking) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: 'App notification · Confirm status',
+        title: title,
+        sub: sub,
+        meta: meta,
+        child: const Padding(padding: EdgeInsets.only(top: 12), child: Text("Got it — we'll check again in 10 days.", style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      );
+    }
+    if (_lactationCheck == _LactationCheckState.resting) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.activeBg,
+        border: VanixColors.greenDeep,
+        priority: _Priority.p1,
+        channel: 'App notification · Confirm status',
+        title: title,
+        sub: sub,
+        meta: meta,
+        child: const Padding(
+          padding: EdgeInsets.only(top: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Resting period started', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+              Text("60-day cool-down begins. She won't appear in Milk Log entries during this time.", style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
+            ],
+          ),
+        ),
+      );
+    }
+    return _ActionCard(
+      isDark: isDark,
+      bg: VanixColors.warningBg,
+      border: VanixColors.warning,
+      priority: _Priority.p1,
+      channel: 'App notification · Confirm status',
+      title: title,
+      sub: sub,
+      meta: meta,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () {
+                  setState(() => _lactationCheck = _LactationCheckState.stillMilking);
+                  _lactationRecheckTimer?.cancel();
+                  _lactationRecheckTimer = Timer(const Duration(seconds: 10), () {
+                    if (mounted) setState(() => _lactationCheck = _LactationCheckState.pending);
+                  });
+                },
+                child: const Text('Still milking'),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              flex: 2,
+              child: ElevatedButton(
+                onPressed: () {
+                  _lactationRecheckTimer?.cancel();
+                  setState(() { _lactationCheck = _LactationCheckState.resting; widget.appState.resolveEvent(); });
+                },
+                child: const Text('Entered resting period'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   // shared: P2 diagnostic card builder (Mastitis / Lameness / Ketosis)
   Widget _buildInspectCard({
@@ -734,6 +1093,7 @@ class _EventsScreenState extends State<EventsScreen> {
     switch (state) {
       case _InspectState.initial:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           leftAccentColor: VanixColors.warning,
@@ -759,6 +1119,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _InspectState.falseAlarm:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p2,
@@ -770,6 +1131,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _InspectState.flagged:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p2,
@@ -841,6 +1203,7 @@ class _EventsScreenState extends State<EventsScreen> {
     final border = isP1 ? VanixColors.warning : VanixColors.border;
     if (state == _AckState.initial) {
       return _ActionCard(
+        isDark: isDark,
         bg: bg,
         border: border,
         leftAccentColor: isP2 ? VanixColors.warning : null,
@@ -857,6 +1220,7 @@ class _EventsScreenState extends State<EventsScreen> {
       );
     }
     return _ActionCard(
+      isDark: isDark,
       bg: VanixColors.bgCard,
       border: VanixColors.border,
       priority: priority,
@@ -1066,6 +1430,7 @@ class _ActionCard extends StatelessWidget {
   final String? meta;
   final Widget child;
   final bool escalated;
+  final bool isDark;
 
   const _ActionCard({
     required this.bg,
@@ -1079,15 +1444,17 @@ class _ActionCard extends StatelessWidget {
     this.meta,
     required this.child,
     this.escalated = false,
+    this.isDark = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final accentColor = leftAccentColor ?? border;
+    final titleColor = isDark ? Colors.white : VanixColors.textPrimary;
     final card = Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: bg,
+        color: isDark ? const Color(0xFF1C1C1C) : bg,
         border: Border(
           top: BorderSide(color: border),
           bottom: BorderSide(color: border),
@@ -1106,7 +1473,7 @@ class _ActionCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: VanixColors.textPrimary)),
+                    Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: titleColor)),
                     Padding(padding: const EdgeInsets.only(top: 3), child: Text(sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint, height: 1.5))),
                     if (meta != null) Padding(padding: const EdgeInsets.only(top: 6), child: Text(meta!, style: const TextStyle(fontSize: 11, color: VanixColors.textHint))),
                   ],
@@ -1241,16 +1608,22 @@ class _HistoryRow extends StatelessWidget {
 /// consumes any of the farmer's actual pending alerts.
 class _FullCycleSheet extends StatefulWidget {
   final bool isDark;
-  const _FullCycleSheet({required this.isDark});
+  /// 'yes' / 'no' if the farmer already resolved the heat question on the
+  /// full-screen alert; null if they dismissed it (close/"View in app").
+  final String? heatPreDecision;
+  /// True when entered via dismiss-without-resolving — the heat step renders
+  /// a trimmed "restricted" detail view until the farmer taps Yes/No here.
+  final bool restricted;
+  const _FullCycleSheet({required this.isDark, this.heatPreDecision, this.restricted = false});
 
   @override
   State<_FullCycleSheet> createState() => _FullCycleSheetState();
 }
 
-enum _SeqStep { heat, watch21, preg, gestation9, delivery, milking, dry, interrupted, complete }
+enum _SeqStep { heat, watch21, preg, gestation9, delivery, milking, lactationCheck, dry, interrupted, complete }
 
 class _FullCycleSheetState extends State<_FullCycleSheet> {
-  static const int totalSteps = 7;
+  static const int totalSteps = 8;
   _SeqStep _step = _SeqStep.heat;
 
   DateTime? _heatStartedAt;
@@ -1262,12 +1635,17 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
   @override
   void initState() {
     super.initState();
-    _startHeat();
+    if (widget.heatPreDecision == 'no') {
+      _interruptedMessage = 'Cycle interrupted — heat not confirmed. Closing walkthrough.';
+      _step = _SeqStep.interrupted;
+    } else {
+      _startHeat();
+    }
   }
 
   void _startHeat() {
     _heatStartedAt = DateTime.now();
-    _heatConfirmed = false;
+    _heatConfirmed = widget.heatPreDecision == 'yes';
     _heatMethod = kInseminationMethods.first;
     _heatTimer?.cancel();
     _heatTimer = Timer.periodic(const Duration(milliseconds: 200), (_) {
@@ -1296,10 +1674,11 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
       case _SeqStep.gestation9: return 4;
       case _SeqStep.delivery: return 5;
       case _SeqStep.milking: return 6;
-      case _SeqStep.dry: return 7;
+      case _SeqStep.lactationCheck: return 7;
+      case _SeqStep.dry: return 8;
       case _SeqStep.interrupted:
       case _SeqStep.complete:
-        return 7;
+        return totalSteps;
     }
   }
 
@@ -1365,13 +1744,15 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
         return _interstitial(
           textColor, hintColor,
           title: '9-month gestation',
-          text: 'Carrying to term for roughly 9 months.',
+          text: 'Carrying to term for roughly 9 months, with vet checks at 3, 6, and 9 months.',
           onContinue: () => _goTo(_SeqStep.delivery),
         );
       case _SeqStep.delivery:
         return _deliveryStepBody(textColor, hintColor);
       case _SeqStep.milking:
         return _milkingStepBody(textColor, hintColor);
+      case _SeqStep.lactationCheck:
+        return _lactationCheckStepBody(textColor, hintColor);
       case _SeqStep.dry:
         return _dryStepBody(textColor, hintColor);
       case _SeqStep.interrupted:
@@ -1425,19 +1806,24 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
       color = VanixColors.danger;
     }
 
+    final restrictedNow = widget.restricted && !_heatConfirmed;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Heat cycle detected — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
-        Padding(padding: const EdgeInsets.only(top: 3), child: Text('Temperature swinging up and down with high movement since 04:30 this morning.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
-        const Padding(padding: EdgeInsets.only(top: 10), child: Text('Is Gauri in heat?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
-        const SizedBox(height: 8),
-        Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: color)),
-        const SizedBox(height: 6),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(3),
-          child: LinearProgressIndicator(value: pct.clamp(0, 1), minHeight: 6, backgroundColor: Colors.black.withOpacity(0.10), valueColor: AlwaysStoppedAnimation(color)),
-        ),
+        if (restrictedNow)
+          const Padding(padding: EdgeInsets.only(top: 10), child: Text('Is Gauri in heat?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)))
+        else ...[
+          Padding(padding: const EdgeInsets.only(top: 3), child: Text('Temperature swinging up and down with high movement since 04:30 this morning.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+          const Padding(padding: EdgeInsets.only(top: 10), child: Text('Is Gauri in heat?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
+          const SizedBox(height: 8),
+          Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: color)),
+          const SizedBox(height: 6),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(3),
+            child: LinearProgressIndicator(value: pct.clamp(0, 1), minHeight: 6, backgroundColor: Colors.black.withOpacity(0.10), valueColor: AlwaysStoppedAnimation(color)),
+          ),
+        ],
         if (!_heatConfirmed) ...[
           const SizedBox(height: 10),
           Row(
@@ -1484,7 +1870,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Pregnancy check due — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
-        Padding(padding: const EdgeInsets.only(top: 3), child: Text('21 days since insemination and no heat detected. Call your vet to confirm the pregnancy.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('21 days since insemination and no heat detected — confirm if she appears pregnant.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
         const SizedBox(height: 12),
         Row(
           children: [
@@ -1498,7 +1884,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
               ),
             ),
             const SizedBox(width: 8),
-            Expanded(flex: 2, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.gestation9), child: const Text('Vet confirmed — pregnant'))),
+            Expanded(flex: 2, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.gestation9), child: const Text('Confirm — pregnant'))),
           ],
         ),
       ],
@@ -1517,15 +1903,71 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
     );
   }
 
+  String _milkStepChoice = 'pending'; // pending | reminded | added
+  String _lactStepChoice = 'pending'; // pending | still | resting
+
   Widget _milkingStepBody(Color textColor, Color hintColor) {
+    if (_milkStepChoice == 'reminded') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("We'll remind you in 24 hours.", style: TextStyle(fontSize: 13, color: hintColor)),
+          const SizedBox(height: 14),
+          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.lactationCheck), child: const Text('Continue'))),
+        ],
+      );
+    }
+    if (_milkStepChoice == 'added') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Added to Milk Log ✓', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+          const SizedBox(height: 14),
+          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.lactationCheck), child: const Text('Skip ahead (250 days)'))),
+        ],
+      );
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Milking period — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
-        Padding(padding: const EdgeInsets.only(top: 3), child: Text('305-day lactation period begins — Gauri is now producing milk and appears in the Milk Log.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
-        const Padding(padding: EdgeInsets.only(top: 10), child: Text('Day 1 of 305', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk))),
+        Text('Gauri is now in her lactation period (250 days)', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('Add her to the milking list?', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
         const SizedBox(height: 12),
-        SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () => _goTo(_SeqStep.dry), child: const Text('Skip ahead'))),
+        Row(
+          children: [
+            Expanded(child: OutlinedButton(onPressed: () => setState(() => _milkStepChoice = 'reminded'), child: const Text('Remind me later'))),
+            const SizedBox(width: 8),
+            Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _milkStepChoice = 'added'), child: const Text('Yes, add'))),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _lactationCheckStepBody(Color textColor, Color hintColor) {
+    if (_lactStepChoice == 'still') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Got it — we'll check again in 10 days.", style: TextStyle(fontSize: 13, color: hintColor)),
+          const SizedBox(height: 14),
+          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => setState(() => _lactStepChoice = 'pending'), child: const Text('Skip ahead (10 days)'))),
+        ],
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Lactation period ending — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('Is Gauri still milking, or has she entered her resting period?', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(child: OutlinedButton(onPressed: () => setState(() => _lactStepChoice = 'still'), child: const Text('Still milking'))),
+            const SizedBox(width: 8),
+            Expanded(flex: 2, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.dry), child: const Text('Entered resting period'))),
+          ],
+        ),
       ],
     );
   }
