@@ -125,7 +125,7 @@ class _EventsScreenState extends State<EventsScreen> {
       final ticking = _heat == _HeatState.initial || _heat == _HeatState.active;
       if (!ticking) return;
       if (_heatElapsedSimHours >= 24) {
-        setState(() { _heat = _HeatState.expired; widget.appState.resolveEvent(); });
+        setState(() => _heat = _HeatState.expired);
         _heatTimer?.cancel();
         return;
       }
