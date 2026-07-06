@@ -670,6 +670,20 @@ class _EventsScreenState extends State<EventsScreen> {
     }
   }
 
+  // ── P1: 9-month vet check / delivery confirmed — the farmer-tapped action
+  // that moves the cow's status to CALVED -> MILKING ──
+  Widget _buildGestationCard(bool isDark) => _buildAckCard(
+        isDark: isDark,
+        state: _gestation,
+        onChange: (s) => setState(() { _gestation = s; widget.appState.resolveEvent(); }),
+        priority: _Priority.p1,
+        title: '9-month vet check due — Lakshmi',
+        sub: 'Approaching her due date — schedule a vet check and confirm delivery once she calves.',
+        meta: 'Green Valley Farm · Belt 52 · confirmed pregnant 4 Oct',
+        buttonLabel: 'Delivery confirmed',
+        resolvedMessage: 'Lakshmi has moved to Calved / Milking — she now appears in the Milk Log.',
+      );
+
   // shared: P2 diagnostic card builder (Mastitis / Lameness / Ketosis)
   Widget _buildInspectCard({
     required bool isDark,
