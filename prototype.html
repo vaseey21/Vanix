@@ -133,10 +133,11 @@
     /* status banners keep their light tint colours in dark mode — no override */
     /* ── Events priority chips (P0-P3) — reuse existing tokens only ── */
     .ev-chip { flex-shrink:0; border-radius:10px; padding:3px 8px; font-size:10px; font-weight:600; white-space:nowrap; }
-    .ev-chip-p0 { background:#8B2800; color:#FFFFFF; }
     .ev-chip-p1 { background:#8A5A00; color:#FFFFFF; }
     .ev-chip-p2 { background:var(--warnbg); border:1px solid var(--warning); color:#8A5A00; }
     .ev-chip-p3 { background:var(--bgcard); border:1px solid var(--border); color:var(--text2); }
+    /* P0 cards use a single corner badge instead of a chip — card tint already signals "critical" */
+    .ev-corner-badge { position:absolute; top:-6px; right:-6px; width:20px; height:20px; border-radius:50%; background:#8B2800; color:#FFFFFF; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 1px 3px rgba(0,0,0,0.25); }
     .ev-channel { font-size:11px; color:var(--text2); margin:2px 0 0; }
     .ev-card-p2 { background:var(--bgcard); border:1px solid var(--border); border-left:2px solid var(--warning); }
     .ev-card-p3 { background:var(--bgcard); border:1px solid var(--border); }
@@ -911,18 +912,15 @@
               <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs action</p>
 
               <!-- 1. Suspected fever -->
-              <div class="ev-card" id="ev-fever" style="background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
+              <div class="ev-card" id="ev-fever" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
+                <span class="ev-corner-badge">!</span>
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Suspected fever — Kajri</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.</p>
                     <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 63 · since 30 Jun</p>
                   </div>
-                  <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-                    <span class="en ev-chip ev-chip-p0">P0 · CRITICAL</span>
-                    <span class="en ev-esc" style="flex-shrink:0; background:#8B2800; color:#FFFFFF; border-radius:10px; padding:3px 8px; font-size:10px; font-weight:600;">ESCALATED</span>
                   </div>
-                </div>
                 <p class="en ev-channel">Push + SMS · Immediate vet visit</p>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Kajri look unwell to you?</p>
@@ -1004,15 +1002,15 @@
 
 
               <!-- 4. Abortion / pregnancy loss -->
-              <div class="ev-card" id="ev-abort" style="background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+              <div class="ev-card" id="ev-abort" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <span class="ev-corner-badge">!</span>
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible pregnancy loss — Mohini</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Sudden drop in rumination with a sustained temperature rise over the last 3 hours.</p>
                     <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Sunrise Dairy · Belt 91 · Day 48 of pregnancy</p>
                   </div>
-                  <span class="en ev-chip ev-chip-p0">P0 · CRITICAL</span>
-                </div>
+                  </div>
                 <p class="en ev-channel">Push + SMS · Immediate vet visit</p>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Mohini show these signs?</p>
@@ -1024,15 +1022,15 @@
               </div>
 
               <!-- 5. Fresh cow / post-calving monitor -->
-              <div class="ev-card" id="ev-freshcow" style="background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+              <div class="ev-card" id="ev-freshcow" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+                <span class="ev-corner-badge">!</span>
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Fresh cow health dip — Ganga</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.</p>
                     <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 27 · Day 6 post-calving</p>
                   </div>
-                  <span class="en ev-chip ev-chip-p0">P0 · CRITICAL</span>
-                </div>
+                  </div>
                 <p class="en ev-channel">Push + SMS · Immediate vet visit</p>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Ganga seem off to you?</p>
@@ -2032,7 +2030,7 @@
         var body = card.querySelector('.ev-body');
         card.querySelector('.ev-no').addEventListener('click', function() {
           evSetTint(card, 'var(--bgcard)', 'var(--border)');
-          card.querySelector('.ev-esc').style.display = 'none';
+          card.querySelector('.ev-corner-badge').style.display = 'none';
           body.innerHTML = '<p style="font-size:13px; color:var(--text2); margin:12px 0 0;">Marked as false alarm — monitoring continues. The owner has been notified.</p>';
           evResolve();
         });
@@ -2040,7 +2038,7 @@
           body.innerHTML = vetPickerHtml('fever');
           wireVetPicker('fever', function(vetName) {
             evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
-            card.querySelector('.ev-esc').style.display = 'none';
+            card.querySelector('.ev-corner-badge').style.display = 'none';
             body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Vet appointment requested ✓</p>' +
               '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Sent to ' + vetName + ' — Kajri · Fever · Green Valley Farm. You\'ll be notified when the vet confirms.</p>';
             evResolve();
@@ -2157,7 +2155,7 @@
         body.innerHTML = vetPickerHtml(card.id);
         wireVetPicker(card.id, function(vetName) {
           evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
-          var esc = card.querySelector('.ev-esc'); if (esc) esc.style.display = 'none';
+          var esc = card.querySelector('.ev-corner-badge'); if (esc) esc.style.display = 'none';
           body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Vet appointment requested ✓</p>' +
             '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Sent to ' + vetName + ' — ' + cowLabel + ' · ' + farmLabel + '. You\'ll be notified when the vet confirms.</p>';
           evResolve();
@@ -2167,7 +2165,7 @@
       // reusable: diagnostic No -> false alarm (all cards)
       function evFalseAlarm(card, body) {
         evSetTint(card, 'var(--bgcard)', 'var(--border)');
-        var esc = card.querySelector('.ev-esc'); if (esc) esc.style.display = 'none';
+        var esc = card.querySelector('.ev-corner-badge'); if (esc) esc.style.display = 'none';
         body.innerHTML = '<p style="font-size:13px; color:var(--text2); margin:12px 0 0;">Marked as false alarm — monitoring continues.</p>';
         evResolve();
       }
