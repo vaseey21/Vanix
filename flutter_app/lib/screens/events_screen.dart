@@ -1722,8 +1722,10 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
   DateTime? _heatStartedAt;
   bool _heatConfirmed = false;
   String _heatMethod = kInseminationMethods.first;
+  String _heatFormStage = 'idle'; // idle | confirm | form
   Timer? _heatTimer;
-  static const double _simHoursPerSecond = 1;
+  // Walkthrough demo speed — 24h plays out in 48s.
+  static const double _simHoursPerSecond = 0.5;
 
   @override
   void initState() {
