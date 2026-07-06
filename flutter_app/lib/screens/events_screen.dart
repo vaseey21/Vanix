@@ -1915,10 +1915,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
           const SizedBox(height: 8),
           Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: color)),
           const SizedBox(height: 6),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(3),
-            child: LinearProgressIndicator(value: pct.clamp(0, 1), minHeight: 6, backgroundColor: Colors.black.withOpacity(0.10), valueColor: AlwaysStoppedAnimation(color)),
-          ),
+          _HeatWindowBar(simHours: h, fillColor: color),
         ],
         if (!_heatConfirmed) ...[
           const SizedBox(height: 10),
@@ -1947,15 +1944,33 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
               ),
             ],
           ),
-        ] else if (h >= 6) ...[
+        ] else if (_heatFormStage == 'idle') ...[
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => setState(() => _heatFormStage = (h >= 6 && h < 18) ? 'form' : 'confirm'),
+              child: const Text('Start insemination'),
+            ),
+          ),
+        ] else if (_heatFormStage == 'confirm') ...[
+          const SizedBox(height: 10),
+          const Text("You're outside the optimal window (best results 6–18h after detection). Continue anyway?", style: TextStyle(fontSize: 12, height: 1.5)),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(child: OutlinedButton(onPressed: () => setState(() => _heatFormStage = 'idle'), child: const Text('Cancel'))),
+              const SizedBox(width: 8),
+              Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatFormStage = 'form'), child: const Text('Continue'))),
+            ],
+          ),
+        ] else ...[
           const SizedBox(height: 10),
           const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
           const SizedBox(height: 6),
           _inseminationMethodGrid(_heatMethod, (m) => setState(() => _heatMethod = m)),
           const SizedBox(height: 8),
           SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.watch21), child: const Text('Log insemination'))),
-        ] else ...[
-          Padding(padding: const EdgeInsets.only(top: 8), child: Text('Acknowledged — waiting for the optimal window to open.', style: TextStyle(fontSize: 12, color: hintColor))),
         ],
       ],
     );
