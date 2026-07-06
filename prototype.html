@@ -1262,6 +1262,27 @@
             </div><!-- /inner padding -->
             </div><!-- /scroll -->
 
+          <!-- Full-screen "push notification" heat alert — View full cycle entry point -->
+          <div id="ev-alert-fullscreen" style="display:none; position:absolute; inset:0; z-index:30; background:linear-gradient(180deg, var(--dark1) 0%, #1C1C1C 100%); flex-direction:column; padding:20px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <button id="ev-fs-close" style="width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.14); border:none; color:#FFFFFF; font-size:16px; line-height:1;">✕</button>
+              <span class="en" style="font-size:13px; font-weight:500; color:rgba(255,255,255,0.85);">Green Valley Farm · Belt 41</span>
+            </div>
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 12px;">
+              <div style="width:104px; height:104px; border-radius:50%; background:var(--warnbg); border:2px solid var(--warning); display:flex; align-items:center; justify-content:center; font-size:44px;">🐄</div>
+              <p style="font-size:19px; font-weight:600; color:#FFFFFF; margin:18px 0 0;">Heat cycle detected — Gauri</p>
+              <p style="font-size:13px; color:rgba(255,255,255,0.75); margin:10px 0 0; line-height:1.6;">🌡 Temperature swinging up and down since 04:30</p>
+              <p style="font-size:13px; color:rgba(255,255,255,0.75); margin:4px 0 0; line-height:1.6;">🏃 Movement well above her baseline</p>
+            </div>
+            <div style="padding-bottom:8px;">
+              <button id="ev-fs-no" style="width:100%; min-height:48px; margin-bottom:10px; background:transparent; border:1px solid rgba(255,255,255,0.4); border-radius:24px; font-size:14px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">No</button>
+              <button id="ev-fs-yes" style="width:100%; min-height:48px; background:#8A5A00; border:none; border-radius:24px; font-size:14px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, in heat</button>
+              <div style="text-align:center; margin-top:14px;">
+                <button id="ev-fs-viewinapp" style="background:transparent; border:none; padding:0; font-size:13px; font-weight:600; color:var(--greendeep); font-family:var(--font-hi);">View in app instead ›</button>
+              </div>
+            </div>
+          </div>
+
           <!-- FULL-CYCLE WALKTHROUGH — self-contained demo, does not touch live evOpen/badges -->
           <div id="ev-seq-scrim" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:20;"></div>
           <div id="ev-seq-sheet" style="position:absolute; left:0; right:0; bottom:0; max-height:78%; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 20px 24px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:21; box-shadow:0 -8px 32px rgba(0,0,0,0.22); overflow-y:auto;">
