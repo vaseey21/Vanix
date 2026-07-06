@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class AppState extends ChangeNotifier {
   bool _isDark = false;
   String _languageCode = 'hi'; // default locale per CLAUDE.md
-  int _openEventsCount = 11;
+  int _openEventsCount = 12;
 
   bool get isDark => _isDark;
   String get languageCode => _languageCode;
