@@ -958,7 +958,36 @@ class _EventsScreenState extends State<EventsScreen> {
         title: '9-month check — call your vet for delivery',
         sub: 'Approaching her due date — call a vet to be on hand for delivery.',
         meta: meta,
-        child: _vetPicker((vetName) => setState(() { _gestationVetName = vetName; _gestation = _GestationState.deliveryForm; })),
+        child: _vetPicker((vetName) => setState(() { _gestationVetName = vetName; _gestation = _GestationState.deliveryAsk; })),
+      );
+    }
+    if (_gestation == _GestationState.deliveryAsk) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: channel,
+        title: 'Vet on the way — Lakshmi',
+        sub: '$_gestationVetName has been called for the delivery.',
+        meta: meta,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Was the delivery successful?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(child: OutlinedButton(onPressed: () => setState(() { _gestation = _GestationState.deliveryFailed; widget.appState.resolveEvent(); }), child: const Text('No'))),
+                  const SizedBox(width: 8),
+                  Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _gestation = _GestationState.deliveryForm), child: const Text('Yes, successful'))),
+                ],
+              ),
+            ],
+          ),
+        ),
       );
     }
     if (_gestation == _GestationState.deliveryForm) {
@@ -968,8 +997,8 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.warning,
         priority: _Priority.p1,
         channel: channel,
-        title: 'Vet on the way — confirm once delivered',
-        sub: '$_gestationVetName has been called. Confirm once Lakshmi has delivered.',
+        title: 'Delivery successful — log it',
+        sub: 'Add any notes from $_gestationVetName before logging the delivery.',
         meta: meta,
         child: Padding(
           padding: const EdgeInsets.only(top: 10),
@@ -986,12 +1015,25 @@ class _EventsScreenState extends State<EventsScreen> {
                     widget.appState.resolveEvent();
                     _milkingNotifShown = true;
                   }),
-                  child: const Text('Delivery confirmed'),
+                  child: const Text('Log delivery'),
                 ),
               ),
             ],
           ),
         ),
+      );
+    }
+    if (_gestation == _GestationState.deliveryFailed) {
+      return _ActionCard(
+        isDark: isDark,
+        bg: VanixColors.dangerBg,
+        border: VanixColors.danger,
+        priority: _Priority.p1,
+        channel: channel,
+        title: 'Delivery unsuccessful — recorded',
+        sub: '$_gestationVetName has been notified for an urgent check. Lakshmi will not enter the milking pool.',
+        meta: meta,
+        child: const SizedBox.shrink(),
       );
     }
     // delivered
@@ -1001,7 +1043,7 @@ class _EventsScreenState extends State<EventsScreen> {
       border: VanixColors.greenDeep,
       priority: _Priority.p1,
       channel: channel,
-      title: 'Delivery confirmed ✓',
+      title: 'Delivery logged ✓',
       sub: 'Lakshmi has moved to Calved. She\'ll appear in the Milk Log once you add her from the new lactation notification.',
       meta: meta,
       child: const SizedBox.shrink(),
