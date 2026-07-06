@@ -32,7 +32,7 @@ You'll need to add the actual font files before it runs cleanly (see
 | Milk Log — hero, banners, date-grouped cards, filter sheet, FAB | ✅ Ported — `lib/screens/milk_log_screen.dart` |
 | Add / edit milk entry — duplicate guard, session warning | ✅ Ported — `lib/screens/milk_add_entry_screen.dart` |
 | Milk summary / analytics — breed filter, trend chart, top cows, yield-by-breed | ✅ Ported — `lib/screens/milk_summary_screen.dart` |
-| Events — All/Needs-action/Reminders tabs, 11-card P0-P3 alert taxonomy (Cattle Health Logic v3.1), reminders, history | ✅ Ported — `lib/screens/events_screen.dart` |
+| Events — All/Needs-action/Reminders tabs, 12-card P0-P3 alert taxonomy (Cattle Health Logic v3.1), reminders, history | ✅ Ported — `lib/screens/events_screen.dart` |
 | Events badge/dot sync across every nav | ✅ Ported — `AppState.openEventsCount` + `resolveEvent()` |
 | Dashboard (Home) | 🚧 Placeholder — content not designed yet in the HTML either |
 | Farms list, Cow profile, Account, Farmer persona | ❌ Not designed in HTML yet — nothing to port |
@@ -96,9 +96,12 @@ match `vanix_design_system.html` exactly (source of truth per `CLAUDE.md`).
 - Milk summary's clip-path "hero grows into the page" expand animation from
   the HTML is a plain page push here — the visual destination is faithful,
   the transition choreography is simplified.
-- Events' 21-day pregnancy watch, 18h insemination countdown, and 6h
-  auto-confirm are all static/mocked — no real timers wired to backend data
-  yet (matches the HTML, which also mocks these).
+- The Heat card's 24h pre/optimal/suboptimal countdown is a *real* ticking
+  `Timer.periodic`, but compressed 24h → 24 real seconds for demo purposes
+  (see the comment above `_simHoursPerSecond` in `events_screen.dart`) —
+  swap in the real backend `peak_timestamp` before shipping. The 21-day
+  pregnancy watch and 9-month gestation timer are still static/mocked text,
+  not real timers.
 - No `providers`/persistence: dark mode, language, and all app data reset
   on hot restart (no `shared_preferences` wired up).
 - This was hand-written without a local Flutter SDK to compile-check —

@@ -968,7 +968,7 @@
             <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
               <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
                 <h2 style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Events</h2>
-                <span id="ev-count-pill" class="en" style="background:var(--dangerbg); border:1px solid var(--danger); border-radius:14px; padding:4px 12px; font-size:12px; font-weight:600; color:#8B2800;">11 need action</span>
+                <span id="ev-count-pill" class="en" style="background:var(--dangerbg); border:1px solid var(--danger); border-radius:14px; padding:4px 12px; font-size:12px; font-weight:600; color:#8B2800;">12 need action</span>
               </div>
               <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Health, breeding and reminders across all your farms</p>
             </div>
@@ -1013,7 +1013,7 @@
                 <div style="min-width:0;">
                   <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Heat cycle detected — Gauri</p>
                   <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Temperature swinging up and down with high movement since 04:30 this morning.</p>
-                  <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 41 · auto-confirms in 4h</p>
+                  <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 41 · detected 04:30</p>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
                   <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
@@ -1021,9 +1021,21 @@
                 </div>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Is Gauri in heat?</p>
-                  <div style="display:flex; gap:8px; margin-top:10px;">
+                  <p id="ev-heat-phase" class="en" style="font-size:12px; font-weight:600; color:var(--text1); margin:8px 0 0;"></p>
+                  <div id="ev-heat-bar-wrap" style="height:6px; background:rgba(0,0,0,0.10); border-radius:3px; margin-top:6px; overflow:hidden;"><div id="ev-heat-bar" style="width:0%; height:100%; background:#8A5A00; border-radius:3px; transition:width 0.3s linear, background 0.3s;"></div></div>
+                  <p id="ev-heat-note" style="font-size:12px; color:var(--text2); margin:6px 0 0;">Best results within 6-18h of detection. The window opens automatically — no need to refresh.</p>
+                  <div id="ev-heat-confirm" style="display:flex; gap:8px; margin-top:10px;">
                     <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No</button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:#8A5A00; border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, in heat</button>
+                  </div>
+                  <div id="ev-heat-form" style="display:none; margin-top:10px;">
+                    <p style="font-size:12px; font-weight:600; color:var(--text1); margin:0 0 6px;">Log insemination</p>
+                    <div style="display:flex; gap:8px;">
+                      <button class="ev-method on" data-method="AI" style="flex:1; min-height:40px; border-radius:20px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi);">AI</button>
+                      <button class="ev-method" data-method="Natural" style="flex:1; min-height:40px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Natural</button>
+                    </div>
+                    <input type="text" id="ev-heat-tech" placeholder="Technician / vet name (optional)" style="width:100%; min-height:44px; margin-top:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi);">
+                    <button id="ev-insem-log" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log insemination</button>
                   </div>
                 </div>
               </div>
@@ -1044,6 +1056,22 @@
                     <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Not pregnant</button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Vet confirmed — pregnant</button>
                   </div>
+                </div>
+              </div>
+
+              <!-- 3b. 9-month vet check / delivery confirmed -->
+              <div class="ev-card" id="ev-gestation" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
+                <div style="min-width:0;">
+                  <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">9-month vet check due — Lakshmi</p>
+                  <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — schedule a vet check and confirm delivery once she calves.</p>
+                  <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 52 · confirmed pregnant 4 Oct</p>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+                  <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
+                  <span class="en ev-channel" style="margin:0;">App notification · Confirm with vet</span>
+                </div>
+                <div class="ev-body">
+                  <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Delivery confirmed</button>
                 </div>
               </div>
 
@@ -1998,7 +2026,7 @@
       var eventsPage = document.getElementById('page-events');
       var eventsNav = document.getElementById('events-nav');
 
-      var evOpen = 11;
+      var evOpen = 12;
       function evUpdateBadges() {
         document.querySelectorAll('.ev-badge').forEach(function(b) {
           b.textContent = evOpen;
@@ -2064,27 +2092,90 @@
         });
       })();
 
-      // 2. Heat: No → dismissed · Yes → 18h insemination window → log → 21-day watch
+      // 2. Heat: single evolving card. Detection starts a real 24h clock immediately —
+      // Yes/No is just the farmer's acknowledgement, it does not pause or reset the clock.
+      // DEMO NOTE: the 24 real hours are compressed into 24 real seconds (1s = 1 simulated
+      // hour) purely so a reviewer can watch the phase transitions live. Replace with the
+      // real backend peak_timestamp once wired up — see Block 7 of Cattle Health Logic v3.1.
       (function() {
         var card = document.getElementById('ev-heat');
-        var body = card.querySelector('.ev-body');
+        var phaseEl = document.getElementById('ev-heat-phase');
+        var barEl = document.getElementById('ev-heat-bar');
+        var noteEl = document.getElementById('ev-heat-note');
+        var confirmEl = document.getElementById('ev-heat-confirm');
+        var formEl = document.getElementById('ev-heat-form');
+        var method = 'AI';
+        var confirmed = false;
+        var resolved = false;
+        var startedAt = Date.now();
+        var SIM_HOURS_PER_SEC = 1; // demo speed — 24h cycle plays out in 24s
+
+        function elapsedSimHours() { return (Date.now() - startedAt) / 1000 * SIM_HOURS_PER_SEC; }
+
+        function render() {
+          if (resolved) return;
+          var h = elapsedSimHours();
+          if (h >= 24) {
+            resolved = true;
+            clearInterval(ticker);
+            evSetTint(card, 'var(--bgcard)', 'var(--border)');
+            phaseEl.textContent = '';
+            barEl.parentElement.style.display = 'none';
+            noteEl.textContent = 'Window closed — no insemination logged. Heat cycle monitoring resumes.';
+            confirmEl.style.display = 'none';
+            formEl.style.display = 'none';
+            evResolve();
+            return;
+          }
+          var pct, label, color;
+          if (h < 6) { pct = h / 6 * 100; label = 'Pre-insemination — window opens in ' + Math.ceil(6 - h) + 'h'; color = '#8A5A00'; }
+          else if (h < 18) { pct = (h - 6) / 12 * 100; label = 'Optimal window — ' + Math.ceil(18 - h) + 'h left'; color = 'var(--greenink)'; }
+          else { pct = (h - 18) / 6 * 100; label = 'Suboptimal window — act soon, ' + Math.ceil(24 - h) + 'h left'; color = 'var(--danger)'; }
+          phaseEl.textContent = label;
+          phaseEl.style.color = color;
+          barEl.style.width = Math.min(100, pct) + '%';
+          barEl.style.background = color;
+          if (confirmed && h >= 6) {
+            formEl.style.display = 'block';
+            noteEl.textContent = 'Enter the insemination details once done.';
+          }
+        }
+        var ticker = setInterval(render, 200);
+        render();
+
         card.querySelector('.ev-no').addEventListener('click', function() {
+          resolved = true;
+          clearInterval(ticker);
           evSetTint(card, 'var(--bgcard)', 'var(--border)');
-          body.innerHTML = '<p style="font-size:13px; color:var(--text2); margin:12px 0 0;">Marked as not in heat — monitoring continues.</p>';
+          card.querySelector('.ev-body').innerHTML = '<p style="font-size:13px; color:var(--text2); margin:12px 0 0;">Marked as not in heat — monitoring continues.</p>';
           evResolve();
         });
         card.querySelector('.ev-yes').addEventListener('click', function() {
-          body.innerHTML =
-            '<p style="font-size:13px; font-weight:600; color:var(--text1); margin:12px 0 0;">Optimal window — <span class="en">11h 30m</span> left</p>' +
-            '<div style="height:6px; background:rgba(0,0,0,0.10); border-radius:3px; margin-top:8px; overflow:hidden;"><div style="width:52%; height:100%; background:#8A5A00; border-radius:3px;"></div></div>' +
-            '<p style="font-size:12px; color:var(--text2); margin:6px 0 0;">T+6h to T+18h: peak fertility. Before T+6h the window hasn\'t opened yet; after T+18h fertility drops (late window). Log the insemination once done.</p>' +
-            '<button id="ev-insem-log" style="width:100%; min-height:44px; margin-top:10px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log insemination</button>';
-          document.getElementById('ev-insem-log').addEventListener('click', function() {
-            evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
-            body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Insemination logged ✓ — 21-day watch started</p>' +
-              '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">If no heat returns by 24 Jul, you\'ll get a pregnancy-check alert. If heat returns earlier, the cycle restarts.</p>';
-            evResolve();
+          confirmed = true;
+          confirmEl.style.display = 'none';
+          render();
+        });
+        card.querySelectorAll('.ev-method').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            method = btn.getAttribute('data-method');
+            card.querySelectorAll('.ev-method').forEach(function(b) {
+              var on = b === btn;
+              b.classList.toggle('on', on);
+              b.style.background = on ? 'var(--dark1)' : 'transparent';
+              b.style.color = on ? '#FFFFFF' : 'var(--text1)';
+              b.style.borderColor = on ? 'var(--dark1)' : 'var(--border)';
+              b.style.fontWeight = on ? '600' : '500';
+            });
           });
+        });
+        document.getElementById('ev-insem-log').addEventListener('click', function() {
+          resolved = true;
+          clearInterval(ticker);
+          var tech = document.getElementById('ev-heat-tech').value.trim();
+          evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
+          card.querySelector('.ev-body').innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Insemination logged ✓ — 21-day watch started</p>' +
+            '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Method: ' + method + (tech ? ' · ' + tech : '') + '. If no heat returns by 24 Jul, you\'ll get a pregnancy-check alert. If heat returns earlier, the cycle restarts.</p>';
+          evResolve();
         });
       })();
 
@@ -2152,6 +2243,20 @@
         var el = document.getElementById(id);
         if (el) el.style.display = 'block';
       });
+
+      // 3b. 9-month vet check / delivery confirmed (P1) — single acknowledge,
+      // this is the point the cow's status moves to CALVED -> MILKING.
+      (function() {
+        var card = document.getElementById('ev-gestation');
+        if (!card) return;
+        var body = card.querySelector('.ev-body');
+        card.querySelector('.ev-ack').addEventListener('click', function() {
+          evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
+          body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Delivery confirmed ✓</p>' +
+            '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Lakshmi has moved to Calved / Milking — she now appears in the Milk Log.</p>';
+          evResolve();
+        });
+      })();
 
       // 4. Abortion / pregnancy loss (P0)
       (function() {
