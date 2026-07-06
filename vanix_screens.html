@@ -2,7 +2,7 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vanix — Screens</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -1725,6 +1725,25 @@
           if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus();
         });
       });
+
+      // Keep the login sheet above the on-screen keyboard by lifting it exactly
+      // the keyboard's height via the VisualViewport API — smooth (rides the
+      // sheet's existing transform transition), no frame reflow/jump. Only
+      // active while an input inside the sheet is focused, so it never fights
+      // the sheet's own show/hide transforms.
+      var sheetInputFocused = false;
+      function liftSheetForKeyboard() {
+        if (!window.visualViewport) return;
+        var kb = window.innerHeight - window.visualViewport.height;
+        sheet.style.transform = (sheetInputFocused && kb > 80) ? 'translateY(-' + kb + 'px)' : 'translateY(0)';
+      }
+      sheet.addEventListener('focusin', function() { sheetInputFocused = true; liftSheetForKeyboard(); });
+      sheet.addEventListener('focusout', function() {
+        sheetInputFocused = false;
+        // let the keyboard finish closing before dropping the sheet back
+        setTimeout(liftSheetForKeyboard, 50);
+      });
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', liftSheetForKeyboard);
     })();
     </script>
 
