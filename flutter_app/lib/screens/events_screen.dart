@@ -166,6 +166,9 @@ class _EventsScreenState extends State<EventsScreen> {
     _heatTechCtrl.dispose();
     _heatLateTimeCtrl.dispose();
     _heatLateTechCtrl.dispose();
+    _gestationNotesCtrl.dispose();
+    _milkingRemindTimer?.cancel();
+    _lactationRecheckTimer?.cancel();
     super.dispose();
   }
 
