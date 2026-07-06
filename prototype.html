@@ -1638,6 +1638,22 @@
           if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus();
         });
       });
+
+      // Keep the login sheet above the on-screen keyboard by lifting it exactly
+      // the keyboard's height via the VisualViewport API — smooth (rides the
+      // sheet's existing transform transition), no frame reflow/jump.
+      var sheetInputFocused = false;
+      function liftSheetForKeyboard() {
+        if (!window.visualViewport) return;
+        var kb = window.innerHeight - window.visualViewport.height;
+        sheet.style.transform = (sheetInputFocused && kb > 80) ? 'translateY(-' + kb + 'px)' : 'translateY(0)';
+      }
+      sheet.addEventListener('focusin', function() { sheetInputFocused = true; liftSheetForKeyboard(); });
+      sheet.addEventListener('focusout', function() {
+        sheetInputFocused = false;
+        setTimeout(liftSheetForKeyboard, 50);
+      });
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', liftSheetForKeyboard);
     })();
     </script>
 <script>
