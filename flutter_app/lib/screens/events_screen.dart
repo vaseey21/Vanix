@@ -184,12 +184,14 @@ class _EventsScreenState extends State<EventsScreen> {
     if (i == 4) widget.appState.toggleDark();
   }
 
-  void _showFullCycleSheet(BuildContext context) {
+  Future<void> _showFullCycleSheet(BuildContext context) async {
+    final result = await Navigator.of(context).push<String?>(MaterialPageRoute(builder: (_) => const HeatAlertScreen(), fullscreenDialog: true));
+    if (!context.mounted) return;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => _FullCycleSheet(isDark: widget.appState.isDark),
+      builder: (context) => _FullCycleSheet(isDark: widget.appState.isDark, heatPreDecision: result, restricted: result == null),
     );
   }
 
