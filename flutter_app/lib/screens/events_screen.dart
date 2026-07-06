@@ -9,6 +9,14 @@ import 'milk_log_screen.dart';
 
 enum _Tab { all, action, reminders }
 
+/// Onboarded vets — contacting a vet is a pick, not a manual email entry.
+/// Mirrors ONBOARDED_VETS in vanix_screens.html.
+const List<String> kOnboardedVets = ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'];
+
+/// The four insemination methods a farmer can log. Mirrors INSEM_METHODS in
+/// vanix_screens.html.
+const List<String> kInseminationMethods = ['Artificial', 'Conventional', 'IVF', 'Embryo Transfer'];
+
 /// Shared by every P0 card (Fever / Abortion / Fresh Cow) — diagnostic
 /// confirm -> vet email -> requested. Mirrors evVetRequestFlow() in
 /// vanix_screens.html.
