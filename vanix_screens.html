@@ -2585,13 +2585,49 @@
           return '<button class="ev-seq-method' + (on ? ' on' : '') + '" data-method="' + label + '" style="min-height:40px; border-radius:20px; border:1px solid ' + (on ? 'var(--dark1)' : 'var(--border)') + '; background:' + (on ? 'var(--dark1)' : 'transparent') + '; color:' + (on ? '#FFFFFF' : 'var(--text1)') + '; font-size:13px; font-weight:600; font-family:var(--font-hi);">' + label + '</button>';
         }
 
+        var fsEl = document.getElementById('ev-alert-fullscreen');
+        var heatPreDecision = null; // null | 'yes' | 'no'
+        var restrictedHeat = false;
+
         function openSeq() {
+          heatPreDecision = null;
+          restrictedHeat = false;
+          fsEl.style.display = 'flex';
+        }
+        function closeFullScreenAlert() {
+          fsEl.style.display = 'none';
+        }
+        function openWalkthroughSheet() {
           step = 1;
           scrim.style.opacity = '1';
           scrim.style.pointerEvents = 'auto';
           sheet.style.transform = 'translateY(0)';
-          renderStep();
+          if (heatPreDecision === 'no') {
+            interrupt('Cycle interrupted — heat not confirmed. Closing walkthrough.');
+          } else {
+            renderStep();
+          }
         }
+        document.getElementById('ev-fs-no').addEventListener('click', function() {
+          heatPreDecision = 'no';
+          closeFullScreenAlert();
+          openWalkthroughSheet();
+        });
+        document.getElementById('ev-fs-yes').addEventListener('click', function() {
+          heatPreDecision = 'yes';
+          closeFullScreenAlert();
+          openWalkthroughSheet();
+        });
+        document.getElementById('ev-fs-close').addEventListener('click', function() {
+          restrictedHeat = true;
+          closeFullScreenAlert();
+          openWalkthroughSheet();
+        });
+        document.getElementById('ev-fs-viewinapp').addEventListener('click', function() {
+          restrictedHeat = true;
+          closeFullScreenAlert();
+          openWalkthroughSheet();
+        });
         function closeSeq() {
           clearInterval(heatTicker);
           heatTicker = null;
