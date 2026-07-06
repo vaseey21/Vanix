@@ -1250,7 +1250,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
   void _startHeat() {
     _heatStartedAt = DateTime.now();
     _heatConfirmed = false;
-    _heatMethod = 'AI';
+    _heatMethod = kInseminationMethods.first;
     _heatTimer?.cancel();
     _heatTimer = Timer.periodic(const Duration(milliseconds: 200), (_) {
       if (_step == _SeqStep.heat) setState(() {});
