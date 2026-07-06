@@ -111,11 +111,15 @@ xs=4  sm=8  md=12  lg=16  pill=24
 
 ## Cow status lifecycle
 
-`IDLE → HEAT ALERT → IN HEAT → INSEMINATED → PREGNANT → CALVED → MILKING`
+`IDLE → HEAT ALERT → IN HEAT → INSEMINATED → PREGNANT → CALVED → MILKING → DRY → IDLE (cycle repeats)`
 
 - Only **CALVED** and **MILKING** cows appear in Milk Log entry forms
 - FEVER is a parallel alert path, separate from heat cycle
 - **CALVED → MILKING** trigger: the farmer taps **"Delivery confirmed"** on the 9-month vet-check Events card — this is a farmer action, not automatic
+- **MILKING** lasts **305 days** (the lactation period) — cow is actively producing milk and logged in the Milk Log
+- **MILKING → DRY** trigger: automatic at day 305. The **DRY** (resting) period lasts **60 days** — no milk produced, not shown in Milk Log entry forms during this window
+- **DRY → IDLE** trigger: automatic at day 60 — the cow re-enters the heat-eligible pool, closing the reproductive loop back to the top of the lifecycle
+- The full loop (Heat → Insemination → Pregnancy Check → Delivery → 305-day Milking → 60-day Dry) can be walked through end-to-end via the **"View full cycle"** link on the Events page — see below
 
 ## Heat → insemination window
 
@@ -153,7 +157,7 @@ Sensor comparison basis: cow's own **10-day** rolling temperature/behaviour base
 | 07 | Milk Log | Done — cream hero, milk-scoped tinted banners (NO heat alerts here), date-grouped cards w/ coloured yield box + ✓/⏱, two-pane filter sheet (category rail left, tinted option rows right — never white), tap card → Edit/Delete action sheet, black FAB. Sessions: Morning + Evening only. "View complete summary" → analytics page: retained totals, breed filter, 8-week trend w/ tooltip, highest/lowest week tiles, top-5 cows + yield-by-breed bars (single-hue greenInk/greenDeep) |
 | 08 | Add milk entry | Done — same-phone page: farm (owner only) + cow (Name—Breed—Belt no.) + date (no future) + session pills (Evening locked till 17:00 today, past-session warning modal) + litres, Save/Cancel. Duplicate guard: same cow+session+date → confirm modal |
 | 09 | Edit milk entry | Done — reuses Add-entry page prefilled ("Edit Milk Entry"); delete via confirm modal. Farmer add-to-existing/edit/delete → pending sub-card on the entry card, owner Approve/✕; approve merges/replaces litres, updates time, adds "↻ Updated" badge |
-| 10 | Events / alert centre | Done — 12-card P0–P3 alert taxonomy aligned to the Cattle Health Logic v3.1 backend spec (Block 7): P0 Fever/Abortion/Fresh-Cow-Monitor (vet-request flow), P1 Heat→Insemination-Window (single evolving card, real 24h clock: Pre 0–6h → Optimal 6–18h w/ method+technician form → Suboptimal 18–24h)/Pregnancy-Check-Due/9-Month-Vet-Check-&-Delivery-Confirmed, P2 Mastitis/Lameness/Ketosis (inspection flow)/Proestrus, P3 Herd-Heat-Stress/Calibration-Complete (single acknowledge). In-place card morphing, ESCALATED chip, live badge/dot sync across navs ("All clear" at zero), reminders, date-grouped history. All tints stay light in dark mode; P2/P3 stay neutral (never dark-flip) |
+| 10 | Events / alert centre | Done — 12-card P0–P3 alert taxonomy aligned to the Cattle Health Logic v3.1 backend spec (Block 7): P0 Fever/Abortion/Fresh-Cow-Monitor (vet-request flow), P1 Heat→Insemination-Window (single evolving card, real 24h clock: Pre 0–6h → Optimal 6–18h w/ method+technician form → Suboptimal 18–24h)/Pregnancy-Check-Due/9-Month-Vet-Check-&-Delivery-Confirmed, P2 Mastitis/Lameness/Ketosis (inspection flow)/Proestrus, P3 Herd-Heat-Stress/Calibration-Complete (single acknowledge). In-place card morphing, ESCALATED chip, live badge/dot sync across navs ("All clear" at zero), reminders, date-grouped history. All tints stay light in dark mode; P2/P3 stay neutral (never dark-flip). Plus "View full cycle" — a 7-step bottom-sheet walkthrough of the whole breeding/lactation year (Heat → Insemination → Pregnancy Check → Delivery → 305-day Milking → 60-day Dry), self-contained demo state, doesn't touch the live badge counter |
 | 11 | Account | Pending |
 | 12 | Farmer persona (stripped views) | Pending |
 

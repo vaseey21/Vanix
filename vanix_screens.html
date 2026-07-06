@@ -286,6 +286,12 @@
     #flow-root.dark #s7-trend .tdot  { fill:var(--greendeep); stroke:#1C1C1C; }
     #flow-root.dark #s7-trend .tval  { fill:#F5F5F5; }
     #flow-root.dark #s7-open-stats { color:var(--greendeep) !important; }
+    #flow-root.dark #ev-view-cycle { color:var(--greendeep) !important; }
+    #flow-root.dark #ev-seq-sheet { background: #1C1C1C !important; }
+    #flow-root.dark #ev-seq-sheet p { color: #F5F5F5 !important; }
+    #flow-root.dark #ev-seq-sheet p[style*="text2"] { color: #8C8780 !important; }
+    #flow-root.dark #ev-seq-step, #flow-root.dark #ev-seq-skip { color: #8C8780 !important; }
+    #flow-root.dark #ev-seq-sheet > div:first-child > div { background: #3A3A3A !important; }
     #flow-root.dark #s7-stats-collapse { color:var(--greendeep) !important; }
 
     /* download → save as PDF: only the milk summary, full height */
@@ -970,7 +976,10 @@
                 <h2 style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Events</h2>
                 <span id="ev-count-pill" class="en" style="background:var(--dangerbg); border:1px solid var(--danger); border-radius:14px; padding:4px 12px; font-size:12px; font-weight:600; color:#8B2800;">12 need action</span>
               </div>
-              <p style="font-size:12px; color:var(--text2); margin:6px 0 0;">Health, breeding and reminders across all your farms</p>
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+                <p style="font-size:12px; color:var(--text2); margin:0;">Health, breeding and reminders across all your farms</p>
+                <button id="ev-view-cycle" style="flex-shrink:0; background:transparent; border:none; padding:0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer; display:flex; align-items:center; gap:2px;">View full cycle <span class="en" style="font-size:14px; line-height:1;">›</span></button>
+              </div>
             </div>
 
             <div style="padding:14px 16px 0;">
@@ -1296,6 +1305,17 @@
 
             </div><!-- /inner padding -->
             </div><!-- /scroll -->
+
+          <!-- FULL-CYCLE WALKTHROUGH — self-contained demo, does not touch live evOpen/badges -->
+          <div id="ev-seq-scrim" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:20;"></div>
+          <div id="ev-seq-sheet" style="position:absolute; left:0; right:0; bottom:0; max-height:78%; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 20px 24px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:21; box-shadow:0 -8px 32px rgba(0,0,0,0.22); overflow-y:auto;">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:#E0E0E0; border-radius:2px;"></div></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:10px;">
+              <span id="ev-seq-step" class="en" style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2);">Step 1 of 7</span>
+              <button id="ev-seq-skip" style="background:transparent; border:none; padding:0; font-size:12px; font-weight:500; color:var(--text2); font-family:var(--font-hi); cursor:pointer;">Skip walkthrough</button>
+            </div>
+            <div id="ev-seq-body" style="margin-top:10px;"></div>
+          </div>
 
           <!-- Frosted nav — Events active -->
           <nav class="vnav" id="events-nav">
@@ -2313,6 +2333,163 @@
         card.querySelector('.ev-ack').addEventListener('click', function() {
           evAcknowledgeFlow(card, body, 'Ganga is now fully live-monitored.');
         });
+      })();
+
+      // ── Full-cycle walkthrough — self-contained demo (independent of evOpen) ──
+      (function() {
+        var scrim = document.getElementById('ev-seq-scrim');
+        var sheet = document.getElementById('ev-seq-sheet');
+        var stepLabel = document.getElementById('ev-seq-step');
+        var body = document.getElementById('ev-seq-body');
+        var TOTAL_STEPS = 7;
+        var step = 1;
+        var heatTicker = null;
+        var heatStartedAt = 0;
+        var heatConfirmed = false;
+        var heatMethod = 'AI';
+        var SIM_HOURS_PER_SEC = 1;
+
+        function openSeq() {
+          step = 1;
+          scrim.style.opacity = '1';
+          scrim.style.pointerEvents = 'auto';
+          sheet.style.transform = 'translateY(0)';
+          renderStep();
+        }
+        function closeSeq() {
+          clearInterval(heatTicker);
+          heatTicker = null;
+          scrim.style.opacity = '0';
+          scrim.style.pointerEvents = 'none';
+          sheet.style.transform = 'translateY(100%)';
+        }
+        scrim.addEventListener('click', closeSeq);
+        document.getElementById('ev-seq-skip').addEventListener('click', closeSeq);
+        document.getElementById('ev-view-cycle').addEventListener('click', openSeq);
+
+        function goTo(n) {
+          if (heatTicker) { clearInterval(heatTicker); heatTicker = null; }
+          step = n;
+          renderStep();
+        }
+        function interrupt(message) {
+          clearInterval(heatTicker);
+          heatTicker = null;
+          stepLabel.textContent = 'Walkthrough ended';
+          body.innerHTML = '<p style="font-size:13px; color:var(--text2); line-height:1.6;">' + message + '</p>' +
+            '<button id="ev-seq-close-btn" style="width:100%; min-height:44px; margin-top:14px; background:var(--dark1); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Close</button>';
+          document.getElementById('ev-seq-close-btn').addEventListener('click', closeSeq);
+        }
+
+        function renderStep() {
+          stepLabel.textContent = 'Step ' + step + ' of ' + TOTAL_STEPS;
+          if (step === 1) renderHeatStep();
+          else if (step === 2) renderInterstitial('21-day pregnancy watch', "Watching for 21 days to see if heat returns. If it doesn't, a pregnancy check is due.", function() { goTo(3); });
+          else if (step === 3) renderPregStep();
+          else if (step === 4) renderInterstitial('9-month gestation', 'Carrying to term for roughly 9 months.', function() { goTo(5); });
+          else if (step === 5) renderGestationStep();
+          else if (step === 6) renderMilkingStep();
+          else if (step === 7) renderDryStep();
+        }
+
+        function renderInterstitial(title, text, onContinue) {
+          body.innerHTML =
+            '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">' + title + '</p>' +
+            '<p style="font-size:13px; color:var(--text2); margin:6px 0 0; line-height:1.6;">' + text + '</p>' +
+            '<button id="ev-seq-continue" style="width:100%; min-height:44px; margin-top:14px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Continue</button>';
+          document.getElementById('ev-seq-continue').addEventListener('click', onContinue);
+        }
+
+        function renderHeatStep() {
+          heatStartedAt = Date.now();
+          heatConfirmed = false;
+          heatMethod = 'AI';
+          paintHeat();
+          heatTicker = setInterval(paintHeat, 200);
+        }
+
+        function paintHeat() {
+          var h = (Date.now() - heatStartedAt) / 1000 * SIM_HOURS_PER_SEC;
+          var pct, label, color;
+          if (h < 6) { pct = h / 6 * 100; label = 'Pre-insemination — window opens in ' + Math.ceil(6 - h) + 'h'; color = '#8A5A00'; }
+          else if (h < 18) { pct = (h - 6) / 12 * 100; label = 'Optimal window — ' + Math.ceil(18 - h) + 'h left'; color = 'var(--greenink)'; }
+          else { pct = (h - 18) / 6 * 100; label = 'Suboptimal window — act soon, ' + Math.ceil(24 - h) + 'h left'; color = 'var(--danger)'; }
+
+          var html =
+            '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Heat cycle detected — Gauri</p>' +
+            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Temperature swinging up and down with high movement since 04:30 this morning.</p>' +
+            '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Is Gauri in heat?</p>' +
+            '<p style="font-size:13px; font-weight:600; color:' + color + '; margin:8px 0 0;">' + label + '</p>' +
+            '<div style="height:6px; background:rgba(0,0,0,0.10); border-radius:3px; margin-top:6px; overflow:hidden;"><div style="width:' + Math.min(100, pct) + '%; height:100%; background:' + color + '; border-radius:3px;"></div></div>';
+
+          if (!heatConfirmed) {
+            html += '<div style="display:flex; gap:8px; margin-top:10px;">' +
+              '<button id="ev-seq-heat-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No</button>' +
+              '<button id="ev-seq-heat-yes" style="flex:1.3; min-height:44px; background:#8A5A00; border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, in heat</button>' +
+              '</div>';
+          } else if (h >= 6) {
+            html += '<p style="font-size:12px; font-weight:600; color:var(--text1); margin:10px 0 6px;">Log insemination</p>' +
+              '<div style="display:flex; gap:8px;">' +
+              '<button class="ev-seq-method' + (heatMethod === 'AI' ? ' on' : '') + '" data-method="AI" style="flex:1; min-height:40px; border-radius:20px; border:1px solid ' + (heatMethod === 'AI' ? 'var(--dark1)' : 'var(--border)') + '; background:' + (heatMethod === 'AI' ? 'var(--dark1)' : 'transparent') + '; color:' + (heatMethod === 'AI' ? '#FFFFFF' : 'var(--text1)') + '; font-size:13px; font-weight:600; font-family:var(--font-hi);">AI</button>' +
+              '<button class="ev-seq-method' + (heatMethod === 'Natural' ? ' on' : '') + '" data-method="Natural" style="flex:1; min-height:40px; border-radius:20px; border:1px solid ' + (heatMethod === 'Natural' ? 'var(--dark1)' : 'var(--border)') + '; background:' + (heatMethod === 'Natural' ? 'var(--dark1)' : 'transparent') + '; color:' + (heatMethod === 'Natural' ? '#FFFFFF' : 'var(--text1)') + '; font-size:13px; font-weight:600; font-family:var(--font-hi);">Natural</button>' +
+              '</div>' +
+              '<button id="ev-seq-heat-log" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log insemination</button>';
+          } else {
+            html += '<p style="font-size:12px; color:var(--text2); margin-top:8px;">Acknowledged — waiting for the optimal window to open.</p>';
+          }
+          body.innerHTML = html;
+
+          if (!heatConfirmed) {
+            document.getElementById('ev-seq-heat-no').addEventListener('click', function() { interrupt('Cycle interrupted — heat not confirmed. Closing walkthrough.'); });
+            document.getElementById('ev-seq-heat-yes').addEventListener('click', function() { heatConfirmed = true; paintHeat(); });
+          } else if (h >= 6) {
+            document.querySelectorAll('.ev-seq-method').forEach(function(btn) {
+              btn.addEventListener('click', function() { heatMethod = btn.getAttribute('data-method'); paintHeat(); });
+            });
+            document.getElementById('ev-seq-heat-log').addEventListener('click', function() { goTo(2); });
+          }
+        }
+
+        function renderPregStep() {
+          body.innerHTML =
+            '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Pregnancy check due — Gauri</p>' +
+            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">21 days since insemination and no heat detected. Call your vet to confirm the pregnancy.</p>' +
+            '<div style="display:flex; gap:8px; margin-top:12px;">' +
+            '<button id="ev-seq-preg-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Not pregnant</button>' +
+            '<button id="ev-seq-preg-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Vet confirmed — pregnant</button>' +
+            '</div>';
+          document.getElementById('ev-seq-preg-no').addEventListener('click', function() { interrupt('Cycle interrupted — pregnancy not confirmed. Heat watch would resume.'); });
+          document.getElementById('ev-seq-preg-yes').addEventListener('click', function() { goTo(4); });
+        }
+
+        function renderGestationStep() {
+          body.innerHTML =
+            '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">9-month vet check due — Gauri</p>' +
+            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — schedule a vet check and confirm delivery once she calves.</p>' +
+            '<button id="ev-seq-delivery" style="width:100%; min-height:44px; margin-top:12px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Delivery confirmed</button>';
+          document.getElementById('ev-seq-delivery').addEventListener('click', function() { goTo(6); });
+        }
+
+        function renderMilkingStep() {
+          body.innerHTML =
+            '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Milking period — Gauri</p>' +
+            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">305-day lactation period begins — Gauri is now producing milk and appears in the Milk Log.</p>' +
+            '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:10px 0 0;">Day 1 of 305</p>' +
+            '<button id="ev-seq-skip-milk" style="width:100%; min-height:44px; margin-top:12px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Skip ahead</button>';
+          document.getElementById('ev-seq-skip-milk').addEventListener('click', function() { goTo(7); });
+        }
+
+        function renderDryStep() {
+          body.innerHTML =
+            '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Dry / resting period — Gauri</p>' +
+            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">60-day dry period — Gauri is resting and won\'t produce milk. She\'ll be ready for her next heat cycle after this.</p>' +
+            '<button id="ev-seq-finish" style="width:100%; min-height:44px; margin-top:12px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Finish</button>';
+          document.getElementById('ev-seq-finish').addEventListener('click', function() {
+            body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:0; line-height:1.6;">Cycle complete ✓ — Gauri is ready for her next heat cycle.</p>' +
+              '<button id="ev-seq-close-btn" style="width:100%; min-height:44px; margin-top:14px; background:var(--dark1); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Close</button>';
+            document.getElementById('ev-seq-close-btn').addEventListener('click', closeSeq);
+          });
+        }
       })();
 
       // ── Unified nav: sliding droplet capsule + page routing ──
