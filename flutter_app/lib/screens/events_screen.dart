@@ -1742,6 +1742,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
     _heatStartedAt = DateTime.now();
     _heatConfirmed = widget.heatPreDecision == 'yes';
     _heatMethod = kInseminationMethods.first;
+    _heatFormStage = 'idle';
     _heatTimer?.cancel();
     _heatTimer = Timer.periodic(const Duration(milliseconds: 200), (_) {
       if (_step == _SeqStep.heat) setState(() {});
