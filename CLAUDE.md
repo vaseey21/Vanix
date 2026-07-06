@@ -129,12 +129,14 @@ Sensor comparison basis: cow's own **10-day** rolling temperature/behaviour base
 | Phase | Window | State |
 |---|---|---|
 | Pre-insemination | T+0–6h | Window not open yet |
-| Optimal | T+6–18h (12h) | Peak fertility — insemination-detail form appears (Method: Artificial / Conventional / IVF / Embryo Transfer + optional technician name) |
+| Optimal | T+6–18h (12h) | Peak fertility |
 | Suboptimal | T+18–24h (6h) | Fertility dropping, still loggable |
+
+The card shows a **single segmented bar** (PRE 6h · OPTIMAL 12h · SUBOPT 6h, detection time at the left end, +24h at the right) with one phase-coloured fill travelling across all three zones. After "Yes, in heat," a **"Start insemination"** button is available in **every** phase — in optimal it opens the form (Method: Artificial / Conventional / IVF / Embryo Transfer + optional technician name) directly; in pre/suboptimal it first asks "outside the optimal window — continue anyway?".
 
 If the window closes with no insemination logged, the card asks directly whether the cow was inseminated — **"Cow inseminated"** opens the same method/technician form plus a time field; **"Insemination missed"** logs it and resumes monitoring.
 
-The heat alert also surfaces as a **full-screen "push notification" style page** (dark background, cow avatar, temperature/movement detail rows, stacked Yes/No) the first time a farmer taps **"View full cycle"** — dismissing it without answering (✕ or "View in app instead") drops into the normal in-app walkthrough sheet with a lighter, "restricted" detail view of the same card.
+The heat alert also surfaces as a **full-screen "push notification" style carousel** (dark background; one card per cow currently in heat — swipe or arrows to move, "N of 3" counter; each card has the cow avatar, a reasoning line, last-10-readings temperature sparkline, movement bar graph, and stacked buttons with **"Yes, in heat" as the greenDeep primary on top**) the first time a farmer taps **"View full cycle"** — actioning a card auto-advances to the next; dismissing without answering (✕ or "View in app instead") drops into the normal in-app walkthrough sheet with a lighter, "restricted" detail view of the heat card.
 
 ## Vets
 
