@@ -973,7 +973,7 @@
               <div class="ev-card" id="ev-preg" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Pregnancy check due — Mohini</p>
-                  <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">21 days since insemination and no heat detected. Call your vet to confirm the pregnancy.</p>
+                  <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">21 days since insemination and no heat detected — confirm if she appears pregnant.</p>
                   <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Sunrise Dairy · Belt 91 · inseminated 12 Jun</p>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
@@ -983,7 +983,7 @@
                 <div class="ev-body">
                   <div style="display:flex; gap:8px; margin-top:12px;">
                     <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Not pregnant</button>
-                    <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Vet confirmed — pregnant</button>
+                    <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Confirm — pregnant</button>
                   </div>
                 </div>
               </div>
@@ -2442,10 +2442,10 @@
         function renderPregStep() {
           body.innerHTML =
             '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Pregnancy check due — Gauri</p>' +
-            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">21 days since insemination and no heat detected. Call your vet to confirm the pregnancy.</p>' +
+            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">21 days since insemination and no heat detected — confirm if she appears pregnant.</p>' +
             '<div style="display:flex; gap:8px; margin-top:12px;">' +
             '<button id="ev-seq-preg-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Not pregnant</button>' +
-            '<button id="ev-seq-preg-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Vet confirmed — pregnant</button>' +
+            '<button id="ev-seq-preg-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Confirm — pregnant</button>' +
             '</div>';
           document.getElementById('ev-seq-preg-no').addEventListener('click', function() { interrupt('Cycle interrupted — pregnancy not confirmed. Heat watch would resume.'); });
           document.getElementById('ev-seq-preg-yes').addEventListener('click', function() { goTo(4); });
