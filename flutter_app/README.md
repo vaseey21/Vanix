@@ -59,7 +59,8 @@ lib/
     milk_log_screen.dart       — hero, banners, date-grouped cards, filter sheet, FAB
     milk_add_entry_screen.dart — add/edit entry, duplicate guard, session-mismatch warning
     milk_summary_screen.dart   — breed filter, 8-week trend (CustomPainter), top cows, yield-by-breed
-    events_screen.dart         — tabs, fever/heat/pregnancy action-card state machines, reminders, history
+    events_screen.dart         — tabs, fever/heat/pregnancy/gestation/milking action-card state machines, reminders, history
+    heat_alert_screen.dart     — full-screen "push notification" style Heat alert
 main.dart
 ```
 
