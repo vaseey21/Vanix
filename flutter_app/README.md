@@ -33,6 +33,7 @@ You'll need to add the actual font files before it runs cleanly (see
 | Add / edit milk entry — duplicate guard, session warning | ✅ Ported — `lib/screens/milk_add_entry_screen.dart` |
 | Milk summary / analytics — breed filter, trend chart, top cows, yield-by-breed | ✅ Ported — `lib/screens/milk_summary_screen.dart` |
 | Events — All/Needs-action/Reminders tabs, 12-card P0-P3 alert taxonomy (Cattle Health Logic v3.1), reminders, history | ✅ Ported — `lib/screens/events_screen.dart` |
+| "View full cycle" — 7-step bottom-sheet walkthrough of the full breeding/lactation year | ✅ Ported — `_FullCycleSheet` in `lib/screens/events_screen.dart` |
 | Events badge/dot sync across every nav | ✅ Ported — `AppState.openEventsCount` + `resolveEvent()` |
 | Dashboard (Home) | 🚧 Placeholder — content not designed yet in the HTML either |
 | Farms list, Cow profile, Account, Farmer persona | ❌ Not designed in HTML yet — nothing to port |

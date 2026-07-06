@@ -1184,3 +1184,331 @@ class _HistoryRow extends StatelessWidget {
     );
   }
 }
+
+/// "View full cycle" — a self-contained walkthrough of the whole breeding/
+/// lactation year for one cow (Gauri), presented as 7 sequential bottom-
+/// sheet steps. Deliberately has its OWN local state — it never calls
+/// AppState.resolveEvent() and never touches the real inline Heat/Preg/
+/// Gestation cards on the Events screen, so running the demo never
+/// consumes any of the farmer's actual pending alerts.
+class _FullCycleSheet extends StatefulWidget {
+  final bool isDark;
+  const _FullCycleSheet({required this.isDark});
+
+  @override
+  State<_FullCycleSheet> createState() => _FullCycleSheetState();
+}
+
+enum _SeqStep { heat, watch21, preg, gestation9, delivery, milking, dry, interrupted, complete }
+
+class _FullCycleSheetState extends State<_FullCycleSheet> {
+  static const int totalSteps = 7;
+  _SeqStep _step = _SeqStep.heat;
+
+  DateTime? _heatStartedAt;
+  bool _heatConfirmed = false;
+  String _heatMethod = 'AI';
+  Timer? _heatTimer;
+  static const double _simHoursPerSecond = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _startHeat();
+  }
+
+  void _startHeat() {
+    _heatStartedAt = DateTime.now();
+    _heatConfirmed = false;
+    _heatMethod = 'AI';
+    _heatTimer?.cancel();
+    _heatTimer = Timer.periodic(const Duration(milliseconds: 200), (_) {
+      if (_step == _SeqStep.heat) setState(() {});
+    });
+  }
+
+  double get _heatElapsedSimHours => _heatStartedAt == null ? 0 : DateTime.now().difference(_heatStartedAt!).inMilliseconds / 1000 * _simHoursPerSecond;
+
+  @override
+  void dispose() {
+    _heatTimer?.cancel();
+    super.dispose();
+  }
+
+  void _goTo(_SeqStep step) {
+    _heatTimer?.cancel();
+    setState(() => _step = step);
+  }
+
+  int get _stepNumber {
+    switch (_step) {
+      case _SeqStep.heat: return 1;
+      case _SeqStep.watch21: return 2;
+      case _SeqStep.preg: return 3;
+      case _SeqStep.gestation9: return 4;
+      case _SeqStep.delivery: return 5;
+      case _SeqStep.milking: return 6;
+      case _SeqStep.dry: return 7;
+      case _SeqStep.interrupted:
+      case _SeqStep.complete:
+        return 7;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = widget.isDark;
+    final bg = isDark ? const Color(0xFF1C1C1C) : Colors.white;
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    final hintColor = isDark ? const Color(0xFF8C8780) : VanixColors.textHint;
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.78),
+        child: Container(
+          decoration: BoxDecoration(color: bg, borderRadius: const BorderRadius.vertical(top: Radius.circular(24))),
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(child: Container(width: 36, height: 4, margin: const EdgeInsets.symmetric(vertical: 8), decoration: BoxDecoration(color: isDark ? const Color(0xFF3A3A3A) : const Color(0xFFE0E0E0), borderRadius: BorderRadius.circular(2)))),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      _step == _SeqStep.interrupted || _step == _SeqStep.complete ? 'Walkthrough ended' : 'Step $_stepNumber of $totalSteps',
+                      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: 0.5, color: hintColor),
+                    ),
+                    if (_step != _SeqStep.interrupted && _step != _SeqStep.complete)
+                      TextButton(
+                        style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text('Skip walkthrough', style: TextStyle(fontSize: 12, color: hintColor)),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                _buildStepBody(textColor, hintColor),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStepBody(Color textColor, Color hintColor) {
+    switch (_step) {
+      case _SeqStep.heat:
+        return _heatStepBody(textColor, hintColor);
+      case _SeqStep.watch21:
+        return _interstitial(
+          textColor, hintColor,
+          title: '21-day pregnancy watch',
+          text: "Watching for 21 days to see if heat returns. If it doesn't, a pregnancy check is due.",
+          onContinue: () => _goTo(_SeqStep.preg),
+        );
+      case _SeqStep.preg:
+        return _pregStepBody(textColor, hintColor);
+      case _SeqStep.gestation9:
+        return _interstitial(
+          textColor, hintColor,
+          title: '9-month gestation',
+          text: 'Carrying to term for roughly 9 months.',
+          onContinue: () => _goTo(_SeqStep.delivery),
+        );
+      case _SeqStep.delivery:
+        return _deliveryStepBody(textColor, hintColor);
+      case _SeqStep.milking:
+        return _milkingStepBody(textColor, hintColor);
+      case _SeqStep.dry:
+        return _dryStepBody(textColor, hintColor);
+      case _SeqStep.interrupted:
+        return _closingBody(textColor, _interruptedMessage);
+      case _SeqStep.complete:
+        return _closingBody(textColor, 'Cycle complete ✓ — Gauri is ready for her next heat cycle.');
+    }
+  }
+
+  String _interruptedMessage = '';
+
+  Widget _interstitial(Color textColor, Color hintColor, {required String title, required String text, required VoidCallback onContinue}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 6), child: Text(text, style: TextStyle(fontSize: 13, color: hintColor, height: 1.5))),
+        const SizedBox(height: 14),
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onContinue, child: const Text('Continue'))),
+      ],
+    );
+  }
+
+  Widget _closingBody(Color textColor, String message) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(message, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk, height: 1.5)),
+        const SizedBox(height: 14),
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Close'))),
+      ],
+    );
+  }
+
+  Widget _heatStepBody(Color textColor, Color hintColor) {
+    final h = _heatElapsedSimHours;
+    String label;
+    double pct;
+    Color color;
+    if (h < 6) {
+      label = 'Pre-insemination — window opens in ${(6 - h).ceil()}h';
+      pct = h / 6;
+      color = VanixColors.warningInk;
+    } else if (h < 18) {
+      label = 'Optimal window — ${(18 - h).ceil()}h left';
+      pct = (h - 6) / 12;
+      color = VanixColors.greenInk;
+    } else {
+      label = 'Suboptimal window — act soon, ${(24 - h).ceil()}h left';
+      pct = (h - 18) / 6;
+      color = VanixColors.danger;
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Heat cycle detected — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('Temperature swinging up and down with high movement since 04:30 this morning.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+        const Padding(padding: EdgeInsets.only(top: 10), child: Text('Is Gauri in heat?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
+        const SizedBox(height: 8),
+        Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: color)),
+        const SizedBox(height: 6),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(3),
+          child: LinearProgressIndicator(value: pct.clamp(0, 1), minHeight: 6, backgroundColor: Colors.black.withOpacity(0.10), valueColor: AlwaysStoppedAnimation(color)),
+        ),
+        if (!_heatConfirmed) ...[
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () {
+                    _heatTimer?.cancel();
+                    setState(() {
+                      _interruptedMessage = 'Cycle interrupted — heat not confirmed. Closing walkthrough.';
+                      _step = _SeqStep.interrupted;
+                    });
+                  },
+                  child: const Text('No'),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                flex: 2,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: VanixColors.warningInk),
+                  onPressed: () => setState(() => _heatConfirmed = true),
+                  child: const Text('Yes, in heat'),
+                ),
+              ),
+            ],
+          ),
+        ] else if (h >= 6) ...[
+          const SizedBox(height: 10),
+          const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(backgroundColor: _heatMethod == 'AI' ? VanixColors.darkPrimary : null, foregroundColor: _heatMethod == 'AI' ? Colors.white : VanixColors.textPrimary),
+                  onPressed: () => setState(() => _heatMethod = 'AI'),
+                  child: const Text('AI'),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(backgroundColor: _heatMethod == 'Natural' ? VanixColors.darkPrimary : null, foregroundColor: _heatMethod == 'Natural' ? Colors.white : VanixColors.textPrimary),
+                  onPressed: () => setState(() => _heatMethod = 'Natural'),
+                  child: const Text('Natural'),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.watch21), child: const Text('Log insemination'))),
+        ] else ...[
+          Padding(padding: const EdgeInsets.only(top: 8), child: Text('Acknowledged — waiting for the optimal window to open.', style: TextStyle(fontSize: 12, color: hintColor))),
+        ],
+      ],
+    );
+  }
+
+  Widget _pregStepBody(Color textColor, Color hintColor) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Pregnancy check due — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('21 days since insemination and no heat detected. Call your vet to confirm the pregnancy.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () => setState(() {
+                  _interruptedMessage = 'Cycle interrupted — pregnancy not confirmed. Heat watch would resume.';
+                  _step = _SeqStep.interrupted;
+                }),
+                child: const Text('Not pregnant'),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(flex: 2, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.gestation9), child: const Text('Vet confirmed — pregnant'))),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _deliveryStepBody(Color textColor, Color hintColor) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('9-month vet check due — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('Approaching her due date — schedule a vet check and confirm delivery once she calves.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+        const SizedBox(height: 12),
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.milking), child: const Text('Delivery confirmed'))),
+      ],
+    );
+  }
+
+  Widget _milkingStepBody(Color textColor, Color hintColor) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Milking period — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('305-day lactation period begins — Gauri is now producing milk and appears in the Milk Log.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+        const Padding(padding: EdgeInsets.only(top: 10), child: Text('Day 1 of 305', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk))),
+        const SizedBox(height: 12),
+        SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () => _goTo(_SeqStep.dry), child: const Text('Skip ahead'))),
+      ],
+    );
+  }
+
+  Widget _dryStepBody(Color textColor, Color hintColor) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Dry / resting period — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text("60-day dry period — Gauri is resting and won't produce milk. She'll be ready for her next heat cycle after this.", style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+        const SizedBox(height: 12),
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.complete), child: const Text('Finish'))),
+      ],
+    );
+  }
+}
