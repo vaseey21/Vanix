@@ -2601,10 +2601,11 @@
           if (step === 1) renderHeatStep();
           else if (step === 2) renderInterstitial('21-day pregnancy watch', "Watching for 21 days to see if heat returns. If it doesn't, a pregnancy check is due.", function() { goTo(3); });
           else if (step === 3) renderPregStep();
-          else if (step === 4) renderInterstitial('9-month gestation', 'Carrying to term for roughly 9 months.', function() { goTo(5); });
+          else if (step === 4) renderInterstitial('9-month gestation', 'Carrying to term for roughly 9 months, with vet checks at 3, 6, and 9 months.', function() { goTo(5); });
           else if (step === 5) renderGestationStep();
           else if (step === 6) renderMilkingStep();
-          else if (step === 7) renderDryStep();
+          else if (step === 7) renderLactationCheckStep();
+          else if (step === 8) renderDryStep();
         }
 
         function renderInterstitial(title, text, onContinue) {
