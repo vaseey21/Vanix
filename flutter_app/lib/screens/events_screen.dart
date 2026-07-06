@@ -49,7 +49,7 @@ enum _VetFlowState { initial, falseAlarm, awaitingEmail, requested }
 /// is just the farmer's acknowledgement and does not pause/reset the clock.
 /// `dismissed`/`logged`/`expired` are terminal; while `active`, the visible
 /// phase (pre/optimal/suboptimal) is derived from elapsed time every tick.
-enum _HeatState { initial, dismissed, active, logged, expired }
+enum _HeatState { initial, dismissed, active, logged, expired, missed }
 enum _PregState { initial, failed, confirmed }
 
 /// Shared by every P2 diagnostic card (Mastitis / Lameness / Ketosis) —
