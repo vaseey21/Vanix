@@ -132,7 +132,7 @@ Sensor comparison basis: cow's own **10-day** rolling temperature/behaviour base
 | Optimal | T+6–18h (12h) | Peak fertility |
 | Suboptimal | T+18–24h (6h) | Fertility dropping, still loggable |
 
-The card shows a **single segmented bar** (PRE 6h · OPTIMAL 12h · SUBOPT 6h, detection time at the left end, +24h at the right) with one phase-coloured fill travelling across all three zones. After "Yes, in heat," a **"Start insemination"** button is available in **every** phase — in optimal it opens the form (Method: Artificial / Conventional / IVF / Embryo Transfer + optional technician name) directly; in pre/suboptimal it first asks "outside the optimal window — continue anyway?".
+The card shows a **single segmented bar** (PRE 6h · OPTIMAL 12h · SUBOPT 6h, detection time at the left end, +24h at the right) with one phase-coloured fill travelling across all three zones. After "Yes, in heat," a **"Call vet"** button is available in **every** phase — it asks the farmer to pick one of the 3 onboarded vets, then opens the insemination log form (Method: Artificial / Conventional / IVF / Embryo Transfer + technician, prefilled with the chosen vet). In pre/suboptimal it first asks "outside the optimal window — continue anyway?" before the vet picker.
 
 If the window closes with no insemination logged, the card asks directly whether the cow was inseminated — **"Cow inseminated"** opens the same method/technician form plus a time field; **"Insemination missed"** logs it and resumes monitoring.
 
