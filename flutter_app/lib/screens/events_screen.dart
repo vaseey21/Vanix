@@ -1123,6 +1123,7 @@ class _ActionCard extends StatelessWidget {
   final String? meta;
   final Widget child;
   final bool escalated;
+  final bool isDark;
 
   const _ActionCard({
     required this.bg,
@@ -1136,15 +1137,17 @@ class _ActionCard extends StatelessWidget {
     this.meta,
     required this.child,
     this.escalated = false,
+    this.isDark = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final accentColor = leftAccentColor ?? border;
+    final titleColor = isDark ? Colors.white : VanixColors.textPrimary;
     final card = Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: bg,
+        color: isDark ? const Color(0xFF1C1C1C) : bg,
         border: Border(
           top: BorderSide(color: border),
           bottom: BorderSide(color: border),
@@ -1163,7 +1166,7 @@ class _ActionCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: VanixColors.textPrimary)),
+                    Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: titleColor)),
                     Padding(padding: const EdgeInsets.only(top: 3), child: Text(sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint, height: 1.5))),
                     if (meta != null) Padding(padding: const EdgeInsets.only(top: 6), child: Text(meta!, style: const TextStyle(fontSize: 11, color: VanixColors.textHint))),
                   ],
