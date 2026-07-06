@@ -388,7 +388,7 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Possible pregnancy loss — Mohini',
           sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
           meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
-          child: _vetEmailForm(_abortEmailCtrl, () => setState(() { _abort = _VetFlowState.requested; widget.appState.resolveEvent(); })),
+          child: _vetPicker((vetName) => setState(() { _abortVetName = vetName; _abort = _VetFlowState.requested; widget.appState.resolveEvent(); })),
         );
       case _VetFlowState.requested:
         return _ActionCard(
@@ -399,7 +399,7 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Possible pregnancy loss — Mohini',
           sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
           meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
-          child: _vetRequestedMessage('Mohini · Pregnancy loss · Sunrise Dairy', _abortEmailCtrl.text),
+          child: _vetRequestedMessage('Mohini · Pregnancy loss · Sunrise Dairy', _abortVetName),
         );
     }
   }
