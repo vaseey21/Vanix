@@ -466,19 +466,19 @@ class _EventsScreenState extends State<EventsScreen> {
     }
   }
 
-  // shared vet-email input + send button (P0 cards)
-  Widget _vetEmailForm(TextEditingController ctrl, VoidCallback onSent) {
-    return _VetEmailForm(controller: ctrl, onSent: onSent);
+  // shared onboarded-vet picker + send button (P0 cards)
+  Widget _vetPicker(ValueChanged<String> onSent) {
+    return _VetPicker(onSent: onSent);
   }
 
-  Widget _vetRequestedMessage(String context, String email) {
+  Widget _vetRequestedMessage(String context, String vetName) {
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('Vet appointment requested ✓', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-          Text("Sent to ${email.isEmpty ? 'the vet' : email} — $context. You'll be notified when the vet confirms.", style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+          Text("Sent to ${vetName.isEmpty ? kOnboardedVets.first : vetName} — $context. You'll be notified when the vet confirms.", style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
         ],
       ),
     );
