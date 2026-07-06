@@ -1674,7 +1674,8 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
       case _SeqStep.gestation9: return 4;
       case _SeqStep.delivery: return 5;
       case _SeqStep.milking: return 6;
-      case _SeqStep.dry: return 7;
+      case _SeqStep.lactationCheck: return 7;
+      case _SeqStep.dry: return 8;
       case _SeqStep.interrupted:
       case _SeqStep.complete:
         return 7;
