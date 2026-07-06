@@ -123,6 +123,15 @@ class _EventsScreenState extends State<EventsScreen> {
     if (i == 4) widget.appState.toggleDark();
   }
 
+  void _showFullCycleSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => _FullCycleSheet(isDark: widget.appState.isDark),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = widget.appState.isDark;
