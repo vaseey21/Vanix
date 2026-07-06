@@ -141,7 +141,7 @@ enum _AckState { initial, acknowledged }
 /// Gestation is its own evolving card (like Heat) — 3/6/9-month vet checks,
 /// call-vet-for-delivery (vet picker), then delivery confirmed w/ notes.
 /// Only the final `delivered` state calls resolveEvent().
-enum _GestationState { check3, check6, callVet, deliveryForm, delivered }
+enum _GestationState { check3, check6, callVet, deliveryAsk, deliveryForm, deliveryFailed, delivered }
 
 /// Milking notification — fires once gestation resolves. "Remind me later"
 /// loops back to pending on a compressed timer without touching the badge;
