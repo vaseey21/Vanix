@@ -2342,18 +2342,48 @@
         if (el) el.style.display = 'block';
       });
 
-      // 3b. 9-month vet check / delivery confirmed (P1) — single acknowledge,
-      // this is the point the cow's status moves to CALVED -> MILKING.
+      // 3b. Gestation: 3-month check -> 6-month check -> call vet for delivery
+      // (vet picker) -> delivery confirmed w/ notes. Single evolving card, like
+      // Heat — only resolves (decrements badge) once, at final delivery confirm.
       (function() {
         var card = document.getElementById('ev-gestation');
         if (!card) return;
+        var titleEl = document.getElementById('ev-gestation-title');
+        var subEl = document.getElementById('ev-gestation-sub');
         var body = card.querySelector('.ev-body');
-        card.querySelector('.ev-ack').addEventListener('click', function() {
-          evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
-          body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Delivery confirmed ✓</p>' +
-            '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Lakshmi has moved to Calved / Milking — she now appears in the Milk Log.</p>';
-          evResolve();
-        });
+
+        function renderCheck6() {
+          titleEl.textContent = '6-month vet check due — Lakshmi';
+          subEl.textContent = 'Routine pregnancy vet check — confirm once done.';
+          body.innerHTML = '<button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Vet check completed</button>';
+          body.querySelector('.ev-ack').addEventListener('click', renderCallVet);
+        }
+
+        function renderCallVet() {
+          titleEl.textContent = '9-month check — call your vet for delivery';
+          subEl.textContent = 'Approaching her due date — call a vet to be on hand for delivery.';
+          body.innerHTML = vetPickerHtml('gestation');
+          wireVetPicker('gestation', function(vetName) {
+            renderDeliveryForm(vetName);
+          });
+        }
+
+        function renderDeliveryForm(vetName) {
+          titleEl.textContent = 'Vet on the way — confirm once delivered';
+          subEl.textContent = vetName + ' has been called. Confirm once Lakshmi has delivered.';
+          body.innerHTML =
+            '<textarea id="ev-gestation-notes" placeholder="Delivery notes (optional)" rows="3" style="width:100%; margin-top:10px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
+            '<button id="ev-gestation-deliver" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Delivery confirmed</button>';
+          document.getElementById('ev-gestation-deliver').addEventListener('click', function() {
+            evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
+            body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Delivery confirmed ✓</p>' +
+              '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Lakshmi has moved to Calved. She\'ll appear in the Milk Log once you add her from the new lactation notification.</p>';
+            evResolve();
+            showMilkingNotif('Lakshmi');
+          });
+        }
+
+        card.querySelector('.ev-ack').addEventListener('click', renderCheck6);
       })();
 
       // 4. Abortion / pregnancy loss (P0)
