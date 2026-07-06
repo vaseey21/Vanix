@@ -5,6 +5,7 @@ import '../state/app_state.dart';
 import '../theme/vanix_theme.dart';
 import '../widgets/vanix_bottom_nav.dart';
 import '../widgets/vanix_nav_items.dart';
+import 'heat_alert_screen.dart';
 import 'milk_log_screen.dart';
 
 enum _Tab { all, action, reminders }
