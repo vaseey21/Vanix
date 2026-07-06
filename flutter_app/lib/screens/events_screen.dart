@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../i18n/strings.dart';
 import '../state/app_state.dart';
@@ -13,7 +14,12 @@ enum _Tab { all, action, reminders }
 /// vanix_screens.html.
 enum _VetFlowState { initial, falseAlarm, awaitingEmail, requested }
 
-enum _HeatState { initial, dismissed, windowOpen, watching }
+/// Heat is a single evolving card, not a state machine of separate alerts.
+/// Detection starts a real 24h clock (`_heatStartedAt`) immediately; Yes/No
+/// is just the farmer's acknowledgement and does not pause/reset the clock.
+/// `dismissed`/`logged`/`expired` are terminal; while `active`, the visible
+/// phase (pre/optimal/suboptimal) is derived from elapsed time every tick.
+enum _HeatState { initial, dismissed, active, logged, expired }
 enum _PregState { initial, failed, confirmed }
 
 /// Shared by every P2 diagnostic card (Mastitis / Lameness / Ketosis) —
