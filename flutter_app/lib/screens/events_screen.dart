@@ -795,16 +795,21 @@ class _EventsScreenState extends State<EventsScreen> {
     String? meta,
     required String buttonLabel,
     required String resolvedMessage,
+    String? channel,
   }) {
+    final isP1 = priority == _Priority.p1;
     final isP2 = priority == _Priority.p2;
+    final resolvedChannel = channel ?? (isP2 ? 'App inbox · Monitor closely' : 'App inbox · Info only');
+    final bg = isP1 ? VanixColors.warningBg : VanixColors.bgCard;
+    final border = isP1 ? VanixColors.warning : VanixColors.border;
     if (state == _AckState.initial) {
       return _ActionCard(
-        bg: VanixColors.bgCard,
-        border: VanixColors.border,
+        bg: bg,
+        border: border,
         leftAccentColor: isP2 ? VanixColors.warning : null,
-        leftAccentWidth: isP2 ? 2 : 0,
+        leftAccentWidth: isP1 ? 4 : (isP2 ? 2 : 0),
         priority: priority,
-        channel: isP2 ? 'App inbox · Monitor closely' : 'App inbox · Info only',
+        channel: resolvedChannel,
         title: title,
         sub: sub,
         meta: meta,
@@ -818,7 +823,7 @@ class _EventsScreenState extends State<EventsScreen> {
       bg: VanixColors.bgCard,
       border: VanixColors.border,
       priority: priority,
-      channel: isP2 ? 'App inbox · Monitor closely' : 'App inbox · Info only',
+      channel: resolvedChannel,
       title: title,
       sub: sub,
       meta: meta,
