@@ -1237,7 +1237,7 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
 
   DateTime? _heatStartedAt;
   bool _heatConfirmed = false;
-  String _heatMethod = 'AI';
+  String _heatMethod = kInseminationMethods.first;
   Timer? _heatTimer;
   static const double _simHoursPerSecond = 1;
 
