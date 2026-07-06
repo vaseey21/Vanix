@@ -190,11 +190,14 @@ class _EventsScreenState extends State<EventsScreen> {
   bool _heatShowLateForm = false;
   late final DateTime _heatStartedAt;
   Timer? _heatTimer;
-  // DEMO: 24 real hours compressed into 24 real seconds (1s = 1 simulated
-  // hour) purely so the phase transitions are demoable live — replace with
-  // the real backend peak_timestamp once wired up (Cattle Health Logic v3.1,
+  // DEMO: 1 simulated hour = 4 real seconds (24h cycle plays out in 96s)
+  // purely so the phase transitions are demoable live — replace with the
+  // real backend peak_timestamp once wired up (Cattle Health Logic v3.1,
   // Block 7).
-  static const double _simHoursPerSecond = 1;
+  static const double _simHoursPerSecond = 0.25;
+  // Start-insemination flow: idle (button showing) | confirm (off-window
+  // warning) | form (method/technician entry). Mirrors the JS substates.
+  String _heatFormStage = 'idle';
 
   _PregState _preg = _PregState.initial;
 
