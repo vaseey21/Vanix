@@ -183,10 +183,17 @@ class _AlertCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    // Content fills the remaining height and centers; the action buttons stay
+    // pinned at the bottom of the screen for easy thumb reach.
+    return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(48, 8, 48, 4),
       child: Column(
         children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
           Text('${data.farm} · detected ${data.time}', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withOpacity(0.75))),
           const SizedBox(height: 12),
           Container(
