@@ -2125,6 +2125,7 @@
         }
       }
       function evResolve() { evOpen = Math.max(0, evOpen - 1); evUpdateBadges(); }
+      evUpdateBadges();
 
       // Events tabs: All / Needs action / Reminders
       document.querySelectorAll('.ev-tab').forEach(function(tab) {
