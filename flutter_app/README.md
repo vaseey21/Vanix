@@ -103,6 +103,10 @@ match `vanix_design_system.html` exactly (source of truth per `CLAUDE.md`).
   swap in the real backend `peak_timestamp` before shipping. The 21-day
   pregnancy watch and 9-month gestation timer are still static/mocked text,
   not real timers.
+- `_FullCycleSheet` is deliberately self-contained — its own local state and
+  its own copy of the Heat countdown timer, separate from `_heat`/`_preg` on
+  the main Events screen. Running the walkthrough never calls
+  `AppState.resolveEvent()`, so it never decrements the real badge/counter.
 - No `providers`/persistence: dark mode, language, and all app data reset
   on hot restart (no `shared_preferences` wired up).
 - This was hand-written without a local Flutter SDK to compile-check —
