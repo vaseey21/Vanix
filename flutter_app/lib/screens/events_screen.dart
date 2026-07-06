@@ -929,17 +929,18 @@ class _PriorityChip extends StatelessWidget {
   }
 }
 
-class _VetEmailForm extends StatefulWidget {
-  final TextEditingController controller;
-  final VoidCallback onSent;
-  const _VetEmailForm({required this.controller, required this.onSent});
+/// Picks one of the onboarded vets instead of typing an email. Mirrors
+/// vetPickerHtml()/wireVetPicker() in vanix_screens.html.
+class _VetPicker extends StatefulWidget {
+  final ValueChanged<String> onSent;
+  const _VetPicker({required this.onSent});
 
   @override
-  State<_VetEmailForm> createState() => _VetEmailFormState();
+  State<_VetPicker> createState() => _VetPickerState();
 }
 
-class _VetEmailFormState extends State<_VetEmailForm> {
-  bool _invalid = false;
+class _VetPickerState extends State<_VetPicker> {
+  String _selected = kOnboardedVets.first;
 
   @override
   Widget build(BuildContext context) {
@@ -949,27 +950,47 @@ class _VetEmailFormState extends State<_VetEmailForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('Request a vet appointment', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
-          const SizedBox(height: 8),
-          TextField(
-            controller: widget.controller,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              hintText: "Vet's email — vet@example.com",
-              enabledBorder: _invalid ? OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: VanixColors.danger, width: 1.5)) : null,
-            ),
-          ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
+          ...kOnboardedVets.map((name) {
+            final on = name == _selected;
+            return Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => setState(() => _selected = name),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: on ? VanixColors.greenDeep : VanixColors.border),
+                    color: on ? VanixColors.activeBg : VanixColors.bgCard,
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 16,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: on ? VanixColors.greenDeep : VanixColors.border, width: 2),
+                          color: on ? VanixColors.greenDeep : Colors.transparent,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(name, style: TextStyle(fontSize: 14, fontWeight: on ? FontWeight.w600 : FontWeight.w500, color: VanixColors.textPrimary)),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
+          const SizedBox(height: 10),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger),
-              onPressed: () {
-                if (!widget.controller.text.contains('@')) {
-                  setState(() => _invalid = true);
-                  return;
-                }
-                widget.onSent();
-              },
+              onPressed: () => widget.onSent(_selected),
               child: const Text('Send appointment request'),
             ),
           ),
