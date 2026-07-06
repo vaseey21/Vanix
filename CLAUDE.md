@@ -115,11 +115,12 @@ xs=4  sm=8  md=12  lg=16  pill=24
 
 - Only **CALVED** and **MILKING** cows appear in Milk Log entry forms
 - FEVER is a parallel alert path, separate from heat cycle
-- **CALVED → MILKING** trigger: the farmer taps **"Delivery confirmed"** on the 9-month vet-check Events card — this is a farmer action, not automatic
-- **MILKING** lasts **305 days** (the lactation period) — cow is actively producing milk and logged in the Milk Log
-- **MILKING → DRY** trigger: automatic at day 305. The **DRY** (resting) period lasts **60 days** — no milk produced, not shown in Milk Log entry forms during this window
+- **CALVED → MILKING** trigger: after the farmer taps **"Delivery confirmed"** on the gestation Events card, a separate **milking notification** card fires — the cow only actually joins the Milk Log once the farmer taps **"Yes, add"** on that card (a "Remind me later" option defers it 24h without losing the alert)
+- Pregnancy confirmation is **farmer self-confirmed** — no vet required. Gestation itself has **3 checkpoints**: vet checks at 3 and 6 months (single acknowledge each), then at 9 months the farmer **calls a vet for delivery** (pick one of the 3 onboarded vets) before tapping **"Delivery confirmed"** with optional doc notes
+- **MILKING** lasts **250 days** (the lactation period) — cow is actively producing milk and logged in the Milk Log
+- **MILKING → DRY** trigger: at the end of the 250 days, an **end-of-lactation check-in** card asks whether the cow is still milking or has entered her resting period — **"Still milking"** re-checks in 10 days (loops, doesn't dead-end); **"Entered resting period"** starts the **DRY** period, which lasts **60 days** — no milk produced, not shown in Milk Log entry forms during this window
 - **DRY → IDLE** trigger: automatic at day 60 — the cow re-enters the heat-eligible pool, closing the reproductive loop back to the top of the lifecycle
-- The full loop (Heat → Insemination → Pregnancy Check → Delivery → 305-day Milking → 60-day Dry) can be walked through end-to-end via the **"View full cycle"** link on the Events page — see below
+- The full loop (Heat → Insemination → Pregnancy Check → Delivery → 250-day Milking → 60-day Dry) can be walked through end-to-end via the **"View full cycle"** link on the Events page — see below
 
 ## Heat → insemination window
 
@@ -131,9 +132,13 @@ Sensor comparison basis: cow's own **10-day** rolling temperature/behaviour base
 | Optimal | T+6–18h (12h) | Peak fertility — insemination-detail form appears (Method: Artificial / Conventional / IVF / Embryo Transfer + optional technician name) |
 | Suboptimal | T+18–24h (6h) | Fertility dropping, still loggable |
 
+If the window closes with no insemination logged, the card asks directly whether the cow was inseminated — **"Cow inseminated"** opens the same method/technician form plus a time field; **"Insemination missed"** logs it and resumes monitoring.
+
+The heat alert also surfaces as a **full-screen "push notification" style page** (dark background, cow avatar, temperature/movement detail rows, stacked Yes/No) the first time a farmer taps **"View full cycle"** — dismissing it without answering (✕ or "View in app instead") drops into the normal in-app walkthrough sheet with a lighter, "restricted" detail view of the same card.
+
 ## Vets
 
-3 vets are onboarded: Dr. Sharma, Dr. Rao, Dr. Iyer. Every P0 vet-request card (Fever, Abortion/Pregnancy Loss, Fresh Cow Monitor) has the farmer pick one from this list — no email entry.
+3 vets are onboarded: Dr. Sharma, Dr. Rao, Dr. Iyer. Every P0 vet-request card (Fever, Abortion/Pregnancy Loss, Fresh Cow Monitor) has the farmer pick one from this list — no email entry. The 9-month gestation checkpoint also uses this picker when calling a vet for delivery.
 
 ## Alert escalation
 
