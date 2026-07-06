@@ -1886,19 +1886,15 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
   Widget _heatStepBody(Color textColor, Color hintColor) {
     final h = _heatElapsedSimHours;
     String label;
-    double pct;
     Color color;
     if (h < 6) {
       label = 'Pre-insemination — window opens in ${(6 - h).ceil()}h';
-      pct = h / 6;
       color = VanixColors.warningInk;
     } else if (h < 18) {
       label = 'Optimal window — ${(18 - h).ceil()}h left';
-      pct = (h - 6) / 12;
       color = VanixColors.greenInk;
     } else {
       label = 'Suboptimal window — act soon, ${(24 - h).ceil()}h left';
-      pct = (h - 18) / 6;
       color = VanixColors.danger;
     }
 
