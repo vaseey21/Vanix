@@ -1903,15 +1903,71 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
     );
   }
 
+  String _milkStepChoice = 'pending'; // pending | reminded | added
+  String _lactStepChoice = 'pending'; // pending | still | resting
+
   Widget _milkingStepBody(Color textColor, Color hintColor) {
+    if (_milkStepChoice == 'reminded') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("We'll remind you in 24 hours.", style: TextStyle(fontSize: 13, color: hintColor)),
+          const SizedBox(height: 14),
+          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.lactationCheck), child: const Text('Continue'))),
+        ],
+      );
+    }
+    if (_milkStepChoice == 'added') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Added to Milk Log ✓', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+          const SizedBox(height: 14),
+          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.lactationCheck), child: const Text('Skip ahead (250 days)'))),
+        ],
+      );
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Milking period — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
-        Padding(padding: const EdgeInsets.only(top: 3), child: Text('305-day lactation period begins — Gauri is now producing milk and appears in the Milk Log.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
-        const Padding(padding: EdgeInsets.only(top: 10), child: Text('Day 1 of 305', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk))),
+        Text('Gauri is now in her lactation period (250 days)', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('Add her to the milking list?', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
         const SizedBox(height: 12),
-        SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () => _goTo(_SeqStep.dry), child: const Text('Skip ahead'))),
+        Row(
+          children: [
+            Expanded(child: OutlinedButton(onPressed: () => setState(() => _milkStepChoice = 'reminded'), child: const Text('Remind me later'))),
+            const SizedBox(width: 8),
+            Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _milkStepChoice = 'added'), child: const Text('Yes, add'))),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _lactationCheckStepBody(Color textColor, Color hintColor) {
+    if (_lactStepChoice == 'still') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Got it — we'll check again in 10 days.", style: TextStyle(fontSize: 13, color: hintColor)),
+          const SizedBox(height: 14),
+          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => setState(() => _lactStepChoice = 'pending'), child: const Text('Skip ahead (10 days)'))),
+        ],
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Lactation period ending — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('Is Gauri still milking, or has she entered her resting period?', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(child: OutlinedButton(onPressed: () => setState(() => _lactStepChoice = 'still'), child: const Text('Still milking'))),
+            const SizedBox(width: 8),
+            Expanded(flex: 2, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.dry), child: const Text('Entered resting period'))),
+          ],
+        ),
       ],
     );
   }
