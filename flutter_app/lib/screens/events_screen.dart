@@ -2045,14 +2045,53 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
     );
   }
 
+  // Gestation walkthrough sub-steps: vet (pick a vet) → ask (was it successful?)
+  // → log (notes) → milking; "No" interrupts the walkthrough.
+  String _seqGestStage = 'vet';
+
   Widget _deliveryStepBody(Color textColor, Color hintColor) {
+    Widget header = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('9-month check — call your vet for delivery', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        Padding(padding: const EdgeInsets.only(top: 3), child: Text('Approaching her due date — call a vet to be on hand for delivery.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
+      ],
+    );
+    if (_seqGestStage == 'vet') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [header, _VetPicker(onSent: (_) => setState(() => _seqGestStage = 'ask'))],
+      );
+    }
+    if (_seqGestStage == 'ask') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          header,
+          const Padding(padding: EdgeInsets.only(top: 12), child: Text('Was the delivery successful?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(child: OutlinedButton(onPressed: () => setState(() {
+                _interruptedMessage = 'Cycle interrupted — delivery unsuccessful. The vet has been notified for an urgent check.';
+                _step = _SeqStep.interrupted;
+              }), child: const Text('No'))),
+              const SizedBox(width: 8),
+              Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _seqGestStage = 'log'), child: const Text('Yes, successful'))),
+            ],
+          ),
+        ],
+      );
+    }
+    // log
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('9-month vet check due — Gauri', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
-        Padding(padding: const EdgeInsets.only(top: 3), child: Text('Approaching her due date — schedule a vet check and confirm delivery once she calves.', style: TextStyle(fontSize: 12, color: hintColor, height: 1.5))),
-        const SizedBox(height: 12),
-        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.milking), child: const Text('Delivery confirmed'))),
+        Text('Delivery successful — log it', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
+        const SizedBox(height: 10),
+        const TextField(maxLines: 3, decoration: InputDecoration(hintText: 'Delivery notes (optional)')),
+        const SizedBox(height: 8),
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => _goTo(_SeqStep.milking), child: const Text('Log delivery'))),
       ],
     );
   }
