@@ -534,7 +534,7 @@ class _EventsScreenState extends State<EventsScreen> {
         child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Marked as not in heat — monitoring continues.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
       );
     }
-    if (_heat == _HeatState.expired) {
+    if (_heat == _HeatState.missed) {
       return _ActionCard(
         bg: VanixColors.bgCard,
         border: VanixColors.border,
@@ -543,7 +543,55 @@ class _EventsScreenState extends State<EventsScreen> {
         title: title,
         sub: sub,
         meta: 'Green Valley Farm · Belt 41',
-        child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Window closed — no insemination logged. Heat cycle monitoring resumes.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+        child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Insemination missed — logged. Heat cycle monitoring resumes.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      );
+    }
+    if (_heat == _HeatState.expired) {
+      return _ActionCard(
+        bg: VanixColors.warningBg,
+        border: VanixColors.warning,
+        priority: _Priority.p1,
+        channel: 'App notification · Schedule inseminator',
+        title: title,
+        sub: sub,
+        meta: 'Green Valley Farm · Belt 41',
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Window expired', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+              const Padding(padding: EdgeInsets.only(top: 4), child: Text('Insemination window has closed. Was Gauri inseminated?', style: TextStyle(fontSize: 12, color: VanixColors.textHint))),
+              if (!_heatShowLateForm) ...[
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(child: OutlinedButton(onPressed: () => setState(() { _heat = _HeatState.missed; widget.appState.resolveEvent(); }), child: const Text('Insemination missed'))),
+                    const SizedBox(width: 8),
+                    Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatShowLateForm = true), child: const Text('Cow inseminated'))),
+                  ],
+                ),
+              ] else ...[
+                const SizedBox(height: 10),
+                const Text('Log insemination', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                const SizedBox(height: 6),
+                _inseminationMethodGrid(_heatLateMethod, (m) => setState(() => _heatLateMethod = m)),
+                const SizedBox(height: 8),
+                TextField(controller: _heatLateTimeCtrl, decoration: const InputDecoration(hintText: 'Time of insemination (e.g. 14:30)')),
+                const SizedBox(height: 8),
+                TextField(controller: _heatLateTechCtrl, decoration: const InputDecoration(hintText: 'Technician / vet name (optional)')),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => setState(() { _heatMethod = _heatLateMethod; _heat = _HeatState.logged; widget.appState.resolveEvent(); }),
+                    child: const Text('Log insemination'),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
       );
     }
     if (_heat == _HeatState.logged) {
