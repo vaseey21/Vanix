@@ -61,6 +61,21 @@ enum _InspectState { initial, falseAlarm, flagged }
 /// Calibration Complete). Mirrors evAcknowledgeFlow() in vanix_screens.html.
 enum _AckState { initial, acknowledged }
 
+/// Gestation is its own evolving card (like Heat) — 3/6/9-month vet checks,
+/// call-vet-for-delivery (vet picker), then delivery confirmed w/ notes.
+/// Only the final `delivered` state calls resolveEvent().
+enum _GestationState { check3, check6, callVet, deliveryForm, delivered }
+
+/// Milking notification — fires once gestation resolves. "Remind me later"
+/// loops back to pending on a compressed timer without touching the badge;
+/// only "Yes, add" resolves it.
+enum _MilkingNotifState { pending, reminded, added }
+
+/// End-of-lactation check-in — reached via the walkthrough's skip-ahead.
+/// "Still milking" loops back to pending on a compressed timer without
+/// touching the badge; only "Entered resting period" resolves it.
+enum _LactationCheckState { pending, stillMilking, resting }
+
 /// Events — mirrors #page-events in vanix_screens.html: All / Needs action /
 /// Reminders tabs, 11 action cards spanning the P0-P3 priority matrix from
 /// Cattle Health Logic v3.1 (Block 7 — Alert & Feedback), reminders, and a
@@ -312,6 +327,7 @@ class _EventsScreenState extends State<EventsScreen> {
     switch (_fever) {
       case _VetFlowState.initial:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           escalated: true,
@@ -336,6 +352,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.falseAlarm:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p0,
@@ -347,6 +364,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.awaitingEmail:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           priority: _Priority.p0,
@@ -358,6 +376,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.requested:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
           priority: _Priority.p0,
@@ -375,6 +394,7 @@ class _EventsScreenState extends State<EventsScreen> {
     switch (_abort) {
       case _VetFlowState.initial:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           priority: _Priority.p0,
@@ -398,6 +418,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.falseAlarm:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p0,
@@ -409,6 +430,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.awaitingEmail:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           priority: _Priority.p0,
@@ -420,6 +442,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.requested:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
           priority: _Priority.p0,
@@ -437,6 +460,7 @@ class _EventsScreenState extends State<EventsScreen> {
     switch (_freshCow) {
       case _VetFlowState.initial:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           priority: _Priority.p0,
@@ -460,6 +484,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.falseAlarm:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p0,
@@ -471,6 +496,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.awaitingEmail:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.dangerBg,
           border: VanixColors.danger,
           priority: _Priority.p0,
@@ -482,6 +508,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _VetFlowState.requested:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
           priority: _Priority.p0,
@@ -524,6 +551,7 @@ class _EventsScreenState extends State<EventsScreen> {
 
     if (_heat == _HeatState.dismissed) {
       return _ActionCard(
+        isDark: isDark,
         bg: VanixColors.bgCard,
         border: VanixColors.border,
         priority: _Priority.p1,
@@ -536,6 +564,7 @@ class _EventsScreenState extends State<EventsScreen> {
     }
     if (_heat == _HeatState.missed) {
       return _ActionCard(
+        isDark: isDark,
         bg: VanixColors.bgCard,
         border: VanixColors.border,
         priority: _Priority.p1,
@@ -548,6 +577,7 @@ class _EventsScreenState extends State<EventsScreen> {
     }
     if (_heat == _HeatState.expired) {
       return _ActionCard(
+        isDark: isDark,
         bg: VanixColors.warningBg,
         border: VanixColors.warning,
         priority: _Priority.p1,
@@ -596,6 +626,7 @@ class _EventsScreenState extends State<EventsScreen> {
     }
     if (_heat == _HeatState.logged) {
       return _ActionCard(
+        isDark: isDark,
         bg: VanixColors.activeBg,
         border: VanixColors.greenDeep,
         priority: _Priority.p1,
@@ -639,6 +670,7 @@ class _EventsScreenState extends State<EventsScreen> {
     }
 
     return _ActionCard(
+      isDark: isDark,
       bg: VanixColors.warningBg,
       border: VanixColors.warning,
       priority: _Priority.p1,
@@ -702,6 +734,7 @@ class _EventsScreenState extends State<EventsScreen> {
     switch (_preg) {
       case _PregState.initial:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.warningBg,
           border: VanixColors.warning,
           priority: _Priority.p1,
@@ -722,6 +755,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _PregState.failed:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p1,
@@ -742,6 +776,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _PregState.confirmed:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.activeBg,
           border: VanixColors.greenDeep,
           priority: _Priority.p1,
@@ -791,6 +826,7 @@ class _EventsScreenState extends State<EventsScreen> {
     switch (state) {
       case _InspectState.initial:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           leftAccentColor: VanixColors.warning,
@@ -816,6 +852,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _InspectState.falseAlarm:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p2,
@@ -827,6 +864,7 @@ class _EventsScreenState extends State<EventsScreen> {
         );
       case _InspectState.flagged:
         return _ActionCard(
+          isDark: isDark,
           bg: VanixColors.bgCard,
           border: VanixColors.border,
           priority: _Priority.p2,
@@ -898,6 +936,7 @@ class _EventsScreenState extends State<EventsScreen> {
     final border = isP1 ? VanixColors.warning : VanixColors.border;
     if (state == _AckState.initial) {
       return _ActionCard(
+        isDark: isDark,
         bg: bg,
         border: border,
         leftAccentColor: isP2 ? VanixColors.warning : null,
@@ -914,6 +953,7 @@ class _EventsScreenState extends State<EventsScreen> {
       );
     }
     return _ActionCard(
+      isDark: isDark,
       bg: VanixColors.bgCard,
       border: VanixColors.border,
       priority: priority,
