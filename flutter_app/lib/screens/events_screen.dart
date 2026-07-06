@@ -445,7 +445,7 @@ class _EventsScreenState extends State<EventsScreen> {
                 children: [
                   Expanded(child: OutlinedButton(onPressed: () => setState(() { _fever = _VetFlowState.falseAlarm; widget.appState.resolveEvent(); }), child: const Text("No, she's fine"))),
                   const SizedBox(width: 8),
-                  Expanded(flex: 2, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger), onPressed: () => setState(() => _fever = _VetFlowState.awaitingEmail), child: const Text("Yes, it's fever"))),
+                  Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _fever = _VetFlowState.awaitingEmail), child: const Text("Yes, it's fever"))),
                 ],
               ),
             ],
@@ -511,7 +511,7 @@ class _EventsScreenState extends State<EventsScreen> {
                 children: [
                   Expanded(child: OutlinedButton(onPressed: () => setState(() { _abort = _VetFlowState.falseAlarm; widget.appState.resolveEvent(); }), child: const Text("No, she's fine"))),
                   const SizedBox(width: 8),
-                  Expanded(flex: 2, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger), onPressed: () => setState(() => _abort = _VetFlowState.awaitingEmail), child: const Text('Yes, report to vet'))),
+                  Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _abort = _VetFlowState.awaitingEmail), child: const Text('Yes, report to vet'))),
                 ],
               ),
             ],
@@ -577,7 +577,7 @@ class _EventsScreenState extends State<EventsScreen> {
                 children: [
                   Expanded(child: OutlinedButton(onPressed: () => setState(() { _freshCow = _VetFlowState.falseAlarm; widget.appState.resolveEvent(); }), child: const Text("No, she's fine"))),
                   const SizedBox(width: 8),
-                  Expanded(flex: 2, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger), onPressed: () => setState(() => _freshCow = _VetFlowState.awaitingEmail), child: const Text('Yes, report to vet'))),
+                  Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _freshCow = _VetFlowState.awaitingEmail), child: const Text('Yes, report to vet'))),
                 ],
               ),
             ],
@@ -799,7 +799,6 @@ class _EventsScreenState extends State<EventsScreen> {
                   Expanded(
                     flex: 2,
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: VanixColors.warningInk),
                       onPressed: () => setState(() { _heatConfirmed = true; _heat = _HeatState.active; }),
                       child: const Text('Yes, in heat'),
                     ),
@@ -1495,7 +1494,6 @@ class _VetPickerState extends State<_VetPicker> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: VanixColors.danger),
               onPressed: () => widget.onSent(_selected),
               child: const Text('Send appointment request'),
             ),
@@ -1978,7 +1976,6 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
               Expanded(
                 flex: 2,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: VanixColors.warningInk),
                   onPressed: () => setState(() => _heatConfirmed = true),
                   child: const Text('Yes, in heat'),
                 ),
