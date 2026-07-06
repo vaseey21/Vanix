@@ -151,7 +151,23 @@ class _EventsScreenState extends State<EventsScreen> {
                         ],
                       ),
                       const SizedBox(height: 6),
-                      const Text('Health, breeding and reminders across all your farms', style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Expanded(child: Text('Health, breeding and reminders across all your farms', style: TextStyle(fontSize: 12, color: VanixColors.textHint))),
+                          TextButton(
+                            style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                            onPressed: () => _showFullCycleSheet(context),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('View full cycle', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: isDark ? VanixColors.greenDeep : VanixColors.greenInk)),
+                                Icon(Icons.chevron_right, size: 14, color: isDark ? VanixColors.greenDeep : VanixColors.greenInk),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
