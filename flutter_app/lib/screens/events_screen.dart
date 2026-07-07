@@ -1661,11 +1661,33 @@ class _CornerBadge extends StatelessWidget {
 class _ReminderCard extends StatelessWidget {
   final IconData icon;
   final String title, sub;
+  final DateTime dueDate;
   final bool isDark;
-  const _ReminderCard({required this.icon, required this.title, required this.sub, required this.isDark});
+  const _ReminderCard({required this.icon, required this.title, required this.sub, required this.dueDate, required this.isDark});
+
+  // DEMO: "today" is fixed to match the History section's "YESTERDAY — 2 JUL"
+  // reference (i.e. today = 3 Jul) — replace with the real current date once
+  // wired to a backend. Static days-left, not a live countdown.
+  static final DateTime _demoToday = DateTime(2026, 7, 3);
 
   @override
   Widget build(BuildContext context) {
+    final days = dueDate.difference(_demoToday).inDays;
+    String dueLabel;
+    Color dueColor;
+    if (days < 0) {
+      dueLabel = 'Overdue by ${-days}d';
+      dueColor = VanixColors.danger;
+    } else if (days == 0) {
+      dueLabel = 'Due today';
+      dueColor = VanixColors.danger;
+    } else if (days <= 2) {
+      dueLabel = '$days day${days == 1 ? '' : 's'} left';
+      dueColor = VanixColors.warningInk;
+    } else {
+      dueLabel = '$days days left';
+      dueColor = VanixColors.textHint;
+    }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
       decoration: BoxDecoration(color: isDark ? const Color(0xFF1C1C1C) : VanixColors.bgCard, border: Border.all(color: isDark ? const Color(0xFF3A3A3A) : VanixColors.border), borderRadius: BorderRadius.circular(16)),
@@ -1684,6 +1706,7 @@ class _ReminderCard extends StatelessWidget {
               children: [
                 Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: isDark ? Colors.white : VanixColors.textPrimary)),
                 Text(sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+                Padding(padding: const EdgeInsets.only(top: 4), child: Text(dueLabel, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: dueColor))),
               ],
             ),
           ),
