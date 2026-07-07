@@ -387,7 +387,7 @@ class _EventsScreenState extends State<EventsScreen> {
                         const SizedBox(height: 8),
                         _ReminderCard(icon: Icons.vaccines_outlined, title: 'FMD vaccination due', sub: '5 cows at Green Valley Farm — due 8 Jul', startDate: DateTime(2026, 6, 28), dueDate: DateTime(2026, 7, 8), isDark: isDark),
                         const SizedBox(height: 8),
-                        _ReminderCard(icon: Icons.medical_services_outlined, title: 'Quarterly vet check-up', sub: 'Sunrise Dairy — 15 Jul, Dr. Sharma', dueDate: DateTime(2026, 7, 15), isDark: isDark),
+                        _ReminderCard(icon: Icons.medical_services_outlined, title: 'Quarterly vet check-up', sub: 'Sunrise Dairy — 15 Jul, Dr. Sharma', startDate: DateTime(2026, 6, 24), dueDate: DateTime(2026, 7, 15), isDark: isDark),
                       ],
                     ),
                   ),
