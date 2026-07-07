@@ -383,11 +383,11 @@ class _EventsScreenState extends State<EventsScreen> {
                       children: [
                         const _SectionLabel('Reminders'),
                         const SizedBox(height: 10),
-                        _ReminderCard(icon: Icons.child_care, title: 'Delivery approaching — Dhauli', sub: 'Expected around 12 Jul — prepare the calving pen. She starts milking after calving.', dueDate: DateTime(2026, 7, 12), isDark: isDark),
+                        _ReminderCard(icon: Icons.child_care, title: 'Delivery approaching — Dhauli', sub: 'Expected around 12 Jul — prepare the calving pen. She starts milking after calving.', startDate: DateTime(2026, 6, 28), dueDate: DateTime(2026, 7, 12), isDark: isDark),
                         const SizedBox(height: 8),
-                        _ReminderCard(icon: Icons.vaccines_outlined, title: 'FMD vaccination due', sub: '5 cows at Green Valley Farm — due 8 Jul', dueDate: DateTime(2026, 7, 8), isDark: isDark),
+                        _ReminderCard(icon: Icons.vaccines_outlined, title: 'FMD vaccination due', sub: '5 cows at Green Valley Farm — due 8 Jul', startDate: DateTime(2026, 6, 28), dueDate: DateTime(2026, 7, 8), isDark: isDark),
                         const SizedBox(height: 8),
-                        _ReminderCard(icon: Icons.medical_services_outlined, title: 'Quarterly vet check-up', sub: 'Sunrise Dairy — 15 Jul, Dr. Sharma', dueDate: DateTime(2026, 7, 15), isDark: isDark),
+                        _ReminderCard(icon: Icons.medical_services_outlined, title: 'Quarterly vet check-up', sub: 'Sunrise Dairy — 15 Jul, Dr. Sharma', startDate: DateTime(2026, 6, 24), dueDate: DateTime(2026, 7, 15), isDark: isDark),
                       ],
                     ),
                   ),
@@ -425,6 +425,7 @@ class _EventsScreenState extends State<EventsScreen> {
 
   // ── P0: Fever ──
   Widget _buildFeverCard(bool isDark) {
+    const manager = 'Ramesh Kumar';
     switch (_fever) {
       case _VetFlowState.initial:
         return _ActionCard(
@@ -434,6 +435,7 @@ class _EventsScreenState extends State<EventsScreen> {
           escalated: true,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
@@ -458,6 +460,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.border,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
@@ -470,6 +473,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.danger,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
@@ -482,6 +486,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.greenDeep,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Suspected fever — Kajri',
           sub: 'Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.',
           meta: 'Green Valley Farm · Belt 63 · since 30 Jun',
@@ -492,6 +497,7 @@ class _EventsScreenState extends State<EventsScreen> {
 
   // ── P0: Abortion / pregnancy loss ──
   Widget _buildAbortCard(bool isDark) {
+    const manager = 'Suresh Yadav';
     switch (_abort) {
       case _VetFlowState.initial:
         return _ActionCard(
@@ -500,6 +506,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.danger,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Possible pregnancy loss — Mohini',
           sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
           meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
@@ -524,6 +531,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.border,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Possible pregnancy loss — Mohini',
           sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
           meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
@@ -536,6 +544,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.danger,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Possible pregnancy loss — Mohini',
           sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
           meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
@@ -548,6 +557,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.greenDeep,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Possible pregnancy loss — Mohini',
           sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
           meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
@@ -558,6 +568,7 @@ class _EventsScreenState extends State<EventsScreen> {
 
   // ── P0: Fresh cow / post-calving monitor ──
   Widget _buildFreshCowCard(bool isDark) {
+    const manager = 'Ramesh Kumar';
     switch (_freshCow) {
       case _VetFlowState.initial:
         return _ActionCard(
@@ -566,6 +577,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.danger,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Fresh cow health dip — Ganga',
           sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
           meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
@@ -590,6 +602,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.border,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Fresh cow health dip — Ganga',
           sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
           meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
@@ -602,6 +615,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.danger,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Fresh cow health dip — Ganga',
           sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
           meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
@@ -614,6 +628,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.greenDeep,
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
+          manager: manager,
           title: 'Fresh cow health dip — Ganga',
           sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
           meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
@@ -646,6 +661,7 @@ class _EventsScreenState extends State<EventsScreen> {
   // acknowledges; it does not pause/reset the automatic pre→optimal→
   // suboptimal progression.
   Widget _buildHeatCard(bool isDark) {
+    const manager = 'Ramesh Kumar';
     const title = 'Heat cycle detected — Gauri';
     const sub = 'Temperature swinging up and down with high movement since 04:30 this morning.';
     const meta = 'Green Valley Farm · Belt 41 · detected 04:30';
@@ -657,6 +673,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.border,
         priority: _Priority.p1,
         channel: 'App notification · Schedule inseminator',
+          manager: manager,
         title: title,
         sub: sub,
         meta: 'Green Valley Farm · Belt 41',
@@ -670,6 +687,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.border,
         priority: _Priority.p1,
         channel: 'App notification · Schedule inseminator',
+          manager: manager,
         title: title,
         sub: sub,
         meta: 'Green Valley Farm · Belt 41',
@@ -683,6 +701,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.warning,
         priority: _Priority.p1,
         channel: 'App notification · Schedule inseminator',
+          manager: manager,
         title: title,
         sub: sub,
         meta: 'Green Valley Farm · Belt 41',
@@ -732,6 +751,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.greenDeep,
         priority: _Priority.p1,
         channel: 'App notification · Schedule inseminator',
+          manager: manager,
         title: title,
         sub: sub,
         meta: 'Green Valley Farm · Belt 41',
@@ -772,6 +792,7 @@ class _EventsScreenState extends State<EventsScreen> {
       border: VanixColors.warning,
       priority: _Priority.p1,
       channel: 'App notification · Schedule inseminator',
+          manager: manager,
       title: title,
       sub: sub,
       meta: meta,
@@ -848,6 +869,7 @@ class _EventsScreenState extends State<EventsScreen> {
 
   // ── P1: Pregnancy check due ──
   Widget _buildPregCard(bool isDark) {
+    const manager = 'Suresh Yadav';
     switch (_preg) {
       case _PregState.initial:
         return _ActionCard(
@@ -856,6 +878,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.warning,
           priority: _Priority.p1,
           channel: 'App notification · Confirm with vet',
+          manager: manager,
           title: 'Pregnancy check due — Mohini',
           sub: '21 days since insemination and no heat detected — confirm if she appears pregnant.',
           meta: 'Sunrise Dairy · Belt 91 · inseminated 12 Jun',
@@ -877,6 +900,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.border,
           priority: _Priority.p1,
           channel: 'App notification · Confirm with vet',
+          manager: manager,
           title: 'Pregnancy check due — Mohini',
           sub: '21 days since insemination and no heat detected.',
           meta: 'Sunrise Dairy · Belt 91',
@@ -898,6 +922,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.greenDeep,
           priority: _Priority.p1,
           channel: 'App notification · Confirm with vet',
+          manager: manager,
           title: 'Pregnancy check due — Mohini',
           sub: '21 days since insemination and no heat detected.',
           meta: 'Sunrise Dairy · Belt 91',
@@ -921,6 +946,7 @@ class _EventsScreenState extends State<EventsScreen> {
   // (vet picker) -> delivery confirmed w/ notes. Single evolving card, like
   // Heat — only resolves (decrements badge) once, at final delivery confirm.
   Widget _buildGestationCard(bool isDark) {
+    const manager = 'Ramesh Kumar';
     const meta = 'Green Valley Farm · Belt 52 · confirmed pregnant 4 Oct';
     const channel = 'App notification · Confirm with vet';
 
@@ -932,6 +958,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.warning,
         priority: _Priority.p1,
         channel: channel,
+          manager: manager,
         title: is3 ? '3-month vet check due — Lakshmi' : '6-month vet check due — Lakshmi',
         sub: 'Routine pregnancy vet check — confirm once done.',
         meta: meta,
@@ -954,6 +981,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.warning,
         priority: _Priority.p1,
         channel: channel,
+          manager: manager,
         title: '9-month check — call your vet for delivery',
         sub: 'Approaching her due date — call a vet to be on hand for delivery.',
         meta: meta,
@@ -967,6 +995,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.warning,
         priority: _Priority.p1,
         channel: channel,
+          manager: manager,
         title: 'Vet on the way — Lakshmi',
         sub: '$_gestationVetName has been called for the delivery.',
         meta: meta,
@@ -996,6 +1025,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.warning,
         priority: _Priority.p1,
         channel: channel,
+          manager: manager,
         title: 'Delivery successful — log it',
         sub: 'Add any notes from $_gestationVetName before logging the delivery.',
         meta: meta,
@@ -1029,6 +1059,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.danger,
         priority: _Priority.p1,
         channel: channel,
+          manager: manager,
         title: 'Delivery unsuccessful — recorded',
         sub: '$_gestationVetName has been notified for an urgent check. Lakshmi will not enter the milking pool.',
         meta: meta,
@@ -1042,6 +1073,7 @@ class _EventsScreenState extends State<EventsScreen> {
       border: VanixColors.greenDeep,
       priority: _Priority.p1,
       channel: channel,
+          manager: manager,
       title: 'Delivery logged ✓',
       sub: 'Lakshmi has moved to Calved. She\'ll appear in the Milk Log once you add her from the new lactation notification.',
       meta: meta,
@@ -1054,6 +1086,7 @@ class _EventsScreenState extends State<EventsScreen> {
   // hour timer that flips back to pending without touching the badge — only
   // "Yes, add" resolves it. ──
   Widget _buildMilkingNotifCard(bool isDark) {
+    const manager = 'Ramesh Kumar';
     const meta = 'Green Valley Farm · Belt 52';
     if (_milkingNotif == _MilkingNotifState.reminded) {
       return _ActionCard(
@@ -1062,6 +1095,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.warning,
         priority: _Priority.p1,
         channel: 'App notification · Add to Milk Log',
+          manager: manager,
         title: 'Lakshmi is now in her lactation period (250 days)',
         sub: 'Add her to the milking list?',
         meta: meta,
@@ -1075,6 +1109,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.greenDeep,
         priority: _Priority.p1,
         channel: 'App notification · Add to Milk Log',
+          manager: manager,
         title: 'Lakshmi is now in her lactation period (250 days)',
         sub: 'Add her to the milking list?',
         meta: meta,
@@ -1096,6 +1131,7 @@ class _EventsScreenState extends State<EventsScreen> {
       border: VanixColors.warning,
       priority: _Priority.p1,
       channel: 'App notification · Add to Milk Log',
+          manager: manager,
       title: 'Lakshmi is now in her lactation period (250 days)',
       sub: 'Add her to the milking list?',
       meta: meta,
@@ -1137,6 +1173,7 @@ class _EventsScreenState extends State<EventsScreen> {
   // simulated-day timer without touching the badge — only "Entered resting
   // period" resolves it. ──
   Widget _buildLactationCheckCard(bool isDark) {
+    const manager = 'Ramesh Kumar';
     const meta = 'Green Valley Farm · Belt 52';
     const title = 'Lactation period ending — Lakshmi';
     const sub = 'Is Lakshmi still milking, or has she entered her resting period?';
@@ -1147,6 +1184,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.warning,
         priority: _Priority.p1,
         channel: 'App notification · Confirm status',
+          manager: manager,
         title: title,
         sub: sub,
         meta: meta,
@@ -1160,6 +1198,7 @@ class _EventsScreenState extends State<EventsScreen> {
         border: VanixColors.greenDeep,
         priority: _Priority.p1,
         channel: 'App notification · Confirm status',
+          manager: manager,
         title: title,
         sub: sub,
         meta: meta,
@@ -1181,6 +1220,7 @@ class _EventsScreenState extends State<EventsScreen> {
       border: VanixColors.warning,
       priority: _Priority.p1,
       channel: 'App notification · Confirm status',
+          manager: manager,
       title: title,
       sub: sub,
       meta: meta,
@@ -1226,6 +1266,7 @@ class _EventsScreenState extends State<EventsScreen> {
     required String sub,
     required String meta,
     required String question,
+    String? manager,
   }) {
     switch (state) {
       case _InspectState.initial:
@@ -1237,6 +1278,7 @@ class _EventsScreenState extends State<EventsScreen> {
           leftAccentWidth: 2,
           priority: _Priority.p2,
           channel: 'App inbox · Physical inspection',
+          manager: manager,
           title: title,
           sub: sub,
           meta: meta,
@@ -1261,6 +1303,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.border,
           priority: _Priority.p2,
           channel: 'App inbox · Physical inspection',
+          manager: manager,
           title: title,
           sub: sub,
           meta: meta,
@@ -1273,6 +1316,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.border,
           priority: _Priority.p2,
           channel: 'App inbox · Physical inspection',
+          manager: manager,
           title: title,
           sub: sub,
           meta: meta,
@@ -1298,6 +1342,7 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: 'Temperature up and feeding down — possible udder infection.',
         meta: 'Green Valley Farm · Belt 09',
         question: 'Does Bhoori show swelling or milk changes?',
+        manager: 'Ramesh Kumar',
       );
 
   Widget _buildLamenessCard(bool isDark) => _buildInspectCard(
@@ -1308,6 +1353,7 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: 'Barely standing and resting far more than usual — possible leg or hoof issue.',
         meta: 'Green Valley Farm · Belt 18',
         question: 'Does Dhauli seem to be limping?',
+        manager: 'Ramesh Kumar',
       );
 
   Widget _buildKetosisCard(bool isDark) => _buildInspectCard(
@@ -1318,6 +1364,7 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: 'Reduced rumination this early in her milking cycle — a metabolic condition common just after calving.',
         meta: 'Green Valley Farm · Belt 52 · Day 12 in milk',
         question: 'Does Lakshmi seem lethargic or off her feed?',
+        manager: 'Ramesh Kumar',
       );
 
   // shared: single-acknowledge card builder (Proestrus / Herd Heat Stress / Calibration)
@@ -1332,6 +1379,7 @@ class _EventsScreenState extends State<EventsScreen> {
     required String buttonLabel,
     required String resolvedMessage,
     String? channel,
+    String? manager,
   }) {
     final isP1 = priority == _Priority.p1;
     final isP2 = priority == _Priority.p2;
@@ -1347,6 +1395,7 @@ class _EventsScreenState extends State<EventsScreen> {
         leftAccentWidth: isP1 ? 4 : (isP2 ? 2 : 0),
         priority: priority,
         channel: resolvedChannel,
+        manager: manager,
         title: title,
         sub: sub,
         meta: meta,
@@ -1362,6 +1411,7 @@ class _EventsScreenState extends State<EventsScreen> {
       border: VanixColors.border,
       priority: priority,
       channel: resolvedChannel,
+      manager: manager,
       title: title,
       sub: sub,
       meta: meta,
@@ -1379,6 +1429,7 @@ class _EventsScreenState extends State<EventsScreen> {
         meta: 'Green Valley Farm · Belt 63',
         buttonLabel: 'Got it, watching',
         resolvedMessage: "Watching Kajri closely — you'll get a separate alert if this strengthens to confirmed heat.",
+        manager: 'Ramesh Kumar',
       );
 
   Widget _buildHerdStressCard(bool isDark) => _buildAckCard(
@@ -1390,6 +1441,7 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: '20%+ of cows in this zone are showing a temperature rise together — likely the weather, not individual cows.',
         buttonLabel: 'Checked cooling / shade',
         resolvedMessage: "Thanks — logged. Herd heat stress alerts don't need a vet visit.",
+        manager: 'Ramesh Kumar',
       );
 
   Widget _buildCalibCard(bool isDark) => _buildAckCard(
@@ -1401,6 +1453,7 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: 'Her new collar has finished calibrating and is now live-monitored.',
         buttonLabel: 'Got it',
         resolvedMessage: 'Ganga is now fully live-monitored.',
+        manager: 'Ramesh Kumar',
       );
 }
 
@@ -1561,9 +1614,15 @@ class _ActionCard extends StatelessWidget {
   final Color? leftAccentColor;
   final double leftAccentWidth;
   final _Priority priority;
+  // Notification-channel routing text (e.g. "App notification · Schedule
+  // inseminator") — kept as a field so existing call sites don't need
+  // updating, but no longer rendered: cards were too text-heavy for the
+  // farm-owner persona and this line was the least essential (internal
+  // routing info, not something the farmer needs to act on).
   final String channel;
   final String title, sub;
   final String? meta;
+  final String? manager;
   final Widget child;
   final bool escalated;
   final bool isDark;
@@ -1578,6 +1637,7 @@ class _ActionCard extends StatelessWidget {
     required this.title,
     required this.sub,
     this.meta,
+    this.manager,
     required this.child,
     this.escalated = false,
     this.isDark = false,
@@ -1610,6 +1670,7 @@ class _ActionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: titleColor)),
+                    if (manager != null) Padding(padding: const EdgeInsets.only(top: 2), child: Text('Manager: $manager', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: VanixColors.textHint))),
                     Padding(padding: const EdgeInsets.only(top: 3), child: Text(sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint, height: 1.5))),
                     if (meta != null) Padding(padding: const EdgeInsets.only(top: 6), child: Text(meta!, style: const TextStyle(fontSize: 11, color: VanixColors.textHint))),
                   ],
@@ -1620,7 +1681,6 @@ class _ActionCard extends StatelessWidget {
               if (priority != _Priority.p0) _PriorityChip(priority: priority),
             ],
           ),
-          Padding(padding: const EdgeInsets.only(top: 2), child: Text(channel, style: const TextStyle(fontSize: 11, color: VanixColors.textHint))),
           child,
         ],
       ),
@@ -1661,9 +1721,9 @@ class _CornerBadge extends StatelessWidget {
 class _ReminderCard extends StatelessWidget {
   final IconData icon;
   final String title, sub;
-  final DateTime dueDate;
+  final DateTime startDate, dueDate;
   final bool isDark;
-  const _ReminderCard({required this.icon, required this.title, required this.sub, required this.dueDate, required this.isDark});
+  const _ReminderCard({required this.icon, required this.title, required this.sub, required this.startDate, required this.dueDate, required this.isDark});
 
   // DEMO: "today" is fixed to match the History section's "YESTERDAY — 2 JUL"
   // reference (i.e. today = 3 Jul) — replace with the real current date once
@@ -1688,6 +1748,9 @@ class _ReminderCard extends StatelessWidget {
       dueLabel = '$days days left';
       dueColor = VanixColors.textHint;
     }
+    final span = dueDate.difference(startDate).inMinutes;
+    final elapsed = _demoToday.difference(startDate).inMinutes;
+    final pct = span > 0 ? (elapsed / span).clamp(0.0, 1.0) : 1.0;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
       decoration: BoxDecoration(color: isDark ? const Color(0xFF1C1C1C) : VanixColors.bgCard, border: Border.all(color: isDark ? const Color(0xFF3A3A3A) : VanixColors.border), borderRadius: BorderRadius.circular(16)),
@@ -1707,6 +1770,18 @@ class _ReminderCard extends StatelessWidget {
                 Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: isDark ? Colors.white : VanixColors.textPrimary)),
                 Text(sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
                 Padding(padding: const EdgeInsets.only(top: 4), child: Text(dueLabel, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: dueColor))),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(2),
+                    child: LinearProgressIndicator(
+                      value: pct,
+                      minHeight: 4,
+                      backgroundColor: isDark ? const Color(0xFF3A3A3A) : VanixColors.border,
+                      valueColor: AlwaysStoppedAnimation<Color>(dueColor),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

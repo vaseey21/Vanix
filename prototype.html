@@ -157,7 +157,6 @@
     #flow-root.dark .fs-ack { color:var(--greendeep); }
     /* P0 cards use a single corner badge instead of a chip — card tint already signals "critical" */
     .ev-corner-badge { position:absolute; top:-6px; right:-6px; width:20px; height:20px; border-radius:50%; background:#8B2800; color:#FFFFFF; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 1px 3px rgba(0,0,0,0.25); }
-    .ev-channel { font-size:11px; color:var(--text2); margin:2px 0 0; }
     .ev-card-p2 { background:var(--bgcard); border:1px solid var(--border); border-left:2px solid var(--warning); }
     .ev-card-p3 { background:var(--bgcard); border:1px solid var(--border); }
     /* Dark mode: action cards flatten to the same dark neutral surface used by
@@ -171,7 +170,6 @@
     #flow-root.dark #page-events > div { background: #111111 !important; }
     #flow-root.dark .ev-card { background:#1C1C1C !important; }
     #flow-root.dark .ev-card p[style*="font-size:15px"] { color:#F5F5F5 !important; }
-    #flow-root.dark .ev-channel { color:#8C8780 !important; }
     #flow-root.dark #page-events .ev-rem, #flow-root.dark #page-events .ev-row { background: #1C1C1C !important; border-color: #3A3A3A !important; }
     #flow-root.dark #page-events .ev-rem p, #flow-root.dark #page-events .ev-row p { color: #F5F5F5 !important; }
     #flow-root.dark #page-events .ev-rem p + p, #flow-root.dark #page-events .ev-row p + p { color: #8C8780 !important; }
@@ -902,11 +900,11 @@
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Suspected fever — Kajri</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.</p>
                     <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 63 · since 30 Jun</p>
                   </div>
                   </div>
-                <p class="en ev-channel">Push + SMS · Immediate vet visit</p>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Kajri look unwell to you?</p>
                   <div style="display:flex; gap:8px; margin-top:10px;">
@@ -920,12 +918,12 @@
               <div class="ev-card" id="ev-heat" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Heat cycle detected — Gauri</p>
+                  <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                   <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Temperature swinging up and down with high movement since 04:30 this morning.</p>
                   <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 41 · detected 04:30</p>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
                   <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
-                  <span class="en ev-channel" style="margin:0;">App notification · Schedule inseminator</span>
                 </div>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Is Gauri in heat?</p>
@@ -980,12 +978,12 @@
               <div class="ev-card" id="ev-preg" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Pregnancy check due — Mohini</p>
+                  <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Suresh Yadav</p>
                   <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">21 days since insemination and no heat detected — confirm if she appears pregnant.</p>
                   <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Sunrise Dairy · Belt 91 · inseminated 12 Jun</p>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
                   <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
-                  <span class="en ev-channel" style="margin:0;">App notification · Confirm with vet</span>
                 </div>
                 <div class="ev-body">
                   <div style="display:flex; gap:8px; margin-top:12px;">
@@ -999,12 +997,12 @@
               <div class="ev-card" id="ev-gestation" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
                 <div style="min-width:0;">
                   <p id="ev-gestation-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">3-month vet check due — Lakshmi</p>
+                  <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                   <p id="ev-gestation-sub" style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Routine pregnancy vet check — confirm once done.</p>
                   <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 52 · confirmed pregnant 4 Oct</p>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
                   <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
-                  <span class="en ev-channel" style="margin:0;">App notification · Confirm with vet</span>
                 </div>
                 <div class="ev-body">
                   <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Vet check completed</button>
@@ -1015,11 +1013,11 @@
               <div class="ev-card" id="ev-milk-notif" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
                 <div style="min-width:0;">
                   <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;" id="ev-milk-notif-title">Lakshmi is now in her lactation period (250 days)</p>
+                  <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                   <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Add her to the milking list?</p>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
                   <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
-                  <span class="en ev-channel" style="margin:0;">App notification · Add to Milk Log</span>
                 </div>
                 <div class="ev-body">
                   <div style="display:flex; gap:8px; margin-top:12px;">
@@ -1033,11 +1031,11 @@
               <div class="ev-card" id="ev-lactation-check" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
                 <div style="min-width:0;">
                   <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Lactation period ending — Lakshmi</p>
+                  <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                   <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Is Lakshmi still milking, or has she entered her resting period?</p>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
                   <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
-                  <span class="en ev-channel" style="margin:0;">App notification · Confirm status</span>
                 </div>
                 <div class="ev-body">
                   <div style="display:flex; gap:8px; margin-top:12px;">
@@ -1054,11 +1052,11 @@
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible pregnancy loss — Mohini</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Suresh Yadav</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Sudden drop in rumination with a sustained temperature rise over the last 3 hours.</p>
                     <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Sunrise Dairy · Belt 91 · Day 48 of pregnancy</p>
                   </div>
                   </div>
-                <p class="en ev-channel">Push + SMS · Immediate vet visit</p>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Mohini show these signs?</p>
                   <div style="display:flex; gap:8px; margin-top:10px;">
@@ -1074,11 +1072,11 @@
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Fresh cow health dip — Ganga</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.</p>
                     <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 27 · Day 6 post-calving</p>
                   </div>
                   </div>
-                <p class="en ev-channel">Push + SMS · Immediate vet visit</p>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Ganga seem off to you?</p>
                   <div style="display:flex; gap:8px; margin-top:10px;">
@@ -1093,12 +1091,12 @@
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible mastitis — Bhoori</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Temperature up and feeding down — possible udder infection.</p>
                     <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 09</p>
                   </div>
                   <span class="en ev-chip ev-chip-p2">P2 · WARNING</span>
                 </div>
-                <p class="en ev-channel">App inbox · Physical inspection</p>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Bhoori show swelling or milk changes?</p>
                   <div style="display:flex; gap:8px; margin-top:10px;">
@@ -1113,12 +1111,12 @@
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible lameness — Dhauli</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Barely standing and resting far more than usual — possible leg or hoof issue.</p>
                     <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 18</p>
                   </div>
                   <span class="en ev-chip ev-chip-p2">P2 · WARNING</span>
                 </div>
-                <p class="en ev-channel">App inbox · Physical inspection</p>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Dhauli seem to be limping?</p>
                   <div style="display:flex; gap:8px; margin-top:10px;">
@@ -1133,12 +1131,12 @@
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible ketosis — Lakshmi</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Reduced rumination this early in her milking cycle — a metabolic condition common just after calving.</p>
                     <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 52 · Day 12 in milk</p>
                   </div>
                   <span class="en ev-chip ev-chip-p2">P2 · WARNING</span>
                 </div>
-                <p class="en ev-channel">App inbox · Physical inspection</p>
                 <div class="ev-body">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Lakshmi seem lethargic or off her feed?</p>
                   <div style="display:flex; gap:8px; margin-top:10px;">
@@ -1153,12 +1151,12 @@
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Early heat signs — Kajri</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Mild temperature and activity rise — possible early signs of heat starting. We'll alert you again if it strengthens.</p>
                     <p class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;">Green Valley Farm · Belt 63</p>
                   </div>
                   <span class="en ev-chip ev-chip-p2">P2 · WARNING</span>
                 </div>
-                <p class="en ev-channel">App inbox · Monitor closely</p>
                 <div class="ev-body">
                   <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Got it, watching</button>
                 </div>
@@ -1169,11 +1167,11 @@
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Herd heat stress — Green Valley Farm</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">20%+ of cows in this zone are showing a temperature rise together — likely the weather, not individual cows.</p>
                   </div>
                   <span class="en ev-chip ev-chip-p3">P3 · INFO</span>
                 </div>
-                <p class="en ev-channel">App inbox · Info only</p>
                 <div class="ev-body">
                   <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Checked cooling / shade</button>
                 </div>
@@ -1184,11 +1182,11 @@
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Collar calibrated — Ganga</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
                     <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Her new collar has finished calibrating and is now live-monitored.</p>
                   </div>
                   <span class="en ev-chip ev-chip-p3">P3 · INFO</span>
                 </div>
-                <p class="en ev-channel">App inbox · Info only</p>
                 <div class="ev-body">
                   <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Got it</button>
                 </div>
@@ -1202,26 +1200,26 @@
 
               <div class="ev-rem" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:13px 16px; margin-bottom:8px; display:flex; gap:12px; align-items:center;">
                 <div style="width:36px; height:36px; border-radius:10px; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-2 8H7c0-3-2-5-2-8a7 7 0 0 1 7-7z"/><path d="M9 21h6"/></svg></div>
-                <div style="min-width:0; flex:1;" data-due="2026-07-12">
+                <div style="min-width:0; flex:1;" data-due="2026-07-12" data-start="2026-06-28">
                   <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Delivery approaching — Dhauli</p>
                   <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Expected around 12 Jul — prepare the calving pen. She starts milking after calving.</p>
-                  <p class="ev-rem-due en" style="font-size:11px; font-weight:600; margin:4px 0 0;"></p>
+                  <p class="ev-rem-due en" style="font-size:11px; font-weight:600; margin:4px 0 0;"></p><div style="height:4px; background:var(--border); border-radius:2px; margin-top:5px; overflow:hidden;"><div class="ev-rem-bar" style="width:0%; height:100%; border-radius:2px;"></div></div>
                 </div>
               </div>
               <div class="ev-rem" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:13px 16px; margin-bottom:8px; display:flex; gap:12px; align-items:center;">
                 <div style="width:36px; height:36px; border-radius:10px; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10"/><path d="M8 7l4-4 4 4"/><circle cx="12" cy="17" r="4"/></svg></div>
-                <div style="min-width:0; flex:1;" data-due="2026-07-08">
+                <div style="min-width:0; flex:1;" data-due="2026-07-08" data-start="2026-06-28">
                   <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">FMD vaccination due</p>
                   <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">5 cows at Green Valley Farm — due 8 Jul</p>
-                  <p class="ev-rem-due en" style="font-size:11px; font-weight:600; margin:4px 0 0;"></p>
+                  <p class="ev-rem-due en" style="font-size:11px; font-weight:600; margin:4px 0 0;"></p><div style="height:4px; background:var(--border); border-radius:2px; margin-top:5px; overflow:hidden;"><div class="ev-rem-bar" style="width:0%; height:100%; border-radius:2px;"></div></div>
                 </div>
               </div>
               <div class="ev-rem" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:13px 16px; margin-bottom:8px; display:flex; gap:12px; align-items:center;">
                 <div style="width:36px; height:36px; border-radius:10px; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg></div>
-                <div style="min-width:0; flex:1;" data-due="2026-07-15">
+                <div style="min-width:0; flex:1;" data-due="2026-07-15" data-start="2026-06-24">
                   <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Quarterly vet check-up</p>
                   <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Sunrise Dairy — 15 Jul, Dr. Sharma</p>
-                  <p class="ev-rem-due en" style="font-size:11px; font-weight:600; margin:4px 0 0;"></p>
+                  <p class="ev-rem-due en" style="font-size:11px; font-weight:600; margin:4px 0 0;"></p><div style="height:4px; background:var(--border); border-radius:2px; margin-top:5px; overflow:hidden;"><div class="ev-rem-bar" style="width:0%; height:100%; border-radius:2px;"></div></div>
                 </div>
               </div>
 
@@ -1531,7 +1529,14 @@
       function liftSheetForKeyboard() {
         if (!window.visualViewport || !sheetInputFocused) return;
         var kb = window.innerHeight - window.visualViewport.height;
-        sheet.style.transform = kb > 80 ? 'translateY(-' + kb + 'px)' : 'translateY(0)';
+        if (kb <= 80) { sheet.style.transform = 'translateY(0)'; return; }
+        // Clamp the lift so the sheet never rises above the persistent logo
+        // mark near the top of the screen — otherwise a tall keyboard (e.g.
+        // with a suggestion bar) pushes the sheet up far enough to overlap it.
+        var safeTop = 100;
+        var maxLift = Math.max(0, sheet.getBoundingClientRect().top - safeTop);
+        var lift = Math.min(kb, maxLift);
+        sheet.style.transform = lift > 0 ? 'translateY(-' + lift + 'px)' : 'translateY(0)';
       }
       sheet.addEventListener('focusin', function() { sheetInputFocused = true; liftSheetForKeyboard(); });
       sheet.addEventListener('focusout', function() {
@@ -1996,6 +2001,16 @@
           else { label = days + ' days left'; color = 'var(--text2)'; }
           dueEl.textContent = label;
           dueEl.style.color = color;
+
+          var barEl = row.querySelector('.ev-rem-bar');
+          var startAttr = row.getAttribute('data-start');
+          if (barEl && startAttr) {
+            var start = new Date(startAttr + 'T00:00:00');
+            var span = due - start;
+            var pct = span > 0 ? Math.min(100, Math.max(0, (today - start) / span * 100)) : 100;
+            barEl.style.width = pct + '%';
+            barEl.style.background = color;
+          }
         });
       })();
 
