@@ -1721,9 +1721,9 @@ class _CornerBadge extends StatelessWidget {
 class _ReminderCard extends StatelessWidget {
   final IconData icon;
   final String title, sub;
-  final DateTime dueDate;
+  final DateTime startDate, dueDate;
   final bool isDark;
-  const _ReminderCard({required this.icon, required this.title, required this.sub, required this.dueDate, required this.isDark});
+  const _ReminderCard({required this.icon, required this.title, required this.sub, required this.startDate, required this.dueDate, required this.isDark});
 
   // DEMO: "today" is fixed to match the History section's "YESTERDAY — 2 JUL"
   // reference (i.e. today = 3 Jul) — replace with the real current date once
