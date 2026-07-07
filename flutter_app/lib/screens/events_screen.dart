@@ -383,7 +383,7 @@ class _EventsScreenState extends State<EventsScreen> {
                       children: [
                         const _SectionLabel('Reminders'),
                         const SizedBox(height: 10),
-                        _ReminderCard(icon: Icons.child_care, title: 'Delivery approaching — Dhauli', sub: 'Expected around 12 Jul — prepare the calving pen. She starts milking after calving.', dueDate: DateTime(2026, 7, 12), isDark: isDark),
+                        _ReminderCard(icon: Icons.child_care, title: 'Delivery approaching — Dhauli', sub: 'Expected around 12 Jul — prepare the calving pen. She starts milking after calving.', startDate: DateTime(2026, 6, 28), dueDate: DateTime(2026, 7, 12), isDark: isDark),
                         const SizedBox(height: 8),
                         _ReminderCard(icon: Icons.vaccines_outlined, title: 'FMD vaccination due', sub: '5 cows at Green Valley Farm — due 8 Jul', dueDate: DateTime(2026, 7, 8), isDark: isDark),
                         const SizedBox(height: 8),
