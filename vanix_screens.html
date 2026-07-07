@@ -2735,6 +2735,95 @@
           '</div>';
         }
 
+        // ── Card Detail page — "View Details" on any Events card ──
+        // Generates a small deterministic mock 10-day temp/movement series per
+        // card (no real sensor dataset exists yet) and moves the card's own
+        // .ev-body CTA node into the detail page so every existing click
+        // handler keeps working untouched; moves it back on close.
+        var evDetailPage = document.getElementById('ev-detail-page');
+        var evDetailCta = document.getElementById('ev-detail-cta');
+        var evDetailReturn = null; // { parent, next }
+        var EV_PRIORITY_LABEL = { p0: 'P0 · CRITICAL', p1: 'P1 · ACTIONABLE', p2: 'P2 · WARNING', p3: 'P3 · INFO' };
+        var EV_PRIORITY_STYLE = {
+          p0: 'background:#8B2800; color:#FFFFFF;',
+          p1: 'background:#8A5A00; color:#FFFFFF;',
+          p2: 'background:var(--warnbg); border:1px solid var(--warning); color:#8A5A00;',
+          p3: 'background:var(--bgcard); border:1px solid var(--border); color:var(--text2);'
+        };
+
+        function evMockSeed(id) {
+          var h = 0;
+          for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+          return h;
+        }
+        function evMockTemps(id) {
+          var h = evMockSeed(id), base = 38.2 + (h % 5) * 0.1, arr = [];
+          for (var i = 0; i < 9; i++) arr.push(base + ((h >> i) % 4) * 0.08);
+          arr.push(base + 0.9);
+          return arr;
+        }
+        function evMockMoves(id) {
+          var h = evMockSeed(id), arr = [];
+          for (var i = 0; i < 9; i++) arr.push(3 + ((h >> i) % 5));
+          arr.push(9 + (h % 3));
+          return arr;
+        }
+
+        window.openCardDetail = function(cardId, priority) {
+          var card = document.getElementById(cardId);
+          if (!card) return;
+          var titleEl = card.querySelector('.ev-title');
+          var managerEl = card.querySelector('.ev-manager');
+          var subEl = card.querySelector('.ev-sub');
+          var metaEl = card.querySelector('.ev-meta');
+          var body = card.querySelector('.ev-body');
+
+          document.getElementById('ev-detail-title').textContent = titleEl ? titleEl.textContent : '';
+          document.getElementById('ev-detail-manager').textContent = managerEl ? managerEl.textContent : '';
+          document.getElementById('ev-detail-sub').textContent = subEl ? subEl.textContent : '';
+          document.getElementById('ev-detail-meta').textContent = metaEl ? metaEl.textContent : '';
+          var badge = document.getElementById('ev-detail-badge');
+          badge.textContent = EV_PRIORITY_LABEL[priority] || '';
+          badge.setAttribute('style', 'flex-shrink:0; border-radius:10px; padding:3px 8px; font-size:10px; font-weight:600; white-space:nowrap; ' + (EV_PRIORITY_STYLE[priority] || ''));
+
+          var temps = evMockTemps(cardId), moves = evMockMoves(cardId);
+          var min = Math.min.apply(null, temps), max = Math.max.apply(null, temps);
+          var pts = temps.map(function(t, i) {
+            var x = i / (temps.length - 1) * 100;
+            var y = 26 - ((t - min) / (max - min || 1)) * 22;
+            return x.toFixed(1) + ',' + y.toFixed(1);
+          }).join(' ');
+          document.getElementById('ev-detail-temp').innerHTML = '<svg viewBox="0 0 100 30" preserveAspectRatio="none" style="display:block; width:100%; height:34px;"><polyline points="' + pts + '" fill="none" stroke="var(--warning)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="100" cy="' + (26 - ((temps[temps.length - 1] - min) / (max - min || 1)) * 22).toFixed(1) + '" r="3" fill="var(--danger)" stroke="#fff" stroke-width="1"/></svg>';
+          document.getElementById('ev-detail-temp-min').textContent = min.toFixed(1) + '°C baseline';
+          document.getElementById('ev-detail-temp-today').textContent = temps[temps.length - 1].toFixed(1) + '°C today';
+          var mmax = Math.max.apply(null, moves);
+          document.getElementById('ev-detail-move').innerHTML = moves.map(function(m, i) {
+            var isToday = i === moves.length - 1;
+            return '<div style="flex:1; height:' + Math.round(m / mmax * 100) + '%; background:' + (isToday ? 'var(--danger)' : 'var(--greendeep)') + '; border-radius:2px;"></div>';
+          }).join('');
+
+          if (body) {
+            evDetailReturn = { parent: body.parentNode, next: body.nextSibling };
+            evDetailCta.appendChild(body);
+          } else {
+            evDetailReturn = null;
+          }
+          evDetailPage.style.transform = 'translateY(0)';
+        };
+
+        window.closeCardDetail = function() {
+          if (evDetailReturn) {
+            var body = evDetailCta.firstChild;
+            if (body) {
+              if (evDetailReturn.next) evDetailReturn.parent.insertBefore(body, evDetailReturn.next);
+              else evDetailReturn.parent.appendChild(body);
+            }
+            evDetailReturn = null;
+          }
+          evDetailPage.style.transform = 'translateY(100%)';
+        };
+        document.getElementById('ev-detail-back').addEventListener('click', window.closeCardDetail);
+
         function fsBuildCards() {
           fsStrip.innerHTML = FS_ALERTS.map(function(a, i) {
             return '<div class="ev-fs-card" data-i="' + i + '" style="flex:0 0 100%; display:flex; flex-direction:column; padding:8px 44px 4px;">' +
