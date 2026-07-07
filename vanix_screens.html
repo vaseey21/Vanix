@@ -226,6 +226,17 @@
     .ev-corner-badge { position:absolute; top:-6px; right:-6px; width:20px; height:20px; border-radius:50%; background:#8B2800; color:#FFFFFF; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 1px 3px rgba(0,0,0,0.25); }
     .ev-card-p2 { background:var(--bgcard); border:1px solid var(--border); border-left:2px solid var(--warning); }
     .ev-card-p3 { background:var(--bgcard); border:1px solid var(--border); }
+    /* Cards trimmed to Title/Manager/View Details/CTA — full description +
+       meta only render on the Card Detail page (#ev-detail-page). */
+    .ev-sub, .ev-meta { display:none; }
+    .ev-viewdetails { background:none; border:none; padding:0; margin:4px 0 0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer; text-align:left; display:block; }
+    #flow-root.dark .ev-viewdetails { color:var(--greendeep); }
+    #ev-detail-page { position:absolute; inset:0; background:var(--bgwarm); z-index:31; transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column; overflow-y:auto; }
+    #flow-root.dark #ev-detail-page { background:#111111; }
+    #ev-detail-page .ev-detail-graph { background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 12px; margin-top:10px; }
+    #flow-root.dark #ev-detail-page .ev-detail-graph { background:rgba(255,255,255,0.06); border-color:transparent; }
+    #ev-detail-page .ev-detail-graph-label { font-size:10px; font-weight:600; letter-spacing:0.06em; color:var(--text2); }
+    #flow-root.dark #ev-detail-page .ev-detail-graph-label { color:rgba(255,255,255,0.6); }
     /* Dark mode: action cards flatten to the same dark neutral surface used by
        Reminders/History (#1C1C1C), keeping their priority-colored border/left-accent
        for severity signaling, with titles flipped to white for readability. */
