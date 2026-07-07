@@ -1303,6 +1303,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.border,
           priority: _Priority.p2,
           channel: 'App inbox · Physical inspection',
+          manager: manager,
           title: title,
           sub: sub,
           meta: meta,
@@ -1315,6 +1316,7 @@ class _EventsScreenState extends State<EventsScreen> {
           border: VanixColors.border,
           priority: _Priority.p2,
           channel: 'App inbox · Physical inspection',
+          manager: manager,
           title: title,
           sub: sub,
           meta: meta,
@@ -1374,6 +1376,7 @@ class _EventsScreenState extends State<EventsScreen> {
     required String buttonLabel,
     required String resolvedMessage,
     String? channel,
+    String? manager,
   }) {
     final isP1 = priority == _Priority.p1;
     final isP2 = priority == _Priority.p2;
@@ -1389,6 +1392,7 @@ class _EventsScreenState extends State<EventsScreen> {
         leftAccentWidth: isP1 ? 4 : (isP2 ? 2 : 0),
         priority: priority,
         channel: resolvedChannel,
+        manager: manager,
         title: title,
         sub: sub,
         meta: meta,
