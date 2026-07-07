@@ -1440,6 +1440,7 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: '20%+ of cows in this zone are showing a temperature rise together — likely the weather, not individual cows.',
         buttonLabel: 'Checked cooling / shade',
         resolvedMessage: "Thanks — logged. Herd heat stress alerts don't need a vet visit.",
+        manager: 'Ramesh Kumar',
       );
 
   Widget _buildCalibCard(bool isDark) => _buildAckCard(
