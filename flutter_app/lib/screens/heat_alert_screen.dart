@@ -217,13 +217,13 @@ class _AlertCard extends StatelessWidget {
           const SizedBox(height: 6),
           Text(data.reason, textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: isDark ? Colors.white.withOpacity(0.75) : VanixColors.textHint, height: 1.6)),
           const SizedBox(height: 12),
-          _GraphPanel(
+          GraphPanel(
             isDark: isDark,
             label: 'TEMPERATURE — LAST 10 READINGS',
             child: SizedBox(
               height: 34,
               width: double.infinity,
-              child: CustomPaint(painter: _SparklinePainter(data.temps)),
+              child: CustomPaint(painter: SparklinePainter(data.temps, highlightLast: true)),
             ),
             footer: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -234,26 +234,10 @@ class _AlertCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          _GraphPanel(
+          GraphPanel(
             isDark: isDark,
             label: 'MOVEMENT — ACTIVITY INDEX',
-            child: SizedBox(
-              height: 34,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  for (var i = 0; i < data.moves.length; i++) ...[
-                    if (i > 0) const SizedBox(width: 3),
-                    Expanded(
-                      child: FractionallySizedBox(
-                        heightFactor: data.moves[i] / data.moves.reduce((a, b) => a > b ? a : b),
-                        child: Container(decoration: BoxDecoration(color: VanixColors.greenDeep, borderRadius: BorderRadius.circular(2))),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
+            child: MovementBars(values: data.moves, highlightLast: true),
           ),
                 ],
               ),
