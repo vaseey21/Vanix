@@ -26,20 +26,14 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   _Panel _panel = _Panel.login;
-  bool _fromForgot = false;
 
   final _emailCtrl = TextEditingController();
-  final _passCtrl = TextEditingController();
-  final _fpEmailCtrl = TextEditingController();
-  final _newPassCtrl = TextEditingController();
-  final _rePassCtrl = TextEditingController();
   final List<TextEditingController> _otpCtrls = List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _otpFocus = List.generate(6, (_) => FocusNode());
 
   Timer? _timer;
   int _secondsLeft = 30;
   bool _showResend = false;
-  String? _pwSavedNote;
 
   VanixStrings get t => VanixStrings.of(widget.appState.languageCode);
 
@@ -53,10 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
       f.dispose();
     }
     _emailCtrl.dispose();
-    _passCtrl.dispose();
-    _fpEmailCtrl.dispose();
-    _newPassCtrl.dispose();
-    _rePassCtrl.dispose();
     super.dispose();
   }
 
