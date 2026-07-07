@@ -67,9 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  void _goToOtp({required bool fromForgot}) {
+  void _goToOtp() {
     setState(() {
-      _fromForgot = fromForgot;
       _panel = _Panel.otp;
       for (final c in _otpCtrls) {
         c.clear();
@@ -84,27 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void _confirmOtp() {
     if (!_otpFilled) return;
     _timer?.cancel();
-    if (_fromForgot) {
-      setState(() => _panel = _Panel.reset);
-      return;
-    }
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (_) => DashboardScreen(appState: widget.appState)),
     );
-  }
-
-  bool get _rePassMatches => _newPassCtrl.text == _rePassCtrl.text;
-  bool get _rePassValid => _newPassCtrl.text.length >= 4 && _rePassCtrl.text.length >= 4 && _rePassMatches;
-
-  void _savePassword() {
-    if (!_rePassValid) return;
-    setState(() {
-      _fromForgot = false;
-      _panel = _Panel.login;
-      _pwSavedNote = t.pwSaved;
-      _newPassCtrl.clear();
-      _rePassCtrl.clear();
-    });
   }
 
   @override
