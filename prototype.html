@@ -74,7 +74,7 @@
     /* ── Dark mode (toggle at top-right) ── */
     #s1-sheet.dark { background: rgba(16,16,16,0.62) !important; border-top-color: rgba(255,255,255,0.18) !important; }
     #s1-sheet.dark h2, #s1-sheet.dark input, #s1-sheet.dark select,
-    #s1-sheet.dark #s1-forgot, #s1-sheet.dark #s1-v-title,
+    #s1-sheet.dark #s1-v-title,
     #s1-sheet.dark #s1-otp-timer, #s1-sheet.dark #s1-v-sent,
     #s1-sheet.dark p { color: #FFFFFF !important; }
     #s1-sheet.dark p[id^="s1-l-"], #s1-sheet.dark #s1-v-desc, #s1-sheet.dark #s1-nootp { color: rgba(255,255,255,0.65) !important; }
@@ -82,7 +82,7 @@
     #s1-sheet.dark #s1-otp-boxes input { border-color: rgba(255,255,255,0.4) !important; }
     #s1-sheet.dark input::placeholder { color: rgba(255,255,255,0.45); }
     #s1-sheet input::placeholder { font-size: 13px; }
-    #s1-sheet.dark #s1-otp-back, #s1-sheet.dark #s1-fp-back, #s1-sheet.dark #s1-rp-back { color: #FFFFFF !important; }
+    #s1-sheet.dark #s1-otp-back { color: #FFFFFF !important; }
     #s1-sheet.dark #s1-lang { background: rgba(0,0,0,0.30) !important; border-color: rgba(255,255,255,0.30) !important; color: #FFFFFF !important; }
     /* language bottom sheet — dark mode (sibling of #s1-sheet) */
     #s1-sheet.dark ~ #s1-lang-sheet { background: rgba(20,20,20,0.92) !important; border-top-color: rgba(255,255,255,0.18) !important; }
@@ -1365,26 +1365,20 @@
 
       // ── i18n ──
       var STRINGS = {
-        en:  { title:'Login', email:'EMAIL', pass:'PASSWORD', cont:'Continue', forgot:'Forgot password?',
+        en:  { title:'Login', email:'EMAIL', cont:'Continue',
                vtitle:'Verification', sent:'OTP was sent to', desc:'Enter the code to log in securely to your account.',
                enterotp:'ENTER OTP', timer:'Time Remaining', nootp:"Didn't receive OTP?", resend:'Resend', confirm:'Confirm',
-               ftitle:'Forgot password', fdesc:"Enter your registered email and we'll send you an OTP to reset your password.", fsend:'Send OTP',
-               phEmail:'you@example.com', phPass:'Enter your password',
-               rptitle:'Set new password', newpass:'NEW PASSWORD', repass:'RE-ENTER PASSWORD', nomatch:"Passwords don't match", rpsave:'Save password', pwSaved:'Password updated — log in with your new password',
+               phEmail:'you@example.com',
                navHome:'Home', navFarms:'Farms', navMilk:'Milk', navEvents:'Events', navAccount:'Account' },
-        hi:  { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'जारी रखें', forgot:'पासवर्ड भूल गए?',
+        hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
-               ftitle:'पासवर्ड भूल गए', fdesc:'अपना पंजीकृत ईमेल डालें, हम पासवर्ड रीसेट के लिए OTP भेजेंगे।', fsend:'OTP भेजें',
-               phEmail:'अपना ईमेल डालें', phPass:'अपना पासवर्ड डालें',
-               rptitle:'नया पासवर्ड सेट करें', newpass:'नया पासवर्ड', repass:'पासवर्ड फिर से डालें', nomatch:'पासवर्ड मेल नहीं खाते', rpsave:'पासवर्ड सहेजें', pwSaved:'पासवर्ड बदल गया — नए पासवर्ड से लॉगिन करें',
+               phEmail:'अपना ईमेल डालें',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' },
-        bho: { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'आगे बढ़ीं', forgot:'पासवर्ड भुला गइनी?',
+        bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
-               ftitle:'पासवर्ड भुला गइनी', fdesc:'आपन पंजीकृत ईमेल डालीं, हम पासवर्ड रीसेट खातिर OTP भेजब।', fsend:'OTP भेजीं',
-               phEmail:'आपन ईमेल डालीं', phPass:'आपन पासवर्ड डालीं',
-               rptitle:'नया पासवर्ड सेट करीं', newpass:'नया पासवर्ड', repass:'पासवर्ड फिर से डालीं', nomatch:'पासवर्ड मेल ना खाला', rpsave:'पासवर्ड सहेजीं', pwSaved:'पासवर्ड बदल गइल — नया पासवर्ड से लॉगिन करीं',
+               phEmail:'आपन ईमेल डालीं',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' }
       };
       var lang = 'en';
