@@ -1411,6 +1411,7 @@ class _EventsScreenState extends State<EventsScreen> {
       border: VanixColors.border,
       priority: priority,
       channel: resolvedChannel,
+      manager: manager,
       title: title,
       sub: sub,
       meta: meta,
