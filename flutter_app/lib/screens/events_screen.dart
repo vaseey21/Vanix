@@ -1561,9 +1561,15 @@ class _ActionCard extends StatelessWidget {
   final Color? leftAccentColor;
   final double leftAccentWidth;
   final _Priority priority;
+  // Notification-channel routing text (e.g. "App notification · Schedule
+  // inseminator") — kept as a field so existing call sites don't need
+  // updating, but no longer rendered: cards were too text-heavy for the
+  // farm-owner persona and this line was the least essential (internal
+  // routing info, not something the farmer needs to act on).
   final String channel;
   final String title, sub;
   final String? meta;
+  final String? manager;
   final Widget child;
   final bool escalated;
   final bool isDark;
@@ -1578,6 +1584,7 @@ class _ActionCard extends StatelessWidget {
     required this.title,
     required this.sub,
     this.meta,
+    this.manager,
     required this.child,
     this.escalated = false,
     this.isDark = false,
