@@ -131,21 +131,9 @@ class _LoginScreenState extends State<LoginScreen> {
           t: t,
           isDark: isDark,
           emailCtrl: _emailCtrl,
-          passCtrl: _passCtrl,
           currentLanguage: widget.appState.languageCode,
-          pwSavedNote: _pwSavedNote,
           onLanguageTap: () => showLanguageSheet(context, current: widget.appState.languageCode, onSelect: widget.appState.setLanguage),
-          onForgot: () => setState(() => _panel = _Panel.forgot),
-          onContinue: () => _goToOtp(fromForgot: false),
-        );
-      case _Panel.forgot:
-        return _ForgotPanel(
-          key: const ValueKey('forgot'),
-          t: t,
-          isDark: isDark,
-          emailCtrl: _fpEmailCtrl,
-          onBack: () => setState(() => _panel = _Panel.login),
-          onSend: () => _goToOtp(fromForgot: true),
+          onContinue: _goToOtp,
         );
       case _Panel.otp:
         return _OtpPanel(
@@ -157,10 +145,10 @@ class _LoginScreenState extends State<LoginScreen> {
           secondsLeft: _secondsLeft,
           showResend: _showResend,
           confirmEnabled: _otpFilled,
-          targetEmail: _fromForgot ? _fpEmailCtrl.text : _emailCtrl.text,
+          targetEmail: _emailCtrl.text,
           onBack: () {
             _timer?.cancel();
-            setState(() => _panel = _fromForgot ? _Panel.forgot : _Panel.login);
+            setState(() => _panel = _Panel.login);
           },
           onResend: _startTimer,
           onChanged: () {
@@ -172,19 +160,6 @@ class _LoginScreenState extends State<LoginScreen> {
             }
           },
           onConfirm: _confirmOtp,
-        );
-      case _Panel.reset:
-        return _ResetPanel(
-          key: const ValueKey('reset'),
-          t: t,
-          isDark: isDark,
-          newPassCtrl: _newPassCtrl,
-          rePassCtrl: _rePassCtrl,
-          showMismatch: _rePassCtrl.text.isNotEmpty && !_rePassMatches,
-          saveEnabled: _rePassValid,
-          onBack: () => setState(() => _panel = _Panel.otp),
-          onChanged: () => setState(() {}),
-          onSave: _savePassword,
         );
     }
   }
