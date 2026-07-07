@@ -1643,6 +1643,71 @@ class _ActionCard extends StatelessWidget {
     this.isDark = false,
   });
 
+  // Deterministic mock temp/movement series so the detail page's graphs have
+  // something to draw — no real 10-day sensor dataset exists yet. Seeded off
+  // the title so each card gets a stable, slightly different series; the
+  // final ("today") value is always the spike/dip that triggered the alert.
+  List<double> _mockTemps() {
+    final h = title.hashCode;
+    final base = 38.2 + (h % 5) * 0.1;
+    return List.generate(9, (i) => base + ((h >> i) % 4) * 0.08)..add(base + 0.9);
+  }
+
+  List<int> _mockMoves() {
+    final h = title.hashCode;
+    return List.generate(9, (i) => 3 + ((h >> i) % 5))..add(9 + (h % 3));
+  }
+
+  void _openDetails(BuildContext context) {
+    String label;
+    Color pBg, pFg;
+    bool outline = false;
+    Color? borderColor;
+    switch (priority) {
+      case _Priority.p0:
+        label = 'P0 · CRITICAL';
+        pBg = const Color(0xFF8B2800);
+        pFg = Colors.white;
+        break;
+      case _Priority.p1:
+        label = 'P1 · ACTIONABLE';
+        pBg = VanixColors.warningInk;
+        pFg = Colors.white;
+        break;
+      case _Priority.p2:
+        label = 'P2 · WARNING';
+        pBg = VanixColors.warningBg;
+        pFg = VanixColors.warningInk;
+        outline = true;
+        borderColor = VanixColors.warning;
+        break;
+      case _Priority.p3:
+        label = 'P3 · INFO';
+        pBg = VanixColors.bgCard;
+        pFg = VanixColors.textHint;
+        outline = true;
+        borderColor = VanixColors.border;
+        break;
+    }
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CardDetailScreen(
+        title: title,
+        sub: sub,
+        meta: meta,
+        manager: manager,
+        priorityLabel: label,
+        priorityBg: pBg,
+        priorityFg: pFg,
+        priorityOutline: outline,
+        priorityBorderColor: borderColor,
+        isDark: isDark,
+        temps: _mockTemps(),
+        moves: _mockMoves(),
+        cta: child,
+      ),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final accentColor = leftAccentColor ?? border;
@@ -1671,8 +1736,14 @@ class _ActionCard extends StatelessWidget {
                   children: [
                     Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: titleColor)),
                     if (manager != null) Padding(padding: const EdgeInsets.only(top: 2), child: Text('Manager: $manager', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: VanixColors.textHint))),
-                    Padding(padding: const EdgeInsets.only(top: 3), child: Text(sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint, height: 1.5))),
-                    if (meta != null) Padding(padding: const EdgeInsets.only(top: 6), child: Text(meta!, style: const TextStyle(fontSize: 11, color: VanixColors.textHint))),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: TextButton(
+                        style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap, alignment: Alignment.centerLeft),
+                        onPressed: () => _openDetails(context),
+                        child: Text('View Details ›', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: isDark ? VanixColors.greenDeep : VanixColors.greenInk)),
+                      ),
+                    ),
                   ],
                 ),
               ),
