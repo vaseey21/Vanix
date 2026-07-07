@@ -2080,7 +2080,7 @@
       // real current date once wired to a backend.
       (function() {
         var today = new Date('2026-07-03T00:00:00');
-        document.querySelectorAll('.ev-rem[data-due]').forEach(function(row) {
+        document.querySelectorAll('#ev-sec-rem [data-due]').forEach(function(row) {
           var due = new Date(row.getAttribute('data-due') + 'T00:00:00');
           var dueEl = row.querySelector('.ev-rem-due');
           if (!dueEl) return;
