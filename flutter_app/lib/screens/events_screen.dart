@@ -1617,6 +1617,7 @@ class _ActionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: titleColor)),
+                    if (manager != null) Padding(padding: const EdgeInsets.only(top: 2), child: Text('Manager: $manager', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: VanixColors.textHint))),
                     Padding(padding: const EdgeInsets.only(top: 3), child: Text(sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint, height: 1.5))),
                     if (meta != null) Padding(padding: const EdgeInsets.only(top: 6), child: Text(meta!, style: const TextStyle(fontSize: 11, color: VanixColors.textHint))),
                   ],
@@ -1627,7 +1628,6 @@ class _ActionCard extends StatelessWidget {
               if (priority != _Priority.p0) _PriorityChip(priority: priority),
             ],
           ),
-          Padding(padding: const EdgeInsets.only(top: 2), child: Text(channel, style: const TextStyle(fontSize: 11, color: VanixColors.textHint))),
           child,
         ],
       ),
