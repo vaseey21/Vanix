@@ -23,9 +23,8 @@ You'll need to add the actual font files before it runs cleanly (see
 
 | Screen | Status |
 |---|---|
-| Login (email/password) | ✅ Ported — `lib/screens/login_screen.dart` |
+| Login (email + OTP, no password) | ✅ Ported — `lib/screens/login_screen.dart` |
 | OTP verification | ✅ Ported — same file, `_OtpPanel` |
-| Forgot password → OTP → reset password | ✅ Ported — `_ForgotPanel` / `_ResetPanel` |
 | Theme toggle (sun/moon pill) | ✅ Ported — `_ThemeToggle` |
 | Language bottom sheet (searchable) | ✅ Ported — `lib/widgets/language_sheet.dart` |
 | Bottom nav (droplet capsule animation) | ✅ Ported — `lib/widgets/vanix_bottom_nav.dart`, shared across every screen |

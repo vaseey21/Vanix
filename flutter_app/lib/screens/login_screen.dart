@@ -6,10 +6,10 @@ import '../theme/vanix_theme.dart';
 import '../widgets/language_sheet.dart';
 import 'dashboard_screen.dart';
 
-enum _Panel { login, forgot, otp, reset }
+enum _Panel { login, otp }
 
-/// Login → OTP → Dashboard, plus the Forgot-password → OTP → Reset-password
-/// side path. Mirrors the #s1-sheet flow in vanix_screens.html panel-for-panel.
+/// Login → OTP → Dashboard — pure OTP login, no password anywhere. Mirrors
+/// the #s1-sheet flow in vanix_screens.html panel-for-panel.
 ///
 /// NOTE for dev: the HTML version plays a looping hero video behind the sheet
 /// (assets/hero.mp4) that fades in before the sheet slides up. Swap the
@@ -26,20 +26,14 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   _Panel _panel = _Panel.login;
-  bool _fromForgot = false;
 
   final _emailCtrl = TextEditingController();
-  final _passCtrl = TextEditingController();
-  final _fpEmailCtrl = TextEditingController();
-  final _newPassCtrl = TextEditingController();
-  final _rePassCtrl = TextEditingController();
   final List<TextEditingController> _otpCtrls = List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _otpFocus = List.generate(6, (_) => FocusNode());
 
   Timer? _timer;
   int _secondsLeft = 30;
   bool _showResend = false;
-  String? _pwSavedNote;
 
   VanixStrings get t => VanixStrings.of(widget.appState.languageCode);
 
@@ -53,10 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
       f.dispose();
     }
     _emailCtrl.dispose();
-    _passCtrl.dispose();
-    _fpEmailCtrl.dispose();
-    _newPassCtrl.dispose();
-    _rePassCtrl.dispose();
     super.dispose();
   }
 
@@ -77,9 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  void _goToOtp({required bool fromForgot}) {
+  void _goToOtp() {
     setState(() {
-      _fromForgot = fromForgot;
       _panel = _Panel.otp;
       for (final c in _otpCtrls) {
         c.clear();
@@ -94,27 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void _confirmOtp() {
     if (!_otpFilled) return;
     _timer?.cancel();
-    if (_fromForgot) {
-      setState(() => _panel = _Panel.reset);
-      return;
-    }
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (_) => DashboardScreen(appState: widget.appState)),
     );
-  }
-
-  bool get _rePassMatches => _newPassCtrl.text == _rePassCtrl.text;
-  bool get _rePassValid => _newPassCtrl.text.length >= 4 && _rePassCtrl.text.length >= 4 && _rePassMatches;
-
-  void _savePassword() {
-    if (!_rePassValid) return;
-    setState(() {
-      _fromForgot = false;
-      _panel = _Panel.login;
-      _pwSavedNote = t.pwSaved;
-      _newPassCtrl.clear();
-      _rePassCtrl.clear();
-    });
   }
 
   @override
@@ -160,21 +131,9 @@ class _LoginScreenState extends State<LoginScreen> {
           t: t,
           isDark: isDark,
           emailCtrl: _emailCtrl,
-          passCtrl: _passCtrl,
           currentLanguage: widget.appState.languageCode,
-          pwSavedNote: _pwSavedNote,
           onLanguageTap: () => showLanguageSheet(context, current: widget.appState.languageCode, onSelect: widget.appState.setLanguage),
-          onForgot: () => setState(() => _panel = _Panel.forgot),
-          onContinue: () => _goToOtp(fromForgot: false),
-        );
-      case _Panel.forgot:
-        return _ForgotPanel(
-          key: const ValueKey('forgot'),
-          t: t,
-          isDark: isDark,
-          emailCtrl: _fpEmailCtrl,
-          onBack: () => setState(() => _panel = _Panel.login),
-          onSend: () => _goToOtp(fromForgot: true),
+          onContinue: _goToOtp,
         );
       case _Panel.otp:
         return _OtpPanel(
@@ -186,10 +145,10 @@ class _LoginScreenState extends State<LoginScreen> {
           secondsLeft: _secondsLeft,
           showResend: _showResend,
           confirmEnabled: _otpFilled,
-          targetEmail: _fromForgot ? _fpEmailCtrl.text : _emailCtrl.text,
+          targetEmail: _emailCtrl.text,
           onBack: () {
             _timer?.cancel();
-            setState(() => _panel = _fromForgot ? _Panel.forgot : _Panel.login);
+            setState(() => _panel = _Panel.login);
           },
           onResend: _startTimer,
           onChanged: () {
@@ -201,19 +160,6 @@ class _LoginScreenState extends State<LoginScreen> {
             }
           },
           onConfirm: _confirmOtp,
-        );
-      case _Panel.reset:
-        return _ResetPanel(
-          key: const ValueKey('reset'),
-          t: t,
-          isDark: isDark,
-          newPassCtrl: _newPassCtrl,
-          rePassCtrl: _rePassCtrl,
-          showMismatch: _rePassCtrl.text.isNotEmpty && !_rePassMatches,
-          saveEnabled: _rePassValid,
-          onBack: () => setState(() => _panel = _Panel.otp),
-          onChanged: () => setState(() {}),
-          onSave: _savePassword,
         );
     }
   }
@@ -301,21 +247,17 @@ class _SheetContainer extends StatelessWidget {
 class _LoginPanel extends StatelessWidget {
   final VanixStrings t;
   final bool isDark;
-  final TextEditingController emailCtrl, passCtrl;
+  final TextEditingController emailCtrl;
   final String currentLanguage;
-  final String? pwSavedNote;
-  final VoidCallback onLanguageTap, onForgot, onContinue;
+  final VoidCallback onLanguageTap, onContinue;
 
   const _LoginPanel({
     super.key,
     required this.t,
     required this.isDark,
     required this.emailCtrl,
-    required this.passCtrl,
     required this.currentLanguage,
-    required this.pwSavedNote,
     required this.onLanguageTap,
-    required this.onForgot,
     required this.onContinue,
   });
 
@@ -335,61 +277,11 @@ class _LoginPanel extends StatelessWidget {
             _PillButton(label: native, onTap: onLanguageTap, isDark: isDark),
           ],
         ),
-        if (pwSavedNote != null) ...[
-          const SizedBox(height: 16),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(color: VanixColors.activeBg, border: Border.all(color: VanixColors.greenDeep), borderRadius: BorderRadius.circular(12)),
-            child: Text(pwSavedNote!, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-          ),
-        ],
         const SizedBox(height: 36),
         _FieldLabel(t.email, isDark: isDark),
         _UnderlineField(controller: emailCtrl, hint: t.phEmail, isDark: isDark),
-        const SizedBox(height: 28),
-        _FieldLabel(t.pass, isDark: isDark),
-        _UnderlineField(controller: passCtrl, hint: t.phPass, isDark: isDark, obscure: true),
         const SizedBox(height: 44),
         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onContinue, child: Text(t.cont))),
-        const SizedBox(height: 22),
-        Center(
-          child: GestureDetector(
-            onTap: onForgot,
-            child: Text(t.forgot, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: textColor, decoration: TextDecoration.underline)),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ForgotPanel extends StatelessWidget {
-  final VanixStrings t;
-  final bool isDark;
-  final TextEditingController emailCtrl;
-  final VoidCallback onBack, onSend;
-
-  const _ForgotPanel({super.key, required this.t, required this.isDark, required this.emailCtrl, required this.onBack, required this.onSend});
-
-  @override
-  Widget build(BuildContext context) {
-    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 22),
-        _BackRow(title: t.ftitle, isDark: isDark, onBack: onBack),
-        Padding(
-          padding: const EdgeInsets.only(top: 24),
-          child: Text(t.fdesc, style: TextStyle(fontSize: 13, color: textColor.withOpacity(0.65), height: 1.6)),
-        ),
-        const SizedBox(height: 28),
-        _FieldLabel(t.email, isDark: isDark),
-        _UnderlineField(controller: emailCtrl, hint: t.phEmail, isDark: isDark),
-        const SizedBox(height: 40),
-        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onSend, child: Text(t.fsend))),
       ],
     );
   }
@@ -483,48 +375,6 @@ class _OtpPanel extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: confirmEnabled ? onConfirm : null, child: Text(t.confirm))),
-      ],
-    );
-  }
-}
-
-class _ResetPanel extends StatelessWidget {
-  final VanixStrings t;
-  final bool isDark;
-  final TextEditingController newPassCtrl, rePassCtrl;
-  final bool showMismatch, saveEnabled;
-  final VoidCallback onBack, onChanged, onSave;
-
-  const _ResetPanel({
-    super.key,
-    required this.t,
-    required this.isDark,
-    required this.newPassCtrl,
-    required this.rePassCtrl,
-    required this.showMismatch,
-    required this.saveEnabled,
-    required this.onBack,
-    required this.onChanged,
-    required this.onSave,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 22),
-        _BackRow(title: t.rptitle, isDark: isDark, onBack: onBack),
-        const SizedBox(height: 28),
-        _FieldLabel(t.newpass, isDark: isDark),
-        _UnderlineField(controller: newPassCtrl, hint: '••••••••', isDark: isDark, obscure: true, onChanged: onChanged),
-        const SizedBox(height: 24),
-        _FieldLabel(t.repass, isDark: isDark),
-        _UnderlineField(controller: rePassCtrl, hint: '••••••••', isDark: isDark, obscure: true, onChanged: onChanged),
-        if (showMismatch) Padding(padding: const EdgeInsets.only(top: 8), child: Text(t.nomatch, style: const TextStyle(fontSize: 12, color: VanixColors.danger))),
-        const SizedBox(height: 36),
-        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: saveEnabled ? onSave : null, child: Text(t.rpsave))),
       ],
     );
   }
