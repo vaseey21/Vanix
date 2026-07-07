@@ -1111,9 +1111,10 @@
               <!-- 3c. Milking notification — fires after delivery is confirmed -->
               <div class="ev-card" id="ev-milk-notif" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
                 <div style="min-width:0;">
-                  <p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;" id="ev-milk-notif-title">Lakshmi is now in her lactation period (250 days)</p>
-                  <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
-                  <p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Add her to the milking list?</p>
+                  <p class="ev-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;" id="ev-milk-notif-title">Lakshmi is now in her lactation period (250 days)</p>
+                  <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
+                  <button class="en ev-viewdetails" onclick="openCardDetail('ev-milk-notif','p1')">View Details ›</button>
+                  <p class="ev-sub">Add her to the milking list?</p>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
                   <span class="en ev-chip ev-chip-p1">P1 · ACTIONABLE</span>
