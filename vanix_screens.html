@@ -1732,16 +1732,19 @@
       // active while an input inside the sheet is focused, so it never fights
       // the sheet's own show/hide transforms.
       var sheetInputFocused = false;
+      // Only lift while a sheet input is focused — never force translateY(0) on
+      // an unfocused resize (that would snap the sheet up over the splash logo
+      // during the intro animation / mobile address-bar collapse).
       function liftSheetForKeyboard() {
-        if (!window.visualViewport) return;
+        if (!window.visualViewport || !sheetInputFocused) return;
         var kb = window.innerHeight - window.visualViewport.height;
-        sheet.style.transform = (sheetInputFocused && kb > 80) ? 'translateY(-' + kb + 'px)' : 'translateY(0)';
+        sheet.style.transform = kb > 80 ? 'translateY(-' + kb + 'px)' : 'translateY(0)';
       }
       sheet.addEventListener('focusin', function() { sheetInputFocused = true; liftSheetForKeyboard(); });
       sheet.addEventListener('focusout', function() {
         sheetInputFocused = false;
         // let the keyboard finish closing before dropping the sheet back
-        setTimeout(liftSheetForKeyboard, 50);
+        setTimeout(function() { if (!sheetInputFocused) sheet.style.transform = 'translateY(0)'; }, 50);
       });
       if (window.visualViewport) window.visualViewport.addEventListener('resize', liftSheetForKeyboard);
     })();
