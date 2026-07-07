@@ -1748,6 +1748,9 @@ class _ReminderCard extends StatelessWidget {
       dueLabel = '$days days left';
       dueColor = VanixColors.textHint;
     }
+    final span = dueDate.difference(startDate).inMinutes;
+    final elapsed = _demoToday.difference(startDate).inMinutes;
+    final pct = span > 0 ? (elapsed / span).clamp(0.0, 1.0) : 1.0;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
       decoration: BoxDecoration(color: isDark ? const Color(0xFF1C1C1C) : VanixColors.bgCard, border: Border.all(color: isDark ? const Color(0xFF3A3A3A) : VanixColors.border), borderRadius: BorderRadius.circular(16)),
