@@ -1342,6 +1342,7 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: 'Temperature up and feeding down — possible udder infection.',
         meta: 'Green Valley Farm · Belt 09',
         question: 'Does Bhoori show swelling or milk changes?',
+        manager: 'Ramesh Kumar',
       );
 
   Widget _buildLamenessCard(bool isDark) => _buildInspectCard(
@@ -1352,6 +1353,7 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: 'Barely standing and resting far more than usual — possible leg or hoof issue.',
         meta: 'Green Valley Farm · Belt 18',
         question: 'Does Dhauli seem to be limping?',
+        manager: 'Ramesh Kumar',
       );
 
   Widget _buildKetosisCard(bool isDark) => _buildInspectCard(
@@ -1362,6 +1364,7 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: 'Reduced rumination this early in her milking cycle — a metabolic condition common just after calving.',
         meta: 'Green Valley Farm · Belt 52 · Day 12 in milk',
         question: 'Does Lakshmi seem lethargic or off her feed?',
+        manager: 'Ramesh Kumar',
       );
 
   // shared: single-acknowledge card builder (Proestrus / Herd Heat Stress / Calibration)
@@ -1425,6 +1428,7 @@ class _EventsScreenState extends State<EventsScreen> {
         meta: 'Green Valley Farm · Belt 63',
         buttonLabel: 'Got it, watching',
         resolvedMessage: "Watching Kajri closely — you'll get a separate alert if this strengthens to confirmed heat.",
+        manager: 'Ramesh Kumar',
       );
 
   Widget _buildHerdStressCard(bool isDark) => _buildAckCard(
