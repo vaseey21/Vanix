@@ -1452,6 +1452,7 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: 'Her new collar has finished calibrating and is now live-monitored.',
         buttonLabel: 'Got it',
         resolvedMessage: 'Ganga is now fully live-monitored.',
+        manager: 'Ramesh Kumar',
       );
 }
 
