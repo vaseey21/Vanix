@@ -1978,6 +1978,27 @@
       function evResolve() { evOpen = Math.max(0, evOpen - 1); evUpdateBadges(); }
       evUpdateBadges();
 
+      // Reminders — static "days left" computed once from each card's due
+      // date vs. today. DEMO: "today" is fixed to match the History section's
+      // "YESTERDAY — 2 JUL" reference (i.e. today = 3 Jul) — replace with the
+      // real current date once wired to a backend.
+      (function() {
+        var today = new Date('2026-07-03T00:00:00');
+        document.querySelectorAll('#ev-sec-rem [data-due]').forEach(function(row) {
+          var due = new Date(row.getAttribute('data-due') + 'T00:00:00');
+          var dueEl = row.querySelector('.ev-rem-due');
+          if (!dueEl) return;
+          var days = Math.round((due - today) / 86400000);
+          var label, color;
+          if (days < 0) { label = 'Overdue by ' + (-days) + 'd'; color = 'var(--danger)'; }
+          else if (days === 0) { label = 'Due today'; color = 'var(--danger)'; }
+          else if (days <= 2) { label = days + ' day' + (days === 1 ? '' : 's') + ' left'; color = '#8A5A00'; }
+          else { label = days + ' days left'; color = 'var(--text2)'; }
+          dueEl.textContent = label;
+          dueEl.style.color = color;
+        });
+      })();
+
       // Events tabs: All / Needs action / Reminders
       document.querySelectorAll('.ev-tab').forEach(function(tab) {
         tab.addEventListener('click', function() {
