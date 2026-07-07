@@ -1770,6 +1770,18 @@ class _ReminderCard extends StatelessWidget {
                 Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: isDark ? Colors.white : VanixColors.textPrimary)),
                 Text(sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
                 Padding(padding: const EdgeInsets.only(top: 4), child: Text(dueLabel, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: dueColor))),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(2),
+                    child: LinearProgressIndicator(
+                      value: pct,
+                      minHeight: 4,
+                      backgroundColor: isDark ? const Color(0xFF3A3A3A) : VanixColors.border,
+                      valueColor: AlwaysStoppedAnimation<Color>(dueColor),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
