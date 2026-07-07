@@ -6,10 +6,10 @@ import '../theme/vanix_theme.dart';
 import '../widgets/language_sheet.dart';
 import 'dashboard_screen.dart';
 
-enum _Panel { login, forgot, otp, reset }
+enum _Panel { login, otp }
 
-/// Login → OTP → Dashboard, plus the Forgot-password → OTP → Reset-password
-/// side path. Mirrors the #s1-sheet flow in vanix_screens.html panel-for-panel.
+/// Login → OTP → Dashboard — pure OTP login, no password anywhere. Mirrors
+/// the #s1-sheet flow in vanix_screens.html panel-for-panel.
 ///
 /// NOTE for dev: the HTML version plays a looping hero video behind the sheet
 /// (assets/hero.mp4) that fades in before the sheet slides up. Swap the
