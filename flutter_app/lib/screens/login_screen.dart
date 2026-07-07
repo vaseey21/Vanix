@@ -247,21 +247,17 @@ class _SheetContainer extends StatelessWidget {
 class _LoginPanel extends StatelessWidget {
   final VanixStrings t;
   final bool isDark;
-  final TextEditingController emailCtrl, passCtrl;
+  final TextEditingController emailCtrl;
   final String currentLanguage;
-  final String? pwSavedNote;
-  final VoidCallback onLanguageTap, onForgot, onContinue;
+  final VoidCallback onLanguageTap, onContinue;
 
   const _LoginPanel({
     super.key,
     required this.t,
     required this.isDark,
     required this.emailCtrl,
-    required this.passCtrl,
     required this.currentLanguage,
-    required this.pwSavedNote,
     required this.onLanguageTap,
-    required this.onForgot,
     required this.onContinue,
   });
 
@@ -281,61 +277,11 @@ class _LoginPanel extends StatelessWidget {
             _PillButton(label: native, onTap: onLanguageTap, isDark: isDark),
           ],
         ),
-        if (pwSavedNote != null) ...[
-          const SizedBox(height: 16),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(color: VanixColors.activeBg, border: Border.all(color: VanixColors.greenDeep), borderRadius: BorderRadius.circular(12)),
-            child: Text(pwSavedNote!, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-          ),
-        ],
         const SizedBox(height: 36),
         _FieldLabel(t.email, isDark: isDark),
         _UnderlineField(controller: emailCtrl, hint: t.phEmail, isDark: isDark),
-        const SizedBox(height: 28),
-        _FieldLabel(t.pass, isDark: isDark),
-        _UnderlineField(controller: passCtrl, hint: t.phPass, isDark: isDark, obscure: true),
         const SizedBox(height: 44),
         SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onContinue, child: Text(t.cont))),
-        const SizedBox(height: 22),
-        Center(
-          child: GestureDetector(
-            onTap: onForgot,
-            child: Text(t.forgot, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: textColor, decoration: TextDecoration.underline)),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ForgotPanel extends StatelessWidget {
-  final VanixStrings t;
-  final bool isDark;
-  final TextEditingController emailCtrl;
-  final VoidCallback onBack, onSend;
-
-  const _ForgotPanel({super.key, required this.t, required this.isDark, required this.emailCtrl, required this.onBack, required this.onSend});
-
-  @override
-  Widget build(BuildContext context) {
-    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 22),
-        _BackRow(title: t.ftitle, isDark: isDark, onBack: onBack),
-        Padding(
-          padding: const EdgeInsets.only(top: 24),
-          child: Text(t.fdesc, style: TextStyle(fontSize: 13, color: textColor.withOpacity(0.65), height: 1.6)),
-        ),
-        const SizedBox(height: 28),
-        _FieldLabel(t.email, isDark: isDark),
-        _UnderlineField(controller: emailCtrl, hint: t.phEmail, isDark: isDark),
-        const SizedBox(height: 40),
-        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onSend, child: Text(t.fsend))),
       ],
     );
   }
