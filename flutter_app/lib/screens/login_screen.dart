@@ -380,48 +380,6 @@ class _OtpPanel extends StatelessWidget {
   }
 }
 
-class _ResetPanel extends StatelessWidget {
-  final VanixStrings t;
-  final bool isDark;
-  final TextEditingController newPassCtrl, rePassCtrl;
-  final bool showMismatch, saveEnabled;
-  final VoidCallback onBack, onChanged, onSave;
-
-  const _ResetPanel({
-    super.key,
-    required this.t,
-    required this.isDark,
-    required this.newPassCtrl,
-    required this.rePassCtrl,
-    required this.showMismatch,
-    required this.saveEnabled,
-    required this.onBack,
-    required this.onChanged,
-    required this.onSave,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 22),
-        _BackRow(title: t.rptitle, isDark: isDark, onBack: onBack),
-        const SizedBox(height: 28),
-        _FieldLabel(t.newpass, isDark: isDark),
-        _UnderlineField(controller: newPassCtrl, hint: '••••••••', isDark: isDark, obscure: true, onChanged: onChanged),
-        const SizedBox(height: 24),
-        _FieldLabel(t.repass, isDark: isDark),
-        _UnderlineField(controller: rePassCtrl, hint: '••••••••', isDark: isDark, obscure: true, onChanged: onChanged),
-        if (showMismatch) Padding(padding: const EdgeInsets.only(top: 8), child: Text(t.nomatch, style: const TextStyle(fontSize: 12, color: VanixColors.danger))),
-        const SizedBox(height: 36),
-        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: saveEnabled ? onSave : null, child: Text(t.rpsave))),
-      ],
-    );
-  }
-}
-
 // ── shared bits ──────────────────────────────────────────────
 
 class _BackRow extends StatelessWidget {
