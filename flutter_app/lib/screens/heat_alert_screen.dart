@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/vanix_theme.dart';
+import '../widgets/graph_widgets.dart';
 
 /// One heat alert's data for the full-screen carousel.
 class _HeatAlertData {
