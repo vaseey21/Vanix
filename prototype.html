@@ -1476,28 +1476,8 @@
         }, 1000);
       }
 
-      // forgot password: email panel → same OTP flow
-      document.getElementById('s1-forgot').addEventListener('click', function() {
-        loginPanel.style.display = 'none';
-        document.getElementById('s1-forgot-panel').style.display = 'block';
-      });
-      document.getElementById('s1-fp-back').addEventListener('click', function() {
-        document.getElementById('s1-forgot-panel').style.display = 'none';
-        loginPanel.style.display = 'block';
-      });
-      document.getElementById('s1-fp-send').addEventListener('click', function() {
-        fromForgot = true;
-        document.getElementById('s1-forgot-panel').style.display = 'none';
-        otpPanel.style.display = 'block';
-        boxes.forEach(function(b) { b.value = ''; });
-        confirmBtn.disabled = true;
-        confirmBtn.style.background = '#B5B5B5';
-        boxes[0].focus();
-        startTimer();
-      });
-
+      // Email → OTP (no password anywhere — pure OTP login)
       document.getElementById('s1-continue').addEventListener('click', function() {
-        fromForgot = false;
         loginPanel.style.display = 'none';
         otpPanel.style.display = 'block';
         boxes.forEach(function(b) { b.value = ''; });
@@ -1516,54 +1496,10 @@
 
       resendEl.addEventListener('click', startTimer);
 
-
-      // ── Reset password panel (forgot-password flow only) ──
-      var fromForgot = false;
-      var resetPanel = document.getElementById('s1-reset-panel');
-      var npIn = document.getElementById('s1-in-newpass');
-      var rpIn = document.getElementById('s1-in-repass');
-      var rpErr = document.getElementById('s1-rp-err');
-      var rpSave = document.getElementById('s1-rp-save');
-      function rpValidate() {
-        var filled = npIn.value.length >= 4 && rpIn.value.length >= 4;
-        var match = npIn.value === rpIn.value;
-        rpErr.style.display = (rpIn.value && !match) ? 'block' : 'none';
-        var ok = filled && match;
-        rpSave.disabled = !ok;
-        rpSave.style.background = ok ? 'var(--greenink)' : '#B5B5B5';
-      }
-      npIn.addEventListener('input', rpValidate);
-      rpIn.addEventListener('input', rpValidate);
-      document.getElementById('s1-rp-back').addEventListener('click', function() {
-        resetPanel.style.display = 'none';
-        otpPanel.style.display = 'block';
-      });
-      rpSave.addEventListener('click', function() {
-        if (rpSave.disabled) return;
-        fromForgot = false;
-        resetPanel.style.display = 'none';
-        loginPanel.style.display = 'block';
-        var note = document.getElementById('s1-pw-note');
-        if (!note) {
-          note = document.createElement('p');
-          note.id = 's1-pw-note';
-          note.style.cssText = 'font-size:12px; font-weight:600; color:var(--greenink); background:var(--activebg); border:1px solid var(--greendeep); border-radius:12px; padding:10px 14px; margin:16px 0 0;';
-          loginPanel.insertBefore(note, loginPanel.children[1]);
-        }
-        note.textContent = t().pwSaved;
-        npIn.value = ''; rpIn.value = ''; rpValidate();
-      });
-
-      // Confirm → dashboard (login) or reset-password panel (forgot flow)
+      // Confirm → dashboard
       confirmBtn.addEventListener('click', function() {
         if (confirmBtn.disabled) return;
         clearInterval(countdown);
-        if (fromForgot) {
-          otpPanel.style.display = 'none';
-          resetPanel.style.display = 'block';
-          npIn.focus();
-          return;
-        }
         document.getElementById('s1-dash').style.transform = 'translateY(0)';
       });
 
