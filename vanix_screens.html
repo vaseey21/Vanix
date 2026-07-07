@@ -407,46 +407,8 @@
                 <p id="s1-l-email" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">EMAIL</p>
                 <input type="email" id="s1-in-email" placeholder="you@example.com" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-hi); padding:0 0 10px;">
               </div>
-              <div style="margin-top:28px;">
-                <p id="s1-l-pass" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">PASSWORD</p>
-                <input type="password" id="s1-in-pass" placeholder="••••••••" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-hi); padding:0 0 10px;">
-              </div>
 
               <button id="s1-continue" style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:44px; cursor:pointer;">Continue</button>
-              <p id="s1-forgot" style="font-size:13px; font-weight:500; color:var(--text1); margin:22px 0 0; text-align:center; text-decoration:underline; text-underline-offset:3px; cursor:pointer;">Forgot password?</p>
-            </div>
-
-            <!-- ── PANEL C: Forgot password (hidden) ── -->
-            <div id="s1-forgot-panel" style="display:none;">
-              <div style="display:flex; align-items:center; gap:10px; padding-top:22px;">
-                <button id="s1-fp-back" style="width:34px; height:34px; border:none; background:transparent; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text1);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-                <span id="s1-fp-title" style="font-size:15px; font-weight:600; color:var(--text1);">Forgot password</span>
-              </div>
-              <p id="s1-fp-desc" style="font-size:13px; color:var(--text2); margin:24px 0 0; line-height:1.6;">Enter your registered email and we'll send you an OTP to reset your password.</p>
-              <div style="margin-top:28px;">
-                <p id="s1-l-fpemail" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">EMAIL</p>
-                <input type="email" id="s1-in-fpemail" placeholder="you@example.com" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-hi); padding:0 0 10px;">
-              </div>
-              <button id="s1-fp-send" style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:40px; cursor:pointer;">Send OTP</button>
-            </div>
-
-
-            <!-- ── PANEL D: Reset password (after forgot-password OTP) ── -->
-            <div id="s1-reset-panel" style="display:none;">
-              <div style="display:flex; align-items:center; gap:10px; padding-top:22px;">
-                <button id="s1-rp-back" style="width:34px; height:34px; border:none; background:transparent; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text1);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-                <span id="s1-rp-title" style="font-size:15px; font-weight:600; color:var(--text1);">Set new password</span>
-              </div>
-              <div style="margin-top:28px;">
-                <p id="s1-l-newpass" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">NEW PASSWORD</p>
-                <input type="password" id="s1-in-newpass" placeholder="••••••••" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-hi); padding:0 0 10px;">
-              </div>
-              <div style="margin-top:24px;">
-                <p id="s1-l-repass" style="font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">RE-ENTER PASSWORD</p>
-                <input type="password" id="s1-in-repass" placeholder="••••••••" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-hi); padding:0 0 10px;">
-                <p id="s1-rp-err" style="display:none; font-size:12px; color:var(--danger); margin:8px 0 0;">Passwords don't match</p>
-              </div>
-              <button id="s1-rp-save" style="width:100%; height:52px; background:#B5B5B5; color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:36px; cursor:pointer;" disabled>Save password</button>
             </div>
 
             <!-- ── PANEL B: OTP (hidden until Continue) ── -->
@@ -1490,26 +1452,20 @@
 
       // ── i18n ──
       var STRINGS = {
-        en:  { title:'Login', email:'EMAIL', pass:'PASSWORD', cont:'Continue', forgot:'Forgot password?',
+        en:  { title:'Login', email:'EMAIL', cont:'Continue',
                vtitle:'Verification', sent:'OTP was sent to', desc:'Enter the code to log in securely to your account.',
                enterotp:'ENTER OTP', timer:'Time Remaining', nootp:"Didn't receive OTP?", resend:'Resend', confirm:'Confirm',
-               ftitle:'Forgot password', fdesc:"Enter your registered email and we'll send you an OTP to reset your password.", fsend:'Send OTP',
-               phEmail:'you@example.com', phPass:'Enter your password',
-               rptitle:'Set new password', newpass:'NEW PASSWORD', repass:'RE-ENTER PASSWORD', nomatch:"Passwords don't match", rpsave:'Save password', pwSaved:'Password updated — log in with your new password',
+               phEmail:'you@example.com',
                navHome:'Home', navFarms:'Farms', navMilk:'Milk', navEvents:'Events', navAccount:'Account' },
-        hi:  { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'जारी रखें', forgot:'पासवर्ड भूल गए?',
+        hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
-               ftitle:'पासवर्ड भूल गए', fdesc:'अपना पंजीकृत ईमेल डालें, हम पासवर्ड रीसेट के लिए OTP भेजेंगे।', fsend:'OTP भेजें',
-               phEmail:'अपना ईमेल डालें', phPass:'अपना पासवर्ड डालें',
-               rptitle:'नया पासवर्ड सेट करें', newpass:'नया पासवर्ड', repass:'पासवर्ड फिर से डालें', nomatch:'पासवर्ड मेल नहीं खाते', rpsave:'पासवर्ड सहेजें', pwSaved:'पासवर्ड बदल गया — नए पासवर्ड से लॉगिन करें',
+               phEmail:'अपना ईमेल डालें',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' },
-        bho: { title:'लॉगिन', email:'ईमेल', pass:'पासवर्ड', cont:'आगे बढ़ीं', forgot:'पासवर्ड भुला गइनी?',
+        bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
-               ftitle:'पासवर्ड भुला गइनी', fdesc:'आपन पंजीकृत ईमेल डालीं, हम पासवर्ड रीसेट खातिर OTP भेजब।', fsend:'OTP भेजीं',
-               phEmail:'आपन ईमेल डालीं', phPass:'आपन पासवर्ड डालीं',
-               rptitle:'नया पासवर्ड सेट करीं', newpass:'नया पासवर्ड', repass:'पासवर्ड फिर से डालीं', nomatch:'पासवर्ड मेल ना खाला', rpsave:'पासवर्ड सहेजीं', pwSaved:'पासवर्ड बदल गइल — नया पासवर्ड से लॉगिन करीं',
+               phEmail:'आपन ईमेल डालीं',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' }
       };
       var lang = 'en';
