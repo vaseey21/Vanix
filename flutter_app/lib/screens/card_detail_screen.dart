@@ -60,6 +60,7 @@ class CardDetailScreen extends StatelessWidget {
     this.illustrationEmoji,
     this.conditionIcon,
     this.conditionIconColor,
+    this.illustrationAssets,
     this.cowName,
     this.cowBreed,
     this.illustrationTint,
