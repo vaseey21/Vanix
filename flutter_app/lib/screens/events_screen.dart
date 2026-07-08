@@ -1707,6 +1707,7 @@ class _ActionCard extends StatelessWidget {
         isDark: isDark,
         temps: _mockTemps(),
         moves: _mockMoves(),
+        moveIsFlat: _mockMoves().toSet().length == 1,
         cta: child,
       ),
     ));
