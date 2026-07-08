@@ -2836,11 +2836,26 @@
           if (avatarEl) {
             illusWrap.style.display = 'block';
             var illus = document.getElementById('ev-detail-illus');
-            illus.textContent = avatarEl.textContent;
-            illus.style.background = getComputedStyle(avatarEl).backgroundColor;
-            illus.style.border = '1px solid ' + getComputedStyle(avatarEl).borderColor;
+            var condIcon = card.querySelector('.ev-cond-icon');
+            if (avatarEl.tagName === 'IMG') {
+              // Real cow photo — condition icon rendered beside it, not overlapping.
+              illus.style.background = 'transparent';
+              illus.style.border = 'none';
+              illus.style.width = 'auto';
+              illus.style.height = 'auto';
+              illus.style.gap = '14px';
+              illus.innerHTML = '<img src="' + avatarEl.getAttribute('src') + '" alt="" style="width:128px; height:auto; object-fit:contain;">' +
+                (condIcon ? '<span style="display:inline-flex; transform:scale(1.5);">' + condIcon.innerHTML + '</span>' : '');
+            } else {
+              illus.style.width = '128px';
+              illus.style.height = '116px';
+              illus.style.gap = '0';
+              illus.textContent = avatarEl.textContent;
+              illus.style.background = getComputedStyle(avatarEl).backgroundColor;
+              illus.style.border = '1px solid ' + getComputedStyle(avatarEl).borderColor;
+            }
             var titleText = titleEl ? titleEl.textContent : '';
-            var cowName = titleText.indexOf('—') >= 0 ? titleText.split('—').pop().trim() : '';
+            var cowName = titleText.indexOf('—') >= 0 ? titleText.split('—').pop().trim() : (titleText.split(' ')[0] || '');
             document.getElementById('ev-detail-cow').textContent = EV_BREED[cowName] ? (cowName + ' · ' + EV_BREED[cowName]) : cowName;
           } else {
             illusWrap.style.display = 'none';
