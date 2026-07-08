@@ -248,13 +248,21 @@
     #flow-root.display-image #ev-heat #ev-heat-phase, #flow-root.display-image #ev-heat #ev-heat-bar-wrap,
     #flow-root.display-image #ev-heat #ev-heat-note,
     #flow-root.display-image #ev-heat .ev-body > p.en { display: none !important; }
-    #flow-root.display-image #ev-heat .ev-chip svg { display: inline; }
-    #flow-root.display-image #ev-heat .ev-chip-p1::after { content: ""; }
+    #flow-root.display-image #ev-heat .ev-chip-wrap { display: none !important; }
     #flow-root.display-image #ev-fever .ev-no .ev-btn-svg, #flow-root.display-image #ev-fever .ev-yes .ev-btn-svg,
     #flow-root.display-image #ev-heat .ev-no .ev-btn-svg, #flow-root.display-image #ev-heat .ev-yes .ev-btn-svg { display: inline; }
     #flow-root.display-image #ev-fever .ev-btn-full { display: none; }
     #flow-root.display-image #ev-fever .ev-btn-short { display: inline; }
-    #flow-root.display-image #ev-fever, #flow-root.display-image #ev-heat { background-size: cover !important; background-repeat: no-repeat !important; background-color: #111 !important; border: none !important; }
+    #flow-root.display-image .ev-photo-viewdetails { display: block !important; }
+    /* Anchor cow·breed to the top and question/View-Details/CTA to the
+       bottom of the full-bleed photo card via flex + margin-top:auto on the
+       question paragraph (pushes it and everything after it down),
+       matching the approved mockup (title top, question+CTA bottom). */
+    #flow-root.display-image #ev-fever, #flow-root.display-image #ev-heat {
+      background-size: cover !important; background-repeat: no-repeat !important; background-color: #111 !important; border: none !important;
+      display: flex !important; flex-direction: column; min-height: 300px;
+    }
+    #flow-root.display-image #ev-fever .ev-anchor-bottom, #flow-root.display-image #ev-heat .ev-anchor-bottom { margin-top: auto !important; }
     #flow-root.display-image #ev-fever { background-image: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.7) 100%), url('assets/images/fever_photo.jpg') !important; background-position: center 30% !important; }
     #flow-root.display-image #ev-heat { background-image: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.7) 100%), url('assets/images/heat_photo.jpg') !important; background-position: center 15% !important; }
     #flow-root.display-image #ev-fever .ev-title, #flow-root.display-image #ev-fever p,
@@ -994,7 +1002,8 @@
                   <img class="ev-avatar ev-illus-img" src="assets/images/cow_icon.png" alt="" style="width:72px; height:auto; object-fit:contain; flex-shrink:0;">
                   <span class="ev-cond-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg></span>
                 </div>
-                <p class="en ev-question-big" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Does Kajri look unwell to you?</p>
+                <p class="en ev-question-big ev-anchor-bottom" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Does Kajri look unwell to you?</p>
+                <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-fever','p0');" style="display:none; background:none; border:none; padding:0; margin:6px auto 0; font-size:12px; font-weight:600; color:#8FE6B8; font-family:var(--font-hi); cursor:pointer; text-align:center;">View Details ›</button>
                 <div class="ev-body" onclick="event.stopPropagation();">
                   <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg class="ev-btn-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span class="ev-btn-full">No, she's fine</span><span class="ev-btn-short">No</span></button>
@@ -1009,7 +1018,7 @@
                 <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
                 <p class="ev-sub">Temperature swinging up and down with high movement since 04:30 this morning.</p>
                 <p class="en ev-meta">Green Valley Farm · Belt 41 · detected 04:30</p>
-                <div style="display:flex; align-items:center; justify-content:center; margin-top:0;">
+                <div class="ev-chip-wrap" style="display:flex; align-items:center; justify-content:center; margin-top:0;">
                   <span class="en ev-chip ev-chip-p1" style="display:inline-flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>P1</span>
                 </div>
                 <p class="en ev-cow-breed" style="text-align:center; font-size:13px; font-weight:600; color:var(--text1); margin:6px 0 0;">Gauri · Desi</p>
@@ -1018,7 +1027,8 @@
                   <img class="ev-illus-img" src="assets/images/bull_icon.png" alt="" style="width:64px; height:auto; object-fit:contain; flex-shrink:0;">
                   <img class="ev-illus-img" src="assets/images/insemination_icon.png" alt="" style="width:56px; height:auto; object-fit:contain; flex-shrink:0;">
                 </div>
-                <p class="en" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Is Gauri in heat?</p>
+                <p class="en ev-anchor-bottom" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Is Gauri in heat?</p>
+                <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-heat','p1');" style="display:none; background:none; border:none; padding:0; margin:6px auto 0; font-size:12px; font-weight:600; color:#8FE6B8; font-family:var(--font-hi); cursor:pointer; text-align:center;">View Details ›</button>
                 <div class="ev-body" onclick="event.stopPropagation();">
                   <p id="ev-heat-phase" class="en" style="font-size:12px; font-weight:600; color:var(--text1); margin:8px 0 0;"></p>
                   <!-- Segmented 24h window bar: 6h pre / 12h optimal / 6h suboptimal, one fill travelling across all three -->
