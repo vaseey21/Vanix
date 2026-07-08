@@ -1688,13 +1688,15 @@
       // the keyboard's height via the VisualViewport API — smooth (rides the
       // sheet's existing transform transition), no frame reflow/jump.
       //
-      // sheetNaturalTop is captured ONCE, before any lift transform is ever
-      // applied — offsetTop is a layout value unaffected by a CSS transform,
-      // so using it (instead of a live getBoundingClientRect() on an already-
-      // transformed element) avoids a feedback loop where each call measures
-      // a position the previous call just moved, causing the sheet to drift/
-      // overshoot rather than settle.
-      var sheetNaturalTop = sheet.offsetTop;
+      // offsetTop is a layout value unaffected by a CSS transform, so
+      // reading it live (instead of a live getBoundingClientRect() on an
+      // already-transformed element) avoids a feedback loop where each call
+      // measures a position the previous call just moved. It's read FRESH
+      // on every call (not cached once) because the sheet's natural top
+      // changes with its content — the OTP panel is taller than the login
+      // panel, so it sits higher up (smaller offsetTop); a stale value
+      // cached from the shorter login panel under-clamps the OTP panel and
+      // lets it rise far enough to overlap the persistent logo mark.
       var liftRaf = null;
       function sheetHasFocus() { return sheet.contains(document.activeElement); }
       function liftSheetForKeyboard() {
@@ -1705,7 +1707,7 @@
         // mark near the top of the screen — otherwise a tall keyboard (e.g.
         // with a suggestion bar) pushes the sheet up far enough to overlap it.
         var safeTop = 100;
-        var maxLift = Math.max(0, sheetNaturalTop - safeTop);
+        var maxLift = Math.max(0, sheet.offsetTop - safeTop);
         var lift = Math.min(kb, maxLift);
         sheet.style.transform = lift > 0 ? 'translateY(-' + lift + 'px)' : 'translateY(0)';
       }
