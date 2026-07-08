@@ -22,6 +22,16 @@ class CardDetailScreen extends StatelessWidget {
   final List<int> moves;
   final bool moveIsFlat;
   final Widget cta;
+  // Illustration-first layout (Fever/Abortion/Fresh-Cow/Heat so far): a big
+  // cow+condition emoji tile + cow name/breed caption, with the CTA moved up
+  // right below it — matches the user's whiteboard sketch (title →
+  // illustration → name/breed → question → Yes/No). Cards without an
+  // illustration keep the original description-first order.
+  final String? illustrationEmoji;
+  final String? cowName;
+  final String? cowBreed;
+  final Color? illustrationTint;
+  final Color? illustrationBorder;
 
   const CardDetailScreen({
     super.key,
@@ -39,6 +49,11 @@ class CardDetailScreen extends StatelessWidget {
     required this.moves,
     this.moveIsFlat = false,
     required this.cta,
+    this.illustrationEmoji,
+    this.cowName,
+    this.cowBreed,
+    this.illustrationTint,
+    this.illustrationBorder,
   });
 
   @override
