@@ -1698,6 +1698,10 @@ class _ActionCard extends StatelessWidget {
   // avatarEmoji when set.
   final IconData? conditionIcon;
   final Color? conditionIconColor;
+  // Custom line-art icon assets (cow/bull/pregnancy/insemination) shown side
+  // by side, no border/tint container — Fever, Heat, Pregnancy Check Due.
+  // Takes precedence over conditionIcon's cow-photo pairing when set.
+  final List<String>? illustrationAssets;
   final Widget child;
   final bool escalated;
   final bool isDark;
@@ -1716,6 +1720,7 @@ class _ActionCard extends StatelessWidget {
     this.avatarEmoji,
     this.conditionIcon,
     this.conditionIconColor,
+    this.illustrationAssets,
     required this.child,
     this.escalated = false,
     this.isDark = false,
