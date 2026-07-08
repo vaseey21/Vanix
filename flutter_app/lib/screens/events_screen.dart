@@ -332,6 +332,8 @@ class _EventsScreenState extends State<EventsScreen> {
                       const SizedBox(width: 8),
                       _TabChip(label: 'Needs action', active: _tab == _Tab.action, isDark: isDark, onTap: () => setState(() => _tab = _Tab.action)),
                       const SizedBox(width: 8),
+                      _TabChip(label: 'Warnings', active: _tab == _Tab.warnings, isDark: isDark, onTap: () => setState(() => _tab = _Tab.warnings)),
+                      const SizedBox(width: 8),
                       _TabChip(label: 'Reminders', active: _tab == _Tab.reminders, isDark: isDark, onTap: () => setState(() => _tab = _Tab.reminders)),
                     ],
                   ),
