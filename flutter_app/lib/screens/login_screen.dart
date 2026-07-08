@@ -107,7 +107,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: SafeArea(
                     child: Padding(
                       padding: const EdgeInsets.only(right: 14, top: 4),
-                      child: _ThemeToggle(isDark: isDark, onTap: widget.appState.toggleDark),
+                      child: Row(
+                        children: [
+                          _DisplayModeToggle(imageMode: widget.appState.displayImageMode, onTap: widget.appState.toggleDisplayMode),
+                          const SizedBox(width: 8),
+                          _ThemeToggle(isDark: isDark, onTap: widget.appState.toggleDark),
+                        ],
+                      ),
                     ),
                   ),
                 ),
