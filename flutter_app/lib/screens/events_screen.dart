@@ -9,7 +9,7 @@ import 'card_detail_screen.dart';
 import 'heat_alert_screen.dart';
 import 'milk_log_screen.dart';
 
-enum _Tab { all, action, reminders }
+enum _Tab { all, action, warnings, reminders }
 
 /// Onboarded vets — contacting a vet is a pick, not a manual email entry.
 /// Mirrors ONBOARDED_VETS in vanix_screens.html.
