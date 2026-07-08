@@ -1823,8 +1823,59 @@ class _ActionCard extends StatelessWidget {
     ));
   }
 
+  // Full-bleed photo card — Image display mode only (Fever, Heat so far):
+  // cow · breed caption over the photo, question + Yes/No (bundled in
+  // `child`) at the bottom on a dark gradient scrim. Bypasses the shared
+  // tinted-card decoration entirely since the photo needs to run edge to
+  // edge, including under the corner badge.
+  Widget _buildPhotoCard(BuildContext context) {
+    final cowName = photoCowBreed ?? (title.contains('—') ? title.split('—').last.trim() : title.split(' ').first);
+    final card = ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        onTap: () => _openDetails(context),
+        child: Ink(
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage(photoBg!), fit: BoxFit.cover),
+          ),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.black.withOpacity(0.45), Colors.transparent, Colors.black.withOpacity(0.7)],
+                stops: const [0.0, 0.5, 1.0],
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(cowName, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white)),
+                  const SizedBox(height: 220),
+                  DefaultTextStyle(style: const TextStyle(color: Colors.white), child: child),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    if (priority != _Priority.p0) return card;
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        card,
+        if (escalated) const Positioned(top: -6, right: -6, child: _CornerBadge()),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (imageMode && photoBg != null) return _buildPhotoCard(context);
     final accentColor = leftAccentColor ?? border;
     final titleColor = isDark ? Colors.white : VanixColors.textPrimary;
     final decoration = BoxDecoration(
