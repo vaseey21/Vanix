@@ -22,6 +22,10 @@ flutter:
   assets:
     - assets/logos/vanix-logo.svg
     - assets/images/cow_lying.png
+    - assets/images/cow_icon.png
+    - assets/images/bull_icon.png
+    - assets/images/pregnancy_icon.png
+    - assets/images/insemination_icon.png
 
   fonts:
     - family: NotoSans
