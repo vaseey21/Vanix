@@ -28,6 +28,10 @@ class CardDetailScreen extends StatelessWidget {
   // illustration → name/breed → question → Yes/No). Cards without an
   // illustration keep the original description-first order.
   final String? illustrationEmoji;
+  // Real cow photo + a small separate condition icon beside it (Fever, Heat,
+  // Milking notification) — takes precedence over illustrationEmoji.
+  final IconData? conditionIcon;
+  final Color? conditionIconColor;
   final String? cowName;
   final String? cowBreed;
   final Color? illustrationTint;
@@ -50,6 +54,8 @@ class CardDetailScreen extends StatelessWidget {
     this.moveIsFlat = false,
     required this.cta,
     this.illustrationEmoji,
+    this.conditionIcon,
+    this.conditionIconColor,
     this.cowName,
     this.cowBreed,
     this.illustrationTint,
