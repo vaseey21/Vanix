@@ -1835,6 +1835,7 @@ class _ActionCard extends StatelessWidget {
       child: InkWell(
         onTap: () => _openDetails(context),
         child: Ink(
+          height: 300,
           decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage(photoBg!), fit: BoxFit.cover),
           ),
@@ -1850,11 +1851,10 @@ class _ActionCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(cowName, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white)),
-                  const SizedBox(height: 220),
                   DefaultTextStyle(style: const TextStyle(color: Colors.white), child: child),
                 ],
               ),
