@@ -897,6 +897,7 @@
               <div id="ev-tabs" style="display:flex; gap:8px; margin:0 0 14px; overflow-x:auto; padding-bottom:2px;">
                 <button class="ev-tab on" data-tab="all" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">All</button>
                 <button class="ev-tab" data-tab="action" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Needs action</button>
+                <button class="ev-tab" data-tab="warn" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Warnings</button>
                 <button class="ev-tab" data-tab="rem" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Reminders</button>
               </div>
 
@@ -1166,17 +1167,23 @@
                 </div>
               </div>
 
-              <!-- 9. Proestrus — early heat signs -->
-              <div class="ev-card ev-card-p2" id="ev-proestrus" style="border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+              </div><!-- /sec-action -->
+
+              <div id="ev-sec-warn" style="display:none;">
+              <!-- ── WARNINGS — P3, single-acknowledge, lower urgency ── -->
+              <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Warnings</p>
+
+              <!-- 9. Rise in temperature — early heat heads-up -->
+              <div class="ev-card ev-card-p3" id="ev-proestrus" style="border-radius:16px; padding:14px 16px; margin-bottom:10px;">
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
-                    <p class="ev-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Early heat signs — Kajri</p>
+                    <p class="ev-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Rise in temperature — Kajri</p>
                     <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500;">Manager: Ramesh Kumar</p>
-                    <button class="en ev-viewdetails" onclick="openCardDetail('ev-proestrus','p2')">View Details ›</button>
-                    <p class="ev-sub">Mild temperature and activity rise — possible early signs of heat starting. We'll alert you again if it strengthens.</p>
+                    <button class="en ev-viewdetails" onclick="openCardDetail('ev-proestrus','p3')">View Details ›</button>
+                    <p class="ev-sub">A mild temperature rise — possible early signs of heat starting. Movement is normal. We'll alert you again if it strengthens.</p>
                     <p class="en ev-meta">Green Valley Farm · Belt 63</p>
                   </div>
-                  <span class="en ev-chip ev-chip-p2">P2 · WARNING</span>
+                  <span class="en ev-chip ev-chip-p3">P3 · WARNING</span>
                 </div>
                 <div class="ev-body">
                   <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Got it, watching</button>
@@ -1184,7 +1191,7 @@
               </div>
 
               <!-- 10. Herd heat stress -->
-              <div class="ev-card ev-card-p3" id="ev-herdstress" style="border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+              <div class="ev-card ev-card-p3" id="ev-herdstress" style="border-radius:16px; padding:14px 16px; margin-bottom:10px;">
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p class="ev-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Herd heat stress — Green Valley Farm</p>
@@ -1192,7 +1199,7 @@
                     <button class="en ev-viewdetails" onclick="openCardDetail('ev-herdstress','p3')">View Details ›</button>
                     <p class="ev-sub">20%+ of cows in this zone are showing a temperature rise together — likely the weather, not individual cows.</p>
                   </div>
-                  <span class="en ev-chip ev-chip-p3">P3 · INFO</span>
+                  <span class="en ev-chip ev-chip-p3">P3 · WARNING</span>
                 </div>
                 <div class="ev-body">
                   <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Checked cooling / shade</button>
@@ -1200,7 +1207,7 @@
               </div>
 
               <!-- 11. Calibration complete -->
-              <div class="ev-card ev-card-p3" id="ev-calib" style="border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+              <div class="ev-card ev-card-p3" id="ev-calib" style="border-radius:16px; padding:14px 16px; margin-bottom:10px;">
                 <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
                   <div style="min-width:0;">
                     <p class="ev-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Collar calibrated — Ganga</p>
@@ -1208,14 +1215,14 @@
                     <button class="en ev-viewdetails" onclick="openCardDetail('ev-calib','p3')">View Details ›</button>
                     <p class="ev-sub">Her new collar has finished calibrating and is now live-monitored.</p>
                   </div>
-                  <span class="en ev-chip ev-chip-p3">P3 · INFO</span>
+                  <span class="en ev-chip ev-chip-p3">P3 · WARNING</span>
                 </div>
                 <div class="ev-body">
                   <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Got it</button>
                 </div>
               </div>
 
-              </div><!-- /sec-action -->
+              </div><!-- /sec-warn -->
 
               <div id="ev-sec-rem">
               <!-- ── REMINDERS ── -->
@@ -2097,6 +2104,7 @@
           tab.classList.add('on');
           var v = tab.getAttribute('data-tab');
           document.getElementById('ev-sec-action').style.display = (v === 'all' || v === 'action') ? 'block' : 'none';
+          document.getElementById('ev-sec-warn').style.display = (v === 'all' || v === 'warn') ? 'block' : 'none';
           document.getElementById('ev-sec-rem').style.display = (v === 'all' || v === 'rem') ? 'block' : 'none';
           document.getElementById('ev-sec-hist').style.display = v === 'all' ? 'block' : 'none';
         });
@@ -2553,7 +2561,7 @@
         card.querySelector('.ev-yes').addEventListener('click', function() { evInspectionFlow(card, body, pair[1]); });
       });
 
-      // 9. Proestrus — single acknowledge (P2)
+      // 9. Rise in temperature (Proestrus) — single acknowledge (P3)
       (function() {
         var card = document.getElementById('ev-proestrus');
         if (!card) return;
@@ -2661,7 +2669,7 @@
         var evDetailPage = document.getElementById('ev-detail-page');
         var evDetailCta = document.getElementById('ev-detail-cta');
         var evDetailReturn = null; // { parent, next }
-        var EV_PRIORITY_LABEL = { p0: 'P0 · CRITICAL', p1: 'P1 · ACTIONABLE', p2: 'P2 · WARNING', p3: 'P3 · INFO' };
+        var EV_PRIORITY_LABEL = { p0: 'P0 · CRITICAL', p1: 'P1 · ACTIONABLE', p2: 'P2 · WARNING', p3: 'P3 · WARNING' };
         var EV_PRIORITY_STYLE = {
           p0: 'background:#8B2800; color:#FFFFFF;',
           p1: 'background:#8A5A00; color:#FFFFFF;',
@@ -2681,6 +2689,9 @@
           return arr;
         }
         function evMockMoves(id) {
+          // Rise in temperature is a temperature-only signal — movement stays
+          // flat/normal, unlike the other cards where it also spikes.
+          if (id === 'ev-proestrus') return [4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
           var h = evMockSeed(id), arr = [];
           for (var i = 0; i < 9; i++) arr.push(3 + ((h >> i) % 5));
           arr.push(9 + (h % 3));
@@ -2715,8 +2726,13 @@
           document.getElementById('ev-detail-temp-min').textContent = min.toFixed(1) + '°C baseline';
           document.getElementById('ev-detail-temp-today').textContent = temps[temps.length - 1].toFixed(1) + '°C today';
           var mmax = Math.max.apply(null, moves);
+          var mmin = Math.min.apply(null, moves);
+          // Only highlight the last bar as a spike if movement actually moved —
+          // a flat/normal series (e.g. "Rise in temperature", where movement
+          // stays normal) should render in the same colour throughout.
+          var moveIsFlat = mmax === mmin;
           document.getElementById('ev-detail-move').innerHTML = moves.map(function(m, i) {
-            var isToday = i === moves.length - 1;
+            var isToday = i === moves.length - 1 && !moveIsFlat;
             return '<div style="flex:1; height:' + Math.round(m / mmax * 100) + '%; background:' + (isToday ? 'var(--danger)' : 'var(--greendeep)') + '; border-radius:2px;"></div>';
           }).join('');
 

@@ -2788,7 +2788,7 @@
         function evMockMoves(id) {
           // Rise in temperature is a temperature-only signal — movement stays
           // flat/normal, unlike the other cards where it also spikes.
-          if (id === 'ev-proestrus') return [4, 5, 4, 5, 4, 5, 4, 5, 4, 5];
+          if (id === 'ev-proestrus') return [4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
           var h = evMockSeed(id), arr = [];
           for (var i = 0; i < 9; i++) arr.push(3 + ((h >> i) % 5));
           arr.push(9 + (h % 3));
