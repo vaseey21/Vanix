@@ -283,22 +283,29 @@
        sentence Yes/No buttons. Adding .display-image swaps to the photo-
        illustration cards (title/manager hidden, illustration + cow·breed +
        short question shown, short icon+word buttons). */
+    /* illustration-row icons (cow/bull/thermometer/insemination) are retired
+       in favour of the full photo background in image mode, and were never
+       part of text mode — hidden unconditionally in both modes. */
+    #ev-fever .ev-illus-row, #ev-heat .ev-illus-row { display: none !important; }
+
+    /* text mode (default): title/manager visible, plain chip/buttons */
     #ev-fever .ev-title, #ev-fever .ev-manager,
     #ev-heat .ev-title, #ev-heat .ev-manager { display: flex !important; }
     #ev-fever .ev-manager svg, #ev-heat .ev-manager svg { display: none; }
     #ev-fever .ev-manager::before, #ev-heat .ev-manager::before { content: "Manager:\00a0"; }
-    #ev-fever .ev-illus-row, #ev-fever .ev-cow-breed, #ev-fever .ev-question-big,
-    #ev-heat .ev-illus-row, #ev-heat .ev-cow-breed, #ev-heat .ev-question-big { display: none !important; }
+    #ev-fever .ev-cow-breed, #ev-fever .ev-question-big,
+    #ev-heat .ev-cow-breed, #ev-heat .ev-question-big { display: none; }
     #ev-heat .ev-chip svg { display: none; }
     #ev-heat .ev-chip-p1::after { content: " · ACTIONABLE"; }
     #ev-fever .ev-no .ev-btn-svg, #ev-fever .ev-yes .ev-btn-svg,
     #ev-heat .ev-no .ev-btn-svg, #ev-heat .ev-yes .ev-btn-svg { display: none; }
     #ev-fever .ev-btn-short { display: none; }
 
+    /* image mode: title/manager hidden, photo bg + cow·breed + short question shown */
     #flow-root.display-image #ev-fever .ev-title, #flow-root.display-image #ev-fever .ev-manager,
     #flow-root.display-image #ev-heat .ev-title, #flow-root.display-image #ev-heat .ev-manager { display: none !important; }
-    #flow-root.display-image #ev-fever .ev-illus-row, #flow-root.display-image #ev-fever .ev-cow-breed, #flow-root.display-image #ev-fever .ev-question-big,
-    #flow-root.display-image #ev-heat .ev-illus-row, #flow-root.display-image #ev-heat .ev-cow-breed, #flow-root.display-image #ev-heat .ev-question-big { display: block; }
+    #flow-root.display-image #ev-fever .ev-cow-breed, #flow-root.display-image #ev-fever .ev-question-big,
+    #flow-root.display-image #ev-heat .ev-cow-breed, #flow-root.display-image #ev-heat .ev-question-big { display: block; }
     #flow-root.display-image #ev-heat .ev-chip svg { display: inline; }
     #flow-root.display-image #ev-heat .ev-chip-p1::after { content: ""; }
     #flow-root.display-image #ev-fever .ev-no .ev-btn-svg, #flow-root.display-image #ev-fever .ev-yes .ev-btn-svg,
