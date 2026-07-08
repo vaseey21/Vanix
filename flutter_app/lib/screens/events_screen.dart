@@ -1315,9 +1315,9 @@ class _EventsScreenState extends State<EventsScreen> {
               Padding(padding: const EdgeInsets.only(top: 12, bottom: 10), child: Text(question, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
               Row(
                 children: [
-                  Expanded(child: OutlinedButton(onPressed: () => onChange(_InspectState.falseAlarm), child: const Text('No'))),
+                  Expanded(child: OutlinedButton(onPressed: () => onChange(_InspectState.falseAlarm), child: _iconLabel(Icons.close, 'No'))),
                   const SizedBox(width: 8),
-                  Expanded(flex: 2, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: VanixColors.warning, foregroundColor: VanixColors.darkPrimary), onPressed: () => onChange(_InspectState.flagged), child: const Text('Yes, flag it'))),
+                  Expanded(flex: 2, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: VanixColors.warning, foregroundColor: VanixColors.darkPrimary), onPressed: () => onChange(_InspectState.flagged), child: _iconLabel(Icons.flag, 'Flag it'))),
                 ],
               ),
             ],
