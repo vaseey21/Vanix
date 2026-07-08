@@ -1775,6 +1775,16 @@ class _ActionCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (avatarEmoji != null) Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Container(
+                  width: 44,
+                  height: 40,
+                  decoration: BoxDecoration(color: bg, border: Border.all(color: border), borderRadius: BorderRadius.circular(14)),
+                  alignment: Alignment.center,
+                  child: Text(avatarEmoji!, style: const TextStyle(fontSize: 19)),
+                ),
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
