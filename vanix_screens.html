@@ -2883,8 +2883,8 @@
           }).join('');
 
           if (body) {
-            evDetailReturn = { parent: body.parentNode, next: body.nextSibling };
-            evDetailCta.appendChild(body);
+            evDetailReturn = { parent: body.parentNode, next: body.nextSibling, slot: avatarEl ? illusCta : evDetailCta };
+            evDetailReturn.slot.appendChild(body);
           } else {
             evDetailReturn = null;
           }
@@ -2893,7 +2893,7 @@
 
         window.closeCardDetail = function() {
           if (evDetailReturn) {
-            var body = evDetailCta.firstChild;
+            var body = evDetailReturn.slot.firstChild;
             if (body) {
               if (evDetailReturn.next) evDetailReturn.parent.insertBefore(body, evDetailReturn.next);
               else evDetailReturn.parent.appendChild(body);
