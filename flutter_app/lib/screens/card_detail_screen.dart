@@ -20,6 +20,7 @@ class CardDetailScreen extends StatelessWidget {
   final bool isDark;
   final List<double> temps;
   final List<int> moves;
+  final bool moveIsFlat;
   final Widget cta;
 
   const CardDetailScreen({
@@ -36,6 +37,7 @@ class CardDetailScreen extends StatelessWidget {
     required this.isDark,
     required this.temps,
     required this.moves,
+    this.moveIsFlat = false,
     required this.cta,
   });
 
