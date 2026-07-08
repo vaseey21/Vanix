@@ -2737,10 +2737,28 @@
           var metaEl = card.querySelector('.ev-meta');
           var body = card.querySelector('.ev-body');
           var avatarEl = card.querySelector('.ev-avatar');
+          var illusRow = card.querySelector('.ev-illus-row');
 
           var illusWrap = document.getElementById('ev-detail-illus-wrap');
           var illusCta = document.getElementById('ev-detail-illus-cta');
-          if (avatarEl) {
+          if (illusRow) {
+            // Custom line-art icon set (cow/bull/pregnancy/insemination) — no
+            // border/tint container, shown side by side, scaled up.
+            illusWrap.style.display = 'block';
+            var illus = document.getElementById('ev-detail-illus');
+            illus.style.background = 'transparent';
+            illus.style.border = 'none';
+            illus.style.width = 'auto';
+            illus.style.height = 'auto';
+            illus.style.gap = '14px';
+            var imgs = illusRow.querySelectorAll('.ev-illus-img');
+            illus.innerHTML = Array.prototype.map.call(imgs, function(img) {
+              return '<img src="' + img.getAttribute('src') + '" alt="" style="width:112px; height:auto; object-fit:contain;">';
+            }).join('');
+            var titleText = titleEl ? titleEl.textContent : '';
+            var cowName = titleText.indexOf('—') >= 0 ? titleText.split('—').pop().trim() : (titleText.split(' ')[0] || '');
+            document.getElementById('ev-detail-cow').textContent = EV_BREED[cowName] ? (cowName + ' · ' + EV_BREED[cowName]) : cowName;
+          } else if (avatarEl) {
             illusWrap.style.display = 'block';
             var illus = document.getElementById('ev-detail-illus');
             var condIcon = card.querySelector('.ev-cond-icon');
