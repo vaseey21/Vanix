@@ -1761,7 +1761,17 @@ class _ActionCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: titleColor)),
-                    if (manager != null) Padding(padding: const EdgeInsets.only(top: 2), child: Text('Manager: $manager', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: VanixColors.textHint))),
+                    if (manager != null) Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.person_outline, size: 12, color: VanixColors.textHint),
+                          const SizedBox(width: 3),
+                          Text(manager!, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: VanixColors.textHint)),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: TextButton(
