@@ -107,20 +107,29 @@ class CardDetailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if (illustrationEmoji != null) ...[
+                    if (illustrationEmoji != null || conditionIcon != null) ...[
                       const SizedBox(height: 18),
                       Center(
-                        child: Container(
-                          width: 128,
-                          height: 116,
-                          decoration: BoxDecoration(
-                            color: illustrationTint,
-                            border: Border.all(color: illustrationBorder ?? VanixColors.border),
-                            borderRadius: BorderRadius.circular(24),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(illustrationEmoji!, style: const TextStyle(fontSize: 52)),
-                        ),
+                        child: conditionIcon != null
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image.asset('assets/images/cow_lying.png', width: 128, fit: BoxFit.contain),
+                                  const SizedBox(width: 14),
+                                  Icon(conditionIcon, size: 38, color: conditionIconColor ?? VanixColors.danger),
+                                ],
+                              )
+                            : Container(
+                                width: 128,
+                                height: 116,
+                                decoration: BoxDecoration(
+                                  color: illustrationTint,
+                                  border: Border.all(color: illustrationBorder ?? VanixColors.border),
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(illustrationEmoji!, style: const TextStyle(fontSize: 52)),
+                              ),
                       ),
                       if (cowName != null) Padding(
                         padding: const EdgeInsets.only(top: 10),
