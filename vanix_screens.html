@@ -2201,6 +2201,7 @@
           tab.classList.add('on');
           var v = tab.getAttribute('data-tab');
           document.getElementById('ev-sec-action').style.display = (v === 'all' || v === 'action') ? 'block' : 'none';
+          document.getElementById('ev-sec-warn').style.display = (v === 'all' || v === 'warn') ? 'block' : 'none';
           document.getElementById('ev-sec-rem').style.display = (v === 'all' || v === 'rem') ? 'block' : 'none';
           document.getElementById('ev-sec-hist').style.display = v === 'all' ? 'block' : 'none';
         });
