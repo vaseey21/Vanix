@@ -26,6 +26,14 @@ flutter:
     - assets/images/bull_icon.png
     - assets/images/pregnancy_icon.png
     - assets/images/insemination_icon.png
+    - assets/images/fever_photo.jpg
+    - assets/images/heat_photo.jpg
+    - assets/images/insemination_photo.jpg
+    - assets/images/delivery_photo.jpg
+    - assets/images/vetvisit_photo.jpg
+    - assets/images/milking_started_photo.jpg
+    - assets/images/milking_ended_photo.jpg
+    - assets/images/gestation_photo.jpg
 
   fonts:
     - family: NotoSans
