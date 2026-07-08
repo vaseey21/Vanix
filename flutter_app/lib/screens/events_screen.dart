@@ -1822,14 +1822,28 @@ class _ActionCard extends StatelessWidget {
     );
 
     Widget body;
-    if (avatarEmoji != null || conditionIcon != null) {
+    if (avatarEmoji != null || conditionIcon != null || illustrationAssets != null) {
       // Illustration-first list card (whiteboard sketch): cow · breed →
       // big illustration → the question + Yes/No (already bundled in
       // `child`) — no title/manager/View-Details row, tapping anywhere on
       // the card opens the fuller detail view.
       final cowName = title.contains('—') ? title.split('—').last.trim() : title.split(' ').first;
       const breedByName = {'Kajri': 'Jersey', 'Mohini': 'Gir/Sahiwal', 'Ganga': 'Ongole', 'Gauri': 'Desi', 'Lakshmi': 'Ongole'};
-      final illustration = conditionIcon != null
+      final illustration = illustrationAssets != null
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (var i = 0; i < illustrationAssets!.length; i++) ...[
+                  if (i > 0) const SizedBox(width: 10),
+                  Image.asset(illustrationAssets![i], width: 72, fit: BoxFit.contain),
+                ],
+                if (conditionIcon != null) ...[
+                  const SizedBox(width: 10),
+                  Icon(conditionIcon, size: 26, color: conditionIconColor ?? VanixColors.danger),
+                ],
+              ],
+            )
+          : conditionIcon != null
           ? Row(
               mainAxisSize: MainAxisSize.min,
               children: [
