@@ -252,11 +252,11 @@ class _AlertCard extends StatelessWidget {
           else ...[
             SizedBox(
               width: double.infinity,
+              height: 52,
               child: ElevatedButton(
-                // Primary CTA: greenDeep fill with dark text (locked token rule).
-                style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(48), backgroundColor: VanixColors.greenDeep, foregroundColor: VanixColors.darkPrimary),
+                style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(52), backgroundColor: VanixColors.greenDeep, foregroundColor: Colors.white),
                 onPressed: onYes,
-                child: const Text('Yes, in heat'),
+                child: const Text('Yes, in heat', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
               ),
             ),
             const SizedBox(height: 8),
