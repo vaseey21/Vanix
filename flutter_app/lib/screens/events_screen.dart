@@ -1802,34 +1802,41 @@ class _ActionCard extends StatelessWidget {
     );
 
     Widget body;
-    if (avatarEmoji != null) {
+    if (avatarEmoji != null || conditionIcon != null) {
       // Illustration-first list card (whiteboard sketch): cow · breed →
       // big illustration → the question + Yes/No (already bundled in
       // `child`) — no title/manager/View-Details row, tapping anywhere on
       // the card opens the fuller detail view.
-      final cowName = title.contains('—') ? title.split('—').last.trim() : null;
-      const breedByName = {'Kajri': 'Jersey', 'Mohini': 'Gir/Sahiwal', 'Ganga': 'Ongole', 'Gauri': 'Desi'};
+      final cowName = title.contains('—') ? title.split('—').last.trim() : title.split(' ').first;
+      const breedByName = {'Kajri': 'Jersey', 'Mohini': 'Gir/Sahiwal', 'Ganga': 'Ongole', 'Gauri': 'Desi', 'Lakshmi': 'Ongole'};
+      final illustration = conditionIcon != null
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset('assets/images/cow_lying.png', width: 96, fit: BoxFit.contain),
+                const SizedBox(width: 10),
+                Icon(conditionIcon, size: 26, color: conditionIconColor ?? VanixColors.danger),
+              ],
+            )
+          : Container(
+              width: 96,
+              height: 88,
+              decoration: BoxDecoration(color: bg, border: Border.all(color: border), borderRadius: BorderRadius.circular(20)),
+              alignment: Alignment.center,
+              child: Text(avatarEmoji!, style: const TextStyle(fontSize: 40)),
+            );
       body = Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (priority != _Priority.p0) _PriorityChip(priority: priority),
-          if (cowName != null) Padding(
+          Padding(
             padding: const EdgeInsets.only(top: 6),
             child: Text(
               breedByName[cowName] != null ? '$cowName · ${breedByName[cowName]}' : cowName,
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: titleColor),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Container(
-              width: 96,
-              height: 88,
-              decoration: BoxDecoration(color: bg, border: Border.all(color: border), borderRadius: BorderRadius.circular(20)),
-              alignment: Alignment.center,
-              child: Text(avatarEmoji!, style: const TextStyle(fontSize: 40)),
-            ),
-          ),
+          Padding(padding: const EdgeInsets.only(top: 8), child: illustration),
           child,
         ],
       );
