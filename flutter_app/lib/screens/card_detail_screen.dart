@@ -101,6 +101,34 @@ class CardDetailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
+                    if (illustrationEmoji != null) ...[
+                      const SizedBox(height: 18),
+                      Center(
+                        child: Container(
+                          width: 128,
+                          height: 116,
+                          decoration: BoxDecoration(
+                            color: illustrationTint,
+                            border: Border.all(color: illustrationBorder ?? VanixColors.border),
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(illustrationEmoji!, style: const TextStyle(fontSize: 52)),
+                        ),
+                      ),
+                      if (cowName != null) Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Center(
+                          child: Text(
+                            cowBreed != null ? '$cowName · $cowBreed' : cowName!,
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? Colors.white.withOpacity(0.85) : VanixColors.textPrimary),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      cta,
+                      const SizedBox(height: 20),
+                    ],
                     if (manager != null) Padding(padding: const EdgeInsets.only(top: 4), child: Text('Manager: $manager', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: VanixColors.textHint))),
                     if (meta != null) Padding(padding: const EdgeInsets.only(top: 4), child: Text(meta!, style: const TextStyle(fontSize: 12, color: VanixColors.textHint))),
                     Padding(padding: const EdgeInsets.only(top: 10), child: Text(sub, style: TextStyle(fontSize: 14, height: 1.6, color: isDark ? Colors.white.withOpacity(0.85) : VanixColors.textPrimary))),
@@ -127,8 +155,10 @@ class CardDetailScreen extends StatelessWidget {
                       label: 'MOVEMENT — LAST 10 DAYS',
                       child: MovementBars(values: moves, highlightLast: !moveIsFlat),
                     ),
-                    const SizedBox(height: 18),
-                    cta,
+                    if (illustrationEmoji == null) ...[
+                      const SizedBox(height: 18),
+                      cta,
+                    ],
                   ],
                 ),
               ),
