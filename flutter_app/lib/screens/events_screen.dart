@@ -98,7 +98,7 @@ class _HeatWindowBar extends StatelessWidget {
 /// 2x2 grid of method-select buttons, shared by the real Heat card and the
 /// "View full cycle" walkthrough's own heat step. Mirrors seqMethodBtn() in
 /// vanix_screens.html.
-Widget _inseminationMethodGrid(String selected, ValueChanged<String> onSelect) {
+Widget _inseminationMethodGrid(String selected, ValueChanged<String> onSelect, {bool isDark = false}) {
   return GridView.count(
     crossAxisCount: 2,
     shrinkWrap: true,
@@ -109,7 +109,7 @@ Widget _inseminationMethodGrid(String selected, ValueChanged<String> onSelect) {
     children: kInseminationMethods.map((m) {
       final on = m == selected;
       return OutlinedButton(
-        style: OutlinedButton.styleFrom(backgroundColor: on ? VanixColors.darkPrimary : null, foregroundColor: on ? Colors.white : VanixColors.textPrimary),
+        style: OutlinedButton.styleFrom(backgroundColor: on ? VanixColors.darkPrimary : null, foregroundColor: on ? Colors.white : (isDark ? const Color(0xFFF5F5F5) : VanixColors.textPrimary)),
         onPressed: () => onSelect(m),
         child: Text(m, textAlign: TextAlign.center),
       );
