@@ -1781,34 +1781,56 @@ class _ActionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final accentColor = leftAccentColor ?? border;
     final titleColor = isDark ? Colors.white : VanixColors.textPrimary;
-    final card = Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1C1C1C) : bg,
-        border: Border(
-          top: BorderSide(color: border),
-          bottom: BorderSide(color: border),
-          left: BorderSide(color: accentColor, width: leftAccentWidth == 0 ? 1 : leftAccentWidth),
-          right: BorderSide(color: border),
-        ),
-        borderRadius: BorderRadius.circular(16),
+    final decoration = BoxDecoration(
+      color: isDark ? const Color(0xFF1C1C1C) : bg,
+      border: Border(
+        top: BorderSide(color: border),
+        bottom: BorderSide(color: border),
+        left: BorderSide(color: accentColor, width: leftAccentWidth == 0 ? 1 : leftAccentWidth),
+        right: BorderSide(color: border),
       ),
-      child: Column(
+      borderRadius: BorderRadius.circular(16),
+    );
+
+    Widget body;
+    if (avatarEmoji != null) {
+      // Illustration-first list card (whiteboard sketch): cow · breed →
+      // big illustration → the question + Yes/No (already bundled in
+      // `child`) — no title/manager/View-Details row, tapping anywhere on
+      // the card opens the fuller detail view.
+      final cowName = title.contains('—') ? title.split('—').last.trim() : null;
+      const breedByName = {'Kajri': 'Jersey', 'Mohini': 'Gir/Sahiwal', 'Ganga': 'Ongole', 'Gauri': 'Desi'};
+      body = Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if (priority != _Priority.p0) _PriorityChip(priority: priority),
+          if (cowName != null) Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text(
+              breedByName[cowName] != null ? '$cowName · ${breedByName[cowName]}' : cowName,
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: titleColor),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Container(
+              width: 96,
+              height: 88,
+              decoration: BoxDecoration(color: bg, border: Border.all(color: border), borderRadius: BorderRadius.circular(20)),
+              alignment: Alignment.center,
+              child: Text(avatarEmoji!, style: const TextStyle(fontSize: 40)),
+            ),
+          ),
+          child,
+        ],
+      );
+    } else {
+      body = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (avatarEmoji != null) Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Container(
-                  width: 64,
-                  height: 60,
-                  decoration: BoxDecoration(color: bg, border: Border.all(color: border), borderRadius: BorderRadius.circular(16)),
-                  alignment: Alignment.center,
-                  child: Text(avatarEmoji!, style: const TextStyle(fontSize: 28)),
-                ),
-              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1843,6 +1865,16 @@ class _ActionCard extends StatelessWidget {
           ),
           child,
         ],
+      );
+    }
+
+    final card = InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: avatarEmoji != null ? () => _openDetails(context) : null,
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: decoration,
+        child: body,
       ),
     );
     if (priority != _Priority.p0) return card;
