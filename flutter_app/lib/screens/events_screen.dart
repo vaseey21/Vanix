@@ -1776,7 +1776,7 @@ class _ActionCard extends StatelessWidget {
         break;
     }
     const breedByName = {'Kajri': 'Jersey', 'Mohini': 'Gir/Sahiwal', 'Ganga': 'Ongole', 'Gauri': 'Desi', 'Lakshmi': 'Ongole'};
-    final hasIllustration = avatarEmoji != null || conditionIcon != null;
+    final hasIllustration = avatarEmoji != null || conditionIcon != null || illustrationAssets != null;
     final cowName = title.contains('—') ? title.split('—').last.trim() : title.split(' ').first;
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => CardDetailScreen(
@@ -1794,9 +1794,10 @@ class _ActionCard extends StatelessWidget {
         moves: _mockMoves(),
         moveIsFlat: _mockMoves().toSet().length == 1,
         cta: child,
-        illustrationEmoji: conditionIcon == null ? avatarEmoji : null,
+        illustrationEmoji: (conditionIcon == null && illustrationAssets == null) ? avatarEmoji : null,
         conditionIcon: conditionIcon,
         conditionIconColor: conditionIconColor,
+        illustrationAssets: illustrationAssets,
         cowName: hasIllustration ? cowName : null,
         cowBreed: hasIllustration ? breedByName[cowName] : null,
         illustrationTint: bg,
