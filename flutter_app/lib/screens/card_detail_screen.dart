@@ -189,7 +189,7 @@ class CardDetailScreen extends StatelessWidget {
                       label: 'MOVEMENT — LAST 10 DAYS',
                       child: MovementBars(values: moves, highlightLast: !moveIsFlat),
                     ),
-                    if (illustrationEmoji == null && conditionIcon == null) ...[
+                    if (illustrationEmoji == null && conditionIcon == null && illustrationAssets == null) ...[
                       const SizedBox(height: 18),
                       cta,
                     ],
