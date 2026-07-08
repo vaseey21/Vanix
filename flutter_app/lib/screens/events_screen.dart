@@ -1704,6 +1704,18 @@ class _ActionCard extends StatelessWidget {
   // by side, no border/tint container — Fever, Heat, Pregnancy Check Due.
   // Takes precedence over conditionIcon's cow-photo pairing when set.
   final List<String>? illustrationAssets;
+  // Text/Image app-wide display preference (AppState.displayImageMode).
+  // When false ("text" mode), the card always renders the plain
+  // description-first layout below — avatarEmoji/conditionIcon/
+  // illustrationAssets/photoBg are ignored entirely (the pre-illustration-
+  // pass design). When true and photoBg is set (Fever, Heat so far), the
+  // card renders as a full-bleed photo card instead.
+  final bool imageMode;
+  // Full-bleed background photo + cow·breed caption for the "Image" display
+  // mode card (Fever, Heat) — takes precedence over avatarEmoji/
+  // conditionIcon/illustrationAssets when imageMode is true.
+  final String? photoBg;
+  final String? photoCowBreed;
   final Widget child;
   final bool escalated;
   final bool isDark;
@@ -1723,6 +1735,9 @@ class _ActionCard extends StatelessWidget {
     this.conditionIcon,
     this.conditionIconColor,
     this.illustrationAssets,
+    this.imageMode = false,
+    this.photoBg,
+    this.photoCowBreed,
     required this.child,
     this.escalated = false,
     this.isDark = false,
