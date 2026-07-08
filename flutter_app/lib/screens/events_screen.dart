@@ -1477,25 +1477,34 @@ class _PriorityChip extends StatelessWidget {
   final _Priority priority;
   const _PriorityChip({required this.priority});
 
+  // Icon + 1-word label replaces the old "P1 · ACTIONABLE"-style text chip —
+  // less to read, same severity colours (locked tokens, no new colours).
   @override
   Widget build(BuildContext context) {
     switch (priority) {
       case _Priority.p0:
-        return _chip('P0 · CRITICAL', bg: const Color(0xFF8B2800), fg: Colors.white, outline: false);
+        return _chip(Icons.emergency, 'P0', bg: const Color(0xFF8B2800), fg: Colors.white, outline: false);
       case _Priority.p1:
-        return _chip('P1 · ACTIONABLE', bg: VanixColors.warningInk, fg: Colors.white, outline: false);
+        return _chip(Icons.notifications_active, 'P1', bg: VanixColors.warningInk, fg: Colors.white, outline: false);
       case _Priority.p2:
-        return _chip('P2 · WARNING', bg: VanixColors.warningBg, fg: VanixColors.warningInk, outline: true, borderColor: VanixColors.warning);
+        return _chip(Icons.warning_amber_rounded, 'P2', bg: VanixColors.warningBg, fg: VanixColors.warningInk, outline: true, borderColor: VanixColors.warning);
       case _Priority.p3:
-        return _chip('P3 · WARNING', bg: VanixColors.bgCard, fg: VanixColors.textHint, outline: true, borderColor: VanixColors.border);
+        return _chip(Icons.info_outline, 'P3', bg: VanixColors.bgCard, fg: VanixColors.textHint, outline: true, borderColor: VanixColors.border);
     }
   }
 
-  Widget _chip(String label, {required Color bg, required Color fg, required bool outline, Color? borderColor}) {
+  Widget _chip(IconData icon, String label, {required Color bg, required Color fg, required bool outline, Color? borderColor}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(10), border: outline ? Border.all(color: borderColor!) : null),
-      child: Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: fg)),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 12, color: fg),
+          const SizedBox(width: 3),
+          Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: fg)),
+        ],
+      ),
     );
   }
 }
