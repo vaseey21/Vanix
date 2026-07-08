@@ -1750,6 +1750,8 @@ class _ActionCard extends StatelessWidget {
         borderColor = VanixColors.border;
         break;
     }
+    const breedByName = {'Kajri': 'Jersey', 'Mohini': 'Gir/Sahiwal', 'Ganga': 'Ongole', 'Gauri': 'Desi'};
+    final cowName = title.contains('—') ? title.split('—').last.trim() : null;
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => CardDetailScreen(
         title: title,
@@ -1766,6 +1768,11 @@ class _ActionCard extends StatelessWidget {
         moves: _mockMoves(),
         moveIsFlat: _mockMoves().toSet().length == 1,
         cta: child,
+        illustrationEmoji: avatarEmoji,
+        cowName: avatarEmoji != null ? cowName : null,
+        cowBreed: avatarEmoji != null ? breedByName[cowName] : null,
+        illustrationTint: bg,
+        illustrationBorder: border,
       ),
     ));
   }
