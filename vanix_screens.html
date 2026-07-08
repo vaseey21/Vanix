@@ -1166,20 +1166,16 @@
 
 
               <!-- 4. Abortion / pregnancy loss -->
-              <div class="ev-card" id="ev-abort" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+              <div class="ev-card" id="ev-abort" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardDetail('ev-abort','p0')">
                 <span class="ev-corner-badge">!</span>
-                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
-                  <div style="width:64px; height:60px; border-radius:16px; background:var(--dangerbg); border:1px solid var(--danger); display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0;" class="ev-avatar" aria-hidden="true">🐄⚠️</div>
-                  <div style="min-width:0; flex:1;">
-                    <p class="ev-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible pregnancy loss — Mohini</p>
-                    <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Suresh Yadav</p>
-                    <button class="en ev-viewdetails" onclick="openCardDetail('ev-abort','p0')">View Details ›</button>
-                    <p class="ev-sub">Sudden drop in rumination with a sustained temperature rise over the last 3 hours.</p>
-                    <p class="en ev-meta">Sunrise Dairy · Belt 91 · Day 48 of pregnancy</p>
-                  </div>
-                </div>
-                <div class="ev-body">
-                  <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Mohini show these signs?</p>
+                <p class="ev-title" style="display:none;">Possible pregnancy loss — Mohini</p>
+                <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Suresh Yadav</p>
+                <p class="ev-sub">Sudden drop in rumination with a sustained temperature rise over the last 3 hours.</p>
+                <p class="en ev-meta">Sunrise Dairy · Belt 91 · Day 48 of pregnancy</p>
+                <p class="en" style="text-align:center; font-size:13px; font-weight:600; color:var(--text1); margin:0;">Mohini · Gir/Sahiwal</p>
+                <div class="ev-avatar" style="width:96px; height:88px; margin:8px auto 0; border-radius:20px; background:var(--dangerbg); border:1px solid var(--danger); display:flex; align-items:center; justify-content:center; font-size:40px;" aria-hidden="true">🐄⚠️</div>
+                <p class="en" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Possible pregnancy loss?</p>
+                <div class="ev-body" onclick="event.stopPropagation();">
                   <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>No</button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M20 6 9 17l-5-5"/></svg>Yes, notify vet</button>
@@ -1188,19 +1184,16 @@
               </div>
 
               <!-- 5. Fresh cow / post-calving monitor -->
-              <div class="ev-card" id="ev-freshcow" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
+              <div class="ev-card" id="ev-freshcow" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardDetail('ev-freshcow','p0')">
                 <span class="ev-corner-badge">!</span>
-                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
-                  <div style="width:64px; height:60px; border-radius:16px; background:var(--dangerbg); border:1px solid var(--danger); display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0;" class="ev-avatar" aria-hidden="true">🐄🆕</div>
-                  <div style="min-width:0; flex:1;">
-                    <p class="ev-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Fresh cow health dip — Ganga</p>
-                    <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
-                    <button class="en ev-viewdetails" onclick="openCardDetail('ev-freshcow','p0')">View Details ›</button>
-                    <p class="ev-sub">Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.</p>
-                    <p class="en ev-meta">Green Valley Farm · Belt 27 · Day 6 post-calving</p>
-                  </div>
-                </div>
-                <div class="ev-body">
+                <p class="ev-title" style="display:none;">Fresh cow health dip — Ganga</p>
+                <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
+                <p class="ev-sub">Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.</p>
+                <p class="en ev-meta">Green Valley Farm · Belt 27 · Day 6 post-calving</p>
+                <p class="en" style="text-align:center; font-size:13px; font-weight:600; color:var(--text1); margin:0;">Ganga · Ongole</p>
+                <div class="ev-avatar" style="width:96px; height:88px; margin:8px auto 0; border-radius:20px; background:var(--dangerbg); border:1px solid var(--danger); display:flex; align-items:center; justify-content:center; font-size:40px;" aria-hidden="true">🐄🆕</div>
+                <p class="en" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Fresh cow health dip?</p>
+                <div class="ev-body" onclick="event.stopPropagation();">
                   <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Ganga seem off to you?</p>
                   <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>No</button>
