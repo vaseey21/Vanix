@@ -1647,6 +1647,32 @@
         themeBtn.style.borderColor = dark ? 'rgba(255,255,255,0.20)' : 'rgba(255,255,255,0.35)';
       });
 
+      // ── Text / Image display mode toggle ──
+      // App-wide preference: "text" = plain description-first Events cards
+      // (no icons, no photos — the pre-illustration-pass design); "image" =
+      // the whiteboard-sketched photo-illustration cards. Applied via a
+      // `.display-image`/no-class root toggle (default = text) so existing
+      // markup/CSS added for each card's photo variant only activates when
+      // this class is present, keeping the plain-text version as the base.
+      window.VANIX_DISPLAY_MODE = localStorage.getItem('vanixDisplayMode') || 'text';
+      var dmBtn = document.getElementById('s1-displaymode');
+      function applyDisplayMode() {
+        var img = window.VANIX_DISPLAY_MODE === 'image';
+        var knob = document.getElementById('s1-dm-knob');
+        knob.style.transform = img ? 'translateX(24px)' : 'translateX(0)';
+        document.getElementById('s1-dm-text').style.display = img ? 'none' : 'block';
+        document.getElementById('s1-dm-image').style.display = img ? 'block' : 'none';
+        document.getElementById('flow-root').classList.toggle('display-image', img);
+        var er = document.getElementById('ev-flow-root');
+        if (er) er.classList.toggle('display-image', img);
+      }
+      applyDisplayMode();
+      dmBtn.addEventListener('click', function() {
+        window.VANIX_DISPLAY_MODE = window.VANIX_DISPLAY_MODE === 'image' ? 'text' : 'image';
+        localStorage.setItem('vanixDisplayMode', window.VANIX_DISPLAY_MODE);
+        applyDisplayMode();
+      });
+
       // timer and resend are mutually exclusive: countdown first, then resend replaces it
       var resendWrap = document.getElementById('s1-resend-wrap');
       function startTimer() {
