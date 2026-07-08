@@ -1428,7 +1428,7 @@ class _EventsScreenState extends State<EventsScreen> {
         meta: meta,
         child: Padding(
           padding: const EdgeInsets.only(top: 12),
-          child: SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () => onChange(_AckState.acknowledged), child: Text(buttonLabel))),
+          child: SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () => onChange(_AckState.acknowledged), child: _iconLabel(Icons.check, buttonLabel))),
         ),
       );
     }
