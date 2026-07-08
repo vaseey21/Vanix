@@ -110,7 +110,7 @@ class CardDetailScreen extends StatelessWidget {
                     GraphPanel(
                       isDark: isDark,
                       label: 'MOVEMENT — LAST 10 DAYS',
-                      child: MovementBars(values: moves, highlightLast: true),
+                      child: MovementBars(values: moves, highlightLast: !moveIsFlat),
                     ),
                     const SizedBox(height: 18),
                     cta,
