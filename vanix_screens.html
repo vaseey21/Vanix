@@ -2823,8 +2823,13 @@
           document.getElementById('ev-detail-temp-min').textContent = min.toFixed(1) + '°C baseline';
           document.getElementById('ev-detail-temp-today').textContent = temps[temps.length - 1].toFixed(1) + '°C today';
           var mmax = Math.max.apply(null, moves);
+          var mmin = Math.min.apply(null, moves);
+          // Only highlight the last bar as a spike if movement actually moved —
+          // a flat/normal series (e.g. "Rise in temperature", where movement
+          // stays normal) should render in the same colour throughout.
+          var moveIsFlat = mmax === mmin;
           document.getElementById('ev-detail-move').innerHTML = moves.map(function(m, i) {
-            var isToday = i === moves.length - 1;
+            var isToday = i === moves.length - 1 && !moveIsFlat;
             return '<div style="flex:1; height:' + Math.round(m / mmax * 100) + '%; background:' + (isToday ? 'var(--danger)' : 'var(--greendeep)') + '; border-radius:2px;"></div>';
           }).join('');
 
