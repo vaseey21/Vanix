@@ -188,6 +188,7 @@ The heat alert also surfaces as a **full-screen "push notification" style carous
 - Dark mode is app-wide (temporary toggle on Account tab) — every new screen needs dark styles
 - Hindi/Bhojpuri strings run 20–40% longer than English — no fixed-width containers
 - EVERY visual/component change in `vanix_screens.html` must be reflected in `vanix_design_system.html` (and new tokens in `vanix_theme.dart`) in the same session — the design system is the source of truth
+- Prefer icon + 1-2 word label over sentence-length UI text, especially for the Farmer persona — never a bare icon with no label, never a full sentence where an icon+word will do. See "Icon + label" in the design system. Applied to Events priority chips/manager line/P2 Yes-No buttons/single-acknowledge button so far; still pending: P0 vet-flow sentences, Heat/Pregnancy/Gestation buttons, Milk Log session pills + litres display
 
 ---
 
