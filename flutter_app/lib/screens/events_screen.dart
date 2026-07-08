@@ -1802,11 +1802,11 @@ class _ActionCard extends StatelessWidget {
               if (avatarEmoji != null) Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: Container(
-                  width: 44,
-                  height: 40,
-                  decoration: BoxDecoration(color: bg, border: Border.all(color: border), borderRadius: BorderRadius.circular(14)),
+                  width: 64,
+                  height: 60,
+                  decoration: BoxDecoration(color: bg, border: Border.all(color: border), borderRadius: BorderRadius.circular(16)),
                   alignment: Alignment.center,
-                  child: Text(avatarEmoji!, style: const TextStyle(fontSize: 19)),
+                  child: Text(avatarEmoji!, style: const TextStyle(fontSize: 28)),
                 ),
               ),
               Expanded(
