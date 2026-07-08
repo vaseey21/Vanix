@@ -369,6 +369,16 @@ class _EventsScreenState extends State<EventsScreen> {
                         _buildLamenessCard(isDark),
                         const SizedBox(height: 10),
                         _buildKetosisCard(isDark),
+                      ],
+                    ),
+                  ),
+                if (_tab == _Tab.all || _tab == _Tab.warnings)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const _SectionLabel('Warnings'),
                         const SizedBox(height: 10),
                         _buildProestrusCard(isDark),
                         const SizedBox(height: 10),
