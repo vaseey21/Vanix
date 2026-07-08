@@ -11,13 +11,24 @@ class AppState extends ChangeNotifier {
   bool _isDark = false;
   String _languageCode = 'hi'; // default locale per CLAUDE.md
   int _openEventsCount = 14;
+  // "text" = plain description-first Events cards (no icons/photos — the
+  // pre-illustration-pass design); "image" = the whiteboard-sketched
+  // photo-illustration cards (Fever, Heat so far). Toggled next to dark
+  // mode on the login screen, applies app-wide.
+  bool _displayImageMode = false;
 
   bool get isDark => _isDark;
   String get languageCode => _languageCode;
   int get openEventsCount => _openEventsCount;
+  bool get displayImageMode => _displayImageMode;
 
   void toggleDark() {
     _isDark = !_isDark;
+    notifyListeners();
+  }
+
+  void toggleDisplayMode() {
+    _displayImageMode = !_displayImageMode;
     notifyListeners();
   }
 
