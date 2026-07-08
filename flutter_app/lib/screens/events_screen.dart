@@ -95,6 +95,20 @@ class _HeatWindowBar extends StatelessWidget {
   }
 }
 
+/// Icon + short word for button labels — replaces full-sentence CTAs
+/// ("No, she's fine") with a quick icon + 1 word so the card reads at a
+/// glance ("less text, more pictorial" — farmer-friendly pass).
+Widget _iconLabel(IconData icon, String label) {
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Icon(icon, size: 16),
+      const SizedBox(width: 6),
+      Text(label),
+    ],
+  );
+}
+
 /// 2x2 grid of method-select buttons, shared by the real Heat card and the
 /// "View full cycle" walkthrough's own heat step. Mirrors seqMethodBtn() in
 /// vanix_screens.html.
