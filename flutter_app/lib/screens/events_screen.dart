@@ -1890,7 +1890,7 @@ class _ActionCard extends StatelessWidget {
     );
 
     Widget body;
-    if (avatarEmoji != null || conditionIcon != null || illustrationAssets != null) {
+    if (imageMode && (avatarEmoji != null || conditionIcon != null || illustrationAssets != null)) {
       // Illustration-first list card (whiteboard sketch): cow · breed →
       // big illustration → the question + Yes/No (already bundled in
       // `child`) — no title/manager/View-Details row, tapping anywhere on
