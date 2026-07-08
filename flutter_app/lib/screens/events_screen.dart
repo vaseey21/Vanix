@@ -1676,10 +1676,17 @@ class _ActionCard extends StatelessWidget {
   final String title, sub;
   final String? meta;
   final String? manager;
-  // Cow + condition emoji "illustration" leading the card (e.g. 🐄🌡️ for
-  // fever) — farmer-friendly pictorial cue, in place of a plain text-only
-  // header. Not every card has one yet (see CLAUDE.md pending list).
+  // Cow + condition emoji "illustration" leading the card (e.g. 🐄⚠️ for
+  // abortion) — farmer-friendly pictorial cue, in place of a plain text-only
+  // header. Legacy combo-emoji tile, still used by cards not yet swapped to
+  // the real photo (Abortion, Fresh-Cow Monitor). Not every card has one yet
+  // (see CLAUDE.md pending list).
   final String? avatarEmoji;
+  // Real cow photo + a small SEPARATE condition icon beside it (not
+  // overlapping) — Fever, Heat, Milking notification. Takes precedence over
+  // avatarEmoji when set.
+  final IconData? conditionIcon;
+  final Color? conditionIconColor;
   final Widget child;
   final bool escalated;
   final bool isDark;
@@ -1696,6 +1703,8 @@ class _ActionCard extends StatelessWidget {
     this.meta,
     this.manager,
     this.avatarEmoji,
+    this.conditionIcon,
+    this.conditionIconColor,
     required this.child,
     this.escalated = false,
     this.isDark = false,

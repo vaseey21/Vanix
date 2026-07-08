@@ -929,7 +929,10 @@
                 <p class="ev-sub">Sustained high temperature for 3 days with very little movement — she has mostly stayed in one spot.</p>
                 <p class="en ev-meta">Green Valley Farm · Belt 63 · since 30 Jun</p>
                 <p class="en" style="text-align:center; font-size:13px; font-weight:600; color:var(--text1); margin:0;">Kajri · Jersey</p>
-                <div class="ev-avatar" style="width:96px; height:88px; margin:8px auto 0; border-radius:20px; background:var(--dangerbg); border:1px solid var(--danger); display:flex; align-items:center; justify-content:center; font-size:40px;" aria-hidden="true">🐄🌡️</div>
+                <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-top:8px;">
+                  <img class="ev-avatar" src="assets/images/cow_lying.png" alt="" style="width:96px; height:auto; object-fit:contain; flex-shrink:0;">
+                  <span class="ev-cond-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg></span>
+                </div>
                 <p class="en" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Does Kajri look unwell to you?</p>
                 <div class="ev-body" onclick="event.stopPropagation();">
                   <div style="display:flex; gap:8px; margin-top:10px;">
@@ -949,7 +952,10 @@
                   <span class="en ev-chip ev-chip-p1" style="display:inline-flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>P1</span>
                 </div>
                 <p class="en" style="text-align:center; font-size:13px; font-weight:600; color:var(--text1); margin:6px 0 0;">Gauri · Desi</p>
-                <div class="ev-avatar" style="width:96px; height:88px; margin:8px auto 0; border-radius:20px; background:var(--warnbg); border:1px solid var(--warning); display:flex; align-items:center; justify-content:center; font-size:40px;" aria-hidden="true">🐄❤️</div>
+                <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-top:8px;">
+                  <img class="ev-avatar" src="assets/images/cow_lying.png" alt="" style="width:96px; height:auto; object-fit:contain; flex-shrink:0;">
+                  <span class="ev-cond-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="var(--danger)" stroke="var(--danger)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                </div>
                 <p class="en" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Is Gauri in heat?</p>
                 <div class="ev-body" onclick="event.stopPropagation();">
                   <p id="ev-heat-phase" class="en" style="font-size:12px; font-weight:600; color:var(--text1); margin:8px 0 0;"></p>
@@ -1037,18 +1043,21 @@
               </div>
 
               <!-- 3c. Milking notification — fires after delivery is confirmed -->
-              <div class="ev-card" id="ev-milk-notif" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
-                <div style="min-width:0;">
-                  <p class="ev-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;" id="ev-milk-notif-title">Lakshmi is now in her lactation period (250 days)</p>
-                  <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
-                  <button class="en ev-viewdetails" onclick="openCardDetail('ev-milk-notif','p1')">View Details ›</button>
-                  <p class="ev-sub">Add her to the milking list?</p>
-                </div>
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+              <div class="ev-card" id="ev-milk-notif" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardDetail('ev-milk-notif','p1')">
+                <p class="ev-title" style="display:none;" id="ev-milk-notif-title">Lakshmi is now in her lactation period (250 days)</p>
+                <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
+                <p class="ev-sub">Add her to the milking list?</p>
+                <div style="display:flex; align-items:center; justify-content:center; margin-top:0;">
                   <span class="en ev-chip ev-chip-p1" style="display:inline-flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>P1</span>
                 </div>
-                <div class="ev-body">
-                  <div style="display:flex; gap:8px; margin-top:12px;">
+                <p class="en" style="text-align:center; font-size:13px; font-weight:600; color:var(--text1); margin:6px 0 0;">Lakshmi · Ongole</p>
+                <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-top:8px;">
+                  <img class="ev-avatar" src="assets/images/cow_lying.png" alt="" style="width:96px; height:auto; object-fit:contain; flex-shrink:0;">
+                  <span class="ev-cond-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg></span>
+                </div>
+                <p class="en" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Add her to the milking list?</p>
+                <div class="ev-body" onclick="event.stopPropagation();">
+                  <div style="display:flex; gap:8px; margin-top:10px;">
                     <button id="ev-milk-remind" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Remind me later</button>
                     <button id="ev-milk-add" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, add</button>
                   </div>
@@ -2713,7 +2722,7 @@
         // Cow name -> breed, for the illustration-first cards' name/breed
         // caption (breed isn't tracked as structured data for these cards
         // today — mock values from the locked breed set).
-        var EV_BREED = { Kajri: 'Jersey', Mohini: 'Gir/Sahiwal', Ganga: 'Ongole', Gauri: 'Desi' };
+        var EV_BREED = { Kajri: 'Jersey', Mohini: 'Gir/Sahiwal', Ganga: 'Ongole', Gauri: 'Desi', Lakshmi: 'Ongole' };
 
         window.openCardDetail = function(cardId, priority) {
           var card = document.getElementById(cardId);
@@ -2730,11 +2739,26 @@
           if (avatarEl) {
             illusWrap.style.display = 'block';
             var illus = document.getElementById('ev-detail-illus');
-            illus.textContent = avatarEl.textContent;
-            illus.style.background = getComputedStyle(avatarEl).backgroundColor;
-            illus.style.border = '1px solid ' + getComputedStyle(avatarEl).borderColor;
+            var condIcon = card.querySelector('.ev-cond-icon');
+            if (avatarEl.tagName === 'IMG') {
+              // Real cow photo — condition icon rendered beside it, not overlapping.
+              illus.style.background = 'transparent';
+              illus.style.border = 'none';
+              illus.style.width = 'auto';
+              illus.style.height = 'auto';
+              illus.style.gap = '14px';
+              illus.innerHTML = '<img src="' + avatarEl.getAttribute('src') + '" alt="" style="width:128px; height:auto; object-fit:contain;">' +
+                (condIcon ? '<span style="display:inline-flex; transform:scale(1.5);">' + condIcon.innerHTML + '</span>' : '');
+            } else {
+              illus.style.width = '128px';
+              illus.style.height = '116px';
+              illus.style.gap = '0';
+              illus.textContent = avatarEl.textContent;
+              illus.style.background = getComputedStyle(avatarEl).backgroundColor;
+              illus.style.border = '1px solid ' + getComputedStyle(avatarEl).borderColor;
+            }
             var titleText = titleEl ? titleEl.textContent : '';
-            var cowName = titleText.indexOf('—') >= 0 ? titleText.split('—').pop().trim() : '';
+            var cowName = titleText.indexOf('—') >= 0 ? titleText.split('—').pop().trim() : (titleText.split(' ')[0] || '');
             document.getElementById('ev-detail-cow').textContent = EV_BREED[cowName] ? (cowName + ' · ' + EV_BREED[cowName]) : cowName;
           } else {
             illusWrap.style.display = 'none';
