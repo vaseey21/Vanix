@@ -225,6 +225,47 @@ class _ThemeToggle extends StatelessWidget {
   }
 }
 
+// Text (plain description-first Events cards) vs Image (photo-illustration
+// cards) — app-wide display preference, same pill styling as _ThemeToggle.
+class _DisplayModeToggle extends StatelessWidget {
+  final bool imageMode;
+  final VoidCallback onTap;
+  const _DisplayModeToggle({required this.imageMode, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 350),
+        width: 54,
+        height: 30,
+        padding: const EdgeInsets.symmetric(horizontal: 2),
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.28),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Colors.white.withOpacity(0.35)),
+        ),
+        child: AnimatedAlign(
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeOutCubic,
+          alignment: imageMode ? Alignment.centerRight : Alignment.centerLeft,
+          child: Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.30), blurRadius: 6, offset: const Offset(0, 2))],
+            ),
+            child: Icon(imageMode ? Icons.image_outlined : Icons.notes, size: 13, color: const Color(0xFF555555)),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _SheetContainer extends StatelessWidget {
   final bool isDark;
   final Widget child;
