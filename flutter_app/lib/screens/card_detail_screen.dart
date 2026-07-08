@@ -112,10 +112,24 @@ class CardDetailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if (illustrationEmoji != null || conditionIcon != null) ...[
+                    if (illustrationEmoji != null || conditionIcon != null || illustrationAssets != null) ...[
                       const SizedBox(height: 18),
                       Center(
-                        child: conditionIcon != null
+                        child: illustrationAssets != null
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  for (var i = 0; i < illustrationAssets!.length; i++) ...[
+                                    if (i > 0) const SizedBox(width: 14),
+                                    Image.asset(illustrationAssets![i], width: 96, fit: BoxFit.contain),
+                                  ],
+                                  if (conditionIcon != null) ...[
+                                    const SizedBox(width: 14),
+                                    Icon(conditionIcon, size: 38, color: conditionIconColor ?? VanixColors.danger),
+                                  ],
+                                ],
+                              )
+                            : conditionIcon != null
                             ? Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
