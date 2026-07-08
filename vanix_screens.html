@@ -311,13 +311,21 @@
     #flow-root.display-image #ev-heat #ev-heat-phase, #flow-root.display-image #ev-heat #ev-heat-bar-wrap,
     #flow-root.display-image #ev-heat #ev-heat-note,
     #flow-root.display-image #ev-heat .ev-body > p.en { display: none !important; }
-    #flow-root.display-image #ev-heat .ev-chip svg { display: inline; }
-    #flow-root.display-image #ev-heat .ev-chip-p1::after { content: ""; }
+    #flow-root.display-image #ev-heat .ev-chip-wrap { display: none !important; }
     #flow-root.display-image #ev-fever .ev-no .ev-btn-svg, #flow-root.display-image #ev-fever .ev-yes .ev-btn-svg,
     #flow-root.display-image #ev-heat .ev-no .ev-btn-svg, #flow-root.display-image #ev-heat .ev-yes .ev-btn-svg { display: inline; }
     #flow-root.display-image #ev-fever .ev-btn-full { display: none; }
     #flow-root.display-image #ev-fever .ev-btn-short { display: inline; }
-    #flow-root.display-image #ev-fever, #flow-root.display-image #ev-heat { background-size: cover !important; background-repeat: no-repeat !important; background-color: #111 !important; border: none !important; }
+    #flow-root.display-image #ev-photo-viewdetails, #flow-root.display-image .ev-photo-viewdetails { display: block !important; }
+    /* Anchor cow·breed to the top and question/View-Details/CTA to the
+       bottom of the full-bleed photo card via flex + margin-top:auto on the
+       question paragraph (pushes it and everything after it down),
+       matching the approved mockup (title top, question+CTA bottom). */
+    #flow-root.display-image #ev-fever, #flow-root.display-image #ev-heat {
+      background-size: cover !important; background-repeat: no-repeat !important; background-color: #111 !important; border: none !important;
+      display: flex !important; flex-direction: column; min-height: 300px;
+    }
+    #flow-root.display-image #ev-fever .ev-anchor-bottom, #flow-root.display-image #ev-heat .ev-anchor-bottom { margin-top: auto !important; }
     #flow-root.display-image #ev-fever { background-image: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.7) 100%), url('assets/images/fever_photo.jpg') !important; background-position: center 30% !important; }
     #flow-root.display-image #ev-heat { background-image: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.7) 100%), url('assets/images/heat_photo.jpg') !important; background-position: center 15% !important; }
     #flow-root.display-image #ev-fever .ev-title, #flow-root.display-image #ev-fever p,
