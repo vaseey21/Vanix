@@ -729,9 +729,9 @@ class _EventsScreenState extends State<EventsScreen> {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Expanded(child: OutlinedButton(onPressed: () => setState(() { _heat = _HeatState.missed; widget.appState.resolveEvent(); }), child: const Text('Insemination missed'))),
+                    Expanded(flex: 3, child: OutlinedButton(onPressed: () => setState(() { _heat = _HeatState.missed; widget.appState.resolveEvent(); }), child: const Text('Insemination missed', style: TextStyle(fontSize: 12.5)))),
                     const SizedBox(width: 8),
-                    Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatShowLateForm = true), child: const Text('Cow inseminated'))),
+                    Expanded(flex: 2, child: ElevatedButton(onPressed: () => setState(() => _heatShowLateForm = true), child: const Text('Cow inseminated', style: TextStyle(fontSize: 12.5)))),
                   ],
                 ),
               ] else ...[
