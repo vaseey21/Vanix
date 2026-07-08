@@ -1988,7 +1988,7 @@ class _ActionCard extends StatelessWidget {
 
     final card = InkWell(
       borderRadius: BorderRadius.circular(16),
-      onTap: (avatarEmoji != null || conditionIcon != null || illustrationAssets != null) ? () => _openDetails(context) : null,
+      onTap: (imageMode && (avatarEmoji != null || conditionIcon != null || illustrationAssets != null)) ? () => _openDetails(context) : null,
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: decoration,
