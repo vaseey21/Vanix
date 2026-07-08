@@ -1475,7 +1475,7 @@ class _PriorityChip extends StatelessWidget {
       case _Priority.p2:
         return _chip('P2 · WARNING', bg: VanixColors.warningBg, fg: VanixColors.warningInk, outline: true, borderColor: VanixColors.warning);
       case _Priority.p3:
-        return _chip('P3 · INFO', bg: VanixColors.bgCard, fg: VanixColors.textHint, outline: true, borderColor: VanixColors.border);
+        return _chip('P3 · WARNING', bg: VanixColors.bgCard, fg: VanixColors.textHint, outline: true, borderColor: VanixColors.border);
     }
   }
 
@@ -1655,6 +1655,9 @@ class _ActionCard extends StatelessWidget {
   }
 
   List<int> _mockMoves() {
+    // Rise in temperature is a temperature-only signal — movement stays
+    // flat/normal, unlike the other cards where it also spikes.
+    if (title.startsWith('Rise in temperature')) return List.filled(10, 4);
     final h = title.hashCode;
     return List.generate(9, (i) => 3 + ((h >> i) % 5))..add(9 + (h % 3));
   }
@@ -1683,7 +1686,7 @@ class _ActionCard extends StatelessWidget {
         borderColor = VanixColors.warning;
         break;
       case _Priority.p3:
-        label = 'P3 · INFO';
+        label = 'P3 · WARNING';
         pBg = VanixColors.bgCard;
         pFg = VanixColors.textHint;
         outline = true;
