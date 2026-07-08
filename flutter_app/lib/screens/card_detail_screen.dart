@@ -32,6 +32,10 @@ class CardDetailScreen extends StatelessWidget {
   // Milking notification) — takes precedence over illustrationEmoji.
   final IconData? conditionIcon;
   final Color? conditionIconColor;
+  // Custom line-art icon assets (cow/bull/pregnancy/insemination), no
+  // border/tint container — takes precedence over conditionIcon's cow-photo
+  // pairing when set.
+  final List<String>? illustrationAssets;
   final String? cowName;
   final String? cowBreed;
   final Color? illustrationTint;
