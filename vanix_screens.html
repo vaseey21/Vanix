@@ -3028,7 +3028,27 @@
         document.getElementById('ev-detail-back').addEventListener('click', window.closeCardDetail);
 
         function fsBuildCards() {
+          var imageMode = window.VANIX_DISPLAY_MODE === 'image';
           fsStrip.innerHTML = FS_ALERTS.map(function(a, i) {
+            if (imageMode) {
+              // Full-bleed real photo (only Gauri has a dedicated shot today —
+              // reused for all three as a placeholder pending real per-cow
+              // photos), dark top/bottom gradient scrim for text legibility,
+              // farm/time + close/counter live in the shared chrome above.
+              return '<div class="ev-fs-card ev-fs-card-photo" data-i="' + i + '" style="flex:0 0 100%; position:relative; background-image:linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 18%, rgba(0,0,0,0) 32%, rgba(0,0,0,0) 55%, rgba(6,6,6,0.6) 68%, rgba(2,2,2,0.92) 100%), url(\'assets/images/' + (a.photo || 'heat_photo.jpg') + '\'); background-size:cover; background-position:center 18%; background-repeat:no-repeat; overflow-y:auto;">' +
+                '<div style="min-height:100%; display:flex; flex-direction:column; padding:14px 24px 20px; box-sizing:border-box;">' +
+                  '<span class="en" style="font-size:12px; font-weight:600; color:#fff; opacity:0.9;">' + a.farm + ' · detected ' + a.time + '</span>' +
+                  '<div style="flex:1;"></div>' +
+                  '<p style="font-size:26px; font-weight:800; color:#fff; margin:0 0 4px; letter-spacing:-0.02em;">Heat cycle detected — ' + a.name + '</p>' +
+                  '<p style="font-size:12px; line-height:1.5; color:#fff; opacity:0.85; margin:0 0 12px;">' + a.reason + '</p>' +
+                  '<div style="width:100%;">' + fsSparkline(a.temps) + fsMovement(a.moves) + '</div>' +
+                  '<div class="ev-fs-actions" style="width:100%; margin-top:14px;">' +
+                    '<button class="ev-fs-yes" style="width:100%; min-height:52px; background:var(--greendeep); border:none; border-radius:26px; font-size:17px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Yes, in heat</button>' +
+                    '<button class="ev-fs-no" style="width:100%; min-height:48px; margin-top:8px; background:rgba(255,255,255,0.14); border:1.5px solid rgba(255,255,255,0.6); border-radius:24px; font-size:14px; font-weight:600; color:#fff; font-family:var(--font-hi);">No</button>' +
+                  '</div>' +
+                '</div>' +
+              '</div>';
+            }
             return '<div class="ev-fs-card" data-i="' + i + '" style="flex:0 0 100%; display:flex; flex-direction:column; padding:8px 44px 4px;">' +
               '<div style="flex:1; overflow-y:auto; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">' +
                 '<span class="en fs-meta" style="font-size:12px; font-weight:500;">' + a.farm + ' · detected ' + a.time + '</span>' +
