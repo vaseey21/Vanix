@@ -2484,11 +2484,10 @@
         card.querySelector('.ev-yes').addEventListener('click', function() {
           confirmed = true;
           confirmEl.style.display = 'none';
-          startBtn.style.display = 'block';
-          // Image mode: swap the card's photo to the vet+syringe shot,
-          // matching the Insemination Window mockup, once heat is confirmed.
-          card.classList.add('ev-heat-inseminating');
-          render();
+          // Heat card = cow+bull + Yes/No only. Yes → straight to the vet
+          // picker, STILL on the cow+bull heat photo (no timer window yet).
+          if (questionEl) questionEl.style.display = 'none';
+          showHeatVetPicker();
         });
         // "Call vet" is available in every phase — but outside the optimal
         // window (pre / suboptimal) it interposes a confirmation step first.
@@ -2498,9 +2497,17 @@
           vetEl.style.display = 'block';
           wireVetPicker('heat', function(vetName) {
             vetEl.style.display = 'none';
+            // Vet called → the card becomes the Insemination Window: swap to
+            // the vet+syringe photo, reveal the 24h timer window + log form.
+            card.classList.add('ev-heat-inseminating');
+            if (questionEl) { questionEl.textContent = 'Insemination window'; questionEl.style.display = 'block'; }
+            phaseEl.style.display = 'block';
+            barWrap.style.display = 'block';
+            noteEl.style.display = 'block';
             formEl.style.display = 'block';
             document.getElementById('ev-heat-tech').value = vetName;
-            noteEl.textContent = vetName + ' called — enter the insemination details once done.';
+            noteEl.textContent = vetName + ' called — log the insemination once done.';
+            render();
           });
         }
         startBtn.addEventListener('click', function() {
