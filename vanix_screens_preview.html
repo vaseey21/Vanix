@@ -2604,9 +2604,19 @@
           vetEl.style.display = 'block';
           wireVetPicker('heat', function(vetName) {
             vetEl.style.display = 'none';
+            // Vet called → the card now becomes the Insemination Window:
+            // swap to the vet+syringe photo, reveal the 24h timer window and
+            // the log form. This is the "goes to insemination where the time
+            // window is" step the farmer described.
+            card.classList.add('ev-heat-inseminating');
+            if (questionEl) { questionEl.textContent = 'Insemination window'; questionEl.style.display = 'block'; }
+            phaseEl.style.display = 'block';
+            barWrap.style.display = 'block';
+            noteEl.style.display = 'block';
             formEl.style.display = 'block';
             document.getElementById('ev-heat-tech').value = vetName;
-            noteEl.textContent = vetName + ' called — enter the insemination details once done.';
+            noteEl.textContent = vetName + ' called — log the insemination once done.';
+            render();
           });
         }
         startBtn.addEventListener('click', function() {
