@@ -2551,7 +2551,10 @@
         function render() {
           if (resolved) return;
           var h = elapsedSimHours();
-          if (h >= 24) {
+          // Expiry only matters once heat is confirmed and we're in the
+          // insemination window — before that the card is just the cow+bull
+          // Yes/No question and the clock is irrelevant to the farmer.
+          if (h >= 24 && confirmed) {
             resolved = true;
             clearInterval(ticker);
             evSetTint(card, 'var(--warnbg)', 'var(--warning)');
