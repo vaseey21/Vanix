@@ -3238,9 +3238,7 @@
               '<span>04:30 detected</span><span>+24h · 04:30</span>' +
             '</div>';
 
-          var html = '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0; letter-spacing:-0.02em;">' + (insem ? 'Insemination window' : 'Heat detected') + '</p>' +
-            '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:2px 0 0;">Gauri · Desi</p>' +
-            (imageMode ? '<span style="position:absolute; top:20px; right:22px; background:var(--danger); color:#fff; font-size:11px; font-weight:700; letter-spacing:0.02em; padding:4px 10px; border-radius:20px; font-family:var(--font-hi);">Critical</span>' : '');
+          var titleText = insem ? 'Insemination window' : 'Heat detected';
 
           // Everything below the title/breed is wrapped in .ev-seq-bottom,
           // which carries margin-top:auto in image mode so it's pinned to
