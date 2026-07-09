@@ -3280,12 +3280,25 @@
               '</div>' +
               '<button id="ev-seq-heat-done" style="width:100%; min-height:50px; margin-top:12px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Done</button>';
           }
-          html += '<div class="ev-seq-bottom">' + bottom + '</div>';
-
-          // Image mode: full-bleed photo card — cow+bull for the heat question,
-          // vet+syringe once we're in the insemination stages.
-          var wrapClass = 'ev-photo-step' + (insem ? ' insem' : '');
-          body.innerHTML = imageMode ? '<div class="' + wrapClass + '">' + html + '</div>' : html;
+          // Image mode: solid-red header band (title/breed/CRITICAL tag) +
+          // full-bleed photo strip (cow+bull for the heat question, vet+syringe
+          // once in the insemination stages) + dark bottom band for the
+          // question/CTA — three stacked bands, no floating white sliver.
+          if (imageMode) {
+            var wrapClass = 'ev-photo-step' + (insem ? ' insem' : '');
+            var header = '<div class="ev-photo-header">' +
+              '<div class="ev-photo-handle"></div>' +
+              '<div class="ev-photo-header-row">' +
+                '<div><p>' + titleText + '</p><p>Gauri · Desi</p></div>' +
+                '<span class="ev-photo-tag">CRITICAL</span>' +
+              '</div>' +
+            '</div>';
+            body.innerHTML = '<div class="' + wrapClass + '">' + header + '<div class="ev-photo-img"></div><div class="ev-seq-bottom">' + bottom + '</div></div>';
+          } else {
+            body.innerHTML = '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0; letter-spacing:-0.02em;">' + titleText + '</p>' +
+              '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:2px 0 0;">Gauri · Desi</p>' +
+              '<div class="ev-seq-bottom">' + bottom + '</div>';
+          }
 
           if (heatFormStage === 'ask') {
             document.getElementById('ev-seq-heat-no').addEventListener('click', function() { interrupt('Cycle interrupted — heat not confirmed. Closing walkthrough.'); });
