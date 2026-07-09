@@ -3348,14 +3348,20 @@
           var html = '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0; letter-spacing:-0.02em;">' + (insem ? 'Insemination window' : 'Heat detected') + '</p>' +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:2px 0 0;">Gauri · Desi</p>';
 
+          // Everything below the title/breed is wrapped in .ev-seq-bottom,
+          // which carries margin-top:auto in image mode so it's pinned to
+          // the bottom of the tall photo card (title top, question/CTA
+          // bottom — matches the approved Heat Alert / Insemination Window
+          // mockups) instead of sitting right under the title.
+          var bottom = '';
           if (heatFormStage === 'ask') {
-            html += '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:16px 0 0;">Is Gauri in heat?</p>' +
-              '<div style="display:flex; gap:10px; margin-top:12px;">' +
+            bottom += '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0 0 12px;">Is Gauri in heat?</p>' +
+              '<div style="display:flex; gap:10px;">' +
               '<button id="ev-seq-heat-no" style="flex:1; min-height:50px; background:transparent; border:1px solid var(--border); border-radius:25px; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">No</button>' +
               '<button id="ev-seq-heat-yes" style="flex:1.3; min-height:50px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Yes, in heat</button>' +
               '</div>';
           } else if (heatFormStage === 'vet') {
-            html += segBar +
+            bottom += segBar +
               '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:16px 0 0;">Call a vet for insemination</p>' +
               ONBOARDED_VETS.map(function(name) {
                 var on = name === heatVetSel;
@@ -3364,7 +3370,7 @@
               }).join('') +
               '<button id="ev-seq-heat-vet-send" style="width:100%; min-height:50px; margin-top:12px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Call vet</button>';
           } else if (heatFormStage === 'form') {
-            html += segBar +
+            bottom += segBar +
               '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:16px 0 8px;">Log insemination</p>' +
               '<div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">' +
               INSEM_METHODS.map(seqMethodBtn).join('') +
@@ -3375,13 +3381,14 @@
             var logBorder = imageMode ? 'rgba(255,255,255,0.3)' : 'var(--border)';
             var logSub = imageMode ? 'rgba(255,255,255,0.82)' : 'var(--text2)';
             var attColor = imageMode ? '#8FE6B8' : 'var(--greenink)';
-            html += '<div style="background:' + logBg + '; border:1px solid ' + logBorder + '; border-radius:14px; padding:14px; margin-top:16px;">' +
+            bottom += '<div style="background:' + logBg + '; border:1px solid ' + logBorder + '; border-radius:14px; padding:14px;">' +
               '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:0;">Vet log — ' + heatVetSel + '</p>' +
               '<p style="font-size:12px; color:' + logSub + '; margin:6px 0 0; line-height:1.6;">Insemination · ' + heatMethod + ' · logged 04:30<br>' + heatVetSel + ' attended</p>' +
               '<button id="ev-seq-heat-attach" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; margin-top:12px; background:transparent; border:1px dashed ' + logBorder + '; border-radius:12px; font-size:13px; font-weight:600; color:' + attColor + '; font-family:var(--font-hi);">📎 Add attachment</button>' +
               '</div>' +
               '<button id="ev-seq-heat-done" style="width:100%; min-height:50px; margin-top:12px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Done</button>';
           }
+          html += '<div class="ev-seq-bottom">' + bottom + '</div>';
 
           // Image mode: full-bleed photo card — cow+bull for the heat question,
           // vet+syringe once we're in the insemination stages.
