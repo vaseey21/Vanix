@@ -309,12 +309,12 @@
     #ev-heat .ev-no .ev-btn-svg, #ev-heat .ev-yes .ev-btn-svg { display: none; }
     #ev-fever .ev-btn-short { display: none; }
 
-    /* image mode: reference-style card — a contained rounded photo on top and
-       a white body below (red question hero, cow·breed, divider, CTAs, View
-       Details). Criticality is shown as a red left accent strip + a red
-       CRITICAL label on the left, reusing the danger token (current colour
-       system — no new colours). Layout order is driven by flex `order` since
-       the DOM order predates this design. */
+    /* image mode: reference-style EVENTS-PAGE card — a horizontal card with a
+       square photo on the left and, to its right, the red question hero,
+       cow·breed and a CRITICAL + time-ago block top-right; a divider, then
+       full-width No/Yes CTAs and a centred View Details below. Uses a CSS grid
+       over the flat DOM (explicit grid-row per element). Criticality: red left
+       accent strip + red CRITICAL label. Current colour tokens only. */
     #flow-root.display-image #ev-fever,
     #flow-root.display-image #ev-heat {
       position: relative;
@@ -322,22 +322,24 @@
       border: 1px solid var(--border) !important;
       border-left: 6px solid var(--danger) !important;
       border-radius: 18px !important;
-      padding: 0 0 6px !important;
+      padding: 14px 16px 12px !important;
       overflow: hidden;
-      display: flex !important;
-      flex-direction: column;
+      display: grid !important;
+      grid-template-columns: 84px 1fr;
+      column-gap: 14px; row-gap: 3px;
+      align-items: start;
     }
-    /* contained rounded photo block at the top */
+    /* square photo, left column, spanning the question + breed rows */
     #flow-root.display-image #ev-fever::before,
     #flow-root.display-image #ev-heat::before {
-      content: ""; order: 0; display: block; height: 190px;
-      margin: 14px 14px 0; border-radius: 14px;
+      content: ""; grid-column: 1; grid-row: 1 / span 2; align-self: start;
+      width: 84px; height: 84px; border-radius: 12px;
       background-size: cover; background-repeat: no-repeat;
     }
     #flow-root.display-image #ev-fever::before { background-image: url('assets/images/fever_photo.jpg'); background-position: center 30%; }
     #flow-root.display-image #ev-heat::before { background-image: url('assets/images/heat_photo.jpg'); background-position: center 15%; }
-    /* Once "Yes, in heat" is confirmed the card evolves into the Insemination
-       Window step; swap only the photo to vet+syringe (body stays white). */
+    /* Once "Yes" opens the slider, the card stays a triage card — no inline
+       photo swap needed, but keep the rule harmless if the class is set. */
     #flow-root.display-image #ev-heat.ev-heat-inseminating::before { background-image: url('assets/images/insemination_photo.jpg'); background-position: center 25%; }
     /* hide text-mode-only bits */
     #flow-root.display-image #ev-fever .ev-title, #flow-root.display-image #ev-fever .ev-manager,
@@ -345,36 +347,48 @@
     #flow-root.display-image #ev-fever .ev-corner-badge,
     #flow-root.display-image #ev-heat .ev-title, #flow-root.display-image #ev-heat .ev-manager,
     #flow-root.display-image #ev-heat .ev-sub, #flow-root.display-image #ev-heat .ev-meta, #flow-root.display-image #ev-heat .ev-chip-wrap { display: none !important; }
-    /* red CRITICAL label on the left */
+    /* CRITICAL + time-ago pinned top-right (absolute so they don't fight the grid) */
     #flow-root.display-image #ev-fever .ev-crit-label,
     #flow-root.display-image #ev-heat .ev-crit-label {
-      display: inline-flex !important; align-items: center; gap: 6px; align-self: flex-start;
-      order: 1; margin: 16px 0 0 16px; padding: 5px 12px 5px 6px; border-radius: 20px;
-      background: var(--dangerbg); color: var(--danger); font-size: 11px; font-weight: 800; letter-spacing: 0.04em;
+      display: inline-flex !important; align-items: center; gap: 6px;
+      position: absolute; top: 14px; right: 16px;
+      color: var(--danger); font-size: 12px; font-weight: 800; letter-spacing: 0.04em;
     }
     #flow-root.display-image .ev-crit-label .ev-crit-dot {
-      width: 16px; height: 16px; border-radius: 50%; background: var(--danger); color: #fff;
-      font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; line-height: 1;
+      width: 18px; height: 18px; border-radius: 50%; background: var(--danger); color: #fff;
+      font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; line-height: 1;
     }
-    /* question hero, red */
+    #flow-root.display-image #ev-fever .ev-timeago,
+    #flow-root.display-image #ev-heat .ev-timeago {
+      display: inline-flex !important; align-items: center; gap: 5px;
+      position: absolute; top: 40px; right: 16px;
+      color: var(--text2); font-size: 13px; font-weight: 500;
+    }
+    /* question hero, red — top-right block clears via padding-right */
     #flow-root.display-image #ev-fever .ev-cow-breed, #flow-root.display-image #ev-fever .ev-question-big,
     #flow-root.display-image #ev-heat .ev-cow-breed, #flow-root.display-image #ev-heat .ev-question-big { display: block; }
     #flow-root.display-image #ev-fever .ev-anchor-bottom,
     #flow-root.display-image #ev-heat .ev-anchor-bottom {
-      display: block !important; order: 2; text-align: left !important;
-      color: var(--danger) !important; font-size: 23px !important; font-weight: 800 !important;
-      letter-spacing: -0.02em; margin: 8px 16px 0 !important;
+      display: block !important; grid-column: 2; grid-row: 1; text-align: left !important;
+      color: var(--danger) !important; font-size: 21px !important; font-weight: 800 !important;
+      letter-spacing: -0.02em; margin: 0 !important; padding-right: 96px;
     }
     /* cow · breed */
     #flow-root.display-image #ev-fever .ev-cow-breed,
     #flow-root.display-image #ev-heat .ev-cow-breed {
-      order: 3; text-align: left !important; color: var(--text1) !important;
-      font-size: 15px !important; font-weight: 700 !important; opacity: 1; margin: 8px 16px 0 !important;
+      grid-column: 2; grid-row: 2; text-align: left !important; color: var(--text1) !important;
+      font-size: 14px !important; font-weight: 600 !important; opacity: 1; margin: 4px 0 0 !important;
     }
-    /* body (buttons + evolving form) with a divider above it */
+    /* View Details — right-aligned, above the divider/CTAs */
+    #flow-root.display-image .ev-photo-viewdetails {
+      display: block !important; grid-column: 1 / -1; grid-row: 3; justify-self: end;
+      text-align: right !important; margin: 10px 0 2px !important;
+      font-size: 14px !important; font-weight: 700 !important; color: var(--greenink) !important;
+    }
+    /* body (buttons) full width with a divider above */
     #flow-root.display-image #ev-fever .ev-body,
     #flow-root.display-image #ev-heat .ev-body {
-      order: 4; margin: 14px 16px 0; padding-top: 14px; border-top: 1px solid var(--border);
+      grid-column: 1 / -1; grid-row: 4; margin: 8px 0 0; padding-top: 12px; border-top: 1px solid var(--border);
     }
     #flow-root.display-image #ev-fever .ev-body > div, #flow-root.display-image #ev-heat .ev-body > div { margin-top: 0 !important; gap: 12px !important; }
     #flow-root.display-image #ev-fever .ev-body button, #flow-root.display-image #ev-heat .ev-body button {
@@ -387,15 +401,20 @@
     #flow-root.display-image #ev-fever .ev-yes, #flow-root.display-image #ev-heat .ev-yes {
       background: var(--greendeep) !important; color: #fff !important;
     }
-    /* View Details centered below the CTAs */
-    #flow-root.display-image .ev-photo-viewdetails {
-      display: block !important; order: 5; text-align: center !important;
-      margin: 12px auto 6px !important; font-size: 14px !important; font-weight: 700 !important; color: var(--greenink) !important;
-    }
     #flow-root.display-image #ev-fever .ev-no .ev-btn-svg, #flow-root.display-image #ev-fever .ev-yes .ev-btn-svg,
     #flow-root.display-image #ev-heat .ev-no .ev-btn-svg, #flow-root.display-image #ev-heat .ev-yes .ev-btn-svg { display: inline; }
     #flow-root.display-image #ev-fever .ev-btn-full { display: none; }
     #flow-root.display-image #ev-fever .ev-btn-short { display: inline; }
+    /* image-mode events cards are pure triage — hide the inline evolving heat
+       UI (timer bar / vet picker / insemination form); that flow now lives in
+       the bottom slider opened by tapping Yes. */
+    #flow-root.display-image #ev-heat #ev-heat-phase,
+    #flow-root.display-image #ev-heat #ev-heat-bar-wrap,
+    #flow-root.display-image #ev-heat #ev-heat-note,
+    #flow-root.display-image #ev-heat #ev-heat-start,
+    #flow-root.display-image #ev-heat #ev-heat-vet,
+    #flow-root.display-image #ev-heat #ev-heat-offwin,
+    #flow-root.display-image #ev-heat #ev-heat-form { display: none !important; }
     /* Walkthrough sheet's Heat step (image mode only) — solid severity-colour
        header band (title/breed/tag), full-bleed photo filling the rest, and
        the question/CTA sitting on a frosted-glass blur over the bottom of the
