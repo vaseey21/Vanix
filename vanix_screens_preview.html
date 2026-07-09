@@ -3334,6 +3334,16 @@
         scrim.addEventListener('click', closeSeq);
         document.getElementById('ev-view-cycle').addEventListener('click', openSeq);
 
+        // Entry point for the image-mode events Heat card's "Yes" — skips the
+        // full-screen alert carousel and opens the bottom slider straight at
+        // the timer + Start-Insemination stage (heat already answered "yes").
+        window.evOpenHeatSlider = function() {
+          heatPreDecision = 'yes';
+          restrictedHeat = true;
+          heatFromEventsCard = true;
+          openWalkthroughSheet();
+        };
+
         function goTo(n) {
           if (heatTicker) { clearInterval(heatTicker); heatTicker = null; }
           step = n;
