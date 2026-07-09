@@ -3264,16 +3264,25 @@
           document.getElementById('ev-seq-continue').addEventListener('click', onContinue);
         }
 
+        function startHeatTicker() {
+          if (heatTicker) clearInterval(heatTicker);
+          heatTicker = setInterval(function() {
+            // Only the live-clock stages repaint; the per-type details and
+            // confirmed pages are static (repainting would wipe form input).
+            if (heatFormStage === 'ask' || heatFormStage === 'timer' || heatFormStage === 'type') paintHeat();
+          }, 200);
+        }
+
         function renderHeatStep() {
           heatStartedAt = Date.now();
-          heatMethod = 'Artificial';
-          heatVetSel = ONBOARDED_VETS[0];
-          // 5-step flow: ask → vet (window starts) → form (options+timer) →
-          // vetlog (log w/ attachment) → Done. If the farmer already tapped
-          // "Yes" on the full-screen alert, skip the ask stage.
-          heatFormStage = (heatPreDecision === 'yes') ? 'vet' : 'ask';
+          heatInsemType = null;
+          // Flow: ask (Heat detected?) → timer (Start Insemination) → type
+          // (pick insemination type) → per-type details page → confirmed. If
+          // the farmer already answered "yes" (events card / full-screen
+          // alert), skip the ask stage and open straight on the timer.
+          heatFormStage = (heatPreDecision === 'yes') ? 'timer' : 'ask';
           paintHeat();
-          heatTicker = setInterval(paintHeat, 200);
+          startHeatTicker();
         }
 
         function paintHeat() {
@@ -3313,51 +3322,27 @@
 
           var titleText = insem ? 'Insemination window' : 'Heat detected';
 
-          // Everything below the title/breed is wrapped in .ev-seq-bottom,
-          // which carries margin-top:auto in image mode so it's pinned to
-          // the bottom of the tall photo card (title top, question/CTA
-          // bottom — matches the approved Heat Alert / Insemination Window
-          // mockups) instead of sitting right under the title.
           var bottom = '';
           if (heatFormStage === 'ask') {
-            bottom += '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0 0 12px;">Is Gauri in heat?</p>' +
+            // Step 1 — Heat Detected?
+            bottom += '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0 0 12px;">Heat detected — is Gauri in heat?</p>' +
               '<div style="display:flex; gap:10px;">' +
               '<button id="ev-seq-heat-no" style="flex:1; min-height:50px; background:transparent; border:1px solid var(--border); border-radius:25px; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">No</button>' +
               '<button id="ev-seq-heat-yes" style="flex:1.3; min-height:50px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Yes, in heat</button>' +
               '</div>';
-          } else if (heatFormStage === 'vet') {
+          } else if (heatFormStage === 'timer') {
+            // Step 2 — window timer + a single Start Insemination button
             bottom += segBar +
-              '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:16px 0 0;">Call a vet for insemination</p>' +
-              ONBOARDED_VETS.map(function(name) {
-                var on = name === heatVetSel;
-                return '<button class="ev-seq-vet-row" data-vet="' + name + '" style="width:100%; display:flex; align-items:center; gap:10px; min-height:46px; padding:0 12px; margin-top:6px; border-radius:12px; border:1px solid ' + (on ? 'var(--greendeep)' : 'var(--border)') + '; background:' + (on ? 'var(--activebg)' : 'var(--bgcard)') + '; font-size:14px; font-weight:' + (on ? '600' : '500') + '; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
-                  '<span style="width:16px; height:16px; border-radius:50%; border:2px solid ' + (on ? 'var(--greendeep)' : 'var(--border)') + '; background:' + (on ? 'var(--greendeep)' : 'transparent') + '; flex-shrink:0;"></span>' + name + '</button>';
-              }).join('') +
-              '<button id="ev-seq-heat-vet-send" style="width:100%; min-height:50px; margin-top:12px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Call vet</button>';
-          } else if (heatFormStage === 'form') {
+              '<button id="ev-seq-start-insem" style="width:100%; min-height:52px; margin-top:16px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Start Insemination</button>';
+          } else { // type — Step 3: pick the insemination type
             bottom += segBar +
-              '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:16px 0 8px;">Log insemination</p>' +
-              '<div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">' +
-              INSEM_METHODS.map(seqMethodBtn).join('') +
-              '</div>' +
-              '<button id="ev-seq-heat-log" style="width:100%; min-height:50px; margin-top:12px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Log insemination</button>';
-          } else { // vetlog
-            var logBg = imageMode ? 'rgba(255,255,255,0.14)' : 'var(--bgcard)';
-            var logBorder = imageMode ? 'rgba(255,255,255,0.3)' : 'var(--border)';
-            var logSub = imageMode ? 'rgba(255,255,255,0.82)' : 'var(--text2)';
-            var attColor = imageMode ? '#8FE6B8' : 'var(--greenink)';
-            bottom += '<div style="background:' + logBg + '; border:1px solid ' + logBorder + '; border-radius:14px; padding:14px;">' +
-              '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:0;">Vet log — ' + heatVetSel + '</p>' +
-              '<p style="font-size:12px; color:' + logSub + '; margin:6px 0 0; line-height:1.6;">Insemination · ' + heatMethod + ' · logged 04:30<br>' + heatVetSel + ' attended</p>' +
-              '<button id="ev-seq-heat-attach" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; margin-top:12px; background:transparent; border:1px dashed ' + logBorder + '; border-radius:12px; font-size:13px; font-weight:600; color:' + attColor + '; font-family:var(--font-hi);">📎 Add attachment</button>' +
-              '</div>' +
-              '<button id="ev-seq-heat-done" style="width:100%; min-height:50px; margin-top:12px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Done</button>';
+              '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:16px 0 4px;">Insemination type</p>' +
+              INSEM_TYPES.map(function(t) {
+                return '<button class="ev-seq-itype" data-key="' + t.key + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:48px; padding:0 14px; margin-top:8px; border-radius:12px; border:1px solid var(--border); background:var(--bgcard); font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
+                  '<span>' + t.label + '</span><span class="en" style="color:var(--greenink); font-size:17px; line-height:1;">›</span></button>';
+              }).join('');
           }
-          // Image mode: solid-red header band (title/breed/CRITICAL tag) +
-          // full-bleed photo. On the heat-question stage the photo fills the
-          // whole area and the question/Yes-No float on a frosted blur over
-          // its bottom; on the insemination stages the photo is a fixed strip
-          // with a solid dark band below for the taller forms.
+
           if (imageMode) {
             var wrapClass = 'ev-photo-step' + (insem ? ' insem' : ' ask');
             var header = '<div class="ev-photo-header">' +
@@ -3376,22 +3361,62 @@
 
           if (heatFormStage === 'ask') {
             document.getElementById('ev-seq-heat-no').addEventListener('click', function() { interrupt('Cycle interrupted — heat not confirmed. Closing walkthrough.'); });
-            document.getElementById('ev-seq-heat-yes').addEventListener('click', function() { heatFormStage = 'vet'; paintHeat(); });
-          } else if (heatFormStage === 'vet') {
-            document.querySelectorAll('.ev-seq-vet-row').forEach(function(row) {
-              row.addEventListener('click', function() { heatVetSel = row.getAttribute('data-vet'); paintHeat(); });
+            document.getElementById('ev-seq-heat-yes').addEventListener('click', function() { heatFormStage = 'timer'; paintHeat(); });
+          } else if (heatFormStage === 'timer') {
+            document.getElementById('ev-seq-start-insem').addEventListener('click', function() { heatFormStage = 'type'; paintHeat(); });
+          } else { // type
+            document.querySelectorAll('.ev-seq-itype').forEach(function(btn) {
+              btn.addEventListener('click', function() { openInsemDetails(btn.getAttribute('data-key')); });
             });
-            document.getElementById('ev-seq-heat-vet-send').addEventListener('click', function() { heatFormStage = 'form'; paintHeat(); });
-          } else if (heatFormStage === 'form') {
-            document.querySelectorAll('.ev-seq-method').forEach(function(btn) {
-              btn.addEventListener('click', function() { heatMethod = btn.getAttribute('data-method'); paintHeat(); });
-            });
-            document.getElementById('ev-seq-heat-log').addEventListener('click', function() { heatFormStage = 'vetlog'; paintHeat(); });
-          } else { // vetlog
-            var att = document.getElementById('ev-seq-heat-attach');
-            if (att) att.addEventListener('click', function() { att.textContent = '✓ Photo attached'; att.style.borderStyle = 'solid'; });
-            document.getElementById('ev-seq-heat-done').addEventListener('click', function() { goTo(2); });
           }
+        }
+
+        function openInsemDetails(key) {
+          // Leaving the live-clock stages — stop the ticker so it doesn't wipe
+          // the form, and open the per-type details page (no photo, back button).
+          if (heatTicker) { clearInterval(heatTicker); heatTicker = null; }
+          heatInsemType = INSEM_TYPES.filter(function(t) { return t.key === key; })[0];
+          renderInsemDetails();
+        }
+
+        function insemField(f) {
+          return '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">' + f.label + '</label>' +
+            '<input type="text" placeholder="' + (f.ph || '') + '" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">';
+        }
+
+        function renderInsemDetails() {
+          var t = heatInsemType;
+          body.innerHTML =
+            '<button id="ev-seq-insem-back" style="display:inline-flex; align-items:center; gap:3px; background:none; border:none; padding:0; margin:2px 0 10px; font-size:14px; font-weight:600; color:var(--text2); font-family:var(--font-hi); cursor:pointer;"><span class="en" style="font-size:19px; line-height:1;">‹</span> Back</button>' +
+            '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">' + t.title + '</p>' +
+            '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">Gauri · Desi</p>' +
+            t.fields.map(insemField).join('') +
+            '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">Date</label>' +
+            '<input type="date" value="2026-07-09" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">' +
+            '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">Notes</label>' +
+            '<textarea rows="3" placeholder="Add notes (optional)" style="width:100%; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
+            '<button id="ev-seq-insem-attach" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; margin-top:8px; background:transparent; border:1px dashed var(--border); border-radius:12px; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi);">📎 Add attachment</button>' +
+            '<button id="ev-seq-insem-submit" style="width:100%; min-height:52px; margin-top:14px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Submit</button>';
+          document.getElementById('ev-seq-insem-back').addEventListener('click', function() {
+            heatFormStage = 'type'; paintHeat(); startHeatTicker();
+          });
+          var att = document.getElementById('ev-seq-insem-attach');
+          att.addEventListener('click', function() { att.textContent = '✓ Attachment added'; att.style.borderStyle = 'solid'; att.style.color = 'var(--greendeep)'; });
+          document.getElementById('ev-seq-insem-submit').addEventListener('click', renderInsemConfirmed);
+        }
+
+        function renderInsemConfirmed() {
+          body.innerHTML =
+            '<div style="text-align:center; padding:14px 0 4px;">' +
+              '<div style="width:56px; height:56px; margin:0 auto 12px; border-radius:50%; background:var(--activebg); display:flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>' +
+              '<p style="font-size:18px; font-weight:800; color:var(--text1); margin:0;">Insemination logged</p>' +
+              '<p style="font-size:13px; color:var(--text2); margin:6px 0 0; line-height:1.6;">' + heatInsemType.label + ' recorded for Gauri.</p>' +
+            '</div>' +
+            '<button id="ev-seq-insem-done" style="width:100%; min-height:50px; margin-top:16px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Done</button>';
+          document.getElementById('ev-seq-insem-done').addEventListener('click', function() {
+            if (heatFromEventsCard) closeSeq();
+            else goTo(2);
+          });
         }
 
         function renderPregStep() {
