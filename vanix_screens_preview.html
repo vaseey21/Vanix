@@ -337,6 +337,15 @@
     #flow-root.display-image #ev-fever .ev-title, #flow-root.display-image #ev-fever p,
     #flow-root.display-image #ev-heat .ev-title, #flow-root.display-image #ev-heat p { color: #fff !important; }
     #flow-root.display-image #ev-fever .ev-corner-badge { z-index: 2; }
+    /* Secondary "No" button on the photo cards: the plain-text-mode dark
+       outline/text (var(--text1) ≈ near-black) is unreadable against a
+       photo — force a translucent light fill + white border/text, matching
+       the full-screen carousel's "No" button treatment. */
+    #flow-root.display-image #ev-fever .ev-no, #flow-root.display-image #ev-heat .ev-no {
+      background: rgba(255,255,255,0.16) !important;
+      border-color: rgba(255,255,255,0.6) !important;
+      color: #fff !important;
+    }
 
     /* filter sheet — option rows (tinted, never white) + category rail */
     .s7-chip { display:block; width:100%; text-align:start; min-height:44px; padding:0 14px; margin-bottom:8px; border-radius:12px; border:1px solid var(--border); background:var(--bgwarm); color:var(--text1); font-size:13px; font-weight:400; font-family:var(--font-hi); }
