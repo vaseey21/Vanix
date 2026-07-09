@@ -2532,10 +2532,15 @@
           evResolve();
         });
         card.querySelector('.ev-yes').addEventListener('click', function() {
+          // Image-mode events card is a triage card — tapping Yes opens the
+          // bottom slider, which runs the timer → Start Insemination → type
+          // flow. Text mode keeps the older inline vet/insemination flow.
+          if (window.VANIX_DISPLAY_MODE === 'image' && window.evOpenHeatSlider) {
+            window.evOpenHeatSlider();
+            return;
+          }
           confirmed = true;
           confirmEl.style.display = 'none';
-          // Heat card = cow+bull + Yes/No only. Yes → straight to the vet
-          // picker, STILL on the cow+bull heat photo (no timer window yet).
           if (questionEl) questionEl.style.display = 'none';
           showHeatVetPicker();
         });
