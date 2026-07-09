@@ -268,6 +268,34 @@
     #flow-root.display-image #ev-fever .ev-title, #flow-root.display-image #ev-fever p,
     #flow-root.display-image #ev-heat .ev-title, #flow-root.display-image #ev-heat p { color: #fff !important; }
     #flow-root.display-image #ev-fever .ev-corner-badge { z-index: 2; }
+    /* Secondary "No" button on the photo cards: the plain-text-mode dark
+       outline/text (var(--text1) ≈ near-black) is unreadable against a
+       photo — force a translucent light fill + white border/text, matching
+       the full-screen carousel's "No" button treatment. */
+    #flow-root.display-image #ev-fever .ev-no, #flow-root.display-image #ev-heat .ev-no {
+      background: rgba(255,255,255,0.16) !important;
+      border-color: rgba(255,255,255,0.6) !important;
+      color: #fff !important;
+    }
+    /* Walkthrough sheet's Heat step (image mode only) — same full-bleed
+       photo + gradient treatment as the real Heat card, inset within the
+       sheet rather than replacing it, so the surrounding walkthrough chrome
+       (Step X of N / Skip walkthrough) stays on the sheet's normal bg. */
+    .ev-photo-step {
+      position: relative;
+      margin: -4px -4px 4px;
+      padding: 16px;
+      border-radius: 16px;
+      background-size: cover;
+      background-position: center 15%;
+      background-image: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.05) 60%, rgba(0,0,0,0.75) 100%), url('assets/images/heat_photo.jpg');
+    }
+    .ev-photo-step p, .ev-photo-step > p:first-child { color: #fff !important; }
+    .ev-photo-step button[id$="-no"], .ev-photo-step button[id$="-offwin-cancel"] {
+      background: rgba(255,255,255,0.16) !important;
+      border-color: rgba(255,255,255,0.6) !important;
+      color: #fff !important;
+    }
 
     /* filter sheet — option rows (tinted, never white) + category rail */
     .s7-chip { display:block; width:100%; text-align:start; min-height:44px; padding:0 14px; margin-bottom:8px; border-radius:12px; border:1px solid var(--border); background:var(--bgwarm); color:var(--text1); font-size:13px; font-weight:400; font-family:var(--font-hi); }
@@ -3165,7 +3193,12 @@
               '</div>' +
               '<button id="ev-seq-heat-log" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log insemination</button>';
           }
-          body.innerHTML = html;
+          // Image mode: wrap the heat step in the same full-bleed photo +
+          // dark gradient treatment as the real Heat card / full-screen
+          // carousel, instead of the plain white sheet background.
+          body.innerHTML = window.VANIX_DISPLAY_MODE === 'image'
+            ? '<div class="ev-photo-step">' + html + '</div>'
+            : html;
 
           if (!heatConfirmed) {
             document.getElementById('ev-seq-heat-no').addEventListener('click', function() { interrupt('Cycle interrupted — heat not confirmed. Closing walkthrough.'); });
