@@ -3279,7 +3279,12 @@
               '</div>' +
               '<button id="ev-seq-heat-log" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log insemination</button>';
           }
-          body.innerHTML = html;
+          // Image mode: wrap the heat step in the same full-bleed photo +
+          // dark gradient treatment as the real Heat card / full-screen
+          // carousel, instead of the plain white sheet background.
+          body.innerHTML = window.VANIX_DISPLAY_MODE === 'image'
+            ? '<div class="ev-photo-step">' + html + '</div>'
+            : html;
 
           if (!heatConfirmed) {
             document.getElementById('ev-seq-heat-no').addEventListener('click', function() { interrupt('Cycle interrupted — heat not confirmed. Closing walkthrough.'); });
