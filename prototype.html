@@ -244,11 +244,34 @@
     #flow-root.display-image #ev-fever .ev-cow-breed, #flow-root.display-image #ev-fever .ev-question-big,
     #flow-root.display-image #ev-heat .ev-cow-breed, #flow-root.display-image #ev-heat .ev-question-big { display: block; }
     #flow-root.display-image #ev-fever .ev-sub, #flow-root.display-image #ev-fever .ev-meta,
-    #flow-root.display-image #ev-heat .ev-sub, #flow-root.display-image #ev-heat .ev-meta,
-    #flow-root.display-image #ev-heat #ev-heat-phase, #flow-root.display-image #ev-heat #ev-heat-bar-wrap,
-    #flow-root.display-image #ev-heat #ev-heat-note,
-    #flow-root.display-image #ev-heat .ev-body > p.en { display: none !important; }
+    #flow-root.display-image #ev-heat .ev-sub, #flow-root.display-image #ev-heat .ev-meta { display: none !important; }
     #flow-root.display-image #ev-heat .ev-chip-wrap { display: none !important; }
+    /* Once "Yes, in heat" is confirmed, the card evolves into the
+       Insemination Window step — segmented timer bar, phase label, method/
+       technician form. Give it the same photo-card treatment (translucent
+       panel behind the bar, white labels) instead of hiding it, and swap
+       the background to the vet+syringe photo to match the approved
+       Insemination Window mockup. .ev-heat-inseminating is added by JS the
+       moment the farmer confirms. */
+    #flow-root.display-image #ev-heat.ev-heat-inseminating {
+      background-image: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 20%, rgba(0,0,0,0.3) 45%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.8) 100%), url('assets/images/insemination_photo.jpg') !important;
+      background-position: center 25% !important;
+    }
+    #flow-root.display-image #ev-heat #ev-heat-bar-wrap {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 12px;
+      padding: 8px 10px;
+      margin-top: 8px !important;
+    }
+    #flow-root.display-image #ev-heat #ev-heat-bar-wrap span,
+    #flow-root.display-image #ev-heat #ev-heat-bar-wrap div.en { color: rgba(255,255,255,0.85) !important; }
+    #flow-root.display-image #ev-heat #ev-heat-note { color: rgba(255,255,255,0.8) !important; }
+    #flow-root.display-image #ev-heat .ev-body input,
+    #flow-root.display-image #ev-heat .ev-body .ev-method:not(.on),
+    #flow-root.display-image #ev-heat .ev-body .ev-late-method:not(.on) {
+      background: rgba(255,255,255,0.9) !important;
+    }
     #flow-root.display-image #ev-fever .ev-no .ev-btn-svg, #flow-root.display-image #ev-fever .ev-yes .ev-btn-svg,
     #flow-root.display-image #ev-heat .ev-no .ev-btn-svg, #flow-root.display-image #ev-heat .ev-yes .ev-btn-svg { display: inline; }
     #flow-root.display-image #ev-fever .ev-btn-full { display: none; }
