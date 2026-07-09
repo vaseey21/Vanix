@@ -2989,6 +2989,26 @@
         var fsCount = document.getElementById('ev-fs-count');
         var heatPreDecision = null; // null | 'yes' | 'no' — Gauri's (card 0) decision feeds the walkthrough
         var restrictedHeat = false;
+        var heatFromEventsCard = false; // true when opened via the events Heat card's "Yes" (close on submit, not continue)
+        var heatInsemType = null; // selected insemination type object
+
+        // Insemination types + their conditional fields (Date + Notes are
+        // constant across all four and appended by renderInsemDetails).
+        var INSEM_TYPES = [
+          { key:'natural', label:'Natural', title:'Natural Service Details',
+            fields:[ {id:'bullname', label:'Bull Name', ph:'Enter bull name'} ] },
+          { key:'moet', label:'Multiple Ovulation Embryo Transfer', title:'MOET Details',
+            fields:[ {id:'donorid', label:'Donor Cow ID', ph:'Enter donor cow ID'},
+                     {id:'breed', label:'Breed', ph:'Enter breed'},
+                     {id:'embryoid', label:'Embryo ID', ph:'Enter embryo ID'},
+                     {id:'numembryos', label:'Number of Embryos', ph:'e.g. 6'} ] },
+          { key:'et', label:'Embryo Transfer', title:'Embryo Transfer Details',
+            fields:[ {id:'donorid', label:'Donor Cow ID', ph:'Enter donor cow ID'},
+                     {id:'breed', label:'Breed', ph:'Enter breed'} ] },
+          { key:'ai', label:'Artificial Insemination', title:'Artificial Insemination Details',
+            fields:[ {id:'bullid', label:'Bull ID', ph:'Enter bull ID'},
+                     {id:'strawid', label:'Straw ID (optional)', ph:'Enter straw ID'} ] }
+        ];
 
         // Multiple cows in heat at once — same card design, different data.
         var FS_ALERTS = [
