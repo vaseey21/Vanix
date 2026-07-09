@@ -331,11 +331,14 @@
        photo + gradient treatment as the real Heat card, inset within the
        sheet rather than replacing it, so the surrounding walkthrough chrome
        (Step X of N / Skip walkthrough) stays on the sheet's normal bg. */
+    #ev-seq-body:has(.ev-photo-step) { padding: 0 !important; }
     .ev-photo-step {
       position: relative;
-      margin: -4px -4px 4px;
+      margin: 0;
+      box-sizing: border-box;
       padding: 20px 22px 22px;
-      border-radius: 24px;
+      border-radius: 24px 24px 0 0;
+      border: 3px solid var(--danger);
       background-size: cover;
       background-position: center 15%;
       background-image: linear-gradient(to bottom, rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.4) 12%, rgba(0,0,0,0) 26%, rgba(0,0,0,0) 50%, rgba(6,6,6,0.55) 63%, rgba(4,4,4,0.86) 78%, rgba(2,2,2,0.97) 100%), url('assets/images/heat_photo.jpg');
