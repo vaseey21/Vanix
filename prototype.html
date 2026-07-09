@@ -3295,11 +3295,12 @@
               '<button id="ev-seq-heat-done" style="width:100%; min-height:50px; margin-top:12px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Done</button>';
           }
           // Image mode: solid-red header band (title/breed/CRITICAL tag) +
-          // full-bleed photo strip (cow+bull for the heat question, vet+syringe
-          // once in the insemination stages) + dark bottom band for the
-          // question/CTA — three stacked bands, no floating white sliver.
+          // full-bleed photo. On the heat-question stage the photo fills the
+          // whole area and the question/Yes-No float on a frosted blur over
+          // its bottom; on the insemination stages the photo is a fixed strip
+          // with a solid dark band below for the taller forms.
           if (imageMode) {
-            var wrapClass = 'ev-photo-step' + (insem ? ' insem' : '');
+            var wrapClass = 'ev-photo-step' + (insem ? ' insem' : ' ask');
             var header = '<div class="ev-photo-header">' +
               '<div class="ev-photo-handle"></div>' +
               '<div class="ev-photo-header-row">' +
