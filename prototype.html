@@ -2446,7 +2446,7 @@
         function render() {
           if (resolved) return;
           var h = elapsedSimHours();
-          if (h >= 24) {
+          if (h >= 24 && confirmed) {
             resolved = true;
             clearInterval(ticker);
             evSetTint(card, 'var(--warnbg)', 'var(--warning)');
