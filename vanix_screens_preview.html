@@ -397,8 +397,9 @@
       color: #fff !important;
     }
     /* Walkthrough sheet's Heat step (image mode only) — solid severity-colour
-       header band (title/breed/tag), full-bleed photo strip, dark bottom band
-       for the question/CTA — three stacked bands, no floating white sliver. */
+       header band (title/breed/tag), full-bleed photo filling the rest, and
+       the question/CTA sitting on a frosted-glass blur over the bottom of the
+       photo. No floating white sliver. */
     #ev-seq-body:has(.ev-photo-step) { padding: 0 !important; }
     #ev-seq-sheet:has(.ev-photo-step) > div:first-child { display: none !important; }
     .ev-photo-step {
@@ -410,7 +411,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      min-height: 260px;
+      min-height: 380px;
     }
     .ev-photo-header { background: var(--danger); padding: 12px 22px 16px; flex-shrink: 0; }
     .ev-photo-handle { width: 36px; height: 4px; background: rgba(255,255,255,0.45); border-radius: 2px; margin: 0 auto 12px; }
@@ -418,15 +419,24 @@
     .ev-photo-header p:first-child { font-size: 22px; font-weight: 800; color: #fff; margin: 0; letter-spacing: -0.02em; }
     .ev-photo-header p:nth-child(2) { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.85); margin: 2px 0 0; }
     .ev-photo-tag { flex-shrink: 0; background: #fff; color: var(--danger); font-size: 11px; font-weight: 800; letter-spacing: 0.03em; padding: 6px 14px; border-radius: 20px; margin-top: 2px; }
-    .ev-photo-img { flex-shrink: 0; height: 220px; background-size: cover; background-position: center 15%; background-image: url('assets/images/heat_photo.jpg'); }
+    .ev-photo-img { flex: 1; min-height: 200px; background-size: cover; background-position: center 15%; background-image: url('assets/images/heat_photo.jpg'); }
     /* Insemination stages of the walkthrough heat step swap to the
        vet+syringe photo (matching the events-page Insemination Window). */
     .ev-photo-step.insem .ev-photo-img {
       background-image: url('assets/images/insemination_photo.jpg');
       background-position: center 25%;
     }
-    .ev-photo-step .ev-seq-bottom { background: #171717; padding: 18px 22px 22px; flex: 1; display: flex; flex-direction: column; }
-    .ev-photo-step .ev-seq-bottom p:not(.ev-phase-label) { color: #fff !important; }
+    /* Question/CTA float on a frosted blur over the bottom of the photo. */
+    .ev-photo-step .ev-seq-bottom {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 18px 22px 22px;
+      background: rgba(20,20,20,0.34);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 -1px 0 rgba(255,255,255,0.12) inset;
+    }
+    .ev-photo-step .ev-seq-bottom p:not(.ev-phase-label) { color: #fff !important; text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
     .ev-photo-step button[id$="-no"], .ev-photo-step button[id$="-offwin-cancel"] {
       background: rgba(255,255,255,0.16) !important;
       border-color: rgba(255,255,255,0.6) !important;
