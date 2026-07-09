@@ -238,14 +238,37 @@
     #ev-heat .ev-no .ev-btn-svg, #ev-heat .ev-yes .ev-btn-svg { display: none; }
     #ev-fever .ev-btn-short { display: none; }
 
-    /* image mode: title/manager hidden, photo bg + cow·breed + short question shown */
-    #flow-root.display-image #ev-fever .ev-title, #flow-root.display-image #ev-fever .ev-manager,
-    #flow-root.display-image #ev-heat .ev-title, #flow-root.display-image #ev-heat .ev-manager { display: none !important; }
+    /* image mode: full-bleed tall photo card matching the approved mockups.
+       Title + cow·breed pinned top-left; question + View Details + CTAs
+       pinned bottom (flex column, question carries margin-top:auto). */
+    #flow-root.display-image #ev-fever .ev-manager,
+    #flow-root.display-image #ev-heat .ev-manager { display: none !important; }
+    #flow-root.display-image #ev-fever .ev-title,
+    #flow-root.display-image #ev-heat .ev-title {
+      display: block !important; text-align: left !important;
+      font-size: 21px !important; font-weight: 800 !important; letter-spacing: -0.02em;
+      margin: 0 !important; color: #fff !important;
+    }
     #flow-root.display-image #ev-fever .ev-cow-breed, #flow-root.display-image #ev-fever .ev-question-big,
     #flow-root.display-image #ev-heat .ev-cow-breed, #flow-root.display-image #ev-heat .ev-question-big { display: block; }
+    #flow-root.display-image #ev-fever .ev-cow-breed,
+    #flow-root.display-image #ev-heat .ev-cow-breed {
+      text-align: left !important; font-size: 14px !important; font-weight: 500 !important;
+      opacity: 0.92; margin: 2px 0 0 !important;
+    }
+    #flow-root.display-image #ev-fever .ev-question-big,
+    #flow-root.display-image #ev-heat .ev-question-big {
+      text-align: left !important; font-size: 19px !important; font-weight: 700 !important;
+      letter-spacing: -0.01em; margin: 0 0 8px !important;
+    }
     #flow-root.display-image #ev-fever .ev-sub, #flow-root.display-image #ev-fever .ev-meta,
     #flow-root.display-image #ev-heat .ev-sub, #flow-root.display-image #ev-heat .ev-meta { display: none !important; }
     #flow-root.display-image #ev-heat .ev-chip-wrap { display: none !important; }
+    /* Bigger CTA buttons + View Details link to match the mockup scale. */
+    #flow-root.display-image #ev-fever .ev-body button, #flow-root.display-image #ev-heat .ev-body button {
+      min-height: 52px !important; font-size: 16px !important; font-weight: 700 !important; border-radius: 26px !important;
+    }
+    #flow-root.display-image #ev-fever .ev-body > div, #flow-root.display-image #ev-heat .ev-body > div { margin-top: 0 !important; gap: 12px !important; }
     /* Once "Yes, in heat" is confirmed, the card evolves into the
        Insemination Window step — segmented timer bar, phase label, method/
        technician form. Give it the same photo-card treatment (translucent
