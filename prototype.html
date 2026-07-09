@@ -3208,16 +3208,24 @@
 
         function paintHeat() {
           var h = (Date.now() - heatStartedAt) / 1000 * SIM_HOURS_PER_SEC;
-          var label, color;
-          if (h < 6) { label = 'Pre-insemination — window opens in ' + Math.ceil(6 - h) + 'h'; color = '#8A5A00'; }
-          else if (h < 18) { label = 'Optimal window — ' + Math.ceil(18 - h) + 'h left'; color = 'var(--greenink)'; }
-          else { label = 'Suboptimal window — act soon, ' + Math.ceil(24 - h) + 'h left'; color = 'var(--danger)'; }
-
           var imageMode = window.VANIX_DISPLAY_MODE === 'image';
           var insem = (heatFormStage !== 'ask');
-          var labelColor = imageMode ? '#FFE9A8' : color; // amber reads on dark photo
+          // Keep the red/orange/green phase colour-coding in both modes —
+          // just swap to the brighter tint that reads on a dark photo
+          // instead of the darker text-on-light-card variant.
+          var label, color, labelColor;
+          if (h < 6) {
+            label = 'Pre-insemination — window opens in ' + Math.ceil(6 - h) + 'h';
+            color = '#8A5A00'; labelColor = imageMode ? '#E8A020' : color;
+          } else if (h < 18) {
+            label = 'Optimal window — ' + Math.ceil(18 - h) + 'h left';
+            color = 'var(--greenink)'; labelColor = imageMode ? 'var(--greendeep)' : color;
+          } else {
+            label = 'Suboptimal window — act soon, ' + Math.ceil(24 - h) + 'h left';
+            color = 'var(--danger)'; labelColor = imageMode ? '#FF6B52' : color;
+          }
           var segBar =
-            '<p style="font-size:13px; font-weight:700; color:' + labelColor + '; margin:14px 0 0;">' + label + '</p>' +
+            '<p class="ev-phase-label" style="font-size:13px; font-weight:700; color:' + labelColor + '; margin:14px 0 0;">' + label + '</p>' +
             '<div class="en" style="display:flex; font-size:9px; font-weight:600; letter-spacing:0.04em; color:var(--text2); margin-top:6px;">' +
               '<span style="flex:0 0 25%; text-align:center;">PRE 6h</span>' +
               '<span style="flex:0 0 50%; text-align:center;">OPTIMAL 12h</span>' +
