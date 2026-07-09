@@ -3166,7 +3166,6 @@
         function interrupt(message) {
           clearInterval(heatTicker);
           heatTicker = null;
-          stepLabel.textContent = 'Walkthrough ended';
           body.innerHTML = '<p style="font-size:13px; color:var(--text2); line-height:1.6;">' + message + '</p>' +
             '<button id="ev-seq-close-btn" style="width:100%; min-height:44px; margin-top:14px; background:var(--dark1); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Close</button>';
           document.getElementById('ev-seq-close-btn').addEventListener('click', closeSeq);
