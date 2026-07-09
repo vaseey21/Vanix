@@ -230,8 +230,8 @@
     #flow-root.dark .fs-ack { color:var(--greendeep); }
     /* P0 cards use a single corner badge instead of a chip — card tint already signals "critical" */
     .ev-corner-badge { position:absolute; top:-6px; right:-6px; width:20px; height:20px; border-radius:50%; background:#8B2800; color:#FFFFFF; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; line-height:1; box-shadow:0 1px 3px rgba(0,0,0,0.25); }
-    /* CRITICAL label (image-mode Fever/Heat cards only — hidden in text mode). */
-    .ev-crit-label { display: none; }
+    /* CRITICAL label + time-ago (image-mode Fever/Heat cards only — hidden in text mode). */
+    .ev-crit-label, .ev-timeago { display: none; }
     .ev-card-p2 { background:var(--bgcard); border:1px solid var(--border); border-left:2px solid var(--warning); }
     .ev-card-p3 { background:var(--bgcard); border:1px solid var(--border); }
     /* Cards trimmed to Title/Manager/View Details/CTA — full description +
