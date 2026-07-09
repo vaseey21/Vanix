@@ -3284,7 +3284,6 @@
         }
 
         function renderStep() {
-          stepLabel.textContent = 'Step ' + step + ' of ' + TOTAL_STEPS;
           if (step === 1) renderHeatStep();
           else if (step === 2) renderInterstitial('21-day pregnancy watch', "Watching for 21 days to see if heat returns. If it doesn't, a pregnancy check is due.", function() { goTo(3); });
           else if (step === 3) renderPregStep();
