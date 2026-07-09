@@ -3295,6 +3295,7 @@
         function openSeq() {
           heatPreDecision = null;
           restrictedHeat = false;
+          heatFromEventsCard = false;
           fsResolved = FS_ALERTS.map(function() { return false; });
           fsBuildCards();
           fsGo(0);
