@@ -2457,6 +2457,9 @@
           confirmed = true;
           confirmEl.style.display = 'none';
           startBtn.style.display = 'block';
+          // Image mode: swap the card's photo to the vet+syringe shot,
+          // matching the Insemination Window mockup, once heat is confirmed.
+          card.classList.add('ev-heat-inseminating');
           render();
         });
         // "Call vet" is available in every phase — but outside the optimal
