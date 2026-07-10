@@ -3766,9 +3766,11 @@
         function seqPhotoCard(photoMod, prio, title, name, breed, inner) {
           return '<div class="ev-photo-step ' + photoMod + ' ' + prio + '">' +
             '<div class="ev-photo-media"></div>' +
-            '<div class="ev-photo-titlerow"><p class="ev-photo-title">' + title + '</p><span class="ev-photo-time en">20 min ago</span></div>' +
-            '<div class="ev-photo-metarow"><span class="ev-photo-namebreed">' + name + ' · ' + breed + '</span><span class="ev-photo-vd en">View Details ›</span></div>' +
-            '<div class="ev-seq-bottom">' + inner + '</div>' +
+            '<div class="ev-photo-foot">' +
+              '<div class="ev-photo-titlerow"><p class="ev-photo-title">' + title + '</p><span class="ev-photo-time en">20 min ago</span></div>' +
+              '<div class="ev-photo-metarow"><span class="ev-photo-namebreed">' + name + ' · ' + breed + '</span><span class="ev-photo-vd en">View Details ›</span></div>' +
+              '<div class="ev-seq-bottom">' + inner + '</div>' +
+            '</div>' +
           '</div>';
         }
         function seqImageMode() { return true; }
