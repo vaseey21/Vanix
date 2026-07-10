@@ -3373,7 +3373,7 @@
           heatTicker = setInterval(function() {
             // Only the live-clock stages repaint; the per-type details and
             // confirmed pages are static (repainting would wipe form input).
-            if (heatFormStage === 'ask' || heatFormStage === 'timer' || heatFormStage === 'type') paintHeat();
+            if (heatFormStage === 'ask' || heatFormStage === 'timer') paintHeat();
           }, 200);
         }
 
