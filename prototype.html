@@ -3503,10 +3503,9 @@
               interrupt('Cycle interrupted — delivery unsuccessful. ' + vetName + ' has been notified for an urgent check.');
             });
             document.getElementById('ev-seq-gest-ok').addEventListener('click', function() {
-              gestBody.innerHTML =
-                '<textarea id="ev-seq-gest-notes" placeholder="Delivery notes (optional)" rows="3" style="width:100%; margin-top:10px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
-                '<button id="ev-seq-gest-log" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log delivery</button>';
-              document.getElementById('ev-seq-gest-log').addEventListener('click', function() { goTo(6); });
+              // Delivery log — date, vet name, notes + attachment (shared form).
+              gestBody.innerHTML = '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:14px 0 0;">Delivery log</p>' + vetLogHtml('gest', vetName);
+              wireVetLog('gest', function() { goTo(6); });
             });
           });
         }
