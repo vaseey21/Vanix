@@ -3111,9 +3111,9 @@
             return;
           }
           var label, color;
-          if (h < 6) { label = 'Pre-insemination — window opens in ' + Math.ceil(6 - h) + 'h'; color = '#8A5A00'; }
-          else if (h < 18) { label = 'Optimal window — ' + Math.ceil(18 - h) + 'h left'; color = 'var(--greenink)'; }
-          else { label = 'Suboptimal window — act soon, ' + Math.ceil(24 - h) + 'h left'; color = 'var(--danger)'; }
+          if (h < 6) { label = 'Pre-insemination — window opens in ' + Math.ceil(6 - h) + 'h'; color = '#F0B860'; }
+          else if (h < 18) { label = 'Optimal window — ' + Math.ceil(18 - h) + 'h left'; color = '#5FD79E'; }
+          else { label = 'Suboptimal window — act soon, ' + Math.ceil(24 - h) + 'h left'; color = '#EE8577'; }
           phaseEl.textContent = label;
           phaseEl.style.color = color;
           // single fill travelling across the whole segmented 24h bar
@@ -3891,13 +3891,13 @@
           var label, color;
           if (h < 6) {
             label = 'Pre-insemination — window opens in ' + Math.ceil(6 - h) + 'h';
-            color = '#8A5A00';
+            color = '#F0B860';
           } else if (h < 18) {
             label = 'Optimal window — ' + Math.ceil(18 - h) + 'h left';
-            color = 'var(--greenink)';
+            color = '#5FD79E';
           } else {
             label = 'Suboptimal window — act soon, ' + Math.ceil(24 - h) + 'h left';
-            color = 'var(--danger)';
+            color = '#EE8577';
           }
           var segBar =
             '<p class="ev-phase-label" style="font-size:13px; font-weight:700; color:' + color + '; margin:0;">' + label + '</p>' +
@@ -3907,9 +3907,9 @@
               '<span style="flex:0 0 25%; text-align:center;">SUBOPT 6h</span>' +
             '</div>' +
             '<div style="position:relative; height:8px; border-radius:4px; margin-top:3px; overflow:hidden; display:flex; border:1px solid rgba(0,0,0,0.08);">' +
-              '<div style="width:25%; background:rgba(232,160,32,0.35); border-right:1px solid rgba(0,0,0,0.15);"></div>' +
-              '<div style="width:50%; background:rgba(46,189,126,0.35); border-right:1px solid rgba(0,0,0,0.15);"></div>' +
-              '<div style="width:25%; background:rgba(212,76,58,0.35);"></div>' +
+              '<div style="width:25%; background:rgba(240,190,110,0.55); border-right:1px solid rgba(0,0,0,0.15);"></div>' +
+              '<div style="width:50%; background:rgba(120,225,180,0.55); border-right:1px solid rgba(0,0,0,0.15);"></div>' +
+              '<div style="width:25%; background:rgba(235,150,140,0.55);"></div>' +
               '<div style="position:absolute; left:0; top:0; width:' + Math.min(100, h / 24 * 100) + '%; height:100%; background:' + color + '; opacity:0.9;"></div>' +
             '</div>' +
             '<div class="en" style="display:flex; justify-content:space-between; font-size:10px; color:var(--text2); margin-top:3px;">' +
