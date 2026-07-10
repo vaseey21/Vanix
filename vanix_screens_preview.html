@@ -3434,17 +3434,9 @@
               '<button id="ev-seq-heat-no" style="flex:1; min-height:50px; background:transparent; border:1px solid var(--border); border-radius:25px; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">No</button>' +
               '<button id="ev-seq-heat-yes" style="flex:1.3; min-height:50px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Yes, in heat</button>' +
               '</div>';
-          } else if (heatFormStage === 'timer') {
-            // Step 2 — window timer + a single Start Insemination button
+          } else { // timer — Step 2: window timer + a single Start Insemination button
             bottom += segBar +
               '<button id="ev-seq-start-insem" style="width:100%; min-height:52px; margin-top:16px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Start Insemination</button>';
-          } else { // type — Step 3: pick the insemination type
-            bottom += segBar +
-              '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:16px 0 4px;">Insemination type</p>' +
-              INSEM_TYPES.map(function(t) {
-                return '<button class="ev-seq-itype" data-key="' + t.key + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:48px; padding:0 14px; margin-top:8px; border-radius:12px; border:1px solid var(--border); background:var(--bgcard); font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
-                  '<span>' + t.label + '</span><span class="en" style="color:var(--greenink); font-size:17px; line-height:1;">›</span></button>';
-              }).join('');
           }
 
           if (imageMode) {
