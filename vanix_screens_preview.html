@@ -413,7 +413,8 @@
     }
     #flow-root.display-image .ev-photo-card .ev-yes,
     #flow-root.display-image .ev-photo-card .ev-ack { background: var(--greendeep) !important; color: #fff !important; }
-    #flow-root.display-image .ev-photo-card .ev-no .ev-btn-svg, #flow-root.display-image .ev-photo-card .ev-yes .ev-btn-svg { display: inline; }
+    /* buttons: no icons — just "Yes" / "No" text */
+    #flow-root.display-image .ev-photo-card .ev-no svg, #flow-root.display-image .ev-photo-card .ev-yes svg { display: none !important; }
     #flow-root.display-image #ev-fever .ev-btn-full { display: none; }
     #flow-root.display-image #ev-fever .ev-btn-short { display: inline; }
     /* image-mode events cards are pure triage — hide the inline evolving heat
