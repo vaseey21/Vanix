@@ -3438,6 +3438,28 @@
           return '<button id="' + id + '" style="display:inline-flex; align-items:center; gap:3px; background:none; border:none; padding:0; margin:2px 0 12px; font-size:14px; font-weight:600; color:var(--text2); font-family:var(--font-hi); cursor:pointer;"><span class="en" style="font-size:19px; line-height:1;">‹</span> Back</button>';
         }
 
+        // Wrap a walkthrough step's content in the full-width photo card
+        // (photo top, priority label/time-ago, title, name·breed, divider,
+        // content). photoMod picks the image (preg/delivery/milking/lactation),
+        // prio is 'p0' (red CRITICAL) or 'p1' (amber ACTION). Image mode only —
+        // callers pass plain markup for text mode.
+        function seqPhotoCard(photoMod, prio, title, name, breed, inner) {
+          var critText = prio === 'p0' ? 'CRITICAL' : 'ACTION';
+          return '<div class="ev-photo-step ' + photoMod + ' ' + prio + '">' +
+            '<div class="ev-photo-media">' +
+              '<div class="ev-photo-crit">' +
+                '<div class="ev-crit-row"><span class="ev-crit-dot">!</span>' + critText + '</div>' +
+                '<div class="ev-crit-time en"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>20 min ago</div>' +
+              '</div>' +
+            '</div>' +
+            '<p class="ev-photo-title">' + title + '</p>' +
+            '<div class="ev-photo-metarow"><div><div class="ev-photo-name">' + name + '</div><div class="ev-photo-sub">' + breed + '</div></div><span class="ev-photo-vd en">View details ›</span></div>' +
+            '<div class="ev-photo-divider"></div>' +
+            '<div class="ev-seq-bottom">' + inner + '</div>' +
+          '</div>';
+        }
+        function seqImageMode() { return window.VANIX_DISPLAY_MODE === 'image'; }
+
         function startInsemFlow() {
           // Leaving the live-clock photo card — stop the ticker and open the
           // plain "Select insemination type" page (no photo, no timer).
