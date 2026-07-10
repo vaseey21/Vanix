@@ -346,15 +346,16 @@
     #flow-root.display-image #ev-heat #ev-heat-vet,
     #flow-root.display-image #ev-heat #ev-heat-offwin,
     #flow-root.display-image #ev-heat #ev-heat-form { display: none !important; }
-    /* Walkthrough / alert Heat card (image mode) — a white card with the photo
-       on top (rounded, contained), a red question title below, a Gauri /
-       breed·age + View-details row, a divider, then the stage content
-       (question buttons / timer / type). Red left accent = criticality. */
+    /* Walkthrough / alert Heat card (image mode) — a full-width white card
+       flush to the sheet edges: photo on top (rounded, contained), a red
+       question title below, a Gauri / breed·age + View-details row, a divider,
+       then the stage content. Red left accent = criticality. */
+    #ev-seq-body:has(.ev-photo-step) { padding: 0 !important; }
     .ev-photo-step {
       position: relative;
       box-sizing: border-box;
-      border-radius: 18px;
-      border: 1px solid var(--border);
+      border-radius: 24px 24px 0 0;
+      border: none;
       border-left: 6px solid var(--danger);
       background: var(--bgcard);
       padding: 14px 16px 16px;
