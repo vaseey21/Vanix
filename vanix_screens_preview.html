@@ -3688,8 +3688,11 @@
               interrupt('Cycle interrupted — delivery unsuccessful. ' + vetName + ' has been notified for an urgent check.');
             });
             document.getElementById('ev-seq-gest-ok').addEventListener('click', function() {
-              // Delivery log — date, vet name, notes + attachment (shared form).
-              gestBody.innerHTML = '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:14px 0 0;">Delivery log</p>' + vetLogHtml('gest', vetName);
+              // Delivery log — plain page, no photo (logs are classified, not
+              // photo-headed). Replaces the whole card body.
+              body.innerHTML = '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Log · Delivery success</p>' +
+                '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">Gauri · Desi · Vet: ' + vetName + '</p>' +
+                vetLogHtml('gest', vetName);
               wireVetLog('gest', function() { goTo(6); });
             });
           });
