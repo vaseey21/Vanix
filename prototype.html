@@ -322,12 +322,13 @@
     }
     #flow-root.display-image .ev-cow-name { font-size: 18px; font-weight: 700; color: var(--text1); line-height: 1.2; }
     #flow-root.display-image .ev-cow-sub { font-size: 15px; font-weight: 500; color: var(--text2); margin-top: 3px; }
-    /* View Details — row 2, right column */
+    /* View Details — row 2, right column: just a clickable chevron (no text) */
     #flow-root.display-image .ev-photo-card .ev-photo-viewdetails {
       display: block !important; grid-column: 3; grid-row: 2; align-self: center; justify-self: end;
-      text-align: right !important; margin: 0 !important;
-      font-size: 15px !important; font-weight: 700 !important; color: var(--greenink) !important;
+      text-align: right !important; margin: 0 !important; padding: 4px 4px !important;
+      font-size: 0 !important; color: var(--text2) !important;
     }
+    #flow-root.display-image .ev-photo-card .ev-photo-viewdetails::after { content: '›'; font-size: 30px; font-weight: 400; line-height: 1; }
     /* CTAs — row 3, full width */
     #flow-root.display-image .ev-photo-card .ev-body {
       grid-column: 1 / -1; grid-row: 3; margin: 16px 0 0; padding-top: 0; border-top: none;
