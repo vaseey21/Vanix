@@ -330,8 +330,10 @@
     }
     #flow-root.display-image .ev-photo-card.p1 { border-left-color: var(--warning) !important; }
     /* stray wrapper / chip divs from the text-mode markup are removed so they
-       don't become stray grid cells */
-    #flow-root.display-image .ev-photo-card .ev-imhide { display: none !important; }
+       don't become stray grid cells (explicit class + generic :has fallbacks) */
+    #flow-root.display-image .ev-photo-card .ev-imhide,
+    #flow-root.display-image .ev-photo-card > div:has(> .ev-chip),
+    #flow-root.display-image .ev-photo-card > div:has(> .ev-title) { display: none !important; }
     /* square photo — row 2, left column; per-card image below */
     #flow-root.display-image .ev-photo-card::before {
       content: ""; grid-column: 1; grid-row: 2; align-self: center;
