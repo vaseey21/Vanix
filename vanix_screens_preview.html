@@ -645,39 +645,24 @@
     #flow-root.display-fullbleed .ev-photo-step::after { display: none; }
     /* everything except the photo sits above the scrim */
     #flow-root.display-fullbleed .ev-photo-step > *:not(.ev-photo-media) { position: relative; z-index: 2; }
-    /* time pill → translucent, top-left */
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-crit {
-      position: absolute; top: 16px; left: 16px;
-      background: rgba(255,255,255,0.16); box-shadow: none; border: 1px solid rgba(255,255,255,0.3);
-    }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-crit .ev-crit-time { color: #fff; }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-crit .ev-crit-time svg { stroke: #fff; }
-    /* question title white, near the bottom */
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-title { color: #fff; margin: 0 0 8px; }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-metarow .ev-photo-name { color: #fff; }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-metarow .ev-photo-sub { color: rgba(255,255,255,0.82); }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-metarow .ev-photo-vd { color: rgba(255,255,255,0.9); }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-divider { display: none; }
-    /* View Details link visible (white text, drop the base font-size:0 + chevron dup) */
+    /* Row 1 — title (left) white + time (right, centred with title) white */
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-titlerow { margin-top: 0; }
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-title { color: #fff; }
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-time { color: rgba(255,255,255,0.85); }
+    /* Row 2 — name · breed (left) white + View Details (right) white */
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-namebreed { color: #fff; }
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-vd {
       font-size: 14px !important; font-weight: 600; color: rgba(255,255,255,0.92) !important;
     }
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-vd::after { content: none !important; }
-    /* the stage content ("slider details") gets a translucent panel so it reads
-       over the photo — 10% white in light mode, 10% black in dark mode */
-    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom {
-      background: rgba(255,255,255,0.1); border-radius: 16px; padding: 14px; margin-top: 14px;
-      -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
-    }
-    #flow-root.dark.display-fullbleed .ev-photo-step .ev-seq-bottom,
-    #flow-root.display-fullbleed.dark .ev-photo-step .ev-seq-bottom { background: rgba(0,0,0,0.1); }
-    /* lighten the detail text (phase label, segment labels, endpoints) so it's
-       legible on the photo; keep the phase-colour label as authored */
+    /* Row 3 — CTAs sit directly on the scrim (no panel / white padding). */
+    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom { margin-top: 14px; }
+    /* lighten the detail text (phase label endpoints, segment labels) on the photo */
     #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom span,
     #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom p:not(.ev-phase-label) { color: rgba(255,255,255,0.88) !important; }
     /* outline/secondary buttons (No / Not pregnant / Remind me later / Still
-       milking / Cancel) are transparent-on-dark → invisible. Make them a
-       translucent white pill with white text so they read on the photo. */
+       milking) are transparent-on-dark → invisible. Make them a translucent
+       white pill with white text so they read on the photo. */
     #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom button[style*="transparent"] {
       background: rgba(255,255,255,0.14) !important; border-color: rgba(255,255,255,0.55) !important; color: #fff !important;
     }
