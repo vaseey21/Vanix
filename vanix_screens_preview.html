@@ -483,7 +483,8 @@
     .ev-photo-metarow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
     .ev-photo-metarow .ev-photo-name { font-size: 17px; font-weight: 700; color: var(--text1); }
     .ev-photo-metarow .ev-photo-sub { font-size: 14px; font-weight: 500; color: var(--text2); margin-top: 2px; }
-    .ev-photo-metarow .ev-photo-vd { flex-shrink: 0; font-size: 15px; font-weight: 700; color: var(--greenink); }
+    .ev-photo-metarow .ev-photo-vd { flex-shrink: 0; font-size: 0; color: var(--text2); }
+    .ev-photo-metarow .ev-photo-vd::after { content: '›'; font-size: 26px; line-height: 1; }
     .ev-photo-divider { border-top: 1px solid var(--border); margin: 14px 0 0; }
     .ev-photo-step .ev-seq-bottom { margin-top: 14px; }
 
