@@ -2853,6 +2853,19 @@
             card.style.display = ok ? '' : 'none';
           });
         }
+        // The Type filter (all / action / warn / rem) drives section visibility
+        // directly now that the old tab row is gone; the Unactioned toggle hides
+        // the resolved-history section.
+        var evSectionType = 'all', evUnactioned = false;
+        function applyEvSections() {
+          var t = evSectionType;
+          document.getElementById('ev-sec-action').style.display = (t === 'all' || t === 'action') ? 'block' : 'none';
+          document.getElementById('ev-sec-warn').style.display   = (t === 'all' || t === 'warn')   ? 'block' : 'none';
+          document.getElementById('ev-sec-rem').style.display    = (t === 'all' || t === 'rem')    ? 'block' : 'none';
+          var hist = document.getElementById('ev-sec-hist');
+          if (hist) hist.style.display = (t === 'all' && !evUnactioned) ? 'block' : 'none';
+        }
+        applyEvSections();
         document.querySelectorAll('.ev-qf').forEach(function(qf) {
           var key = qf.getAttribute('data-filter');
           var btn = qf.querySelector('.ev-qf-btn');
