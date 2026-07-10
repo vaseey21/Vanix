@@ -184,9 +184,9 @@
     #flow-root.dark .ev-tab { background:#1C1C1C; border-color:#3A3A3A; color:#F5F5F5; }
     #flow-root.dark .ev-tab.on { background:#F5F5F5 !important; color:#111111 !important; border-color:#F5F5F5 !important; }
     /* ── Quick filters (Swiggy-style dropdown chips) ── */
-    #ev-quickfilters { display:flex; gap:8px; margin:0 0 14px; flex-wrap:wrap; }
+    #ev-quickfilters { display:flex; gap:6px; margin:0 0 14px; flex-wrap:nowrap; align-items:center; }
     .ev-qf { position:relative; flex-shrink:0; }
-    .ev-qf-btn { display:flex; align-items:center; gap:6px; height:34px; padding:0 12px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer; white-space:nowrap; }
+    .ev-qf-btn { display:flex; align-items:center; gap:4px; height:34px; padding:0 10px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi); cursor:pointer; white-space:nowrap; }
     .ev-qf-btn svg { transition:transform 0.2s ease; }
     .ev-qf.open .ev-qf-btn svg { transform:rotate(180deg); }
     .ev-qf.active .ev-qf-btn { background:var(--dark1); color:#FFFFFF; border-color:var(--dark1); font-weight:600; }
@@ -1384,13 +1384,6 @@
 
             <div style="padding:14px 16px 0;">
 
-              <!-- ── NEEDS ACTION — prominent pinned cards ── -->
-              <div id="ev-tabs" style="display:flex; gap:8px; margin:0 0 14px; overflow-x:auto; padding-bottom:2px;">
-                <button class="ev-tab on" data-tab="all" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);">All</button>
-                <button class="ev-tab" data-tab="action" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Needs action</button>
-                <button class="ev-tab" data-tab="warn" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Warnings</button>
-                <button class="ev-tab" data-tab="rem" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Reminders</button>
-              </div>
 
               <!-- ── Quick filters (Swiggy-style dropdown chips) ── -->
               <div id="ev-quickfilters">
@@ -2730,6 +2723,16 @@
             card.style.display = ok ? '' : 'none';
           });
         }
+        var evSectionType = 'all', evUnactioned = false;
+        function applyEvSections() {
+          var t = evSectionType;
+          document.getElementById('ev-sec-action').style.display = (t === 'all' || t === 'action') ? 'block' : 'none';
+          document.getElementById('ev-sec-warn').style.display   = (t === 'all' || t === 'warn')   ? 'block' : 'none';
+          document.getElementById('ev-sec-rem').style.display    = (t === 'all' || t === 'rem')    ? 'block' : 'none';
+          var hist = document.getElementById('ev-sec-hist');
+          if (hist) hist.style.display = (t === 'all' && !evUnactioned) ? 'block' : 'none';
+        }
+        applyEvSections();
         document.querySelectorAll('.ev-qf').forEach(function(qf) {
           var key = qf.getAttribute('data-filter');
           var btn = qf.querySelector('.ev-qf-btn');
@@ -2751,8 +2754,8 @@
               else { label.textContent = opt.textContent; qf.classList.add('active'); }
               qf.classList.remove('open');
               if (key === 'type') {
-                var tab = document.querySelector('.ev-tab[data-tab="' + val + '"]');
-                if (tab) tab.click();
+                evSectionType = val;
+                applyEvSections();
               } else {
                 evFilter[key] = val;
                 applyEvFilters();
@@ -2764,9 +2767,8 @@
         if (unBtn) {
           unBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            var on = unBtn.classList.toggle('active');
-            var hist = document.getElementById('ev-sec-hist');
-            if (hist) hist.style.display = on ? 'none' : '';
+            evUnactioned = unBtn.classList.toggle('active');
+            applyEvSections();
           });
         }
         document.addEventListener('click', function() {
