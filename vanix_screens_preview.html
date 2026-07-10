@@ -420,6 +420,9 @@
        question title below, a Gauri / breed·age + View-details row, a divider,
        then the stage content. Red left accent = criticality. */
     #ev-seq-body:has(.ev-photo-step) { padding: 0 !important; }
+    /* hide the sheet's grabber handle so the card (and its red accent strip)
+       reaches the very top of the sheet. */
+    #ev-seq-sheet:has(.ev-photo-step) > div:first-child { display: none !important; }
     .ev-photo-step {
       position: relative;
       box-sizing: border-box;
