@@ -751,18 +751,26 @@
     .ev-flow-photo button[id$="-back"] { color: #fff !important; }
     /* selection rows, inputs, textareas and the attachment button all use the
        same treatment: white border + 20% white fill + white text */
+    /* selection rows + inputs are outline-only (transparent fill, white border) */
     .ev-flow-photo .ev-seq-itype,
     .ev-flow-photo .ev-seq-vetrow,
     .ev-flow-photo .ev-vet-row,
     .ev-flow-photo input,
-    .ev-flow-photo textarea,
-    .ev-flow-photo [id*="attach"] {
-      background: rgba(255,255,255,0.2) !important;
+    .ev-flow-photo textarea {
+      background: transparent !important;
       border: 1px solid rgba(255,255,255,0.6) !important;
       color: #fff !important;
     }
     .ev-flow-photo input::placeholder, .ev-flow-photo textarea::placeholder { color: rgba(255,255,255,0.7); }
     .ev-flow-photo .ev-seq-itype .en, .ev-flow-photo .ev-seq-vetrow .en { color: #fff !important; }
+    /* Add-attachment: compact green-outline pill (no fill), left-aligned */
+    .ev-flow-photo [id*="attach"] {
+      display: inline-flex !important; width: auto !important; align-self: flex-start;
+      min-height: 34px !important; padding: 0 14px !important; margin-top: 12px !important;
+      background: transparent !important; border: 1px solid var(--greendeep) !important;
+      color: var(--greendeep) !important; border-radius: 18px !important;
+      font-size: 12px !important; font-weight: 600 !important; gap: 6px !important;
+    }
     /* two-column field row for the log form */
     .ev-field-row { display: flex; gap: 10px; }
     .ev-field-row > * { flex: 1 1 0; min-width: 0; }
