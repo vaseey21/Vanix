@@ -440,7 +440,7 @@
     /* ── events-page list cards ── */
     #flow-root.display-fullbleed .ev-photo-card {
       position: relative;
-      min-height: 430px;
+      min-height: 300px;
       background: #0A2318 !important;
       border: none !important;
       border-radius: 20px !important;
@@ -598,6 +598,37 @@
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-metarow .ev-photo-sub { color: rgba(255,255,255,0.82); }
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-metarow .ev-photo-vd { color: rgba(255,255,255,0.9); }
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-divider { display: none; }
+    /* View Details link visible (white text, drop the base font-size:0 + chevron dup) */
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-vd {
+      font-size: 14px !important; font-weight: 600; color: rgba(255,255,255,0.92) !important;
+    }
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-vd::after { content: none !important; }
+    /* the stage content ("slider details") gets a translucent panel so it reads
+       over the photo — 10% white in light mode, 10% black in dark mode */
+    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom {
+      background: rgba(255,255,255,0.1); border-radius: 16px; padding: 14px; margin-top: 14px;
+      -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+    }
+    #flow-root.dark.display-fullbleed .ev-photo-step .ev-seq-bottom,
+    #flow-root.display-fullbleed.dark .ev-photo-step .ev-seq-bottom { background: rgba(0,0,0,0.1); }
+    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom span,
+    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom p:not(.ev-phase-label) { color: rgba(255,255,255,0.88) !important; }
+    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom button[style*="transparent"] {
+      background: rgba(255,255,255,0.14) !important; border-color: rgba(255,255,255,0.55) !important; color: #fff !important;
+    }
+
+    /* ── blurred-photo background for the plain flow pages ── */
+    .ev-flow-photo { position: relative; z-index: 0; }
+    .ev-flow-photo::before {
+      content: ""; position: absolute; inset: -20px; z-index: -1;
+      background-size: cover; background-position: center;
+      filter: blur(8px); opacity: 0.5;
+    }
+    .ev-flow-photo.insem::before { background-image: url('assets/images/insemination_photo.jpg'); }
+    .ev-flow-photo.callvet::before { background-image: url('assets/images/vetvisit_photo.jpg'); }
+    .ev-flow-photo.delivery::before { background-image: url('assets/images/delivery_photo.jpg'); }
+    .ev-field-row { display: flex; gap: 10px; }
+    .ev-field-row > * { flex: 1 1 0; min-width: 0; }
 
 
 
@@ -2634,7 +2665,7 @@
           '<input type="text" value="' + vetName + '" readonly style="' + inp + ' background:var(--bgwarm);">' +
           '<label style="' + lbl + '">Notes</label>' +
           '<textarea rows="3" placeholder="Add notes (optional)" style="width:100%; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
-          '<button id="ev-vetlog-attach-' + idPrefix + '" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; margin-top:8px; background:transparent; border:1px dashed var(--border); border-radius:12px; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi);">📎 Add attachment</button>' +
+          '<button id="ev-vetlog-attach-' + idPrefix + '" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; margin-top:8px; background:var(--bgcard); border:1px dashed var(--border); border-radius:12px; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi);">📎 Add attachment</button>' +
           '<button id="ev-vetlog-submit-' + idPrefix + '" style="width:100%; min-height:50px; margin-top:12px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Submit log</button>';
       }
       function wireVetLog(idPrefix, onSubmit) {
@@ -3606,7 +3637,7 @@
               '</div>' +
             '</div>';
             var meta = '<div class="ev-photo-metarow">' +
-              '<div><div class="ev-photo-name">Gauri</div><div class="ev-photo-sub">Desi Cow · 4 years</div></div>' +
+              '<div><div class="ev-photo-name">Gauri</div><div class="ev-photo-sub">Desi</div></div>' +
               '<span class="ev-photo-vd en">View details ›</span>' +
             '</div>';
             body.innerHTML = '<div class="' + wrapClass + '">' + media +
@@ -3663,14 +3694,14 @@
         }
 
         function renderInsemTypeSelect() {
-          body.innerHTML =
+          body.innerHTML = '<div class="ev-flow-photo insem">' +
             insemBack('ev-seq-itype-back') +
             '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Select insemination type</p>' +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0 0 4px;">Gauri · Desi</p>' +
             INSEM_TYPES.map(function(t) {
               return '<button class="ev-seq-itype" data-key="' + t.key + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:52px; padding:0 14px; margin-top:10px; border-radius:12px; border:1px solid var(--border); background:var(--bgcard); font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
                 '<span>' + t.label + '</span><span class="en" style="color:var(--greenink); font-size:18px; line-height:1;">›</span></button>';
-            }).join('');
+            }).join('') + '</div>';
           document.getElementById('ev-seq-itype-back').addEventListener('click', function() {
             heatFormStage = 'timer'; paintHeat(); startHeatTicker();
           });
@@ -3683,14 +3714,14 @@
         }
 
         function renderInsemVetSelect() {
-          body.innerHTML =
+          body.innerHTML = '<div class="ev-flow-photo insem">' +
             insemBack('ev-seq-vet-back') +
             '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Select vet</p>' +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0 0 4px;">' + heatInsemType.label + ' · Gauri</p>' +
             ONBOARDED_VETS.map(function(name) {
               return '<button class="ev-seq-vetrow" data-vet="' + name + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:52px; padding:0 14px; margin-top:10px; border-radius:12px; border:1px solid var(--border); background:var(--bgcard); font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
                 '<span>' + name + '</span><span class="en" style="color:var(--greenink); font-size:18px; line-height:1;">›</span></button>';
-            }).join('');
+            }).join('') + '</div>';
           document.getElementById('ev-seq-vet-back').addEventListener('click', renderInsemTypeSelect);
           document.querySelectorAll('.ev-seq-vetrow').forEach(function(row) {
             row.addEventListener('click', function() { heatVetSel = row.getAttribute('data-vet'); renderInsemDetails(); });
@@ -3698,23 +3729,37 @@
         }
 
         function insemField(f) {
-          return '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">' + f.label + '</label>' +
-            '<input type="text" placeholder="' + (f.ph || '') + '" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">';
+          return '<div>' +
+            '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">' + f.label + '</label>' +
+            '<input type="text" placeholder="' + (f.ph || '') + '" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">' +
+            '</div>';
+        }
+        function insemFieldsPaired(fields) {
+          var out = '';
+          for (var i = 0; i < fields.length; i += 2) {
+            if (i + 1 < fields.length) {
+              out += '<div class="ev-field-row">' + insemField(fields[i]) + insemField(fields[i + 1]) + '</div>';
+            } else {
+              out += insemField(fields[i]);
+            }
+          }
+          return out;
         }
 
         function renderInsemDetails() {
           var t = heatInsemType;
-          body.innerHTML =
+          body.innerHTML = '<div class="ev-flow-photo insem">' +
             insemBack('ev-seq-insem-back') +
             '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Log · Insemination</p>' +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">' + t.label + ' · Gauri · Vet: ' + heatVetSel + '</p>' +
-            t.fields.map(insemField).join('') +
+            insemFieldsPaired(t.fields) +
             '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">Date</label>' +
             '<input type="date" value="2026-07-09" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">' +
             '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">Notes</label>' +
             '<textarea rows="3" placeholder="Add notes (optional)" style="width:100%; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
             '<button id="ev-seq-insem-attach" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; margin-top:8px; background:transparent; border:1px dashed var(--border); border-radius:12px; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi);">📎 Add attachment</button>' +
-            '<button id="ev-seq-insem-submit" style="width:100%; min-height:52px; margin-top:14px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Submit</button>';
+            '<button id="ev-seq-insem-submit" style="width:100%; min-height:52px; margin-top:14px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Submit</button>' +
+            '</div>';
           document.getElementById('ev-seq-insem-back').addEventListener('click', renderInsemVetSelect);
           var att = document.getElementById('ev-seq-insem-attach');
           att.addEventListener('click', function() { att.textContent = '✓ Attachment added'; att.style.borderStyle = 'solid'; att.style.color = 'var(--greendeep)'; });
@@ -3741,7 +3786,7 @@
             '<button id="ev-seq-preg-yes" style="flex:1.3; min-height:48px; background:var(--greendeep); border:none; border-radius:14px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Confirm — pregnant</button>' +
             '</div>';
           if (seqImageMode()) {
-            body.innerHTML = seqPhotoCard('preg', 'p1', 'Is Gauri pregnant?', 'Gauri', 'Desi Cow · 4 years', buttons);
+            body.innerHTML = seqPhotoCard('preg', 'p1', 'Is Gauri pregnant?', 'Gauri', 'Desi', buttons);
           } else {
             body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Pregnancy check due — Gauri</p>' +
               '<p style="font-size:12px; color:var(--text2); margin:3px 0 12px; line-height:1.6;">21 days since insemination and no heat detected — confirm if she appears pregnant.</p>' + buttons;
@@ -3754,7 +3799,7 @@
           // 9-month checkpoint: call a vet for delivery -> was it successful? -> log it.
           var inner = '<div id="ev-seq-gest-body"></div>';
           if (seqImageMode()) {
-            body.innerHTML = seqPhotoCard('delivery', 'p1', 'Call vet for delivery', 'Gauri', 'Desi Cow · 4 years', inner);
+            body.innerHTML = seqPhotoCard('delivery', 'p1', 'Call vet for delivery', 'Gauri', 'Desi', inner);
           } else {
             body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">9-month check — call your vet for delivery</p>' +
               '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — call a vet to be on hand for delivery.</p>' + inner;
@@ -3774,9 +3819,10 @@
             document.getElementById('ev-seq-gest-ok').addEventListener('click', function() {
               // Delivery log — plain page, no photo (logs are classified, not
               // photo-headed). Replaces the whole card body.
-              body.innerHTML = '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Log · Delivery success</p>' +
+              body.innerHTML = '<div class="ev-flow-photo delivery">' +
+                '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Log · Delivery success</p>' +
                 '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">Gauri · Desi · Vet: ' + vetName + '</p>' +
-                vetLogHtml('gest', vetName);
+                vetLogHtml('gest', vetName) + '</div>';
               wireVetLog('gest', function() { goTo(6); });
             });
           });
@@ -3788,7 +3834,7 @@
               '<button id="ev-seq-milk-add" style="flex:1.3; min-height:48px; background:var(--greendeep); border:none; border-radius:14px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Yes, add</button>' +
             '</div>';
           if (seqImageMode()) {
-            body.innerHTML = seqPhotoCard('milking', 'p1', 'Add to milking list?', 'Gauri', 'Desi Cow · 4 years · 250-day lactation', buttons);
+            body.innerHTML = seqPhotoCard('milking', 'p1', 'Add to milking list?', 'Gauri', 'Desi · 250-day lactation', buttons);
           } else {
             body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Gauri is now in her lactation period (250 days)</p>' +
               '<p style="font-size:12px; color:var(--text2); margin:3px 0 12px; line-height:1.6;">Add her to the milking list?</p>' + buttons;
@@ -3811,7 +3857,7 @@
               '<button id="ev-seq-lact-resting" style="flex:1.3; min-height:48px; background:var(--greendeep); border:none; border-radius:14px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Entered resting period</button>' +
             '</div>';
           if (seqImageMode()) {
-            body.innerHTML = seqPhotoCard('lactation', 'p1', 'Still milking?', 'Gauri', 'Desi Cow · 4 years · end of lactation', buttons);
+            body.innerHTML = seqPhotoCard('lactation', 'p1', 'Still milking?', 'Gauri', 'Desi · end of lactation', buttons);
           } else {
             body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Lactation period ending — Gauri</p>' +
               '<p style="font-size:12px; color:var(--text2); margin:3px 0 12px; line-height:1.6;">Is Gauri still milking, or has she entered her resting period?</p>' + buttons;

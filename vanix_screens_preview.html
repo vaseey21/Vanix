@@ -3755,7 +3755,7 @@
               '</div>' +
             '</div>';
             var meta = '<div class="ev-photo-metarow">' +
-              '<div><div class="ev-photo-name">Gauri</div><div class="ev-photo-sub">Desi Cow · 4 years</div></div>' +
+              '<div><div class="ev-photo-name">Gauri</div><div class="ev-photo-sub">Desi</div></div>' +
               '<span class="ev-photo-vd en">View details ›</span>' +
             '</div>';
             body.innerHTML = '<div class="' + wrapClass + '">' + media +
@@ -3906,7 +3906,7 @@
             '<button id="ev-seq-preg-yes" style="flex:1.3; min-height:48px; background:var(--greendeep); border:none; border-radius:14px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Confirm — pregnant</button>' +
             '</div>';
           if (seqImageMode()) {
-            body.innerHTML = seqPhotoCard('preg', 'p1', 'Is Gauri pregnant?', 'Gauri', 'Desi Cow · 4 years', buttons);
+            body.innerHTML = seqPhotoCard('preg', 'p1', 'Is Gauri pregnant?', 'Gauri', 'Desi', buttons);
           } else {
             body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Pregnancy check due — Gauri</p>' +
               '<p style="font-size:12px; color:var(--text2); margin:3px 0 12px; line-height:1.6;">21 days since insemination and no heat detected — confirm if she appears pregnant.</p>' + buttons;
@@ -3919,7 +3919,7 @@
           // 9-month checkpoint: call a vet for delivery -> was it successful? -> log it.
           var inner = '<div id="ev-seq-gest-body"></div>';
           if (seqImageMode()) {
-            body.innerHTML = seqPhotoCard('delivery', 'p1', 'Call vet for delivery', 'Gauri', 'Desi Cow · 4 years', inner);
+            body.innerHTML = seqPhotoCard('delivery', 'p1', 'Call vet for delivery', 'Gauri', 'Desi', inner);
           } else {
             body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">9-month check — call your vet for delivery</p>' +
               '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — call a vet to be on hand for delivery.</p>' + inner;
@@ -3954,7 +3954,7 @@
               '<button id="ev-seq-milk-add" style="flex:1.3; min-height:48px; background:var(--greendeep); border:none; border-radius:14px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Yes, add</button>' +
             '</div>';
           if (seqImageMode()) {
-            body.innerHTML = seqPhotoCard('milking', 'p1', 'Add to milking list?', 'Gauri', 'Desi Cow · 4 years · 250-day lactation', buttons);
+            body.innerHTML = seqPhotoCard('milking', 'p1', 'Add to milking list?', 'Gauri', 'Desi · 250-day lactation', buttons);
           } else {
             body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Gauri is now in her lactation period (250 days)</p>' +
               '<p style="font-size:12px; color:var(--text2); margin:3px 0 12px; line-height:1.6;">Add her to the milking list?</p>' + buttons;
@@ -3977,7 +3977,7 @@
               '<button id="ev-seq-lact-resting" style="flex:1.3; min-height:48px; background:var(--greendeep); border:none; border-radius:14px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Entered resting period</button>' +
             '</div>';
           if (seqImageMode()) {
-            body.innerHTML = seqPhotoCard('lactation', 'p1', 'Still milking?', 'Gauri', 'Desi Cow · 4 years · end of lactation', buttons);
+            body.innerHTML = seqPhotoCard('lactation', 'p1', 'Still milking?', 'Gauri', 'Desi · end of lactation', buttons);
           } else {
             body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Lactation period ending — Gauri</p>' +
               '<p style="font-size:12px; color:var(--text2); margin:3px 0 12px; line-height:1.6;">Is Gauri still milking, or has she entered her resting period?</p>' + buttons;
