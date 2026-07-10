@@ -476,17 +476,15 @@
     .ev-photo-step.p1 .ev-photo-title { color: #8A5A00; }
     .ev-photo-step.p1 .ev-photo-crit .ev-crit-row { color: #8A5A00; }
     .ev-photo-step.p1 .ev-photo-crit .ev-crit-dot { background: var(--warning); }
-    /* CRITICAL + time-ago pill overlapping the photo's top-right */
+    /* time-ago pill (top-left, so it clears the severity corner triangle) */
     .ev-photo-crit {
-      position: absolute; top: 10px; right: 10px;
-      background: var(--bgcard); border-radius: 12px; padding: 7px 12px;
+      position: absolute; top: 10px; left: 10px;
+      background: var(--bgcard); border-radius: 12px; padding: 6px 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
-    /* CRITICAL text + dot hidden; severity-coloured ↗ arrow injected instead */
-    .ev-photo-crit .ev-crit-row { display: flex; align-items: center; color: var(--danger); font-size: 0; }
-    .ev-photo-crit .ev-crit-row .ev-crit-dot { display: none; }
-    .ev-photo-crit .ev-crit-row::after { content: '↗'; font-size: 22px; font-weight: 800; line-height: 1; }
-    .ev-photo-crit .ev-crit-time { display: flex; align-items: center; gap: 5px; color: var(--text2); font-size: 13px; font-weight: 500; margin-top: 4px; }
+    /* severity is now the corner triangle — the arrow row is dropped */
+    .ev-photo-crit .ev-crit-row { display: none; }
+    .ev-photo-crit .ev-crit-time { display: flex; align-items: center; gap: 5px; color: var(--text2); font-size: 13px; font-weight: 500; }
     .ev-photo-title { color: var(--danger); font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 14px 0 0; }
     .ev-photo-metarow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
     .ev-photo-metarow .ev-photo-name { font-size: 17px; font-weight: 700; color: var(--text1); }
