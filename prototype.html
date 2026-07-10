@@ -145,6 +145,9 @@
     #flow-root.display-image #ev-alert-fullscreen #ev-fs-viewinapp { color:#fff; }
     #flow-root.display-image #ev-alert-fullscreen .fs-panel { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.22); }
     #flow-root.display-image #ev-alert-fullscreen .fs-panel-label { color:rgba(255,255,255,0.7); }
+    #ev-alert-fullscreen .fs-panel { background:rgba(255,255,255,0.3) !important; border:1px solid rgba(255,255,255,0.45) !important; }
+    #ev-alert-fullscreen .fs-panel-label { color:#fff !important; }
+    #ev-alert-fullscreen .fs-circle-btn { background:rgba(0,0,0,0.4); color:#fff; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
     .fs-circle-btn { background:rgba(0,0,0,0.08); color:var(--text1); }
     #flow-root.dark .fs-circle-btn { background:rgba(255,255,255,0.14); color:#FFFFFF; }
     .fs-meta { color:var(--text2); }
@@ -661,14 +664,20 @@
     .ev-flow-photo .ev-seq-vetrow,
     .ev-flow-photo .ev-vet-row,
     .ev-flow-photo input,
-    .ev-flow-photo textarea,
-    .ev-flow-photo [id*="attach"] {
-      background: rgba(255,255,255,0.2) !important;
+    .ev-flow-photo textarea {
+      background: transparent !important;
       border: 1px solid rgba(255,255,255,0.6) !important;
       color: #fff !important;
     }
     .ev-flow-photo input::placeholder, .ev-flow-photo textarea::placeholder { color: rgba(255,255,255,0.7); }
     .ev-flow-photo .ev-seq-itype .en, .ev-flow-photo .ev-seq-vetrow .en { color: #fff !important; }
+    .ev-flow-photo [id*="attach"] {
+      display: inline-flex !important; width: auto !important; align-self: flex-start;
+      min-height: 34px !important; padding: 0 14px !important; margin-top: 12px !important;
+      background: transparent !important; border: 1px solid var(--greendeep) !important;
+      color: var(--greendeep) !important; border-radius: 18px !important;
+      font-size: 12px !important; font-weight: 600 !important; gap: 6px !important;
+    }
     .ev-field-row { display: flex; gap: 10px; }
     .ev-field-row > * { flex: 1 1 0; min-width: 0; }
 
@@ -1860,16 +1869,14 @@
 
           <!-- Full-screen "push notification" heat alert carousel — View full cycle entry point.
                Multiple heat alerts swipe left/right; cards are injected by JS from FS_ALERTS. -->
-          <div id="ev-alert-fullscreen" style="display:none; position:absolute; inset:0; z-index:30; flex-direction:column; padding:20px 0;">
-            <div style="display:flex; align-items:center; justify-content:space-between; padding:0 20px;">
-              <span id="ev-fs-count" class="en fs-meta" style="font-size:12px; font-weight:600;">1 of 3</span>
-              <button id="ev-fs-close" class="fs-circle-btn" style="width:32px; height:32px; border-radius:50%; border:none; font-size:16px; line-height:1;">✕</button>
-            </div>
-            <div style="flex:1; position:relative; overflow:hidden; margin-top:4px;">
+          <div id="ev-alert-fullscreen" style="display:none; position:absolute; inset:0; z-index:30; padding:0;">
+            <div style="position:absolute; inset:0; overflow:hidden;">
               <div id="ev-fs-strip" style="display:flex; height:100%; transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);"></div>
-              <button id="ev-fs-prev" class="fs-circle-btn" style="position:absolute; left:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; border:none; font-size:18px; line-height:1;">‹</button>
-              <button id="ev-fs-next" class="fs-circle-btn" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; border:none; font-size:18px; line-height:1;">›</button>
             </div>
+            <span id="ev-fs-count" class="en" style="position:absolute; top:18px; left:22px; z-index:5; font-size:12px; font-weight:600; color:#fff; text-shadow:0 1px 4px rgba(0,0,0,0.5);">1 of 3</span>
+            <button id="ev-fs-close" class="fs-circle-btn" style="position:absolute; top:14px; right:18px; z-index:5; width:32px; height:32px; border-radius:50%; border:none; font-size:16px; line-height:1;">✕</button>
+            <button id="ev-fs-prev" class="fs-circle-btn" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); z-index:5; width:34px; height:34px; border-radius:50%; border:none; font-size:18px; line-height:1;">‹</button>
+            <button id="ev-fs-next" class="fs-circle-btn" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); z-index:5; width:34px; height:34px; border-radius:50%; border:none; font-size:18px; line-height:1;">›</button>
           </div>
 
           <!-- FULL-CYCLE WALKTHROUGH — self-contained demo, does not touch live evOpen/badges -->
@@ -3806,7 +3813,13 @@
 
         // Shared back-button markup for the plain (no-photo) insemination pages.
         function insemBack(id) {
-          return '<button id="' + id + '" style="display:inline-flex; align-items:center; gap:3px; background:none; border:none; padding:0; margin:2px 0 12px; font-size:14px; font-weight:600; color:var(--text2); font-family:var(--font-hi); cursor:pointer;"><span class="en" style="font-size:19px; line-height:1;">‹</span> Back</button>';
+          return '<button id="' + id + '" class="en" style="flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; background:none; border:none; padding:0; margin:0; font-size:26px; line-height:1; color:var(--text2); font-family:var(--font-hi); cursor:pointer;">‹</button>';
+        }
+        function flowTitleRow(backId, title) {
+          return '<div style="display:flex; align-items:center; gap:8px; margin:0 0 2px;">' +
+            insemBack(backId) +
+            '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0; letter-spacing:-0.02em;">' + title + '</p>' +
+          '</div>';
         }
 
         // Wrap a walkthrough step's content in the full-width photo card
@@ -3836,8 +3849,7 @@
 
         function renderInsemTypeSelect() {
           body.innerHTML = '<div class="ev-flow-photo insem">' +
-            insemBack('ev-seq-itype-back') +
-            '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Select insemination type</p>' +
+            flowTitleRow('ev-seq-itype-back', 'Select insemination type') +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0 0 4px;">Gauri · Desi</p>' +
             INSEM_TYPES.map(function(t) {
               return '<button class="ev-seq-itype" data-key="' + t.key + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:52px; padding:0 14px; margin-top:10px; border-radius:12px; border:1px solid var(--border); background:var(--bgcard); font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
@@ -3856,8 +3868,7 @@
 
         function renderInsemVetSelect() {
           body.innerHTML = '<div class="ev-flow-photo insem">' +
-            insemBack('ev-seq-vet-back') +
-            '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Select vet</p>' +
+            flowTitleRow('ev-seq-vet-back', 'Select vet') +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0 0 4px;">' + heatInsemType.label + ' · Gauri</p>' +
             ONBOARDED_VETS.map(function(name) {
               return '<button class="ev-seq-vetrow" data-vet="' + name + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:52px; padding:0 14px; margin-top:10px; border-radius:12px; border:1px solid var(--border); background:var(--bgcard); font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
@@ -3890,8 +3901,7 @@
         function renderInsemDetails() {
           var t = heatInsemType;
           body.innerHTML = '<div class="ev-flow-photo insem">' +
-            insemBack('ev-seq-insem-back') +
-            '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Log · Insemination</p>' +
+            flowTitleRow('ev-seq-insem-back', 'Log · Insemination') +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">' + t.label + ' · Gauri · Vet: ' + heatVetSel + '</p>' +
             insemFieldsPaired(t.fields) +
             '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">Date</label>' +
