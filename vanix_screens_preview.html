@@ -1964,16 +1964,15 @@
 
           <!-- Full-screen "push notification" heat alert carousel — View full cycle entry point.
                Multiple heat alerts swipe left/right; cards are injected by JS from FS_ALERTS. -->
-          <div id="ev-alert-fullscreen" style="display:none; position:absolute; inset:0; z-index:30; flex-direction:column; padding:20px 0;">
-            <div style="display:flex; align-items:center; justify-content:space-between; padding:0 20px;">
-              <span id="ev-fs-count" class="en fs-meta" style="font-size:12px; font-weight:600;">1 of 3</span>
-              <button id="ev-fs-close" class="fs-circle-btn" style="width:32px; height:32px; border-radius:50%; border:none; font-size:16px; line-height:1;">✕</button>
-            </div>
-            <div style="flex:1; position:relative; overflow:hidden; margin-top:4px;">
+          <div id="ev-alert-fullscreen" style="display:none; position:absolute; inset:0; z-index:30; padding:0;">
+            <div style="position:absolute; inset:0; overflow:hidden;">
               <div id="ev-fs-strip" style="display:flex; height:100%; transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);"></div>
-              <button id="ev-fs-prev" class="fs-circle-btn" style="position:absolute; left:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; border:none; font-size:18px; line-height:1;">‹</button>
-              <button id="ev-fs-next" class="fs-circle-btn" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; border:none; font-size:18px; line-height:1;">›</button>
             </div>
+            <!-- overlaid on the photo -->
+            <span id="ev-fs-count" class="en" style="position:absolute; top:18px; left:22px; z-index:5; font-size:12px; font-weight:600; color:#fff; text-shadow:0 1px 4px rgba(0,0,0,0.5);">1 of 3</span>
+            <button id="ev-fs-close" class="fs-circle-btn" style="position:absolute; top:14px; right:18px; z-index:5; width:32px; height:32px; border-radius:50%; border:none; font-size:16px; line-height:1;">✕</button>
+            <button id="ev-fs-prev" class="fs-circle-btn" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); z-index:5; width:34px; height:34px; border-radius:50%; border:none; font-size:18px; line-height:1;">‹</button>
+            <button id="ev-fs-next" class="fs-circle-btn" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); z-index:5; width:34px; height:34px; border-radius:50%; border:none; font-size:18px; line-height:1;">›</button>
           </div>
 
           <!-- FULL-CYCLE WALKTHROUGH — self-contained demo, does not touch live evOpen/badges -->
