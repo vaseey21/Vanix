@@ -3652,13 +3652,16 @@
         }
 
         function renderPregStep() {
-          body.innerHTML =
-            '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Pregnancy check due — Gauri</p>' +
-            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">21 days since insemination and no heat detected — confirm if she appears pregnant.</p>' +
-            '<div style="display:flex; gap:8px; margin-top:12px;">' +
-            '<button id="ev-seq-preg-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Not pregnant</button>' +
-            '<button id="ev-seq-preg-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Confirm — pregnant</button>' +
+          var buttons = '<div style="display:flex; gap:8px;">' +
+            '<button id="ev-seq-preg-no" style="flex:1; min-height:48px; background:transparent; border:1px solid var(--border); border-radius:14px; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">Not pregnant</button>' +
+            '<button id="ev-seq-preg-yes" style="flex:1.3; min-height:48px; background:var(--greendeep); border:none; border-radius:14px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Confirm — pregnant</button>' +
             '</div>';
+          if (seqImageMode()) {
+            body.innerHTML = seqPhotoCard('preg', 'p1', 'Is Gauri pregnant?', 'Gauri', 'Desi Cow · 4 years', buttons);
+          } else {
+            body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Pregnancy check due — Gauri</p>' +
+              '<p style="font-size:12px; color:var(--text2); margin:3px 0 12px; line-height:1.6;">21 days since insemination and no heat detected — confirm if she appears pregnant.</p>' + buttons;
+          }
           document.getElementById('ev-seq-preg-no').addEventListener('click', function() { interrupt('Cycle interrupted — pregnancy not confirmed. Heat watch would resume.'); });
           document.getElementById('ev-seq-preg-yes').addEventListener('click', function() { goTo(4); });
         }
