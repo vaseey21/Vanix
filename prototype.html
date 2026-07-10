@@ -1821,6 +1821,7 @@
         document.getElementById('s1-dm-text').style.display = img ? 'none' : 'block';
         document.getElementById('s1-dm-image').style.display = img ? 'block' : 'none';
         document.getElementById('flow-root').classList.toggle('display-image', !img);
+        document.getElementById('flow-root').classList.toggle('display-fullbleed', img);
       }
       applyDisplayMode();
       dmBtn.addEventListener('click', function() {
