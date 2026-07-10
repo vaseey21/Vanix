@@ -474,8 +474,10 @@
       background: var(--bgcard); border-radius: 12px; padding: 7px 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
-    .ev-photo-crit .ev-crit-row { display: flex; align-items: center; gap: 6px; color: var(--danger); font-size: 13px; font-weight: 800; letter-spacing: 0.04em; }
-    .ev-photo-crit .ev-crit-dot { width: 18px; height: 18px; border-radius: 50%; background: var(--danger); color: #fff; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+    /* CRITICAL text + dot hidden; severity-coloured ↗ arrow injected instead */
+    .ev-photo-crit .ev-crit-row { display: flex; align-items: center; color: var(--danger); font-size: 0; }
+    .ev-photo-crit .ev-crit-row .ev-crit-dot { display: none; }
+    .ev-photo-crit .ev-crit-row::after { content: '↗'; font-size: 22px; font-weight: 800; line-height: 1; }
     .ev-photo-crit .ev-crit-time { display: flex; align-items: center; gap: 5px; color: var(--text2); font-size: 13px; font-weight: 500; margin-top: 4px; }
     .ev-photo-title { color: var(--danger); font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 14px 0 0; }
     .ev-photo-metarow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
