@@ -384,6 +384,15 @@
       background-image: url('assets/images/insemination_photo.jpg');
       background-position: center 25%;
     }
+    /* other walkthrough/alert steps — per-step photo + amber (P1) priority */
+    .ev-photo-step.preg .ev-photo-media { background-image: url('assets/images/gestation_photo.jpg'); }
+    .ev-photo-step.delivery .ev-photo-media { background-image: url('assets/images/delivery_photo.jpg'); }
+    .ev-photo-step.milking .ev-photo-media { background-image: url('assets/images/milking_started_photo.jpg'); }
+    .ev-photo-step.lactation .ev-photo-media { background-image: url('assets/images/milking_ended_photo.jpg'); }
+    .ev-photo-step.p1 { border-left-color: var(--warning); }
+    .ev-photo-step.p1 .ev-photo-title { color: #8A5A00; }
+    .ev-photo-step.p1 .ev-photo-crit .ev-crit-row { color: #8A5A00; }
+    .ev-photo-step.p1 .ev-photo-crit .ev-crit-dot { background: var(--warning); }
     /* CRITICAL + time-ago pill overlapping the photo's top-right */
     .ev-photo-crit {
       position: absolute; top: 10px; right: 10px;
