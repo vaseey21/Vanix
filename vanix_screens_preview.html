@@ -447,7 +447,15 @@
       border-left: 6px solid var(--danger);
       background: var(--bgcard);
       padding: 14px 16px 16px;
+      overflow: hidden;
     }
+    /* severity corner triangle (top-right), colour = criticality */
+    .ev-photo-step::after {
+      content: ""; position: absolute; top: 0; right: 0; z-index: 3;
+      width: 0; height: 0; border-style: solid; border-width: 0 46px 46px 0;
+      border-color: transparent var(--danger) transparent transparent;
+    }
+    .ev-photo-step.p1::after { border-right-color: var(--warning); }
     .ev-photo-media {
       position: relative;
       height: 200px;
