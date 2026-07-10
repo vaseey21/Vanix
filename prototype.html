@@ -3335,14 +3335,20 @@
 
           if (imageMode) {
             var wrapClass = 'ev-photo-step' + (insem ? ' insem' : ' ask');
-            var header = '<div class="ev-photo-header">' +
-              '<div class="ev-photo-handle"></div>' +
-              '<div class="ev-photo-header-row">' +
-                '<div><p>' + titleText + '</p><p>Gauri · Desi</p></div>' +
-                '<span class="ev-photo-tag">CRITICAL</span>' +
+            var media = '<div class="ev-photo-media">' +
+              '<div class="ev-photo-crit">' +
+                '<div class="ev-crit-row"><span class="ev-crit-dot">!</span>CRITICAL</div>' +
+                '<div class="ev-crit-time en"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>20 min ago</div>' +
               '</div>' +
             '</div>';
-            body.innerHTML = '<div class="' + wrapClass + '">' + header + '<div class="ev-photo-img"></div><div class="ev-seq-bottom">' + bottom + '</div></div>';
+            var meta = '<div class="ev-photo-metarow">' +
+              '<div><div class="ev-photo-name">Gauri</div><div class="ev-photo-sub">Desi Cow · 4 years</div></div>' +
+              '<span class="ev-photo-vd en">View details ›</span>' +
+            '</div>';
+            body.innerHTML = '<div class="' + wrapClass + '">' + media +
+              '<p class="ev-photo-title">' + titleText + '</p>' + meta +
+              '<div class="ev-photo-divider"></div>' +
+              '<div class="ev-seq-bottom">' + bottom + '</div></div>';
           } else {
             body.innerHTML = '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0; letter-spacing:-0.02em;">' + titleText + '</p>' +
               '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:2px 0 0;">Gauri · Desi</p>' +
