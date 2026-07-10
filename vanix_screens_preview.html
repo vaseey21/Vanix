@@ -1328,7 +1328,12 @@
               </div>
 
               <!-- 3b. Gestation: 3/6/9-month vet checks -> call vet for delivery -> delivery confirmed -->
-              <div class="ev-card" id="ev-gestation" style="background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
+              <div class="ev-card ev-photo-card p1" id="ev-gestation" style="position:relative; background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
+                <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>ACTION</span>
+                <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>3h ago</span>
+                <p class="en ev-anchor-bottom">Vet check due</p>
+                <p class="en ev-cow-breed"><span class="ev-cow-name">Lakshmi</span><span class="ev-cow-sub">Sahiwal Cow · 6 years</span></p>
+                <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-gestation','p1');">View details ›</button>
                 <div style="min-width:0;">
                   <p id="ev-gestation-title" class="ev-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">3-month vet check due — Lakshmi</p>
                   <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
