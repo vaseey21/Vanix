@@ -667,6 +667,45 @@
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-metarow .ev-photo-sub { color: rgba(255,255,255,0.82); }
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-metarow .ev-photo-vd { color: rgba(255,255,255,0.9); }
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-divider { display: none; }
+    /* View Details link visible (white text, drop the base font-size:0 + chevron dup) */
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-vd {
+      font-size: 14px !important; font-weight: 600; color: rgba(255,255,255,0.92) !important;
+    }
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-vd::after { content: none !important; }
+    /* the stage content ("slider details") gets a translucent panel so it reads
+       over the photo — 10% white in light mode, 10% black in dark mode */
+    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom {
+      background: rgba(255,255,255,0.1); border-radius: 16px; padding: 14px; margin-top: 14px;
+      -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+    }
+    #flow-root.dark.display-fullbleed .ev-photo-step .ev-seq-bottom,
+    #flow-root.display-fullbleed.dark .ev-photo-step .ev-seq-bottom { background: rgba(0,0,0,0.1); }
+    /* lighten the detail text (phase label, segment labels, endpoints) so it's
+       legible on the photo; keep the phase-colour label as authored */
+    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom span,
+    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom p:not(.ev-phase-label) { color: rgba(255,255,255,0.88) !important; }
+    /* outline/secondary buttons (No / Not pregnant / Remind me later / Still
+       milking / Cancel) are transparent-on-dark → invisible. Make them a
+       translucent white pill with white text so they read on the photo. */
+    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom button[style*="transparent"] {
+      background: rgba(255,255,255,0.14) !important; border-color: rgba(255,255,255,0.55) !important; color: #fff !important;
+    }
+
+    /* ── blurred-photo background for the plain flow pages (Select insemination
+       type / Select vet / Log / Call vet) — the relevant photo sits behind at
+       50% opacity + blur so the form text reads on top. ── */
+    .ev-flow-photo { position: relative; z-index: 0; }
+    .ev-flow-photo::before {
+      content: ""; position: absolute; inset: -20px; z-index: -1;
+      background-size: cover; background-position: center;
+      filter: blur(8px); opacity: 0.5;
+    }
+    .ev-flow-photo.insem::before { background-image: url('assets/images/insemination_photo.jpg'); }
+    .ev-flow-photo.callvet::before { background-image: url('assets/images/vetvisit_photo.jpg'); }
+    .ev-flow-photo.delivery::before { background-image: url('assets/images/delivery_photo.jpg'); }
+    /* two-column field row for the log form */
+    .ev-field-row { display: flex; gap: 10px; }
+    .ev-field-row > * { flex: 1 1 0; min-width: 0; }
 
     /* filter sheet — option rows (tinted, never white) + category rail */
     .s7-chip { display:block; width:100%; text-align:start; min-height:44px; padding:0 14px; margin-bottom:8px; border-radius:12px; border:1px solid var(--border); background:var(--bgwarm); color:var(--text1); font-size:13px; font-weight:400; font-family:var(--font-hi); }
