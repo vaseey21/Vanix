@@ -4042,8 +4042,7 @@
         function renderInsemDetails() {
           var t = heatInsemType;
           body.innerHTML = '<div class="ev-flow-photo insem">' +
-            insemBack('ev-seq-insem-back') +
-            '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Log · Insemination</p>' +
+            flowTitleRow('ev-seq-insem-back', 'Log · Insemination') +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">' + t.label + ' · Gauri · Vet: ' + heatVetSel + '</p>' +
             insemFieldsPaired(t.fields) +
             '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">Date</label>' +
