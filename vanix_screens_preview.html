@@ -2822,6 +2822,67 @@
         });
       });
 
+      // ── Quick filters (type / criticality / category) ──
+      (function() {
+        // Per-card metadata for the visible photo cards; criticality is read from
+        // the p0/p1 class (critical / medium), everything else counts as low.
+        var CARD_META = {
+          'ev-fever':          { cat:'Fever',          type:'Health' },
+          'ev-heat':           { cat:'Heat',           type:'Breeding' },
+          'ev-preg':           { cat:'Pregnancy',      type:'Breeding' },
+          'ev-gestation':      { cat:'Gestation',      type:'Breeding' },
+          'ev-milk-notif':     { cat:'Milking',        type:'Lactation' },
+          'ev-lactation-check':{ cat:'Lactation',      type:'Lactation' },
+          'ev-abort':          { cat:'Pregnancy loss', type:'Health' },
+          'ev-freshcow':       { cat:'Fresh cow',      type:'Health' }
+        };
+        var DEMO_HIDDEN = ['ev-milk-notif', 'ev-lactation-check'];
+        var evFilter = { type:'all', crit:'all', cat:'all' };
+        function critOf(card) {
+          return card.classList.contains('p0') ? 'critical'
+               : card.classList.contains('p1') ? 'medium' : 'low';
+        }
+        function applyEvFilters() {
+          document.querySelectorAll('#ev-sec-action .ev-photo-card').forEach(function(card) {
+            if (DEMO_HIDDEN.indexOf(card.id) >= 0) return; // demo-triggered, leave as-is
+            var meta = CARD_META[card.id] || {};
+            var ok = (evFilter.type === 'all' || evFilter.type === meta.type)
+                  && (evFilter.crit === 'all' || evFilter.crit === critOf(card))
+                  && (evFilter.cat  === 'all' || evFilter.cat  === meta.cat);
+            card.style.display = ok ? '' : 'none';
+          });
+        }
+        document.querySelectorAll('.ev-qf').forEach(function(qf) {
+          var key = qf.getAttribute('data-filter');
+          var btn = qf.querySelector('.ev-qf-btn');
+          var label = qf.querySelector('.ev-qf-label');
+          var defLabel = label.textContent;
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var wasOpen = qf.classList.contains('open');
+            document.querySelectorAll('.ev-qf').forEach(function(o) { o.classList.remove('open'); });
+            if (!wasOpen) qf.classList.add('open');
+          });
+          qf.querySelectorAll('.ev-qf-opt').forEach(function(opt) {
+            opt.addEventListener('click', function(e) {
+              e.stopPropagation();
+              qf.querySelectorAll('.ev-qf-opt').forEach(function(o) { o.classList.remove('on'); });
+              opt.classList.add('on');
+              var val = opt.getAttribute('data-val');
+              evFilter[key] = val;
+              if (val === 'all') { label.textContent = defLabel; qf.classList.remove('active'); }
+              else { label.textContent = opt.textContent; qf.classList.add('active'); }
+              qf.classList.remove('open');
+              applyEvFilters();
+            });
+          });
+        });
+        // tapping elsewhere closes any open menu
+        document.addEventListener('click', function() {
+          document.querySelectorAll('.ev-qf').forEach(function(o) { o.classList.remove('open'); });
+        });
+      })();
+
 
       // Onboarded vets — contacting a vet is now a pick, not a manual email entry.
       var ONBOARDED_VETS = ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'];
