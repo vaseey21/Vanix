@@ -3354,21 +3354,57 @@
           if (heatFormStage === 'ask') {
             document.getElementById('ev-seq-heat-no').addEventListener('click', function() { interrupt('Cycle interrupted — heat not confirmed. Closing walkthrough.'); });
             document.getElementById('ev-seq-heat-yes').addEventListener('click', function() { heatFormStage = 'timer'; paintHeat(); });
-          } else if (heatFormStage === 'timer') {
-            document.getElementById('ev-seq-start-insem').addEventListener('click', function() { heatFormStage = 'type'; paintHeat(); });
-          } else { // type
-            document.querySelectorAll('.ev-seq-itype').forEach(function(btn) {
-              btn.addEventListener('click', function() { openInsemDetails(btn.getAttribute('data-key')); });
-            });
+          } else { // timer
+            document.getElementById('ev-seq-start-insem').addEventListener('click', startInsemFlow);
           }
         }
 
-        function openInsemDetails(key) {
-          // Leaving the live-clock stages — stop the ticker so it doesn't wipe
-          // the form, and open the per-type details page (no photo, back button).
+        // Shared back-button markup for the plain (no-photo) insemination pages.
+        function insemBack(id) {
+          return '<button id="' + id + '" style="display:inline-flex; align-items:center; gap:3px; background:none; border:none; padding:0; margin:2px 0 12px; font-size:14px; font-weight:600; color:var(--text2); font-family:var(--font-hi); cursor:pointer;"><span class="en" style="font-size:19px; line-height:1;">‹</span> Back</button>';
+        }
+
+        function startInsemFlow() {
+          // Leaving the live-clock photo card — stop the ticker and open the
+          // plain "Select insemination type" page (no photo, no timer).
           if (heatTicker) { clearInterval(heatTicker); heatTicker = null; }
-          heatInsemType = INSEM_TYPES.filter(function(t) { return t.key === key; })[0];
-          renderInsemDetails();
+          heatInsemType = null;
+          renderInsemTypeSelect();
+        }
+
+        function renderInsemTypeSelect() {
+          body.innerHTML =
+            insemBack('ev-seq-itype-back') +
+            '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Select insemination type</p>' +
+            '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0 0 4px;">Gauri · Desi</p>' +
+            INSEM_TYPES.map(function(t) {
+              return '<button class="ev-seq-itype" data-key="' + t.key + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:52px; padding:0 14px; margin-top:10px; border-radius:12px; border:1px solid var(--border); background:var(--bgcard); font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
+                '<span>' + t.label + '</span><span class="en" style="color:var(--greenink); font-size:18px; line-height:1;">›</span></button>';
+            }).join('');
+          document.getElementById('ev-seq-itype-back').addEventListener('click', function() {
+            heatFormStage = 'timer'; paintHeat(); startHeatTicker();
+          });
+          document.querySelectorAll('.ev-seq-itype').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+              heatInsemType = INSEM_TYPES.filter(function(t) { return t.key === btn.getAttribute('data-key'); })[0];
+              renderInsemVetSelect();
+            });
+          });
+        }
+
+        function renderInsemVetSelect() {
+          body.innerHTML =
+            insemBack('ev-seq-vet-back') +
+            '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Select vet</p>' +
+            '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0 0 4px;">' + heatInsemType.label + ' · Gauri</p>' +
+            ONBOARDED_VETS.map(function(name) {
+              return '<button class="ev-seq-vetrow" data-vet="' + name + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:52px; padding:0 14px; margin-top:10px; border-radius:12px; border:1px solid var(--border); background:var(--bgcard); font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
+                '<span>' + name + '</span><span class="en" style="color:var(--greenink); font-size:18px; line-height:1;">›</span></button>';
+            }).join('');
+          document.getElementById('ev-seq-vet-back').addEventListener('click', renderInsemTypeSelect);
+          document.querySelectorAll('.ev-seq-vetrow').forEach(function(row) {
+            row.addEventListener('click', function() { heatVetSel = row.getAttribute('data-vet'); renderInsemDetails(); });
+          });
         }
 
         function insemField(f) {
