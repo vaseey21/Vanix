@@ -623,28 +623,38 @@
       min-height: 496px;
       border: none;
       border-left: none;
-      border-radius: 0;
+      border-radius: 22px 22px 0 0;
       background: #0A2318;
       padding: 20px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+      /* upward "negative" shadow so the card reads as floating above the sheet */
+      box-shadow: 0 -16px 36px rgba(0,0,0,0.55);
     }
     /* photo fills the whole step (media block goes absolute) */
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-media {
       position: absolute; inset: 0; z-index: 0;
       height: auto; border-radius: 0;
     }
-    /* dark scrim */
+    /* light top vignette only — the heavy black is carried by .ev-photo-foot,
+       which begins exactly at the title (see below). */
     #flow-root.display-fullbleed .ev-photo-step::before {
       content: ""; position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 34%, rgba(0,0,0,0.15) 56%, rgba(0,0,0,0.9) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 28%);
     }
     /* drop the corner triangle in fullbleed (roundel replaces it) */
     #flow-root.display-fullbleed .ev-photo-step::after { display: none; }
     /* everything except the photo sits above the scrim */
     #flow-root.display-fullbleed .ev-photo-step > *:not(.ev-photo-media) { position: relative; z-index: 2; }
+    /* the black readability wash starts where the title starts and deepens to
+       the bottom — the foot wraps title + name/breed + CTAs and bleeds to the
+       card edges (card padding is 20px). */
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-foot {
+      margin: 0 -20px -20px; padding: 44px 20px 20px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.72) 38%, rgba(0,0,0,0.92) 100%);
+    }
     /* Row 1 — title (left) white + time (right, centred with title) white */
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-titlerow { margin-top: 0; }
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-title { color: #fff; }
