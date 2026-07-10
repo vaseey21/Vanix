@@ -346,58 +346,46 @@
     #flow-root.display-image #ev-heat #ev-heat-vet,
     #flow-root.display-image #ev-heat #ev-heat-offwin,
     #flow-root.display-image #ev-heat #ev-heat-form { display: none !important; }
-    /* Walkthrough sheet's Heat step (image mode only) — solid severity-colour
-       header band (title/breed/tag), full-bleed photo strip, dark bottom band
-       for the question/CTA — three stacked bands, no floating white sliver. */
-    #ev-seq-body:has(.ev-photo-step) { padding: 0 !important; }
-    #ev-seq-sheet:has(.ev-photo-step) > div:first-child { display: none !important; }
+    /* Walkthrough / alert Heat card (image mode) — a white card with the photo
+       on top (rounded, contained), a red question title below, a Gauri /
+       breed·age + View-details row, a divider, then the stage content
+       (question buttons / timer / type). Red left accent = criticality. */
     .ev-photo-step {
       position: relative;
-      margin: 0;
       box-sizing: border-box;
-      border-radius: 24px 24px 0 0;
-      border: 3px solid var(--danger);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 260px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      border-left: 6px solid var(--danger);
+      background: var(--bgcard);
+      padding: 14px 16px 16px;
     }
-    .ev-photo-header { background: var(--danger); padding: 8px 22px 11px; flex-shrink: 0; }
-    .ev-photo-handle { width: 36px; height: 4px; background: rgba(255,255,255,0.45); border-radius: 2px; margin: 0 auto 8px; }
-    .ev-photo-header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-    .ev-photo-header p:first-child { font-size: 22px; font-weight: 800; color: #fff; margin: 0; letter-spacing: -0.02em; }
-    .ev-photo-header p:nth-child(2) { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.85); margin: 2px 0 0; }
-    .ev-photo-tag { flex-shrink: 0; background: #fff; color: var(--danger); font-size: 11px; font-weight: 800; letter-spacing: 0.03em; padding: 6px 14px; border-radius: 20px; margin-top: 2px; }
-    .ev-photo-img { flex-shrink: 0; height: 220px; background-size: cover; background-position: center 15%; background-image: url('assets/images/heat_photo.jpg'); }
-    /* Insemination stages of the walkthrough heat step swap to the
-       vet+syringe photo (matching the events-page Insemination Window). */
-    .ev-photo-step.insem .ev-photo-img {
+    .ev-photo-media {
+      position: relative;
+      height: 200px;
+      border-radius: 14px;
+      background-size: cover; background-position: center 15%;
+      background-image: url('assets/images/heat_photo.jpg');
+    }
+    .ev-photo-step.insem .ev-photo-media {
       background-image: url('assets/images/insemination_photo.jpg');
       background-position: center 25%;
     }
-    .ev-photo-step .ev-seq-bottom { background: #171717; padding: 18px 22px 22px; flex: 1; display: flex; flex-direction: column; }
-    /* Heat-question stage only: the photo fills the whole area below the
-       header and the question/CTA float on a frosted blur over its bottom. */
-    .ev-photo-step.ask { min-height: 380px; }
-    .ev-photo-step.ask .ev-photo-img { flex: 1; height: auto; min-height: 200px; }
-    .ev-photo-step.ask .ev-seq-bottom {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      padding-top: 40px;
-      background: linear-gradient(to bottom, rgba(20,20,20,0) 0%, rgba(20,20,20,0.28) 42%, rgba(20,20,20,0.62) 100%);
-      -webkit-backdrop-filter: blur(16px);
-      backdrop-filter: blur(16px);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 55%);
-      mask-image: linear-gradient(to bottom, transparent 0%, black 55%);
-      flex: none;
+    /* CRITICAL + time-ago pill overlapping the photo's top-right */
+    .ev-photo-crit {
+      position: absolute; top: 10px; right: 10px;
+      background: var(--bgcard); border-radius: 12px; padding: 7px 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
-    .ev-photo-step .ev-seq-bottom p:not(.ev-phase-label) { color: #fff !important; }
-    .ev-photo-step.ask .ev-seq-bottom p:not(.ev-phase-label) { text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
-    .ev-photo-step button[id$="-no"], .ev-photo-step button[id$="-offwin-cancel"] {
-      background: rgba(255,255,255,0.16) !important;
-      border-color: rgba(255,255,255,0.6) !important;
-      color: #fff !important;
-    }
+    .ev-photo-crit .ev-crit-row { display: flex; align-items: center; gap: 6px; color: var(--danger); font-size: 13px; font-weight: 800; letter-spacing: 0.04em; }
+    .ev-photo-crit .ev-crit-dot { width: 18px; height: 18px; border-radius: 50%; background: var(--danger); color: #fff; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+    .ev-photo-crit .ev-crit-time { display: flex; align-items: center; gap: 5px; color: var(--text2); font-size: 13px; font-weight: 500; margin-top: 4px; }
+    .ev-photo-title { color: var(--danger); font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 14px 0 0; }
+    .ev-photo-metarow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
+    .ev-photo-metarow .ev-photo-name { font-size: 17px; font-weight: 700; color: var(--text1); }
+    .ev-photo-metarow .ev-photo-sub { font-size: 14px; font-weight: 500; color: var(--text2); margin-top: 2px; }
+    .ev-photo-metarow .ev-photo-vd { flex-shrink: 0; font-size: 15px; font-weight: 700; color: var(--greenink); }
+    .ev-photo-divider { border-top: 1px solid var(--border); margin: 14px 0 0; }
+    .ev-photo-step .ev-seq-bottom { margin-top: 14px; }
 
     /* filter sheet — option rows (tinted, never white) + category rail */
     .s7-chip { display:block; width:100%; text-align:start; min-height:44px; padding:0 14px; margin-bottom:8px; border-radius:12px; border:1px solid var(--border); background:var(--bgwarm); color:var(--text1); font-size:13px; font-weight:400; font-family:var(--font-hi); }
