@@ -1814,11 +1814,13 @@
       var dmBtn = document.getElementById('s1-displaymode');
       function applyDisplayMode() {
         var img = window.VANIX_DISPLAY_MODE === 'image';
+        // Photo-card design lives in the NON-image (Text) position now, so the
+        // `.display-image` class is applied when NOT in image mode.
         var knob = document.getElementById('s1-dm-knob');
         knob.style.transform = img ? 'translateX(24px)' : 'translateX(0)';
         document.getElementById('s1-dm-text').style.display = img ? 'none' : 'block';
         document.getElementById('s1-dm-image').style.display = img ? 'block' : 'none';
-        document.getElementById('flow-root').classList.toggle('display-image', img);
+        document.getElementById('flow-root').classList.toggle('display-image', !img);
       }
       applyDisplayMode();
       dmBtn.addEventListener('click', function() {
