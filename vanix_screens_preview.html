@@ -2836,7 +2836,7 @@
           'ev-abort':          { cat:'Pregnancy loss', type:'Health' },
           'ev-freshcow':       { cat:'Fresh cow',      type:'Health' }
         };
-        var evFilter = { type:'all', crit:'all', cat:'all' };
+        var evFilter = { crit:'all', cat:'all' };
         // Baseline visibility is captured lazily (on first filter use) — by then
         // any load-time card reveals have run, so cards hidden until triggered
         // (e.g. the milking notification) stay hidden and never leak into a filter.
