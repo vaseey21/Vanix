@@ -554,28 +554,35 @@
       min-height: 496px;
       border: none;
       border-left: none;
-      border-radius: 0;
+      border-radius: 22px 22px 0 0;
       background: #0A2318;
       padding: 20px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+      box-shadow: 0 -16px 36px rgba(0,0,0,0.55);
     }
     /* photo fills the whole step (media block goes absolute) */
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-media {
       position: absolute; inset: 0; z-index: 0;
       height: auto; border-radius: 0;
     }
-    /* dark scrim */
+    #flow-root.display-fullbleed .ev-photo-step.milking .ev-photo-media { background-position: center 62%; }
+    /* light top vignette only — the heavy black is carried by .ev-photo-foot. */
     #flow-root.display-fullbleed .ev-photo-step::before {
       content: ""; position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 34%, rgba(0,0,0,0.15) 56%, rgba(0,0,0,0.9) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 28%);
     }
     /* drop the corner triangle in fullbleed (roundel replaces it) */
     #flow-root.display-fullbleed .ev-photo-step::after { display: none; }
     /* everything except the photo sits above the scrim */
     #flow-root.display-fullbleed .ev-photo-step > *:not(.ev-photo-media) { position: relative; z-index: 2; }
+    /* black readability wash starts at the title and deepens to the bottom */
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-foot {
+      margin: 0 -20px -20px; padding: 44px 20px 20px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.72) 38%, rgba(0,0,0,0.92) 100%);
+    }
     /* Row 1 — title (left) white + time (right, centred with title) white */
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-titlerow { margin-top: 0; }
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-title { color: #fff; }
@@ -594,16 +601,39 @@
       background: rgba(255,255,255,0.14) !important; border-color: rgba(255,255,255,0.55) !important; color: #fff !important;
     }
 
-    /* ── blurred-photo background for the plain flow pages ── */
-    .ev-flow-photo { position: relative; z-index: 0; }
+    /* ── darkened, blurred-photo background for the plain flow pages ── */
+    #ev-seq-body:has(.ev-flow-photo) { padding: 0 !important; }
+    #ev-seq-sheet:has(.ev-flow-photo) > div:first-child { display: none !important; }
+    .ev-flow-photo {
+      position: relative; z-index: 0; overflow: hidden;
+      padding: 18px; background: #0A2318; border-radius: 24px 24px 0 0;
+    }
     .ev-flow-photo::before {
-      content: ""; position: absolute; inset: -20px; z-index: -1;
+      content: ""; position: absolute; inset: 0; z-index: -2;
       background-size: cover; background-position: center;
-      filter: blur(8px); opacity: 0.5;
+      filter: blur(6px); opacity: 0.4;
+    }
+    .ev-flow-photo::after {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background: rgba(0,0,0,0.5);
     }
     .ev-flow-photo.insem::before { background-image: url('assets/images/insemination_photo.jpg'); }
     .ev-flow-photo.callvet::before { background-image: url('assets/images/vetvisit_photo.jpg'); }
     .ev-flow-photo.delivery::before { background-image: url('assets/images/delivery_photo.jpg'); }
+    .ev-flow-photo p, .ev-flow-photo label { color: #fff !important; }
+    .ev-flow-photo button[id$="-back"] { color: #fff !important; }
+    .ev-flow-photo .ev-seq-itype,
+    .ev-flow-photo .ev-seq-vetrow,
+    .ev-flow-photo .ev-vet-row,
+    .ev-flow-photo input,
+    .ev-flow-photo textarea,
+    .ev-flow-photo [id*="attach"] {
+      background: rgba(255,255,255,0.2) !important;
+      border: 1px solid rgba(255,255,255,0.6) !important;
+      color: #fff !important;
+    }
+    .ev-flow-photo input::placeholder, .ev-flow-photo textarea::placeholder { color: rgba(255,255,255,0.7); }
+    .ev-flow-photo .ev-seq-itype .en, .ev-flow-photo .ev-seq-vetrow .en { color: #fff !important; }
     .ev-field-row { display: flex; gap: 10px; }
     .ev-field-row > * { flex: 1 1 0; min-width: 0; }
 
@@ -1781,7 +1811,7 @@
           </div>
 
           <!-- FULL-CYCLE WALKTHROUGH — self-contained demo, does not touch live evOpen/badges -->
-          <div id="ev-seq-scrim" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:20;"></div>
+          <div id="ev-seq-scrim" style="position:absolute; inset:0; background:rgba(0,0,0,0.7); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:20;"></div>
           <div id="ev-seq-sheet" style="position:absolute; left:0; right:0; bottom:0; max-height:78%; background:#FFFFFF; border-radius:24px 24px 0 0; padding:0; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:21; box-shadow:0 -8px 32px rgba(0,0,0,0.22); overflow-y:auto;">
             <div style="display:flex; justify-content:center; padding:8px 0 4px;"><div style="width:36px; height:4px; background:#E0E0E0; border-radius:2px;"></div></div>
             <div id="ev-seq-body" style="padding:0 20px 20px;"></div>
@@ -3609,9 +3639,11 @@
             var wrapClass = 'ev-photo-step' + (insem ? ' insem' : ' ask');
             body.innerHTML = '<div class="' + wrapClass + '">' +
               '<div class="ev-photo-media"></div>' +
-              '<div class="ev-photo-titlerow"><p class="ev-photo-title">' + titleText + '</p><span class="ev-photo-time en">20 min ago</span></div>' +
-              '<div class="ev-photo-metarow"><span class="ev-photo-namebreed">Gauri · Desi</span><span class="ev-photo-vd en">View Details ›</span></div>' +
-              '<div class="ev-seq-bottom">' + bottom + '</div></div>';
+              '<div class="ev-photo-foot">' +
+                '<div class="ev-photo-titlerow"><p class="ev-photo-title">' + titleText + '</p><span class="ev-photo-time en">20 min ago</span></div>' +
+                '<div class="ev-photo-metarow"><span class="ev-photo-namebreed">Gauri · Desi</span><span class="ev-photo-vd en">View Details ›</span></div>' +
+                '<div class="ev-seq-bottom">' + bottom + '</div>' +
+              '</div></div>';
           } else {
             body.innerHTML = '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0; letter-spacing:-0.02em;">' + titleText + '</p>' +
               '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:2px 0 0;">Gauri · Desi</p>' +
@@ -3639,9 +3671,11 @@
         function seqPhotoCard(photoMod, prio, title, name, breed, inner) {
           return '<div class="ev-photo-step ' + photoMod + ' ' + prio + '">' +
             '<div class="ev-photo-media"></div>' +
-            '<div class="ev-photo-titlerow"><p class="ev-photo-title">' + title + '</p><span class="ev-photo-time en">20 min ago</span></div>' +
-            '<div class="ev-photo-metarow"><span class="ev-photo-namebreed">' + name + ' · ' + breed + '</span><span class="ev-photo-vd en">View Details ›</span></div>' +
-            '<div class="ev-seq-bottom">' + inner + '</div>' +
+            '<div class="ev-photo-foot">' +
+              '<div class="ev-photo-titlerow"><p class="ev-photo-title">' + title + '</p><span class="ev-photo-time en">20 min ago</span></div>' +
+              '<div class="ev-photo-metarow"><span class="ev-photo-namebreed">' + name + ' · ' + breed + '</span><span class="ev-photo-vd en">View Details ›</span></div>' +
+              '<div class="ev-seq-bottom">' + inner + '</div>' +
+            '</div>' +
           '</div>';
         }
         function seqImageMode() { return true; }
@@ -3757,29 +3791,35 @@
         }
 
         function renderGestationStep() {
-          // 9-month checkpoint: call a vet for delivery -> was it successful? -> log it.
-          var inner = '<div id="ev-seq-gest-body"></div>';
+          // 9-month checkpoint. Call-vet is a follow-up card → blurred-photo flow
+          // page. Then "Was the delivery successful?" is still a question, so it
+          // uses the pregnant-photo alert card. Delivery log is a blurred flow page.
           if (seqImageMode()) {
-            body.innerHTML = seqPhotoCard('delivery', 'p1', 'Call vet for delivery', 'Gauri', 'Desi', inner);
+            body.innerHTML = '<div class="ev-flow-photo callvet">' +
+              '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Call vet for delivery</p>' +
+              '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0 0 4px;">Gauri · Desi</p>' +
+              '<div id="ev-seq-gest-body"></div></div>';
           } else {
             body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">9-month check — call your vet for delivery</p>' +
-              '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — call a vet to be on hand for delivery.</p>' + inner;
+              '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — call a vet to be on hand for delivery.</p>' +
+              '<div id="ev-seq-gest-body"></div>';
           }
           var gestBody = document.getElementById('ev-seq-gest-body');
           gestBody.innerHTML = vetPickerHtml('seqgest');
           wireVetPicker('seqgest', function(vetName) {
-            gestBody.innerHTML =
-              '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">' + vetName + ' called. Was the delivery successful?</p>' +
-              '<div style="display:flex; gap:8px; margin-top:10px;">' +
-                '<button id="ev-seq-gest-fail" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No</button>' +
-                '<button id="ev-seq-gest-ok" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, successful</button>' +
+            var q = '<div style="display:flex; gap:8px;">' +
+                '<button id="ev-seq-gest-fail" style="flex:1; min-height:48px; background:transparent; border:1px solid var(--border); border-radius:14px; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">No</button>' +
+                '<button id="ev-seq-gest-ok" style="flex:1.3; min-height:48px; background:var(--greendeep); border:none; border-radius:14px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Yes, successful</button>' +
               '</div>';
+            if (seqImageMode()) {
+              body.innerHTML = seqPhotoCard('preg', 'p1', 'Was the delivery successful?', 'Gauri', 'Desi', q);
+            } else {
+              body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0 0 12px;">' + vetName + ' called. Was the delivery successful?</p>' + q;
+            }
             document.getElementById('ev-seq-gest-fail').addEventListener('click', function() {
               interrupt('Cycle interrupted — delivery unsuccessful. ' + vetName + ' has been notified for an urgent check.');
             });
             document.getElementById('ev-seq-gest-ok').addEventListener('click', function() {
-              // Delivery log — plain page, no photo (logs are classified, not
-              // photo-headed). Replaces the whole card body.
               body.innerHTML = '<div class="ev-flow-photo delivery">' +
                 '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Log · Delivery success</p>' +
                 '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">Gauri · Desi · Vet: ' + vetName + '</p>' +
