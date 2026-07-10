@@ -1476,6 +1476,42 @@
                 <button class="ev-tab" data-tab="rem" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Reminders</button>
               </div>
 
+              <!-- ── Quick filters (Swiggy-style dropdown chips) ── -->
+              <div id="ev-quickfilters">
+                <div class="ev-qf" data-filter="type">
+                  <button class="ev-qf-btn"><span class="ev-qf-label">Alert type</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <div class="ev-qf-menu">
+                    <button class="ev-qf-opt on" data-val="all">All types</button>
+                    <button class="ev-qf-opt" data-val="Health">Health</button>
+                    <button class="ev-qf-opt" data-val="Breeding">Breeding</button>
+                    <button class="ev-qf-opt" data-val="Lactation">Lactation</button>
+                  </div>
+                </div>
+                <div class="ev-qf" data-filter="crit">
+                  <button class="ev-qf-btn"><span class="ev-qf-label">Criticality</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <div class="ev-qf-menu">
+                    <button class="ev-qf-opt on" data-val="all">All levels</button>
+                    <button class="ev-qf-opt" data-val="critical">Critical</button>
+                    <button class="ev-qf-opt" data-val="medium">Medium</button>
+                    <button class="ev-qf-opt" data-val="low">Low</button>
+                  </div>
+                </div>
+                <div class="ev-qf" data-filter="cat">
+                  <button class="ev-qf-btn"><span class="ev-qf-label">Category</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <div class="ev-qf-menu">
+                    <button class="ev-qf-opt on" data-val="all">All categories</button>
+                    <button class="ev-qf-opt" data-val="Fever">Fever</button>
+                    <button class="ev-qf-opt" data-val="Heat">Heat</button>
+                    <button class="ev-qf-opt" data-val="Pregnancy">Pregnancy</button>
+                    <button class="ev-qf-opt" data-val="Gestation">Gestation</button>
+                    <button class="ev-qf-opt" data-val="Milking">Milking</button>
+                    <button class="ev-qf-opt" data-val="Lactation">Lactation</button>
+                    <button class="ev-qf-opt" data-val="Pregnancy loss">Pregnancy loss</button>
+                    <button class="ev-qf-opt" data-val="Fresh cow">Fresh cow</button>
+                  </div>
+                </div>
+              </div>
+
               <div id="ev-sec-action">
               <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs action</p>
 
