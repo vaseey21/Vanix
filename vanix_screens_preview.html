@@ -3950,7 +3950,15 @@
 
         // Shared back-button markup for the plain (no-photo) insemination pages.
         function insemBack(id) {
-          return '<button id="' + id + '" style="display:inline-flex; align-items:center; gap:3px; background:none; border:none; padding:0; margin:2px 0 12px; font-size:14px; font-weight:600; color:var(--text2); font-family:var(--font-hi); cursor:pointer;"><span class="en" style="font-size:19px; line-height:1;">‹</span> Back</button>';
+          // icon-only chevron; sits inline next to the page title (no "Back" text)
+          return '<button id="' + id + '" class="en" style="flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; background:none; border:none; padding:0; margin:0; font-size:26px; line-height:1; color:var(--text2); font-family:var(--font-hi); cursor:pointer;">‹</button>';
+        }
+        // page title row: icon-only back chevron next to the title
+        function flowTitleRow(backId, title) {
+          return '<div style="display:flex; align-items:center; gap:8px; margin:0 0 2px;">' +
+            insemBack(backId) +
+            '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0; letter-spacing:-0.02em;">' + title + '</p>' +
+          '</div>';
         }
 
         // Wrap a walkthrough step's content in the full-width photo card
