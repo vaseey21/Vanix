@@ -3832,14 +3832,14 @@
         }
 
         function renderInsemVetSelect() {
-          body.innerHTML =
+          body.innerHTML = '<div class="ev-flow-photo insem">' +
             insemBack('ev-seq-vet-back') +
             '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Select vet</p>' +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0 0 4px;">' + heatInsemType.label + ' · Gauri</p>' +
             ONBOARDED_VETS.map(function(name) {
               return '<button class="ev-seq-vetrow" data-vet="' + name + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:52px; padding:0 14px; margin-top:10px; border-radius:12px; border:1px solid var(--border); background:var(--bgcard); font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
                 '<span>' + name + '</span><span class="en" style="color:var(--greenink); font-size:18px; line-height:1;">›</span></button>';
-            }).join('');
+            }).join('') + '</div>';
           document.getElementById('ev-seq-vet-back').addEventListener('click', renderInsemTypeSelect);
           document.querySelectorAll('.ev-seq-vetrow').forEach(function(row) {
             row.addEventListener('click', function() { heatVetSel = row.getAttribute('data-vet'); renderInsemDetails(); });
