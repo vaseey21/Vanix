@@ -409,24 +409,15 @@
     .ev-photo-step.lactation .ev-photo-media { background-image: url('assets/images/milking_ended_photo.jpg'); }
     .ev-photo-step.p1 { border-left-color: var(--warning); }
     .ev-photo-step.p1 .ev-photo-title { color: #8A5A00; }
-    .ev-photo-step.p1 .ev-photo-crit .ev-crit-row { color: #8A5A00; }
-    .ev-photo-step.p1 .ev-photo-crit .ev-crit-dot { background: var(--warning); }
-    /* time-ago pill (top-left, so it clears the severity corner triangle) */
-    .ev-photo-crit {
-      position: absolute; top: 10px; left: 10px;
-      background: var(--bgcard); border-radius: 12px; padding: 6px 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-    }
-    /* severity is now the corner triangle — the arrow row is dropped */
-    .ev-photo-crit .ev-crit-row { display: none; }
-    .ev-photo-crit .ev-crit-time { display: flex; align-items: center; gap: 5px; color: var(--text2); font-size: 13px; font-weight: 500; }
-    .ev-photo-title { color: var(--danger); font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 14px 0 0; }
+    /* Row 1: title (left) + time-ago (right, centred with the title) */
+    .ev-photo-titlerow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
+    .ev-photo-title { color: var(--danger); font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+    .ev-photo-time { flex-shrink: 0; color: var(--text2); font-size: 13px; font-weight: 500; }
+    /* Row 2: name · breed (left) + View Details (right) */
     .ev-photo-metarow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
-    .ev-photo-metarow .ev-photo-name { font-size: 17px; font-weight: 700; color: var(--text1); }
-    .ev-photo-metarow .ev-photo-sub { font-size: 14px; font-weight: 500; color: var(--text2); margin-top: 2px; }
-    .ev-photo-metarow .ev-photo-vd { flex-shrink: 0; font-size: 0; color: var(--text2); }
-    .ev-photo-metarow .ev-photo-vd::after { content: '›'; font-size: 26px; line-height: 1; }
-    .ev-photo-divider { border-top: 1px solid var(--border); margin: 14px 0 0; }
+    .ev-photo-namebreed { font-size: 16px; font-weight: 700; color: var(--text1); }
+    .ev-photo-metarow .ev-photo-vd { flex-shrink: 0; font-size: 14px; font-weight: 600; color: var(--greenink); }
+    /* Row 3: CTAs */
     .ev-photo-step .ev-seq-bottom { margin-top: 14px; }
 
     /* ═══ Full-bleed dark photo cards (IMAGE toggle) ═══
@@ -585,32 +576,18 @@
     #flow-root.display-fullbleed .ev-photo-step::after { display: none; }
     /* everything except the photo sits above the scrim */
     #flow-root.display-fullbleed .ev-photo-step > *:not(.ev-photo-media) { position: relative; z-index: 2; }
-    /* time pill → translucent, top-left */
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-crit {
-      position: absolute; top: 16px; left: 16px;
-      background: rgba(255,255,255,0.16); box-shadow: none; border: 1px solid rgba(255,255,255,0.3);
-    }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-crit .ev-crit-time { color: #fff; }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-crit .ev-crit-time svg { stroke: #fff; }
-    /* question title white, near the bottom */
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-title { color: #fff; margin: 0 0 8px; }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-metarow .ev-photo-name { color: #fff; }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-metarow .ev-photo-sub { color: rgba(255,255,255,0.82); }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-metarow .ev-photo-vd { color: rgba(255,255,255,0.9); }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-divider { display: none; }
-    /* View Details link visible (white text, drop the base font-size:0 + chevron dup) */
+    /* Row 1 — title (left) white + time (right, centred with title) white */
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-titlerow { margin-top: 0; }
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-title { color: #fff; }
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-time { color: rgba(255,255,255,0.85); }
+    /* Row 2 — name · breed (left) white + View Details (right) white */
+    #flow-root.display-fullbleed .ev-photo-step .ev-photo-namebreed { color: #fff; }
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-vd {
       font-size: 14px !important; font-weight: 600; color: rgba(255,255,255,0.92) !important;
     }
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-vd::after { content: none !important; }
-    /* the stage content ("slider details") gets a translucent panel so it reads
-       over the photo — 10% white in light mode, 10% black in dark mode */
-    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom {
-      background: rgba(255,255,255,0.1); border-radius: 16px; padding: 14px; margin-top: 14px;
-      -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
-    }
-    #flow-root.dark.display-fullbleed .ev-photo-step .ev-seq-bottom,
-    #flow-root.display-fullbleed.dark .ev-photo-step .ev-seq-bottom { background: rgba(0,0,0,0.1); }
+    /* Row 3 — CTAs sit directly on the scrim (no panel / white padding). */
+    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom { margin-top: 14px; }
     #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom span,
     #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom p:not(.ev-phase-label) { color: rgba(255,255,255,0.88) !important; }
     #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom button[style*="transparent"] {
@@ -3630,19 +3607,10 @@
 
           if (imageMode) {
             var wrapClass = 'ev-photo-step' + (insem ? ' insem' : ' ask');
-            var media = '<div class="ev-photo-media">' +
-              '<div class="ev-photo-crit">' +
-                '<div class="ev-crit-row"><span class="ev-crit-dot">!</span>CRITICAL</div>' +
-                '<div class="ev-crit-time en"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>20 min ago</div>' +
-              '</div>' +
-            '</div>';
-            var meta = '<div class="ev-photo-metarow">' +
-              '<div><div class="ev-photo-name">Gauri</div><div class="ev-photo-sub">Desi</div></div>' +
-              '<span class="ev-photo-vd en">View details ›</span>' +
-            '</div>';
-            body.innerHTML = '<div class="' + wrapClass + '">' + media +
-              '<p class="ev-photo-title">' + titleText + '</p>' + meta +
-              '<div class="ev-photo-divider"></div>' +
+            body.innerHTML = '<div class="' + wrapClass + '">' +
+              '<div class="ev-photo-media"></div>' +
+              '<div class="ev-photo-titlerow"><p class="ev-photo-title">' + titleText + '</p><span class="ev-photo-time en">20 min ago</span></div>' +
+              '<div class="ev-photo-metarow"><span class="ev-photo-namebreed">Gauri · Desi</span><span class="ev-photo-vd en">View Details ›</span></div>' +
               '<div class="ev-seq-bottom">' + bottom + '</div></div>';
           } else {
             body.innerHTML = '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0; letter-spacing:-0.02em;">' + titleText + '</p>' +
@@ -3669,17 +3637,10 @@
         // prio is 'p0' (red CRITICAL) or 'p1' (amber ACTION). Image mode only —
         // callers pass plain markup for text mode.
         function seqPhotoCard(photoMod, prio, title, name, breed, inner) {
-          var critText = prio === 'p0' ? 'CRITICAL' : 'ACTION';
           return '<div class="ev-photo-step ' + photoMod + ' ' + prio + '">' +
-            '<div class="ev-photo-media">' +
-              '<div class="ev-photo-crit">' +
-                '<div class="ev-crit-row"><span class="ev-crit-dot">!</span>' + critText + '</div>' +
-                '<div class="ev-crit-time en"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>20 min ago</div>' +
-              '</div>' +
-            '</div>' +
-            '<p class="ev-photo-title">' + title + '</p>' +
-            '<div class="ev-photo-metarow"><div><div class="ev-photo-name">' + name + '</div><div class="ev-photo-sub">' + breed + '</div></div><span class="ev-photo-vd en">View details ›</span></div>' +
-            '<div class="ev-photo-divider"></div>' +
+            '<div class="ev-photo-media"></div>' +
+            '<div class="ev-photo-titlerow"><p class="ev-photo-title">' + title + '</p><span class="ev-photo-time en">20 min ago</span></div>' +
+            '<div class="ev-photo-metarow"><span class="ev-photo-namebreed">' + name + ' · ' + breed + '</span><span class="ev-photo-vd en">View Details ›</span></div>' +
             '<div class="ev-seq-bottom">' + inner + '</div>' +
           '</div>';
         }
