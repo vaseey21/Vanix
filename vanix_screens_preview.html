@@ -678,17 +678,43 @@
     }
 
     /* ── blurred-photo background for the plain flow pages (Select insemination
-       type / Select vet / Log / Call vet) — the relevant photo sits behind at
-       50% opacity + blur so the form text reads on top. ── */
-    .ev-flow-photo { position: relative; z-index: 0; }
+       type / Select vet / Log / Call vet) — a darkened, blurred photo sits
+       behind so the WHITE form text/controls read clearly on top. ── */
+    #ev-seq-body:has(.ev-flow-photo) { padding: 0 !important; }
+    .ev-flow-photo {
+      position: relative; z-index: 0; overflow: hidden;
+      padding: 18px; background: #0A2318; border-radius: 22px 22px 0 0;
+    }
     .ev-flow-photo::before {
-      content: ""; position: absolute; inset: -20px; z-index: -1;
+      content: ""; position: absolute; inset: 0; z-index: -2;
       background-size: cover; background-position: center;
-      filter: blur(8px); opacity: 0.5;
+      filter: blur(6px); opacity: 0.4;
+    }
+    /* dark wash over the blurred photo → text in front is legible */
+    .ev-flow-photo::after {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background: rgba(0,0,0,0.5);
     }
     .ev-flow-photo.insem::before { background-image: url('assets/images/insemination_photo.jpg'); }
     .ev-flow-photo.callvet::before { background-image: url('assets/images/vetvisit_photo.jpg'); }
     .ev-flow-photo.delivery::before { background-image: url('assets/images/delivery_photo.jpg'); }
+    /* white text for headings/labels/back on the dark blurred pages */
+    .ev-flow-photo p, .ev-flow-photo label { color: #fff !important; }
+    .ev-flow-photo button[id$="-back"] { color: #fff !important; }
+    /* selection rows, inputs, textareas and the attachment button all use the
+       same treatment: white border + 20% white fill + white text */
+    .ev-flow-photo .ev-seq-itype,
+    .ev-flow-photo .ev-seq-vetrow,
+    .ev-flow-photo .ev-vet-row,
+    .ev-flow-photo input,
+    .ev-flow-photo textarea,
+    .ev-flow-photo [id*="attach"] {
+      background: rgba(255,255,255,0.2) !important;
+      border: 1px solid rgba(255,255,255,0.6) !important;
+      color: #fff !important;
+    }
+    .ev-flow-photo input::placeholder, .ev-flow-photo textarea::placeholder { color: rgba(255,255,255,0.7); }
+    .ev-flow-photo .ev-seq-itype .en, .ev-flow-photo .ev-seq-vetrow .en { color: #fff !important; }
     /* two-column field row for the log form */
     .ev-field-row { display: flex; gap: 10px; }
     .ev-field-row > * { flex: 1 1 0; min-width: 0; }
