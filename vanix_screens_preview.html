@@ -638,6 +638,9 @@
       position: absolute; inset: 0; z-index: 0;
       height: auto; border-radius: 0;
     }
+    /* milking photo: pull the cow (mid-frame) up into the visible (un-scrimmed)
+       area rather than framing the barn ceiling */
+    #flow-root.display-fullbleed .ev-photo-step.milking .ev-photo-media { background-position: center 62%; }
     /* light top vignette only — the heavy black is carried by .ev-photo-foot,
        which begins exactly at the title (see below). */
     #flow-root.display-fullbleed .ev-photo-step::before {
