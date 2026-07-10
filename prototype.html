@@ -3181,7 +3181,7 @@
         document.getElementById('ev-detail-back').addEventListener('click', window.closeCardDetail);
 
         function fsBuildCards() {
-          var imageMode = window.VANIX_DISPLAY_MODE === 'image';
+          var imageMode = window.VANIX_DISPLAY_MODE !== 'image';
           fsStrip.innerHTML = FS_ALERTS.map(function(a, i) {
             if (imageMode) {
               // Full-bleed real photo (only Gauri has a dedicated shot today —
@@ -3376,7 +3376,7 @@
 
         function paintHeat() {
           var h = (Date.now() - heatStartedAt) / 1000 * SIM_HOURS_PER_SEC;
-          var imageMode = window.VANIX_DISPLAY_MODE === 'image';
+          var imageMode = window.VANIX_DISPLAY_MODE !== 'image';
           var insem = (heatFormStage !== 'ask');
           // Red/orange/green phase colour-coding on the (now white) card.
           var label, color;
