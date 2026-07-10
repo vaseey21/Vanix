@@ -330,21 +330,24 @@
       font-size: 0 !important; color: var(--text2) !important;
     }
     #flow-root.display-image .ev-photo-card .ev-photo-viewdetails::after { content: '›'; font-size: 30px; font-weight: 400; line-height: 1; }
-    /* CTAs — row 3, full width */
+    /* CTAs — bottom, full width */
     #flow-root.display-image .ev-photo-card .ev-body {
-      grid-column: 1 / -1; grid-row: 3; margin: 16px 0 0; padding-top: 0; border-top: none;
+      grid-column: 1 / -1; grid-row: 4; margin: 16px 0 0; padding-top: 0; border-top: none;
     }
     #flow-root.display-image .ev-photo-card .ev-body > div,
     #flow-root.display-image .ev-photo-card .ev-body > button { margin-top: 0 !important; gap: 12px !important; }
     #flow-root.display-image .ev-photo-card .ev-body button {
       min-height: 52px !important; font-size: 16px !important; font-weight: 700 !important; border-radius: 14px !important;
+      flex: 1 1 0 !important; /* Yes / No equal width */
     }
-    /* No = outline dark on white; Yes/primary = greenDeep CTA */
+    /* No = outline dark on white; every primary CTA uses the darker green */
     #flow-root.display-image .ev-photo-card .ev-no {
       background: var(--bgcard) !important; border: 1px solid var(--border) !important; color: var(--text1) !important;
     }
     #flow-root.display-image .ev-photo-card .ev-yes,
-    #flow-root.display-image .ev-photo-card .ev-ack { background: var(--greendeep) !important; color: #fff !important; }
+    #flow-root.display-image .ev-photo-card .ev-ack,
+    #flow-root.display-image .ev-photo-card #ev-milk-add,
+    #flow-root.display-image .ev-photo-card #ev-lact-resting { background: var(--greenink) !important; color: #fff !important; }
     /* buttons: no icons, plain "Yes" / "No" (injected, replacing longer labels
        like "Yes, in heat" / "Yes, notify vet" on the confirm cards) */
     #flow-root.display-image .ev-photo-card .ev-no svg, #flow-root.display-image .ev-photo-card .ev-yes svg { display: none !important; }
