@@ -302,10 +302,11 @@
     }
     #flow-root.display-image .ev-photo-card.p1 .ev-crit-label { border-right-color: var(--warning); }
     #flow-root.display-image .ev-photo-card .ev-crit-label .ev-crit-dot { display: none !important; }
+    /* time-ago now sits under the breed (row 3, middle column) */
     #flow-root.display-image .ev-photo-card .ev-timeago {
-      display: inline-flex !important; align-items: center; gap: 5px;
-      position: absolute; top: 42px; right: 16px;
-      color: var(--text2); font-size: 14px; font-weight: 500;
+      display: inline-flex !important; align-items: center; gap: 4px;
+      grid-column: 2; grid-row: 3; align-self: start; margin-top: 2px;
+      color: var(--text2); font-size: 13px; font-weight: 500;
     }
     /* question title — row 1, full width, clears the top-right block */
     #flow-root.display-image .ev-photo-card .ev-cow-breed, #flow-root.display-image .ev-photo-card .ev-question-big { display: block; }
