@@ -3535,9 +3535,7 @@
             '<textarea rows="3" placeholder="Add notes (optional)" style="width:100%; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
             '<button id="ev-seq-insem-attach" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; margin-top:8px; background:transparent; border:1px dashed var(--border); border-radius:12px; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi);">📎 Add attachment</button>' +
             '<button id="ev-seq-insem-submit" style="width:100%; min-height:52px; margin-top:14px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Submit</button>';
-          document.getElementById('ev-seq-insem-back').addEventListener('click', function() {
-            heatFormStage = 'type'; paintHeat(); startHeatTicker();
-          });
+          document.getElementById('ev-seq-insem-back').addEventListener('click', renderInsemVetSelect);
           var att = document.getElementById('ev-seq-insem-attach');
           att.addEventListener('click', function() { att.textContent = '✓ Attachment added'; att.style.borderStyle = 'solid'; att.style.color = 'var(--greendeep)'; });
           document.getElementById('ev-seq-insem-submit').addEventListener('click', renderInsemConfirmed);
