@@ -2878,14 +2878,30 @@
               qf.querySelectorAll('.ev-qf-opt').forEach(function(o) { o.classList.remove('on'); });
               opt.classList.add('on');
               var val = opt.getAttribute('data-val');
-              evFilter[key] = val;
               if (val === 'all') { label.textContent = defLabel; qf.classList.remove('active'); }
               else { label.textContent = opt.textContent; qf.classList.add('active'); }
               qf.classList.remove('open');
-              applyEvFilters();
+              if (key === 'type') {
+                // Type mirrors the section tabs (Needs action / Warnings / Reminder)
+                var tab = document.querySelector('.ev-tab[data-tab="' + val + '"]');
+                if (tab) tab.click();
+              } else {
+                evFilter[key] = val;
+                applyEvFilters();
+              }
             });
           });
         });
+        // "Unactioned" toggle — enable to show only open alerts (hide resolved history)
+        var unBtn = document.getElementById('ev-qf-unactioned');
+        if (unBtn) {
+          unBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var on = unBtn.classList.toggle('active');
+            var hist = document.getElementById('ev-sec-hist');
+            if (hist) hist.style.display = on ? 'none' : '';
+          });
+        }
         // tapping elsewhere closes any open menu
         document.addEventListener('click', function() {
           document.querySelectorAll('.ev-qf').forEach(function(o) { o.classList.remove('open'); });
