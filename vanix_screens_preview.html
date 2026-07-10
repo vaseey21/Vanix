@@ -1909,13 +1909,17 @@
       var dmBtn = document.getElementById('s1-displaymode');
       function applyDisplayMode() {
         var img = window.VANIX_DISPLAY_MODE === 'image';
+        // The polished photo-card design now lives in the NON-image (Text)
+        // toggle position, so the `.display-image` class (which drives it) is
+        // applied when NOT in image mode. Image mode is the fresh canvas.
+        var showPhoto = !img;
         var knob = document.getElementById('s1-dm-knob');
         knob.style.transform = img ? 'translateX(24px)' : 'translateX(0)';
         document.getElementById('s1-dm-text').style.display = img ? 'none' : 'block';
         document.getElementById('s1-dm-image').style.display = img ? 'block' : 'none';
-        document.getElementById('flow-root').classList.toggle('display-image', img);
+        document.getElementById('flow-root').classList.toggle('display-image', showPhoto);
         var er = document.getElementById('ev-flow-root');
-        if (er) er.classList.toggle('display-image', img);
+        if (er) er.classList.toggle('display-image', showPhoto);
       }
       applyDisplayMode();
       dmBtn.addEventListener('click', function() {
