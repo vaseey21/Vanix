@@ -3736,9 +3736,11 @@
             var wrapClass = 'ev-photo-step' + (insem ? ' insem' : ' ask');
             body.innerHTML = '<div class="' + wrapClass + '">' +
               '<div class="ev-photo-media"></div>' +
-              '<div class="ev-photo-titlerow"><p class="ev-photo-title">' + titleText + '</p><span class="ev-photo-time en">20 min ago</span></div>' +
-              '<div class="ev-photo-metarow"><span class="ev-photo-namebreed">Gauri · Desi</span><span class="ev-photo-vd en">View Details ›</span></div>' +
-              '<div class="ev-seq-bottom">' + bottom + '</div></div>';
+              '<div class="ev-photo-foot">' +
+                '<div class="ev-photo-titlerow"><p class="ev-photo-title">' + titleText + '</p><span class="ev-photo-time en">20 min ago</span></div>' +
+                '<div class="ev-photo-metarow"><span class="ev-photo-namebreed">Gauri · Desi</span><span class="ev-photo-vd en">View Details ›</span></div>' +
+                '<div class="ev-seq-bottom">' + bottom + '</div>' +
+              '</div></div>';
           } else {
             body.innerHTML = '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0; letter-spacing:-0.02em;">' + titleText + '</p>' +
               '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:2px 0 0;">Gauri · Desi</p>' +
