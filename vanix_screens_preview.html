@@ -3847,8 +3847,23 @@
         }
 
         function insemField(f) {
-          return '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">' + f.label + '</label>' +
-            '<input type="text" placeholder="' + (f.ph || '') + '" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">';
+          return '<div>' +
+            '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">' + f.label + '</label>' +
+            '<input type="text" placeholder="' + (f.ph || '') + '" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">' +
+            '</div>';
+        }
+        // Lay the type-specific fields out two-per-row (so Donor Cow ID + Breed
+        // share a line, and Embryo ID + Number of Embryos share the next).
+        function insemFieldsPaired(fields) {
+          var out = '';
+          for (var i = 0; i < fields.length; i += 2) {
+            if (i + 1 < fields.length) {
+              out += '<div class="ev-field-row">' + insemField(fields[i]) + insemField(fields[i + 1]) + '</div>';
+            } else {
+              out += insemField(fields[i]);
+            }
+          }
+          return out;
         }
 
         function renderInsemDetails() {
