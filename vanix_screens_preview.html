@@ -2844,7 +2844,7 @@
         function snapshotBaseline() {
           evBaseVisible = {};
           document.querySelectorAll('#ev-sec-action .ev-photo-card').forEach(function(c) {
-            evBaseVisible[c.id] = getComputedStyle(c).display !== 'none';
+            evBaseVisible[c.id] = c.style.display !== 'none';
           });
         }
         function critOf(card) {
