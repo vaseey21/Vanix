@@ -240,12 +240,12 @@
     #ev-heat .ev-no .ev-btn-svg, #ev-heat .ev-yes .ev-btn-svg { display: none; }
     #ev-fever .ev-btn-short { display: none; }
 
-    /* image mode: reference-style EVENTS-PAGE card — a horizontal card with a
-       square photo on the left and, to its right, the red question hero,
-       cow·breed and a CRITICAL + time-ago block top-right; a divider, then
-       full-width No/Yes CTAs and a centred View Details below. Uses a CSS grid
-       over the flat DOM (explicit grid-row per element). Criticality: red left
-       accent strip + red CRITICAL label. Current colour tokens only. */
+    /* image mode: reference-style EVENTS-PAGE card. Layout (matches the mockup):
+       ── Row 1: red question title (full width) · CRITICAL + time-ago top-right
+       ── Row 2: square photo · Gauri / breed·age · View Details (right)
+       ── Row 3: full-width No / Yes CTAs
+       CSS grid over the flat DOM (explicit grid-column/row per element).
+       Criticality: red left accent strip + red CRITICAL label. Tokens only. */
     #flow-root.display-image #ev-fever,
     #flow-root.display-image #ev-heat {
       position: relative;
@@ -253,17 +253,17 @@
       border: 1px solid var(--border) !important;
       border-left: 6px solid var(--danger) !important;
       border-radius: 18px !important;
-      padding: 14px 16px 12px !important;
+      padding: 16px 16px 14px !important;
       overflow: hidden;
       display: grid !important;
-      grid-template-columns: 84px 1fr;
-      column-gap: 14px; row-gap: 3px;
-      align-items: start;
+      grid-template-columns: 84px 1fr auto;
+      column-gap: 14px; row-gap: 0;
+      align-items: center;
     }
-    /* square photo, left column, spanning the question + breed rows */
+    /* square photo — row 2, left column */
     #flow-root.display-image #ev-fever::before,
     #flow-root.display-image #ev-heat::before {
-      content: ""; grid-column: 1; grid-row: 1 / span 2; align-self: start;
+      content: ""; grid-column: 1; grid-row: 2; align-self: center;
       width: 84px; height: 84px; border-radius: 12px;
       background-size: cover; background-repeat: no-repeat;
     }
@@ -276,12 +276,12 @@
     #flow-root.display-image #ev-fever .ev-corner-badge,
     #flow-root.display-image #ev-heat .ev-title, #flow-root.display-image #ev-heat .ev-manager,
     #flow-root.display-image #ev-heat .ev-sub, #flow-root.display-image #ev-heat .ev-meta, #flow-root.display-image #ev-heat .ev-chip-wrap { display: none !important; }
-    /* CRITICAL + time-ago pinned top-right (absolute so they don't fight the grid) */
+    /* CRITICAL + time-ago pinned top-right */
     #flow-root.display-image #ev-fever .ev-crit-label,
     #flow-root.display-image #ev-heat .ev-crit-label {
       display: inline-flex !important; align-items: center; gap: 6px;
-      position: absolute; top: 14px; right: 16px;
-      color: var(--danger); font-size: 12px; font-weight: 800; letter-spacing: 0.04em;
+      position: absolute; top: 16px; right: 16px;
+      color: var(--danger); font-size: 13px; font-weight: 800; letter-spacing: 0.04em;
     }
     #flow-root.display-image .ev-crit-label .ev-crit-dot {
       width: 18px; height: 18px; border-radius: 50%; background: var(--danger); color: #fff;
@@ -290,34 +290,36 @@
     #flow-root.display-image #ev-fever .ev-timeago,
     #flow-root.display-image #ev-heat .ev-timeago {
       display: inline-flex !important; align-items: center; gap: 5px;
-      position: absolute; top: 40px; right: 16px;
-      color: var(--text2); font-size: 13px; font-weight: 500;
+      position: absolute; top: 42px; right: 16px;
+      color: var(--text2); font-size: 14px; font-weight: 500;
     }
-    /* question hero, red — top-right block clears via padding-right */
+    /* question title, red — row 1, full width, clears the top-right block */
     #flow-root.display-image #ev-fever .ev-cow-breed, #flow-root.display-image #ev-fever .ev-question-big,
     #flow-root.display-image #ev-heat .ev-cow-breed, #flow-root.display-image #ev-heat .ev-question-big { display: block; }
     #flow-root.display-image #ev-fever .ev-anchor-bottom,
     #flow-root.display-image #ev-heat .ev-anchor-bottom {
-      display: block !important; grid-column: 2; grid-row: 1; text-align: left !important;
-      color: var(--danger) !important; font-size: 21px !important; font-weight: 800 !important;
-      letter-spacing: -0.02em; margin: 0 !important; padding-right: 96px;
+      display: block !important; grid-column: 1 / -1; grid-row: 1; text-align: left !important;
+      color: var(--danger) !important; font-size: 22px !important; font-weight: 800 !important;
+      letter-spacing: -0.02em; margin: 0 0 14px !important; padding-right: 108px;
     }
-    /* cow · breed */
+    /* Gauri / breed·age — row 2, middle column (two lines) */
     #flow-root.display-image #ev-fever .ev-cow-breed,
     #flow-root.display-image #ev-heat .ev-cow-breed {
-      grid-column: 2; grid-row: 2; text-align: left !important; color: var(--text1) !important;
-      font-size: 14px !important; font-weight: 600 !important; opacity: 1; margin: 4px 0 0 !important;
+      grid-column: 2; grid-row: 2; align-self: center;
+      display: flex !important; flex-direction: column; text-align: left !important; margin: 0 !important;
     }
-    /* View Details — right-aligned, above the divider/CTAs */
+    #flow-root.display-image .ev-cow-name { font-size: 18px; font-weight: 700; color: var(--text1); line-height: 1.2; }
+    #flow-root.display-image .ev-cow-sub { font-size: 15px; font-weight: 500; color: var(--text2); margin-top: 3px; }
+    /* View Details — row 2, right column */
     #flow-root.display-image .ev-photo-viewdetails {
-      display: block !important; grid-column: 1 / -1; grid-row: 3; justify-self: end;
-      text-align: right !important; margin: 10px 0 2px !important;
-      font-size: 14px !important; font-weight: 700 !important; color: var(--greenink) !important;
+      display: block !important; grid-column: 3; grid-row: 2; align-self: center; justify-self: end;
+      text-align: right !important; margin: 0 !important;
+      font-size: 15px !important; font-weight: 700 !important; color: var(--greenink) !important;
     }
-    /* body (buttons) full width with a divider above */
+    /* CTAs — row 3, full width */
     #flow-root.display-image #ev-fever .ev-body,
     #flow-root.display-image #ev-heat .ev-body {
-      grid-column: 1 / -1; grid-row: 4; margin: 8px 0 0; padding-top: 12px; border-top: 1px solid var(--border);
+      grid-column: 1 / -1; grid-row: 3; margin: 16px 0 0; padding-top: 0; border-top: none;
     }
     #flow-root.display-image #ev-fever .ev-body > div, #flow-root.display-image #ev-heat .ev-body > div { margin-top: 0 !important; gap: 12px !important; }
     #flow-root.display-image #ev-fever .ev-body button, #flow-root.display-image #ev-heat .ev-body button {
