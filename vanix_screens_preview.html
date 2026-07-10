@@ -2836,15 +2836,25 @@
           'ev-abort':          { cat:'Pregnancy loss', type:'Health' },
           'ev-freshcow':       { cat:'Fresh cow',      type:'Health' }
         };
-        var DEMO_HIDDEN = ['ev-milk-notif', 'ev-lactation-check'];
         var evFilter = { type:'all', crit:'all', cat:'all' };
+        // Baseline visibility is captured lazily (on first filter use) — by then
+        // any load-time card reveals have run, so cards hidden until triggered
+        // (e.g. the milking notification) stay hidden and never leak into a filter.
+        var evBaseVisible = null;
+        function snapshotBaseline() {
+          evBaseVisible = {};
+          document.querySelectorAll('#ev-sec-action .ev-photo-card').forEach(function(c) {
+            evBaseVisible[c.id] = getComputedStyle(c).display !== 'none';
+          });
+        }
         function critOf(card) {
           return card.classList.contains('p0') ? 'critical'
                : card.classList.contains('p1') ? 'medium' : 'low';
         }
         function applyEvFilters() {
+          if (!evBaseVisible) snapshotBaseline();
           document.querySelectorAll('#ev-sec-action .ev-photo-card').forEach(function(card) {
-            if (DEMO_HIDDEN.indexOf(card.id) >= 0) return; // demo-triggered, leave as-is
+            if (!evBaseVisible[card.id]) { card.style.display = 'none'; return; }
             var meta = CARD_META[card.id] || {};
             var ok = (evFilter.type === 'all' || evFilter.type === meta.type)
                   && (evFilter.crit === 'all' || evFilter.crit === critOf(card))
