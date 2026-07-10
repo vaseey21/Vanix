@@ -478,24 +478,15 @@
     .ev-photo-step.lactation .ev-photo-media { background-image: url('assets/images/milking_ended_photo.jpg'); }
     .ev-photo-step.p1 { border-left-color: var(--warning); }
     .ev-photo-step.p1 .ev-photo-title { color: #8A5A00; }
-    .ev-photo-step.p1 .ev-photo-crit .ev-crit-row { color: #8A5A00; }
-    .ev-photo-step.p1 .ev-photo-crit .ev-crit-dot { background: var(--warning); }
-    /* time-ago pill (top-left, so it clears the severity corner triangle) */
-    .ev-photo-crit {
-      position: absolute; top: 10px; left: 10px;
-      background: var(--bgcard); border-radius: 12px; padding: 6px 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-    }
-    /* severity is now the corner triangle — the arrow row is dropped */
-    .ev-photo-crit .ev-crit-row { display: none; }
-    .ev-photo-crit .ev-crit-time { display: flex; align-items: center; gap: 5px; color: var(--text2); font-size: 13px; font-weight: 500; }
-    .ev-photo-title { color: var(--danger); font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 14px 0 0; }
+    /* Row 1: title (left) + time-ago (right, centred with the title) */
+    .ev-photo-titlerow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
+    .ev-photo-title { color: var(--danger); font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+    .ev-photo-time { flex-shrink: 0; color: var(--text2); font-size: 13px; font-weight: 500; }
+    /* Row 2: name · breed (left) + View Details (right) */
     .ev-photo-metarow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
-    .ev-photo-metarow .ev-photo-name { font-size: 17px; font-weight: 700; color: var(--text1); }
-    .ev-photo-metarow .ev-photo-sub { font-size: 14px; font-weight: 500; color: var(--text2); margin-top: 2px; }
-    .ev-photo-metarow .ev-photo-vd { flex-shrink: 0; font-size: 0; color: var(--text2); }
-    .ev-photo-metarow .ev-photo-vd::after { content: '›'; font-size: 26px; line-height: 1; }
-    .ev-photo-divider { border-top: 1px solid var(--border); margin: 14px 0 0; }
+    .ev-photo-namebreed { font-size: 16px; font-weight: 700; color: var(--text1); }
+    .ev-photo-metarow .ev-photo-vd { flex-shrink: 0; font-size: 14px; font-weight: 600; color: var(--greenink); }
+    /* Row 3: CTAs */
     .ev-photo-step .ev-seq-bottom { margin-top: 14px; }
 
     /* ═══ Full-bleed dark photo cards (IMAGE toggle) ═══
