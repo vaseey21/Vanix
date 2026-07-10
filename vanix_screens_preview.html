@@ -2525,13 +2525,19 @@
           evResolve();
         });
         card.querySelector('.ev-yes').addEventListener('click', function() {
+          // Fever → select vet → log (date, vet name, notes + attachment).
           body.innerHTML = vetPickerHtml('fever');
           wireVetPicker('fever', function(vetName) {
-            evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
-            card.querySelector('.ev-corner-badge').style.display = 'none';
-            body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Vet appointment requested ✓</p>' +
-              '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Sent to ' + vetName + ' — Kajri · Fever · Green Valley Farm. You\'ll be notified when the vet confirms.</p>';
-            evResolve();
+            body.innerHTML = '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0 0 2px;">Fever — vet log</p>' +
+              '<p style="font-size:12px; color:var(--text2); margin:0;">Kajri · Green Valley Farm</p>' +
+              vetLogHtml('fever', vetName);
+            wireVetLog('fever', function() {
+              evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
+              card.querySelector('.ev-corner-badge').style.display = 'none';
+              body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Vet visit logged ✓</p>' +
+                '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Logged with ' + vetName + ' — Kajri · Fever · Green Valley Farm.</p>';
+              evResolve();
+            });
           });
         });
       })();
