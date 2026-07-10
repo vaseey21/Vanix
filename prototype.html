@@ -3558,10 +3558,13 @@
 
         function renderGestationStep() {
           // 9-month checkpoint: call a vet for delivery -> was it successful? -> log it.
-          body.innerHTML =
-            '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">9-month check — call your vet for delivery</p>' +
-            '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — call a vet to be on hand for delivery.</p>' +
-            '<div id="ev-seq-gest-body"></div>';
+          var inner = '<div id="ev-seq-gest-body"></div>';
+          if (seqImageMode()) {
+            body.innerHTML = seqPhotoCard('delivery', 'p1', 'Call vet for delivery', 'Gauri', 'Desi Cow · 4 years', inner);
+          } else {
+            body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">9-month check — call your vet for delivery</p>' +
+              '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — call a vet to be on hand for delivery.</p>' + inner;
+          }
           var gestBody = document.getElementById('ev-seq-gest-body');
           gestBody.innerHTML = vetPickerHtml('seqgest');
           wireVetPicker('seqgest', function(vetName) {
