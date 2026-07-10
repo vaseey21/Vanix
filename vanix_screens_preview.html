@@ -3916,29 +3916,37 @@
         }
 
         function renderGestationStep() {
-          // 9-month checkpoint: call a vet for delivery -> was it successful? -> log it.
-          var inner = '<div id="ev-seq-gest-body"></div>';
+          // 9-month checkpoint. Call-vet is a follow-up card → blurred-photo flow
+          // page (not a full-bleed alert). Then "Was the delivery successful?" is
+          // still a question, so it uses the pregnant-photo alert card. Finally the
+          // delivery log is a blurred-photo flow page.
           if (seqImageMode()) {
-            body.innerHTML = seqPhotoCard('delivery', 'p1', 'Call vet for delivery', 'Gauri', 'Desi', inner);
+            body.innerHTML = '<div class="ev-flow-photo callvet">' +
+              '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Call vet for delivery</p>' +
+              '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0 0 4px;">Gauri · Desi</p>' +
+              '<div id="ev-seq-gest-body"></div></div>';
           } else {
             body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">9-month check — call your vet for delivery</p>' +
-              '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — call a vet to be on hand for delivery.</p>' + inner;
+              '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.6;">Approaching her due date — call a vet to be on hand for delivery.</p>' +
+              '<div id="ev-seq-gest-body"></div>';
           }
           var gestBody = document.getElementById('ev-seq-gest-body');
           gestBody.innerHTML = vetPickerHtml('seqgest');
           wireVetPicker('seqgest', function(vetName) {
-            gestBody.innerHTML =
-              '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">' + vetName + ' called. Was the delivery successful?</p>' +
-              '<div style="display:flex; gap:8px; margin-top:10px;">' +
-                '<button id="ev-seq-gest-fail" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">No</button>' +
-                '<button id="ev-seq-gest-ok" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Yes, successful</button>' +
+            var q = '<div style="display:flex; gap:8px;">' +
+                '<button id="ev-seq-gest-fail" style="flex:1; min-height:48px; background:transparent; border:1px solid var(--border); border-radius:14px; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">No</button>' +
+                '<button id="ev-seq-gest-ok" style="flex:1.3; min-height:48px; background:var(--greendeep); border:none; border-radius:14px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Yes, successful</button>' +
               '</div>';
+            if (seqImageMode()) {
+              body.innerHTML = seqPhotoCard('preg', 'p1', 'Was the delivery successful?', 'Gauri', 'Desi', q);
+            } else {
+              body.innerHTML = '<p style="font-size:15px; font-weight:600; color:var(--text1); margin:0 0 12px;">' + vetName + ' called. Was the delivery successful?</p>' + q;
+            }
             document.getElementById('ev-seq-gest-fail').addEventListener('click', function() {
               interrupt('Cycle interrupted — delivery unsuccessful. ' + vetName + ' has been notified for an urgent check.');
             });
             document.getElementById('ev-seq-gest-ok').addEventListener('click', function() {
-              // Delivery log — plain page, no photo (logs are classified, not
-              // photo-headed). Replaces the whole card body.
+              // Delivery log — blurred-photo flow page.
               body.innerHTML = '<div class="ev-flow-photo delivery">' +
                 '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Log · Delivery success</p>' +
                 '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">Gauri · Desi · Vet: ' + vetName + '</p>' +
