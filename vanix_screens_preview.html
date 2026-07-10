@@ -2575,8 +2575,8 @@
           // Fever → select vet → log (date, vet name, notes + attachment).
           body.innerHTML = vetPickerHtml('fever');
           wireVetPicker('fever', function(vetName) {
-            body.innerHTML = '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0 0 2px;">Fever — vet log</p>' +
-              '<p style="font-size:12px; color:var(--text2); margin:0;">Kajri · Green Valley Farm</p>' +
+            body.innerHTML = '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Log · Fever</p>' +
+              '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">Kajri · Green Valley Farm · Vet: ' + vetName + '</p>' +
               vetLogHtml('fever', vetName);
             wireVetLog('fever', function() {
               evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
