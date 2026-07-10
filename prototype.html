@@ -516,10 +516,11 @@
       color: #fff !important; font-size: 24px !important; font-weight: 800 !important;
       letter-spacing: -0.02em; margin: 0 0 10px !important; padding: 0 !important;
     }
-    /* View Details — white link with text */
+    /* View Details — white link with text (reset native button chrome) */
     #flow-root.display-fullbleed .ev-photo-card .ev-photo-viewdetails {
       display: block !important; text-align: left !important; font-size: 0 !important;
       color: rgba(255,255,255,0.9) !important; margin: 0 0 16px !important; padding: 0 !important;
+      background: none !important; border: none !important; width: auto !important; box-shadow: none !important;
     }
     #flow-root.display-fullbleed .ev-photo-card .ev-photo-viewdetails::after {
       content: 'View Details ›'; font-size: 14px; font-weight: 600;
@@ -534,7 +535,8 @@
       min-height: 52px !important; font-size: 16px !important; font-weight: 700 !important;
       border-radius: 14px !important; flex: 1 1 0 !important;
     }
-    #flow-root.display-fullbleed .ev-photo-card .ev-no {
+    #flow-root.display-fullbleed .ev-photo-card .ev-no,
+    #flow-root.display-fullbleed .ev-photo-card .ev-body button[style*="transparent"] {
       background: rgba(255,255,255,0.12) !important; border: 1px solid rgba(255,255,255,0.5) !important; color: #fff !important;
     }
     #flow-root.display-fullbleed .ev-photo-card .ev-yes,
