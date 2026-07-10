@@ -291,17 +291,17 @@
     #flow-root.display-image .ev-photo-card .ev-avatar,
     #flow-root.display-image .ev-photo-card .ev-cond-icon,
     #flow-root.display-image .ev-photo-card .ev-corner-badge { display: none !important; }
-    /* severity arrow (colour = criticality) + time-ago pinned top-right.
-       CRITICAL/ACTION text + dot are hidden; a ↗ arrow is injected, coloured
-       by priority (red P0 / amber P1). */
+    /* severity corner triangle (top + right edges = legs, diagonal hypotenuse)
+       filled with the criticality colour — red P0 / amber P1. CRITICAL/ACTION
+       text + dot are hidden; the label element becomes the triangle. */
     #flow-root.display-image .ev-photo-card .ev-crit-label {
-      display: inline-flex !important; align-items: center;
-      position: absolute; top: 12px; right: 14px;
-      color: var(--danger); font-size: 0 !important;
+      display: block !important; position: absolute; top: 0; right: 0;
+      width: 0; height: 0; padding: 0 !important; margin: 0 !important; font-size: 0 !important;
+      border-style: solid; border-width: 0 46px 46px 0;
+      border-color: transparent var(--danger) transparent transparent;
     }
-    #flow-root.display-image .ev-photo-card.p1 .ev-crit-label { color: #8A5A00; }
+    #flow-root.display-image .ev-photo-card.p1 .ev-crit-label { border-right-color: var(--warning); }
     #flow-root.display-image .ev-photo-card .ev-crit-label .ev-crit-dot { display: none !important; }
-    #flow-root.display-image .ev-photo-card .ev-crit-label::after { content: '↗'; font-size: 26px; font-weight: 800; line-height: 1; }
     #flow-root.display-image .ev-photo-card .ev-timeago {
       display: inline-flex !important; align-items: center; gap: 5px;
       position: absolute; top: 42px; right: 16px;
