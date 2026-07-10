@@ -336,7 +336,7 @@
     #flow-root.display-image .ev-photo-card > div:has(> .ev-title) { display: none !important; }
     /* square photo — row 2, left column; per-card image below */
     #flow-root.display-image .ev-photo-card::before {
-      content: ""; grid-column: 1; grid-row: 2; align-self: center;
+      content: ""; grid-column: 1; grid-row: 2 / span 2; align-self: center;
       width: 84px; height: 84px; border-radius: 12px;
       background-size: cover; background-repeat: no-repeat; background-position: center;
     }
@@ -366,7 +366,7 @@
     #flow-root.display-image .ev-photo-card .ev-crit-label {
       display: block !important; position: absolute; top: 0; right: 0;
       width: 0; height: 0; padding: 0 !important; margin: 0 !important; font-size: 0 !important;
-      border-style: solid; border-width: 0 46px 46px 0;
+      border-style: solid; border-width: 0 23px 23px 0;
       border-color: transparent var(--danger) transparent transparent;
     }
     #flow-root.display-image .ev-photo-card.p1 .ev-crit-label { border-right-color: var(--warning); }
@@ -452,7 +452,7 @@
     /* severity corner triangle (top-right), colour = criticality */
     .ev-photo-step::after {
       content: ""; position: absolute; top: 0; right: 0; z-index: 3;
-      width: 0; height: 0; border-style: solid; border-width: 0 46px 46px 0;
+      width: 0; height: 0; border-style: solid; border-width: 0 23px 23px 0;
       border-color: transparent var(--danger) transparent transparent;
     }
     .ev-photo-step.p1::after { border-right-color: var(--warning); }
