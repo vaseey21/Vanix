@@ -2901,9 +2901,8 @@
         if (unBtn) {
           unBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            var on = unBtn.classList.toggle('active');
-            var hist = document.getElementById('ev-sec-hist');
-            if (hist) hist.style.display = on ? 'none' : '';
+            evUnactioned = unBtn.classList.toggle('active');
+            applyEvSections();
           });
         }
         // tapping elsewhere closes any open menu
