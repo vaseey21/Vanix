@@ -2887,9 +2887,8 @@
               else { label.textContent = opt.textContent; qf.classList.add('active'); }
               qf.classList.remove('open');
               if (key === 'type') {
-                // Type mirrors the section tabs (Needs action / Warnings / Reminder)
-                var tab = document.querySelector('.ev-tab[data-tab="' + val + '"]');
-                if (tab) tab.click();
+                evSectionType = val;
+                applyEvSections();
               } else {
                 evFilter[key] = val;
                 applyEvFilters();
