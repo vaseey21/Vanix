@@ -533,6 +533,14 @@
       content: 'CRITICAL'; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
     }
     #flow-root.display-fullbleed .ev-photo-card.p1 .ev-crit-label::after { content: 'MEDIUM'; }
+    /* TRIAL (first card / Fever only): CRITICAL banner as a corner tag flush to
+       the top-right, melding with the card's rounded corner */
+    #flow-root.display-fullbleed #ev-fever .ev-crit-label {
+      top: 0 !important; right: 0 !important;
+      padding: 8px 16px 9px 18px !important;
+      border-radius: 0 20px 0 16px !important;
+      box-shadow: none !important;
+    }
     #flow-root.display-fullbleed .ev-photo-card.p2 .ev-crit-label::after,
     #flow-root.display-fullbleed .ev-photo-card.p3 .ev-crit-label::after { content: 'LOW'; }
     /* cow name / breed — white caption, top-left */
