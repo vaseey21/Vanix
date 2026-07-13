@@ -390,8 +390,8 @@
        like "Yes, in heat" / "Yes, notify vet" on the confirm cards) */
     #flow-root.display-image .ev-photo-card .ev-no svg, #flow-root.display-image .ev-photo-card .ev-yes svg { display: none !important; }
     #flow-root.display-image .ev-photo-card .ev-body .ev-no, #flow-root.display-image .ev-photo-card .ev-body .ev-yes { font-size: 0 !important; }
-    #flow-root.display-image .ev-photo-card .ev-body .ev-no::after { content: 'No'; font-size: 16px; font-weight: 700; }
-    #flow-root.display-image .ev-photo-card .ev-body .ev-yes::after { content: 'Yes'; font-size: 16px; font-weight: 700; }
+    #flow-root.display-image .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 16px; font-weight: 700; }
+    #flow-root.display-image .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 700; }
     #flow-root.display-image #ev-fever .ev-btn-full { display: none; }
     #flow-root.display-image #ev-fever .ev-btn-short { display: inline; }
     /* image-mode events cards are pure triage — hide the inline evolving heat
@@ -545,11 +545,11 @@
     #flow-root.display-fullbleed .ev-photo-card.p3 .ev-crit-label { background: var(--text2); }
     #flow-root.display-fullbleed .ev-photo-card .ev-crit-label .ev-crit-dot { display: none !important; }
     #flow-root.display-fullbleed .ev-photo-card .ev-crit-label::after {
-      content: 'CRITICAL'; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+      content: var(--i18n-critical); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
     }
-    #flow-root.display-fullbleed .ev-photo-card.p1 .ev-crit-label::after { content: 'MEDIUM'; }
+    #flow-root.display-fullbleed .ev-photo-card.p1 .ev-crit-label::after { content: var(--i18n-medium); }
     #flow-root.display-fullbleed .ev-photo-card.p2 .ev-crit-label::after,
-    #flow-root.display-fullbleed .ev-photo-card.p3 .ev-crit-label::after { content: 'LOW'; }
+    #flow-root.display-fullbleed .ev-photo-card.p3 .ev-crit-label::after { content: var(--i18n-low); }
     /* cow name / breed — white caption, top-left */
     #flow-root.display-fullbleed .ev-photo-card .ev-cow-breed {
       display: flex !important; flex-direction: column; text-align: left !important;
@@ -571,7 +571,7 @@
       background: none !important; border: none !important; width: auto !important; box-shadow: none !important;
     }
     #flow-root.display-fullbleed .ev-photo-card .ev-photo-viewdetails::after {
-      content: 'View Details ›'; font-size: 14px; font-weight: 600;
+      content: var(--i18n-viewdetails); font-size: 14px; font-weight: 600;
     }
     /* CTAs — full width, translucent-outline No + green Yes */
     #flow-root.display-fullbleed .ev-photo-card .ev-body {
@@ -593,8 +593,8 @@
     #flow-root.display-fullbleed .ev-photo-card #ev-lact-resting { background: var(--greenink) !important; color: #fff !important; border: none !important; }
     #flow-root.display-fullbleed .ev-photo-card .ev-no svg, #flow-root.display-fullbleed .ev-photo-card .ev-yes svg { display: none !important; }
     #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-no, #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-yes { font-size: 0 !important; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-no::after { content: 'No'; font-size: 16px; font-weight: 700; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-yes::after { content: 'Yes'; font-size: 16px; font-weight: 700; }
+    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 16px; font-weight: 700; }
+    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 700; }
     #flow-root.display-fullbleed #ev-fever .ev-btn-full { display: none; }
     #flow-root.display-fullbleed #ev-fever .ev-btn-short { display: inline; }
 
@@ -1466,7 +1466,7 @@
                   <img class="ev-avatar ev-illus-img" src="assets/images/cow_icon.png" alt="" style="width:72px; height:auto; object-fit:contain; flex-shrink:0;">
                   <span class="ev-cond-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg></span>
                 </div>
-                <p class="en ev-question-big ev-anchor-bottom" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Is Kajri unwell?</p>
+                <p class="en ev-question-big ev-anchor-bottom" data-k="cardFeverQ" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Is Kajri unwell?</p>
                 <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-fever','p0');" style="display:none; background:none; border:none; padding:0; margin:6px auto 0; font-size:12px; font-weight:600; color:#8FE6B8; font-family:var(--font-hi); cursor:pointer; text-align:center;">View Details ›</button>
                 <div class="ev-body" onclick="event.stopPropagation();">
                   <div style="display:flex; gap:8px; margin-top:10px;">
@@ -1493,7 +1493,7 @@
                   <img class="ev-illus-img" src="assets/images/bull_icon.png" alt="" style="width:64px; height:auto; object-fit:contain; flex-shrink:0;">
                   <img class="ev-illus-img" src="assets/images/insemination_icon.png" alt="" style="width:56px; height:auto; object-fit:contain; flex-shrink:0;">
                 </div>
-                <p class="en ev-anchor-bottom" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Gauri in heat?</p>
+                <p class="en ev-anchor-bottom" data-k="cardHeatQ" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Gauri in heat?</p>
                 <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-heat','p1');" style="display:none; background:none; border:none; padding:0; margin:6px auto 0; font-size:12px; font-weight:600; color:#8FE6B8; font-family:var(--font-hi); cursor:pointer; text-align:center;">View Details ›</button>
                 <div class="ev-body" onclick="event.stopPropagation();">
                   <p id="ev-heat-phase" class="en" style="display:none; font-size:12px; font-weight:600; color:var(--text1); margin:8px 0 0;"></p>
@@ -1547,7 +1547,7 @@
               <div class="ev-card ev-photo-card p1" id="ev-preg" style="position:relative; background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>ACTION</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>1h ago</span>
-                <p class="en ev-anchor-bottom">Pregnant?</p>
+                <p class="en ev-anchor-bottom" data-k="cardPregQ">Pregnant?</p>
                 <p class="en ev-cow-breed"><span class="ev-cow-name">Mohini</span><span class="ev-cow-sub">Gir/Sahiwal</span></p>
                 <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-preg','p1');">View details ›</button>
                 <div class="ev-imhide" style="min-width:0;">
@@ -1575,7 +1575,7 @@
               <div class="ev-card ev-photo-card p1" id="ev-gestation" style="position:relative; background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px;">
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>ACTION</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>3h ago</span>
-                <p class="en ev-anchor-bottom">Vet check due</p>
+                <p class="en ev-anchor-bottom" data-k="cardGestationQ">Vet check due</p>
                 <p class="en ev-cow-breed"><span class="ev-cow-name">Lakshmi</span><span class="ev-cow-sub">Sahiwal</span></p>
                 <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-gestation','p1');">View details ›</button>
                 <div style="min-width:0;">
@@ -1597,7 +1597,7 @@
               <div class="ev-card ev-photo-card p1" id="ev-milk-notif" style="position:relative; background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardDetail('ev-milk-notif','p1')">
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>ACTION</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>30 min ago</span>
-                <p class="en ev-anchor-bottom">Start milking?</p>
+                <p class="en ev-anchor-bottom" data-k="cardMilkQ">Start milking?</p>
                 <p class="en ev-cow-breed"><span class="ev-cow-name">Lakshmi</span><span class="ev-cow-sub">Ongole</span></p>
                 <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-milk-notif','p1');">View details ›</button>
                 <p class="ev-title" style="display:none;" id="ev-milk-notif-title">Lakshmi is now in her lactation period (250 days)</p>
@@ -1624,7 +1624,7 @@
               <div class="ev-card ev-photo-card p1" id="ev-lactation-check" style="position:relative; background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none;">
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>ACTION</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>1d ago</span>
-                <p class="en ev-anchor-bottom">Still milking?</p>
+                <p class="en ev-anchor-bottom" data-k="cardLactationQ">Still milking?</p>
                 <p class="en ev-cow-breed"><span class="ev-cow-name">Lakshmi</span><span class="ev-cow-sub">Ongole</span></p>
                 <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-lactation-check','p1');">View details ›</button>
                 <div style="min-width:0;">
@@ -1650,7 +1650,7 @@
                 <span class="ev-corner-badge">!</span>
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>CRITICAL</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>15 min ago</span>
-                <p class="en ev-anchor-bottom">Loss signs?</p>
+                <p class="en ev-anchor-bottom" data-k="cardAbortQ">Loss signs?</p>
                 <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-abort','p0');">View details ›</button>
                 <p class="ev-title" style="display:none;">Possible pregnancy loss — Mohini</p>
                 <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Suresh Yadav</p>
@@ -1672,7 +1672,7 @@
                 <span class="ev-corner-badge">!</span>
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>CRITICAL</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>45 min ago</span>
-                <p class="en ev-anchor-bottom">Cow unwell?</p>
+                <p class="en ev-anchor-bottom" data-k="cardFreshcowQ">Cow unwell?</p>
                 <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-freshcow','p0');">View details ›</button>
                 <p class="ev-title" style="display:none;">Fresh cow health dip — Ganga</p>
                 <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
@@ -2203,7 +2203,10 @@
                qfType:'Type', qfUnactioned:'Unactioned', qfCriticality:'Criticality', qfCategory:'Category',
                qfAllTypes:'All types', qfNeedsAction:'Needs action', qfWarnings:'Warnings', qfReminder:'Reminder',
                qfAllLevels:'All levels', qfCritical:'Critical', qfMedium:'Medium', qfLow:'Low',
-               qfAllCategories:'All categories', needsActionHeader:'Needs action', allClear:'All clear', remindersHeader:'Reminders' },
+               qfAllCategories:'All categories', needsActionHeader:'Needs action', allClear:'All clear', remindersHeader:'Reminders',
+               ctaNo:'No', ctaYes:'Yes', viewDetailsLabel:'View Details ›',
+               cardFeverQ:'Is Kajri unwell?', cardHeatQ:'Gauri in heat?', cardPregQ:'Pregnant?', cardGestationQ:'Vet check due',
+               cardMilkQ:'Start milking?', cardLactationQ:'Still milking?', cardAbortQ:'Loss signs?', cardFreshcowQ:'Cow unwell?' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -2221,7 +2224,10 @@
                qfType:'प्रकार', qfUnactioned:'अनसुलझे', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
                qfAllTypes:'सभी प्रकार', qfNeedsAction:'कार्रवाई चाहिए', qfWarnings:'चेतावनी', qfReminder:'अनुस्मारक',
                qfAllLevels:'सभी स्तर', qfCritical:'गंभीर', qfMedium:'मध्यम', qfLow:'कम',
-               qfAllCategories:'सभी श्रेणियाँ', needsActionHeader:'कार्रवाई चाहिए', allClear:'सब ठीक है', remindersHeader:'अनुस्मारक' },
+               qfAllCategories:'सभी श्रेणियाँ', needsActionHeader:'कार्रवाई चाहिए', allClear:'सब ठीक है', remindersHeader:'अनुस्मारक',
+               ctaNo:'नहीं', ctaYes:'हाँ', viewDetailsLabel:'विवरण देखें ›',
+               cardFeverQ:'क्या कजरी अस्वस्थ है?', cardHeatQ:'क्या गौरी हीट में है?', cardPregQ:'गर्भवती?', cardGestationQ:'पशु चिकित्सक जांच बाकी',
+               cardMilkQ:'दूध निकालना शुरू करें?', cardLactationQ:'अभी भी दूध दे रही है?', cardAbortQ:'नुकसान के संकेत?', cardFreshcowQ:'गाय अस्वस्थ?' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -2239,7 +2245,10 @@
                qfType:'प्रकार', qfUnactioned:'ना सुलझल', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
                qfAllTypes:'सगरी प्रकार', qfNeedsAction:'कार्रवाई के जरूरत', qfWarnings:'चेतावनी', qfReminder:'अनुस्मारक',
                qfAllLevels:'सगरी स्तर', qfCritical:'गंभीर', qfMedium:'मध्यम', qfLow:'कम',
-               qfAllCategories:'सगरी श्रेणी', needsActionHeader:'कार्रवाई के जरूरत', allClear:'सब ठीक बा', remindersHeader:'अनुस्मारक' }
+               qfAllCategories:'सगरी श्रेणी', needsActionHeader:'कार्रवाई के जरूरत', allClear:'सब ठीक बा', remindersHeader:'अनुस्मारक',
+               ctaNo:'ना', ctaYes:'हाँ', viewDetailsLabel:'विवरण देखीं ›',
+               cardFeverQ:'का कजरी बेमार बिया?', cardHeatQ:'का गौरी हीट में बिया?', cardPregQ:'गर्भवती?', cardGestationQ:'पशु डॉक्टर जांच बाकी',
+               cardMilkQ:'दूध निकालल शुरू करीं?', cardLactationQ:'अबहियों दूध देत बिया?', cardAbortQ:'नुकसान के संकेत?', cardFreshcowQ:'गाय बेमार?' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
@@ -2259,7 +2268,21 @@
         applyLang();
       }
 
+      // "No" / "Yes" / the severity banner / "View Details ›" are injected via
+      // CSS ::after { content } on every image-mode card (one rule, all cards)
+      // — CSS can't reach STRINGS directly, so we hand it the current
+      // language's text through custom properties instead.
+      function applyImgModeVars() {
+        var r = document.documentElement.style;
+        r.setProperty('--i18n-no', '"' + t().ctaNo + '"');
+        r.setProperty('--i18n-yes', '"' + t().ctaYes + '"');
+        r.setProperty('--i18n-critical', '"' + t().sevCritical + '"');
+        r.setProperty('--i18n-medium', '"' + t().sevMedium + '"');
+        r.setProperty('--i18n-low', '"' + t().sevLow + '"');
+        r.setProperty('--i18n-viewdetails', '"' + t().viewDetailsLabel + '"');
+      }
       function applyLang() {
+        applyImgModeVars();
         document.getElementById('s1-title').textContent   = t().title;
         document.getElementById('s1-l-email').textContent = t().email;
         document.getElementById('s1-continue').textContent = t().cont;
