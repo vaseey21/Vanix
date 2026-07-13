@@ -3137,8 +3137,14 @@
         function syncQfLabel(qf) {
           var label = qf.querySelector('.ev-qf-label');
           var on = qf.querySelector('.ev-qf-opt.on');
-          var key = (on && on.getAttribute('data-k')) || label.getAttribute('data-k');
-          label.textContent = t()[key];
+          if (!on || on.getAttribute('data-val') === 'all') {
+            label.textContent = t()[label.getAttribute('data-k')];
+          } else {
+            // Category names (Fever/Heat/Pregnancy…) have no data-k yet — they
+            // stay untranslated for now and just show their raw option text.
+            var k = on.getAttribute('data-k');
+            label.textContent = k ? t()[k] : on.textContent;
+          }
         }
         document.querySelectorAll('.ev-qf').forEach(function(qf) {
           var key = qf.getAttribute('data-filter');
