@@ -3034,6 +3034,7 @@
         }
       }
       function evResolve() { evOpen = Math.max(0, evOpen - 1); evUpdateBadges(); }
+      window.evUpdateBadges = evUpdateBadges;
       evUpdateBadges();
 
       // Reminders — static "days left" computed once from each card's due
