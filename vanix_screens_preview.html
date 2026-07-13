@@ -446,7 +446,7 @@
     #flow-root.display-image .ev-photo-card .ev-body > div,
     #flow-root.display-image .ev-photo-card .ev-body > button { margin-top: 0 !important; gap: 12px !important; }
     #flow-root.display-image .ev-photo-card .ev-body button {
-      min-height: 52px !important; font-size: 16px !important; font-weight: 700 !important; border-radius: 14px !important;
+      min-height: 52px !important; font-size: 16px !important; font-weight: 500 !important; border-radius: 14px !important;
       flex: 1 1 0 !important; /* Yes / No equal width */
     }
     /* No = outline dark on white; every primary CTA uses the darker green */
@@ -461,8 +461,8 @@
        like "Yes, in heat" / "Yes, notify vet" on the confirm cards) */
     #flow-root.display-image .ev-photo-card .ev-no svg, #flow-root.display-image .ev-photo-card .ev-yes svg { display: none !important; }
     #flow-root.display-image .ev-photo-card .ev-body .ev-no, #flow-root.display-image .ev-photo-card .ev-body .ev-yes { font-size: 0 !important; }
-    #flow-root.display-image .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 16px; font-weight: 700; }
-    #flow-root.display-image .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 700; }
+    #flow-root.display-image .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 16px; font-weight: 500; }
+    #flow-root.display-image .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 500; }
     #flow-root.display-image #ev-fever .ev-btn-full { display: none; }
     #flow-root.display-image #ev-fever .ev-btn-short { display: inline; }
     /* image-mode events cards are pure triage — hide the inline evolving heat
@@ -654,7 +654,7 @@
     #flow-root.display-fullbleed .ev-photo-card .ev-body > div,
     #flow-root.display-fullbleed .ev-photo-card .ev-body > button { margin-top: 0 !important; gap: 12px !important; }
     #flow-root.display-fullbleed .ev-photo-card .ev-body button {
-      min-height: 52px !important; font-size: 16px !important; font-weight: 700 !important;
+      min-height: 52px !important; font-size: 16px !important; font-weight: 500 !important;
       border-radius: 14px !important; flex: 1 1 0 !important;
     }
     #flow-root.display-fullbleed .ev-photo-card .ev-no,
@@ -667,8 +667,8 @@
     #flow-root.display-fullbleed .ev-photo-card #ev-lact-resting { background: var(--greenink) !important; color: #fff !important; border: none !important; }
     #flow-root.display-fullbleed .ev-photo-card .ev-no svg, #flow-root.display-fullbleed .ev-photo-card .ev-yes svg { display: none !important; }
     #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-no, #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-yes { font-size: 0 !important; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 16px; font-weight: 700; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 700; }
+    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 16px; font-weight: 500; }
+    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 500; }
     #flow-root.display-fullbleed #ev-fever .ev-btn-full { display: none; }
     #flow-root.display-fullbleed #ev-fever .ev-btn-short { display: inline; }
 
@@ -1576,7 +1576,7 @@
                   <span class="ev-cond-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg></span>
                 </div>
                 <p class="en ev-question-big ev-anchor-bottom" data-k="cardFeverQ" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Is Kajri unwell?</p>
-                <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-fever','p0');" style="display:none; background:none; border:none; padding:0; margin:6px auto 0; font-size:12px; font-weight:600; color:#8FE6B8; font-family:var(--font-hi); cursor:pointer; text-align:center;">View Details ›</button>
+                <button class="en ev-photo-viewdetails" data-k="viewDetailsLabel" onclick="event.stopPropagation(); openCardDetail('ev-fever','p0');" style="display:none; background:none; border:none; padding:0; margin:6px auto 0; font-size:12px; font-weight:600; color:#8FE6B8; font-family:var(--font-hi); cursor:pointer; text-align:center;">View Details ›</button>
                 <div class="ev-body" onclick="event.stopPropagation();">
                   <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg class="ev-btn-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span class="ev-btn-full">No, she's fine</span><span class="ev-btn-short">No</span></button>
@@ -1603,7 +1603,7 @@
                   <img class="ev-illus-img" src="assets/images/insemination_icon.png" alt="" style="width:56px; height:auto; object-fit:contain; flex-shrink:0;">
                 </div>
                 <p class="en ev-anchor-bottom" data-k="cardHeatQ" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Gauri in heat?</p>
-                <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-heat','p1');" style="display:none; background:none; border:none; padding:0; margin:6px auto 0; font-size:12px; font-weight:600; color:#8FE6B8; font-family:var(--font-hi); cursor:pointer; text-align:center;">View Details ›</button>
+                <button class="en ev-photo-viewdetails" data-k="viewDetailsLabel" onclick="event.stopPropagation(); openCardDetail('ev-heat','p1');" style="display:none; background:none; border:none; padding:0; margin:6px auto 0; font-size:12px; font-weight:600; color:#8FE6B8; font-family:var(--font-hi); cursor:pointer; text-align:center;">View Details ›</button>
                 <div class="ev-body" onclick="event.stopPropagation();">
                   <p id="ev-heat-phase" class="en" style="display:none; font-size:12px; font-weight:600; color:var(--text1); margin:8px 0 0;"></p>
                   <!-- Segmented 24h window bar: 6h pre / 12h optimal / 6h suboptimal, one fill travelling across all three. Hidden until a vet is called (the Insemination Window stage). -->
@@ -1626,7 +1626,7 @@
                   </div>
                   <p id="ev-heat-note" style="display:none; font-size:12px; color:var(--text2); margin:6px 0 0;">Best results within 6-18h of detection. The window opens automatically — no need to refresh.</p>
                   <div id="ev-heat-confirm" style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg class="ev-btn-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>No</button>
+                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg class="ev-btn-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span data-k="ctaNo">No</span></button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);"><svg class="ev-btn-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M20 6 9 17l-5-5"/></svg>Yes, in heat</button>
                   </div>
                   <button id="ev-heat-start" style="display:none; width:100%; min-height:44px; margin-top:10px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Call vet</button>
@@ -1658,11 +1658,11 @@
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>1h ago</span>
                 <p class="en ev-anchor-bottom" data-k="cardPregQ">Pregnant?</p>
                 <p class="en ev-cow-breed"><span class="ev-cow-name" data-k="nmMohini">Mohini</span><span class="ev-cow-sub" data-k="brGirSahiwal">Gir/Sahiwal</span></p>
-                <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-preg','p1');">View details ›</button>
+                <button class="en ev-photo-viewdetails" data-k="viewDetailsLabel" onclick="event.stopPropagation(); openCardDetail('ev-preg','p1');">View details ›</button>
                 <div class="ev-imhide" style="min-width:0;">
                   <p class="ev-title" data-k="titlePreg" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Pregnancy check due — Mohini</p>
                   <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Suresh Yadav</p>
-                  <button class="en ev-viewdetails" onclick="openCardDetail('ev-preg','p1')">View Details ›</button>
+                  <button class="en ev-viewdetails" data-k="viewDetailsLabel" onclick="openCardDetail('ev-preg','p1')">View Details ›</button>
                   <p class="ev-sub" data-k="subPreg">21 days since insemination and no heat detected — confirm if she appears pregnant.</p>
                   <p class="en ev-meta" data-k="metaAbortP">Sunrise Dairy · Belt 91 · inseminated 12 Jun</p>
                 </div>
@@ -1686,19 +1686,19 @@
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>3h ago</span>
                 <p class="en ev-anchor-bottom" data-k="cardGestationQ">Vet check due</p>
                 <p class="en ev-cow-breed"><span class="ev-cow-name" data-k="nmLakshmi">Lakshmi</span><span class="ev-cow-sub" data-k="brSahiwal">Sahiwal</span></p>
-                <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-gestation','p1');">View details ›</button>
+                <button class="en ev-photo-viewdetails" data-k="viewDetailsLabel" onclick="event.stopPropagation(); openCardDetail('ev-gestation','p1');">View details ›</button>
                 <div style="min-width:0;">
-                  <p id="ev-gestation-title" class="ev-title" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">3-month vet check due — Lakshmi</p>
+                  <p id="ev-gestation-title" class="ev-title" data-k="gestTitle3" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">3-month vet check due — Lakshmi</p>
                   <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
-                  <button class="en ev-viewdetails" onclick="openCardDetail('ev-gestation','p1')">View Details ›</button>
-                  <p id="ev-gestation-sub" class="ev-sub">Routine pregnancy vet check — confirm once done.</p>
+                  <button class="en ev-viewdetails" data-k="viewDetailsLabel" onclick="openCardDetail('ev-gestation','p1')">View Details ›</button>
+                  <p id="ev-gestation-sub" class="ev-sub" data-k="gestSub">Routine pregnancy vet check — confirm once done.</p>
                   <p class="en ev-meta" data-k="metaPregConf">Green Valley Farm · Belt 52 · confirmed pregnant 4 Oct</p>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
                   <span class="en ev-chip ev-chip-p1" style="display:inline-flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>P1</span>
                 </div>
                 <div class="ev-body">
-                  <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Vet check completed</button>
+                  <button class="ev-ack" style="width:100%; min-height:44px; margin-top:12px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);"><span data-k="gestAck">Vet check completed</span></button>
                 </div>
               </div>
 
@@ -1708,7 +1708,7 @@
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>30 min ago</span>
                 <p class="en ev-anchor-bottom" data-k="cardMilkQ">Start milking?</p>
                 <p class="en ev-cow-breed"><span class="ev-cow-name" data-k="nmLakshmi">Lakshmi</span><span class="ev-cow-sub" data-k="brOngole">Ongole</span></p>
-                <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-milk-notif','p1');">View details ›</button>
+                <button class="en ev-photo-viewdetails" data-k="viewDetailsLabel" onclick="event.stopPropagation(); openCardDetail('ev-milk-notif','p1');">View details ›</button>
                 <p class="ev-title" style="display:none;" id="ev-milk-notif-title">Lakshmi is now in her lactation period (250 days)</p>
                 <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
                 <p class="ev-sub" data-k="subMilkNotif">Add her to the milking list?</p>
@@ -1735,11 +1735,11 @@
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>1d ago</span>
                 <p class="en ev-anchor-bottom" data-k="cardLactationQ">Still milking?</p>
                 <p class="en ev-cow-breed"><span class="ev-cow-name" data-k="nmLakshmi">Lakshmi</span><span class="ev-cow-sub" data-k="brOngole">Ongole</span></p>
-                <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-lactation-check','p1');">View details ›</button>
+                <button class="en ev-photo-viewdetails" data-k="viewDetailsLabel" onclick="event.stopPropagation(); openCardDetail('ev-lactation-check','p1');">View details ›</button>
                 <div style="min-width:0;">
                   <p class="ev-title" data-k="titleLactation" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Lactation period ending — Lakshmi</p>
                   <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
-                  <button class="en ev-viewdetails" onclick="openCardDetail('ev-lactation-check','p1')">View Details ›</button>
+                  <button class="en ev-viewdetails" data-k="viewDetailsLabel" onclick="openCardDetail('ev-lactation-check','p1')">View Details ›</button>
                   <p class="ev-sub" data-k="subLactation">Is Lakshmi still milking, or has she entered her resting period?</p>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
@@ -1760,7 +1760,7 @@
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>CRITICAL</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>15 min ago</span>
                 <p class="en ev-anchor-bottom" data-k="cardAbortQ">Loss signs?</p>
-                <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-abort','p0');">View details ›</button>
+                <button class="en ev-photo-viewdetails" data-k="viewDetailsLabel" onclick="event.stopPropagation(); openCardDetail('ev-abort','p0');">View details ›</button>
                 <p class="ev-title" data-k="titleAbort" style="display:none;">Possible pregnancy loss — Mohini</p>
                 <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Suresh Yadav</p>
                 <p class="ev-sub" data-k="subAbort">Sudden drop in rumination with a sustained temperature rise over the last 3 hours.</p>
@@ -1770,7 +1770,7 @@
                 <p class="en ev-imhide" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Does Mohini show these signs?</p>
                 <div class="ev-body" onclick="event.stopPropagation();">
                   <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>No</button>
+                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span data-k="ctaNo">No</span></button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M20 6 9 17l-5-5"/></svg>Yes, notify vet</button>
                   </div>
                 </div>
@@ -1782,7 +1782,7 @@
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>CRITICAL</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>45 min ago</span>
                 <p class="en ev-anchor-bottom" data-k="cardFreshcowQ">Cow unwell?</p>
-                <button class="en ev-photo-viewdetails" onclick="event.stopPropagation(); openCardDetail('ev-freshcow','p0');">View details ›</button>
+                <button class="en ev-photo-viewdetails" data-k="viewDetailsLabel" onclick="event.stopPropagation(); openCardDetail('ev-freshcow','p0');">View details ›</button>
                 <p class="ev-title" data-k="titleFreshcow" style="display:none;">Fresh cow health dip — Ganga</p>
                 <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
                 <p class="ev-sub" data-k="subFreshcow">Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.</p>
@@ -1792,7 +1792,7 @@
                 <p class="en ev-imhide" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;">Does Ganga seem off to you?</p>
                 <div class="ev-body" onclick="event.stopPropagation();">
                   <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>No</button>
+                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span data-k="ctaNo">No</span></button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M20 6 9 17l-5-5"/></svg>Yes, notify vet</button>
                   </div>
                 </div>
@@ -1804,7 +1804,7 @@
                   <div style="min-width:0;">
                     <p class="ev-title" data-k="titleMast" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible mastitis — Bhoori</p>
                     <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
-                    <button class="en ev-viewdetails" onclick="openCardDetail('ev-mastitis','p2')">View Details ›</button>
+                    <button class="en ev-viewdetails" data-k="viewDetailsLabel" onclick="openCardDetail('ev-mastitis','p2')">View Details ›</button>
                     <p class="ev-sub" data-k="subMast">Temperature up and feeding down — possible udder infection.</p>
                     <p class="en ev-meta" data-k="metaMast">Green Valley Farm · Belt 09</p>
                   </div>
@@ -1813,7 +1813,7 @@
                 <div class="ev-body">
                   <p data-k="qMast" style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Bhoori show swelling or milk changes?</p>
                   <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>No</button>
+                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span data-k="ctaNo">No</span></button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--warning); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#111111; font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22V15"/></svg><span data-k="ctaFlagIt">Flag it</span></button>
                   </div>
                 </div>
@@ -1825,7 +1825,7 @@
                   <div style="min-width:0;">
                     <p class="ev-title" data-k="titleLame" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible lameness — Dhauli</p>
                     <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
-                    <button class="en ev-viewdetails" onclick="openCardDetail('ev-lameness','p2')">View Details ›</button>
+                    <button class="en ev-viewdetails" data-k="viewDetailsLabel" onclick="openCardDetail('ev-lameness','p2')">View Details ›</button>
                     <p class="ev-sub" data-k="subLame">Barely standing and resting far more than usual — possible leg or hoof issue.</p>
                     <p class="en ev-meta" data-k="metaLame">Green Valley Farm · Belt 18</p>
                   </div>
@@ -1834,7 +1834,7 @@
                 <div class="ev-body">
                   <p data-k="qLame" style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Dhauli seem to be limping?</p>
                   <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>No</button>
+                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span data-k="ctaNo">No</span></button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--warning); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#111111; font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22V15"/></svg><span data-k="ctaFlagIt">Flag it</span></button>
                   </div>
                 </div>
@@ -1846,7 +1846,7 @@
                   <div style="min-width:0;">
                     <p class="ev-title" data-k="titleKeto" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Possible ketosis — Lakshmi</p>
                     <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
-                    <button class="en ev-viewdetails" onclick="openCardDetail('ev-ketosis','p2')">View Details ›</button>
+                    <button class="en ev-viewdetails" data-k="viewDetailsLabel" onclick="openCardDetail('ev-ketosis','p2')">View Details ›</button>
                     <p class="ev-sub" data-k="subKeto">Reduced rumination this early in her milking cycle — a metabolic condition common just after calving.</p>
                     <p class="en ev-meta" data-k="metaKeto">Green Valley Farm · Belt 52 · Day 12 in milk</p>
                   </div>
@@ -1855,7 +1855,7 @@
                 <div class="ev-body">
                   <p data-k="qKeto" style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Does Lakshmi seem lethargic or off her feed?</p>
                   <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>No</button>
+                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span data-k="ctaNo">No</span></button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--warning); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#111111; font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22V15"/></svg><span data-k="ctaFlagIt">Flag it</span></button>
                   </div>
                 </div>
@@ -1873,7 +1873,7 @@
                   <div style="min-width:0;">
                     <p class="ev-title" data-k="titlePro" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Rise in temperature — Kajri</p>
                     <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
-                    <button class="en ev-viewdetails" onclick="openCardDetail('ev-proestrus','p3')">View Details ›</button>
+                    <button class="en ev-viewdetails" data-k="viewDetailsLabel" onclick="openCardDetail('ev-proestrus','p3')">View Details ›</button>
                     <p class="ev-sub" data-k="subPro">A mild temperature rise — possible early signs of heat starting. Movement is normal. We'll alert you again if it strengthens.</p>
                     <p class="en ev-meta" data-k="metaHerd">Green Valley Farm · Belt 63</p>
                   </div>
@@ -1890,7 +1890,7 @@
                   <div style="min-width:0;">
                     <p class="ev-title" data-k="titleHerd" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Herd heat stress — Green Valley Farm</p>
                     <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
-                    <button class="en ev-viewdetails" onclick="openCardDetail('ev-herdstress','p3')">View Details ›</button>
+                    <button class="en ev-viewdetails" data-k="viewDetailsLabel" onclick="openCardDetail('ev-herdstress','p3')">View Details ›</button>
                     <p class="ev-sub" data-k="subHerd">20%+ of cows in this zone are showing a temperature rise together — likely the weather, not individual cows.</p>
                   </div>
                   
@@ -1906,7 +1906,7 @@
                   <div style="min-width:0;">
                     <p class="ev-title" data-k="titleCalib" style="font-size:15px; font-weight:600; color:var(--text1); margin:0;">Collar calibrated — Ganga</p>
                     <p class="en ev-manager" style="font-size:11px; color:var(--text2); margin:2px 0 0; font-weight:500; display:flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh Kumar</p>
-                    <button class="en ev-viewdetails" onclick="openCardDetail('ev-calib','p3')">View Details ›</button>
+                    <button class="en ev-viewdetails" data-k="viewDetailsLabel" onclick="openCardDetail('ev-calib','p3')">View Details ›</button>
                     <p class="ev-sub" data-k="subCalib">Her new collar has finished calibrating and is now live-monitored.</p>
                   </div>
                   
@@ -2056,7 +2056,7 @@
               <button id="ev-detail-back" style="width:36px; height:36px; border-radius:18px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; cursor:pointer;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
               </button>
-              <p class="en" style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Details</p>
+              <p class="en" data-k="detailHeader" style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">Details</p>
             </div>
             <div style="padding:4px 20px 24px;">
               <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
@@ -2072,7 +2072,7 @@
               <p id="ev-detail-meta" class="en" style="font-size:12px; color:var(--text2); margin:4px 0 0;"></p>
               <p id="ev-detail-sub" style="font-size:14px; color:var(--text1); line-height:1.6; margin:10px 0 0;"></p>
               <div class="ev-detail-graph">
-                <p class="ev-detail-graph-label en">TEMPERATURE — LAST 10 DAYS</p>
+                <p class="ev-detail-graph-label en" data-k="graphTemp">TEMPERATURE — LAST 10 DAYS</p>
                 <div id="ev-detail-temp" style="margin-top:4px;"></div>
                 <div style="display:flex; justify-content:space-between; margin-top:4px;">
                   <span id="ev-detail-temp-min" class="en" style="font-size:10px; color:var(--text2);"></span>
@@ -2080,7 +2080,7 @@
                 </div>
               </div>
               <div class="ev-detail-graph">
-                <p class="ev-detail-graph-label en">MOVEMENT — LAST 10 DAYS</p>
+                <p class="ev-detail-graph-label en" data-k="graphMove">MOVEMENT — LAST 10 DAYS</p>
                 <div id="ev-detail-move" style="margin-top:4px; height:34px; display:flex; align-items:flex-end; gap:3px;"></div>
               </div>
               <div id="ev-detail-cta" style="margin-top:14px;"></div>
@@ -2400,6 +2400,17 @@
                histInsemT:'Inseminated — Mohini',
                histInsemSub:'Within the 18h window — pregnancy check set for 3 Jul',
                stg21Watch:'21-DAY WATCH',
+               gestTitle3:'3-month vet check due — Lakshmi',
+               gestSub:'Routine pregnancy vet check — confirm once done.',
+               gestAck:'Vet check completed',
+               detailHeader:'Details',
+               graphTemp:'TEMPERATURE — LAST 10 DAYS',
+               graphMove:'MOVEMENT — LAST 10 DAYS',
+               baselineWord:'baseline',
+               todayWord:'today',
+               badgeCritical:'CRITICAL',
+               badgeAction:'ACTION',
+               badgeWarning:'WARNING',
  },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
@@ -2504,6 +2515,17 @@
                histInsemT:'गर्भाधान — मोहिनी',
                histInsemSub:'18 घंटे की विंडो में — गर्भ जांच 3 जुलाई को',
                stg21Watch:'21-दिन निगरानी',
+               gestTitle3:'3-माह पशु चिकित्सक जांच बाकी — लक्ष्मी',
+               gestSub:'नियमित गर्भ पशु जांच — पूरा होने पर पुष्टि करें।',
+               gestAck:'पशु जांच पूरी',
+               detailHeader:'विवरण',
+               graphTemp:'तापमान — पिछले 10 दिन',
+               graphMove:'हलचल — पिछले 10 दिन',
+               baselineWord:'आधार',
+               todayWord:'आज',
+               badgeCritical:'गंभीर',
+               badgeAction:'कार्रवाई',
+               badgeWarning:'चेतावनी',
  },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
@@ -2608,6 +2630,17 @@
                histInsemT:'गर्भाधान — मोहिनी',
                histInsemSub:'18 घंटा के विंडो में — गर्भ जांच 3 जुलाई के',
                stg21Watch:'21-दिन निगरानी',
+               gestTitle3:'3-महीना पशु डॉक्टर जांच बाकी — लक्ष्मी',
+               gestSub:'नियमित गर्भ पशु जांच — पूरा होखे पर पुष्टि करीं।',
+               gestAck:'पशु जांच पूरा',
+               detailHeader:'विवरण',
+               graphTemp:'तापमान — पिछला 10 दिन',
+               graphMove:'हलचल — पिछला 10 दिन',
+               baselineWord:'आधार',
+               todayWord:'आज',
+               badgeCritical:'गंभीर',
+               badgeAction:'कार्रवाई',
+               badgeWarning:'चेतावनी',
  }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
@@ -4205,7 +4238,7 @@
           document.getElementById('ev-detail-sub').textContent = subEl ? subEl.textContent : '';
           document.getElementById('ev-detail-meta').textContent = metaEl ? metaEl.textContent : '';
           var badge = document.getElementById('ev-detail-badge');
-          badge.textContent = EV_PRIORITY_LABEL[priority] || '';
+          badge.textContent = window.t()[{p0:'badgeCritical',p1:'badgeAction',p2:'badgeWarning',p3:'badgeWarning'}[priority]] || '';
           badge.setAttribute('style', 'flex-shrink:0; border-radius:10px; padding:3px 8px; font-size:10px; font-weight:600; white-space:nowrap; ' + (EV_PRIORITY_STYLE[priority] || ''));
 
           var temps = evMockTemps(cardId), moves = evMockMoves(cardId);
@@ -4216,8 +4249,8 @@
             return x.toFixed(1) + ',' + y.toFixed(1);
           }).join(' ');
           document.getElementById('ev-detail-temp').innerHTML = '<svg viewBox="0 0 100 30" preserveAspectRatio="none" style="display:block; width:100%; height:34px;"><polyline points="' + pts + '" fill="none" stroke="var(--warning)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="100" cy="' + (26 - ((temps[temps.length - 1] - min) / (max - min || 1)) * 22).toFixed(1) + '" r="3" fill="var(--danger)" stroke="#fff" stroke-width="1"/></svg>';
-          document.getElementById('ev-detail-temp-min').textContent = min.toFixed(1) + '°C baseline';
-          document.getElementById('ev-detail-temp-today').textContent = temps[temps.length - 1].toFixed(1) + '°C today';
+          document.getElementById('ev-detail-temp-min').textContent = min.toFixed(1) + '°C ' + window.t().baselineWord;
+          document.getElementById('ev-detail-temp-today').textContent = temps[temps.length - 1].toFixed(1) + '°C ' + window.t().todayWord;
           var mmax = Math.max.apply(null, moves);
           var mmin = Math.min.apply(null, moves);
           // Only highlight the last bar as a spike if movement actually moved —
@@ -4931,7 +4964,7 @@
           return '<div class="en farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--bgcard); border:' + (dashed ? '2px dashed var(--border)' : '1px solid var(--border)') + '; border-radius:16px; padding:16px; margin-bottom:12px; cursor:pointer;">' +
             '<div style="min-width:0;">' +
               '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">' + f.name + '</p>' +
-              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' ' + window.t().wordCattle + ' · ' + f.manager + '</p>' +
+              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' ' + window.t().wordCattle + ' · ' + (f.manager === 'Unassigned' ? window.t().unassignedWord : f.manager) + '</p>' +
             '</div>' +
             '<div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">' +
               farmStatusBadge(f) +
@@ -4989,7 +5022,7 @@
             '<div style="flex-shrink:0; width:44px; height:44px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:16px;">✕</div>' +
             '<div style="flex:1; min-width:0;">' +
               '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + c.name + ' — ' + c.no + '</p>' +
-              '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + c.age + ' · ' + c.belt + '</p>' +
+              '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + c.age.replace('yrs', window.t().yrsWord) + ' · ' + c.belt.replace('Belt', window.t().beltWord) + '</p>' +
               '<span style="display:inline-block; margin-top:6px; height:26px; padding:0 12px; border-radius:13px; font-size:12px; font-weight:600; line-height:26px; ' + cattlePillStyle(c.status) + '">' + cattleStatusLabel(c) + '</span>' +
             '</div>' +
             '<div style="flex-shrink:0; text-align:end;">' +
