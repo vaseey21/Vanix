@@ -4651,7 +4651,7 @@
               '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>' +
             '</div>' +
           '</div>';
-        }).join('') || '<p class="en" style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">No farms match this filter.</p>';
+        }).join('') || '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">' + t().noFarmsMatch + '</p>';
         document.querySelectorAll('.farm-row').forEach(function(row) {
           row.addEventListener('click', function() { openFarmDetail(row.getAttribute('data-farm')); });
         });
