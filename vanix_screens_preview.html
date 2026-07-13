@@ -3025,9 +3025,9 @@
         document.querySelectorAll('.ev-dot').forEach(function(d) { d.style.display = evOpen > 0 ? 'block' : 'none'; });
         var pill = document.getElementById('ev-count-pill');
         if (evOpen > 0) {
-          pill.textContent = evOpen + ' need' + (evOpen === 1 ? 's' : '') + ' action';
+          pill.textContent = evOpen + ' ' + t().evNeedAction;
         } else {
-          pill.textContent = 'All clear';
+          pill.textContent = t().allClear;
           pill.style.background = 'var(--activebg)';
           pill.style.borderColor = 'var(--greendeep)';
           pill.style.color = 'var(--greenink)';
