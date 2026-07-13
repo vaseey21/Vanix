@@ -2394,7 +2394,7 @@
         if (typeof renderFarmsList === 'function') renderFarmsList();
         if (typeof renderCattleList === 'function' && typeof currentFarmId !== 'undefined' && currentFarmId) {
           var _farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
-          if (_farm) renderCattleList(_farm);
+          if (_farm) { renderCattleList(_farm); if (typeof refreshFarmDetailHeader === 'function') refreshFarmDetailHeader(_farm); }
         }
         if (window.evSyncQfLabels) window.evSyncQfLabels();
         if (window.evUpdateBadges) window.evUpdateBadges();
