@@ -2096,38 +2096,38 @@
             <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
 
               <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
-                <h2 class="en" style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Farms</h2>
+                <h2 data-k="farmsTitle" style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Farms</h2>
               </div>
 
               <div style="padding:14px 16px 0;">
                 <div style="display:flex; gap:8px;">
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
                     <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">3</p>
-                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Total Farms</p>
+                    <p data-k="statTotalFarms" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Total Farms</p>
                   </div>
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
                     <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">118 <span style="font-size:12px; font-weight:600;">L</span></p>
-                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
+                    <p data-k="statMilkToday" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
                   </div>
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
                     <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">3</p>
-                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
+                    <p data-k="statUnactionedAlerts" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
                   </div>
                 </div>
 
                 <div style="display:flex; gap:8px; margin-top:14px; position:relative;">
                   <div class="farms-search-wrap" style="flex:1; display:flex; align-items:center; gap:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; height:46px; padding:0 14px;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-                    <input type="text" id="farms-search" class="en" placeholder="Search farms" style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
+                    <input type="text" id="farms-search" placeholder="Search farms" data-k="searchFarms" data-k-placeholder style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
                   </div>
                   <button id="farms-filter-btn" style="flex-shrink:0; width:46px; height:46px; border-radius:14px; border:1px solid var(--border); background:var(--bgcard); display:flex; align-items:center; justify-content:center;">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                   </button>
                   <div id="farms-filter-menu" style="display:none; position:absolute; top:52px; right:0; z-index:10; min-width:190px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.22); padding:6px;">
-                    <button class="farms-filter-opt on en" data-val="all" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">All Farms</button>
-                    <button class="farms-filter-opt en" data-val="healthy" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Healthy Farms</button>
-                    <button class="farms-filter-opt en" data-val="attention" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Need Attention</button>
-                    <button class="farms-filter-opt en" data-val="setup" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Setup Required</button>
+                    <button class="farms-filter-opt on en" data-val="all" data-k="filterAllFarms" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">All Farms</button>
+                    <button class="farms-filter-opt en" data-val="healthy" data-k="filterHealthy" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Healthy Farms</button>
+                    <button class="farms-filter-opt en" data-val="attention" data-k="filterAttention" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Need Attention</button>
+                    <button class="farms-filter-opt en" data-val="setup" data-k="filterSetup" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Setup Required</button>
                   </div>
                 </div>
 
@@ -2185,7 +2185,7 @@
                   </div>
                   <div style="flex-shrink:0; text-align:end;">
                     <p id="farm-detail-temp" class="en" style="font-size:19px; font-weight:700; color:var(--text1); margin:0;">33°C</p>
-                    <p class="en" style="font-size:11px; font-style:italic; color:var(--text2); margin:1px 0 0;">Farm temp</p>
+                    <p data-k="farmTempCaption" style="font-size:11px; font-style:italic; color:var(--text2); margin:1px 0 0;">Farm temp</p>
                   </div>
                 </div>
               </div>
@@ -2194,24 +2194,24 @@
                 <div style="display:flex; gap:8px;">
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
                     <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-milk">40</span> <span style="font-size:12px; font-weight:600;">L</span> <span style="color:var(--greenink);">▲</span></p>
-                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
+                    <p data-k="statMilkToday" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
                   </div>
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
                     <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-alerts">2</span> <span style="color:var(--danger);">▲</span></p>
-                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
+                    <p data-k="statUnactionedAlerts" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
                   </div>
                 </div>
 
                 <div class="farms-search-wrap" style="display:flex; align-items:center; gap:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; height:46px; padding:0 14px; margin-top:14px;">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-                  <input type="text" id="cattle-search" class="en" placeholder="Search cattle" style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
+                  <input type="text" id="cattle-search" placeholder="Search cattle" data-k="searchCattle" data-k-placeholder style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
                 </div>
 
                 <div id="cattle-status-tabs" style="display:flex; gap:8px; margin:12px 0 0; overflow-x:auto; padding-bottom:2px;">
-                  <button class="cattle-tab on en" data-status="all" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--greenink); background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi);">All</button>
-                  <button class="cattle-tab en" data-status="Milking" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Milking</button>
-                  <button class="cattle-tab en" data-status="Fever" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Fever</button>
-                  <button class="cattle-tab en" data-status="Heat" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Heat</button>
+                  <button class="cattle-tab on en" data-status="all" data-k="cattleAll" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--greenink); background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi);">All</button>
+                  <button class="cattle-tab en" data-status="Milking" data-k="cattleMilking" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Milking</button>
+                  <button class="cattle-tab en" data-status="Fever" data-k="cattleFever" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Fever</button>
+                  <button class="cattle-tab en" data-status="Heat" data-k="cattleHeat" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Heat</button>
                 </div>
 
                 <div id="cattle-list" style="margin-top:12px;"></div>
@@ -2223,7 +2223,7 @@
             <button id="farm-detail-fab" title="Add cattle" style="position:absolute; right:18px; bottom:104px; width:56px; height:56px; border-radius:50%; background:var(--greenink); border:none; box-shadow:0 10px 24px rgba(0,0,0,0.28); padding:0; display:flex; align-items:center; justify-content:center; z-index:3;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
             </button>
-            <p class="en" style="position:absolute; right:18px; bottom:82px; font-size:11px; color:var(--text2); margin:0; z-index:3;">Add Cattle</p>
+            <p data-k="addCattle" style="position:absolute; right:18px; bottom:82px; font-size:11px; color:var(--text2); margin:0; z-index:3;">Add Cattle</p>
 
             </div>
 
@@ -4644,7 +4644,7 @@
           return '<div class="en farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--bgcard); border:' + (dashed ? '2px dashed var(--border)' : '1px solid var(--border)') + '; border-radius:16px; padding:16px; margin-bottom:12px; cursor:pointer;">' +
             '<div style="min-width:0;">' +
               '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">' + f.name + '</p>' +
-              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' cattle · ' + f.manager + '</p>' +
+              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' ' + t().wordCattle + ' · ' + f.manager + '</p>' +
             '</div>' +
             '<div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">' +
               farmStatusBadge(f) +
