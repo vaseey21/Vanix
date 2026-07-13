@@ -4604,9 +4604,9 @@
 
       var cattleStatusFilter = 'all';
       function cattlePillStyle(status) {
-        // Heat Cycle is the one filled/black pill in the reference mockup;
-        // every other status is an outline pill.
-        if (status === 'Heat') return 'background:var(--dark1); border:1px solid var(--dark1); color:#fff;';
+        // Heat Cycle is the one filled pill (brand green, not black) that
+        // stands out; every other status is an outline pill.
+        if (status === 'Heat') return 'background:var(--greenink); border:1px solid var(--greenink); color:#fff;';
         return 'background:transparent; border:1px solid var(--border); color:var(--text1);';
       }
       function renderCattleList(farm) {
