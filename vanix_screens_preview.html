@@ -2129,8 +2129,19 @@
                phEmail:'आपन ईमेल डालीं',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' }
       };
-      var lang = 'en';
+      var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
+      function setLang(newLang) {
+        lang = newLang;
+        localStorage.setItem('vanixLang', lang);
+        var curEl = document.getElementById('s1-lang-cur');
+        if (curEl) curEl.textContent = LANG_LABEL[lang];
+        document.querySelectorAll('.s1-ls-row').forEach(function(r) {
+          var chk = r.querySelector('.s1-ls-check');
+          if (chk) chk.style.display = (r.getAttribute('data-lang') === lang) ? 'block' : 'none';
+        });
+        applyLang();
+      }
 
       function applyLang() {
         document.getElementById('s1-title').textContent   = t().title;
