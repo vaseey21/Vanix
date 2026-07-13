@@ -4683,6 +4683,13 @@
         if (status === 'Heat') return 'background:var(--greenink); border:1px solid var(--greenink); color:#fff;';
         return 'background:transparent; border:1px solid var(--border); color:var(--text1);';
       }
+      // status key -> translation key (labels are cow-status names, not the
+      // English filter values in c.status, so they translate independently)
+      var CATTLE_STATUS_K = { Milking:'statusMilking', Pregnant:'statusPregnant', Heat:'statusHeatCycle' };
+      function cattleStatusLabel(c) {
+        var k = CATTLE_STATUS_K[c.status];
+        return k ? t()[k] : (c.label || c.status);
+      }
       function renderCattleList(farm) {
         var q = (document.getElementById('cattle-search').value || '').trim().toLowerCase();
         var cows = farm.cows.filter(function(c) {
