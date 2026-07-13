@@ -1559,7 +1559,7 @@
               </div>
 
               <div id="ev-sec-action">
-              <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs action</p>
+              <p data-k="qfNeedsAction" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs action</p>
 
               <!-- 1. Suspected fever -->
               <div class="ev-card ev-photo-card p0" id="ev-fever" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; cursor:pointer;" onclick="openCardDetail('ev-fever','p0')">
@@ -1865,7 +1865,7 @@
 
               <div id="ev-sec-warn" style="display:none;">
               <!-- ── WARNINGS — P3, single-acknowledge, lower urgency ── -->
-              <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Warnings</p>
+              <p data-k="qfWarnings" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Warnings</p>
 
               <!-- 9. Rise in temperature — early heat heads-up -->
               <div class="ev-card ev-card-p3" id="ev-proestrus" style="border-radius:16px; padding:14px 16px; margin-bottom:10px;">
@@ -1920,7 +1920,7 @@
 
               <div id="ev-sec-rem">
               <!-- ── REMINDERS ── -->
-              <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Reminders</p>
+              <p data-k="remindersHeader" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Reminders</p>
 
               <div class="ev-rem" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:13px 16px; margin-bottom:8px; display:flex; gap:12px; align-items:center;">
                 <div style="width:36px; height:36px; border-radius:10px; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-2 8H7c0-3-2-5-2-8a7 7 0 0 1 7-7z"/><path d="M9 21h6"/></svg></div>
@@ -2314,7 +2314,7 @@
                qfType:'Type', qfUnactioned:'Unactioned', qfCriticality:'Criticality', qfCategory:'Category',
                qfAllTypes:'All types', qfNeedsAction:'Needs action', qfWarnings:'Warnings', qfReminder:'Reminder',
                qfAllLevels:'All levels', qfCritical:'Critical', qfMedium:'Medium', qfLow:'Low',
-               qfAllCategories:'All categories', needsActionHeader:'Needs action', allClear:'All clear' },
+               qfAllCategories:'All categories', needsActionHeader:'Needs action', allClear:'All clear', remindersHeader:'Reminders' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -2332,7 +2332,7 @@
                qfType:'प्रकार', qfUnactioned:'अनसुलझे', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
                qfAllTypes:'सभी प्रकार', qfNeedsAction:'कार्रवाई चाहिए', qfWarnings:'चेतावनी', qfReminder:'अनुस्मारक',
                qfAllLevels:'सभी स्तर', qfCritical:'गंभीर', qfMedium:'मध्यम', qfLow:'कम',
-               qfAllCategories:'सभी श्रेणियाँ', needsActionHeader:'कार्रवाई चाहिए', allClear:'सब ठीक है' },
+               qfAllCategories:'सभी श्रेणियाँ', needsActionHeader:'कार्रवाई चाहिए', allClear:'सब ठीक है', remindersHeader:'अनुस्मारक' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -2350,7 +2350,7 @@
                qfType:'प्रकार', qfUnactioned:'ना सुलझल', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
                qfAllTypes:'सगरी प्रकार', qfNeedsAction:'कार्रवाई के जरूरत', qfWarnings:'चेतावनी', qfReminder:'अनुस्मारक',
                qfAllLevels:'सगरी स्तर', qfCritical:'गंभीर', qfMedium:'मध्यम', qfLow:'कम',
-               qfAllCategories:'सगरी श्रेणी', needsActionHeader:'कार्रवाई के जरूरत', allClear:'सब ठीक बा' }
+               qfAllCategories:'सगरी श्रेणी', needsActionHeader:'कार्रवाई के जरूरत', allClear:'सब ठीक बा', remindersHeader:'अनुस्मारक' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }

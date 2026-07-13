@@ -192,8 +192,8 @@
     .ev-qf-btn { display:flex; align-items:center; gap:4px; height:34px; padding:0 10px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi); cursor:pointer; white-space:nowrap; }
     .ev-qf-btn svg { transition:transform 0.2s ease; }
     .ev-qf.open .ev-qf-btn svg { transform:rotate(180deg); }
-    .ev-qf.active .ev-qf-btn { background:var(--dark1); color:#FFFFFF; border-color:var(--dark1); font-weight:600; }
-    .ev-qf-toggle.active { background:var(--dark1); color:#FFFFFF; border-color:var(--dark1); font-weight:600; }
+    .ev-qf.active .ev-qf-btn { background:var(--greenink); color:#FFFFFF; border-color:var(--greenink); font-weight:600; }
+    .ev-qf-toggle.active { background:var(--greenink); color:#FFFFFF; border-color:var(--greenink); font-weight:600; }
     #flow-root.dark .ev-qf-toggle.active { background:#F5F5F5; color:#111111; border-color:#F5F5F5; }
     .ev-qf-menu { display:none; position:absolute; top:40px; inset-inline-start:0; z-index:30; min-width:170px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.22); padding:6px; }
     .ev-qf.open .ev-qf-menu { display:block; }
@@ -1400,12 +1400,12 @@
             <!-- HERO -->
             <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
               <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-                <h2 style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Events</h2>
+                <h2 data-k="evTitle" style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Events</h2>
                 <span id="ev-count-pill" class="en" style="background:var(--dangerbg); border:1px solid var(--danger); border-radius:14px; padding:4px 12px; font-size:12px; font-weight:600; color:#8B2800;">14 need action</span>
               </div>
               <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
-                <p style="font-size:12px; color:var(--text2); margin:0;">Health, breeding and reminders across all your farms</p>
-                <button id="ev-view-cycle" style="flex-shrink:0; background:transparent; border:none; padding:0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer; display:flex; align-items:center; gap:2px;">View full cycle <span class="en" style="font-size:14px; line-height:1;">›</span></button>
+                <p data-k="evSubtitle" style="font-size:12px; color:var(--text2); margin:0;">Health, breeding and reminders across all your farms</p>
+                <button id="ev-view-cycle" style="flex-shrink:0; background:transparent; border:none; padding:0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer; display:flex; align-items:center; gap:2px;"><span data-k="evViewFullCycle">View full cycle</span> <span class="en" style="font-size:14px; line-height:1;">›</span></button>
               </div>
             </div>
 
@@ -1415,28 +1415,28 @@
               <!-- ── Quick filters (Swiggy-style dropdown chips) ── -->
               <div id="ev-quickfilters">
                 <div class="ev-qf" data-filter="type">
-                  <button class="ev-qf-btn"><span class="ev-qf-label">Type</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <button class="ev-qf-btn"><span class="ev-qf-label" data-k="qfType">Type</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                   <div class="ev-qf-menu">
-                    <button class="ev-qf-opt on" data-val="all">All types</button>
-                    <button class="ev-qf-opt" data-val="action">Needs action</button>
-                    <button class="ev-qf-opt" data-val="warn">Warnings</button>
-                    <button class="ev-qf-opt" data-val="rem">Reminder</button>
+                    <button class="ev-qf-opt on" data-val="all" data-k="qfAllTypes">All types</button>
+                    <button class="ev-qf-opt" data-val="action" data-k="qfNeedsAction">Needs action</button>
+                    <button class="ev-qf-opt" data-val="warn" data-k="qfWarnings">Warnings</button>
+                    <button class="ev-qf-opt" data-val="rem" data-k="qfReminder">Reminder</button>
                   </div>
                 </div>
-                <button id="ev-qf-unactioned" class="ev-qf-btn ev-qf-toggle" type="button">Unactioned</button>
+                <button id="ev-qf-unactioned" class="ev-qf-btn ev-qf-toggle" type="button" data-k="qfUnactioned">Unactioned</button>
                 <div class="ev-qf" data-filter="crit">
-                  <button class="ev-qf-btn"><span class="ev-qf-label">Criticality</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <button class="ev-qf-btn"><span class="ev-qf-label" data-k="qfCriticality">Criticality</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                   <div class="ev-qf-menu">
-                    <button class="ev-qf-opt on" data-val="all">All levels</button>
-                    <button class="ev-qf-opt" data-val="critical">Critical</button>
-                    <button class="ev-qf-opt" data-val="medium">Medium</button>
-                    <button class="ev-qf-opt" data-val="low">Low</button>
+                    <button class="ev-qf-opt on" data-val="all" data-k="qfAllLevels">All levels</button>
+                    <button class="ev-qf-opt" data-val="critical" data-k="qfCritical">Critical</button>
+                    <button class="ev-qf-opt" data-val="medium" data-k="qfMedium">Medium</button>
+                    <button class="ev-qf-opt" data-val="low" data-k="qfLow">Low</button>
                   </div>
                 </div>
                 <div class="ev-qf" data-filter="cat">
-                  <button class="ev-qf-btn"><span class="ev-qf-label">Category</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <button class="ev-qf-btn"><span class="ev-qf-label" data-k="qfCategory">Category</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                   <div class="ev-qf-menu">
-                    <button class="ev-qf-opt on" data-val="all">All categories</button>
+                    <button class="ev-qf-opt on" data-val="all" data-k="qfAllCategories">All categories</button>
                     <button class="ev-qf-opt" data-val="Fever">Fever</button>
                     <button class="ev-qf-opt" data-val="Heat">Heat</button>
                     <button class="ev-qf-opt" data-val="Pregnancy">Pregnancy</button>
@@ -1450,7 +1450,7 @@
               </div>
 
               <div id="ev-sec-action">
-              <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs action</p>
+              <p data-k="qfNeedsAction" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs action</p>
 
               <!-- 1. Suspected fever -->
               <div class="ev-card ev-photo-card p0" id="ev-fever" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; cursor:pointer;" onclick="openCardDetail('ev-fever','p0')">
@@ -1756,7 +1756,7 @@
 
               <div id="ev-sec-warn" style="display:none;">
               <!-- ── WARNINGS — P3, single-acknowledge, lower urgency ── -->
-              <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Warnings</p>
+              <p data-k="qfWarnings" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Warnings</p>
 
               <!-- 9. Rise in temperature — early heat heads-up -->
               <div class="ev-card ev-card-p3" id="ev-proestrus" style="border-radius:16px; padding:14px 16px; margin-bottom:10px;">
@@ -1811,7 +1811,7 @@
 
               <div id="ev-sec-rem">
               <!-- ── REMINDERS ── -->
-              <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Reminders</p>
+              <p data-k="remindersHeader" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">Reminders</p>
 
               <div class="ev-rem" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:13px 16px; margin-bottom:8px; display:flex; gap:12px; align-items:center;">
                 <div style="width:36px; height:36px; border-radius:10px; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-2 8H7c0-3-2-5-2-8a7 7 0 0 1 7-7z"/><path d="M9 21h6"/></svg></div>
@@ -1986,38 +1986,38 @@
             <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
 
               <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
-                <h2 class="en" style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Farms</h2>
+                <h2 data-k="farmsTitle" style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Farms</h2>
               </div>
 
               <div style="padding:14px 16px 0;">
                 <div style="display:flex; gap:8px;">
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
                     <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">3</p>
-                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Total Farms</p>
+                    <p data-k="statTotalFarms" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Total Farms</p>
                   </div>
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
                     <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">118 <span style="font-size:12px; font-weight:600;">L</span></p>
-                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
+                    <p data-k="statMilkToday" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
                   </div>
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
                     <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">3</p>
-                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
+                    <p data-k="statUnactionedAlerts" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
                   </div>
                 </div>
 
                 <div style="display:flex; gap:8px; margin-top:14px; position:relative;">
                   <div class="farms-search-wrap" style="flex:1; display:flex; align-items:center; gap:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; height:46px; padding:0 14px;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-                    <input type="text" id="farms-search" class="en" placeholder="Search farms" style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
+                    <input type="text" id="farms-search" placeholder="Search farms" data-k="searchFarms" data-k-placeholder style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
                   </div>
                   <button id="farms-filter-btn" style="flex-shrink:0; width:46px; height:46px; border-radius:14px; border:1px solid var(--border); background:var(--bgcard); display:flex; align-items:center; justify-content:center;">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                   </button>
                   <div id="farms-filter-menu" style="display:none; position:absolute; top:52px; right:0; z-index:10; min-width:190px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.22); padding:6px;">
-                    <button class="farms-filter-opt on en" data-val="all" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">All Farms</button>
-                    <button class="farms-filter-opt en" data-val="healthy" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Healthy Farms</button>
-                    <button class="farms-filter-opt en" data-val="attention" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Need Attention</button>
-                    <button class="farms-filter-opt en" data-val="setup" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Setup Required</button>
+                    <button class="farms-filter-opt on en" data-val="all" data-k="filterAllFarms" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">All Farms</button>
+                    <button class="farms-filter-opt en" data-val="healthy" data-k="filterHealthy" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Healthy Farms</button>
+                    <button class="farms-filter-opt en" data-val="attention" data-k="filterAttention" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Need Attention</button>
+                    <button class="farms-filter-opt en" data-val="setup" data-k="filterSetup" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Setup Required</button>
                   </div>
                 </div>
 
@@ -2075,7 +2075,7 @@
                   </div>
                   <div style="flex-shrink:0; text-align:end;">
                     <p id="farm-detail-temp" class="en" style="font-size:19px; font-weight:700; color:var(--text1); margin:0;">33°C</p>
-                    <p class="en" style="font-size:11px; font-style:italic; color:var(--text2); margin:1px 0 0;">Farm temp</p>
+                    <p data-k="farmTempCaption" style="font-size:11px; font-style:italic; color:var(--text2); margin:1px 0 0;">Farm temp</p>
                   </div>
                 </div>
               </div>
@@ -2084,24 +2084,24 @@
                 <div style="display:flex; gap:8px;">
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
                     <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-milk">40</span> <span style="font-size:12px; font-weight:600;">L</span> <span style="color:var(--greenink);">▲</span></p>
-                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
+                    <p data-k="statMilkToday" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
                   </div>
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
                     <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-alerts">2</span> <span style="color:var(--danger);">▲</span></p>
-                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
+                    <p data-k="statUnactionedAlerts" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
                   </div>
                 </div>
 
                 <div class="farms-search-wrap" style="display:flex; align-items:center; gap:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; height:46px; padding:0 14px; margin-top:14px;">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-                  <input type="text" id="cattle-search" class="en" placeholder="Search cattle" style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
+                  <input type="text" id="cattle-search" placeholder="Search cattle" data-k="searchCattle" data-k-placeholder style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
                 </div>
 
                 <div id="cattle-status-tabs" style="display:flex; gap:8px; margin:12px 0 0; overflow-x:auto; padding-bottom:2px;">
-                  <button class="cattle-tab on en" data-status="all" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi);">All</button>
-                  <button class="cattle-tab en" data-status="Milking" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Milking</button>
-                  <button class="cattle-tab en" data-status="Fever" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Fever</button>
-                  <button class="cattle-tab en" data-status="Heat" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Heat</button>
+                  <button class="cattle-tab on en" data-status="all" data-k="cattleAll" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--greenink); background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi);">All</button>
+                  <button class="cattle-tab en" data-status="Milking" data-k="cattleMilking" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Milking</button>
+                  <button class="cattle-tab en" data-status="Fever" data-k="cattleFever" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Fever</button>
+                  <button class="cattle-tab en" data-status="Heat" data-k="cattleHeat" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Heat</button>
                 </div>
 
                 <div id="cattle-list" style="margin-top:12px;"></div>
@@ -2110,10 +2110,10 @@
 
             </div><!-- /scroll -->
 
-            <button id="farm-detail-fab" title="Add cattle" style="position:absolute; right:18px; bottom:104px; width:56px; height:56px; border-radius:50%; background:var(--dark1); border:none; box-shadow:0 10px 24px rgba(0,0,0,0.28); padding:0; display:flex; align-items:center; justify-content:center; z-index:3;">
+            <button id="farm-detail-fab" title="Add cattle" style="position:absolute; right:18px; bottom:104px; width:56px; height:56px; border-radius:50%; background:var(--greenink); border:none; box-shadow:0 10px 24px rgba(0,0,0,0.28); padding:0; display:flex; align-items:center; justify-content:center; z-index:3;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
             </button>
-            <p class="en" style="position:absolute; right:18px; bottom:82px; font-size:11px; color:var(--text2); margin:0; z-index:3;">Add Cattle</p>
+            <p data-k="addCattle" style="position:absolute; right:18px; bottom:82px; font-size:11px; color:var(--text2); margin:0; z-index:3;">Add Cattle</p>
 
             </div>
 
@@ -2190,20 +2190,63 @@
                vtitle:'Verification', sent:'OTP was sent to', desc:'Enter the code to log in securely to your account.',
                enterotp:'ENTER OTP', timer:'Time Remaining', nootp:"Didn't receive OTP?", resend:'Resend', confirm:'Confirm',
                phEmail:'you@example.com',
-               navHome:'Home', navFarms:'Farms', navMilk:'Milk', navEvents:'Events', navAccount:'Account' },
+               navHome:'Home', navFarms:'Farms', navMilk:'Milk', navEvents:'Events', navAccount:'Account',
+               sevCritical:'CRITICAL', sevMedium:'MEDIUM', sevLow:'LOW',
+               farmsTitle:'Farms', statTotalFarms:'Total Farms', statMilkToday:'Milk Today', statUnactionedAlerts:'Unactioned Alerts',
+               searchFarms:'Search farms', filterAllFarms:'All Farms', filterHealthy:'Healthy Farms', filterAttention:'Need Attention', filterSetup:'Setup Required',
+               wordCattle:'cattle', setupBadge:'Setup', noFarmsMatch:'No farms match this filter.',
+               managerWord:'Manager', farmTempCaption:'Farm temp', searchCattle:'Search cattle',
+               cattleAll:'All', cattleMilking:'Milking', cattleFever:'Fever', cattleHeat:'Heat',
+               cowTempCaption:'cow temp', addCattle:'Add Cattle', noCattleYet:'No cattle yet on this farm.', tapAddCattle:'Tap "Add Cattle" below to get started.', noCattleMatch:'No cattle match this filter.',
+               statusMilking:'Milking', statusPregnant:'Pregnant', statusHeatCycle:'Heat Cycle',
+               evTitle:'Events', evSubtitle:'Health, breeding and reminders across all your farms', evViewFullCycle:'View full cycle', evNeedAction:'need action',
+               qfType:'Type', qfUnactioned:'Unactioned', qfCriticality:'Criticality', qfCategory:'Category',
+               qfAllTypes:'All types', qfNeedsAction:'Needs action', qfWarnings:'Warnings', qfReminder:'Reminder',
+               qfAllLevels:'All levels', qfCritical:'Critical', qfMedium:'Medium', qfLow:'Low',
+               qfAllCategories:'All categories', needsActionHeader:'Needs action', allClear:'All clear', remindersHeader:'Reminders' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
                phEmail:'अपना ईमेल डालें',
-               navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' },
+               navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता',
+               sevCritical:'गंभीर', sevMedium:'मध्यम', sevLow:'कम',
+               farmsTitle:'खेत', statTotalFarms:'कुल खेत', statMilkToday:'आज का दूध', statUnactionedAlerts:'अनसुलझी चेतावनी',
+               searchFarms:'खेत खोजें', filterAllFarms:'सभी खेत', filterHealthy:'स्वस्थ खेत', filterAttention:'ध्यान चाहिए', filterSetup:'सेटअप ज़रूरी',
+               wordCattle:'पशु', setupBadge:'सेटअप', noFarmsMatch:'इस फ़िल्टर से कोई खेत नहीं मिला।',
+               managerWord:'प्रबंधक', farmTempCaption:'खेत का तापमान', searchCattle:'पशु खोजें',
+               cattleAll:'सभी', cattleMilking:'दूध देने वाली', cattleFever:'बुखार', cattleHeat:'हीट',
+               cowTempCaption:'पशु का तापमान', addCattle:'पशु जोड़ें', noCattleYet:'इस खेत में अभी कोई पशु नहीं है।', tapAddCattle:'शुरू करने के लिए "पशु जोड़ें" दबाएँ।', noCattleMatch:'इस फ़िल्टर से कोई पशु नहीं मिला।',
+               statusMilking:'दूध दे रही', statusPregnant:'गर्भवती', statusHeatCycle:'हीट साइकिल',
+               evTitle:'कार्यक्रम', evSubtitle:'आपके सभी खेतों में स्वास्थ्य, प्रजनन और अनुस्मारक', evViewFullCycle:'पूरा चक्र देखें', evNeedAction:'को कार्रवाई चाहिए',
+               qfType:'प्रकार', qfUnactioned:'अनसुलझे', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
+               qfAllTypes:'सभी प्रकार', qfNeedsAction:'कार्रवाई चाहिए', qfWarnings:'चेतावनी', qfReminder:'अनुस्मारक',
+               qfAllLevels:'सभी स्तर', qfCritical:'गंभीर', qfMedium:'मध्यम', qfLow:'कम',
+               qfAllCategories:'सभी श्रेणियाँ', needsActionHeader:'कार्रवाई चाहिए', allClear:'सब ठीक है', remindersHeader:'अनुस्मारक' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
                phEmail:'आपन ईमेल डालीं',
-               navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' }
+               navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता',
+               sevCritical:'गंभीर', sevMedium:'मध्यम', sevLow:'कम',
+               farmsTitle:'खेत', statTotalFarms:'कुल खेत', statMilkToday:'आज के दूध', statUnactionedAlerts:'ना सुलझल चेतावनी',
+               searchFarms:'खेत खोजीं', filterAllFarms:'सगरी खेत', filterHealthy:'स्वस्थ खेत', filterAttention:'ध्यान के जरूरत', filterSetup:'सेटअप जरूरी',
+               wordCattle:'पशु', setupBadge:'सेटअप', noFarmsMatch:'ए फ़िल्टर से कवनो खेत ना मिलल।',
+               managerWord:'प्रबंधक', farmTempCaption:'खेत के तापमान', searchCattle:'पशु खोजीं',
+               cattleAll:'सगरी', cattleMilking:'दूध देवे वाली', cattleFever:'बुखार', cattleHeat:'हीट',
+               cowTempCaption:'पशु के तापमान', addCattle:'पशु जोड़ीं', noCattleYet:'ए खेत में अबतक कवनो पशु नइखे।', tapAddCattle:'शुरू करे खातिर "पशु जोड़ीं" दबाईं।', noCattleMatch:'ए फ़िल्टर से कवनो पशु ना मिलल।',
+               statusMilking:'दूध देत बा', statusPregnant:'गर्भवती', statusHeatCycle:'हीट साइकिल',
+               evTitle:'कार्यक्रम', evSubtitle:'रउरा सगरी खेत में स्वास्थ्य, प्रजनन आ अनुस्मारक', evViewFullCycle:'पूरा चक्र देखीं', evNeedAction:'के कार्रवाई के जरूरत',
+               qfType:'प्रकार', qfUnactioned:'ना सुलझल', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
+               qfAllTypes:'सगरी प्रकार', qfNeedsAction:'कार्रवाई के जरूरत', qfWarnings:'चेतावनी', qfReminder:'अनुस्मारक',
+               qfAllLevels:'सगरी स्तर', qfCritical:'गंभीर', qfMedium:'मध्यम', qfLow:'कम',
+               qfAllCategories:'सगरी श्रेणी', needsActionHeader:'कार्रवाई के जरूरत', allClear:'सब ठीक बा', remindersHeader:'अनुस्मारक' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
+      // Login/OTP lives in its own <script> tag, separate from the main app
+      // script (Farms/Milk/Events) — expose the translation lookup on window
+      // so that script can call window.t() and stay in sync with this one.
+      window.t = t;
       function setLang(newLang) {
         lang = newLang;
         localStorage.setItem('vanixLang', lang);
@@ -2231,6 +2274,19 @@
         document.querySelectorAll('.s1-nav-l').forEach(function(el) {
           el.textContent = t()[el.getAttribute('data-k')];
         });
+        // Generic data-k text/placeholder sweep — every static chrome label
+        // added after login (Farms, Farm Detail, Events) is wired this way so
+        // one language switch updates every screen, not just the nav bar.
+        document.querySelectorAll('[data-k]:not(.s1-nav-l)').forEach(function(el) {
+          var v = t()[el.getAttribute('data-k')];
+          if (v == null) return;
+          if (el.hasAttribute('data-k-placeholder')) el.placeholder = v; else el.textContent = v;
+        });
+        // The Farms/Milk/Events app lives in a separate <script> tag/scope —
+        // it exposes one bridge function that re-renders everything there
+        // built from JS template strings (farm rows, cattle rows, severity
+        // badges, quick-filter labels, the events count pill).
+        if (window.vanixRefreshApp) window.vanixRefreshApp();
       }
 
       // ── Language bottom sheet ──
@@ -2838,15 +2894,16 @@
         document.querySelectorAll('.ev-dot').forEach(function(d) { d.style.display = evOpen > 0 ? 'block' : 'none'; });
         var pill = document.getElementById('ev-count-pill');
         if (evOpen > 0) {
-          pill.textContent = evOpen + ' need' + (evOpen === 1 ? 's' : '') + ' action';
+          pill.textContent = evOpen + ' ' + window.t().evNeedAction;
         } else {
-          pill.textContent = 'All clear';
+          pill.textContent = window.t().allClear;
           pill.style.background = 'var(--activebg)';
           pill.style.borderColor = 'var(--greendeep)';
           pill.style.color = 'var(--greenink)';
         }
       }
       function evResolve() { evOpen = Math.max(0, evOpen - 1); evUpdateBadges(); }
+      window.evUpdateBadges = evUpdateBadges;
       evUpdateBadges();
 
       // Reminders — static "days left" computed once from each card's due
@@ -2937,11 +2994,23 @@
           if (hist) hist.style.display = (t === 'all' && !evUnactioned) ? 'block' : 'none';
         }
         applyEvSections();
+        // Labels are re-derived from data-k every time (via the option's own
+        // data-k, or the filter's default data-k when "all" is selected) so a
+        // language switch mid-session updates whichever text is showing,
+        // including an already-selected option — never a frozen string.
+        function syncQfLabel(qf) {
+          var label = qf.querySelector('.ev-qf-label');
+          var on = qf.querySelector('.ev-qf-opt.on');
+          if (!on || on.getAttribute('data-val') === 'all') {
+            label.textContent = window.t()[label.getAttribute('data-k')];
+          } else {
+            var k = on.getAttribute('data-k');
+            label.textContent = k ? window.t()[k] : on.textContent;
+          }
+        }
         document.querySelectorAll('.ev-qf').forEach(function(qf) {
           var key = qf.getAttribute('data-filter');
           var btn = qf.querySelector('.ev-qf-btn');
-          var label = qf.querySelector('.ev-qf-label');
-          var defLabel = label.textContent;
           btn.addEventListener('click', function(e) {
             e.stopPropagation();
             var wasOpen = qf.classList.contains('open');
@@ -2954,8 +3023,8 @@
               qf.querySelectorAll('.ev-qf-opt').forEach(function(o) { o.classList.remove('on'); });
               opt.classList.add('on');
               var val = opt.getAttribute('data-val');
-              if (val === 'all') { label.textContent = defLabel; qf.classList.remove('active'); }
-              else { label.textContent = opt.textContent; qf.classList.add('active'); }
+              qf.classList.toggle('active', val !== 'all');
+              syncQfLabel(qf);
               qf.classList.remove('open');
               if (key === 'type') {
                 evSectionType = val;
@@ -2967,6 +3036,9 @@
             });
           });
         });
+        window.evSyncQfLabels = function() {
+          document.querySelectorAll('.ev-qf').forEach(syncQfLabel);
+        };
         var unBtn = document.getElementById('ev-qf-unactioned');
         if (unBtn) {
           unBtn.addEventListener('click', function(e) {
@@ -4390,9 +4462,19 @@
       var farmsFilter = 'all';
       var currentFarmId = null;
 
+      // Urgency badges — same CRITICAL/MEDIUM/LOW (red/orange/green) text-banner
+      // convention as the Events cards; replaces the old black "!" circle.
+      var SEVERITY_BADGE = {
+        critical: { label:'sevCritical', color:'var(--danger)' },
+        medium:   { label:'sevMedium',   color:'var(--warning)' },
+        low:      { label:'sevLow',      color:'var(--greenink)' }
+      };
       function farmStatusBadge(f) {
-        if (f.status === 'attention') return '<span style="flex-shrink:0; width:28px; height:28px; border-radius:50%; background:var(--dark1); color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700;">!</span>';
-        if (f.status === 'setup') return '<span class="en" style="flex-shrink:0; height:30px; padding:0 14px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:600; display:flex; align-items:center; font-family:var(--font-hi);">Setup</span>';
+        if (f.status === 'setup') return '<span class="farm-setup-pill" style="flex-shrink:0; height:30px; padding:0 14px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:600; display:flex; align-items:center; font-family:var(--font-hi);">' + window.t().setupBadge + '</span>';
+        if (f.status === 'attention') {
+          var sev = SEVERITY_BADGE[f.severity || 'critical'];
+          return '<span class="farm-sev-badge" data-sev-k="' + sev.label + '" style="flex-shrink:0; height:26px; padding:0 12px; border-radius:13px; font-size:11px; font-weight:700; letter-spacing:0.04em; display:flex; align-items:center; background:' + sev.color + '; color:#fff; font-family:var(--font-hi);">' + window.t()[sev.label] + '</span>';
+        }
         return '<span style="flex-shrink:0; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--text1); display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>';
       }
 
@@ -4408,14 +4490,14 @@
           return '<div class="en farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--bgcard); border:' + (dashed ? '2px dashed var(--border)' : '1px solid var(--border)') + '; border-radius:16px; padding:16px; margin-bottom:12px; cursor:pointer;">' +
             '<div style="min-width:0;">' +
               '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">' + f.name + '</p>' +
-              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' cattle · ' + f.manager + '</p>' +
+              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' ' + window.t().wordCattle + ' · ' + f.manager + '</p>' +
             '</div>' +
             '<div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">' +
               farmStatusBadge(f) +
               '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>' +
             '</div>' +
           '</div>';
-        }).join('') || '<p class="en" style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">No farms match this filter.</p>';
+        }).join('') || '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">' + window.t().noFarmsMatch + '</p>';
         document.querySelectorAll('.farm-row').forEach(function(row) {
           row.addEventListener('click', function() { openFarmDetail(row.getAttribute('data-farm')); });
         });
@@ -4442,10 +4524,17 @@
 
       var cattleStatusFilter = 'all';
       function cattlePillStyle(status) {
-        // Heat Cycle is the one filled/black pill in the reference mockup;
-        // every other status is an outline pill.
-        if (status === 'Heat') return 'background:var(--dark1); border:1px solid var(--dark1); color:#fff;';
+        // Heat Cycle is the one filled pill (brand green, not black) that
+        // stands out; every other status is an outline pill.
+        if (status === 'Heat') return 'background:var(--greenink); border:1px solid var(--greenink); color:#fff;';
         return 'background:transparent; border:1px solid var(--border); color:var(--text1);';
+      }
+      // status key -> translation key (labels are cow-status names, not the
+      // English filter values in c.status, so they translate independently)
+      var CATTLE_STATUS_K = { Milking:'statusMilking', Pregnant:'statusPregnant', Heat:'statusHeatCycle' };
+      function cattleStatusLabel(c) {
+        var k = CATTLE_STATUS_K[c.status];
+        return k ? window.t()[k] : (c.label || c.status);
       }
       function renderCattleList(farm) {
         var q = (document.getElementById('cattle-search').value || '').trim().toLowerCase();
@@ -4460,19 +4549,19 @@
             '<div style="flex:1; min-width:0;">' +
               '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + c.name + ' — ' + c.no + '</p>' +
               '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + c.age + ' · ' + c.belt + '</p>' +
-              '<span style="display:inline-block; margin-top:6px; height:26px; padding:0 12px; border-radius:13px; font-size:12px; font-weight:600; line-height:26px; ' + cattlePillStyle(c.status) + '">' + (c.label || c.status) + '</span>' +
+              '<span style="display:inline-block; margin-top:6px; height:26px; padding:0 12px; border-radius:13px; font-size:12px; font-weight:600; line-height:26px; ' + cattlePillStyle(c.status) + '">' + cattleStatusLabel(c) + '</span>' +
             '</div>' +
             '<div style="flex-shrink:0; text-align:end;">' +
               '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + c.temp + ' <span style="color:var(--danger); font-size:12px;">▲</span></p>' +
-              '<p style="font-size:10px; font-style:italic; color:var(--text2); margin:1px 0 4px;">cow temp</p>' +
+              '<p style="font-size:10px; font-style:italic; color:var(--text2); margin:1px 0 4px;">' + window.t().cowTempCaption + '</p>' +
               '<span style="color:var(--text2); font-size:16px; line-height:1;">⋮</span>' +
             '</div>' +
           '</div>';
         }).join('');
         if (!farm.cows.length) {
-          html = '<p class="en" style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px; line-height:1.6;">No cattle yet on this farm.<br>Tap "Add Cattle" below to get started.</p>';
+          html = '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px; line-height:1.6;">' + window.t().noCattleYet + '<br>' + window.t().tapAddCattle + '</p>';
         } else if (!cows.length) {
-          html = '<p class="en" style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">No cattle match this filter.</p>';
+          html = '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">' + window.t().noCattleMatch + '</p>';
         }
         document.getElementById('cattle-list').innerHTML = html;
       }
@@ -4487,7 +4576,7 @@
             t.style.background = 'var(--bgcard)'; t.style.borderColor = 'var(--border)'; t.style.color = 'var(--text1)'; t.style.fontWeight = '500';
           });
           tab.classList.add('on');
-          tab.style.background = 'var(--dark1)'; tab.style.borderColor = 'var(--dark1)'; tab.style.color = '#FFFFFF'; tab.style.fontWeight = '600';
+          tab.style.background = 'var(--greenink)'; tab.style.borderColor = 'var(--greenink)'; tab.style.color = '#FFFFFF'; tab.style.fontWeight = '600';
           cattleStatusFilter = tab.getAttribute('data-status');
           var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
           if (farm) renderCattleList(farm);
@@ -4501,17 +4590,20 @@
         cattleStatusFilter = 'all';
         document.querySelectorAll('.cattle-tab').forEach(function(t, idx) {
           t.classList.toggle('on', idx === 0);
-          if (idx === 0) { t.style.background = 'var(--dark1)'; t.style.borderColor = 'var(--dark1)'; t.style.color = '#FFFFFF'; t.style.fontWeight = '600'; }
+          if (idx === 0) { t.style.background = 'var(--greenink)'; t.style.borderColor = 'var(--greenink)'; t.style.color = '#FFFFFF'; t.style.fontWeight = '600'; }
           else { t.style.background = 'var(--bgcard)'; t.style.borderColor = 'var(--border)'; t.style.color = 'var(--text1)'; t.style.fontWeight = '500'; }
         });
         document.getElementById('cattle-search').value = '';
         document.getElementById('farm-detail-name').textContent = farm.name;
-        document.getElementById('farm-detail-manager').textContent = farm.manager + ' · Manager';
         document.getElementById('farm-detail-temp').textContent = farm.temp;
         document.getElementById('farm-detail-milk').textContent = farm.milkToday;
         document.getElementById('farm-detail-alerts').textContent = farm.alerts;
+        refreshFarmDetailHeader(farm);
         renderCattleList(farm);
         farmDetailPage.style.display = 'block';
+      }
+      function refreshFarmDetailHeader(farm) {
+        document.getElementById('farm-detail-manager').textContent = farm.manager + ' · ' + window.t().managerWord;
       }
       document.getElementById('farm-detail-back').addEventListener('click', function() {
         farmDetailPage.style.display = 'none';
@@ -4519,6 +4611,19 @@
       document.getElementById('farm-detail-fab').addEventListener('click', function() {
         // Add Cattle is a future flow — no-op placeholder for now.
       });
+
+      // Bridge called from the login script's applyLang() (a separate
+      // <script> tag/scope) whenever the language changes, so every screen
+      // built from JS template strings re-renders with the new copy.
+      window.vanixRefreshApp = function() {
+        renderFarmsList();
+        if (currentFarmId) {
+          var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
+          if (farm) { renderCattleList(farm); refreshFarmDetailHeader(farm); }
+        }
+        if (window.evSyncQfLabels) window.evSyncQfLabels();
+        evUpdateBadges();
+      };
     })();
     </script>
 </body>
