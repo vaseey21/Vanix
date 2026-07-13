@@ -3025,9 +3025,9 @@
         document.querySelectorAll('.ev-dot').forEach(function(d) { d.style.display = evOpen > 0 ? 'block' : 'none'; });
         var pill = document.getElementById('ev-count-pill');
         if (evOpen > 0) {
-          pill.textContent = evOpen + ' ' + t().evNeedAction;
+          pill.textContent = evOpen + ' ' + window.t().evNeedAction;
         } else {
-          pill.textContent = t().allClear;
+          pill.textContent = window.t().allClear;
           pill.style.background = 'var(--activebg)';
           pill.style.borderColor = 'var(--greendeep)';
           pill.style.color = 'var(--greenink)';
@@ -3141,12 +3141,12 @@
           var label = qf.querySelector('.ev-qf-label');
           var on = qf.querySelector('.ev-qf-opt.on');
           if (!on || on.getAttribute('data-val') === 'all') {
-            label.textContent = t()[label.getAttribute('data-k')];
+            label.textContent = window.t()[label.getAttribute('data-k')];
           } else {
             // Category names (Fever/Heat/Pregnancy…) have no data-k yet — they
             // stay untranslated for now and just show their raw option text.
             var k = on.getAttribute('data-k');
-            label.textContent = k ? t()[k] : on.textContent;
+            label.textContent = k ? window.t()[k] : on.textContent;
           }
         }
         document.querySelectorAll('.ev-qf').forEach(function(qf) {
@@ -4627,7 +4627,7 @@
         if (f.status === 'setup') return '<span class="en farm-setup-pill" style="flex-shrink:0; height:30px; padding:0 14px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:600; display:flex; align-items:center; font-family:var(--font-hi);">Setup</span>';
         if (f.status === 'attention') {
           var sev = SEVERITY_BADGE[f.severity || 'critical'];
-          return '<span class="farm-sev-badge" data-sev-k="' + sev.label + '" style="flex-shrink:0; height:26px; padding:0 12px; border-radius:13px; font-size:11px; font-weight:700; letter-spacing:0.04em; display:flex; align-items:center; background:' + sev.color + '; color:#fff; font-family:var(--font-hi);">' + t()[sev.label] + '</span>';
+          return '<span class="farm-sev-badge" data-sev-k="' + sev.label + '" style="flex-shrink:0; height:26px; padding:0 12px; border-radius:13px; font-size:11px; font-weight:700; letter-spacing:0.04em; display:flex; align-items:center; background:' + sev.color + '; color:#fff; font-family:var(--font-hi);">' + window.t()[sev.label] + '</span>';
         }
         return '<span style="flex-shrink:0; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--text1); display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>';
       }
@@ -4644,14 +4644,14 @@
           return '<div class="en farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--bgcard); border:' + (dashed ? '2px dashed var(--border)' : '1px solid var(--border)') + '; border-radius:16px; padding:16px; margin-bottom:12px; cursor:pointer;">' +
             '<div style="min-width:0;">' +
               '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">' + f.name + '</p>' +
-              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' ' + t().wordCattle + ' · ' + f.manager + '</p>' +
+              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' ' + window.t().wordCattle + ' · ' + f.manager + '</p>' +
             '</div>' +
             '<div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">' +
               farmStatusBadge(f) +
               '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>' +
             '</div>' +
           '</div>';
-        }).join('') || '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">' + t().noFarmsMatch + '</p>';
+        }).join('') || '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">' + window.t().noFarmsMatch + '</p>';
         document.querySelectorAll('.farm-row').forEach(function(row) {
           row.addEventListener('click', function() { openFarmDetail(row.getAttribute('data-farm')); });
         });
@@ -4688,7 +4688,7 @@
       var CATTLE_STATUS_K = { Milking:'statusMilking', Pregnant:'statusPregnant', Heat:'statusHeatCycle' };
       function cattleStatusLabel(c) {
         var k = CATTLE_STATUS_K[c.status];
-        return k ? t()[k] : (c.label || c.status);
+        return k ? window.t()[k] : (c.label || c.status);
       }
       function renderCattleList(farm) {
         var q = (document.getElementById('cattle-search').value || '').trim().toLowerCase();
@@ -4707,15 +4707,15 @@
             '</div>' +
             '<div style="flex-shrink:0; text-align:end;">' +
               '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + c.temp + ' <span style="color:var(--danger); font-size:12px;">▲</span></p>' +
-              '<p style="font-size:10px; font-style:italic; color:var(--text2); margin:1px 0 4px;">' + t().cowTempCaption + '</p>' +
+              '<p style="font-size:10px; font-style:italic; color:var(--text2); margin:1px 0 4px;">' + window.t().cowTempCaption + '</p>' +
               '<span style="color:var(--text2); font-size:16px; line-height:1;">⋮</span>' +
             '</div>' +
           '</div>';
         }).join('');
         if (!farm.cows.length) {
-          html = '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px; line-height:1.6;">' + t().noCattleYet + '<br>' + t().tapAddCattle + '</p>';
+          html = '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px; line-height:1.6;">' + window.t().noCattleYet + '<br>' + window.t().tapAddCattle + '</p>';
         } else if (!cows.length) {
-          html = '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">' + t().noCattleMatch + '</p>';
+          html = '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">' + window.t().noCattleMatch + '</p>';
         }
         document.getElementById('cattle-list').innerHTML = html;
       }
@@ -4757,7 +4757,7 @@
         farmDetailPage.style.display = 'block';
       }
       function refreshFarmDetailHeader(farm) {
-        document.getElementById('farm-detail-manager').textContent = farm.manager + ' · ' + t().managerWord;
+        document.getElementById('farm-detail-manager').textContent = farm.manager + ' · ' + window.t().managerWord;
       }
       document.getElementById('farm-detail-back').addEventListener('click', function() {
         farmDetailPage.style.display = 'none';
@@ -4765,6 +4765,19 @@
       document.getElementById('farm-detail-fab').addEventListener('click', function() {
         // Add Cattle is a future flow — no-op placeholder for now.
       });
+
+      // Bridge called from the login script's applyLang() (a separate
+      // <script> tag/scope) whenever the language changes, so every screen
+      // built from JS template strings re-renders with the new copy.
+      window.vanixRefreshApp = function() {
+        renderFarmsList();
+        if (currentFarmId) {
+          var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
+          if (farm) { renderCattleList(farm); refreshFarmDetailHeader(farm); }
+        }
+        if (window.evSyncQfLabels) window.evSyncQfLabels();
+        evUpdateBadges();
+      };
     })();
     </script>
 
