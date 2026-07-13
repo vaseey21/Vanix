@@ -136,6 +136,16 @@
     .ev-chip-p1 { background:#8A5A00; color:#FFFFFF; }
     .ev-chip-p2 { background:var(--warnbg); border:1px solid var(--warning); color:#8A5A00; }
     .ev-chip-p3 { background:var(--bgcard); border:1px solid var(--border); color:var(--text2); }
+    /* P2/P3: solid severity corner tag, same treatment as the photo-card CRITICAL banner */
+    .ev-card-p2, .ev-card-p3 { position: relative; }
+    .ev-card-p2 .ev-chip-p2, .ev-card-p3 .ev-chip-p3 {
+      position: absolute; top: -1px; right: -1px; z-index: 2;
+      border: none; border-radius: 0 15px 0 12px; padding: 6px 14px 7px 16px;
+      background: var(--warning); color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    }
+    .ev-card-p3 .ev-chip-p3 { background: var(--text2); }
+    .ev-card-p2 .ev-chip-p2 svg, .ev-card-p3 .ev-chip-p3 svg { display: none; }
+    .ev-card-p2 .ev-title, .ev-card-p3 .ev-title { padding-inline-end: 72px; }
     /* Full-screen heat alert carousel — follows light/dark mode */
     #ev-alert-fullscreen { background:var(--bgwarm); }
     #flow-root.dark #ev-alert-fullscreen { background:linear-gradient(180deg, var(--dark1) 0%, #1C1C1C 100%); }
@@ -2207,7 +2217,7 @@
                ctaNo:'No', ctaYes:'Yes', viewDetailsLabel:'View Details ›',
                cardFeverQ:'Is Kajri unwell?', cardHeatQ:'Gauri in heat?', cardPregQ:'Pregnant?', cardGestationQ:'Vet check due',
                cardMilkQ:'Start milking?', cardLactationQ:'Still milking?', cardAbortQ:'Loss signs?', cardFreshcowQ:'Cow unwell?',
-               chipP1:'P1', chipP2:'P2', chipP3:'P3',
+               chipP1:'MEDIUM', chipP2:'MEDIUM', chipP3:'LOW',
                mgrRamesh:'Ramesh Kumar', mgrSuresh:'Suresh Yadav',
                cowKajri:'Kajri', cowGauri:'Gauri', cowMohini:'Mohini', cowLakshmi:'Lakshmi', cowGanga:'Ganga',
                breedJersey:'Jersey', breedDesi:'Desi', breedGirSahiwal:'Gir/Sahiwal', breedSahiwal:'Sahiwal', breedOngole:'Ongole', milkCowCaption:'Lakshmi \u00b7 Ongole',
@@ -2229,7 +2239,7 @@
                histVetDone:'Vet appointment completed \u2014 Bhoori', histVetDoneSub:'Fever treated by Dr. Sharma \u2014 temperature back to normal',
                histInsem:'Inseminated \u2014 Mohini', histInsemSub:'Within the 18h window \u2014 pregnancy check set for 3 Jul',
                stageMilking:'MILKING', stageHeatWatch:'HEAT WATCH', stageRecovered:'RECOVERED', stage21Day:'21-DAY WATCH',
-               prioP0:'P0 \u00b7 CRITICAL', prioP1:'P1 \u00b7 ACTIONABLE', prioP2:'P2 \u00b7 WARNING', prioP3:'P3 \u00b7 WARNING',
+               prioP0:'CRITICAL', prioP1:'MEDIUM', prioP2:'MEDIUM', prioP3:'LOW',
                chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
@@ -2252,7 +2262,7 @@
                ctaNo:'नहीं', ctaYes:'हाँ', viewDetailsLabel:'विवरण देखें ›',
                cardFeverQ:'क्या कजरी अस्वस्थ है?', cardHeatQ:'क्या गौरी हीट में है?', cardPregQ:'गर्भवती?', cardGestationQ:'पशु चिकित्सक जांच बाकी',
                cardMilkQ:'दूध निकालना शुरू करें?', cardLactationQ:'अभी भी दूध दे रही है?', cardAbortQ:'नुकसान के संकेत?', cardFreshcowQ:'गाय अस्वस्थ?',
-               chipP1:'मध्यम', chipP2:'कम', chipP3:'कम',
+               chipP1:'मध्यम', chipP2:'मध्यम', chipP3:'कम',
                mgrRamesh:'रमेश कुमार', mgrSuresh:'सुरेश यादव',
                cowKajri:'कजरी', cowGauri:'गौरी', cowMohini:'मोहिनी', cowLakshmi:'लक्ष्मी', cowGanga:'गंगा',
                breedJersey:'जर्सी', breedDesi:'देसी', breedGirSahiwal:'गिर/साहीवाल', breedSahiwal:'साहीवाल', breedOngole:'ओंगोल', milkCowCaption:'लक्ष्मी \u00b7 ओंगोल',
@@ -2274,7 +2284,7 @@
                histVetDone:'पशु चिकित्सक भेंट पूरी \u2014 भूरी', histVetDoneSub:'डॉ. शर्मा ने बुखार का इलाज किया \u2014 तापमान सामान्य',
                histInsem:'गर्भाधान हुआ \u2014 मोहिनी', histInsemSub:'18 घंटे की विंडो में \u2014 गर्भ जांच 3 जुलाई को',
                stageMilking:'दूध दे रही', stageHeatWatch:'हीट निगरानी', stageRecovered:'स्वस्थ हुई', stage21Day:'21-दिन निगरानी',
-               prioP0:'गंभीर', prioP1:'मध्यम \u00b7 कार्रवाई', prioP2:'कम \u00b7 चेतावनी', prioP3:'कम \u00b7 चेतावनी',
+               prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
                chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
@@ -2297,7 +2307,7 @@
                ctaNo:'ना', ctaYes:'हाँ', viewDetailsLabel:'विवरण देखीं ›',
                cardFeverQ:'का कजरी बेमार बिया?', cardHeatQ:'का गौरी हीट में बिया?', cardPregQ:'गर्भवती?', cardGestationQ:'पशु डॉक्टर जांच बाकी',
                cardMilkQ:'दूध निकालल शुरू करीं?', cardLactationQ:'अबहियों दूध देत बिया?', cardAbortQ:'नुकसान के संकेत?', cardFreshcowQ:'गाय बेमार?',
-               chipP1:'मध्यम', chipP2:'कम', chipP3:'कम',
+               chipP1:'मध्यम', chipP2:'मध्यम', chipP3:'कम',
                mgrRamesh:'रमेश कुमार', mgrSuresh:'सुरेश यादव',
                cowKajri:'कजरी', cowGauri:'गौरी', cowMohini:'मोहिनी', cowLakshmi:'लक्ष्मी', cowGanga:'गंगा',
                breedJersey:'जर्सी', breedDesi:'देसी', breedGirSahiwal:'गिर/साहीवाल', breedSahiwal:'साहीवाल', breedOngole:'ओंगोल', milkCowCaption:'लक्ष्मी \u00b7 ओंगोल',
@@ -2319,7 +2329,7 @@
                histVetDone:'पशु डॉक्टर भेंट पूरा \u2014 भूरी', histVetDoneSub:'डॉ. शर्मा बुखार के इलाज कइलें \u2014 तापमान सामान्य',
                histInsem:'गर्भाधान भइल \u2014 मोहिनी', histInsemSub:'18 घंटा के विंडो में \u2014 गर्भ जांच 3 जुलाई के',
                stageMilking:'दूध देत बिया', stageHeatWatch:'हीट निगरानी', stageRecovered:'ठीक भइल', stage21Day:'21-दिन निगरानी',
-               prioP0:'गंभीर', prioP1:'मध्यम \u00b7 कार्रवाई', prioP2:'कम \u00b7 चेतावनी', prioP3:'कम \u00b7 चेतावनी',
+               prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
                chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
@@ -3069,7 +3079,7 @@
         }
         function critOf(card) {
           return card.classList.contains('p0') ? 'critical'
-               : card.classList.contains('p1') ? 'medium' : 'low';
+               : (card.classList.contains('p1') || card.classList.contains('p2')) ? 'medium' : 'low';
         }
         function applyEvFilters() {
           if (!evBaseVisible) snapshotBaseline();
@@ -3774,8 +3784,8 @@
         var EV_PRIORITY_STYLE = {
           p0: 'background:#8B2800; color:#FFFFFF;',
           p1: 'background:#8A5A00; color:#FFFFFF;',
-          p2: 'background:var(--warnbg); border:1px solid var(--warning); color:#8A5A00;',
-          p3: 'background:var(--bgcard); border:1px solid var(--border); color:var(--text2);'
+          p2: 'background:var(--warning); color:#FFFFFF;',
+          p3: 'background:var(--text2); color:#FFFFFF;'
         };
 
         function evMockSeed(id) {
