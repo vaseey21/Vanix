@@ -110,5 +110,15 @@ match `vanix_design_system.html` exactly (source of truth per `CLAUDE.md`).
   `AppState.resolveEvent()`, so it never decrements the real badge/counter.
 - No `providers`/persistence: dark mode, language, and all app data reset
   on hot restart (no `shared_preferences` wired up).
+- **Events i18n gap:** the HTML mockup now fully translates every Events card
+  into hi/bho (cow names + breeds, timeago, sensor description, farm/belt meta,
+  questions, all CTAs), the P2/P3/reminder/history sections, and the Card Detail
+  sub-page. `strings.dart` does NOT yet carry these keys — the Flutter Events
+  screen is still English-only for card content. Port the new `STRINGS` keys
+  (cow-name/breed maps, `sub*`/`meta*`/`title*`, `q*`, `rem*`, `hist*`/`stg*`,
+  `graphTemp`/`graphMove`/`baselineWord`/`todayWord`/`badge*`, `beltWord`/
+  `yrsWord`/`unassignedWord`, `minAgo`/`hAgo`/`dAgo`) from
+  `vanix_screens_preview.html` into `VanixStrings`, and remove the P2/P3 chip
+  labels + de-bold the alert primary CTA (match 500 weight / 16px) to reach parity.
 - This was hand-written without a local Flutter SDK to compile-check —
   run `flutter analyze` as a first step and fix anything it flags.
