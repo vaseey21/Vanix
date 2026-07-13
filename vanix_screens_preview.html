@@ -4713,9 +4713,9 @@
           '</div>';
         }).join('');
         if (!farm.cows.length) {
-          html = '<p class="en" style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px; line-height:1.6;">No cattle yet on this farm.<br>Tap "Add Cattle" below to get started.</p>';
+          html = '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px; line-height:1.6;">' + t().noCattleYet + '<br>' + t().tapAddCattle + '</p>';
         } else if (!cows.length) {
-          html = '<p class="en" style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">No cattle match this filter.</p>';
+          html = '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">' + t().noCattleMatch + '</p>';
         }
         document.getElementById('cattle-list').innerHTML = html;
       }
