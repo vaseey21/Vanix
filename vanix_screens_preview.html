@@ -269,6 +269,10 @@
     #flow-root.dark .ev-tab.on { background:#F5F5F5 !important; color:#111111 !important; border-color:#F5F5F5 !important; }
     /* ── Quick filters (Swiggy-style dropdown chips) ── */
     #ev-quickfilters { display:flex; gap:6px; margin:0 0 14px; flex-wrap:nowrap; align-items:center; }
+    #ev-filter-btn.on { background:var(--dark1) !important; color:#FFFFFF !important; border-color:var(--dark1) !important; }
+    #flow-root.dark #ev-filter-btn { background:#1C1C1C; color:#F5F5F5; border-color:#3A3A3A; }
+    #flow-root.dark #ev-filter-btn.on { background:var(--activebg) !important; color:var(--greenink) !important; border-color:var(--greendeep) !important; }
+    #flow-root.dark #ev-title-btn h2 { color:#F5F5F5 !important; }
     .ev-qf { position:relative; flex-shrink:0; }
     .ev-qf-btn { display:flex; align-items:center; gap:4px; height:34px; padding:0 10px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi); cursor:pointer; white-space:nowrap; }
     .ev-qf-btn svg { transition:transform 0.2s ease; }
@@ -288,7 +292,6 @@
     #flow-root.dark .ev-qf-opt { color:#F5F5F5; }
     #flow-root.dark .ev-qf-opt:hover { background:#262626; }
     #flow-root.dark .ev-qf-opt.on { color:var(--greendeep); }
-    #flow-root.dark #ev-count-pill { background: var(--dangerbg) !important; color: #8B2800 !important; border-color: var(--danger) !important; }
     #flow-root.dark #page-events > div { background: #111111 !important; }
     #flow-root.dark .ev-card { background:#1C1C1C !important; }
     #flow-root.dark .ev-card p[style*="font-size:15px"] { color:#F5F5F5 !important; }
@@ -863,7 +866,6 @@
     #flow-root.dark #s7-trend .tdot  { fill:var(--greendeep); stroke:#1C1C1C; }
     #flow-root.dark #s7-trend .tval  { fill:#F5F5F5; }
     #flow-root.dark #s7-open-stats { color:var(--greendeep) !important; }
-    #flow-root.dark #ev-view-cycle { color:var(--greendeep) !important; }
     #flow-root.dark #ev-seq-sheet { background: #1C1C1C !important; }
     #flow-root.dark #ev-seq-sheet p { color: #F5F5F5 !important; }
     #flow-root.dark #ev-seq-sheet p[style*="text2"] { color: #8C8780 !important; }
@@ -1520,19 +1522,22 @@
             <!-- HERO -->
             <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
               <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-                <h2 data-k="evTitle" style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Events</h2>
-                <span id="ev-count-pill" style="background:var(--dangerbg); border:1px solid var(--danger); border-radius:14px; padding:4px 12px; font-size:12px; font-weight:600; color:#8B2800;">14 need action</span>
+                <!-- Tapping the title opens the full-cycle walkthrough -->
+                <button id="ev-title-btn" style="display:flex; align-items:center; gap:4px; background:transparent; border:none; padding:0; cursor:pointer; font-family:var(--font-hi);">
+                  <h2 data-k="evTitle" style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Events</h2>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+                <button id="ev-filter-btn" style="flex-shrink:0; display:flex; align-items:center; gap:6px; height:34px; padding:0 14px; background:var(--bgcard); border:1px solid var(--border); border-radius:17px; font-size:13px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg><span data-k="filterWord">Filter</span></button>
               </div>
               <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
                 <p data-k="evSubtitle" style="font-size:12px; color:var(--text2); margin:0;">Health, breeding and reminders across all your farms</p>
-                <button id="ev-view-cycle" style="flex-shrink:0; background:transparent; border:none; padding:0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer; display:flex; align-items:center; gap:2px;"><span data-k="evViewFullCycle">View full cycle</span> <span class="en" style="font-size:14px; line-height:1;">›</span></button>
               </div>
             </div>
 
             <div style="padding:14px 16px 0;">
 
               <!-- ── Quick filters (Swiggy-style dropdown chips) ── -->
-              <div id="ev-quickfilters">
+              <div id="ev-quickfilters" style="display:none;">
                 <div class="ev-qf" data-filter="type">
                   <button class="ev-qf-btn"><span class="ev-qf-label" data-k="qfType">Type</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                   <div class="ev-qf-menu">
@@ -2351,7 +2356,7 @@
                histInsem:'Inseminated \u2014 Mohini', histInsemSub:'Within the 18h window \u2014 pregnancy check set for 3 Jul',
                stageMilking:'MILKING', stageHeatWatch:'HEAT WATCH', stageRecovered:'RECOVERED', stage21Day:'21-DAY WATCH',
                prioP0:'CRITICAL', prioP1:'MEDIUM', prioP2:'MEDIUM', prioP3:'LOW',
-               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today' },
+               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -2396,7 +2401,7 @@
                histInsem:'गर्भाधान हुआ \u2014 मोहिनी', histInsemSub:'18 घंटे की विंडो में \u2014 गर्भ जांच 3 जुलाई को',
                stageMilking:'दूध दे रही', stageHeatWatch:'हीट निगरानी', stageRecovered:'स्वस्थ हुई', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज' },
+               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -2441,7 +2446,7 @@
                histInsem:'गर्भाधान भइल \u2014 मोहिनी', histInsemSub:'18 घंटा के विंडो में \u2014 गर्भ जांच 3 जुलाई के',
                stageMilking:'दूध देत बिया', stageHeatWatch:'हीट निगरानी', stageRecovered:'ठीक भइल', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज' }
+               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
@@ -3129,15 +3134,6 @@
           b.style.display = evOpen > 0 ? 'flex' : 'none';
         });
         document.querySelectorAll('.ev-dot').forEach(function(d) { d.style.display = evOpen > 0 ? 'block' : 'none'; });
-        var pill = document.getElementById('ev-count-pill');
-        if (evOpen > 0) {
-          pill.textContent = evOpen + ' ' + window.t().evNeedAction;
-        } else {
-          pill.textContent = window.t().allClear;
-          pill.style.background = 'var(--activebg)';
-          pill.style.borderColor = 'var(--greendeep)';
-          pill.style.color = 'var(--greenink)';
-        }
       }
       function evResolve() { evOpen = Math.max(0, evOpen - 1); evUpdateBadges(); }
       window.evUpdateBadges = evUpdateBadges;
@@ -4196,7 +4192,14 @@
           sheet.style.transform = 'translateY(100%)';
         }
         scrim.addEventListener('click', closeSeq);
-        document.getElementById('ev-view-cycle').addEventListener('click', openSeq);
+        document.getElementById('ev-title-btn').addEventListener('click', openSeq);
+        var evFilterBtn = document.getElementById('ev-filter-btn');
+        var evQuickfilters = document.getElementById('ev-quickfilters');
+        evFilterBtn.addEventListener('click', function() {
+          var open = evQuickfilters.style.display !== 'none';
+          evQuickfilters.style.display = open ? 'none' : '';
+          evFilterBtn.classList.toggle('on', !open);
+        });
 
         // Entry point for the image-mode events Heat card's "Yes" — skips the
         // full-screen alert carousel and opens the bottom slider straight at
@@ -4698,28 +4701,34 @@
 
       // ── Farms list + Farm detail (mock data model) ──
       var FARMS = [
-        { id:'sunrise', name:'Sunrise Dairy Farm', manager:'Ramesh C', cattle:32, status:'attention',
+        { id:'sunrise', name:'Sunrise Dairy Farm', nameHi:'सनराइज़ डेयरी फार्म', manager:'Ramesh C', managerHi:'रमेश सी', cattle:32, status:'attention',
           temp:'33°C', milkToday:40, alerts:2,
           cows:[
-            { name:'Gowri', no:1, age:'2.2 yrs', belt:'Belt 60', status:'Milking', temp:'32°C' },
-            { name:'Giri', no:2, age:'4 yrs', belt:'Belt 12', status:'Pregnant', temp:'34°C' },
-            { name:'Ramya', no:3, age:'3 yrs', belt:'Belt 45', status:'Heat', label:'Heat Cycle', temp:'36°C' }
+            { name:'Gowri', nameHi:'गौरी', no:1, age:'2.2 yrs', ageHi:'2.2 साल', belt:'Belt 60', beltHi:'बेल्ट 60', status:'Milking', temp:'32°C' },
+            { name:'Giri', nameHi:'गिरि', no:2, age:'4 yrs', ageHi:'4 साल', belt:'Belt 12', beltHi:'बेल्ट 12', status:'Pregnant', temp:'34°C' },
+            { name:'Ramya', nameHi:'रम्या', no:3, age:'3 yrs', ageHi:'3 साल', belt:'Belt 45', beltHi:'बेल्ट 45', status:'Heat', label:'Heat Cycle', temp:'36°C' }
           ] },
-        { id:'greenvilla', name:'Green Villa Dairy Farm', manager:'Rakesh H', cattle:20, status:'healthy',
+        { id:'greenvilla', name:'Green Villa Dairy Farm', nameHi:'ग्रीन विला डेयरी फार्म', manager:'Rakesh H', managerHi:'राकेश एच', cattle:20, status:'healthy',
           temp:'31°C', milkToday:34, alerts:0,
           cows:[
-            { name:'Meera', no:1, age:'3.5 yrs', belt:'Belt 21', status:'Milking', temp:'31°C' },
-            { name:'Kaveri', no:2, age:'2 yrs', belt:'Belt 8', status:'Milking', temp:'32°C' }
+            { name:'Meera', nameHi:'मीरा', no:1, age:'3.5 yrs', ageHi:'3.5 साल', belt:'Belt 21', beltHi:'बेल्ट 21', status:'Milking', temp:'31°C' },
+            { name:'Kaveri', nameHi:'कावेरी', no:2, age:'2 yrs', ageHi:'2 साल', belt:'Belt 8', beltHi:'बेल्ट 8', status:'Milking', temp:'32°C' }
           ] },
-        { id:'stones', name:'Stones Dairy Farm', manager:'Vimal E', cattle:25, status:'healthy',
+        { id:'stones', name:'Stones Dairy Farm', nameHi:'स्टोन्स डेयरी फार्म', manager:'Vimal E', managerHi:'विमल ई', cattle:25, status:'healthy',
           temp:'30°C', milkToday:44, alerts:0,
           cows:[
-            { name:'Chinnu', no:1, age:'5 yrs', belt:'Belt 3', status:'Milking', temp:'30°C' },
-            { name:'Devi', no:2, age:'1.8 yrs', belt:'Belt 27', status:'Pregnant', temp:'31°C' }
+            { name:'Chinnu', nameHi:'चिन्नू', no:1, age:'5 yrs', ageHi:'5 साल', belt:'Belt 3', beltHi:'बेल्ट 3', status:'Milking', temp:'30°C' },
+            { name:'Devi', nameHi:'देवी', no:2, age:'1.8 yrs', ageHi:'1.8 साल', belt:'Belt 27', beltHi:'बेल्ट 27', status:'Pregnant', temp:'31°C' }
           ] },
-        { id:'highland', name:'Highland Farm', manager:'Unassigned', cattle:0, status:'setup',
+        { id:'highland', name:'Highland Farm', nameHi:'हाइलैंड फार्म', manager:'Unassigned', managerHi:'नियुक्त नहीं', cattle:0, status:'setup',
           temp:'—', milkToday:0, alerts:0, cows:[] }
       ];
+      // Proper nouns (farm/cow/manager names, age/belt captions) render in
+      // Devanagari for hi/bho and English otherwise.
+      function loc(obj, field) {
+        var l = localStorage.getItem('vanixLang') || 'en';
+        return (l === 'en') ? obj[field] : (obj[field + 'Hi'] || obj[field]);
+      }
       var farmsFilter = 'all';
       var currentFarmId = null;
 
@@ -4743,15 +4752,15 @@
         var q = (document.getElementById('farms-search').value || '').trim().toLowerCase();
         var list = FARMS.filter(function(f) {
           if (farmsFilter !== 'all' && f.status !== farmsFilter) return false;
-          if (q && f.name.toLowerCase().indexOf(q) === -1) return false;
+          if (q && (f.name + ' ' + (f.nameHi || '')).toLowerCase().indexOf(q) === -1) return false;
           return true;
         });
         document.getElementById('farms-list').innerHTML = list.map(function(f) {
           var dashed = f.status === 'setup';
           return '<div class="en farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--bgcard); border:' + (dashed ? '2px dashed var(--border)' : '1px solid var(--border)') + '; border-radius:16px; padding:16px; margin-bottom:12px; cursor:pointer;">' +
             '<div style="min-width:0;">' +
-              '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">' + f.name + '</p>' +
-              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' ' + window.t().wordCattle + ' · ' + f.manager + '</p>' +
+              '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">' + loc(f, 'name') + '</p>' +
+              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' ' + window.t().wordCattle + ' · ' + loc(f, 'manager') + '</p>' +
             '</div>' +
             '<div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">' +
               farmStatusBadge(f) +
@@ -4801,15 +4810,15 @@
         var q = (document.getElementById('cattle-search').value || '').trim().toLowerCase();
         var cows = farm.cows.filter(function(c) {
           if (cattleStatusFilter !== 'all' && c.status !== cattleStatusFilter) return false;
-          if (q && c.name.toLowerCase().indexOf(q) === -1) return false;
+          if (q && (c.name + ' ' + (c.nameHi || '')).toLowerCase().indexOf(q) === -1) return false;
           return true;
         });
         var html = cows.map(function(c) {
           return '<div class="en" style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 14px; margin-bottom:10px;">' +
             '<div style="flex-shrink:0; width:44px; height:44px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:16px;">✕</div>' +
             '<div style="flex:1; min-width:0;">' +
-              '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + c.name + ' — ' + c.no + '</p>' +
-              '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + c.age + ' · ' + c.belt + '</p>' +
+              '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + loc(c, 'name') + ' — ' + c.no + '</p>' +
+              '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + loc(c, 'age') + ' · ' + loc(c, 'belt') + '</p>' +
               '<span style="display:inline-block; margin-top:6px; height:26px; padding:0 12px; border-radius:13px; font-size:12px; font-weight:600; line-height:26px; ' + cattlePillStyle(c.status) + '">' + cattleStatusLabel(c) + '</span>' +
             '</div>' +
             '<div style="flex-shrink:0; text-align:end;">' +
@@ -4855,7 +4864,7 @@
           else { t.style.background = 'var(--bgcard)'; t.style.borderColor = 'var(--border)'; t.style.color = 'var(--text1)'; t.style.fontWeight = '500'; }
         });
         document.getElementById('cattle-search').value = '';
-        document.getElementById('farm-detail-name').textContent = farm.name;
+        document.getElementById('farm-detail-name').textContent = loc(farm, 'name');
         document.getElementById('farm-detail-temp').textContent = farm.temp;
         document.getElementById('farm-detail-milk').textContent = farm.milkToday;
         document.getElementById('farm-detail-alerts').textContent = farm.alerts;
@@ -4864,7 +4873,7 @@
         farmDetailPage.style.display = 'block';
       }
       function refreshFarmDetailHeader(farm) {
-        document.getElementById('farm-detail-manager').textContent = farm.manager + ' · ' + window.t().managerWord;
+        document.getElementById('farm-detail-manager').textContent = loc(farm, 'manager') + ' · ' + window.t().managerWord;
       }
       document.getElementById('farm-detail-back').addEventListener('click', function() {
         farmDetailPage.style.display = 'none';
