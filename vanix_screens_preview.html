@@ -461,8 +461,8 @@
        like "Yes, in heat" / "Yes, notify vet" on the confirm cards) */
     #flow-root.display-image .ev-photo-card .ev-no svg, #flow-root.display-image .ev-photo-card .ev-yes svg { display: none !important; }
     #flow-root.display-image .ev-photo-card .ev-body .ev-no, #flow-root.display-image .ev-photo-card .ev-body .ev-yes { font-size: 0 !important; }
-    #flow-root.display-image .ev-photo-card .ev-body .ev-no::after { content: 'No'; font-size: 16px; font-weight: 700; }
-    #flow-root.display-image .ev-photo-card .ev-body .ev-yes::after { content: 'Yes'; font-size: 16px; font-weight: 700; }
+    #flow-root.display-image .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 16px; font-weight: 700; }
+    #flow-root.display-image .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 700; }
     #flow-root.display-image #ev-fever .ev-btn-full { display: none; }
     #flow-root.display-image #ev-fever .ev-btn-short { display: inline; }
     /* image-mode events cards are pure triage — hide the inline evolving heat
@@ -618,11 +618,11 @@
     #flow-root.display-fullbleed .ev-photo-card.p3 .ev-crit-label { background: var(--text2); }
     #flow-root.display-fullbleed .ev-photo-card .ev-crit-label .ev-crit-dot { display: none !important; }
     #flow-root.display-fullbleed .ev-photo-card .ev-crit-label::after {
-      content: 'CRITICAL'; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+      content: var(--i18n-critical); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
     }
-    #flow-root.display-fullbleed .ev-photo-card.p1 .ev-crit-label::after { content: 'MEDIUM'; }
+    #flow-root.display-fullbleed .ev-photo-card.p1 .ev-crit-label::after { content: var(--i18n-medium); }
     #flow-root.display-fullbleed .ev-photo-card.p2 .ev-crit-label::after,
-    #flow-root.display-fullbleed .ev-photo-card.p3 .ev-crit-label::after { content: 'LOW'; }
+    #flow-root.display-fullbleed .ev-photo-card.p3 .ev-crit-label::after { content: var(--i18n-low); }
     /* cow name / breed — white caption, top-left */
     #flow-root.display-fullbleed .ev-photo-card .ev-cow-breed {
       display: flex !important; flex-direction: column; text-align: left !important;
@@ -645,7 +645,7 @@
       background: none !important; border: none !important; width: auto !important; box-shadow: none !important;
     }
     #flow-root.display-fullbleed .ev-photo-card .ev-photo-viewdetails::after {
-      content: 'View Details ›'; font-size: 14px; font-weight: 600;
+      content: var(--i18n-viewdetails); font-size: 14px; font-weight: 600;
     }
     /* CTAs — full width, translucent-outline No + green Yes */
     #flow-root.display-fullbleed .ev-photo-card .ev-body {
@@ -667,8 +667,8 @@
     #flow-root.display-fullbleed .ev-photo-card #ev-lact-resting { background: var(--greenink) !important; color: #fff !important; border: none !important; }
     #flow-root.display-fullbleed .ev-photo-card .ev-no svg, #flow-root.display-fullbleed .ev-photo-card .ev-yes svg { display: none !important; }
     #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-no, #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-yes { font-size: 0 !important; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-no::after { content: 'No'; font-size: 16px; font-weight: 700; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-yes::after { content: 'Yes'; font-size: 16px; font-weight: 700; }
+    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 16px; font-weight: 700; }
+    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 700; }
     #flow-root.display-fullbleed #ev-fever .ev-btn-full { display: none; }
     #flow-root.display-fullbleed #ev-fever .ev-btn-short { display: inline; }
 
@@ -2314,7 +2314,10 @@
                qfType:'Type', qfUnactioned:'Unactioned', qfCriticality:'Criticality', qfCategory:'Category',
                qfAllTypes:'All types', qfNeedsAction:'Needs action', qfWarnings:'Warnings', qfReminder:'Reminder',
                qfAllLevels:'All levels', qfCritical:'Critical', qfMedium:'Medium', qfLow:'Low',
-               qfAllCategories:'All categories', needsActionHeader:'Needs action', allClear:'All clear', remindersHeader:'Reminders' },
+               qfAllCategories:'All categories', needsActionHeader:'Needs action', allClear:'All clear', remindersHeader:'Reminders',
+               ctaNo:'No', ctaYes:'Yes', viewDetailsLabel:'View Details ›',
+               cardFeverQ:'Is Kajri unwell?', cardHeatQ:'Gauri in heat?', cardPregQ:'Pregnant?', cardGestationQ:'Vet check due',
+               cardMilkQ:'Start milking?', cardLactationQ:'Still milking?', cardAbortQ:'Loss signs?', cardFreshcowQ:'Cow unwell?' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -2332,7 +2335,10 @@
                qfType:'प्रकार', qfUnactioned:'अनसुलझे', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
                qfAllTypes:'सभी प्रकार', qfNeedsAction:'कार्रवाई चाहिए', qfWarnings:'चेतावनी', qfReminder:'अनुस्मारक',
                qfAllLevels:'सभी स्तर', qfCritical:'गंभीर', qfMedium:'मध्यम', qfLow:'कम',
-               qfAllCategories:'सभी श्रेणियाँ', needsActionHeader:'कार्रवाई चाहिए', allClear:'सब ठीक है', remindersHeader:'अनुस्मारक' },
+               qfAllCategories:'सभी श्रेणियाँ', needsActionHeader:'कार्रवाई चाहिए', allClear:'सब ठीक है', remindersHeader:'अनुस्मारक',
+               ctaNo:'नहीं', ctaYes:'हाँ', viewDetailsLabel:'विवरण देखें ›',
+               cardFeverQ:'क्या कजरी अस्वस्थ है?', cardHeatQ:'क्या गौरी हीट में है?', cardPregQ:'गर्भवती?', cardGestationQ:'पशु चिकित्सक जांच बाकी',
+               cardMilkQ:'दूध निकालना शुरू करें?', cardLactationQ:'अभी भी दूध दे रही है?', cardAbortQ:'नुकसान के संकेत?', cardFreshcowQ:'गाय अस्वस्थ?' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -2350,7 +2356,10 @@
                qfType:'प्रकार', qfUnactioned:'ना सुलझल', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
                qfAllTypes:'सगरी प्रकार', qfNeedsAction:'कार्रवाई के जरूरत', qfWarnings:'चेतावनी', qfReminder:'अनुस्मारक',
                qfAllLevels:'सगरी स्तर', qfCritical:'गंभीर', qfMedium:'मध्यम', qfLow:'कम',
-               qfAllCategories:'सगरी श्रेणी', needsActionHeader:'कार्रवाई के जरूरत', allClear:'सब ठीक बा', remindersHeader:'अनुस्मारक' }
+               qfAllCategories:'सगरी श्रेणी', needsActionHeader:'कार्रवाई के जरूरत', allClear:'सब ठीक बा', remindersHeader:'अनुस्मारक',
+               ctaNo:'ना', ctaYes:'हाँ', viewDetailsLabel:'विवरण देखीं ›',
+               cardFeverQ:'का कजरी बेमार बिया?', cardHeatQ:'का गौरी हीट में बिया?', cardPregQ:'गर्भवती?', cardGestationQ:'पशु डॉक्टर जांच बाकी',
+               cardMilkQ:'दूध निकालल शुरू करीं?', cardLactationQ:'अबहियों दूध देत बिया?', cardAbortQ:'नुकसान के संकेत?', cardFreshcowQ:'गाय बेमार?' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
@@ -2370,7 +2379,21 @@
         applyLang();
       }
 
+      // "No" / "Yes" / the severity banner / "View Details ›" are injected via
+      // CSS ::after { content } on every image-mode card (one rule, all cards)
+      // — CSS can't reach STRINGS directly, so we hand it the current
+      // language's text through custom properties instead.
+      function applyImgModeVars() {
+        var r = document.documentElement.style;
+        r.setProperty('--i18n-no', '"' + t().ctaNo + '"');
+        r.setProperty('--i18n-yes', '"' + t().ctaYes + '"');
+        r.setProperty('--i18n-critical', '"' + t().sevCritical + '"');
+        r.setProperty('--i18n-medium', '"' + t().sevMedium + '"');
+        r.setProperty('--i18n-low', '"' + t().sevLow + '"');
+        r.setProperty('--i18n-viewdetails', '"' + t().viewDetailsLabel + '"');
+      }
       function applyLang() {
+        applyImgModeVars();
         document.getElementById('s1-title').textContent   = t().title;
         document.getElementById('s1-l-email').textContent = t().email;
         document.getElementById('s1-continue').textContent = t().cont;
