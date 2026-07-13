@@ -2393,15 +2393,11 @@
           if (v == null) return;
           if (el.hasAttribute('data-k-placeholder')) el.placeholder = v; else el.textContent = v;
         });
-        // Re-render the pieces built entirely from JS template strings (farm
-        // rows, cattle rows, severity badges) so their embedded copy updates too.
-        if (typeof renderFarmsList === 'function') renderFarmsList();
-        if (typeof renderCattleList === 'function' && typeof currentFarmId !== 'undefined' && currentFarmId) {
-          var _farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
-          if (_farm) { renderCattleList(_farm); if (typeof refreshFarmDetailHeader === 'function') refreshFarmDetailHeader(_farm); }
-        }
-        if (window.evSyncQfLabels) window.evSyncQfLabels();
-        if (window.evUpdateBadges) window.evUpdateBadges();
+        // The Farms/Milk/Events app lives in a separate <script> tag/scope —
+        // it exposes one bridge function that re-renders everything there
+        // built from JS template strings (farm rows, cattle rows, severity
+        // badges, quick-filter labels, the events count pill).
+        if (window.vanixRefreshApp) window.vanixRefreshApp();
       }
 
       // ── Language bottom sheet ──
