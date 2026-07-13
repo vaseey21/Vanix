@@ -163,8 +163,8 @@ The heat alert also surfaces as a **full-screen "push notification" style carous
 | 01 | Login — phone OTP | Done |
 | 02 | OTP entry | Pending |
 | 03 | Home dashboard (Farm Owner) | Pending |
-| 04 | Farms list | Pending |
-| 05 | Farm detail (cow list) | Pending |
+| 04 | Farms list | Done — hero (Farms title) + 3 stat tiles (Total Farms / Milk Today / Unactioned Alerts) + search + a Swiggy-style filter dropdown (All / Healthy / Need Attention / Setup Required). Farm rows show cattle count + manager, and a status affordance: black "!" circle (need attention), outline check (healthy), or a dashed-border row + "Setup" pill (setup required, unassigned). No "Add Farm" — farms are provisioned by the distributor/admin. Tapping a row opens Farm Detail. |
+| 05 | Farm detail (cow list) | Done — back chevron + farm name + manager, farm temp top-right. 2 stat tiles (Milk Today / Unactioned Alerts, each with a trend arrow). Search cattle + status filter pills (All / Milking / Fever / Heat). Cattle rows: avatar placeholder, name — number, age · belt, a status pill (black fill for Heat Cycle, outline for the rest), cow temp + trend arrow + a kebab menu. FAB "+" → Add Cattle (placeholder, no flow yet). Highland Farm (0 cattle) shows an empty state. |
 | 06 | Cow profile (vitals, cycle, yield) | Pending |
 | 07 | Milk Log | Done — cream hero, milk-scoped tinted banners (NO heat alerts here), date-grouped cards w/ coloured yield box + ✓/⏱, two-pane filter sheet (category rail left, tinted option rows right — never white), tap card → Edit/Delete action sheet, black FAB. Sessions: Morning + Evening only. "View complete summary" → analytics page: retained totals, breed filter, 8-week trend w/ tooltip, highest/lowest week tiles, top-5 cows + yield-by-breed bars (single-hue greenInk/greenDeep) |
 | 08 | Add milk entry | Done — same-phone page: farm (owner only) + cow (Name—Breed—Belt no.) + date (no future) + session pills (Evening locked till 17:00 today, past-session warning modal) + litres, Save/Cancel. Duplicate guard: same cow+session+date → confirm modal |
