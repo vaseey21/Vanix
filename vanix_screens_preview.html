@@ -1524,28 +1524,28 @@
               <!-- ── Quick filters (Swiggy-style dropdown chips) ── -->
               <div id="ev-quickfilters">
                 <div class="ev-qf" data-filter="type">
-                  <button class="ev-qf-btn"><span class="ev-qf-label">Type</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <button class="ev-qf-btn"><span class="ev-qf-label" data-k="qfType">Type</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                   <div class="ev-qf-menu">
-                    <button class="ev-qf-opt on" data-val="all">All types</button>
-                    <button class="ev-qf-opt" data-val="action">Needs action</button>
-                    <button class="ev-qf-opt" data-val="warn">Warnings</button>
-                    <button class="ev-qf-opt" data-val="rem">Reminder</button>
+                    <button class="ev-qf-opt on" data-val="all" data-k="qfAllTypes">All types</button>
+                    <button class="ev-qf-opt" data-val="action" data-k="qfNeedsAction">Needs action</button>
+                    <button class="ev-qf-opt" data-val="warn" data-k="qfWarnings">Warnings</button>
+                    <button class="ev-qf-opt" data-val="rem" data-k="qfReminder">Reminder</button>
                   </div>
                 </div>
-                <button id="ev-qf-unactioned" class="ev-qf-btn ev-qf-toggle" type="button">Unactioned</button>
+                <button id="ev-qf-unactioned" class="ev-qf-btn ev-qf-toggle" type="button" data-k="qfUnactioned">Unactioned</button>
                 <div class="ev-qf" data-filter="crit">
-                  <button class="ev-qf-btn"><span class="ev-qf-label">Criticality</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <button class="ev-qf-btn"><span class="ev-qf-label" data-k="qfCriticality">Criticality</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                   <div class="ev-qf-menu">
-                    <button class="ev-qf-opt on" data-val="all">All levels</button>
-                    <button class="ev-qf-opt" data-val="critical">Critical</button>
-                    <button class="ev-qf-opt" data-val="medium">Medium</button>
-                    <button class="ev-qf-opt" data-val="low">Low</button>
+                    <button class="ev-qf-opt on" data-val="all" data-k="qfAllLevels">All levels</button>
+                    <button class="ev-qf-opt" data-val="critical" data-k="qfCritical">Critical</button>
+                    <button class="ev-qf-opt" data-val="medium" data-k="qfMedium">Medium</button>
+                    <button class="ev-qf-opt" data-val="low" data-k="qfLow">Low</button>
                   </div>
                 </div>
                 <div class="ev-qf" data-filter="cat">
-                  <button class="ev-qf-btn"><span class="ev-qf-label">Category</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <button class="ev-qf-btn"><span class="ev-qf-label" data-k="qfCategory">Category</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                   <div class="ev-qf-menu">
-                    <button class="ev-qf-opt on" data-val="all">All categories</button>
+                    <button class="ev-qf-opt on" data-val="all" data-k="qfAllCategories">All categories</button>
                     <button class="ev-qf-opt" data-val="Fever">Fever</button>
                     <button class="ev-qf-opt" data-val="Heat">Heat</button>
                     <button class="ev-qf-opt" data-val="Pregnancy">Pregnancy</button>
