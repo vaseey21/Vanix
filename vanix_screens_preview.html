@@ -4542,9 +4542,19 @@
       var farmsFilter = 'all';
       var currentFarmId = null;
 
+      // Urgency badges — same CRITICAL/MEDIUM/LOW (red/orange/green) text-banner
+      // convention as the Events cards; replaces the old black "!" circle.
+      var SEVERITY_BADGE = {
+        critical: { label:'sevCritical', color:'var(--danger)' },
+        medium:   { label:'sevMedium',   color:'var(--warning)' },
+        low:      { label:'sevLow',      color:'var(--greenink)' }
+      };
       function farmStatusBadge(f) {
-        if (f.status === 'attention') return '<span style="flex-shrink:0; width:28px; height:28px; border-radius:50%; background:var(--dark1); color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700;">!</span>';
-        if (f.status === 'setup') return '<span class="en" style="flex-shrink:0; height:30px; padding:0 14px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:600; display:flex; align-items:center; font-family:var(--font-hi);">Setup</span>';
+        if (f.status === 'setup') return '<span class="en farm-setup-pill" style="flex-shrink:0; height:30px; padding:0 14px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:600; display:flex; align-items:center; font-family:var(--font-hi);">Setup</span>';
+        if (f.status === 'attention') {
+          var sev = SEVERITY_BADGE[f.severity || 'critical'];
+          return '<span class="farm-sev-badge" data-sev-k="' + sev.label + '" style="flex-shrink:0; height:26px; padding:0 12px; border-radius:13px; font-size:11px; font-weight:700; letter-spacing:0.04em; display:flex; align-items:center; background:' + sev.color + '; color:#fff; font-family:var(--font-hi);">' + t()[sev.label] + '</span>';
+        }
         return '<span style="flex-shrink:0; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--text1); display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>';
       }
 
