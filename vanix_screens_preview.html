@@ -4749,12 +4749,15 @@
         });
         document.getElementById('cattle-search').value = '';
         document.getElementById('farm-detail-name').textContent = farm.name;
-        document.getElementById('farm-detail-manager').textContent = farm.manager + ' · Manager';
         document.getElementById('farm-detail-temp').textContent = farm.temp;
         document.getElementById('farm-detail-milk').textContent = farm.milkToday;
         document.getElementById('farm-detail-alerts').textContent = farm.alerts;
+        refreshFarmDetailHeader(farm);
         renderCattleList(farm);
         farmDetailPage.style.display = 'block';
+      }
+      function refreshFarmDetailHeader(farm) {
+        document.getElementById('farm-detail-manager').textContent = farm.manager + ' · ' + t().managerWord;
       }
       document.getElementById('farm-detail-back').addEventListener('click', function() {
         farmDetailPage.style.display = 'none';
