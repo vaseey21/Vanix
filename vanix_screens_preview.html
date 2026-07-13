@@ -4624,7 +4624,7 @@
         low:      { label:'sevLow',      color:'var(--greenink)' }
       };
       function farmStatusBadge(f) {
-        if (f.status === 'setup') return '<span class="en farm-setup-pill" style="flex-shrink:0; height:30px; padding:0 14px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:600; display:flex; align-items:center; font-family:var(--font-hi);">Setup</span>';
+        if (f.status === 'setup') return '<span class="farm-setup-pill" style="flex-shrink:0; height:30px; padding:0 14px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:600; display:flex; align-items:center; font-family:var(--font-hi);">' + window.t().setupBadge + '</span>';
         if (f.status === 'attention') {
           var sev = SEVERITY_BADGE[f.severity || 'critical'];
           return '<span class="farm-sev-badge" data-sev-k="' + sev.label + '" style="flex-shrink:0; height:26px; padding:0 12px; border-radius:13px; font-size:11px; font-weight:700; letter-spacing:0.04em; display:flex; align-items:center; background:' + sev.color + '; color:#fff; font-family:var(--font-hi);">' + window.t()[sev.label] + '</span>';
