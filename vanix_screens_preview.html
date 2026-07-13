@@ -344,7 +344,7 @@
     #ev-fever .ev-cow-breed, #ev-fever .ev-question-big,
     #ev-heat .ev-cow-breed, #ev-heat .ev-question-big { display: none; }
     #ev-heat .ev-chip svg { display: none; }
-    #ev-heat .ev-chip-p1::after { content: " · ACTIONABLE"; }
+    #ev-heat .ev-chip-p1::after { content: var(--i18n-actionable, " · ACTIONABLE"); }
     #ev-fever .ev-no .ev-btn-svg, #ev-fever .ev-yes .ev-btn-svg,
     #ev-heat .ev-no .ev-btn-svg, #ev-heat .ev-yes .ev-btn-svg { display: none; }
     #ev-fever .ev-btn-short { display: none; }
@@ -1925,24 +1925,24 @@
               <div class="ev-rem" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:13px 16px; margin-bottom:8px; display:flex; gap:12px; align-items:center;">
                 <div style="width:36px; height:36px; border-radius:10px; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5-2 8H7c0-3-2-5-2-8a7 7 0 0 1 7-7z"/><path d="M9 21h6"/></svg></div>
                 <div style="min-width:0; flex:1;" data-due="2026-07-12" data-start="2026-06-28">
-                  <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Delivery approaching — Dhauli</p>
-                  <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Expected around 12 Jul — prepare the calving pen. She starts milking after calving.</p>
+                  <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="remDeliveryTitle">Delivery approaching — Dhauli</p>
+                  <p style="font-size:12px; color:var(--text2); margin:2px 0 0;" data-k="remDeliverySub">Expected around 12 Jul — prepare the calving pen. She starts milking after calving.</p>
                   <p class="ev-rem-due en" style="font-size:11px; font-weight:600; margin:4px 0 0;"></p><div style="height:4px; background:var(--border); border-radius:2px; margin-top:5px; overflow:hidden;"><div class="ev-rem-bar" style="width:0%; height:100%; border-radius:2px;"></div></div>
                 </div>
               </div>
               <div class="ev-rem" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:13px 16px; margin-bottom:8px; display:flex; gap:12px; align-items:center;">
                 <div style="width:36px; height:36px; border-radius:10px; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10"/><path d="M8 7l4-4 4 4"/><circle cx="12" cy="17" r="4"/></svg></div>
                 <div style="min-width:0; flex:1;" data-due="2026-07-08" data-start="2026-06-28">
-                  <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">FMD vaccination due</p>
-                  <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">5 cows at Green Valley Farm — due 8 Jul</p>
+                  <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="remFmdTitle">FMD vaccination due</p>
+                  <p style="font-size:12px; color:var(--text2); margin:2px 0 0;" data-k="remFmdSub">5 cows at Green Valley Farm — due 8 Jul</p>
                   <p class="ev-rem-due en" style="font-size:11px; font-weight:600; margin:4px 0 0;"></p><div style="height:4px; background:var(--border); border-radius:2px; margin-top:5px; overflow:hidden;"><div class="ev-rem-bar" style="width:0%; height:100%; border-radius:2px;"></div></div>
                 </div>
               </div>
               <div class="ev-rem" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:13px 16px; margin-bottom:8px; display:flex; gap:12px; align-items:center;">
                 <div style="width:36px; height:36px; border-radius:10px; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg></div>
                 <div style="min-width:0; flex:1;" data-due="2026-07-15" data-start="2026-06-24">
-                  <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Quarterly vet check-up</p>
-                  <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Sunrise Dairy — 15 Jul, Dr. Sharma</p>
+                  <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="remVetTitle">Quarterly vet check-up</p>
+                  <p style="font-size:12px; color:var(--text2); margin:2px 0 0;" data-k="remVetSub">Sunrise Dairy — 15 Jul, Dr. Sharma</p>
                   <p class="ev-rem-due en" style="font-size:11px; font-weight:600; margin:4px 0 0;"></p><div style="height:4px; background:var(--border); border-radius:2px; margin-top:5px; overflow:hidden;"><div class="ev-rem-bar" style="width:0%; height:100%; border-radius:2px;"></div></div>
                 </div>
               </div>
@@ -1951,39 +1951,39 @@
 
               <div id="ev-sec-hist">
               <!-- ── TIMELINE ── -->
-              <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;">History</p>
+              <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:18px 0 10px;" data-k="histHeader">History</p>
               <div id="ev-timeline">
-                <p class="en ev-date" style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0 0 8px;">Yesterday — 2 Jul</p>
+                <p class="en ev-date" style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0 0 8px;" data-k="histDateYest">Yesterday — 2 Jul</p>
                 <div class="ev-row" style="background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px; display:flex; gap:10px; align-items:flex-start;">
                   <span style="width:8px; height:8px; border-radius:50%; background:var(--greendeep); flex-shrink:0; margin-top:5px;"></span>
                   <div style="min-width:0; flex:1;">
-                    <p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;">Calved — Ganga</p><span class="en ev-stage" style="background:var(--activebg); border:1px solid var(--greendeep); color:var(--greenink); border-radius:9px; padding:1px 8px; font-size:10px; font-weight:600; margin-top:5px; display:inline-block;">MILKING</span>
-                    <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Healthy calf at 05:40 — Ganga now appears in the Milk Log</p>
+                    <p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;" data-k="histCalved">Calved — Ganga</p><span class="en ev-stage" style="background:var(--activebg); border:1px solid var(--greendeep); color:var(--greenink); border-radius:9px; padding:1px 8px; font-size:10px; font-weight:600; margin-top:5px; display:inline-block;" data-k="stageMilking">MILKING</span>
+                    <p style="font-size:12px; color:var(--text2); margin:2px 0 0;" data-k="histCalvedSub">Healthy calf at 05:40 — Ganga now appears in the Milk Log</p>
                   </div>
                   <span class="en" style="font-size:11px; color:var(--text2); flex-shrink:0;">05:40</span>
                 </div>
                 <div class="ev-row" style="background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px; display:flex; gap:10px; align-items:flex-start;">
                   <span style="width:8px; height:8px; border-radius:50%; background:var(--warning); flex-shrink:0; margin-top:5px;"></span>
                   <div style="min-width:0; flex:1;">
-                    <p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;">Pregnancy failed — Lakshmi</p><span class="en ev-stage" style="background:var(--warnbg); border:1px solid var(--warning); color:#8A5A00; border-radius:9px; padding:1px 8px; font-size:10px; font-weight:600; margin-top:5px; display:inline-block;">HEAT WATCH</span>
-                    <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Heat returned on day 16 of the 21-day watch — cycle restarted</p>
+                    <p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;" data-k="histPregFail">Pregnancy failed — Lakshmi</p><span class="en ev-stage" style="background:var(--warnbg); border:1px solid var(--warning); color:#8A5A00; border-radius:9px; padding:1px 8px; font-size:10px; font-weight:600; margin-top:5px; display:inline-block;" data-k="stageHeatWatch">HEAT WATCH</span>
+                    <p style="font-size:12px; color:var(--text2); margin:2px 0 0;" data-k="histPregFailSub">Heat returned on day 16 of the 21-day watch — cycle restarted</p>
                   </div>
                   <span class="en" style="font-size:11px; color:var(--text2); flex-shrink:0;">14:05</span>
                 </div>
-                <p class="en ev-date" style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:12px 0 8px;">30 Jun</p>
+                <p class="en ev-date" style="font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:12px 0 8px;" data-k="histDate30Jun">30 Jun</p>
                 <div class="ev-row" style="background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px; display:flex; gap:10px; align-items:flex-start;">
                   <span style="width:8px; height:8px; border-radius:50%; background:var(--danger); flex-shrink:0; margin-top:5px;"></span>
                   <div style="min-width:0; flex:1;">
-                    <p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;">Vet appointment completed — Bhoori</p><span class="en ev-stage" style="background:var(--activebg); border:1px solid var(--greendeep); color:var(--greenink); border-radius:9px; padding:1px 8px; font-size:10px; font-weight:600; margin-top:5px; display:inline-block;">RECOVERED</span>
-                    <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Fever treated by Dr. Sharma — temperature back to normal</p>
+                    <p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;" data-k="histVetDone">Vet appointment completed — Bhoori</p><span class="en ev-stage" style="background:var(--activebg); border:1px solid var(--greendeep); color:var(--greenink); border-radius:9px; padding:1px 8px; font-size:10px; font-weight:600; margin-top:5px; display:inline-block;" data-k="stageRecovered">RECOVERED</span>
+                    <p style="font-size:12px; color:var(--text2); margin:2px 0 0;" data-k="histVetDoneSub">Fever treated by Dr. Sharma — temperature back to normal</p>
                   </div>
                   <span class="en" style="font-size:11px; color:var(--text2); flex-shrink:0;">11:30</span>
                 </div>
                 <div class="ev-row" style="background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px; display:flex; gap:10px; align-items:flex-start;">
                   <span style="width:8px; height:8px; border-radius:50%; background:var(--greendeep); flex-shrink:0; margin-top:5px;"></span>
                   <div style="min-width:0; flex:1;">
-                    <p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;">Inseminated — Mohini</p><span class="en ev-stage" style="background:var(--activebg); border:1px solid var(--greendeep); color:var(--greenink); border-radius:9px; padding:1px 8px; font-size:10px; font-weight:600; margin-top:5px; display:inline-block;">21-DAY WATCH</span>
-                    <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Within the 18h window — pregnancy check set for 3 Jul</p>
+                    <p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;" data-k="histInsem">Inseminated — Mohini</p><span class="en ev-stage" style="background:var(--activebg); border:1px solid var(--greendeep); color:var(--greenink); border-radius:9px; padding:1px 8px; font-size:10px; font-weight:600; margin-top:5px; display:inline-block;" data-k="stage21Day">21-DAY WATCH</span>
+                    <p style="font-size:12px; color:var(--text2); margin:2px 0 0;" data-k="histInsemSub">Within the 18h window — pregnancy check set for 3 Jul</p>
                   </div>
                   <span class="en" style="font-size:11px; color:var(--text2); flex-shrink:0;">09:15</span>
                 </div>
@@ -2330,7 +2330,18 @@
                ctaFlagIt:'Flag it', ctaGotIt:'Got it', ctaGotItWatching:'Got it, watching', ctaCheckedCooling:'Checked cooling / shade', ctaVetCheckDone:'Vet check completed',
                ctaRemindLater:'Remind me later', ctaYesAdd:'Yes, add', ctaStillMilking:'Still milking', ctaResting:'Entered resting period', ctaYesInHeat:'Yes, in heat', ctaCallVet:'Call vet',
                ctaNotPregnant:'Not pregnant', ctaConfirmPregnant:'Confirm \u2014 pregnant', ctaYesNotifyVet:'Yes, notify vet', feverNoFull:"No, she's fine", feverYesFull:"Yes, it's fever", feverYesShort:'Yes, fever',
-               msgRecheck10d:"Got it \u2014 we'll check again in 10 days." },
+               msgRecheck10d:"Got it \u2014 we'll check again in 10 days.",
+               remDeliveryTitle:'Delivery approaching \u2014 Dhauli', remDeliverySub:'Expected around 12 Jul \u2014 prepare the calving pen. She starts milking after calving.',
+               remFmdTitle:'FMD vaccination due', remFmdSub:'5 cows at Green Valley Farm \u2014 due 8 Jul', remVetTitle:'Quarterly vet check-up', remVetSub:'Sunrise Dairy \u2014 15 Jul, Dr. Sharma',
+               remOverdue:'Overdue by {n}d', remDueToday:'Due today', remDayLeft:'1 day left', remDaysLeft:'{n} days left',
+               histHeader:'History', histDateYest:'Yesterday \u2014 2 Jul', histDate30Jun:'30 Jun',
+               histCalved:'Calved \u2014 Ganga', histCalvedSub:'Healthy calf at 05:40 \u2014 Ganga now appears in the Milk Log',
+               histPregFail:'Pregnancy failed \u2014 Lakshmi', histPregFailSub:'Heat returned on day 16 of the 21-day watch \u2014 cycle restarted',
+               histVetDone:'Vet appointment completed \u2014 Bhoori', histVetDoneSub:'Fever treated by Dr. Sharma \u2014 temperature back to normal',
+               histInsem:'Inseminated \u2014 Mohini', histInsemSub:'Within the 18h window \u2014 pregnancy check set for 3 Jul',
+               stageMilking:'MILKING', stageHeatWatch:'HEAT WATCH', stageRecovered:'RECOVERED', stage21Day:'21-DAY WATCH',
+               prioP0:'P0 \u00b7 CRITICAL', prioP1:'P1 \u00b7 ACTIONABLE', prioP2:'P2 \u00b7 WARNING', prioP3:'P3 \u00b7 WARNING',
+               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -2364,7 +2375,18 @@
                ctaFlagIt:'फ्लैग करें', ctaGotIt:'ठीक है', ctaGotItWatching:'ठीक है, नज़र रखेंगे', ctaCheckedCooling:'ठंडक/छाया जाँच ली', ctaVetCheckDone:'पशु चिकित्सक जांच पूरी',
                ctaRemindLater:'बाद में याद दिलाएँ', ctaYesAdd:'हाँ, जोड़ें', ctaStillMilking:'अभी दूध दे रही', ctaResting:'आराम अवधि शुरू', ctaYesInHeat:'हाँ, हीट में है', ctaCallVet:'पशु चिकित्सक बुलाएँ',
                ctaNotPregnant:'गर्भवती नहीं', ctaConfirmPregnant:'पुष्टि \u2014 गर्भवती', ctaYesNotifyVet:'हाँ, पशु चिकित्सक को बताएँ', feverNoFull:'नहीं, वह ठीक है', feverYesFull:'हाँ, बुखार है', feverYesShort:'हाँ, बुखार',
-               msgRecheck10d:'ठीक है \u2014 10 दिन बाद फिर जाँचेंगे।' },
+               msgRecheck10d:'ठीक है \u2014 10 दिन बाद फिर जाँचेंगे।',
+               remDeliveryTitle:'प्रसव नज़दीक \u2014 धौली', remDeliverySub:'12 जुलाई के आसपास अपेक्षित \u2014 ब्याने का बाड़ा तैयार करें। ब्याने के बाद वह दूध देना शुरू करेगी।',
+               remFmdTitle:'खुरपका (FMD) टीकाकरण बाकी', remFmdSub:'ग्रीन वैली फार्म की 5 गायें \u2014 8 जुलाई तक', remVetTitle:'तिमाही पशु चिकित्सक जांच', remVetSub:'सनराइज़ डेयरी \u2014 15 जुलाई, डॉ. शर्मा',
+               remOverdue:'{n} दिन देर से', remDueToday:'आज देय', remDayLeft:'1 दिन बाकी', remDaysLeft:'{n} दिन बाकी',
+               histHeader:'इतिहास', histDateYest:'कल \u2014 2 जुलाई', histDate30Jun:'30 जून',
+               histCalved:'ब्याई \u2014 गंगा', histCalvedSub:'सुबह 05:40 पर स्वस्थ बछड़ा \u2014 गंगा अब दूध लॉग में दिखेगी',
+               histPregFail:'गर्भ असफल \u2014 लक्ष्मी', histPregFailSub:'21-दिन निगरानी के 16वें दिन हीट लौटी \u2014 चक्र फिर शुरू',
+               histVetDone:'पशु चिकित्सक भेंट पूरी \u2014 भूरी', histVetDoneSub:'डॉ. शर्मा ने बुखार का इलाज किया \u2014 तापमान सामान्य',
+               histInsem:'गर्भाधान हुआ \u2014 मोहिनी', histInsemSub:'18 घंटे की विंडो में \u2014 गर्भ जांच 3 जुलाई को',
+               stageMilking:'दूध दे रही', stageHeatWatch:'हीट निगरानी', stageRecovered:'स्वस्थ हुई', stage21Day:'21-दिन निगरानी',
+               prioP0:'गंभीर', prioP1:'मध्यम \u00b7 कार्रवाई', prioP2:'कम \u00b7 चेतावनी', prioP3:'कम \u00b7 चेतावनी',
+               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -2398,7 +2420,18 @@
                ctaFlagIt:'फ्लैग करीं', ctaGotIt:'ठीक बा', ctaGotItWatching:'ठीक बा, नजर रखेम', ctaCheckedCooling:'ठंडक/छाया देख लिहनी', ctaVetCheckDone:'पशु डॉक्टर जांच पूरा',
                ctaRemindLater:'बाद में याद दिलाईं', ctaYesAdd:'हाँ, जोड़ीं', ctaStillMilking:'अबहूँ दूध देत बिया', ctaResting:'आराम अवधि शुरू', ctaYesInHeat:'हाँ, हीट में बिया', ctaCallVet:'पशु डॉक्टर बोलाईं',
                ctaNotPregnant:'गर्भवती ना', ctaConfirmPregnant:'पुष्टि \u2014 गर्भवती', ctaYesNotifyVet:'हाँ, पशु डॉक्टर के बताईं', feverNoFull:'ना, ऊ ठीक बिया', feverYesFull:'हाँ, बुखार बा', feverYesShort:'हाँ, बुखार',
-               msgRecheck10d:'ठीक बा \u2014 10 दिन बाद फिर जाँचब।' }
+               msgRecheck10d:'ठीक बा \u2014 10 दिन बाद फिर जाँचब।',
+               remDeliveryTitle:'बियान नजदीक \u2014 धौली', remDeliverySub:'12 जुलाई के आसपास उमेद बा \u2014 बियाए के बाड़ा तइयार करीं। बियाए के बाद ऊ दूध देवे लागी।',
+               remFmdTitle:'खुरपका (FMD) टीका बाकी', remFmdSub:'ग्रीन वैली फार्म के 5 गाय \u2014 8 जुलाई ले', remVetTitle:'तिमाही पशु डॉक्टर जांच', remVetSub:'सनराइज़ डेयरी \u2014 15 जुलाई, डॉ. शर्मा',
+               remOverdue:'{n} दिन देरी', remDueToday:'आज देय बा', remDayLeft:'1 दिन बाकी', remDaysLeft:'{n} दिन बाकी',
+               histHeader:'इतिहास', histDateYest:'काल्हु \u2014 2 जुलाई', histDate30Jun:'30 जून',
+               histCalved:'बियाइल \u2014 गंगा', histCalvedSub:'05:40 पर स्वस्थ बछरू \u2014 गंगा अब दूध लॉग में लउकी',
+               histPregFail:'गर्भ असफल \u2014 लक्ष्मी', histPregFailSub:'21-दिन निगरानी के 16वाँ दिन हीट लवटल \u2014 चक्र फिर शुरू',
+               histVetDone:'पशु डॉक्टर भेंट पूरा \u2014 भूरी', histVetDoneSub:'डॉ. शर्मा बुखार के इलाज कइलें \u2014 तापमान सामान्य',
+               histInsem:'गर्भाधान भइल \u2014 मोहिनी', histInsemSub:'18 घंटा के विंडो में \u2014 गर्भ जांच 3 जुलाई के',
+               stageMilking:'दूध देत बिया', stageHeatWatch:'हीट निगरानी', stageRecovered:'ठीक भइल', stage21Day:'21-दिन निगरानी',
+               prioP0:'गंभीर', prioP1:'मध्यम \u00b7 कार्रवाई', prioP2:'कम \u00b7 चेतावनी', prioP3:'कम \u00b7 चेतावनी',
+               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
@@ -2430,6 +2463,7 @@
         r.setProperty('--i18n-medium', '"' + t().sevMedium + '"');
         r.setProperty('--i18n-low', '"' + t().sevLow + '"');
         r.setProperty('--i18n-viewdetails', '"' + t().viewDetailsLabel + '"');
+        r.setProperty('--i18n-actionable', '" \u00b7 ' + t().chipActionable + '"');
       }
       function applyLang() {
         applyImgModeVars();
@@ -3103,7 +3137,7 @@
       // date vs. today. DEMO: "today" is fixed to match the History section's
       // "YESTERDAY — 2 JUL" reference (i.e. today = 3 Jul) — replace with the
       // real current date once wired to a backend.
-      (function() {
+      function evRenderReminderDues() {
         var today = new Date('2026-07-03T00:00:00');
         document.querySelectorAll('#ev-sec-rem [data-due]').forEach(function(row) {
           var due = new Date(row.getAttribute('data-due') + 'T00:00:00');
@@ -3111,10 +3145,10 @@
           if (!dueEl) return;
           var days = Math.round((due - today) / 86400000);
           var label, color;
-          if (days < 0) { label = 'Overdue by ' + (-days) + 'd'; color = 'var(--danger)'; }
-          else if (days === 0) { label = 'Due today'; color = 'var(--danger)'; }
-          else if (days <= 2) { label = days + ' day' + (days === 1 ? '' : 's') + ' left'; color = '#8A5A00'; }
-          else { label = days + ' days left'; color = 'var(--text2)'; }
+          if (days < 0) { label = window.t().remOverdue.replace('{n}', -days); color = 'var(--danger)'; }
+          else if (days === 0) { label = window.t().remDueToday; color = 'var(--danger)'; }
+          else if (days === 1) { label = window.t().remDayLeft; color = '#8A5A00'; }
+          else { label = window.t().remDaysLeft.replace('{n}', days); color = (days <= 2 ? '#8A5A00' : 'var(--text2)'); }
           dueEl.textContent = label;
           dueEl.style.color = color;
 
@@ -3128,7 +3162,8 @@
             barEl.style.background = color;
           }
         });
-      })();
+      }
+      evRenderReminderDues();
 
       // Events tabs: All / Needs action / Reminders
       document.querySelectorAll('.ev-tab').forEach(function(tab) {
@@ -3915,7 +3950,7 @@
         // Cow name -> breed, for the illustration-first cards' name/breed
         // caption (breed isn't tracked as structured data for these cards
         // today — mock values from the locked breed set).
-        var EV_BREED = { Kajri: 'Jersey', Mohini: 'Gir/Sahiwal', Ganga: 'Ongole', Gauri: 'Desi', Lakshmi: 'Ongole' };
+        var EV_BREED = { Kajri: 'Jersey', Mohini: 'Gir/Sahiwal', Ganga: 'Ongole', Gauri: 'Desi', Lakshmi: 'Ongole', 'कजरी': 'जर्सी', 'मोहिनी': 'गिर/साहीवाल', 'गंगा': 'ओंगोल', 'गौरी': 'देसी', 'लक्ष्मी': 'ओंगोल' };
 
         window.openCardDetail = function(cardId, priority) {
           var card = document.getElementById(cardId);
@@ -3980,7 +4015,7 @@
           document.getElementById('ev-detail-sub').textContent = subEl ? subEl.textContent : '';
           document.getElementById('ev-detail-meta').textContent = metaEl ? metaEl.textContent : '';
           var badge = document.getElementById('ev-detail-badge');
-          badge.textContent = EV_PRIORITY_LABEL[priority] || '';
+          badge.textContent = window.t()['prio' + priority.toUpperCase()] || EV_PRIORITY_LABEL[priority] || '';
           badge.setAttribute('style', 'flex-shrink:0; border-radius:10px; padding:3px 8px; font-size:10px; font-weight:600; white-space:nowrap; ' + (EV_PRIORITY_STYLE[priority] || ''));
 
           var temps = evMockTemps(cardId), moves = evMockMoves(cardId);
@@ -3991,8 +4026,8 @@
             return x.toFixed(1) + ',' + y.toFixed(1);
           }).join(' ');
           document.getElementById('ev-detail-temp').innerHTML = '<svg viewBox="0 0 100 30" preserveAspectRatio="none" style="display:block; width:100%; height:34px;"><polyline points="' + pts + '" fill="none" stroke="var(--warning)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="100" cy="' + (26 - ((temps[temps.length - 1] - min) / (max - min || 1)) * 22).toFixed(1) + '" r="3" fill="var(--danger)" stroke="#fff" stroke-width="1"/></svg>';
-          document.getElementById('ev-detail-temp-min').textContent = min.toFixed(1) + '°C baseline';
-          document.getElementById('ev-detail-temp-today').textContent = temps[temps.length - 1].toFixed(1) + '°C today';
+          document.getElementById('ev-detail-temp-min').textContent = min.toFixed(1) + window.t().detBaseline;
+          document.getElementById('ev-detail-temp-today').textContent = temps[temps.length - 1].toFixed(1) + window.t().detToday;
           var mmax = Math.max.apply(null, moves);
           var mmin = Math.min.apply(null, moves);
           // Only highlight the last bar as a spike if movement actually moved —
@@ -4838,6 +4873,7 @@
           if (farm) { renderCattleList(farm); refreshFarmDetailHeader(farm); }
         }
         if (window.evSyncQfLabels) window.evSyncQfLabels();
+        evRenderReminderDues();
         evUpdateBadges();
       };
     })();
