@@ -2075,6 +2075,177 @@
 
           </div>
 
+          <!-- FARMS LIST — opened from the Farms tab. Provisioned by the
+               distributor/admin; the app only ever lists them (no Add Farm). -->
+          <div id="page-farms" style="position:absolute; inset:0; background:var(--bgwarm); z-index:40; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
+
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <h2 class="en" style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Farms</h2>
+              </div>
+
+              <div style="padding:14px 16px 0;">
+                <div style="display:flex; gap:8px;">
+                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
+                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">3</p>
+                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Total Farms</p>
+                  </div>
+                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
+                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">118 <span style="font-size:12px; font-weight:600;">L</span></p>
+                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
+                  </div>
+                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
+                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">3</p>
+                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
+                  </div>
+                </div>
+
+                <div style="display:flex; gap:8px; margin-top:14px; position:relative;">
+                  <div style="flex:1; display:flex; align-items:center; gap:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; height:46px; padding:0 14px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                    <input type="text" id="farms-search" class="en" placeholder="Search farms" style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
+                  </div>
+                  <button id="farms-filter-btn" style="flex-shrink:0; width:46px; height:46px; border-radius:14px; border:1px solid var(--border); background:var(--bgcard); display:flex; align-items:center; justify-content:center;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                  </button>
+                  <div id="farms-filter-menu" style="display:none; position:absolute; top:52px; right:0; z-index:10; min-width:190px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.22); padding:6px;">
+                    <button class="farms-filter-opt on en" data-val="all" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">All Farms</button>
+                    <button class="farms-filter-opt en" data-val="healthy" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Healthy Farms</button>
+                    <button class="farms-filter-opt en" data-val="attention" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Need Attention</button>
+                    <button class="farms-filter-opt en" data-val="setup" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Setup Required</button>
+                  </div>
+                </div>
+
+                <div id="farms-list" style="margin-top:14px;"></div>
+              </div>
+
+            </div><!-- /scroll -->
+            </div>
+
+            <!-- Frosted nav — Farms active -->
+            <nav class="vnav" id="farms-nav">
+              <div class="vcap" style="transform:translateX(100%);"></div>
+              <button class="vtab" data-i="0">
+                <span style="position:relative; display:flex;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
+                  <span class="ev-dot" style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
+                </span>
+                <span class="vlab s1-nav-l en" data-k="navHome">Home</span>
+              </button>
+              <button class="vtab on" data-i="1">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navFarms">Farms</span>
+              </button>
+              <button class="vtab" data-i="2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navMilk">Milk</span>
+              </button>
+              <button class="vtab" data-i="3">
+                <span style="position:relative; display:flex;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  <span class="en ev-badge" style="position:absolute; top:-5px; right:-8px; min-width:15px; height:15px; border-radius:8px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px;">3</span>
+                </span>
+                <span class="vlab s1-nav-l en" data-k="navEvents">Events</span>
+              </button>
+              <button class="vtab" data-i="4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navAccount">Account</span>
+              </button>
+            </nav>
+            </div>
+          </div>
+
+          <!-- FARM DETAIL — opened by tapping a farm row on the Farms list. -->
+          <div id="page-farm-detail" style="position:absolute; inset:0; background:var(--bgwarm); z-index:41; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
+
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <div style="display:flex; align-items:flex-start; gap:6px;">
+                  <button id="farm-detail-back" style="flex-shrink:0; width:32px; height:32px; margin-top:2px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                  </button>
+                  <div style="flex:1;">
+                    <p id="farm-detail-name" class="en" style="font-size:21px; font-weight:700; color:var(--text1); margin:0; line-height:1.2;">Sunrise Dairy Farm</p>
+                    <p id="farm-detail-manager" class="en" style="font-size:13px; color:var(--text2); margin:2px 0 0;">Ramesh C · Manager</p>
+                  </div>
+                  <div style="flex-shrink:0; text-align:end;">
+                    <p id="farm-detail-temp" class="en" style="font-size:19px; font-weight:700; color:var(--text1); margin:0;">33°C</p>
+                    <p class="en" style="font-size:11px; font-style:italic; color:var(--text2); margin:1px 0 0;">Farm temp</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="padding:14px 16px 0;">
+                <div style="display:flex; gap:8px;">
+                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
+                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-milk">40</span> <span style="font-size:12px; font-weight:600;">L</span> <span style="color:var(--greenink);">▲</span></p>
+                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
+                  </div>
+                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
+                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-alerts">2</span> <span style="color:var(--danger);">▲</span></p>
+                    <p class="en" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
+                  </div>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; height:46px; padding:0 14px; margin-top:14px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                  <input type="text" id="cattle-search" class="en" placeholder="Search cattle" style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
+                </div>
+
+                <div id="cattle-status-tabs" style="display:flex; gap:8px; margin:12px 0 0; overflow-x:auto; padding-bottom:2px;">
+                  <button class="cattle-tab on en" data-status="all" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--dark1); background:var(--dark1); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi);">All</button>
+                  <button class="cattle-tab en" data-status="Milking" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Milking</button>
+                  <button class="cattle-tab en" data-status="Fever" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Fever</button>
+                  <button class="cattle-tab en" data-status="Heat" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Heat</button>
+                </div>
+
+                <div id="cattle-list" style="margin-top:12px;"></div>
+
+              </div>
+
+            </div><!-- /scroll -->
+
+            <button id="farm-detail-fab" title="Add cattle" style="position:absolute; right:18px; bottom:104px; width:56px; height:56px; border-radius:50%; background:var(--dark1); border:none; box-shadow:0 10px 24px rgba(0,0,0,0.28); padding:0; display:flex; align-items:center; justify-content:center; z-index:3;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+            <p class="en" style="position:absolute; right:18px; bottom:82px; font-size:11px; color:var(--text2); margin:0; z-index:3;">Add Cattle</p>
+
+            </div>
+
+            <!-- Frosted nav — Farms active (farm detail) -->
+            <nav class="vnav" id="farm-detail-nav">
+              <div class="vcap" style="transform:translateX(100%);"></div>
+              <button class="vtab" data-i="0">
+                <span style="position:relative; display:flex;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
+                  <span class="ev-dot" style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
+                </span>
+                <span class="vlab s1-nav-l en" data-k="navHome">Home</span>
+              </button>
+              <button class="vtab on" data-i="1">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navFarms">Farms</span>
+              </button>
+              <button class="vtab" data-i="2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navMilk">Milk</span>
+              </button>
+              <button class="vtab" data-i="3">
+                <span style="position:relative; display:flex;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  <span class="en ev-badge" style="position:absolute; top:-5px; right:-8px; min-width:15px; height:15px; border-radius:8px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px;">3</span>
+                </span>
+                <span class="vlab s1-nav-l en" data-k="navEvents">Events</span>
+              </button>
+              <button class="vtab" data-i="4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navAccount">Account</span>
+              </button>
+            </nav>
+          </div>
+
         </div><!-- /layer stack -->
 
       </div><!-- /phone -->

@@ -2016,8 +2016,19 @@
                phEmail:'आपन ईमेल डालीं',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता' }
       };
-      var lang = 'en';
+      var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
+      function setLang(newLang) {
+        lang = newLang;
+        localStorage.setItem('vanixLang', lang);
+        var curEl = document.getElementById('s1-lang-cur');
+        if (curEl) curEl.textContent = LANG_LABEL[lang];
+        document.querySelectorAll('.s1-ls-row').forEach(function(r) {
+          var chk = r.querySelector('.s1-ls-check');
+          if (chk) chk.style.display = (r.getAttribute('data-lang') === lang) ? 'block' : 'none';
+        });
+        applyLang();
+      }
 
       function applyLang() {
         document.getElementById('s1-title').textContent   = t().title;
@@ -2063,15 +2074,11 @@
       });
       document.querySelectorAll('.s1-ls-row').forEach(function(row) {
         row.addEventListener('click', function() {
-          lang = row.getAttribute('data-lang');
-          document.getElementById('s1-lang-cur').textContent = LANG_LABEL[lang];
-          document.querySelectorAll('.s1-ls-row').forEach(function(r) {
-            r.querySelector('.s1-ls-check').style.display = r === row ? 'block' : 'none';
-          });
-          applyLang();
+          setLang(row.getAttribute('data-lang'));
           closeLangSheet();
         });
       });
+      setLang(lang);
 
       // ── App dark mode: tap Account tab anywhere (temporary home for the switch) ──
       document.getElementById('s1-acct').addEventListener('click', function() {
@@ -3567,7 +3574,6 @@
                     '<span class="en" style="font-size:16px; font-weight:600; color:#fff; opacity:0.9; flex-shrink:0;">' + a.time + '</span>' +
                   '</div>' +
                   '<p style="font-size:14px; font-weight:500; color:#fff; opacity:0.85; margin:5px 0 14px;">' + a.name + ' · ' + a.breed + '</p>' +
-                  '<div style="width:100%;">' + fsSparkline(a.temps) + fsMovement(a.moves) + '</div>' +
                   '<div class="ev-fs-actions" style="width:100%; margin-top:16px;">' +
                     '<button class="ev-fs-yes" style="width:100%; min-height:52px; background:var(--greenink); border:none; border-radius:26px; font-size:17px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Yes, in heat</button>' +
                     '<button class="ev-fs-no" style="width:100%; min-height:48px; margin-top:8px; background:rgba(255,255,255,0.14); border:1.5px solid rgba(255,255,255,0.6); border-radius:24px; font-size:14px; font-weight:600; color:#fff; font-family:var(--font-hi);">No</button>' +
