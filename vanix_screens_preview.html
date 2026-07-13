@@ -4377,8 +4377,12 @@
 
       // ── Unified nav: sliding droplet capsule + page routing ──
       var milkPage = document.getElementById('page-milk');
+      var farmsPage = document.getElementById('page-farms');
+      var farmDetailPage = document.getElementById('page-farm-detail');
       var dashNav = document.getElementById('dash-nav');
       var milkNav = document.getElementById('milk-nav');
+      var farmsNav = document.getElementById('farms-nav');
+      var farmDetailNav = document.getElementById('farm-detail-nav');
 
       function wireNav(nav, onSelect) {
         var cap = nav.querySelector('.vcap');
@@ -4405,6 +4409,10 @@
       }
 
       wireNav(dashNav, function(i) {
+        if (i === 1) setTimeout(function() {
+          farmsPage.style.display = 'block';
+          resetNav(dashNav, 0); // dashboard shows Home again on return
+        }, 280);
         if (i === 2) setTimeout(function() {
           milkPage.style.display = 'block';
           resetNav(dashNav, 0); // dashboard shows Home again on return
@@ -4420,6 +4428,11 @@
           milkPage.style.display = 'none';
           resetNav(milkNav, 2); // milk page re-opens with Milk active
         }, 280);
+        if (i === 1) setTimeout(function() {
+          milkPage.style.display = 'none';
+          farmsPage.style.display = 'block';
+          resetNav(milkNav, 2);
+        }, 280);
         if (i === 3) setTimeout(function() {
           eventsPage.style.display = 'block';
           milkPage.style.display = 'none';
@@ -4432,12 +4445,218 @@
           eventsPage.style.display = 'none';
           resetNav(eventsNav, 3); // events re-opens with Events active
         }, 280);
+        if (i === 1) setTimeout(function() {
+          eventsPage.style.display = 'none';
+          farmsPage.style.display = 'block';
+          resetNav(eventsNav, 3);
+        }, 280);
         if (i === 2) setTimeout(function() {
           milkPage.style.display = 'block';
           eventsPage.style.display = 'none';
           resetNav(eventsNav, 3);
         }, 280);
         if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+      });
+      wireNav(farmsNav, function(i) {
+        if (i === 0) setTimeout(function() {
+          farmsPage.style.display = 'none';
+          resetNav(farmsNav, 1); // farms list re-opens with Farms active
+        }, 280);
+        if (i === 2) setTimeout(function() {
+          farmsPage.style.display = 'none';
+          milkPage.style.display = 'block';
+          resetNav(farmsNav, 1);
+        }, 280);
+        if (i === 3) setTimeout(function() {
+          farmsPage.style.display = 'none';
+          eventsPage.style.display = 'block';
+          resetNav(farmsNav, 1);
+        }, 280);
+        if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+      });
+      wireNav(farmDetailNav, function(i) {
+        if (i === 0) setTimeout(function() {
+          farmDetailPage.style.display = 'none';
+          farmsPage.style.display = 'none';
+          resetNav(farmDetailNav, 1);
+          resetNav(farmsNav, 1);
+        }, 280);
+        if (i === 1) setTimeout(function() {
+          farmDetailPage.style.display = 'none'; // back to the farms list, already underneath
+          resetNav(farmDetailNav, 1);
+        }, 280);
+        if (i === 2) setTimeout(function() {
+          farmDetailPage.style.display = 'none';
+          farmsPage.style.display = 'none';
+          milkPage.style.display = 'block';
+          resetNav(farmDetailNav, 1);
+          resetNav(farmsNav, 1);
+        }, 280);
+        if (i === 3) setTimeout(function() {
+          farmDetailPage.style.display = 'none';
+          farmsPage.style.display = 'none';
+          eventsPage.style.display = 'block';
+          resetNav(farmDetailNav, 1);
+          resetNav(farmsNav, 1);
+        }, 280);
+        if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+      });
+
+      // ── Farms list + Farm detail (mock data model) ──
+      var FARMS = [
+        { id:'sunrise', name:'Sunrise Dairy Farm', manager:'Ramesh C', cattle:32, status:'attention',
+          temp:'33°C', milkToday:40, alerts:2,
+          cows:[
+            { name:'Gowri', no:1, age:'2.2 yrs', belt:'Belt 60', status:'Milking', temp:'32°C' },
+            { name:'Giri', no:2, age:'4 yrs', belt:'Belt 12', status:'Pregnant', temp:'34°C' },
+            { name:'Ramya', no:3, age:'3 yrs', belt:'Belt 45', status:'Heat', label:'Heat Cycle', temp:'36°C' }
+          ] },
+        { id:'greenvilla', name:'Green Villa Dairy Farm', manager:'Rakesh H', cattle:20, status:'healthy',
+          temp:'31°C', milkToday:34, alerts:0,
+          cows:[
+            { name:'Meera', no:1, age:'3.5 yrs', belt:'Belt 21', status:'Milking', temp:'31°C' },
+            { name:'Kaveri', no:2, age:'2 yrs', belt:'Belt 8', status:'Milking', temp:'32°C' }
+          ] },
+        { id:'stones', name:'Stones Dairy Farm', manager:'Vimal E', cattle:25, status:'healthy',
+          temp:'30°C', milkToday:44, alerts:0,
+          cows:[
+            { name:'Chinnu', no:1, age:'5 yrs', belt:'Belt 3', status:'Milking', temp:'30°C' },
+            { name:'Devi', no:2, age:'1.8 yrs', belt:'Belt 27', status:'Pregnant', temp:'31°C' }
+          ] },
+        { id:'highland', name:'Highland Farm', manager:'Unassigned', cattle:0, status:'setup',
+          temp:'—', milkToday:0, alerts:0, cows:[] }
+      ];
+      var farmsFilter = 'all';
+      var currentFarmId = null;
+
+      function farmStatusBadge(f) {
+        if (f.status === 'attention') return '<span style="flex-shrink:0; width:28px; height:28px; border-radius:50%; background:var(--dark1); color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700;">!</span>';
+        if (f.status === 'setup') return '<span class="en" style="flex-shrink:0; height:30px; padding:0 14px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:600; display:flex; align-items:center; font-family:var(--font-hi);">Setup</span>';
+        return '<span style="flex-shrink:0; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--text1); display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>';
+      }
+
+      function renderFarmsList() {
+        var q = (document.getElementById('farms-search').value || '').trim().toLowerCase();
+        var list = FARMS.filter(function(f) {
+          if (farmsFilter !== 'all' && f.status !== farmsFilter) return false;
+          if (q && f.name.toLowerCase().indexOf(q) === -1) return false;
+          return true;
+        });
+        document.getElementById('farms-list').innerHTML = list.map(function(f) {
+          var dashed = f.status === 'setup';
+          return '<div class="en farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--bgcard); border:' + (dashed ? '2px dashed var(--border)' : '1px solid var(--border)') + '; border-radius:16px; padding:16px; margin-bottom:12px; cursor:pointer;">' +
+            '<div style="min-width:0;">' +
+              '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">' + f.name + '</p>' +
+              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' cattle · ' + f.manager + '</p>' +
+            '</div>' +
+            '<div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">' +
+              farmStatusBadge(f) +
+              '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>' +
+            '</div>' +
+          '</div>';
+        }).join('') || '<p class="en" style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">No farms match this filter.</p>';
+        document.querySelectorAll('.farm-row').forEach(function(row) {
+          row.addEventListener('click', function() { openFarmDetail(row.getAttribute('data-farm')); });
+        });
+      }
+      document.getElementById('farms-search').addEventListener('input', renderFarmsList);
+      var farmsFilterBtn = document.getElementById('farms-filter-btn');
+      var farmsFilterMenu = document.getElementById('farms-filter-menu');
+      farmsFilterBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        farmsFilterMenu.style.display = farmsFilterMenu.style.display === 'block' ? 'none' : 'block';
+      });
+      document.addEventListener('click', function() { farmsFilterMenu.style.display = 'none'; });
+      document.querySelectorAll('.farms-filter-opt').forEach(function(opt) {
+        opt.addEventListener('click', function(e) {
+          e.stopPropagation();
+          document.querySelectorAll('.farms-filter-opt').forEach(function(o) { o.classList.remove('on'); o.style.color = 'var(--text1)'; o.style.fontWeight = '500'; });
+          opt.classList.add('on'); opt.style.color = 'var(--greenink)'; opt.style.fontWeight = '700';
+          farmsFilter = opt.getAttribute('data-val');
+          farmsFilterMenu.style.display = 'none';
+          renderFarmsList();
+        });
+      });
+      renderFarmsList();
+
+      var cattleStatusFilter = 'all';
+      function cattlePillStyle(status) {
+        // Heat Cycle is the one filled/black pill in the reference mockup;
+        // every other status is an outline pill.
+        if (status === 'Heat') return 'background:var(--dark1); border:1px solid var(--dark1); color:#fff;';
+        return 'background:transparent; border:1px solid var(--border); color:var(--text1);';
+      }
+      function renderCattleList(farm) {
+        var q = (document.getElementById('cattle-search').value || '').trim().toLowerCase();
+        var cows = farm.cows.filter(function(c) {
+          if (cattleStatusFilter !== 'all' && c.status !== cattleStatusFilter) return false;
+          if (q && c.name.toLowerCase().indexOf(q) === -1) return false;
+          return true;
+        });
+        var html = cows.map(function(c) {
+          return '<div class="en" style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 14px; margin-bottom:10px;">' +
+            '<div style="flex-shrink:0; width:44px; height:44px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:16px;">✕</div>' +
+            '<div style="flex:1; min-width:0;">' +
+              '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + c.name + ' — ' + c.no + '</p>' +
+              '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + c.age + ' · ' + c.belt + '</p>' +
+              '<span style="display:inline-block; margin-top:6px; height:26px; padding:0 12px; border-radius:13px; font-size:12px; font-weight:600; line-height:26px; ' + cattlePillStyle(c.status) + '">' + (c.label || c.status) + '</span>' +
+            '</div>' +
+            '<div style="flex-shrink:0; text-align:end;">' +
+              '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + c.temp + ' <span style="color:var(--danger); font-size:12px;">▲</span></p>' +
+              '<p style="font-size:10px; font-style:italic; color:var(--text2); margin:1px 0 4px;">cow temp</p>' +
+              '<span style="color:var(--text2); font-size:16px; line-height:1;">⋮</span>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+        if (!farm.cows.length) {
+          html = '<p class="en" style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px; line-height:1.6;">No cattle yet on this farm.<br>Tap "Add Cattle" below to get started.</p>';
+        } else if (!cows.length) {
+          html = '<p class="en" style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">No cattle match this filter.</p>';
+        }
+        document.getElementById('cattle-list').innerHTML = html;
+      }
+      document.getElementById('cattle-search').addEventListener('input', function() {
+        var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
+        if (farm) renderCattleList(farm);
+      });
+      document.querySelectorAll('.cattle-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.cattle-tab').forEach(function(t) {
+            t.classList.remove('on');
+            t.style.background = 'var(--bgcard)'; t.style.borderColor = 'var(--border)'; t.style.color = 'var(--text1)'; t.style.fontWeight = '500';
+          });
+          tab.classList.add('on');
+          tab.style.background = 'var(--dark1)'; tab.style.borderColor = 'var(--dark1)'; tab.style.color = '#FFFFFF'; tab.style.fontWeight = '600';
+          cattleStatusFilter = tab.getAttribute('data-status');
+          var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
+          if (farm) renderCattleList(farm);
+        });
+      });
+
+      function openFarmDetail(farmId) {
+        var farm = FARMS.filter(function(f) { return f.id === farmId; })[0];
+        if (!farm) return;
+        currentFarmId = farmId;
+        cattleStatusFilter = 'all';
+        document.querySelectorAll('.cattle-tab').forEach(function(t, idx) {
+          t.classList.toggle('on', idx === 0);
+          if (idx === 0) { t.style.background = 'var(--dark1)'; t.style.borderColor = 'var(--dark1)'; t.style.color = '#FFFFFF'; t.style.fontWeight = '600'; }
+          else { t.style.background = 'var(--bgcard)'; t.style.borderColor = 'var(--border)'; t.style.color = 'var(--text1)'; t.style.fontWeight = '500'; }
+        });
+        document.getElementById('cattle-search').value = '';
+        document.getElementById('farm-detail-name').textContent = farm.name;
+        document.getElementById('farm-detail-manager').textContent = farm.manager + ' · Manager';
+        document.getElementById('farm-detail-temp').textContent = farm.temp;
+        document.getElementById('farm-detail-milk').textContent = farm.milkToday;
+        document.getElementById('farm-detail-alerts').textContent = farm.alerts;
+        renderCattleList(farm);
+        farmDetailPage.style.display = 'block';
+      }
+      document.getElementById('farm-detail-back').addEventListener('click', function() {
+        farmDetailPage.style.display = 'none';
+      });
+      document.getElementById('farm-detail-fab').addEventListener('click', function() {
+        // Add Cattle is a future flow — no-op placeholder for now.
       });
     })();
     </script>
