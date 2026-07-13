@@ -2354,6 +2354,10 @@
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
+      // Login/OTP lives in its own <script> tag, separate from the main app
+      // script (Farms/Milk/Events) — expose the translation lookup on window
+      // so that script can call window.t() and stay in sync with this one.
+      window.t = t;
       function setLang(newLang) {
         lang = newLang;
         localStorage.setItem('vanixLang', lang);
