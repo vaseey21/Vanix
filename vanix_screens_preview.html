@@ -263,8 +263,8 @@
     .ev-qf-btn { display:flex; align-items:center; gap:4px; height:34px; padding:0 10px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi); cursor:pointer; white-space:nowrap; }
     .ev-qf-btn svg { transition:transform 0.2s ease; }
     .ev-qf.open .ev-qf-btn svg { transform:rotate(180deg); }
-    .ev-qf.active .ev-qf-btn { background:var(--dark1); color:#FFFFFF; border-color:var(--dark1); font-weight:600; }
-    .ev-qf-toggle.active { background:var(--dark1); color:#FFFFFF; border-color:var(--dark1); font-weight:600; }
+    .ev-qf.active .ev-qf-btn { background:var(--greenink); color:#FFFFFF; border-color:var(--greenink); font-weight:600; }
+    .ev-qf-toggle.active { background:var(--greenink); color:#FFFFFF; border-color:var(--greenink); font-weight:600; }
     #flow-root.dark .ev-qf-toggle.active { background:#F5F5F5; color:#111111; border-color:#F5F5F5; }
     .ev-qf-menu { display:none; position:absolute; top:40px; inset-inline-start:0; z-index:30; min-width:170px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.22); padding:6px; }
     .ev-qf.open .ev-qf-menu { display:block; }
@@ -4649,7 +4649,7 @@
             t.style.background = 'var(--bgcard)'; t.style.borderColor = 'var(--border)'; t.style.color = 'var(--text1)'; t.style.fontWeight = '500';
           });
           tab.classList.add('on');
-          tab.style.background = 'var(--dark1)'; tab.style.borderColor = 'var(--dark1)'; tab.style.color = '#FFFFFF'; tab.style.fontWeight = '600';
+          tab.style.background = 'var(--greenink)'; tab.style.borderColor = 'var(--greenink)'; tab.style.color = '#FFFFFF'; tab.style.fontWeight = '600';
           cattleStatusFilter = tab.getAttribute('data-status');
           var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
           if (farm) renderCattleList(farm);
@@ -4663,7 +4663,7 @@
         cattleStatusFilter = 'all';
         document.querySelectorAll('.cattle-tab').forEach(function(t, idx) {
           t.classList.toggle('on', idx === 0);
-          if (idx === 0) { t.style.background = 'var(--dark1)'; t.style.borderColor = 'var(--dark1)'; t.style.color = '#FFFFFF'; t.style.fontWeight = '600'; }
+          if (idx === 0) { t.style.background = 'var(--greenink)'; t.style.borderColor = 'var(--greenink)'; t.style.color = '#FFFFFF'; t.style.fontWeight = '600'; }
           else { t.style.background = 'var(--bgcard)'; t.style.borderColor = 'var(--border)'; t.style.color = 'var(--text1)'; t.style.fontWeight = '500'; }
         });
         document.getElementById('cattle-search').value = '';
