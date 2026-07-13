@@ -2187,15 +2187,13 @@
       });
       document.querySelectorAll('.s1-ls-row').forEach(function(row) {
         row.addEventListener('click', function() {
-          lang = row.getAttribute('data-lang');
-          document.getElementById('s1-lang-cur').textContent = LANG_LABEL[lang];
-          document.querySelectorAll('.s1-ls-row').forEach(function(r) {
-            r.querySelector('.s1-ls-check').style.display = r === row ? 'block' : 'none';
-          });
-          applyLang();
+          setLang(row.getAttribute('data-lang'));
           closeLangSheet();
         });
       });
+      // Apply the persisted language (or default 'en') across every screen —
+      // nav labels everywhere, login/OTP — as soon as the language table exists.
+      setLang(lang);
 
       // ── App dark mode: tap Account tab anywhere (temporary home for the switch) ──
       document.getElementById('s1-acct').addEventListener('click', function() {
