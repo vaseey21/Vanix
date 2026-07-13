@@ -2381,6 +2381,21 @@
         document.querySelectorAll('.s1-nav-l').forEach(function(el) {
           el.textContent = t()[el.getAttribute('data-k')];
         });
+        // Generic data-k text/placeholder sweep — every static chrome label
+        // added after login (Farms, Farm Detail, Events) is wired this way so
+        // one language switch updates every screen, not just the nav bar.
+        document.querySelectorAll('[data-k]:not(.s1-nav-l)').forEach(function(el) {
+          var v = t()[el.getAttribute('data-k')];
+          if (v == null) return;
+          if (el.hasAttribute('data-k-placeholder')) el.placeholder = v; else el.textContent = v;
+        });
+        // Re-render the pieces built entirely from JS template strings (farm
+        // rows, cattle rows, severity badges) so their embedded copy updates too.
+        if (typeof renderFarmsList === 'function') renderFarmsList();
+        if (typeof renderCattleList === 'function' && typeof currentFarmId !== 'undefined' && currentFarmId) {
+          var _farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
+          if (_farm) renderCattleList(_farm);
+        }
       }
 
       // ── Language bottom sheet ──
