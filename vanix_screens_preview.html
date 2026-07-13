@@ -3130,11 +3130,19 @@
           if (hist) hist.style.display = (t === 'all' && !evUnactioned) ? 'block' : 'none';
         }
         applyEvSections();
+        // Labels are re-derived from data-k every time (via the option's own
+        // data-k, or the filter's default data-k when "all" is selected) so a
+        // language switch mid-session updates whichever text is showing,
+        // including an already-selected option — never a frozen string.
+        function syncQfLabel(qf) {
+          var label = qf.querySelector('.ev-qf-label');
+          var on = qf.querySelector('.ev-qf-opt.on');
+          var key = (on && on.getAttribute('data-k')) || label.getAttribute('data-k');
+          label.textContent = t()[key];
+        }
         document.querySelectorAll('.ev-qf').forEach(function(qf) {
           var key = qf.getAttribute('data-filter');
           var btn = qf.querySelector('.ev-qf-btn');
-          var label = qf.querySelector('.ev-qf-label');
-          var defLabel = label.textContent;
           btn.addEventListener('click', function(e) {
             e.stopPropagation();
             var wasOpen = qf.classList.contains('open');
@@ -3147,8 +3155,8 @@
               qf.querySelectorAll('.ev-qf-opt').forEach(function(o) { o.classList.remove('on'); });
               opt.classList.add('on');
               var val = opt.getAttribute('data-val');
-              if (val === 'all') { label.textContent = defLabel; qf.classList.remove('active'); }
-              else { label.textContent = opt.textContent; qf.classList.add('active'); }
+              qf.classList.toggle('active', val !== 'all');
+              syncQfLabel(qf);
               qf.classList.remove('open');
               if (key === 'type') {
                 evSectionType = val;
@@ -3160,6 +3168,9 @@
             });
           });
         });
+        window.evSyncQfLabels = function() {
+          document.querySelectorAll('.ev-qf').forEach(syncQfLabel);
+        };
         // "Unactioned" toggle — enable to show only open alerts (hide resolved history)
         var unBtn = document.getElementById('ev-qf-unactioned');
         if (unBtn) {
