@@ -5063,6 +5063,8 @@
           if (farm) { renderCattleList(farm); refreshFarmDetailHeader(farm); }
         }
         if (window.evSyncQfLabels) window.evSyncQfLabels();
+        if (window.evLocalizeDynamic) window.evLocalizeDynamic();
+        if (window.evSyncGestationTitle) window.evSyncGestationTitle();
         evUpdateBadges();
       };
     })();
