@@ -273,6 +273,11 @@
     #flow-root.dark #ev-filter-btn { background:#1C1C1C; color:#F5F5F5; border-color:#3A3A3A; }
     #flow-root.dark #ev-filter-btn.on { background:var(--activebg) !important; color:var(--greenink) !important; border-color:var(--greendeep) !important; }
     #flow-root.dark #ev-title-btn h2 { color:#F5F5F5 !important; }
+    #flow-root.dark #ev-fs-sheet { background:#1C1C1C !important; }
+    #flow-root.dark #ev-fs-sheet h3 { color:#F5F5F5 !important; }
+    #flow-root.dark #ev-fs-cats { background:#111111 !important; }
+    #flow-root.dark #ev-fs-panes { background:#1C1C1C !important; }
+    #flow-root.dark #ev-fs-sheet div[style*="border-top"] { border-color:#3A3A3A !important; }
     .ev-qf { position:relative; flex-shrink:0; }
     .ev-qf-btn { display:flex; align-items:center; gap:4px; height:34px; padding:0 10px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi); cursor:pointer; white-space:nowrap; }
     .ev-qf-btn svg { transition:transform 0.2s ease; }
@@ -1536,43 +1541,6 @@
 
             <div style="padding:14px 16px 0;">
 
-              <!-- ── Quick filters (Swiggy-style dropdown chips) ── -->
-              <div id="ev-quickfilters" style="display:none;">
-                <div class="ev-qf" data-filter="type">
-                  <button class="ev-qf-btn"><span class="ev-qf-label" data-k="qfType">Type</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
-                  <div class="ev-qf-menu">
-                    <button class="ev-qf-opt on" data-val="all" data-k="qfAllTypes">All types</button>
-                    <button class="ev-qf-opt" data-val="action" data-k="qfNeedsAction">Needs action</button>
-                    <button class="ev-qf-opt" data-val="warn" data-k="qfWarnings">Warnings</button>
-                    <button class="ev-qf-opt" data-val="rem" data-k="qfReminder">Reminder</button>
-                  </div>
-                </div>
-                <button id="ev-qf-unactioned" class="ev-qf-btn ev-qf-toggle" type="button" data-k="qfUnactioned">Unactioned</button>
-                <div class="ev-qf" data-filter="crit">
-                  <button class="ev-qf-btn"><span class="ev-qf-label" data-k="qfCriticality">Criticality</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
-                  <div class="ev-qf-menu">
-                    <button class="ev-qf-opt on" data-val="all" data-k="qfAllLevels">All levels</button>
-                    <button class="ev-qf-opt" data-val="critical" data-k="qfCritical">Critical</button>
-                    <button class="ev-qf-opt" data-val="medium" data-k="qfMedium">Medium</button>
-                    <button class="ev-qf-opt" data-val="low" data-k="qfLow">Low</button>
-                  </div>
-                </div>
-                <div class="ev-qf" data-filter="cat">
-                  <button class="ev-qf-btn"><span class="ev-qf-label" data-k="qfCategory">Category</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
-                  <div class="ev-qf-menu">
-                    <button class="ev-qf-opt on" data-val="all" data-k="qfAllCategories">All categories</button>
-                    <button class="ev-qf-opt" data-val="Fever">Fever</button>
-                    <button class="ev-qf-opt" data-val="Heat">Heat</button>
-                    <button class="ev-qf-opt" data-val="Pregnancy">Pregnancy</button>
-                    <button class="ev-qf-opt" data-val="Gestation">Gestation</button>
-                    <button class="ev-qf-opt" data-val="Milking">Milking</button>
-                    <button class="ev-qf-opt" data-val="Lactation">Lactation</button>
-                    <button class="ev-qf-opt" data-val="Pregnancy loss">Pregnancy loss</button>
-                    <button class="ev-qf-opt" data-val="Fresh cow">Fresh cow</button>
-                  </div>
-                </div>
-              </div>
-
               <div id="ev-sec-action">
               <p data-k="qfNeedsAction" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs action</p>
 
@@ -2009,6 +1977,66 @@
             </div><!-- /inner padding -->
             </div><!-- /scroll -->
 
+          <!-- FILTER BOTTOM SHEET — two-pane: rail left, options right (mirrors the Milk Log sheet) -->
+          <div id="ev-fs-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
+          <div id="ev-fs-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:#E0E0E0; border-radius:2px;"></div></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:10px;">
+              <h3 data-k="filterWord" style="font-size:18px; font-weight:600; color:var(--text1); margin:0;">Filter</h3>
+              <button id="ev-fs-close" style="border:none; background:transparent; font-size:16px; color:var(--text2); padding:6px; cursor:pointer;">✕</button>
+            </div>
+            <div style="display:flex; margin-top:14px; height:300px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-left:-24px; margin-right:-24px;">
+              <div id="ev-fs-cats" style="width:126px; flex-shrink:0; background:var(--bgwarm); display:flex; flex-direction:column; padding:8px 0;">
+                <button class="s7-cat ev-fs-cat on" data-cat="type" data-k="qfType" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);">Type</button>
+                <button class="s7-cat ev-fs-cat" data-cat="crit" data-k="qfCriticality" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);">Criticality</button>
+                <button class="s7-cat ev-fs-cat" data-cat="status" data-k="statusWord" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);">Status</button>
+                <button class="s7-cat ev-fs-cat" data-cat="cat" data-k="qfCategory" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);">Category</button>
+                <button class="s7-cat ev-fs-cat" data-cat="farm" data-k="farmWord" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);">Farm</button>
+              </div>
+              <div id="ev-fs-panes" style="flex:1; padding:12px 20px; overflow-y:auto; background:#FFFFFF;">
+                <div class="ev-fs-pane" data-pane="type">
+                  <button class="s7-chip on" data-val="all" data-k="qfAllTypes">All types</button>
+                  <button class="s7-chip" data-val="action" data-k="qfNeedsAction">Needs action</button>
+                  <button class="s7-chip" data-val="warn" data-k="qfWarnings">Warnings</button>
+                  <button class="s7-chip" data-val="rem" data-k="qfReminder">Reminder</button>
+                </div>
+                <div class="ev-fs-pane" data-pane="crit" style="display:none;">
+                  <button class="s7-chip on" data-val="all" data-k="qfAllLevels">All levels</button>
+                  <button class="s7-chip" data-val="critical" data-k="qfCritical">Critical</button>
+                  <button class="s7-chip" data-val="medium" data-k="qfMedium">Medium</button>
+                  <button class="s7-chip" data-val="low" data-k="qfLow">Low</button>
+                </div>
+                <div class="ev-fs-pane" data-pane="status" style="display:none;">
+                  <button class="s7-chip on" data-val="all" data-k="allWord">All</button>
+                  <button class="s7-chip" data-val="actioned" data-k="statusActioned">Actioned</button>
+                  <button class="s7-chip" data-val="pending" data-k="statusPending">Pending</button>
+                </div>
+                <div class="ev-fs-pane" data-pane="cat" style="display:none;">
+                  <button class="s7-chip on" data-val="all" data-k="qfAllCategories">All categories</button>
+                  <button class="s7-chip" data-val="Fever" data-k="catFever">Fever</button>
+                  <button class="s7-chip" data-val="Heat" data-k="catHeat">Heat</button>
+                  <button class="s7-chip" data-val="Pregnancy" data-k="catPregnancy">Pregnancy</button>
+                  <button class="s7-chip" data-val="Gestation" data-k="catGestation">Gestation</button>
+                  <button class="s7-chip" data-val="Milking" data-k="catMilking">Milking</button>
+                  <button class="s7-chip" data-val="Lactation" data-k="catLactation">Lactation</button>
+                  <button class="s7-chip" data-val="Pregnancy loss" data-k="catPregLoss">Pregnancy loss</button>
+                  <button class="s7-chip" data-val="Fresh cow" data-k="catFreshCow">Fresh cow</button>
+                  <button class="s7-chip" data-val="Mastitis" data-k="catMastitis">Mastitis</button>
+                  <button class="s7-chip" data-val="Lameness" data-k="catLameness">Lameness</button>
+                  <button class="s7-chip" data-val="Ketosis" data-k="catKetosis">Ketosis</button>
+                  <button class="s7-chip" data-val="Heat stress" data-k="catHeatStress">Heat stress</button>
+                  <button class="s7-chip" data-val="Calibration" data-k="catCalibration">Calibration</button>
+                </div>
+                <div class="ev-fs-pane" data-pane="farm" style="display:none;">
+                  <button class="s7-chip on" data-val="all" data-k="filterAllFarms">All Farms</button>
+                  <button class="s7-chip" data-val="greenvalley" data-k="farmGreenValley">Green Valley Farm</button>
+                  <button class="s7-chip" data-val="sunrise" data-k="farmSunrise">Sunrise Dairy</button>
+                </div>
+              </div>
+            </div>
+            <button id="ev-fs-apply" data-k="applyFilters" style="width:100%; height:52px; background:var(--dark1); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:18px;">Apply filters</button>
+          </div>
+
           <!-- Full-screen "push notification" heat alert carousel — View full cycle entry point.
                Multiple heat alerts swipe left/right; cards are injected by JS from FS_ALERTS. -->
           <div id="ev-alert-fullscreen" style="display:none; position:absolute; inset:0; z-index:30; padding:0;">
@@ -2356,7 +2384,9 @@
                histInsem:'Inseminated \u2014 Mohini', histInsemSub:'Within the 18h window \u2014 pregnancy check set for 3 Jul',
                stageMilking:'MILKING', stageHeatWatch:'HEAT WATCH', stageRecovered:'RECOVERED', stage21Day:'21-DAY WATCH',
                prioP0:'CRITICAL', prioP1:'MEDIUM', prioP2:'MEDIUM', prioP3:'LOW',
-               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter' },
+               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters',
+               catFever:'Fever', catHeat:'Heat', catPregnancy:'Pregnancy', catGestation:'Gestation', catMilking:'Milking', catLactation:'Lactation', catPregLoss:'Pregnancy loss', catFreshCow:'Fresh cow',
+               catMastitis:'Mastitis', catLameness:'Lameness', catKetosis:'Ketosis', catHeatStress:'Heat stress', catCalibration:'Calibration', farmGreenValley:'Green Valley Farm', farmSunrise:'Sunrise Dairy' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -2401,7 +2431,9 @@
                histInsem:'गर्भाधान हुआ \u2014 मोहिनी', histInsemSub:'18 घंटे की विंडो में \u2014 गर्भ जांच 3 जुलाई को',
                stageMilking:'दूध दे रही', stageHeatWatch:'हीट निगरानी', stageRecovered:'स्वस्थ हुई', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर' },
+               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें',
+               catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताज़ा ब्याई',
+               catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -2446,7 +2478,9 @@
                histInsem:'गर्भाधान भइल \u2014 मोहिनी', histInsemSub:'18 घंटा के विंडो में \u2014 गर्भ जांच 3 जुलाई के',
                stageMilking:'दूध देत बिया', stageHeatWatch:'हीट निगरानी', stageRecovered:'ठीक भइल', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर' }
+               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं',
+               catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताजा बियाइल',
+               catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
@@ -3189,14 +3223,20 @@
         // Per-card metadata for the visible photo cards; criticality is read from
         // the p0/p1 class (critical / medium), everything else counts as low.
         var CARD_META = {
-          'ev-fever':          { cat:'Fever',          type:'Health' },
-          'ev-heat':           { cat:'Heat',           type:'Breeding' },
-          'ev-preg':           { cat:'Pregnancy',      type:'Breeding' },
-          'ev-gestation':      { cat:'Gestation',      type:'Breeding' },
-          'ev-milk-notif':     { cat:'Milking',        type:'Lactation' },
-          'ev-lactation-check':{ cat:'Lactation',      type:'Lactation' },
-          'ev-abort':          { cat:'Pregnancy loss', type:'Health' },
-          'ev-freshcow':       { cat:'Fresh cow',      type:'Health' }
+          'ev-fever':          { cat:'Fever',          type:'Health',    farm:'greenvalley' },
+          'ev-heat':           { cat:'Heat',           type:'Breeding',  farm:'greenvalley' },
+          'ev-preg':           { cat:'Pregnancy',      type:'Breeding',  farm:'sunrise' },
+          'ev-gestation':      { cat:'Gestation',      type:'Breeding',  farm:'greenvalley' },
+          'ev-milk-notif':     { cat:'Milking',        type:'Lactation', farm:'greenvalley' },
+          'ev-lactation-check':{ cat:'Lactation',      type:'Lactation', farm:'greenvalley' },
+          'ev-abort':          { cat:'Pregnancy loss', type:'Health',    farm:'sunrise' },
+          'ev-freshcow':       { cat:'Fresh cow',      type:'Health',    farm:'greenvalley' },
+          'ev-mastitis':       { cat:'Mastitis',       type:'Health',    farm:'greenvalley' },
+          'ev-lameness':       { cat:'Lameness',       type:'Health',    farm:'greenvalley' },
+          'ev-ketosis':        { cat:'Ketosis',        type:'Health',    farm:'greenvalley' },
+          'ev-proestrus':      { cat:'Heat',           type:'Health',    farm:'greenvalley' },
+          'ev-herdstress':     { cat:'Heat stress',    type:'Health',    farm:'greenvalley' },
+          'ev-calib':          { cat:'Calibration',    type:'Device',    farm:'greenvalley' }
         };
         var evFilter = { crit:'all', cat:'all' };
         // Baseline visibility is captured lazily (on first filter use) — by then
@@ -3205,7 +3245,7 @@
         var evBaseVisible = null;
         function snapshotBaseline() {
           evBaseVisible = {};
-          document.querySelectorAll('#ev-sec-action .ev-photo-card').forEach(function(c) {
+          document.querySelectorAll('#ev-sec-action .ev-card, #ev-sec-warn .ev-card').forEach(function(c) {
             evBaseVisible[c.id] = c.style.display !== 'none';
           });
         }
@@ -3215,25 +3255,28 @@
         }
         function applyEvFilters() {
           if (!evBaseVisible) snapshotBaseline();
-          document.querySelectorAll('#ev-sec-action .ev-photo-card').forEach(function(card) {
+          document.querySelectorAll('#ev-sec-action .ev-card, #ev-sec-warn .ev-card').forEach(function(card) {
             if (!evBaseVisible[card.id]) { card.style.display = 'none'; return; }
             var meta = CARD_META[card.id] || {};
             var ok = (evFilter.crit === 'all' || evFilter.crit === critOf(card))
-                  && (evFilter.cat  === 'all' || evFilter.cat  === meta.cat);
+                  && (evFilter.cat  === 'all' || evFilter.cat  === meta.cat)
+                  && (evFarm === 'all' || evFarm === meta.farm);
             card.style.display = ok ? '' : 'none';
           });
         }
         // The Type filter (all / action / warn / rem) drives section visibility
         // directly now that the old tab row is gone; the Unactioned toggle hides
         // the resolved-history section.
-        var evSectionType = 'all', evUnactioned = false;
+        var evSectionType = 'all', evUnactioned = false, evStatus = 'all', evFarm = 'all';
         function applyEvSections() {
           var t = evSectionType;
-          document.getElementById('ev-sec-action').style.display = (t === 'all' || t === 'action') ? 'block' : 'none';
-          document.getElementById('ev-sec-warn').style.display   = (t === 'all' || t === 'warn')   ? 'block' : 'none';
-          document.getElementById('ev-sec-rem').style.display    = (t === 'all' || t === 'rem')    ? 'block' : 'none';
+          // Status: "actioned" shows only the History section; "pending" hides it.
+          var pendingVisible = evStatus !== 'actioned';
+          document.getElementById('ev-sec-action').style.display = (pendingVisible && (t === 'all' || t === 'action')) ? 'block' : 'none';
+          document.getElementById('ev-sec-warn').style.display   = (pendingVisible && (t === 'all' || t === 'warn'))   ? 'block' : 'none';
+          document.getElementById('ev-sec-rem').style.display    = (pendingVisible && (t === 'all' || t === 'rem'))    ? 'block' : 'none';
           var hist = document.getElementById('ev-sec-hist');
-          if (hist) hist.style.display = (t === 'all' && !evUnactioned) ? 'block' : 'none';
+          if (hist) hist.style.display = (t === 'all' && !evUnactioned && evStatus !== 'pending') ? 'block' : 'none';
         }
         applyEvSections();
         // Labels are re-derived from data-k every time (via the option's own
@@ -3295,6 +3338,50 @@
         // tapping elsewhere closes any open menu
         document.addEventListener('click', function() {
           document.querySelectorAll('.ev-qf').forEach(function(o) { o.classList.remove('open'); });
+        });
+
+        // ── Filter bottom sheet (two-pane) — opened from the hero Filter button ──
+        var fsSheet = document.getElementById('ev-fs-sheet');
+        var fsBackdrop = document.getElementById('ev-fs-backdrop');
+        var fsBtn = document.getElementById('ev-filter-btn');
+        function fsClose() { fsSheet.style.transform = 'translateY(100%)'; fsBackdrop.style.opacity = '0'; fsBackdrop.style.pointerEvents = 'none'; }
+        fsBtn.addEventListener('click', function() {
+          fsSheet.style.transform = 'translateY(0)';
+          fsBackdrop.style.opacity = '1'; fsBackdrop.style.pointerEvents = 'auto';
+        });
+        fsBackdrop.addEventListener('click', fsClose);
+        document.getElementById('ev-fs-close').addEventListener('click', fsClose);
+        // left rail switches the visible pane
+        document.querySelectorAll('.ev-fs-cat').forEach(function(cat) {
+          cat.addEventListener('click', function() {
+            document.querySelectorAll('.ev-fs-cat').forEach(function(c) { c.classList.remove('on'); });
+            cat.classList.add('on');
+            document.querySelectorAll('.ev-fs-pane').forEach(function(p) {
+              p.style.display = p.getAttribute('data-pane') === cat.getAttribute('data-cat') ? 'block' : 'none';
+            });
+          });
+        });
+        // single-select options within each pane
+        document.querySelectorAll('.ev-fs-pane .s7-chip').forEach(function(chip) {
+          chip.addEventListener('click', function() {
+            chip.parentElement.querySelectorAll('.s7-chip').forEach(function(c) { c.classList.remove('on'); });
+            chip.classList.add('on');
+          });
+        });
+        function fsVal(pane) {
+          var on = document.querySelector('.ev-fs-pane[data-pane="' + pane + '"] .s7-chip.on');
+          return on ? on.getAttribute('data-val') : 'all';
+        }
+        document.getElementById('ev-fs-apply').addEventListener('click', function() {
+          evSectionType = fsVal('type');
+          evFilter.crit = fsVal('crit');
+          evFilter.cat  = fsVal('cat');
+          evStatus = fsVal('status');
+          evFarm = fsVal('farm');
+          applyEvSections();
+          applyEvFilters();
+          fsBtn.classList.toggle('on', evSectionType !== 'all' || evFilter.crit !== 'all' || evFilter.cat !== 'all' || evStatus !== 'all' || evFarm !== 'all');
+          fsClose();
         });
       })();
 
@@ -4193,13 +4280,6 @@
         }
         scrim.addEventListener('click', closeSeq);
         document.getElementById('ev-title-btn').addEventListener('click', openSeq);
-        var evFilterBtn = document.getElementById('ev-filter-btn');
-        var evQuickfilters = document.getElementById('ev-quickfilters');
-        evFilterBtn.addEventListener('click', function() {
-          var open = evQuickfilters.style.display !== 'none';
-          evQuickfilters.style.display = open ? 'none' : '';
-          evFilterBtn.classList.toggle('on', !open);
-        });
 
         // Entry point for the image-mode events Heat card's "Yes" — skips the
         // full-screen alert carousel and opens the bottom slider straight at
