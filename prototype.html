@@ -2498,7 +2498,7 @@
                     <p class="en" id="farm-detail-cattle" style="font-size:24px; font-weight:700; color:var(--text1); margin:0;">32</p>
                     <p data-k="statTotalCattle" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Total Cattle</p>
                   </div>
-                  <div style="flex:1; background:var(--dangerbg); border:1px solid var(--danger); border-radius:16px; padding:14px 8px; text-align:center;">
+                  <div id="farm-detail-alerts-tile" style="flex:1; background:var(--dangerbg); border:1px solid var(--danger); border-radius:16px; padding:14px 8px; text-align:center; cursor:pointer;">
                     <p class="en" id="farm-detail-alerts" style="font-size:24px; font-weight:700; color:var(--text1); margin:0;">2</p>
                     <p data-k="statUnactionedAlerts" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
                     <p id="farm-detail-critical" class="en" style="font-size:10px; font-weight:600; color:var(--danger); margin:3px 0 0;">2 critical</p>
@@ -2533,6 +2533,8 @@
             <div style="display:flex; margin-top:14px; height:260px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-left:-24px; margin-right:-24px;">
               <div class="fs-cats-rail" style="width:126px; flex-shrink:0; background:var(--bgwarm); display:flex; flex-direction:column; padding:8px 0;">
                 <button class="s7-cat cattle-fs-cat on" data-cat="status" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);"><span data-k="statusWord">Status</span></button>
+                <button class="s7-cat cattle-fs-cat" data-cat="breed" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);"><span data-k="breedWord">Breed</span></button>
+                <button class="s7-cat cattle-fs-cat" data-cat="age" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);"><span data-k="ageWord">Age</span></button>
               </div>
               <div class="fs-panes-wrap" style="flex:1; padding:12px 20px; overflow-y:auto; background:#FFFFFF;">
                 <div class="cattle-fs-pane" data-pane="status">
@@ -2541,6 +2543,21 @@
                   <button class="s7-chip" data-val="Pregnant" data-k="statusPregnant">Pregnant</button>
                   <button class="s7-chip" data-val="Heat" data-k="cattleHeat">Heat</button>
                   <button class="s7-chip" data-val="Fever" data-k="cattleFever">Fever</button>
+                </div>
+                <div class="cattle-fs-pane" data-pane="breed" style="display:none;">
+                  <button class="s7-chip on" data-val="all" data-k="allWord">All</button>
+                  <button class="s7-chip" data-val="Jersey" data-k="breedJersey">Jersey</button>
+                  <button class="s7-chip" data-val="HF Cross">HF Cross</button>
+                  <button class="s7-chip" data-val="Gir" data-k="breedGir">Gir</button>
+                  <button class="s7-chip" data-val="Sahiwal" data-k="breedSahiwal">Sahiwal</button>
+                  <button class="s7-chip" data-val="Ongole" data-k="breedOngole">Ongole</button>
+                  <button class="s7-chip" data-val="Desi" data-k="breedDesi">Desi</button>
+                </div>
+                <div class="cattle-fs-pane" data-pane="age" style="display:none;">
+                  <button class="s7-chip on" data-val="all" data-k="allWord">All</button>
+                  <button class="s7-chip" data-val="u2" data-k="ageUnder2">Under 2 yrs</button>
+                  <button class="s7-chip" data-val="2to4" data-k="age2to4">2 – 4 yrs</button>
+                  <button class="s7-chip" data-val="o4" data-k="ageOver4">Over 4 yrs</button>
                 </div>
               </div>
             </div>
@@ -2704,7 +2721,7 @@
                grpYourVets:'Your Vets', grpEmergency:'Emergency Contacts', vetConfirmed:'CONFIRMED', vetPending:'PENDING', vetDeclined:'DECLINED',
                vetPendingNote:'Confirmation link sent \u2014 waiting for the vet to accept', vetDeclinedNote:'Declined the invite', vetResend:'Resend invite',
                addVet:'+ Add Vet', addContact:'+ Add Contact', vetNamePh:'Vet name', phonePh:'Phone number', sendInvite:'Send invite link', demoConfirm:'(demo) Confirm', demoDecline:'(demo) Decline',
-               emgFarmManager:'Farm Manager', vetSpec1:'Large animal vet \u00b7 6.2 km away', vetSpec2:'Cattle specialist \u00b7 9 km away', vetSpec3:'General vet \u00b7 12 km away', legalUpdated:'Last Updated: July 1, 2026' },
+               emgFarmManager:'Farm Manager', vetSpec1:'Large animal vet \u00b7 6.2 km away', vetSpec2:'Cattle specialist \u00b7 9 km away', vetSpec3:'General vet \u00b7 12 km away', legalUpdated:'Last Updated: July 1, 2026', breedWord:'Breed', ageWord:'Age', breedGir:'Gir', breedDesi:'Desi', ageUnder2:'Under 2 yrs', age2to4:'2 \u2013 4 yrs', ageOver4:'Over 4 yrs' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -2786,7 +2803,7 @@
                grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
                vetPendingNote:'पुष्टि लिंक भेजा गया \u2014 पशु चिकित्सक की स्वीकृति बाकी', vetDeclinedNote:'निमंत्रण अस्वीकार किया', vetResend:'फिर से भेजें',
                addVet:'+ पशु चिकित्सक जोड़ें', addContact:'+ संपर्क जोड़ें', vetNamePh:'पशु चिकित्सक का नाम', phonePh:'फ़ोन नंबर', sendInvite:'निमंत्रण लिंक भेजें', demoConfirm:'(डेमो) पुष्टि', demoDecline:'(डेमो) अस्वीकार',
-               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026' },
+               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -2868,7 +2885,7 @@
                grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
                vetPendingNote:'पुष्टि लिंक भेजा गया \u2014 पशु चिकित्सक की स्वीकृति बाकी', vetDeclinedNote:'निमंत्रण अस्वीकार किया', vetResend:'फिर से भेजें',
                addVet:'+ पशु चिकित्सक जोड़ें', addContact:'+ संपर्क जोड़ें', vetNamePh:'पशु चिकित्सक का नाम', phonePh:'फ़ोन नंबर', sendInvite:'निमंत्रण लिंक भेजें', demoConfirm:'(डेमो) पुष्टि', demoDecline:'(डेमो) अस्वीकार',
-               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026' }
+               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
@@ -5320,7 +5337,7 @@
       document.getElementById('farms-filter-btn').addEventListener('click', openFarmsSheet);
       renderFarmsList();
 
-      var cattleStatusFilter = 'all';
+      var cattleStatusFilter = 'all', cattleBreedFilter = 'all', cattleAgeFilter = 'all', cattleAlertsOnly = false;
       var CATTLE_STATUS_K = { Milking:'statusMilking', Pregnant:'statusPregnant', Heat:'statusHeatCycle', Fever:'statusFeverAlert' };
       function cattleStatusLabel(c) {
         var k = CATTLE_STATUS_K[c.status];
@@ -5353,10 +5370,16 @@
           '<button style="' + item + ' color:var(--text1);">' + window.t().addToGroup + '</button>' +
         '</div>';
       }
+      function ageYears(c) { var m = (c.age || '').match(/[\d.]+/); return m ? parseFloat(m[0]) : 0; }
+      function ageBucket(c) { var y = ageYears(c); return y < 2 ? 'u2' : y <= 4 ? '2to4' : 'o4'; }
+      function isAlertCow(c) { return c.status === 'Fever' || c.status === 'Heat'; }
       function renderCattleList(farm) {
         var q = (document.getElementById('cattle-search').value || '').trim().toLowerCase();
         var cows = farm.cows.filter(function(c) {
+          if (cattleAlertsOnly && !isAlertCow(c)) return false;
           if (cattleStatusFilter !== 'all' && c.status !== cattleStatusFilter) return false;
+          if (cattleBreedFilter !== 'all' && c.breed !== cattleBreedFilter) return false;
+          if (cattleAgeFilter !== 'all' && ageBucket(c) !== cattleAgeFilter) return false;
           if (q && (c.name + ' ' + (c.nameHi || '')).toLowerCase().indexOf(q) === -1) return false;
           return true;
         });
@@ -5530,10 +5553,20 @@
       });
       var openCattleSheet = wireFilterSheet('cattle-fs', function(vals) {
         cattleStatusFilter = vals.status || 'all';
+        cattleBreedFilter = vals.breed || 'all';
+        cattleAgeFilter = vals.age || 'all';
         var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
         if (farm) renderCattleList(farm);
       });
       document.getElementById('cattle-filter-btn').addEventListener('click', openCattleSheet);
+      // Unactioned-alerts tile: toggle to show only alert cows (Fever/Heat)
+      document.getElementById('farm-detail-alerts-tile').addEventListener('click', function() {
+        cattleAlertsOnly = !cattleAlertsOnly;
+        this.style.outline = cattleAlertsOnly ? '2px solid var(--danger)' : 'none';
+        this.style.outlineOffset = '1px';
+        var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
+        if (farm) renderCattleList(farm);
+      });
       document.addEventListener('click', function() {
         document.querySelectorAll('.cow-kebab-menu').forEach(function(m) { m.style.display = 'none'; });
         document.getElementById('cow-kebab-menu').style.display = 'none';
@@ -5596,7 +5629,8 @@
         var farm = FARMS.filter(function(f) { return f.id === farmId; })[0];
         if (!farm) return;
         currentFarmId = farmId;
-        cattleStatusFilter = 'all';
+        cattleStatusFilter = 'all'; cattleBreedFilter = 'all'; cattleAgeFilter = 'all'; cattleAlertsOnly = false;
+        var atile = document.getElementById('farm-detail-alerts-tile'); if (atile) atile.style.outline = 'none';
         document.getElementById('cattle-search').value = '';
         document.getElementById('farm-detail-name').textContent = loc(farm, 'name');
         document.getElementById('farm-detail-temp').textContent = farm.temp;
