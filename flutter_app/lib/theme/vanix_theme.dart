@@ -203,3 +203,22 @@ ThemeData vanixDarkTheme({String languageCode = 'hi'}) {
     dividerTheme: const DividerThemeData(color: VanixColors.darkBorder, thickness: 0.5, space: 0),
   );
 }
+
+// ─────────────────────────────────────────────
+// Elevation — Airbnb-style soft shadows for cards (light + dark).
+// Matches prototype.html: 0 4px 16px / 0 1px 3px, deepened on dark.
+// ─────────────────────────────────────────────
+
+class VanixShadow {
+  VanixShadow._();
+
+  static const List<BoxShadow> card = [
+    BoxShadow(color: Color(0x0F000000), blurRadius: 16, offset: Offset(0, 4)),
+    BoxShadow(color: Color(0x0A000000), blurRadius: 3, offset: Offset(0, 1)),
+  ];
+
+  static const List<BoxShadow> cardDark = [
+    BoxShadow(color: Color(0x59000000), blurRadius: 16, offset: Offset(0, 4)),
+    BoxShadow(color: Color(0x4D000000), blurRadius: 3, offset: Offset(0, 1)),
+  ];
+}
