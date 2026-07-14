@@ -2038,21 +2038,34 @@
 
               <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
                 <h2 data-k="farmsTitle" style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Farms</h2>
+                <p data-k="farmsSubtitle" style="font-size:12px; color:var(--text2); margin:4px 0 0;">Manage all your dairy farms in one place</p>
               </div>
 
               <div style="padding:14px 16px 0;">
-                <div style="display:flex; gap:8px;">
-                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
-                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">3</p>
-                    <p data-k="statTotalFarms" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Total Farms</p>
+                <!-- Period selector drives the stat tiles below -->
+                <div style="display:flex; justify-content:flex-end; position:relative;">
+                  <button id="farms-period-btn" style="display:flex; align-items:center; gap:6px; height:32px; padding:0 12px; border-radius:16px; border:1px solid var(--border); background:var(--bgcard); font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><span id="farms-period-label">Today</span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <div id="farms-period-menu" style="display:none; position:absolute; top:36px; right:0; z-index:11; min-width:150px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.22); padding:6px;">
+                    <button class="farms-period-opt on" data-val="today" data-k="periodToday" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:10px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); font-weight:700; color:var(--greenink);">Today</button>
+                    <button class="farms-period-opt" data-val="7d" data-k="period7" style="OPT">Last 7 days</button>
+                    <button class="farms-period-opt" data-val="30d" data-k="period30" style="OPT">Last 30 days</button>
                   </div>
-                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
-                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">118 <span style="font-size:12px; font-weight:600;">L</span></p>
-                    <p data-k="statMilkToday" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px;">
+                    <span style="width:30px; height:30px; border-radius:50%; background:var(--activebg); display:inline-flex; align-items:center; justify-content:center; color:var(--greenink);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+                    <p class="en" id="farms-stat-farms" style="font-size:20px; font-weight:700; color:var(--text1); margin:6px 0 0;">3</p>
+                    <p data-k="statTotalFarms" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:3px 0 0;">Total Farms</p>
                   </div>
-                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
-                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">3</p>
-                    <p data-k="statUnactionedAlerts" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
+                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px;">
+                    <span style="width:30px; height:30px; border-radius:50%; background:var(--bgwarm); display:inline-flex; align-items:center; justify-content:center; color:var(--text1);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/></svg></span>
+                    <p class="en" id="farms-stat-cattle" style="font-size:20px; font-weight:700; color:var(--text1); margin:6px 0 0;">77</p>
+                    <p data-k="statTotalCattle" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:3px 0 0;">Total Cattle</p>
+                  </div>
+                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px;">
+                    <span style="width:30px; height:30px; border-radius:50%; background:var(--warnbg); display:inline-flex; align-items:center; justify-content:center; color:#8A5A00;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg></span>
+                    <p class="en" id="farms-stat-milk" style="font-size:20px; font-weight:700; color:var(--text1); margin:6px 0 0;">118 <span style="font-size:12px; font-weight:600;">L</span></p>
+                    <p data-k="statTotalMilk" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:3px 0 0;">Total Milk</p>
                   </div>
                 </div>
 
@@ -2072,7 +2085,8 @@
                   </div>
                 </div>
 
-                <div id="farms-list" style="margin-top:14px;"></div>
+                <p data-k="yourFarms" style="font-size:15px; font-weight:700; color:var(--text1); margin:16px 0 0;">Your Farms</p>
+                <div id="farms-list" style="margin-top:10px;"></div>
               </div>
 
             </div><!-- /scroll -->
@@ -2124,22 +2138,25 @@
                     <p id="farm-detail-name" class="en" style="font-size:21px; font-weight:700; color:var(--text1); margin:0; line-height:1.2;">Sunrise Dairy Farm</p>
                     <p id="farm-detail-manager" class="en" style="font-size:13px; color:var(--text2); margin:2px 0 0;">Ramesh C · Manager</p>
                   </div>
-                  <div style="flex-shrink:0; text-align:end;">
-                    <p id="farm-detail-temp" class="en" style="font-size:19px; font-weight:700; color:var(--text1); margin:0;">33°C</p>
-                    <p data-k="farmTempCaption" style="font-size:11px; font-style:italic; color:var(--text2); margin:1px 0 0;">Farm temp</p>
-                  </div>
+                  <button style="flex-shrink:0; width:36px; height:36px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:17px; line-height:1; cursor:pointer;">⋮</button>
                 </div>
               </div>
 
               <div style="padding:14px 16px 0;">
                 <div style="display:flex; gap:8px;">
-                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
-                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-milk">40</span> <span style="font-size:12px; font-weight:600;">L</span> <span style="color:var(--greenink);">▲</span></p>
-                    <p data-k="statMilkToday" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
+                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px;">
+                    <p class="en" style="font-size:17px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-temp">33°C</span></p>
+                    <p data-k="avgTempLabel" style="font-size:9px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Avg Temp</p>
                   </div>
-                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
-                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-alerts">2</span> <span style="color:var(--danger);">▲</span></p>
-                    <p data-k="statUnactionedAlerts" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
+                  <div style="flex:1.2; background:var(--activebg); border:1px solid var(--greendeep); border-radius:16px; padding:12px;">
+                    <p class="en" style="font-size:17px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-milk">40</span> <span style="font-size:11px; font-weight:600;">L</span></p>
+                    <p data-k="statMilkToday" style="font-size:9px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Milk Today</p>
+                    <p id="farm-detail-milk-trend" class="en" style="font-size:10px; font-weight:600; color:var(--greenink); margin:3px 0 0;">↑ 12% vs yesterday</p>
+                  </div>
+                  <div style="flex:1.2; background:var(--dangerbg); border:1px solid var(--danger); border-radius:16px; padding:12px;">
+                    <p class="en" style="font-size:17px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-alerts">2</span></p>
+                    <p data-k="statUnactionedAlerts" style="font-size:9px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
+                    <p id="farm-detail-critical" class="en" style="font-size:10px; font-weight:600; color:var(--danger); margin:3px 0 0;">2 critical</p>
                   </div>
                 </div>
 
@@ -2283,7 +2300,12 @@
                prioP0:'CRITICAL', prioP1:'MEDIUM', prioP2:'MEDIUM', prioP3:'LOW',
                chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters',
                catFever:'Fever', catHeat:'Heat', catPregnancy:'Pregnancy', catGestation:'Gestation', catMilking:'Milking', catLactation:'Lactation', catPregLoss:'Pregnancy loss', catFreshCow:'Fresh cow',
-               catMastitis:'Mastitis', catLameness:'Lameness', catKetosis:'Ketosis', catHeatStress:'Heat stress', catCalibration:'Calibration', farmGreenValley:'Green Valley Farm', farmSunrise:'Sunrise Dairy' },
+               catMastitis:'Mastitis', catLameness:'Lameness', catKetosis:'Ketosis', catHeatStress:'Heat stress', catCalibration:'Calibration', farmGreenValley:'Green Valley Farm', farmSunrise:'Sunrise Dairy',
+               farmsSubtitle:'Manage all your dairy farms in one place', yourFarms:'Your Farms', periodToday:'Today', period7:'Last 7 days', period30:'Last 30 days',
+               statTotalCattle:'Total Cattle', statTotalMilk:'Total Milk', healthyWord:'HEALTHY', insemWord:'Insemination', notSetUp:'Not set up yet', setupFarm:'Setup Farm',
+               avgTempLabel:'Avg Temp', vsYesterday:'vs yesterday', criticalWord:'critical', statusFeverAlert:'Fever Alert',
+               labelMilkToday:'Milk Today', labelLastMilking:'Last Milking', labelLactation:'Lactation', labelDueDate:'Due Date', labelPregnancy:'Pregnancy', labelLastCheck:'Last Check',
+               labelHeatDetected:'Heat Detected', labelInsemination:'Insemination', labelHeatStage:'Heat Stage', labelTempRecorded:'Temp Recorded', labelRecordedAt:'Recorded At', labelSeverity:'Severity' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -2330,7 +2352,12 @@
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
                chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताज़ा ब्याई',
-               catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी' },
+               catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
+               farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
+               statTotalCattle:'कुल पशु', statTotalMilk:'कुल दूध', healthyWord:'स्वस्थ', insemWord:'गर्भाधान', notSetUp:'अभी सेट अप नहीं', setupFarm:'फार्म सेट करें',
+               avgTempLabel:'औसत तापमान', vsYesterday:'कल की तुलना में', criticalWord:'गंभीर', statusFeverAlert:'बुखार अलर्ट',
+               labelMilkToday:'आज का दूध', labelLastMilking:'पिछली दुहाई', labelLactation:'दुग्ध अवधि', labelDueDate:'नियत तारीख', labelPregnancy:'गर्भावस्था', labelLastCheck:'पिछली जांच',
+               labelHeatDetected:'हीट मिली', labelInsemination:'गर्भाधान', labelHeatStage:'हीट चरण', labelTempRecorded:'तापमान दर्ज', labelRecordedAt:'दर्ज समय', labelSeverity:'गंभीरता' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -2377,7 +2404,12 @@
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
                chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताजा बियाइल',
-               catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी' }
+               catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
+               farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
+               statTotalCattle:'कुल पशु', statTotalMilk:'कुल दूध', healthyWord:'स्वस्थ', insemWord:'गर्भाधान', notSetUp:'अभी सेट अप नहीं', setupFarm:'फार्म सेट करें',
+               avgTempLabel:'औसत तापमान', vsYesterday:'कल की तुलना में', criticalWord:'गंभीर', statusFeverAlert:'बुखार अलर्ट',
+               labelMilkToday:'आज का दूध', labelLastMilking:'पिछली दुहाई', labelLactation:'दुग्ध अवधि', labelDueDate:'नियत तारीख', labelPregnancy:'गर्भावस्था', labelLastCheck:'पिछली जांच',
+               labelHeatDetected:'हीट मिली', labelInsemination:'गर्भाधान', labelHeatStage:'हीट चरण', labelTempRecorded:'तापमान दर्ज', labelRecordedAt:'दर्ज समय', labelSeverity:'गंभीरता' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
@@ -4636,26 +4668,43 @@
       // ── Farms list + Farm detail (mock data model) ──
       var FARMS = [
         { id:'sunrise', name:'Sunrise Dairy Farm', nameHi:'सनराइज़ डेयरी फार्म', manager:'Ramesh C', managerHi:'रमेश सी', cattle:32, status:'attention',
-          temp:'33°C', milkToday:40, alerts:2,
+          location:'Coimbatore, Tamil Nadu', locationHi:'कोयंबटूर, तमिलनाडु',
+          temp:'33°C', milkToday:56, milk7:392, milk30:1680, alerts:2, critical:2, trendPct:12,
+          heat:2, fever:1, insem:1,
           cows:[
-            { name:'Gowri', nameHi:'गौरी', no:1, age:'2.2 yrs', ageHi:'2.2 साल', belt:'Belt 60', beltHi:'बेल्ट 60', status:'Milking', temp:'32°C' },
-            { name:'Giri', nameHi:'गिरि', no:2, age:'4 yrs', ageHi:'4 साल', belt:'Belt 12', beltHi:'बेल्ट 12', status:'Pregnant', temp:'34°C' },
-            { name:'Ramya', nameHi:'रम्या', no:3, age:'3 yrs', ageHi:'3 साल', belt:'Belt 45', beltHi:'बेल्ट 45', status:'Heat', label:'Heat Cycle', temp:'36°C' }
+            { name:'Gowri', nameHi:'गौरी', no:1, age:'2.2 yrs', ageHi:'2.2 साल', belt:'Belt 60', beltHi:'बेल्ट 60', status:'Milking', temp:'32°C', trend:'up', photo:'assets/images/milking_started_photo.jpg',
+              info:[ {k:'labelMilkToday', v:'12 L'}, {k:'labelLastMilking', v:'6:45 AM'}, {k:'labelLactation', v:'Day 45', vHi:'दिन 45'} ] },
+            { name:'Giri', nameHi:'गिरि', no:2, age:'4 yrs', ageHi:'4 साल', belt:'Belt 12', beltHi:'बेल्ट 12', status:'Pregnant', temp:'34°C', trend:'up', photo:'assets/images/gestation_photo.jpg',
+              info:[ {k:'labelDueDate', v:'12 Aug', vHi:'12 अगस्त'}, {k:'labelPregnancy', v:'5 Months', vHi:'5 महीने'}, {k:'labelLastCheck', v:'15 May', vHi:'15 मई'} ] },
+            { name:'Ramya', nameHi:'रम्या', no:3, age:'3 yrs', ageHi:'3 साल', belt:'Belt 45', beltHi:'बेल्ट 45', status:'Heat', label:'Heat Cycle', temp:'36°C', trend:'up', photo:'assets/images/heat_photo.jpg',
+              info:[ {k:'labelHeatDetected', v:'6:10 AM'}, {k:'labelInsemination', v:'Due Today', vHi:'आज देय'}, {k:'labelHeatStage', v:'Standing Heat', vHi:'स्टैंडिंग हीट'} ] },
+            { name:'Lakshmi', nameHi:'लक्ष्मी', no:4, age:'5 yrs', ageHi:'5 साल', belt:'Belt 08', beltHi:'बेल्ट 08', status:'Fever', temp:'39.2°C', trend:'up', photo:'assets/images/fever_photo.jpg',
+              info:[ {k:'labelTempRecorded', v:'39.2°C'}, {k:'labelRecordedAt', v:'9:15 AM'}, {k:'labelSeverity', v:'High', vHi:'उच्च'} ] },
+            { name:'Nandini', nameHi:'नंदिनी', no:5, age:'2.8 yrs', ageHi:'2.8 साल', belt:'Belt 22', beltHi:'बेल्ट 22', status:'Milking', temp:'31°C', trend:'down', photo:'assets/images/milking_ended_photo.jpg',
+              info:[ {k:'labelMilkToday', v:'8 L'}, {k:'labelLastMilking', v:'6:10 AM'}, {k:'labelLactation', v:'Day 30', vHi:'दिन 30'} ] }
           ] },
         { id:'greenvilla', name:'Green Villa Dairy Farm', nameHi:'ग्रीन विला डेयरी फार्म', manager:'Rakesh H', managerHi:'राकेश एच', cattle:20, status:'healthy',
-          temp:'31°C', milkToday:34, alerts:0,
+          location:'Erode, Tamil Nadu', locationHi:'एरोड, तमिलनाडु',
+          temp:'31°C', milkToday:42, milk7:301, milk30:1290, alerts:0, critical:0, trendPct:5,
+          heat:0, fever:0, insem:0,
           cows:[
-            { name:'Meera', nameHi:'मीरा', no:1, age:'3.5 yrs', ageHi:'3.5 साल', belt:'Belt 21', beltHi:'बेल्ट 21', status:'Milking', temp:'31°C' },
-            { name:'Kaveri', nameHi:'कावेरी', no:2, age:'2 yrs', ageHi:'2 साल', belt:'Belt 8', beltHi:'बेल्ट 8', status:'Milking', temp:'32°C' }
+            { name:'Meera', nameHi:'मीरा', no:1, age:'3.5 yrs', ageHi:'3.5 साल', belt:'Belt 21', beltHi:'बेल्ट 21', status:'Milking', temp:'31°C', trend:'up', photo:'assets/images/milking_started_photo.jpg',
+              info:[ {k:'labelMilkToday', v:'11 L'}, {k:'labelLastMilking', v:'7:00 AM'}, {k:'labelLactation', v:'Day 80', vHi:'दिन 80'} ] },
+            { name:'Kaveri', nameHi:'कावेरी', no:2, age:'2 yrs', ageHi:'2 साल', belt:'Belt 8', beltHi:'बेल्ट 8', status:'Milking', temp:'32°C', trend:'up', photo:'assets/images/milking_ended_photo.jpg',
+              info:[ {k:'labelMilkToday', v:'9 L'}, {k:'labelLastMilking', v:'6:30 AM'}, {k:'labelLactation', v:'Day 112', vHi:'दिन 112'} ] }
           ] },
         { id:'stones', name:'Stones Dairy Farm', nameHi:'स्टोन्स डेयरी फार्म', manager:'Vimal E', managerHi:'विमल ई', cattle:25, status:'healthy',
-          temp:'30°C', milkToday:44, alerts:0,
+          location:'Salem, Tamil Nadu', locationHi:'सेलम, तमिलनाडु',
+          temp:'30°C', milkToday:20, milk7:149, milk30:635, alerts:0, critical:0, trendPct:4,
+          heat:0, fever:0, insem:0,
           cows:[
-            { name:'Chinnu', nameHi:'चिन्नू', no:1, age:'5 yrs', ageHi:'5 साल', belt:'Belt 3', beltHi:'बेल्ट 3', status:'Milking', temp:'30°C' },
-            { name:'Devi', nameHi:'देवी', no:2, age:'1.8 yrs', ageHi:'1.8 साल', belt:'Belt 27', beltHi:'बेल्ट 27', status:'Pregnant', temp:'31°C' }
+            { name:'Chinnu', nameHi:'चिन्नू', no:1, age:'5 yrs', ageHi:'5 साल', belt:'Belt 3', beltHi:'बेल्ट 3', status:'Milking', temp:'30°C', trend:'up', photo:'assets/images/milking_started_photo.jpg',
+              info:[ {k:'labelMilkToday', v:'10 L'}, {k:'labelLastMilking', v:'6:15 AM'}, {k:'labelLactation', v:'Day 60', vHi:'दिन 60'} ] },
+            { name:'Devi', nameHi:'देवी', no:2, age:'1.8 yrs', ageHi:'1.8 साल', belt:'Belt 27', beltHi:'बेल्ट 27', status:'Pregnant', temp:'31°C', trend:'up', photo:'assets/images/gestation_photo.jpg',
+              info:[ {k:'labelDueDate', v:'2 Oct', vHi:'2 अक्टूबर'}, {k:'labelPregnancy', v:'3 Months', vHi:'3 महीने'}, {k:'labelLastCheck', v:'20 Jun', vHi:'20 जून'} ] }
           ] },
         { id:'highland', name:'Highland Farm', nameHi:'हाइलैंड फार्म', manager:'Unassigned', managerHi:'नियुक्त नहीं', cattle:0, status:'setup',
-          temp:'—', milkToday:0, alerts:0, cows:[] }
+          location:'—', temp:'—', milkToday:0, milk7:0, milk30:0, alerts:0, critical:0, trendPct:0, heat:0, fever:0, insem:0, cows:[] }
       ];
       // Proper nouns (farm/cow/manager names, age/belt captions) render in
       // Devanagari for hi/bho and English otherwise.
@@ -4682,6 +4731,14 @@
         return '<span style="flex-shrink:0; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--text1); display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>';
       }
 
+      function farmChip(bg, color, val, label) {
+        return '<div style="flex:1; min-width:0; background:' + bg + '; border-radius:12px; padding:8px 4px; text-align:center;">' +
+          '<p class="en" style="font-size:14px; font-weight:700; color:' + color + '; margin:0;">' + val + '</p>' +
+          '<p style="font-size:9px; font-weight:600; color:' + color + '; opacity:0.8; margin:2px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + label + '</p>' +
+        '</div>';
+      }
+      var FARM_CIRCLE = '<span style="width:52px; height:52px; border-radius:50%; flex-shrink:0; background:linear-gradient(135deg, var(--activebg), #D8E8DC); display:flex; align-items:center; justify-content:center; color:var(--greenink);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>';
+      var PIN_SVG = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-inline-end:3px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
       function renderFarmsList() {
         var q = (document.getElementById('farms-search').value || '').trim().toLowerCase();
         var list = FARMS.filter(function(f) {
@@ -4690,22 +4747,76 @@
           return true;
         });
         document.getElementById('farms-list').innerHTML = list.map(function(f) {
-          var dashed = f.status === 'setup';
-          return '<div class="en farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--bgcard); border:' + (dashed ? '2px dashed var(--border)' : '1px solid var(--border)') + '; border-radius:16px; padding:16px; margin-bottom:12px; cursor:pointer;">' +
-            '<div style="min-width:0;">' +
-              '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">' + loc(f, 'name') + '</p>' +
-              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' ' + window.t().wordCattle + ' · ' + loc(f, 'manager') + '</p>' +
+          if (f.status === 'setup') {
+            return '<div class="farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; gap:10px; background:var(--bgcard); border:2px dashed var(--border); border-radius:18px; padding:14px; margin-bottom:12px; cursor:pointer;">' +
+              '<span style="width:52px; height:52px; border-radius:50%; flex-shrink:0; background:var(--bgwarm); display:flex; align-items:center; justify-content:center; color:var(--text2);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 12v6M9 15h6"/></svg></span>' +
+              '<div style="flex:1; min-width:0;">' +
+                '<p style="font-size:16px; font-weight:700; color:var(--text1); margin:0;">' + loc(f, 'name') + '</p>' +
+                '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + window.t().notSetUp + ' · 0 ' + window.t().wordCattle + '</p>' +
+              '</div>' +
+              '<span class="farm-setup-pill" style="flex-shrink:0; height:36px; padding:0 14px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:600; display:flex; align-items:center; font-family:var(--font-hi);">' + window.t().setupFarm + '</span>' +
+              '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>' +
+            '</div>';
+          }
+          var attention = f.status === 'attention';
+          var dot = attention ? 'var(--danger)' : 'var(--greendeep)';
+          var badge = attention
+            ? '<span class="en" style="background:var(--dangerbg); border:1px solid var(--danger); color:#8B2800; border-radius:12px; padding:3px 10px; font-size:10px; font-weight:700; letter-spacing:0.04em;">' + window.t().sevCritical + '</span>'
+            : '<span class="en" style="background:var(--activebg); border:1px solid var(--greendeep); color:var(--greenink); border-radius:12px; padding:3px 10px; font-size:10px; font-weight:700; letter-spacing:0.04em;">' + window.t().healthyWord + '</span>';
+          return '<div class="farm-row" data-farm="' + f.id + '" style="background:var(--bgcard); border:1px solid var(--border); border-radius:18px; padding:14px; margin-bottom:12px; cursor:pointer;">' +
+            '<div style="display:flex; align-items:center; gap:10px;">' +
+              '<span style="width:8px; height:8px; border-radius:50%; background:' + dot + '; flex-shrink:0;"></span>' +
+              FARM_CIRCLE +
+              '<div style="flex:1; min-width:0;">' +
+                '<p style="font-size:16px; font-weight:700; color:var(--text1); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + loc(f, 'name') + '</p>' +
+                '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + loc(f, 'manager') + ' · ' + f.cattle + ' ' + window.t().wordCattle + '</p>' +
+                '<p style="font-size:11px; color:var(--text2); margin:2px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + PIN_SVG + loc(f, 'location') + '</p>' +
+              '</div>' +
+              '<div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px; flex-shrink:0;">' + badge +
+                '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>' +
+              '</div>' +
             '</div>' +
-            '<div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">' +
-              farmStatusBadge(f) +
-              '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>' +
+            '<div style="display:flex; gap:6px; margin-top:12px;">' +
+              farmChip('var(--dangerbg)', 'var(--danger)', f.heat, window.t().cattleHeat) +
+              farmChip('var(--warnbg)', '#8A5A00', f.fever, window.t().cattleFever) +
+              farmChip('var(--bgwarm)', 'var(--text1)', f.insem, window.t().insemWord) +
+              farmChip('var(--activebg)', 'var(--greenink)', f.milkToday + ' L', window.t().statMilkToday) +
             '</div>' +
           '</div>';
         }).join('') || '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">' + window.t().noFarmsMatch + '</p>';
         document.querySelectorAll('.farm-row').forEach(function(row) {
           row.addEventListener('click', function() { openFarmDetail(row.getAttribute('data-farm')); });
         });
+        farmsSyncStats();
       }
+      var farmsPeriod = 'today';
+      function farmsSyncStats() {
+        var totFarms = FARMS.filter(function(f) { return f.status !== 'setup'; }).length;
+        var totCattle = FARMS.reduce(function(s, f) { return s + f.cattle; }, 0);
+        var key = farmsPeriod === '7d' ? 'milk7' : farmsPeriod === '30d' ? 'milk30' : 'milkToday';
+        var totMilk = FARMS.reduce(function(s, f) { return s + (f[key] || 0); }, 0);
+        document.getElementById('farms-stat-farms').textContent = totFarms;
+        document.getElementById('farms-stat-cattle').textContent = totCattle;
+        document.getElementById('farms-stat-milk').innerHTML = totMilk + ' <span style="font-size:12px; font-weight:600;">L</span>';
+        var lbl = document.getElementById('farms-period-label');
+        lbl.textContent = window.t()[farmsPeriod === '7d' ? 'period7' : farmsPeriod === '30d' ? 'period30' : 'periodToday'];
+      }
+      document.getElementById('farms-period-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        var m = document.getElementById('farms-period-menu');
+        m.style.display = m.style.display === 'block' ? 'none' : 'block';
+      });
+      document.addEventListener('click', function() { document.getElementById('farms-period-menu').style.display = 'none'; });
+      document.querySelectorAll('.farms-period-opt').forEach(function(opt) {
+        opt.addEventListener('click', function(e) {
+          e.stopPropagation();
+          document.querySelectorAll('.farms-period-opt').forEach(function(o) { o.classList.remove('on'); o.style.fontWeight = '500'; o.style.color = 'var(--text1)'; });
+          opt.classList.add('on'); opt.style.fontWeight = '700'; opt.style.color = 'var(--greenink)';
+          farmsPeriod = opt.getAttribute('data-val');
+          document.getElementById('farms-period-menu').style.display = 'none';
+          farmsSyncStats();
+        });
+      });
       document.getElementById('farms-search').addEventListener('input', renderFarmsList);
       var farmsFilterBtn = document.getElementById('farms-filter-btn');
       var farmsFilterMenu = document.getElementById('farms-filter-menu');
@@ -4727,20 +4838,37 @@
       renderFarmsList();
 
       var cattleStatusFilter = 'all';
-      function cattlePillStyle(status) {
-        // Heat Cycle is the one filled pill (brand green, not black) that
-        // stands out; every other status is an outline pill.
-        if (status === 'Heat') return 'background:var(--greenink); border:1px solid var(--greenink); color:#fff;';
-        return 'background:transparent; border:1px solid var(--border); color:var(--text1);';
-      }
-      // status key -> translation key (labels are cow-status names, not the
-      // English filter values in c.status, so they translate independently)
-      var CATTLE_STATUS_K = { Milking:'statusMilking', Pregnant:'statusPregnant', Heat:'statusHeatCycle' };
+      var CATTLE_STATUS_K = { Milking:'statusMilking', Pregnant:'statusPregnant', Heat:'statusHeatCycle', Fever:'statusFeverAlert' };
       function cattleStatusLabel(c) {
         var k = CATTLE_STATUS_K[c.status];
         return k ? window.t()[k] : (c.label || c.status);
       }
+      function cattlePillStyle(status) {
+        if (status === 'Heat' || status === 'Fever') return 'background:var(--dangerbg); border:1px solid var(--danger); color:var(--danger);';
+        if (status === 'Pregnant') return 'background:var(--warnbg); border:1px solid var(--warning); color:#8A5A00;';
+        return 'background:var(--activebg); border:1px solid var(--greendeep); color:var(--greenink);';
+      }
+      function cowInfoCols(c) {
+        var l = localStorage.getItem('vanixLang') || 'en';
+        return (c.info || []).map(function(cell, i) {
+          var v = (l === 'en') ? cell.v : (cell.vHi || cell.v);
+          return '<div style="flex:1; min-width:0; padding:0 8px;' + (i > 0 ? ' border-inline-start:1px solid var(--border);' : ' padding-inline-start:0;') + '">' +
+            '<p style="font-size:9px; font-weight:600; color:var(--text2); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + window.t()[cell.k] + '</p>' +
+            '<p class="en" style="font-size:12px; font-weight:700; color:var(--text1); margin:2px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + v + '</p>' +
+          '</div>';
+        }).join('');
+      }
+      function renderCattleTabs(farm) {
+        var counts = { all: farm.cows.length };
+        farm.cows.forEach(function(c) { counts[c.status] = (counts[c.status] || 0) + 1; });
+        document.querySelectorAll('.cattle-tab').forEach(function(tab) {
+          var s = tab.getAttribute('data-status');
+          var n = s === 'all' ? counts.all : (counts[s] || 0);
+          tab.textContent = window.t()[tab.getAttribute('data-k')] + ' (' + n + ')';
+        });
+      }
       function renderCattleList(farm) {
+        renderCattleTabs(farm);
         var q = (document.getElementById('cattle-search').value || '').trim().toLowerCase();
         var cows = farm.cows.filter(function(c) {
           if (cattleStatusFilter !== 'all' && c.status !== cattleStatusFilter) return false;
@@ -4748,18 +4876,23 @@
           return true;
         });
         var html = cows.map(function(c) {
-          return '<div class="en" style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 14px; margin-bottom:10px;">' +
-            '<div style="flex-shrink:0; width:44px; height:44px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:16px;">✕</div>' +
-            '<div style="flex:1; min-width:0;">' +
-              '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + loc(c, 'name') + ' — ' + c.no + '</p>' +
-              '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + loc(c, 'age') + ' · ' + loc(c, 'belt') + '</p>' +
-              '<span style="display:inline-block; margin-top:6px; height:26px; padding:0 12px; border-radius:13px; font-size:12px; font-weight:600; line-height:26px; ' + cattlePillStyle(c.status) + '">' + cattleStatusLabel(c) + '</span>' +
+          var arrow = c.trend === 'down' ? '<span style="color:var(--greenink); font-size:11px;">▼</span>' : '<span style="color:var(--danger); font-size:11px;">▲</span>';
+          var photo = c.photo
+            ? '<img src="' + c.photo + '" alt="" style="width:64px; height:64px; border-radius:14px; object-fit:cover; flex-shrink:0;">'
+            : '<div style="width:64px; height:64px; border-radius:14px; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:16px; flex-shrink:0;">✕</div>';
+          return '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:18px; padding:12px 14px; margin-bottom:10px;">' +
+            '<div style="display:flex; gap:12px;">' + photo +
+              '<div style="flex:1; min-width:0;">' +
+                '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + loc(c, 'name') + ' <span class="en" style="font-size:10px; font-weight:700; color:var(--greenink); background:var(--activebg); border-radius:8px; padding:1px 6px; vertical-align:2px;">#' + c.no + '</span></p>' +
+                '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + loc(c, 'age') + ' · ' + loc(c, 'belt') + '</p>' +
+                '<span style="display:inline-block; margin-top:6px; height:24px; padding:0 10px; border-radius:12px; font-size:11px; font-weight:600; line-height:24px; ' + cattlePillStyle(c.status) + '">' + cattleStatusLabel(c) + '</span>' +
+              '</div>' +
+              '<div style="flex-shrink:0; text-align:end;">' +
+                '<p class="en" style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + c.temp + ' ' + arrow + '</p>' +
+                '<p style="font-size:9px; font-style:italic; color:var(--text2); margin:1px 0 0;">' + window.t().cowTempCaption + '</p>' +
+              '</div>' +
             '</div>' +
-            '<div style="flex-shrink:0; text-align:end;">' +
-              '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + c.temp + ' <span style="color:var(--danger); font-size:12px;">▲</span></p>' +
-              '<p style="font-size:10px; font-style:italic; color:var(--text2); margin:1px 0 4px;">' + window.t().cowTempCaption + '</p>' +
-              '<span style="color:var(--text2); font-size:16px; line-height:1;">⋮</span>' +
-            '</div>' +
+            (c.info ? '<div style="display:flex; margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">' + cowInfoCols(c) + '</div>' : '') +
           '</div>';
         }).join('');
         if (!farm.cows.length) {
@@ -4808,6 +4941,8 @@
       }
       function refreshFarmDetailHeader(farm) {
         document.getElementById('farm-detail-manager').textContent = loc(farm, 'manager') + ' · ' + window.t().managerWord;
+        document.getElementById('farm-detail-milk-trend').textContent = '\u2191 ' + (farm.trendPct || 0) + '% ' + window.t().vsYesterday;
+        document.getElementById('farm-detail-critical').textContent = farm.critical + ' ' + window.t().criticalWord;
       }
       document.getElementById('farm-detail-back').addEventListener('click', function() {
         farmDetailPage.style.display = 'none';
