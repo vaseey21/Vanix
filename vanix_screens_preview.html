@@ -2284,7 +2284,7 @@
 
                 <p data-k="grpFarmMgmt" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:16px 0 8px;">Farm Management</p>
                 <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
-                  <div style="display:flex; align-items:center; gap:10px; padding:13px 14px; border-bottom:1px solid var(--border); cursor:pointer;">
+                  <div class="acct-row" data-page="page-farmmgmt" style="display:flex; align-items:center; gap:10px; padding:13px 14px; border-bottom:1px solid var(--border); cursor:pointer;">
                     <div style="flex:1; min-width:0;"><p data-k="grpFarmMgmt" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Farm Management</p><p data-k="acctFarmSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Sunrise Dairy Farm</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
                   </div>
                   <div style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
@@ -2426,13 +2426,30 @@
                 <div id="vets-list"></div>
                 <button id="add-vet-btn" data-k="addVet" style="width:100%; min-height:46px; border:1px dashed var(--text2); border-radius:14px; background:transparent; color:var(--text1); font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">+ Add Vet</button>
                 <div id="add-vet-form" style="display:none; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px; margin-top:8px;">
-                  <input type="text" id="add-vet-name" placeholder="Vet name" data-k="vetNamePh" data-k-placeholder style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); font-family:var(--font-hi); margin-bottom:8px;">
+                  <input type="text" id="add-vet-name" placeholder="Vet name" data-k="vetNamePh" data-k-placeholder style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">
+                  <input type="email" id="add-vet-email" placeholder="Email address" data-k="emailPh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
                   <input type="tel" id="add-vet-phone" placeholder="Phone number" data-k="phonePh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
+                  <p data-k="inviteHint" style="font-size:10px; color:var(--text2); margin:0 0 8px; line-height:1.5;">An invite link is emailed to the vet — they confirm before being added.</p>
                   <button id="add-vet-send" data-k="sendInvite" style="width:100%; min-height:44px; border-radius:22px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Send invite link</button>
                 </div>
-                <p data-k="grpEmergency" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:18px 0 8px;">Emergency Contacts</p>
-                <div id="emg-list"></div>
-                <button id="add-emg-btn" data-k="addContact" style="width:100%; min-height:46px; border:1px dashed var(--text2); border-radius:14px; background:transparent; color:var(--text1); font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">+ Add Contact</button>
+              </div>
+              <!-- Vet edit sheet: name editable, email/phone/role read-only -->
+              <div id="vet-edit-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:46;"></div>
+              <div id="vet-edit-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+                <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--greenink); border-radius:2px;"></div></div>
+                <div style="display:flex; align-items:center; margin-top:10px;">
+                  <h3 data-k="editVet" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Edit vet</h3>
+                  <button id="vet-edit-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+                </div>
+                <p data-k="fldName" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:14px 0 5px;">Full Name</p>
+                <input type="text" id="vet-edit-name" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px; margin-bottom:0; font-family:var(--font-hi);">
+                <p data-k="fldEmail" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:12px 0 5px;">Email Address</p>
+                <div id="vet-edit-email" class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:11px 12px; font-size:13px; color:var(--text2);"></div>
+                <p data-k="fldPhone" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:12px 0 5px;">Phone No.</p>
+                <div id="vet-edit-phone" class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:11px 12px; font-size:13px; color:var(--text2);"></div>
+                <p data-k="fldRole" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:12px 0 5px;">Role</p>
+                <div data-k="roleVet" class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:11px 12px; font-size:13px; color:var(--text2);">Veterinarian</div>
+                <button id="vet-edit-save" data-k="saveChanges" style="width:100%; min-height:48px; margin-top:16px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Save changes</button>
               </div>
             </div>
             </div>
@@ -2484,6 +2501,40 @@
                 <h4>Contact Us</h4><p>For support or legal queries, contact support@mybovine.ai.</p>
               </div>
             </div>
+            </div>
+          </div>
+
+          <!-- FARM MANAGEMENT — assign / remove a manager or assign self -->
+          <div id="page-farmmgmt" style="position:absolute; inset:0; background:var(--bgwarm); z-index:44; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 40px;">
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button class="acct-back" data-close="page-farmmgmt" style="flex-shrink:0; width:32px; height:32px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                  <div>
+                    <h2 data-k="grpFarmMgmt" style="font-size:19px; font-weight:700; color:var(--text1); margin:0;">Farm Management</h2>
+                    <p data-k="farmMgmtSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Assign or remove a manager for each farm</p>
+                  </div>
+                </div>
+              </div>
+              <div style="padding:14px 16px 0;">
+                <div id="farmmgmt-list"></div>
+              </div>
+            </div>
+            </div>
+            <!-- Reassign form sheet -->
+            <div id="fm-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:46;"></div>
+            <div id="fm-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--greenink); border-radius:2px;"></div></div>
+              <div style="display:flex; align-items:center; margin-top:10px;">
+                <h3 id="fm-sheet-title" data-k="assignManager" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Assign manager</h3>
+                <button id="fm-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+              </div>
+              <p id="fm-sheet-farm" class="en" style="font-size:12px; color:var(--text2); margin:6px 0 0;"></p>
+              <input type="text" id="fm-name" placeholder="Manager name" data-k="mgrNamePh" data-k-placeholder style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px; margin-top:14px; font-family:var(--font-hi);">
+              <input type="tel" id="fm-phone" placeholder="Mobile number" data-k="phonePh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
+              <input type="email" id="fm-email" placeholder="Email address" data-k="emailPh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
+              <button id="fm-assign-save" data-k="confirmAssign" style="width:100%; min-height:48px; margin-top:8px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Confirm &amp; assign</button>
             </div>
           </div>
 
@@ -2832,7 +2883,7 @@
                grpYourVets:'Your Vets', grpEmergency:'Emergency Contacts', vetConfirmed:'CONFIRMED', vetPending:'PENDING', vetDeclined:'DECLINED',
                vetPendingNote:'Confirmation link sent \u2014 waiting for the vet to accept', vetDeclinedNote:'Declined the invite', vetResend:'Resend invite',
                addVet:'+ Add Vet', addContact:'+ Add Contact', vetNamePh:'Vet name', phonePh:'Phone number', sendInvite:'Send invite link', demoConfirm:'(demo) Confirm', demoDecline:'(demo) Decline',
-               emgFarmManager:'Farm Manager', vetSpec1:'Large animal vet \u00b7 6.2 km away', vetSpec2:'Cattle specialist \u00b7 9 km away', vetSpec3:'General vet \u00b7 12 km away', legalUpdated:'Last Updated: July 1, 2026', breedWord:'Breed', ageWord:'Age', breedGir:'Gir', breedDesi:'Desi', ageUnder2:'Under 2 yrs', age2to4:'2 \u2013 4 yrs', ageOver4:'Over 4 yrs' },
+               emgFarmManager:'Farm Manager', vetSpec1:'Large animal vet \u00b7 6.2 km away', vetSpec2:'Cattle specialist \u00b7 9 km away', vetSpec3:'General vet \u00b7 12 km away', legalUpdated:'Last Updated: July 1, 2026', breedWord:'Breed', ageWord:'Age', breedGir:'Gir', breedDesi:'Desi', ageUnder2:'Under 2 yrs', age2to4:'2 \u2013 4 yrs', ageOver4:'Over 4 yrs', editVet:'Edit vet', roleVet:'Veterinarian', saveChanges:'Save changes', emailPh:'Email address', inviteHint:'An invite link is emailed to the vet — they confirm before being added.', farmMgmtSub:'Assign or remove a manager for each farm', unassignedWord:'Unassigned', reassignWord:'Reassign', assignManager:'Assign manager', assignMe:'Assign to me', removeManager:'Remove manager', mgrNamePh:'Manager name', confirmAssign:'Confirm & assign' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -2914,7 +2965,7 @@
                grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
                vetPendingNote:'पुष्टि लिंक भेजा गया \u2014 पशु चिकित्सक की स्वीकृति बाकी', vetDeclinedNote:'निमंत्रण अस्वीकार किया', vetResend:'फिर से भेजें',
                addVet:'+ पशु चिकित्सक जोड़ें', addContact:'+ संपर्क जोड़ें', vetNamePh:'पशु चिकित्सक का नाम', phonePh:'फ़ोन नंबर', sendInvite:'निमंत्रण लिंक भेजें', demoConfirm:'(डेमो) पुष्टि', demoDecline:'(डेमो) अस्वीकार',
-               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक' },
+               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक', editVet:'पशु चिकित्सक संपादित करें', roleVet:'पशु चिकित्सक', saveChanges:'परिवर्तन सहेजें', emailPh:'ईमेल पता', inviteHint:'पशु चिकित्सक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', farmMgmtSub:'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', unassignedWord:'नियुक्त नहीं', reassignWord:'फिर से नियुक्त करें', assignManager:'प्रबंधक नियुक्त करें', assignMe:'मुझे नियुक्त करें', removeManager:'प्रबंधक हटाएँ', mgrNamePh:'प्रबंधक का नाम', confirmAssign:'पुष्टि करें और नियुक्त करें' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -2996,7 +3047,7 @@
                grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
                vetPendingNote:'पुष्टि लिंक भेजा गया \u2014 पशु चिकित्सक की स्वीकृति बाकी', vetDeclinedNote:'निमंत्रण अस्वीकार किया', vetResend:'फिर से भेजें',
                addVet:'+ पशु चिकित्सक जोड़ें', addContact:'+ संपर्क जोड़ें', vetNamePh:'पशु चिकित्सक का नाम', phonePh:'फ़ोन नंबर', sendInvite:'निमंत्रण लिंक भेजें', demoConfirm:'(डेमो) पुष्टि', demoDecline:'(डेमो) अस्वीकार',
-               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक' }
+               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक', editVet:'पशु चिकित्सक संपादित करें', roleVet:'पशु चिकित्सक', saveChanges:'परिवर्तन सहेजें', emailPh:'ईमेल पता', inviteHint:'पशु चिकित्सक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', farmMgmtSub:'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', unassignedWord:'नियुक्त नहीं', reassignWord:'फिर से नियुक्त करें', assignManager:'प्रबंधक नियुक्त करें', assignMe:'मुझे नियुक्त करें', removeManager:'प्रबंधक हटाएँ', mgrNamePh:'प्रबंधक का नाम', confirmAssign:'पुष्टि करें और नियुक्त करें' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
@@ -5823,7 +5874,9 @@
       window.openAccountPage = openAccountPage;
       document.querySelectorAll('.acct-row').forEach(function(row) {
         row.addEventListener('click', function() {
-          document.getElementById(row.getAttribute('data-page')).style.display = 'block';
+          var pid = row.getAttribute('data-page');
+          if (pid === 'page-farmmgmt' && typeof renderFarmMgmt === 'function') renderFarmMgmt();
+          document.getElementById(pid).style.display = 'block';
         });
       });
       document.querySelectorAll('.acct-back').forEach(function(btn) {
@@ -5870,16 +5923,16 @@
       }
       // ── Vets: onboarding via confirmation link (pending / confirmed / declined) ──
       var VETS = [
-        { name:'Dr. Sharma', specK:'vetSpec1', status:'confirmed' },
-        { name:'Dr. Rao',    specK:'vetSpec2', status:'confirmed' },
-        { name:'Dr. Iyer',   specK:'vetSpec3', status:'pending' }
+        { name:'Dr. Sharma', email:'sharma.vet@gmail.com', phone:'+91 98450 11223', specK:'vetSpec1', status:'confirmed' },
+        { name:'Dr. Rao',    email:'rao.cattle@gmail.com', phone:'+91 99000 44556', specK:'vetSpec2', status:'confirmed' },
+        { name:'Dr. Iyer',   email:'iyer.vet@gmail.com',   phone:'+91 90032 77889', specK:'vetSpec3', status:'pending' }
       ];
-      var EMG = [ { name:'Suresh Yadav', nameHi:'सुरेश यादव', roleK:'emgFarmManager' } ];
       var VET_BADGE = {
         confirmed: { bg:'var(--activebg)', border:'var(--greendeep)', color:'var(--greenink)', k:'vetConfirmed' },
         pending:   { bg:'var(--warnbg)',   border:'var(--warning)',   color:'#8A5A00',         k:'vetPending' },
         declined:  { bg:'var(--dangerbg)', border:'var(--danger)',    color:'var(--danger)',   k:'vetDeclined' }
       };
+      var vetEditIdx = null;
       function renderVets() {
         var listEl = document.getElementById('vets-list');
         if (!listEl) return;
@@ -5895,7 +5948,7 @@
           } else if (v.status === 'declined') {
             actions = '<button class="vet-demo" data-i="' + i + '" data-act="pending" style="width:100%; min-height:34px; margin-top:8px; border-radius:17px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:11px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + window.t().vetResend + '</button>';
           }
-          return '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px;">' +
+          return '<div class="vet-card" data-i="' + i + '" style="background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px; cursor:pointer;">' +
             '<div style="display:flex; align-items:center; gap:10px;">' +
               '<span class="en" style="width:38px; height:38px; border-radius:50%; background:var(--bgwarm); color:var(--text1); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0;">' + v.name.replace('Dr. ', '').slice(0, 2) + '</span>' +
               '<div style="flex:1; min-width:0;">' +
@@ -5909,40 +5962,119 @@
           '</div>';
         }).join('');
         listEl.querySelectorAll('.vet-demo').forEach(function(btn) {
-          btn.addEventListener('click', function() {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
             VETS[+btn.getAttribute('data-i')].status = btn.getAttribute('data-act');
             renderVets();
           });
         });
-        var emgEl = document.getElementById('emg-list');
-        emgEl.innerHTML = EMG.map(function(c) {
-          return '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px; display:flex; align-items:center; gap:10px;">' +
-            '<span class="en" style="width:38px; height:38px; border-radius:50%; background:var(--bgwarm); color:var(--text1); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0;">' + c.name.slice(0, 1) + '</span>' +
-            '<div style="flex:1; min-width:0;">' +
-              '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:0;">' + loc(c, 'name') + '</p>' +
-              '<p style="font-size:11px; color:var(--text2); margin:2px 0 0;">' + window.t()[c.roleK] + '</p>' +
-            '</div>' +
-          '</div>';
-        }).join('');
+        listEl.querySelectorAll('.vet-card').forEach(function(card) {
+          card.addEventListener('click', function() { openVetEdit(+card.getAttribute('data-i')); });
+        });
       }
+      function openVetEdit(i) {
+        vetEditIdx = i;
+        var v = VETS[i];
+        document.getElementById('vet-edit-name').value = v.name;
+        document.getElementById('vet-edit-email').textContent = v.email || '—';
+        document.getElementById('vet-edit-phone').textContent = v.phone || '—';
+        var sh = document.getElementById('vet-edit-sheet'), bd = document.getElementById('vet-edit-backdrop');
+        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeVetEdit() {
+        var sh = document.getElementById('vet-edit-sheet'), bd = document.getElementById('vet-edit-backdrop');
+        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      document.getElementById('vet-edit-close').addEventListener('click', closeVetEdit);
+      document.getElementById('vet-edit-backdrop').addEventListener('click', closeVetEdit);
+      document.getElementById('vet-edit-save').addEventListener('click', function() {
+        if (vetEditIdx != null) {
+          var nm = (document.getElementById('vet-edit-name').value || '').trim();
+          if (nm) VETS[vetEditIdx].name = nm;
+          renderVets();
+        }
+        closeVetEdit();
+      });
       document.getElementById('add-vet-btn').addEventListener('click', function() {
         var f = document.getElementById('add-vet-form');
         f.style.display = f.style.display === 'none' ? 'block' : 'none';
       });
       document.getElementById('add-vet-send').addEventListener('click', function() {
         var name = (document.getElementById('add-vet-name').value || '').trim();
+        var email = (document.getElementById('add-vet-email').value || '').trim();
         var phone = (document.getElementById('add-vet-phone').value || '').trim();
-        if (!name) return;
-        VETS.push({ name: name, phone: phone, status: 'pending' });
+        if (!name || !email) return;
+        VETS.push({ name: name, email: email, phone: phone, status: 'pending' });
         document.getElementById('add-vet-name').value = '';
+        document.getElementById('add-vet-email').value = '';
         document.getElementById('add-vet-phone').value = '';
         document.getElementById('add-vet-form').style.display = 'none';
         renderVets();
       });
-      document.getElementById('add-emg-btn').addEventListener('click', function() {
-        // Placeholder — same pattern as Add Vet once contact fields are specced.
-      });
       renderVets();
+
+      // ── Farm Management: assign / remove a manager, or assign self ──
+      var fmFarmId = null;
+      function renderFarmMgmt() {
+        var listEl = document.getElementById('farmmgmt-list');
+        if (!listEl) return;
+        listEl.innerHTML = FARMS.filter(function(f) { return f.status !== 'setup'; }).map(function(f) {
+          var assigned = f.manager && f.manager !== 'Unassigned';
+          var mgrLine = assigned
+            ? '<p style="font-size:12px; color:var(--text2); margin:3px 0 0;">' + window.t().managerWord + ': ' + loc(f, 'manager') + '</p>'
+            : '<p style="font-size:12px; color:var(--danger); margin:3px 0 0;">' + window.t().unassignedWord + '</p>';
+          var btn = 'flex:1; min-height:38px; border-radius:19px; font-size:12px; font-weight:600; font-family:var(--font-hi); cursor:pointer;';
+          return '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px; margin-bottom:12px;">' +
+            '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + loc(f, 'name') + '</p>' + mgrLine +
+            '<div style="display:flex; gap:8px; margin-top:12px;">' +
+              '<button class="fm-assign" data-f="' + f.id + '" style="' + btn + ' border:1px solid var(--greenink); background:var(--activebg); color:var(--greenink);">' + (assigned ? window.t().reassignWord : window.t().assignManager) + '</button>' +
+              '<button class="fm-self" data-f="' + f.id + '" style="' + btn + ' border:1px solid var(--border); background:transparent; color:var(--text1);">' + window.t().assignMe + '</button>' +
+            '</div>' +
+            (assigned ? '<button class="fm-remove" data-f="' + f.id + '" style="width:100%; min-height:36px; margin-top:8px; border-radius:18px; border:1px solid var(--danger); background:transparent; color:var(--danger); font-size:12px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + window.t().removeManager + '</button>' : '') +
+          '</div>';
+        }).join('');
+        listEl.querySelectorAll('.fm-assign').forEach(function(b) {
+          b.addEventListener('click', function() { openFmSheet(b.getAttribute('data-f')); });
+        });
+        listEl.querySelectorAll('.fm-self').forEach(function(b) {
+          b.addEventListener('click', function() {
+            var f = FARMS.filter(function(x) { return x.id === b.getAttribute('data-f'); })[0];
+            if (f) { f.manager = 'James Redmark'; f.managerHi = 'जेम्स रेडमार्क'; renderFarmMgmt(); renderFarmsList(); }
+          });
+        });
+        listEl.querySelectorAll('.fm-remove').forEach(function(b) {
+          b.addEventListener('click', function() {
+            var f = FARMS.filter(function(x) { return x.id === b.getAttribute('data-f'); })[0];
+            if (f) { f.manager = 'Unassigned'; f.managerHi = 'नियुक्त नहीं'; renderFarmMgmt(); renderFarmsList(); }
+          });
+        });
+      }
+      function openFmSheet(farmId) {
+        fmFarmId = farmId;
+        var f = FARMS.filter(function(x) { return x.id === farmId; })[0];
+        document.getElementById('fm-sheet-farm').textContent = f ? loc(f, 'name') : '';
+        document.getElementById('fm-name').value = '';
+        document.getElementById('fm-phone').value = '';
+        document.getElementById('fm-email').value = '';
+        var sh = document.getElementById('fm-sheet'), bd = document.getElementById('fm-backdrop');
+        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeFmSheet() {
+        var sh = document.getElementById('fm-sheet'), bd = document.getElementById('fm-backdrop');
+        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      document.getElementById('fm-close').addEventListener('click', closeFmSheet);
+      document.getElementById('fm-backdrop').addEventListener('click', closeFmSheet);
+      document.getElementById('fm-assign-save').addEventListener('click', function() {
+        var nm = (document.getElementById('fm-name').value || '').trim();
+        if (nm && fmFarmId) {
+          var f = FARMS.filter(function(x) { return x.id === fmFarmId; })[0];
+          if (f) { f.manager = nm; f.managerHi = nm; }
+          renderFarmMgmt(); renderFarmsList();
+        }
+        closeFmSheet();
+      });
+      renderFarmMgmt();
 
       // Bridge called from the login script's applyLang() (a separate
       // <script> tag/scope) whenever the language changes, so every screen
