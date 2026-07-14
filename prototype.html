@@ -211,6 +211,10 @@
     #flow-root.dark .cow-tl-card { background:#262626; border-color:#3A3A3A; }
     #flow-root.dark .cow-tl-card p { color:#F5F5F5 !important; }
     #flow-root.dark .cow-tl-card p + p { color:#8C8780 !important; }
+    /* Account section */
+    .legal-body-wrap h4 { font-size:13px; font-weight:700; color:var(--text1); margin:14px 0 4px; }
+    .legal-body-wrap > p { font-size:12px; color:var(--text2); line-height:1.6; margin:0; }
+    #flow-root.dark #page-account .m-hero h2, #flow-root.dark .legal-body-wrap h4 { color:#F5F5F5; }
     #ev-filter-btn.on { background:var(--dark1) !important; color:#FFFFFF !important; border-color:var(--dark1) !important; }
     #flow-root.dark #ev-filter-btn { background:#1C1C1C; color:#F5F5F5; border-color:#3A3A3A; }
     #flow-root.dark #ev-filter-btn.on { background:var(--activebg) !important; color:var(--greenink) !important; border-color:var(--greendeep) !important; }
@@ -2152,6 +2156,231 @@
             </nav>
           </div>
 
+          <!-- ACCOUNT / SETTINGS — opened from the Account tab -->
+          <div id="page-account" style="position:absolute; inset:0; background:var(--bgwarm); z-index:43; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <h2 data-k="navAccount" style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Account</h2>
+              </div>
+              <div style="padding:14px 16px 0;">
+
+                <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
+                  <div class="acct-row" data-page="page-profile" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
+                    <span class="en" style="width:40px; height:40px; border-radius:50%; background:var(--activebg); color:var(--greenink); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">JR</span>
+                    <div style="flex:1; min-width:0;">
+                      <p class="en" style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">James Redmark</p>
+                      <p data-k="farmOwner" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Farm Owner</p>
+                    </div>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  </div>
+                </div>
+
+                <p data-k="grpFarmMgmt" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:16px 0 8px;">Farm Management</p>
+                <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
+                  <div style="display:flex; align-items:center; gap:10px; padding:13px 14px; border-bottom:1px solid var(--border); cursor:pointer;">
+                    <div style="flex:1; min-width:0;"><p data-k="grpFarmMgmt" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Farm Management</p><p data-k="acctFarmSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Sunrise Dairy Farm</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
+                    <div style="flex:1; min-width:0;"><p data-k="rowCattleGroups" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Cattle Groups</p><p data-k="acctGroupsSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Desi, Jersey, Holstein Friesian, Sahiwal</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  </div>
+                </div>
+
+                <p data-k="grpAlerts" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:16px 0 8px;">Alerts &amp; Contacts</p>
+                <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
+                  <div id="acct-sound-row" style="display:flex; align-items:center; gap:10px; padding:13px 14px; border-bottom:1px solid var(--border); cursor:pointer;">
+                    <div style="flex:1; min-width:0;"><p data-k="rowSound" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Alert sound</p><p data-k="soundSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Alerts always notify — sound can be muted</p></div>
+                    <span class="acct-toggle" style="width:40px; height:22px; border-radius:12px; background:var(--greenink); position:relative; flex-shrink:0; transition:background 0.2s;"><span style="position:absolute; top:2px; inset-inline-start:20px; width:18px; height:18px; border-radius:50%; background:#FFFFFF; transition:inset-inline-start 0.2s;"></span></span>
+                  </div>
+                  <div class="acct-row" data-page="page-vets" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
+                    <div style="flex:1; min-width:0;"><p data-k="rowVets" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Vet &amp; Emergency Contacts</p><p data-k="vetsSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Who gets called when you tap "Call Vet"</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  </div>
+                </div>
+
+                <p data-k="grpApp" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:16px 0 8px;">App</p>
+                <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
+                  <div id="acct-lang-row" style="display:flex; align-items:center; gap:10px; padding:13px 14px; border-bottom:1px solid var(--border); cursor:pointer;">
+                    <div style="flex:1; min-width:0;"><p data-k="rowLanguage" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Language</p><p id="acct-lang-cur" class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0;">English</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  </div>
+                  <div id="acct-lang-opts" style="display:none; padding:4px 14px 10px; border-bottom:1px solid var(--border);">
+                    <button class="acct-lang-opt en" data-lang="en" style="display:inline-block; min-height:38px; padding:0 16px; margin:4px 6px 0 0; border:1px solid var(--border); border-radius:19px; background:var(--bgcard); font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">English</button>
+                    <button class="acct-lang-opt" data-lang="hi" style="display:inline-block; min-height:38px; padding:0 16px; margin:4px 6px 0 0; border:1px solid var(--border); border-radius:19px; background:var(--bgcard); font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">हिंदी</button>
+                    <button class="acct-lang-opt" data-lang="bho" style="display:inline-block; min-height:38px; padding:0 16px; margin:4px 6px 0 0; border:1px solid var(--border); border-radius:19px; background:var(--bgcard); font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">भोजपुरी</button>
+                  </div>
+                  <div id="acct-dark-row" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
+                    <div style="flex:1; min-width:0;"><p data-k="rowDark" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Dark mode</p></div>
+                    <span class="acct-toggle" id="acct-dark-toggle" style="width:40px; height:22px; border-radius:12px; background:var(--border); position:relative; flex-shrink:0; transition:background 0.2s;"><span style="position:absolute; top:2px; inset-inline-start:2px; width:18px; height:18px; border-radius:50%; background:#FFFFFF; transition:inset-inline-start 0.2s;"></span></span>
+                  </div>
+                </div>
+
+                <p data-k="grpLegal" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:16px 0 8px;">Legal</p>
+                <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
+                  <div class="acct-row" data-page="page-privacy" style="display:flex; align-items:center; gap:10px; padding:13px 14px; border-bottom:1px solid var(--border); cursor:pointer;">
+                    <p data-k="rowPrivacy" style="flex:1; font-size:14px; font-weight:600; color:var(--text1); margin:0;">Privacy Policy</p><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  </div>
+                  <div class="acct-row" data-page="page-terms" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
+                    <p data-k="rowTerms" style="flex:1; font-size:14px; font-weight:600; color:var(--text1); margin:0;">Terms of Service</p><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  </div>
+                </div>
+
+                <p data-k="grpSupport" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:16px 0 8px;">Support</p>
+                <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
+                  <div style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
+                    <div style="flex:1; min-width:0;"><p data-k="rowHelp" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Help &amp; FAQs</p><p data-k="helpSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Common guides for common tasks</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  </div>
+                </div>
+
+                <div style="margin-top:16px; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
+                  <div style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;"><p data-k="rowLogout" style="flex:1; font-size:14px; font-weight:600; color:var(--danger); margin:0;">Log Out</p></div>
+                </div>
+
+              </div>
+            </div><!-- /scroll -->
+            </div>
+
+            <!-- Frosted nav — Account active -->
+            <nav class="vnav" id="account-nav">
+              <div class="vcap" style="transform:translateX(400%);"></div>
+              <button class="vtab" data-i="0">
+                <span style="position:relative; display:flex;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
+                  <span class="ev-dot" style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
+                </span>
+                <span class="vlab s1-nav-l en" data-k="navHome">Home</span>
+              </button>
+              <button class="vtab" data-i="1">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navFarms">Farms</span>
+              </button>
+              <button class="vtab" data-i="2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navMilk">Milk</span>
+              </button>
+              <button class="vtab" data-i="3">
+                <span style="position:relative; display:flex;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  <span class="en ev-badge" style="position:absolute; top:-5px; right:-8px; min-width:15px; height:15px; border-radius:8px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px;">3</span>
+                </span>
+                <span class="vlab s1-nav-l en" data-k="navEvents">Events</span>
+              </button>
+              <button class="vtab on" data-i="4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navAccount">Account</span>
+              </button>
+            </nav>
+          </div>
+
+          <!-- PROFILE — read-only, opened from the Account profile row -->
+          <div id="page-profile" style="position:absolute; inset:0; background:var(--bgwarm); z-index:44; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 40px;">
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button class="acct-back" data-close="page-profile" style="flex-shrink:0; width:32px; height:32px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                  <h2 data-k="profTitle" style="font-size:21px; font-weight:700; color:var(--text1); margin:0;">Profile</h2>
+                </div>
+              </div>
+              <div style="padding:16px;">
+                <div style="text-align:center; margin-bottom:16px;">
+                  <span class="en" style="display:inline-flex; width:64px; height:64px; border-radius:50%; background:var(--activebg); color:var(--greenink); align-items:center; justify-content:center; font-size:18px; font-weight:700;">JR</span>
+                </div>
+                <p data-k="fldName" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:0 0 5px;">Full Name</p>
+                <div class="en" style="background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text1); margin-bottom:12px;">James Redmark</div>
+                <p data-k="fldPhone" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:0 0 5px;">Phone No.</p>
+                <div class="en" style="background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text1);">+91 98765 43210</div>
+                <p data-k="phoneHint" style="font-size:10px; color:var(--text2); margin:4px 0 12px;">Used for SMS alerts &amp; emergency contacts</p>
+                <p data-k="fldEmail" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:0 0 5px;">Email Address</p>
+                <div class="en" style="background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text1);">james@sunrisedairy.in</div>
+                <p data-k="emailHint" style="font-size:10px; color:var(--text2); margin:4px 0 12px;">Login email &amp; vet report copies</p>
+                <p data-k="fldRole" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:0 0 5px;">Role</p>
+                <div data-k="farmOwner" style="background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text1); margin-bottom:18px;">Farm Owner</div>
+                <p data-k="grpDelete" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:0 0 8px;">Delete Account</p>
+                <p data-k="delNote" style="font-size:12px; color:var(--text2); border:1px dashed var(--border); border-radius:12px; padding:10px 12px; margin:0 0 10px; line-height:1.5;">Permanently removes your profile, farm data &amp; connections.</p>
+                <button data-k="btnReqDelete" style="width:100%; min-height:48px; border-radius:24px; border:1px solid var(--danger); background:var(--dangerbg); color:var(--danger); font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Request Account Deletion</button>
+              </div>
+            </div>
+            </div>
+          </div>
+
+          <!-- VET & EMERGENCY CONTACTS -->
+          <div id="page-vets" style="position:absolute; inset:0; background:var(--bgwarm); z-index:44; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 40px;">
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button class="acct-back" data-close="page-vets" style="flex-shrink:0; width:32px; height:32px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                  <div>
+                    <h2 data-k="rowVets" style="font-size:19px; font-weight:700; color:var(--text1); margin:0;">Vet &amp; Emergency Contacts</h2>
+                    <p data-k="vetsSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Who gets called when you tap "Call Vet"</p>
+                  </div>
+                </div>
+              </div>
+              <div style="padding:14px 16px 0;">
+                <p data-k="grpYourVets" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:0 0 8px;">Your Vets</p>
+                <div id="vets-list"></div>
+                <button id="add-vet-btn" data-k="addVet" style="width:100%; min-height:46px; border:1px dashed var(--text2); border-radius:14px; background:transparent; color:var(--text1); font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">+ Add Vet</button>
+                <div id="add-vet-form" style="display:none; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px; margin-top:8px;">
+                  <input type="text" id="add-vet-name" placeholder="Vet name" data-k="vetNamePh" data-k-placeholder style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); font-family:var(--font-hi); margin-bottom:8px;">
+                  <input type="tel" id="add-vet-phone" placeholder="Phone number" data-k="phonePh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
+                  <button id="add-vet-send" data-k="sendInvite" style="width:100%; min-height:44px; border-radius:22px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Send invite link</button>
+                </div>
+                <p data-k="grpEmergency" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:18px 0 8px;">Emergency Contacts</p>
+                <div id="emg-list"></div>
+                <button id="add-emg-btn" data-k="addContact" style="width:100%; min-height:46px; border:1px dashed var(--text2); border-radius:14px; background:transparent; color:var(--text1); font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">+ Add Contact</button>
+              </div>
+            </div>
+            </div>
+          </div>
+
+          <!-- PRIVACY POLICY -->
+          <div id="page-privacy" style="position:absolute; inset:0; background:var(--bgwarm); z-index:44; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 40px;">
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button class="acct-back" data-close="page-privacy" style="flex-shrink:0; width:32px; height:32px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                  <h2 data-k="rowPrivacy" style="font-size:21px; font-weight:700; color:var(--text1); margin:0;">Privacy Policy</h2>
+                </div>
+              </div>
+              <div class="en legal-body-wrap" style="padding:16px;">
+                <p data-k="legalUpdated" style="font-size:11px; color:var(--text2); margin:0 0 14px;">Last Updated: July 1, 2026</p>
+                <h4>Introduction</h4><p>MyBovine.ai ("we," "us") provides farm and cattle management tools. This policy explains what information we collect when you use the app, how we use it, and the choices you have.</p>
+                <h4>Information We Collect</h4><p>Account details (name, phone, email, role); farm data (farm name, location, acreage, team members); cattle information (breed, weight, health and breeding records, milk yield); and device data from connected sensors or ear tags (battery level, connectivity status, readings), where applicable.</p>
+                <h4>How Information Is Used</h4><p>We use this information to operate core features such as health alerts, vet reports, and cattle group tracking; to notify you and your emergency contacts; and to maintain and improve the app.</p>
+                <h4>Data Sharing &amp; Third-Party Services</h4><p>We share data only with people you authorize, such as vets or farm managers added to your account, and with service providers who help operate the app (e.g. SMS or notification delivery). We do not sell your personal data.</p>
+                <h4>Data Security</h4><p>We use encryption in transit, access controls, and secure servers to protect your data. No method of storage or transmission is completely secure, and we work to continually improve our safeguards.</p>
+                <h4>Your Rights</h4><p>You may view or update your profile and farm data at any time from within the app. You can also request a copy of your data or request deletion of your account and associated data, where applicable, by contacting us below.</p>
+                <h4>Contact Us</h4><p>For privacy-related questions or requests, contact privacy@mybovine.ai.</p>
+              </div>
+            </div>
+            </div>
+          </div>
+
+          <!-- TERMS OF SERVICE -->
+          <div id="page-terms" style="position:absolute; inset:0; background:var(--bgwarm); z-index:44; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 40px;">
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button class="acct-back" data-close="page-terms" style="flex-shrink:0; width:32px; height:32px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                  <h2 data-k="rowTerms" style="font-size:21px; font-weight:700; color:var(--text1); margin:0;">Terms of Service</h2>
+                </div>
+              </div>
+              <div class="en legal-body-wrap" style="padding:16px;">
+                <p data-k="legalUpdated" style="font-size:11px; color:var(--text2); margin:0 0 14px;">Last Updated: July 1, 2026</p>
+                <h4>Acceptance of Terms</h4><p>By creating an account or using MyBovine.ai, you agree to these Terms of Service. If you do not agree, please do not use the app.</p>
+                <h4>User Responsibilities</h4><p>You are responsible for the accuracy of the farm, cattle, and contact information you enter, and for keeping your login credentials confidential.</p>
+                <h4>Acceptable Use</h4><p>The app is intended for legitimate farm and cattle management. You agree not to misuse the service, attempt to disrupt it, or reverse-engineer any part of it.</p>
+                <h4>Account Responsibilities</h4><p>Farm Owners manage access for Farm Managers and other team members added to an account. You are responsible for the actions taken under roles you assign.</p>
+                <h4>Limitation of Liability</h4><p>MyBovine.ai is a monitoring and record-keeping aid, not a substitute for veterinary judgment. We are not liable for losses arising from reliance on alerts, records, or data accuracy.</p>
+                <h4>Intellectual Property</h4><p>The MyBovine.ai app, its design, logo, and underlying software are owned by us and may not be copied or redistributed without permission.</p>
+                <h4>Termination or Suspension</h4><p>We may suspend or terminate accounts that violate these terms or misuse the service. You may stop using the app and request account deletion at any time.</p>
+                <h4>Contact Us</h4><p>For support or legal queries, contact support@mybovine.ai.</p>
+              </div>
+            </div>
+            </div>
+          </div>
+
           <!-- COW PROFILE — opened by tapping a cattle card. Timeline / Overview / Vet Logs. -->
           <div id="page-cow" style="position:absolute; inset:0; background:var(--bgwarm); z-index:42; display:none;">
             <div style="position:relative; height:100%; overflow:hidden;">
@@ -2470,7 +2699,16 @@
                tlHeatMissD:'Heat was detected but the 24-hour insemination window passed without action.',
                tlVetNoteD:'Routine deworming completed; next dose due in 6 months.',
                tlCollarD:'Smart collar Belt 60 assigned and calibrated over 10 days.',
-               tlAddedD:'Registered on Sunrise Dairy Farm by Ramesh C.' },
+               tlAddedD:'Registered on Sunrise Dairy Farm by Ramesh C.',
+               farmOwner:'Farm Owner', grpFarmMgmt:'Farm Management', acctFarmSub:'Sunrise Dairy Farm', rowCattleGroups:'Cattle Groups', acctGroupsSub:'Desi, Jersey, Holstein Friesian, Sahiwal',
+               grpAlerts:'Alerts & Contacts', rowSound:'Alert sound', soundSub:'Alerts always notify \u2014 sound can be muted', rowVets:'Vet & Emergency Contacts', vetsSub:'Who gets called when you tap "Call Vet"',
+               grpApp:'App', rowLanguage:'Language', rowDark:'Dark mode', grpLegal:'Legal', rowPrivacy:'Privacy Policy', rowTerms:'Terms of Service', grpSupport:'Support', rowHelp:'Help & FAQs', helpSub:'Common guides for common tasks', rowLogout:'Log Out',
+               profTitle:'Profile', fldName:'Full Name', fldPhone:'Phone No.', phoneHint:'Used for SMS alerts & emergency contacts', fldEmail:'Email Address', emailHint:'Login email & vet report copies', fldRole:'Role',
+               grpDelete:'Delete Account', delNote:'Permanently removes your profile, farm data & connections.', btnReqDelete:'Request Account Deletion',
+               grpYourVets:'Your Vets', grpEmergency:'Emergency Contacts', vetConfirmed:'CONFIRMED', vetPending:'PENDING', vetDeclined:'DECLINED',
+               vetPendingNote:'Confirmation link sent \u2014 waiting for the vet to accept', vetDeclinedNote:'Declined the invite', vetResend:'Resend invite',
+               addVet:'+ Add Vet', addContact:'+ Add Contact', vetNamePh:'Vet name', phonePh:'Phone number', sendInvite:'Send invite link', demoConfirm:'(demo) Confirm', demoDecline:'(demo) Decline',
+               emgFarmManager:'Farm Manager', vetSpec1:'Large animal vet \u00b7 6.2 km away', vetSpec2:'Cattle specialist \u00b7 9 km away', vetSpec3:'General vet \u00b7 12 km away', legalUpdated:'Last Updated: July 1, 2026' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -2543,7 +2781,16 @@
                tlHeatMissD:'हीट मिली लेकिन 24 घंटे की गर्भाधान विंडो बिना कार्रवाई निकल गई।',
                tlVetNoteD:'नियमित डीवर्मिंग पूर्ण; अगली खुराक 6 महीने में।',
                tlCollarD:'स्मार्ट कॉलर बेल्ट 60 लगाया गया और 10 दिनों में कैलिब्रेट हुआ।',
-               tlAddedD:'रमेश सी द्वारा सनराइज़ डेयरी फार्म पर पंजीकृत।' },
+               tlAddedD:'रमेश सी द्वारा सनराइज़ डेयरी फार्म पर पंजीकृत।',
+               farmOwner:'फार्म मालिक', grpFarmMgmt:'फार्म प्रबंधन', acctFarmSub:'सनराइज़ डेयरी फार्म', rowCattleGroups:'पशु समूह', acctGroupsSub:'देसी, जर्सी, होल्स्टीन फ़्रीज़ियन, साहीवाल',
+               grpAlerts:'अलर्ट और संपर्क', rowSound:'अलर्ट ध्वनि', soundSub:'अलर्ट हमेशा आते हैं \u2014 ध्वनि बंद की जा सकती है', rowVets:'पशु चिकित्सक और आपातकालीन संपर्क', vetsSub:'"पशु चिकित्सक बुलाएँ" दबाने पर किसे कॉल होती है',
+               grpApp:'ऐप', rowLanguage:'भाषा', rowDark:'डार्क मोड', grpLegal:'कानूनी', rowPrivacy:'गोपनीयता नीति', rowTerms:'सेवा की शर्तें', grpSupport:'सहायता', rowHelp:'सहायता और सामान्य प्रश्न', helpSub:'सामान्य कार्यों के लिए गाइड', rowLogout:'लॉग आउट',
+               profTitle:'प्रोफ़ाइल', fldName:'पूरा नाम', fldPhone:'फ़ोन नंबर', phoneHint:'SMS अलर्ट और आपातकालीन संपर्क के लिए', fldEmail:'ईमेल पता', emailHint:'लॉगिन ईमेल और वेट रिपोर्ट प्रतियाँ', fldRole:'भूमिका',
+               grpDelete:'खाता हटाएँ', delNote:'आपकी प्रोफ़ाइल, फार्म डेटा और कनेक्शन स्थायी रूप से हट जाएँगे।', btnReqDelete:'खाता हटाने का अनुरोध',
+               grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
+               vetPendingNote:'पुष्टि लिंक भेजा गया \u2014 पशु चिकित्सक की स्वीकृति बाकी', vetDeclinedNote:'निमंत्रण अस्वीकार किया', vetResend:'फिर से भेजें',
+               addVet:'+ पशु चिकित्सक जोड़ें', addContact:'+ संपर्क जोड़ें', vetNamePh:'पशु चिकित्सक का नाम', phonePh:'फ़ोन नंबर', sendInvite:'निमंत्रण लिंक भेजें', demoConfirm:'(डेमो) पुष्टि', demoDecline:'(डेमो) अस्वीकार',
+               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -2616,7 +2863,16 @@
                tlHeatMissD:'हीट मिली लेकिन 24 घंटे की गर्भाधान विंडो बिना कार्रवाई निकल गई।',
                tlVetNoteD:'नियमित डीवर्मिंग पूर्ण; अगली खुराक 6 महीने में।',
                tlCollarD:'स्मार्ट कॉलर बेल्ट 60 लगाया गया और 10 दिनों में कैलिब्रेट हुआ।',
-               tlAddedD:'रमेश सी द्वारा सनराइज़ डेयरी फार्म पर पंजीकृत।' }
+               tlAddedD:'रमेश सी द्वारा सनराइज़ डेयरी फार्म पर पंजीकृत।',
+               farmOwner:'फार्म मालिक', grpFarmMgmt:'फार्म प्रबंधन', acctFarmSub:'सनराइज़ डेयरी फार्म', rowCattleGroups:'पशु समूह', acctGroupsSub:'देसी, जर्सी, होल्स्टीन फ़्रीज़ियन, साहीवाल',
+               grpAlerts:'अलर्ट और संपर्क', rowSound:'अलर्ट ध्वनि', soundSub:'अलर्ट हमेशा आते हैं \u2014 ध्वनि बंद की जा सकती है', rowVets:'पशु चिकित्सक और आपातकालीन संपर्क', vetsSub:'"पशु चिकित्सक बुलाएँ" दबाने पर किसे कॉल होती है',
+               grpApp:'ऐप', rowLanguage:'भाषा', rowDark:'डार्क मोड', grpLegal:'कानूनी', rowPrivacy:'गोपनीयता नीति', rowTerms:'सेवा की शर्तें', grpSupport:'सहायता', rowHelp:'सहायता और सामान्य प्रश्न', helpSub:'सामान्य कार्यों के लिए गाइड', rowLogout:'लॉग आउट',
+               profTitle:'प्रोफ़ाइल', fldName:'पूरा नाम', fldPhone:'फ़ोन नंबर', phoneHint:'SMS अलर्ट और आपातकालीन संपर्क के लिए', fldEmail:'ईमेल पता', emailHint:'लॉगिन ईमेल और वेट रिपोर्ट प्रतियाँ', fldRole:'भूमिका',
+               grpDelete:'खाता हटाएँ', delNote:'आपकी प्रोफ़ाइल, फार्म डेटा और कनेक्शन स्थायी रूप से हट जाएँगे।', btnReqDelete:'खाता हटाने का अनुरोध',
+               grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
+               vetPendingNote:'पुष्टि लिंक भेजा गया \u2014 पशु चिकित्सक की स्वीकृति बाकी', vetDeclinedNote:'निमंत्रण अस्वीकार किया', vetResend:'फिर से भेजें',
+               addVet:'+ पशु चिकित्सक जोड़ें', addContact:'+ संपर्क जोड़ें', vetNamePh:'पशु चिकित्सक का नाम', phonePh:'फ़ोन नंबर', sendInvite:'निमंत्रण लिंक भेजें', demoConfirm:'(डेमो) पुष्टि', demoDecline:'(डेमो) अस्वीकार',
+               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
@@ -2624,6 +2880,7 @@
       // script (Farms/Milk/Events) — expose the translation lookup on window
       // so that script can call window.t() and stay in sync with this one.
       window.t = t;
+      window.vanixSetLang = function(l) { setLang(l); };
       function setLang(newLang) {
         lang = newLang;
         localStorage.setItem('vanixLang', lang);
@@ -2714,9 +2971,9 @@
       });
       setLang(lang);
 
-      // ── App dark mode: tap Account tab anywhere (temporary home for the switch) ──
+      // Account tab on the home nav opens the Account page (dark toggle now lives inside it).
       document.getElementById('s1-acct').addEventListener('click', function() {
-        document.getElementById('flow-root').classList.toggle('dark');
+        if (window.openAccountPage) window.openAccountPage();
       });
 
       // ── Dark / light mode toggle ──
@@ -4791,7 +5048,7 @@
           eventsPage.style.display = 'block';
           resetNav(dashNav, 0);
         }, 280);
-        // i === 4 (Account) dark toggle is handled by the #s1-acct listener
+        if (i === 4) setTimeout(function() { openAccountPage(); resetNav(dashNav, 0); }, 280);
       });
       wireNav(milkNav, function(i) {
         if (i === 0) setTimeout(function() {
@@ -4808,7 +5065,7 @@
           milkPage.style.display = 'none';
           resetNav(milkNav, 2);
         }, 280);
-        if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+        if (i === 4) setTimeout(openAccountPage, 280);
       });
       wireNav(eventsNav, function(i) {
         if (i === 0) setTimeout(function() {
@@ -4825,7 +5082,7 @@
           eventsPage.style.display = 'none';
           resetNav(eventsNav, 3);
         }, 280);
-        if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+        if (i === 4) setTimeout(openAccountPage, 280);
       });
       wireNav(farmsNav, function(i) {
         if (i === 0) setTimeout(function() {
@@ -4842,7 +5099,7 @@
           eventsPage.style.display = 'block';
           resetNav(farmsNav, 1);
         }, 280);
-        if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+        if (i === 4) setTimeout(openAccountPage, 280);
       });
       wireNav(farmDetailNav, function(i) {
         if (i === 0) setTimeout(function() {
@@ -4869,7 +5126,7 @@
           resetNav(farmDetailNav, 1);
           resetNav(farmsNav, 1);
         }, 280);
-        if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+        if (i === 4) setTimeout(openAccountPage, 280);
       });
 
       // ── Farms list + Farm detail (mock data model) ──
@@ -5355,6 +5612,141 @@
         // Add Cattle is a future flow — no-op placeholder for now.
       });
 
+
+      // ── Account section ──
+      var accountPage = document.getElementById('page-account');
+      function openAccountPage() {
+        ['page-farm-detail', 'page-cow', 'page-milk', 'page-events', 'page-farms'].forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el) el.style.display = 'none';
+        });
+        syncAccountUi();
+        accountPage.style.display = 'block';
+      }
+      window.openAccountPage = openAccountPage;
+      document.querySelectorAll('.acct-row').forEach(function(row) {
+        row.addEventListener('click', function() {
+          document.getElementById(row.getAttribute('data-page')).style.display = 'block';
+        });
+      });
+      document.querySelectorAll('.acct-back').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.getElementById(btn.getAttribute('data-close')).style.display = 'none';
+        });
+      });
+      // Alert sound toggle (alerts themselves are mandatory)
+      function paintToggle(el, on) {
+        el.style.background = on ? 'var(--greenink)' : 'var(--border)';
+        el.firstElementChild.style.insetInlineStart = on ? '20px' : '2px';
+      }
+      var soundOn = localStorage.getItem('vanixSound') !== 'off';
+      var soundToggle = document.querySelector('#acct-sound-row .acct-toggle');
+      document.getElementById('acct-sound-row').addEventListener('click', function() {
+        soundOn = !soundOn;
+        localStorage.setItem('vanixSound', soundOn ? 'on' : 'off');
+        paintToggle(soundToggle, soundOn);
+      });
+      // Dark mode toggle (moved here from the raw Account-tab tap)
+      var darkToggle = document.getElementById('acct-dark-toggle');
+      document.getElementById('acct-dark-row').addEventListener('click', function() {
+        document.getElementById('flow-root').classList.toggle('dark');
+        paintToggle(darkToggle, document.getElementById('flow-root').classList.contains('dark'));
+      });
+      // Language selector
+      var ACCT_LANG_LABEL = { en:'English', hi:'हिंदी', bho:'भोजपुरी' };
+      document.getElementById('acct-lang-row').addEventListener('click', function() {
+        var o = document.getElementById('acct-lang-opts');
+        o.style.display = o.style.display === 'none' ? 'block' : 'none';
+      });
+      document.querySelectorAll('.acct-lang-opt').forEach(function(opt) {
+        opt.addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (window.vanixSetLang) window.vanixSetLang(opt.getAttribute('data-lang'));
+          document.getElementById('acct-lang-opts').style.display = 'none';
+          syncAccountUi();
+        });
+      });
+      function syncAccountUi() {
+        paintToggle(soundToggle, soundOn);
+        paintToggle(darkToggle, document.getElementById('flow-root').classList.contains('dark'));
+        document.getElementById('acct-lang-cur').textContent = ACCT_LANG_LABEL[localStorage.getItem('vanixLang') || 'en'];
+      }
+      // ── Vets: onboarding via confirmation link (pending / confirmed / declined) ──
+      var VETS = [
+        { name:'Dr. Sharma', specK:'vetSpec1', status:'confirmed' },
+        { name:'Dr. Rao',    specK:'vetSpec2', status:'confirmed' },
+        { name:'Dr. Iyer',   specK:'vetSpec3', status:'pending' }
+      ];
+      var EMG = [ { name:'Suresh Yadav', nameHi:'सुरेश यादव', roleK:'emgFarmManager' } ];
+      var VET_BADGE = {
+        confirmed: { bg:'var(--activebg)', border:'var(--greendeep)', color:'var(--greenink)', k:'vetConfirmed' },
+        pending:   { bg:'var(--warnbg)',   border:'var(--warning)',   color:'#8A5A00',         k:'vetPending' },
+        declined:  { bg:'var(--dangerbg)', border:'var(--danger)',    color:'var(--danger)',   k:'vetDeclined' }
+      };
+      function renderVets() {
+        var listEl = document.getElementById('vets-list');
+        if (!listEl) return;
+        listEl.innerHTML = VETS.map(function(v, i) {
+          var b = VET_BADGE[v.status];
+          var note = v.status === 'pending' ? window.t().vetPendingNote : v.status === 'declined' ? window.t().vetDeclinedNote : '';
+          var actions = '';
+          if (v.status === 'pending') {
+            actions = '<div style="display:flex; gap:8px; margin-top:8px;">' +
+              '<button class="vet-demo en" data-i="' + i + '" data-act="confirmed" style="flex:1; min-height:34px; border-radius:17px; border:1px solid var(--greendeep); background:transparent; color:var(--greenink); font-size:11px; font-weight:600; cursor:pointer;">' + window.t().demoConfirm + '</button>' +
+              '<button class="vet-demo en" data-i="' + i + '" data-act="declined" style="flex:1; min-height:34px; border-radius:17px; border:1px solid var(--border); background:transparent; color:var(--danger); font-size:11px; font-weight:600; cursor:pointer;">' + window.t().demoDecline + '</button>' +
+            '</div>';
+          } else if (v.status === 'declined') {
+            actions = '<button class="vet-demo" data-i="' + i + '" data-act="pending" style="width:100%; min-height:34px; margin-top:8px; border-radius:17px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:11px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + window.t().vetResend + '</button>';
+          }
+          return '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px;">' +
+            '<div style="display:flex; align-items:center; gap:10px;">' +
+              '<span class="en" style="width:38px; height:38px; border-radius:50%; background:var(--bgwarm); color:var(--text1); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0;">' + v.name.replace('Dr. ', '').slice(0, 2) + '</span>' +
+              '<div style="flex:1; min-width:0;">' +
+                '<p class="en" style="font-size:14px; font-weight:700; color:var(--text1); margin:0;">' + v.name + '</p>' +
+                '<p style="font-size:11px; color:var(--text2); margin:2px 0 0;">' + (v.specK ? window.t()[v.specK] : (v.phone || '')) + '</p>' +
+              '</div>' +
+              '<span class="en" style="flex-shrink:0; background:' + b.bg + '; border:1px solid ' + b.border + '; color:' + b.color + '; border-radius:12px; padding:3px 10px; font-size:9px; font-weight:700; letter-spacing:0.04em;">' + window.t()[b.k] + '</span>' +
+            '</div>' +
+            (note ? '<p style="font-size:11px; color:var(--text2); margin:8px 0 0;">' + note + '</p>' : '') +
+            actions +
+          '</div>';
+        }).join('');
+        listEl.querySelectorAll('.vet-demo').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            VETS[+btn.getAttribute('data-i')].status = btn.getAttribute('data-act');
+            renderVets();
+          });
+        });
+        var emgEl = document.getElementById('emg-list');
+        emgEl.innerHTML = EMG.map(function(c) {
+          return '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px; display:flex; align-items:center; gap:10px;">' +
+            '<span class="en" style="width:38px; height:38px; border-radius:50%; background:var(--bgwarm); color:var(--text1); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0;">' + c.name.slice(0, 1) + '</span>' +
+            '<div style="flex:1; min-width:0;">' +
+              '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:0;">' + loc(c, 'name') + '</p>' +
+              '<p style="font-size:11px; color:var(--text2); margin:2px 0 0;">' + window.t()[c.roleK] + '</p>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+      document.getElementById('add-vet-btn').addEventListener('click', function() {
+        var f = document.getElementById('add-vet-form');
+        f.style.display = f.style.display === 'none' ? 'block' : 'none';
+      });
+      document.getElementById('add-vet-send').addEventListener('click', function() {
+        var name = (document.getElementById('add-vet-name').value || '').trim();
+        var phone = (document.getElementById('add-vet-phone').value || '').trim();
+        if (!name) return;
+        VETS.push({ name: name, phone: phone, status: 'pending' });
+        document.getElementById('add-vet-name').value = '';
+        document.getElementById('add-vet-phone').value = '';
+        document.getElementById('add-vet-form').style.display = 'none';
+        renderVets();
+      });
+      document.getElementById('add-emg-btn').addEventListener('click', function() {
+        // Placeholder — same pattern as Add Vet once contact fields are specced.
+      });
+      renderVets();
+
       // Bridge called from the login script's applyLang() (a separate
       // <script> tag/scope) whenever the language changes, so every screen
       // built from JS template strings re-renders with the new copy.
@@ -5365,6 +5757,8 @@
           if (farm) { renderCattleList(farm); refreshFarmDetailHeader(farm); }
         }
         if (currentCow) renderCowPage();
+        renderVets();
+        if (accountPage.style.display === 'block') syncAccountUi();
         if (window.evSyncQfLabels) window.evSyncQfLabels();
         evRenderReminderDues();
         evUpdateBadges();
