@@ -269,6 +269,42 @@
     #flow-root.dark .ev-tab.on { background:#F5F5F5 !important; color:#111111 !important; border-color:#F5F5F5 !important; }
     /* ── Quick filters (Swiggy-style dropdown chips) ── */
     #ev-quickfilters { display:flex; gap:6px; margin:0 0 14px; flex-wrap:nowrap; align-items:center; }
+    /* ── Airbnb-style soft shadows on cards ── */
+    .farm-row, .cow-row, .vet-card, #cattle-list > div, #farmmgmt-list > div,
+    #vets-list > div, #page-cow .cow-tl-card, .m-stat-card {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .farm-row { border: none !important; }
+
+    /* ── Dark mode: flip the design tokens so every screen follows ── */
+    #flow-root.dark {
+      --bgwarm: #121212;
+      --bgcard: #1E1E1E;
+      --text1: #F5F5F5;
+      --text2: #9E988E;
+      --border: #333333;
+      --activebg: #123024;
+      --warnbg: #2A2312;
+      --dangerbg: #2E1815;
+    }
+    #flow-root.dark .m-stat-card,
+    #flow-root.dark .farm-row, #flow-root.dark .cow-row, #flow-root.dark .vet-card,
+    #flow-root.dark #cattle-list > div, #flow-root.dark #farmmgmt-list > div,
+    #flow-root.dark #vets-list > div, #flow-root.dark #page-cow .cow-tl-card {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.30);
+    }
+    /* bottom sheets + read-only field rows in dark */
+    #flow-root.dark #ev-fs-sheet, #flow-root.dark #cattle-fs-sheet, #flow-root.dark #farms-fs-sheet,
+    #flow-root.dark #callvet-sheet, #flow-root.dark #hist-sheet, #flow-root.dark #cow-tl-sheet,
+    #flow-root.dark #cow-add-sheet, #flow-root.dark #vet-edit-sheet, #flow-root.dark #fm-sheet,
+    #flow-root.dark #add-vet-sheet, #flow-root.dark #s7-sheet, #flow-root.dark #s7-act {
+      background: #1E1E1E !important;
+    }
+    #flow-root.dark .fs-cats-rail { background: #161616 !important; }
+    #flow-root.dark .fs-panes-wrap { background: #1E1E1E !important; }
+    #flow-root.dark input, #flow-root.dark textarea, #flow-root.dark select { color: #F5F5F5; }
+    #flow-root.dark input::placeholder, #flow-root.dark textarea::placeholder { color: #6F6A62; }
+
     /* Farms hero: auto-scrolling one-line activity ticker */
     .farms-ticker-track { display:flex; width:max-content; animation: farms-ticker 55s linear infinite; }
     .farms-ticker-item { flex-shrink:0; display:flex; align-items:center; gap:6px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:6px 12px; margin-inline-end:8px; font-size:11px; font-weight:500; color:var(--text1); white-space:nowrap; }
@@ -1092,7 +1128,7 @@
               <button class="vtab" data-i="3">
                 <span style="position:relative; display:flex;">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                  <span style="position:absolute; top:-5px; right:-8px; min-width:15px; height:15px; border-radius:8px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px;" class="en">3</span>
+                  <span style="position:absolute; top:-5px; right:-8px; min-width:15px; height:15px; border-radius:8px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px;" class="en ev-badge">3</span>
                 </span>
                 <span class="vlab s1-nav-l en" data-k="navEvents">Events</span>
               </button>
@@ -2427,15 +2463,15 @@
                   <span class="en" style="display:inline-flex; width:64px; height:64px; border-radius:50%; background:var(--activebg); color:var(--greenink); align-items:center; justify-content:center; font-size:18px; font-weight:700;">JR</span>
                 </div>
                 <p data-k="fldName" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:0 0 5px;">Full Name</p>
-                <div class="en" style="background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text1); margin-bottom:12px;">James Redmark</div>
+                <div class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text2); margin-bottom:12px;">James Redmark</div>
                 <p data-k="fldPhone" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:0 0 5px;">Phone No.</p>
-                <div class="en" style="background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text1);">+91 98765 43210</div>
+                <div class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text2);">+91 98765 43210</div>
                 <p data-k="phoneHint" style="font-size:10px; color:var(--text2); margin:4px 0 12px;">Used for SMS alerts &amp; emergency contacts</p>
                 <p data-k="fldEmail" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:0 0 5px;">Email Address</p>
-                <div class="en" style="background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text1);">james@sunrisedairy.in</div>
+                <div class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text2);">james@sunrisedairy.in</div>
                 <p data-k="emailHint" style="font-size:10px; color:var(--text2); margin:4px 0 12px;">Login email &amp; vet report copies</p>
                 <p data-k="fldRole" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:0 0 5px;">Role</p>
-                <div data-k="farmOwner" style="background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text1); margin-bottom:18px;">Farm Owner</div>
+                <div data-k="farmOwner" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text2); margin-bottom:18px;">Farm Owner</div>
                 <p data-k="grpDelete" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:0 0 8px;">Delete Account</p>
                 <p data-k="delNote" style="font-size:12px; color:var(--text2); border:1px dashed var(--border); border-radius:12px; padding:10px 12px; margin:0 0 10px; line-height:1.5;">Permanently removes your profile, farm data &amp; connections.</p>
                 <button data-k="btnReqDelete" style="width:100%; min-height:48px; border-radius:24px; border:1px solid var(--danger); background:var(--dangerbg); color:var(--danger); font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Request Account Deletion</button>
@@ -5484,7 +5520,7 @@
         });
         document.getElementById('farms-list').innerHTML = list.map(function(f) {
           if (f.status === 'setup') {
-            return '<div class="farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; gap:10px; background:var(--bgcard); border:2px dashed var(--border); border-radius:18px; padding:14px; margin-bottom:12px; cursor:pointer;">' +
+            return '<div class="farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; gap:10px; background:var(--bgcard); border-radius:18px; padding:14px; margin-bottom:12px; cursor:pointer;">' +
               '<div style="flex:1; min-width:0;">' +
                 '<p style="font-size:16px; font-weight:700; color:var(--text1); margin:0;">' + loc(f, 'name') + '</p>' +
                 '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + window.t().notSetUp + ' · 0 ' + window.t().wordCattle + '</p>' +
@@ -5495,7 +5531,7 @@
           var attention = f.status === 'attention';
           var sevCol = attention ? 'var(--danger)' : 'var(--greendeep)';
           var tag = attention ? cornerTag('var(--danger)', window.t().sevCritical) : cornerTag('var(--greenink)', window.t().healthyWord);
-          return '<div class="farm-row" data-farm="' + f.id + '" style="position:relative; overflow:hidden; background:var(--bgcard); border:1.5px solid ' + sevCol + '; border-radius:18px; padding:14px; margin-bottom:12px; cursor:pointer;">' + tag +
+          return '<div class="farm-row" data-farm="' + f.id + '" style="position:relative; overflow:hidden; background:var(--bgcard); border-radius:18px; padding:14px; margin-bottom:12px; cursor:pointer;">' + tag +
             '<div style="display:flex; align-items:flex-start; gap:10px;">' +
               '<div style="flex:1; min-width:0;">' +
                 '<p style="font-size:16px; font-weight:700; color:var(--text1); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + loc(f, 'name') + '</p>' +
