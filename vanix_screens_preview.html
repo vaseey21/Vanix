@@ -274,6 +274,14 @@
     .farms-ticker-item { flex-shrink:0; display:flex; align-items:center; gap:6px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:6px 12px; margin-inline-end:8px; font-size:11px; font-weight:500; color:var(--text1); white-space:nowrap; }
     @keyframes farms-ticker { from { transform:translateX(0); } to { transform:translateX(-50%); } }
     #flow-root.dark .farms-ticker-item { background:#1C1C1C; border-color:#3A3A3A; color:#F5F5F5; }
+    /* Cow timeline: white sheet, events as tappable cards */
+    #cow-pane-timeline { background:var(--bgcard); margin:0 -16px; padding:16px 16px 24px; min-height:420px; }
+    #flow-root.dark #cow-pane-timeline { background:#1C1C1C; }
+    .cow-tl-card { background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:10px 36px 10px 12px; margin-bottom:10px; cursor:pointer; position:relative; }
+    .cow-tl-card::after { content:'\203A'; position:absolute; top:50%; inset-inline-end:14px; transform:translateY(-55%); color:var(--text2); font-size:16px; }
+    #flow-root.dark .cow-tl-card { background:#262626; border-color:#3A3A3A; }
+    #flow-root.dark .cow-tl-card p { color:#F5F5F5 !important; }
+    #flow-root.dark .cow-tl-card p + p { color:#8C8780 !important; }
     #ev-filter-btn.on { background:var(--dark1) !important; color:#FFFFFF !important; border-color:var(--dark1) !important; }
     #flow-root.dark #ev-filter-btn { background:#1C1C1C; color:#F5F5F5; border-color:#3A3A3A; }
     #flow-root.dark #ev-filter-btn.on { background:var(--activebg) !important; color:var(--greenink) !important; border-color:var(--greendeep) !important; }
@@ -2303,6 +2311,51 @@
               </div>
 
             </div><!-- /scroll -->
+            <!-- Timeline event detail sheet -->
+            <div id="cow-tl-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:46;"></div>
+            <div id="cow-tl-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--greenink); border-radius:2px;"></div></div>
+              <div style="display:flex; align-items:flex-start; gap:10px; margin-top:12px;">
+                <span id="cow-tl-dot" style="width:12px; height:12px; border-radius:50%; background:var(--greendeep); flex-shrink:0; margin-top:5px;"></span>
+                <div style="flex:1; min-width:0;">
+                  <p id="cow-tl-title" style="font-size:16px; font-weight:700; color:var(--text1); margin:0;">Event</p>
+                  <p id="cow-tl-date" class="en" style="font-size:11px; color:var(--text2); margin:3px 0 0;">Date</p>
+                </div>
+                <button id="cow-tl-close" style="width:34px; height:34px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
+              </div>
+              <p id="cow-tl-desc" style="font-size:13px; color:var(--text2); margin:12px 0 4px; line-height:1.6;">Description</p>
+            </div>
+
+            <!-- Cow actions sheet (from the floating + button) -->
+            <div id="cow-add-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:48;"></div>
+            <div id="cow-add-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:49; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--greenink); border-radius:2px;"></div></div>
+              <div style="display:flex; align-items:center; gap:12px; margin-top:10px;">
+                <h3 id="cow-add-title" data-k="cowActions" style="font-size:20px; font-weight:700; color:var(--text1); margin:0; flex:1;">Actions</h3>
+                <button id="cow-add-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
+              </div>
+              <div id="cow-add-main" style="margin-top:12px;">
+                <button class="cow-add-row" id="cow-add-status-btn" data-k="changeStatus" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Change status</button>
+                <button class="cow-add-row" data-card="ev-fever" data-pri="p0" data-k="reqVetVisit" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Request a vet visit</button>
+                <button class="cow-add-row" data-card="ev-heat" data-pri="p1" data-k="addHeat" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Add Heat</button>
+                <button class="cow-add-row" data-card="ev-heat" data-pri="p1" data-k="addInsem" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Add Insemination</button>
+                <button class="cow-add-row" data-card="ev-preg" data-pri="p1" data-k="addPreg" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Add Pregnancy</button>
+              </div>
+              <div id="cow-add-statuses" style="display:none; margin-top:12px;">
+                <button class="cow-add-row" data-card="ev-heat" data-pri="p1" data-k="stInHeat" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">In heat</button>
+                <button class="cow-add-row" data-card="ev-heat" data-pri="p1" data-k="stInsem" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Inseminated</button>
+                <button class="cow-add-row" data-card="ev-preg" data-pri="p1" data-k="stPreg" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Pregnant</button>
+                <button class="cow-add-row" data-card="ev-gestation" data-pri="p1" data-k="stDelivered" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Delivered</button>
+                <button class="cow-add-row" data-card="ev-gestation" data-pri="p1" data-k="stCalvInt" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Calving Interval</button>
+                <button class="cow-add-row" data-card="ev-milk-notif" data-pri="p1" data-k="stMilking" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Milking</button>
+                <button class="cow-add-row" data-card="ev-lactation-check" data-pri="p1" data-k="stDry" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Dry State</button>
+              </div>
+            </div>
+
+            <!-- Floating + button -->
+            <button id="cow-fab" title="Actions" style="position:absolute; right:18px; bottom:28px; width:56px; height:56px; border-radius:50%; background:var(--greenink); border:none; box-shadow:0 10px 24px rgba(0,0,0,0.28); padding:0; display:flex; align-items:center; justify-content:center; z-index:44; cursor:pointer;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
             </div>
           </div>
 
@@ -2516,7 +2569,19 @@
                tickHeat:'Heat \u2014 2 cows \u2014 Sunrise Dairy', tickMilk:'Milk \u2014 Morning logging \u2014 Completed', tickFever:'Fever \u2014 1 cow \u2014 Sunrise Dairy', tickVet:'Vet visit \u2014 Today 5 PM \u2014 Green Villa', tickInsem:'Insemination \u2014 Ramya \u2014 Due today',
                tlAdded:'Added to Sunrise Dairy Farm', tlCollar:'Collar assigned \u2014 Belt 60', tlVetNote:'Vet note \u2014 deworming done', tlHeatMiss:'Heat detected \u2014 window missed', tlHeat:'Heat detected \u2014 confirmed',
                tlInsem:'Inseminated \u2014 Artificial, Dr. Rao', tlPreg:'Pregnancy confirmed', tlVet9m:'Vet called for delivery \u2014 Dr. Sharma', tlCalved:'Calved \u2014 healthy calf', tlMilking:'Milking started \u2014 joined the Milk Log',
-               vl1t:'Fever treatment', vl1n:'Administered antibiotics; temperature back to normal in 48h.', vl2t:'Pregnancy check', vl2n:'Confirmed 5 months; growth normal.', vl3t:'FMD vaccination', vl3n:'Annual FMD dose given.' },
+               vl1t:'Fever treatment', vl1n:'Administered antibiotics; temperature back to normal in 48h.', vl2t:'Pregnancy check', vl2n:'Confirmed 5 months; growth normal.', vl3t:'FMD vaccination', vl3n:'Annual FMD dose given.',
+               cowActions:'Actions', changeStatus:'Change status', reqVetVisit:'Request a vet visit', addHeat:'Add Heat', addInsem:'Add Insemination', addPreg:'Add Pregnancy',
+               stInHeat:'In heat', stInsem:'Inseminated', stPreg:'Pregnant', stDelivered:'Delivered', stCalvInt:'Calving Interval', stMilking:'Milking', stDry:'Dry State',
+               tlMilkingD:'She joined the Milk Log after delivery was confirmed. Morning and evening sessions are now recorded for her.',
+               tlCalvedD:'Healthy calf delivered at 05:40. Mother and calf are doing well.',
+               tlVet9mD:'Dr. Sharma was requested for the delivery at the 9-month checkpoint.',
+               tlPregD:'No heat returned within 21 days of insemination \u2014 pregnancy self-confirmed.',
+               tlInsemD:'Artificial insemination performed by Dr. Rao within the optimal window.',
+               tlHeatD:'Temperature and movement matched her heat pattern; confirmed by the farmer.',
+               tlHeatMissD:'Heat was detected but the 24-hour insemination window passed without action.',
+               tlVetNoteD:'Routine deworming completed; next dose due in 6 months.',
+               tlCollarD:'Smart collar Belt 60 assigned and calibrated over 10 days.',
+               tlAddedD:'Registered on Sunrise Dairy Farm by Ramesh C.' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -2577,7 +2642,19 @@
                tickHeat:'हीट \u2014 2 गायें \u2014 सनराइज़ डेयरी', tickMilk:'दूध \u2014 सुबह की लॉगिंग \u2014 पूर्ण', tickFever:'बुखार \u2014 1 गाय \u2014 सनराइज़ डेयरी', tickVet:'पशु चिकित्सक भेंट \u2014 आज शाम 5 बजे \u2014 ग्रीन विला', tickInsem:'गर्भाधान \u2014 रम्या \u2014 आज देय',
                tlAdded:'सनराइज़ डेयरी फार्म में जोड़ा गया', tlCollar:'कॉलर लगाया गया \u2014 बेल्ट 60', tlVetNote:'पशु चिकित्सक नोट \u2014 डीवर्मिंग पूर्ण', tlHeatMiss:'हीट मिली \u2014 विंडो चूक गई', tlHeat:'हीट मिली \u2014 पुष्टि हुई',
                tlInsem:'गर्भाधान \u2014 कृत्रिम, डॉ. राव', tlPreg:'गर्भ की पुष्टि', tlVet9m:'प्रसव हेतु पशु चिकित्सक \u2014 डॉ. शर्मा', tlCalved:'ब्याई \u2014 स्वस्थ बछड़ा', tlMilking:'दुहाई शुरू \u2014 दूध लॉग में शामिल',
-               vl1t:'बुखार का इलाज', vl1n:'एंटीबायोटिक दी गई; 48 घंटे में तापमान सामान्य।', vl2t:'गर्भ जांच', vl2n:'पुष्टि: 5 महीने; विकास सामान्य।', vl3t:'खुरपका टीकाकरण', vl3n:'वार्षिक FMD खुराक दी गई।' },
+               vl1t:'बुखार का इलाज', vl1n:'एंटीबायोटिक दी गई; 48 घंटे में तापमान सामान्य।', vl2t:'गर्भ जांच', vl2n:'पुष्टि: 5 महीने; विकास सामान्य।', vl3t:'खुरपका टीकाकरण', vl3n:'वार्षिक FMD खुराक दी गई।',
+               cowActions:'कार्रवाई', changeStatus:'स्थिति बदलें', reqVetVisit:'पशु चिकित्सक भेंट का अनुरोध', addHeat:'हीट जोड़ें', addInsem:'गर्भाधान जोड़ें', addPreg:'गर्भ जोड़ें',
+               stInHeat:'हीट में', stInsem:'गर्भाधान हुआ', stPreg:'गर्भवती', stDelivered:'प्रसव हुआ', stCalvInt:'ब्यांत अंतराल', stMilking:'दूध दे रही', stDry:'शुष्क अवस्था',
+               tlMilkingD:'प्रसव की पुष्टि के बाद वह दूध लॉग में शामिल हुई। अब उसके सुबह और शाम के सत्र दर्ज होते हैं।',
+               tlCalvedD:'सुबह 05:40 पर स्वस्थ बछड़ा। माँ और बछड़ा दोनों स्वस्थ हैं।',
+               tlVet9mD:'9 महीने की जांच पर प्रसव के लिए डॉ. शर्मा को बुलाया गया।',
+               tlPregD:'गर्भाधान के 21 दिन में हीट नहीं लौटी \u2014 गर्भ की पुष्टि की गई।',
+               tlInsemD:'सर्वोत्तम विंडो में डॉ. राव द्वारा कृत्रिम गर्भाधान किया गया।',
+               tlHeatD:'तापमान और चाल हीट पैटर्न से मेल खाए; किसान ने पुष्टि की।',
+               tlHeatMissD:'हीट मिली लेकिन 24 घंटे की गर्भाधान विंडो बिना कार्रवाई निकल गई।',
+               tlVetNoteD:'नियमित डीवर्मिंग पूर्ण; अगली खुराक 6 महीने में।',
+               tlCollarD:'स्मार्ट कॉलर बेल्ट 60 लगाया गया और 10 दिनों में कैलिब्रेट हुआ।',
+               tlAddedD:'रमेश सी द्वारा सनराइज़ डेयरी फार्म पर पंजीकृत।' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -2638,7 +2715,19 @@
                tickHeat:'हीट \u2014 2 गायें \u2014 सनराइज़ डेयरी', tickMilk:'दूध \u2014 सुबह की लॉगिंग \u2014 पूर्ण', tickFever:'बुखार \u2014 1 गाय \u2014 सनराइज़ डेयरी', tickVet:'पशु चिकित्सक भेंट \u2014 आज शाम 5 बजे \u2014 ग्रीन विला', tickInsem:'गर्भाधान \u2014 रम्या \u2014 आज देय',
                tlAdded:'सनराइज़ डेयरी फार्म में जोड़ा गया', tlCollar:'कॉलर लगाया गया \u2014 बेल्ट 60', tlVetNote:'पशु चिकित्सक नोट \u2014 डीवर्मिंग पूर्ण', tlHeatMiss:'हीट मिली \u2014 विंडो चूक गई', tlHeat:'हीट मिली \u2014 पुष्टि हुई',
                tlInsem:'गर्भाधान \u2014 कृत्रिम, डॉ. राव', tlPreg:'गर्भ की पुष्टि', tlVet9m:'प्रसव हेतु पशु चिकित्सक \u2014 डॉ. शर्मा', tlCalved:'ब्याई \u2014 स्वस्थ बछड़ा', tlMilking:'दुहाई शुरू \u2014 दूध लॉग में शामिल',
-               vl1t:'बुखार का इलाज', vl1n:'एंटीबायोटिक दी गई; 48 घंटे में तापमान सामान्य।', vl2t:'गर्भ जांच', vl2n:'पुष्टि: 5 महीने; विकास सामान्य।', vl3t:'खुरपका टीकाकरण', vl3n:'वार्षिक FMD खुराक दी गई।' }
+               vl1t:'बुखार का इलाज', vl1n:'एंटीबायोटिक दी गई; 48 घंटे में तापमान सामान्य।', vl2t:'गर्भ जांच', vl2n:'पुष्टि: 5 महीने; विकास सामान्य।', vl3t:'खुरपका टीकाकरण', vl3n:'वार्षिक FMD खुराक दी गई।',
+               cowActions:'कार्रवाई', changeStatus:'स्थिति बदलें', reqVetVisit:'पशु चिकित्सक भेंट का अनुरोध', addHeat:'हीट जोड़ें', addInsem:'गर्भाधान जोड़ें', addPreg:'गर्भ जोड़ें',
+               stInHeat:'हीट में', stInsem:'गर्भाधान हुआ', stPreg:'गर्भवती', stDelivered:'प्रसव हुआ', stCalvInt:'ब्यांत अंतराल', stMilking:'दूध दे रही', stDry:'शुष्क अवस्था',
+               tlMilkingD:'प्रसव की पुष्टि के बाद वह दूध लॉग में शामिल हुई। अब उसके सुबह और शाम के सत्र दर्ज होते हैं।',
+               tlCalvedD:'सुबह 05:40 पर स्वस्थ बछड़ा। माँ और बछड़ा दोनों स्वस्थ हैं।',
+               tlVet9mD:'9 महीने की जांच पर प्रसव के लिए डॉ. शर्मा को बुलाया गया।',
+               tlPregD:'गर्भाधान के 21 दिन में हीट नहीं लौटी \u2014 गर्भ की पुष्टि की गई।',
+               tlInsemD:'सर्वोत्तम विंडो में डॉ. राव द्वारा कृत्रिम गर्भाधान किया गया।',
+               tlHeatD:'तापमान और चाल हीट पैटर्न से मेल खाए; किसान ने पुष्टि की।',
+               tlHeatMissD:'हीट मिली लेकिन 24 घंटे की गर्भाधान विंडो बिना कार्रवाई निकल गई।',
+               tlVetNoteD:'नियमित डीवर्मिंग पूर्ण; अगली खुराक 6 महीने में।',
+               tlCollarD:'स्मार्ट कॉलर बेल्ट 60 लगाया गया और 10 दिनों में कैलिब्रेट हुआ।',
+               tlAddedD:'रमेश सी द्वारा सनराइज़ डेयरी फार्म पर पंजीकृत।' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
@@ -5221,13 +5310,30 @@
       function renderCowTimeline() {
         document.getElementById('cow-pane-timeline').innerHTML =
           '<div style="border-inline-start:2px solid var(--border); margin-inline-start:7px; padding-inline-start:18px;">' +
-          COW_TIMELINE.map(function(ev) {
-            return '<div style="position:relative; padding-bottom:18px;">' +
-              '<span style="position:absolute; inset-inline-start:-27px; top:2px; width:14px; height:14px; border-radius:50%; background:' + ev.c + '; border:3px solid var(--bgwarm);"></span>' +
-              '<p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;">' + window.t()[ev.k] + '</p>' +
-              '<p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0;">' + ev.d + '</p>' +
+          COW_TIMELINE.map(function(ev, i) {
+            return '<div style="position:relative;">' +
+              '<span style="position:absolute; inset-inline-start:-27px; top:14px; width:14px; height:14px; border-radius:50%; background:' + ev.c + '; border:3px solid var(--bgcard);"></span>' +
+              '<div class="cow-tl-card" data-tl="' + i + '">' +
+                '<p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;">' + window.t()[ev.k] + '</p>' +
+                '<p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0;">' + ev.d + '</p>' +
+              '</div>' +
             '</div>';
           }).join('') + '</div>';
+        document.querySelectorAll('.cow-tl-card').forEach(function(card) {
+          card.addEventListener('click', function() { openTlDetail(COW_TIMELINE[+card.getAttribute('data-tl')]); });
+        });
+      }
+      function openTlDetail(ev) {
+        document.getElementById('cow-tl-dot').style.background = ev.c;
+        document.getElementById('cow-tl-title').textContent = window.t()[ev.k];
+        document.getElementById('cow-tl-date').textContent = ev.d;
+        document.getElementById('cow-tl-desc').textContent = window.t()[ev.k + 'D'] || '';
+        var sh = document.getElementById('cow-tl-sheet'), bd = document.getElementById('cow-tl-backdrop');
+        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeTlDetail() {
+        var sh = document.getElementById('cow-tl-sheet'), bd = document.getElementById('cow-tl-backdrop');
+        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
       function ovTile(val, k) {
         return '<div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 8px; text-align:center;">' +
@@ -5336,6 +5442,42 @@
         tab.addEventListener('click', function() {
           cowTab = tab.getAttribute('data-tab');
           syncCowTabs();
+        });
+      });
+      document.getElementById('cow-tl-close').addEventListener('click', closeTlDetail);
+      document.getElementById('cow-tl-backdrop').addEventListener('click', closeTlDetail);
+      // ── Floating + : actions sheet → routes into the Events alert-card flows ──
+      function cowAddClose() {
+        document.getElementById('cow-add-sheet').style.transform = 'translateY(100%)';
+        var bd = document.getElementById('cow-add-backdrop');
+        bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      document.getElementById('cow-fab').addEventListener('click', function() {
+        document.getElementById('cow-add-main').style.display = 'block';
+        document.getElementById('cow-add-statuses').style.display = 'none';
+        document.getElementById('cow-add-title').textContent = window.t().cowActions;
+        document.getElementById('cow-add-sheet').style.transform = 'translateY(0)';
+        var bd = document.getElementById('cow-add-backdrop');
+        bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      });
+      document.getElementById('cow-add-close').addEventListener('click', cowAddClose);
+      document.getElementById('cow-add-backdrop').addEventListener('click', cowAddClose);
+      document.getElementById('cow-add-status-btn').addEventListener('click', function() {
+        document.getElementById('cow-add-main').style.display = 'none';
+        document.getElementById('cow-add-statuses').style.display = 'block';
+        document.getElementById('cow-add-title').textContent = window.t().changeStatus;
+      });
+      document.querySelectorAll('.cow-add-row[data-card]').forEach(function(row) {
+        row.addEventListener('click', function() {
+          cowAddClose();
+          // Jump to the Events page and open the matching alert card flow.
+          cowPage.style.display = 'none';
+          farmDetailPage.style.display = 'none';
+          farmsPage.style.display = 'none';
+          document.getElementById('page-events').style.display = 'block';
+          setTimeout(function() {
+            if (window.openCardDetail) window.openCardDetail(row.getAttribute('data-card'), row.getAttribute('data-pri'));
+          }, 120);
         });
       });
       function openFarmDetail(farmId) {
