@@ -876,6 +876,8 @@
     /* Filter header cleanup: no icon chip, no close circle, smaller title */
     #farms-fs-close, #cattle-fs-close, #ev-fs-close, #s7-close { display:none !important; }
     #farms-fs-sheet h3, #cattle-fs-sheet h3, #ev-fs-sheet h3, #s7-sheet h3 { font-size:17px !important; }
+    /* Nav bar only on primary screens — Farm Detail is a secondary (pushed) view */
+    #farm-detail-nav { display:none !important; }
     /* filter sheet — Swiggy-style: white rail w/ dividers, bordered option rows,
        radio (single) / checkbox (multi), selected = greenInk outline + 10% fill */
     .s7-chip { display:flex; align-items:center; gap:12px; width:100%; text-align:start; min-height:50px; padding:0 14px; margin-bottom:10px; border-radius:14px; border:1.5px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi); }
@@ -2532,16 +2534,16 @@
               <div style="padding:14px 16px 0;">
                 <p data-k="grpYourVets" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:0 0 8px;">Your Vets</p>
                 <div id="vets-list"></div>
-                <button id="add-vet-btn" data-k="addVet" style="width:100%; min-height:46px; border:1px dashed var(--text2); border-radius:14px; background:transparent; color:var(--text1); font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">+ Add Vet</button></div>
+                <button id="add-vet-btn" title="Add vet" style="position:absolute; right:18px; bottom:24px; width:56px; height:56px; border-radius:50%; background:var(--greenink); border:none; box-shadow:0 10px 24px rgba(0,0,0,0.28); padding:0; display:flex; align-items:center; justify-content:center; z-index:6; cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
               <!-- Vet edit sheet: name editable, email/phone/role read-only --></div>
             </div>
                             <div id="add-vet-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:46;"></div>
                 <div id="add-vet-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
                   <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
                   <div style="display:flex; align-items:center; margin-top:10px; margin-bottom:6px;"><h3 data-k="addVetTitle" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Add a vet</h3><button id="add-vet-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button></div>
-                  <input type="text" id="add-vet-name" placeholder="Vet name" data-k="vetNamePh" data-k-placeholder style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">
-                  <input type="email" id="add-vet-email" placeholder="Email address" data-k="emailPh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
-                  <input type="tel" id="add-vet-phone" placeholder="Phone number" data-k="phonePh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
+                  <input type="text" id="add-vet-name" placeholder="Vet name" data-k="vetNamePh" data-k-placeholder style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">
+                  <input type="email" id="add-vet-email" placeholder="Email address" data-k="emailPh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
+                  <input type="tel" id="add-vet-phone" placeholder="Phone number" data-k="phonePh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
                   <p data-k="inviteHint" style="font-size:10px; color:var(--text2); margin:0 0 8px; line-height:1.5;">An invite link is emailed to the vet — they confirm before being added.</p>
                   <button id="add-vet-send" data-k="sendInvite" style="width:100%; min-height:44px; border-radius:22px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Send invite link</button>
                 </div>
@@ -2839,7 +2841,7 @@
             <button id="farm-detail-fab" title="Add cattle" style="position:absolute; right:18px; bottom:104px; width:56px; height:56px; border-radius:50%; background:var(--greenink); border:none; box-shadow:0 10px 24px rgba(0,0,0,0.28); padding:0; display:flex; align-items:center; justify-content:center; z-index:3;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
             </button>
-            <p data-k="addCattle" style="position:absolute; right:18px; bottom:82px; font-size:11px; color:var(--text2); margin:0; z-index:3;">Add Cattle</p>
+            
 
             </div>
 
@@ -5520,7 +5522,7 @@
       }
       var PIN_SVG = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-inline-end:3px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
       var PERSON_SVG = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-inline-end:3px;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>';
-      var COWHEAD_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/></svg>';
+      var COWHEAD_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/></svg>';
       var farmsLocFilter = 'all';
       function renderFarmsList() {
         var q = (document.getElementById('farms-search').value || '').trim().toLowerCase();
@@ -5721,8 +5723,8 @@
         var item = 'display:flex; align-items:center; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;';
         return '<div class="cow-kebab-menu" style="display:none; position:absolute; bottom:38px; inset-inline-end:0; z-index:6; min-width:160px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,0.2); padding:4px;">' +
           '<button style="' + item + ' color:var(--text1);">' + window.t().editWord + '</button>' +
-          '<button style="' + item + ' color:var(--danger);">' + window.t().deleteWord + '</button>' +
           '<button style="' + item + ' color:var(--text1);">' + window.t().addToGroup + '</button>' +
+          '<button style="' + item + ' color:var(--danger);">' + window.t().deleteWord + '</button>' +
         '</div>';
       }
       function ageYears(c) { var m = (c.age || '').match(/[\d.]+/); return m ? parseFloat(m[0]) : 0; }
@@ -5924,6 +5926,7 @@
       });
       document.addEventListener('click', function() {
         document.querySelectorAll('.cow-kebab-menu').forEach(function(m) { m.style.display = 'none'; });
+        document.querySelectorAll('.vet-kebab-menu').forEach(function(m) { m.style.display = 'none'; });
         document.getElementById('cow-kebab-menu').style.display = 'none';
       });
       document.getElementById('cow-back').addEventListener('click', function() {
@@ -6098,7 +6101,8 @@
           } else if (v.status === 'declined') {
             actions = '<button class="vet-demo" data-i="' + i + '" data-act="pending" style="width:100%; min-height:34px; margin-top:8px; border-radius:17px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:11px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + window.t().vetResend + '</button>';
           }
-          return '<div class="vet-card" data-i="' + i + '" style="background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px; cursor:pointer;">' +
+          var itm = 'display:flex; align-items:center; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;';
+          return '<div class="vet-card" data-i="' + i + '" style="position:relative; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px;">' +
             '<div style="display:flex; align-items:center; gap:10px;">' +
               '<span class="en" style="width:38px; height:38px; border-radius:50%; background:var(--bgwarm); color:var(--text1); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0;">' + v.name.replace('Dr. ', '').slice(0, 2) + '</span>' +
               '<div style="flex:1; min-width:0;">' +
@@ -6106,6 +6110,10 @@
                 '<p style="font-size:11px; color:var(--text2); margin:2px 0 0;">' + (v.specK ? window.t()[v.specK] : (v.phone || '')) + '</p>' +
               '</div>' +
               '<span class="en" style="flex-shrink:0; background:' + b.bg + '; border:1px solid ' + b.border + '; color:' + b.color + '; border-radius:12px; padding:3px 10px; font-size:9px; font-weight:700; letter-spacing:0.04em;">' + window.t()[b.k] + '</span>' +
+              '<button class="vet-kebab" data-i="' + i + '" style="flex-shrink:0; width:30px; height:30px; border-radius:50%; border:none; background:transparent; color:var(--text2); font-size:16px; line-height:1; cursor:pointer;">\u22ee</button>' +
+            '</div>' +
+            '<div class="vet-kebab-menu" style="display:none; position:absolute; top:44px; inset-inline-end:12px; z-index:6; min-width:150px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,0.2); padding:4px;">' +
+              '<button class="vet-del" data-i="' + i + '" style="' + itm + ' color:var(--danger);">' + window.t().deleteWord + '</button>' +
             '</div>' +
             (note ? '<p style="font-size:11px; color:var(--text2); margin:8px 0 0;">' + note + '</p>' : '') +
             actions +
@@ -6118,8 +6126,21 @@
             renderVets();
           });
         });
-        listEl.querySelectorAll('.vet-card').forEach(function(card) {
-          card.addEventListener('click', function() { openVetEdit(+card.getAttribute('data-i')); });
+        listEl.querySelectorAll('.vet-kebab').forEach(function(kb) {
+          kb.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var menu = kb.parentElement.parentElement.querySelector('.vet-kebab-menu');
+            var open = menu.style.display === 'block';
+            listEl.querySelectorAll('.vet-kebab-menu').forEach(function(m) { m.style.display = 'none'; });
+            menu.style.display = open ? 'none' : 'block';
+          });
+        });
+        listEl.querySelectorAll('.vet-del').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            VETS.splice(+btn.getAttribute('data-i'), 1);
+            renderVets();
+          });
         });
       }
       function openVetEdit(i) {
