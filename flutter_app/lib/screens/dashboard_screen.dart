@@ -6,6 +6,8 @@ import '../widgets/vanix_bottom_nav.dart';
 import '../widgets/vanix_nav_items.dart';
 import 'milk_log_screen.dart';
 import 'events_screen.dart';
+import 'farms_screen.dart';
+import 'account_screen.dart';
 
 /// Home dashboard — screen 03 in the build plan (still pending content).
 /// The nav shell + tab routing here is final; the dashboard body itself
