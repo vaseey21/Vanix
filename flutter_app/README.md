@@ -43,6 +43,10 @@ You'll need to add the actual font files before it runs cleanly (see
 | Vet Contacts — invite-link onboarding (Pending/Confirmed/Declined), Add-Vet sheet, per-vet edit sheet | ✅ Ported — `_VetsPage` in `lib/screens/account_screen.dart` |
 | Farm Management — assign / reassign / remove manager or assign self, per farm | ✅ Ported — `_FarmMgmtPage` in `lib/screens/account_screen.dart` |
 | Events refinements — filter-as-sheet, title-opens-walkthrough, P2/P3 fever-photo + Call-vet cards, past-event detail sheets | 🚧 Partial — Events base ported; these later HTML tweaks not yet reflected |
+| Filters v2 (boxless rows, left radio/checkbox, white rail, Reset/Cancel everywhere) | ❌ Pending — HTML done, not yet ported to the Flutter filter sheets |
+| Milk summary polish (hero merges w/ page while open, header button stays a filter) | ❌ Pending — HTML done |
+| Cow profile v3 (underline tabs, per-segment timeline rail, borderless tiles, multi-step + sheet: status+reason, vet visit, vet log, heat/insem/preg/delivery) | ❌ Pending — HTML done, `cow_profile_screen.dart` still on the v2 pill-tab design |
+| Events inputs-as-sheets (vet picker callback sheet + generic form sheet for Fever/Gestation/P0 flows) | ❌ Pending — HTML done |
 | Farmer persona (stripped views) | ❌ Not designed in HTML yet — nothing to port |
 
 ## Structure
