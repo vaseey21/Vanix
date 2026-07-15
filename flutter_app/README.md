@@ -36,7 +36,14 @@ You'll need to add the actual font files before it runs cleanly (see
 | "View full cycle" — 8-step bottom-sheet walkthrough of the full breeding/lactation year | ✅ Ported — `_FullCycleSheet` in `lib/screens/events_screen.dart` |
 | Events badge/dot sync across every nav | ✅ Ported — `AppState.openEventsCount` + `resolveEvent()` |
 | Dashboard (Home) | 🚧 Placeholder — content not designed yet in the HTML either |
-| Farms list, Cow profile, Account, Farmer persona | ❌ Not designed in HTML yet — nothing to port |
+| Farms list — hero (Total Farms/Cattle/Alerts + activity ticker), search + two-pane filter sheet (Status/Location), farm cards (severity tag, chips row), Setup rows | ❌ **PENDING** — built in HTML, not yet ported |
+| Farm detail (cow list) — temp+level hero, Total Cattle/Unactioned tiles, search + filter sheet, cow cards, alerts-tile toggle | ❌ **PENDING** — built in HTML, not yet ported |
+| Cow profile — hero (photo/status/temp), Timeline (tappable event cards + detail sheet), Overview (weekly graph + tiles), Vet Logs; floating + actions (change status / vet / add heat·insem·preg) | ❌ **PENDING** — built in HTML, not yet ported |
+| Account / Settings — profile row → read-only Profile, Alert-sound toggle, Language + Dark-mode, Legal (Privacy/Terms), Help, Log Out | ❌ **PENDING** — built in HTML, not yet ported |
+| Vet & Emergency → Vet Contacts — onboarding via invite link (Pending/Confirmed/Declined), Add-Vet slide-up sheet, per-vet edit sheet | ❌ **PENDING** — built in HTML, not yet ported |
+| Farm Management — assign / reassign / remove manager or assign self, per farm | ❌ **PENDING** — built in HTML, not yet ported |
+| Events refinements — filter as two-pane bottom sheet, title opens walkthrough, P2/P3 fever-photo + Call-vet cards, past-event detail sheets | ❌ **PENDING** — Events is ported but these later changes are HTML-only |
+| Farmer persona (stripped views) | ❌ Not designed in HTML yet — nothing to port |
 
 ## Structure
 
