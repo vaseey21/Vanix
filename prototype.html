@@ -5789,21 +5789,22 @@
         '</div>';
       }
       function ovStatCard(icon, big, unit, labelK, corner, accent, tint) {
-        return '<div style="flex:1; min-width:0; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px; position:relative; overflow:hidden;">' +
+        return '<div style="flex:1; min-width:0; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 14px 14px 16px; position:relative; overflow:hidden;">' +
           '<span style="position:absolute; inset-inline-start:0; top:0; bottom:0; width:4px; background:' + accent + ';"></span>' +
           '<div style="display:flex; align-items:flex-start; justify-content:space-between; gap:6px;">' +
             '<span style="display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:11px; background:' + tint + '; color:' + accent + ';">' + icon + '</span>' +
-            (corner ? '<span style="color:' + accent + '; opacity:0.55;">' + corner + '</span>' : '') +
+            (corner ? '<span style="color:' + accent + '; opacity:0.5;">' + corner + '</span>' : '') +
           '</div>' +
           '<p style="margin:12px 0 0;"><span class="en" style="font-size:22px; font-weight:700; color:var(--text1);">' + big + '</span>' + (unit ? ' <span class="en" style="font-size:13px; font-weight:600; color:var(--text1);">' + unit + '</span>' : '') + '</p>' +
           '<p style="font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">' + window.t()[labelK] + '</p>' +
         '</div>';
       }
-      function ovActTile(icon, val, labelK, withDivider) {
+      function ovActTile(icon, val, labelK, withDivider, accent, tint) {
         var t = window.t();
         return '<div style="flex:1; min-width:0; padding:2px 6px;' + (withDivider ? ' border-inline-start:1px solid var(--divider);' : '') + '">' +
-          '<div style="display:flex; align-items:baseline; gap:4px;"><span style="color:var(--text2);">' + icon + '</span><span class="en" style="font-size:17px; font-weight:700; color:var(--text1);">' + val + '</span><span class="en" style="font-size:10px; color:var(--text2);">min</span></div>' +
-          '<p style="font-size:9px; font-weight:600; letter-spacing:0.03em; text-transform:uppercase; color:var(--text2); margin:5px 0 0;">' + t[labelK] + '</p>' +
+          '<span style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:9px; background:' + tint + '; color:' + accent + ';">' + icon + '</span>' +
+          '<p style="margin:8px 0 0;"><span class="en" style="font-size:17px; font-weight:700; color:var(--text1);">' + val + '</span> <span class="en" style="font-size:10px; color:var(--text2);">min</span></p>' +
+          '<p style="font-size:9px; font-weight:600; letter-spacing:0.03em; text-transform:uppercase; color:var(--text2); margin:3px 0 0;">' + t[labelK] + '</p>' +
         '</div>';
       }
       function renderCowOverview() {
@@ -5821,17 +5822,17 @@
         var xlabels = ['00:00', '06:00', '12:00', '18:00', '24:00'];
         document.getElementById('cow-pane-overview').innerHTML =
           '<div style="display:flex; gap:8px;">' +
-            ovStatCard(cal, '19 Mar', '', 'ovLastHeat', upArrow) +
-            ovStatCard(cal, '14 Apr', '', 'ovNextHeat', cal) +
+            ovStatCard(cal, '19 Mar', '', 'ovLastHeat', upArrow, 'var(--warning)', 'rgba(232,160,32,0.14)') +
+            ovStatCard(cal, '14 Apr', '', 'ovNextHeat', cal, 'var(--greenink)', 'var(--activebg)') +
           '</div>' +
           '<div style="display:flex; gap:8px; margin-top:8px;">' +
-            ovStatCard(thermo, '18 Jun', '', 'ovLastSpike', upArrow) +
-            ovStatCard(cow, '1', '', 'ovNumCalving', cow) +
+            ovStatCard(thermo, '18 Jun', '', 'ovLastSpike', upArrow, 'var(--danger)', 'rgba(212,76,58,0.12)') +
+            ovStatCard(cow, '1', '', 'ovNumCalving', cow, '#2563EB', 'rgba(37,99,235,0.12)') +
           '</div>' +
           '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">' + t.tempWord + '</p>' +
           '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">' +
             '<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">' +
-              '<span style="display:inline-block; padding:4px 12px; border-radius:14px; border:1px solid var(--border); font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">' + t.tempNormal + '</span>' +
+              '<span style="display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:14px; background:var(--activebg); font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi);"><span style="width:7px; height:7px; border-radius:50%; background:var(--greendeep);"></span>' + t.tempNormal + '</span>' +
               '<div style="display:flex; align-items:center; gap:8px;"><span class="en" style="font-size:18px; font-weight:700; color:var(--text1);">33°C</span>' +
                 '<span style="display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:14px; border:1px solid var(--border); font-size:11px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">' + t.todayWord + ' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>' +
               '</div>' +
@@ -5839,17 +5840,24 @@
             '<div style="display:flex; gap:8px; margin-top:12px;">' +
               '<div class="en" style="display:flex; flex-direction:column; justify-content:space-between; font-size:9px; color:var(--text2); padding:2px 0 14px;"><span>40°C</span><span>30°C</span><span>20°C</span></div>' +
               '<div style="flex:1; min-width:0;">' +
-                '<svg viewBox="0 0 100 40" preserveAspectRatio="none" style="display:block; width:100%; height:120px;"><polyline points="' + pts + '" fill="none" stroke="var(--text1)" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/></svg>' +
+                '<svg viewBox="0 0 100 40" preserveAspectRatio="none" style="display:block; width:100%; height:120px;">' +
+                  '<defs><linearGradient id="ov-temp-grad" x1="0" y1="1" x2="0" y2="0">' +
+                    '<stop offset="0" stop-color="#2EBD7E"/><stop offset="0.5" stop-color="#E8A020"/><stop offset="0.8" stop-color="#D44C3A"/>' +
+                  '</linearGradient></defs>' +
+                  // fever threshold guide at 39°C
+                  '<line x1="0" y1="' + (40 - (39 - lo) / (hi - lo) * 40).toFixed(1) + '" x2="100" y2="' + (40 - (39 - lo) / (hi - lo) * 40).toFixed(1) + '" stroke="var(--danger)" stroke-width="0.4" stroke-dasharray="2 2" opacity="0.5"/>' +
+                  '<polyline points="' + pts + '" fill="none" stroke="url(#ov-temp-grad)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>' +
+                '</svg>' +
                 '<div class="en" style="display:flex; justify-content:space-between; font-size:9px; color:var(--text2); margin-top:4px;">' + xlabels.map(function(x) { return '<span>' + x + '</span>'; }).join('') + '</div>' +
               '</div>' +
             '</div>' +
           '</div>' +
           '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">' + t.actStatus + '</p>' +
           '<div style="display:flex; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 6px;">' +
-            ovActTile(cow, '210', 'actRumination', false) +
-            ovActTile('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16l-2 16H6z"/><path d="M4 9h16"/></svg>', '268', 'actFeeding', true) +
-            ovActTile(cow, '96', 'actStanding', true) +
-            ovActTile(cow, '512', 'actResting', true) +
+            ovActTile(cow, '210', 'actRumination', false, 'var(--greenink)', 'var(--activebg)') +
+            ovActTile('<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16l-2 16H6z"/><path d="M4 9h16"/></svg>', '268', 'actFeeding', true, 'var(--warning)', 'rgba(232,160,32,0.14)') +
+            ovActTile(cow, '96', 'actStanding', true, '#2563EB', 'rgba(37,99,235,0.12)') +
+            ovActTile(cow, '512', 'actResting', true, '#7C3AED', 'rgba(124,58,237,0.12)') +
           '</div>' +
           '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">' + t.remindersWord + '</p>' +
           '<div style="border:1.5px dashed var(--border); border-radius:16px; padding:20px; display:flex; align-items:center; justify-content:center; gap:8px; color:var(--text2);">' +
