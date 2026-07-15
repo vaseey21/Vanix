@@ -8,6 +8,8 @@ import '../widgets/vanix_nav_items.dart';
 import 'card_detail_screen.dart';
 import 'heat_alert_screen.dart';
 import 'milk_log_screen.dart';
+import 'farms_screen.dart';
+import 'account_screen.dart';
 
 enum _Tab { all, action, warnings, reminders }
 
@@ -272,11 +274,18 @@ class _EventsScreenState extends State<EventsScreen> {
       Navigator.of(context).pop();
       return;
     }
+    if (i == 1) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => FarmsScreen(appState: widget.appState)));
+      return;
+    }
     if (i == 2) {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MilkLogScreen(appState: widget.appState)));
       return;
     }
-    if (i == 4) widget.appState.toggleDark();
+    if (i == 4) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => AccountScreen(appState: widget.appState)));
+      return;
+    }
   }
 
   Future<void> _showFullCycleSheet(BuildContext context) async {

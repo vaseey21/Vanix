@@ -8,6 +8,8 @@ import '../widgets/vanix_nav_items.dart';
 import '../widgets/milk_filter_sheet.dart';
 import '../widgets/option_sheet.dart';
 import 'events_screen.dart';
+import 'farms_screen.dart';
+import 'account_screen.dart';
 import 'milk_add_entry_screen.dart';
 import 'milk_summary_screen.dart';
 
@@ -52,11 +54,18 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
       Navigator.of(context).pop();
       return;
     }
+    if (i == 1) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => FarmsScreen(appState: widget.appState)));
+      return;
+    }
     if (i == 3) {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => EventsScreen(appState: widget.appState)));
       return;
     }
-    if (i == 4) widget.appState.toggleDark();
+    if (i == 4) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => AccountScreen(appState: widget.appState)));
+      return;
+    }
   }
 
   List<MilkEntry> get _visibleTodayEntries {
