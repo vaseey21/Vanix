@@ -305,6 +305,14 @@
     #flow-root.dark input, #flow-root.dark textarea, #flow-root.dark select { color: #F5F5F5; }
     #flow-root.dark input::placeholder, #flow-root.dark textarea::placeholder { color: #6F6A62; }
 
+    /* Filter sheets v2: rail + trigger "filter applied" dots, reset/cancel */
+    .fs-rail-dot { display:none; width:7px; height:7px; border-radius:50%; background:var(--greenink); margin-inline-start:auto; flex-shrink:0; }
+    .s7-cat.filtered .fs-rail-dot { display:inline-block; }
+    .fs-trigger-dot { display:none; position:absolute; top:-2px; right:-2px; width:10px; height:10px; border-radius:50%; background:var(--greenink); border:2px solid var(--bgwarm); }
+    .fs-filtered .fs-trigger-dot { display:block; }
+    .fs-reset-btn { border:none; background:transparent; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer; padding:6px 10px; flex-shrink:0; }
+    .fs-cancel-btn { width:100%; min-height:44px; margin-top:6px; border:none; background:transparent; font-size:14px; font-weight:600; color:var(--text2); font-family:var(--font-hi); cursor:pointer; }
+    #flow-root.dark .fs-trigger-dot { border-color:#121212; }
     /* Farms hero: auto-scrolling one-line activity ticker */
     .farms-ticker-track { display:flex; width:max-content; animation: farms-ticker 55s linear infinite; }
     .farms-ticker-item { flex-shrink:0; display:flex; align-items:center; gap:6px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:6px 12px; margin-inline-end:8px; font-size:11px; font-weight:500; color:var(--text1); white-space:nowrap; }
@@ -1601,7 +1609,7 @@
               <p data-k="qfNeedsAction" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs action</p>
 
               <!-- 1. Suspected fever -->
-              <div class="ev-card ev-photo-card p0" id="ev-fever" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; cursor:pointer;" onclick="openCardDetail('ev-fever','p0')">
+              <div class="ev-card ev-photo-card p0" id="ev-fever" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; cursor:pointer;" onclick="openCardSheet('ev-fever','p0')">
                 <span class="ev-corner-badge">!</span>
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>CRITICAL</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2h ago</span>
@@ -1625,7 +1633,7 @@
               </div>
 
               <!-- 2. Heat cycle detected -->
-              <div class="ev-card ev-photo-card p0" id="ev-heat" style="position:relative; background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; cursor:pointer;" onclick="openCardDetail('ev-heat','p1')">
+              <div class="ev-card ev-photo-card p0" id="ev-heat" style="position:relative; background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; cursor:pointer;" onclick="openCardSheet('ev-heat','p1')">
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>CRITICAL</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>20 min ago</span>
                 <p class="ev-title" data-k="titleHeat" style="display:none;">Heat cycle detected — Gauri</p>
@@ -1742,7 +1750,7 @@
               </div>
 
               <!-- 3c. Milking notification — fires after delivery is confirmed -->
-              <div class="ev-card ev-photo-card p1" id="ev-milk-notif" style="position:relative; background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardDetail('ev-milk-notif','p1')">
+              <div class="ev-card ev-photo-card p1" id="ev-milk-notif" style="position:relative; background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardSheet('ev-milk-notif','p1')">
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>ACTION</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>30 min ago</span>
                 <p class="en ev-anchor-bottom" data-k="cardMilkQ">Start milking?</p>
@@ -1794,7 +1802,7 @@
 
 
               <!-- 4. Abortion / pregnancy loss -->
-              <div class="ev-card ev-photo-card p0" id="ev-abort" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardDetail('ev-abort','p0')">
+              <div class="ev-card ev-photo-card p0" id="ev-abort" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardSheet('ev-abort','p0')">
                 <span class="ev-corner-badge">!</span>
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>CRITICAL</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>15 min ago</span>
@@ -1816,7 +1824,7 @@
               </div>
 
               <!-- 5. Fresh cow / post-calving monitor -->
-              <div class="ev-card ev-photo-card p0" id="ev-freshcow" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardDetail('ev-freshcow','p0')">
+              <div class="ev-card ev-photo-card p0" id="ev-freshcow" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardSheet('ev-freshcow','p0')">
                 <span class="ev-corner-badge">!</span>
                 <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span>CRITICAL</span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>45 min ago</span>
@@ -2069,6 +2077,23 @@
             </p>
           </div>
 
+          <!-- CARD QUICK SHEET — tapping an alert card opens this instead of the detail page -->
+          <div id="ev-cs-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
+          <div id="ev-cs-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+            <div style="display:flex; align-items:flex-start; gap:10px; margin-top:10px;">
+              <div style="flex:1; min-width:0;">
+                <h3 id="ev-cs-title" style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">Question</h3>
+                <p id="ev-cs-cow" class="en" style="font-size:12px; font-weight:600; color:var(--greenink); margin:4px 0 0;"></p>
+              </div>
+              <button id="ev-cs-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
+            </div>
+            <p id="ev-cs-sub" style="font-size:13px; color:var(--text2); margin:10px 0 0; line-height:1.6;"></p>
+            <p id="ev-cs-meta" class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;"></p>
+            <button id="ev-cs-details" data-k="viewDetailsLabel" style="border:none; background:transparent; padding:8px 0 0; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;">View Details ›</button>
+            <div id="ev-cs-actions" style="display:flex; gap:8px; margin-top:14px;"></div>
+          </div>
+
           <!-- FILTER BOTTOM SHEET — two-pane: rail left, options right (mirrors the Milk Log sheet) -->
           <div id="ev-fs-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
           <div id="ev-fs-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
@@ -2104,7 +2129,7 @@
                   <button class="s7-chip" data-val="actioned" data-k="statusActioned">Actioned</button>
                   <button class="s7-chip" data-val="pending" data-k="statusPending">Pending</button>
                 </div>
-                <div class="ev-fs-pane" data-pane="cat" style="display:none;">
+                <div class="ev-fs-pane" data-pane="cat" data-multi="1" style="display:none;">
                   <button class="s7-chip on" data-val="all" data-k="qfAllCategories">All categories</button>
                   <button class="s7-chip" data-val="Fever" data-k="catFever">Fever</button>
                   <button class="s7-chip" data-val="Heat" data-k="catHeat">Heat</button>
@@ -2120,7 +2145,7 @@
                   <button class="s7-chip" data-val="Heat stress" data-k="catHeatStress">Heat stress</button>
                   <button class="s7-chip" data-val="Calibration" data-k="catCalibration">Calibration</button>
                 </div>
-                <div class="ev-fs-pane" data-pane="farm" style="display:none;">
+                <div class="ev-fs-pane" data-pane="farm" data-multi="1" style="display:none;">
                   <button class="s7-chip on" data-val="all" data-k="filterAllFarms">All Farms</button>
                   <button class="s7-chip" data-val="greenvalley" data-k="farmGreenValley">Green Valley Farm</button>
                   <button class="s7-chip" data-val="sunrise" data-k="farmSunrise">Sunrise Dairy</button>
@@ -2291,7 +2316,7 @@
                   <button class="s7-chip" data-val="attention" data-k="filterAttention">Need Attention</button>
                   <button class="s7-chip" data-val="setup" data-k="filterSetup">Setup Required</button>
                 </div>
-                <div class="farms-fs-pane" data-pane="location" style="display:none;">
+                <div class="farms-fs-pane" data-pane="location" data-multi="1" style="display:none;">
                   <button class="s7-chip on" data-val="all" data-k="allWord">All</button>
                   <button class="s7-chip" data-val="coimbatore" data-k="locCoimbatore">Coimbatore</button>
                   <button class="s7-chip" data-val="erode" data-k="locErode">Erode</button>
@@ -2780,7 +2805,7 @@
                   <button class="s7-chip" data-val="Heat" data-k="cattleHeat">Heat</button>
                   <button class="s7-chip" data-val="Fever" data-k="cattleFever">Fever</button>
                 </div>
-                <div class="cattle-fs-pane" data-pane="breed" style="display:none;">
+                <div class="cattle-fs-pane" data-pane="breed" data-multi="1" style="display:none;">
                   <button class="s7-chip on" data-val="all" data-k="allWord">All</button>
                   <button class="s7-chip" data-val="Jersey" data-k="breedJersey">Jersey</button>
                   <button class="s7-chip" data-val="HF Cross">HF Cross</button>
@@ -2958,7 +2983,7 @@
                grpYourVets:'Your Vets', grpEmergency:'Emergency Contacts', vetConfirmed:'CONFIRMED', vetPending:'PENDING', vetDeclined:'DECLINED',
                vetPendingNote:'Confirmation link sent \u2014 waiting for the vet to accept', vetDeclinedNote:'Declined the invite', vetResend:'Resend invite',
                addVet:'+ Add Vet', addContact:'+ Add Contact', vetNamePh:'Vet name', phonePh:'Phone number', sendInvite:'Send invite link', demoConfirm:'(demo) Confirm', demoDecline:'(demo) Decline',
-               emgFarmManager:'Farm Manager', vetSpec1:'Large animal vet \u00b7 6.2 km away', vetSpec2:'Cattle specialist \u00b7 9 km away', vetSpec3:'General vet \u00b7 12 km away', legalUpdated:'Last Updated: July 1, 2026', breedWord:'Breed', ageWord:'Age', breedGir:'Gir', breedDesi:'Desi', ageUnder2:'Under 2 yrs', age2to4:'2 \u2013 4 yrs', ageOver4:'Over 4 yrs', editVet:'Edit vet', roleVet:'Veterinarian', saveChanges:'Save changes', emailPh:'Email address', inviteHint:'An invite link is emailed to the vet — they confirm before being added.', farmMgmtSub:'Assign or remove a manager for each farm', unassignedWord:'Unassigned', reassignWord:'Reassign', assignManager:'Assign manager', assignMe:'Assign to me', removeManager:'Remove manager', mgrNamePh:'Manager name', confirmAssign:'Confirm & assign', addVetTitle:'Add a vet', ctaCallVet:'Call vet', callVetTitle:'Call a vet', callVetSub:"Pick a vet — they'll be sent the details.", sendVetReq:'Send request', actionedBy:'Actioned by', vetOutcome:'Vet outcome', histActorRamesh:'Ramesh Kumar (Farmer)', histActorRao:'Dr. Rao (Vet)', histActorSystem:'System — auto-detected by collar', histVetPregfail:'Heat returned on day 16, so pregnancy did not hold. Monitoring resumed for the next cycle.', histVetDone2:'Dr. Sharma visited, administered antibiotics, and confirmed the temperature was back to normal.', histVetInsem:'Dr. Rao performed artificial insemination within the optimal window; pregnancy check scheduled for 3 Jul.' },
+               emgFarmManager:'Farm Manager', vetSpec1:'Large animal vet \u00b7 6.2 km away', vetSpec2:'Cattle specialist \u00b7 9 km away', vetSpec3:'General vet \u00b7 12 km away', legalUpdated:'Last Updated: July 1, 2026', breedWord:'Breed', ageWord:'Age', breedGir:'Gir', breedDesi:'Desi', ageUnder2:'Under 2 yrs', age2to4:'2 \u2013 4 yrs', ageOver4:'Over 4 yrs', editVet:'Edit vet', roleVet:'Veterinarian', saveChanges:'Save changes', emailPh:'Email address', inviteHint:'An invite link is emailed to the vet — they confirm before being added.', farmMgmtSub:'Assign or remove a manager for each farm', unassignedWord:'Unassigned', reassignWord:'Reassign', assignManager:'Assign manager', assignMe:'Assign to me', removeManager:'Remove manager', mgrNamePh:'Manager name', confirmAssign:'Confirm & assign', addVetTitle:'Add a vet', resetFilters:'Reset filters', cancelWord:'Cancel', ctaCallVet:'Call vet', callVetTitle:'Call a vet', callVetSub:"Pick a vet — they'll be sent the details.", sendVetReq:'Send request', actionedBy:'Actioned by', vetOutcome:'Vet outcome', histActorRamesh:'Ramesh Kumar (Farmer)', histActorRao:'Dr. Rao (Vet)', histActorSystem:'System — auto-detected by collar', histVetPregfail:'Heat returned on day 16, so pregnancy did not hold. Monitoring resumed for the next cycle.', histVetDone2:'Dr. Sharma visited, administered antibiotics, and confirmed the temperature was back to normal.', histVetInsem:'Dr. Rao performed artificial insemination within the optimal window; pregnancy check scheduled for 3 Jul.' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -3040,7 +3065,7 @@
                grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
                vetPendingNote:'पुष्टि लिंक भेजा गया \u2014 पशु चिकित्सक की स्वीकृति बाकी', vetDeclinedNote:'निमंत्रण अस्वीकार किया', vetResend:'फिर से भेजें',
                addVet:'+ पशु चिकित्सक जोड़ें', addContact:'+ संपर्क जोड़ें', vetNamePh:'पशु चिकित्सक का नाम', phonePh:'फ़ोन नंबर', sendInvite:'निमंत्रण लिंक भेजें', demoConfirm:'(डेमो) पुष्टि', demoDecline:'(डेमो) अस्वीकार',
-               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक', editVet:'पशु चिकित्सक संपादित करें', roleVet:'पशु चिकित्सक', saveChanges:'परिवर्तन सहेजें', emailPh:'ईमेल पता', inviteHint:'पशु चिकित्सक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', farmMgmtSub:'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', unassignedWord:'नियुक्त नहीं', reassignWord:'फिर से नियुक्त करें', assignManager:'प्रबंधक नियुक्त करें', assignMe:'मुझे नियुक्त करें', removeManager:'प्रबंधक हटाएँ', mgrNamePh:'प्रबंधक का नाम', confirmAssign:'पुष्टि करें और नियुक्त करें', addVetTitle:'पशु चिकित्सक जोड़ें', ctaCallVet:'पशु चिकित्सक बुलाएँ', callVetTitle:'पशु चिकित्सक बुलाएँ', callVetSub:'एक पशु चिकित्सक चुनें — उन्हें विवरण भेजा जाएगा।', sendVetReq:'अनुरोध भेजें', actionedBy:'कार्रवाई की', vetOutcome:'पशु चिकित्सक परिणाम', histActorRamesh:'रमेश कुमार (किसान)', histActorRao:'डॉ. राव (पशु चिकित्सक)', histActorSystem:'सिस्टम — कॉलर द्वारा स्वतः पहचाना गया', histVetPregfail:'16वें दिन हीट लौटी, इसलिए गर्भ नहीं ठहरा। अगले चक्र की निगरानी फिर शुरू।', histVetDone2:'डॉ. शर्मा ने दौरा किया, एंटीबायोटिक दी, और तापमान सामान्य होने की पुष्टि की।', histVetInsem:'डॉ. राव ने सर्वोत्तम विंडो में कृत्रिम गर्भाधान किया; गर्भ जांच 3 जुलाई को निर्धारित।' },
+               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक', editVet:'पशु चिकित्सक संपादित करें', roleVet:'पशु चिकित्सक', saveChanges:'परिवर्तन सहेजें', emailPh:'ईमेल पता', inviteHint:'पशु चिकित्सक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', farmMgmtSub:'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', unassignedWord:'नियुक्त नहीं', reassignWord:'फिर से नियुक्त करें', assignManager:'प्रबंधक नियुक्त करें', assignMe:'मुझे नियुक्त करें', removeManager:'प्रबंधक हटाएँ', mgrNamePh:'प्रबंधक का नाम', confirmAssign:'पुष्टि करें और नियुक्त करें', addVetTitle:'पशु चिकित्सक जोड़ें', resetFilters:'फ़िल्टर रीसेट करें', cancelWord:'रद्द करें', ctaCallVet:'पशु चिकित्सक बुलाएँ', callVetTitle:'पशु चिकित्सक बुलाएँ', callVetSub:'एक पशु चिकित्सक चुनें — उन्हें विवरण भेजा जाएगा।', sendVetReq:'अनुरोध भेजें', actionedBy:'कार्रवाई की', vetOutcome:'पशु चिकित्सक परिणाम', histActorRamesh:'रमेश कुमार (किसान)', histActorRao:'डॉ. राव (पशु चिकित्सक)', histActorSystem:'सिस्टम — कॉलर द्वारा स्वतः पहचाना गया', histVetPregfail:'16वें दिन हीट लौटी, इसलिए गर्भ नहीं ठहरा। अगले चक्र की निगरानी फिर शुरू।', histVetDone2:'डॉ. शर्मा ने दौरा किया, एंटीबायोटिक दी, और तापमान सामान्य होने की पुष्टि की।', histVetInsem:'डॉ. राव ने सर्वोत्तम विंडो में कृत्रिम गर्भाधान किया; गर्भ जांच 3 जुलाई को निर्धारित।' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -3122,7 +3147,7 @@
                grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
                vetPendingNote:'पुष्टि लिंक भेजा गया \u2014 पशु चिकित्सक की स्वीकृति बाकी', vetDeclinedNote:'निमंत्रण अस्वीकार किया', vetResend:'फिर से भेजें',
                addVet:'+ पशु चिकित्सक जोड़ें', addContact:'+ संपर्क जोड़ें', vetNamePh:'पशु चिकित्सक का नाम', phonePh:'फ़ोन नंबर', sendInvite:'निमंत्रण लिंक भेजें', demoConfirm:'(डेमो) पुष्टि', demoDecline:'(डेमो) अस्वीकार',
-               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक', editVet:'पशु चिकित्सक संपादित करें', roleVet:'पशु चिकित्सक', saveChanges:'परिवर्तन सहेजें', emailPh:'ईमेल पता', inviteHint:'पशु चिकित्सक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', farmMgmtSub:'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', unassignedWord:'नियुक्त नहीं', reassignWord:'फिर से नियुक्त करें', assignManager:'प्रबंधक नियुक्त करें', assignMe:'मुझे नियुक्त करें', removeManager:'प्रबंधक हटाएँ', mgrNamePh:'प्रबंधक का नाम', confirmAssign:'पुष्टि करें और नियुक्त करें', addVetTitle:'पशु चिकित्सक जोड़ें', ctaCallVet:'पशु चिकित्सक बुलाएँ', callVetTitle:'पशु चिकित्सक बुलाएँ', callVetSub:'एक पशु चिकित्सक चुनें — उन्हें विवरण भेजा जाएगा।', sendVetReq:'अनुरोध भेजें', actionedBy:'कार्रवाई की', vetOutcome:'पशु चिकित्सक परिणाम', histActorRamesh:'रमेश कुमार (किसान)', histActorRao:'डॉ. राव (पशु चिकित्सक)', histActorSystem:'सिस्टम — कॉलर द्वारा स्वतः पहचाना गया', histVetPregfail:'16वें दिन हीट लौटी, इसलिए गर्भ नहीं ठहरा। अगले चक्र की निगरानी फिर शुरू।', histVetDone2:'डॉ. शर्मा ने दौरा किया, एंटीबायोटिक दी, और तापमान सामान्य होने की पुष्टि की।', histVetInsem:'डॉ. राव ने सर्वोत्तम विंडो में कृत्रिम गर्भाधान किया; गर्भ जांच 3 जुलाई को निर्धारित।' }
+               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक', editVet:'पशु चिकित्सक संपादित करें', roleVet:'पशु चिकित्सक', saveChanges:'परिवर्तन सहेजें', emailPh:'ईमेल पता', inviteHint:'पशु चिकित्सक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', farmMgmtSub:'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', unassignedWord:'नियुक्त नहीं', reassignWord:'फिर से नियुक्त करें', assignManager:'प्रबंधक नियुक्त करें', assignMe:'मुझे नियुक्त करें', removeManager:'प्रबंधक हटाएँ', mgrNamePh:'प्रबंधक का नाम', confirmAssign:'पुष्टि करें और नियुक्त करें', addVetTitle:'पशु चिकित्सक जोड़ें', resetFilters:'फ़िल्टर रीसेट करें', cancelWord:'रद्द करें', ctaCallVet:'पशु चिकित्सक बुलाएँ', callVetTitle:'पशु चिकित्सक बुलाएँ', callVetSub:'एक पशु चिकित्सक चुनें — उन्हें विवरण भेजा जाएगा।', sendVetReq:'अनुरोध भेजें', actionedBy:'कार्रवाई की', vetOutcome:'पशु चिकित्सक परिणाम', histActorRamesh:'रमेश कुमार (किसान)', histActorRao:'डॉ. राव (पशु चिकित्सक)', histActorSystem:'सिस्टम — कॉलर द्वारा स्वतः पहचाना गया', histVetPregfail:'16वें दिन हीट लौटी, इसलिए गर्भ नहीं ठहरा। अगले चक्र की निगरानी फिर शुरू।', histVetDone2:'डॉ. शर्मा ने दौरा किया, एंटीबायोटिक दी, और तापमान सामान्य होने की पुष्टि की।', histVetInsem:'डॉ. राव ने सर्वोत्तम विंडो में कृत्रिम गर्भाधान किया; गर्भ जांच 3 जुलाई को निर्धारित।' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
       function t() { return STRINGS[lang]; }
@@ -3902,8 +3927,8 @@
             if (!evBaseVisible[card.id]) { card.style.display = 'none'; return; }
             var meta = CARD_META[card.id] || {};
             var ok = (evFilter.crit === 'all' || evFilter.crit === critOf(card))
-                  && (evFilter.cat  === 'all' || evFilter.cat  === meta.cat)
-                  && (evFarm === 'all' || evFarm === meta.farm);
+                  && (evFilter.cat  === 'all' || evFilter.cat.indexOf(meta.cat) !== -1)
+                  && (evFarm === 'all' || evFarm.indexOf(meta.farm) !== -1);
             card.style.display = ok ? '' : 'none';
           });
         }
@@ -3983,49 +4008,17 @@
           document.querySelectorAll('.ev-qf').forEach(function(o) { o.classList.remove('open'); });
         });
 
-        // ── Filter bottom sheet (two-pane) — opened from the hero Filter button ──
-        var fsSheet = document.getElementById('ev-fs-sheet');
-        var fsBackdrop = document.getElementById('ev-fs-backdrop');
-        var fsBtn = document.getElementById('ev-filter-btn');
-        function fsClose() { fsSheet.style.transform = 'translateY(100%)'; fsBackdrop.style.opacity = '0'; fsBackdrop.style.pointerEvents = 'none'; }
-        fsBtn.addEventListener('click', function() {
-          fsSheet.style.transform = 'translateY(0)';
-          fsBackdrop.style.opacity = '1'; fsBackdrop.style.pointerEvents = 'auto';
-        });
-        fsBackdrop.addEventListener('click', fsClose);
-        document.getElementById('ev-fs-close').addEventListener('click', fsClose);
-        // left rail switches the visible pane
-        document.querySelectorAll('.ev-fs-cat').forEach(function(cat) {
-          cat.addEventListener('click', function() {
-            document.querySelectorAll('.ev-fs-cat').forEach(function(c) { c.classList.remove('on'); });
-            cat.classList.add('on');
-            document.querySelectorAll('.ev-fs-pane').forEach(function(p) {
-              p.style.display = p.getAttribute('data-pane') === cat.getAttribute('data-cat') ? 'block' : 'none';
-            });
-          });
-        });
-        // single-select options within each pane
-        document.querySelectorAll('.ev-fs-pane .s7-chip').forEach(function(chip) {
-          chip.addEventListener('click', function() {
-            chip.parentElement.querySelectorAll('.s7-chip').forEach(function(c) { c.classList.remove('on'); });
-            chip.classList.add('on');
-          });
-        });
-        function fsVal(pane) {
-          var on = document.querySelector('.ev-fs-pane[data-pane="' + pane + '"] .s7-chip.on');
-          return on ? on.getAttribute('data-val') : 'all';
-        }
-        document.getElementById('ev-fs-apply').addEventListener('click', function() {
-          evSectionType = fsVal('type');
-          evFilter.crit = fsVal('crit');
-          evFilter.cat  = fsVal('cat');
-          evStatus = fsVal('status');
-          evFarm = fsVal('farm');
+        // ── Filter bottom sheet — shared wireFilterSheet (multi-select, reset, dots) ──
+        var openEvSheet = wireFilterSheet('ev-fs', 'ev-filter-btn', function(vals) {
+          evSectionType = vals.type;
+          evFilter.crit = vals.crit;
+          evFilter.cat  = vals.cat;
+          evStatus = vals.status;
+          evFarm = vals.farm;
           applyEvSections();
           applyEvFilters();
-          fsBtn.classList.toggle('on', evSectionType !== 'all' || evFilter.crit !== 'all' || evFilter.cat !== 'all' || evStatus !== 'all' || evFarm !== 'all');
-          fsClose();
         });
+        document.getElementById('ev-filter-btn').addEventListener('click', openEvSheet);
       })();
 
 
@@ -5520,7 +5513,7 @@
         var q = (document.getElementById('farms-search').value || '').trim().toLowerCase();
         var list = FARMS.filter(function(f) {
           if (farmsFilter !== 'all' && f.status !== farmsFilter) return false;
-          if (farmsLocFilter !== 'all' && f.locKey !== farmsLocFilter) return false;
+          if (farmsLocFilter !== 'all' && farmsLocFilter.indexOf(f.locKey) === -1) return false;
           if (q && (f.name + ' ' + (f.nameHi || '')).toLowerCase().indexOf(q) === -1) return false;
           return true;
         });
@@ -5579,13 +5572,61 @@
         document.getElementById('farms-ticker-track').innerHTML = half + half;
       }
       document.getElementById('farms-search').addEventListener('input', renderFarmsList);
-      function wireFilterSheet(prefix, onApply) {
+      function wireFilterSheet(prefix, triggerId, onApply) {
         var sh = document.getElementById(prefix + '-sheet');
         var bd = document.getElementById(prefix + '-backdrop');
+        var trigger = triggerId ? document.getElementById(triggerId) : null;
+        if (trigger) {
+          trigger.style.position = 'relative';
+          trigger.insertAdjacentHTML('beforeend', '<span class="fs-trigger-dot"></span>');
+        }
+        var closeBtn = document.getElementById(prefix + '-close');
+        closeBtn.insertAdjacentHTML('beforebegin', '<button id="' + prefix + '-reset" class="fs-reset-btn" data-k="resetFilters">' + window.t().resetFilters + '</button>');
+        var applyBtn = document.getElementById(prefix + '-apply');
+        applyBtn.insertAdjacentHTML('afterend', '<button id="' + prefix + '-cancel" class="fs-cancel-btn" data-k="cancelWord">' + window.t().cancelWord + '</button>');
+        document.querySelectorAll('.' + prefix + '-cat').forEach(function(cat) {
+          cat.insertAdjacentHTML('beforeend', '<span class="fs-rail-dot"></span>');
+        });
+        var applied = null; // pane -> array of selected vals; used to restore on cancel
+
+        function paneVals(p) {
+          return Array.prototype.map.call(p.querySelectorAll('.s7-chip.on'), function(c) { return c.getAttribute('data-val'); });
+        }
+        function setPane(p, vals) {
+          p.querySelectorAll('.s7-chip').forEach(function(c) {
+            c.classList.toggle('on', vals.indexOf(c.getAttribute('data-val')) !== -1);
+          });
+        }
+        function syncRailDots() {
+          document.querySelectorAll('.' + prefix + '-pane').forEach(function(p) {
+            var active = paneVals(p).filter(function(v) { return v !== 'all'; }).length > 0;
+            var cat = document.querySelector('.' + prefix + '-cat[data-cat="' + p.getAttribute('data-pane') + '"]');
+            if (cat) cat.classList.toggle('filtered', active);
+          });
+        }
+        function snapshot() {
+          applied = {};
+          document.querySelectorAll('.' + prefix + '-pane').forEach(function(p) {
+            applied[p.getAttribute('data-pane')] = paneVals(p);
+          });
+        }
+        function restore() {
+          if (!applied) return;
+          document.querySelectorAll('.' + prefix + '-pane').forEach(function(p) {
+            setPane(p, applied[p.getAttribute('data-pane')] || ['all']);
+          });
+          syncRailDots();
+        }
         function close() { sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
-        function open()  { sh.style.transform = 'translateY(0)';    bd.style.opacity = '1'; bd.style.pointerEvents = 'auto'; }
-        bd.addEventListener('click', close);
-        document.getElementById(prefix + '-close').addEventListener('click', close);
+        function open()  { restore(); sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto'; }
+        function cancel() { restore(); close(); }
+        bd.addEventListener('click', cancel);
+        closeBtn.addEventListener('click', cancel);
+        document.getElementById(prefix + '-cancel').addEventListener('click', cancel);
+        document.getElementById(prefix + '-reset').addEventListener('click', function() {
+          document.querySelectorAll('.' + prefix + '-pane').forEach(function(p) { setPane(p, ['all']); });
+          syncRailDots();
+        });
         document.querySelectorAll('.' + prefix + '-cat').forEach(function(cat) {
           cat.addEventListener('click', function() {
             document.querySelectorAll('.' + prefix + '-cat').forEach(function(c) { c.classList.remove('on'); });
@@ -5595,24 +5636,42 @@
             });
           });
         });
+        // chips: single-select by default; panes marked data-multi allow many
         document.querySelectorAll('.' + prefix + '-pane .s7-chip').forEach(function(chip) {
           chip.addEventListener('click', function() {
-            chip.parentElement.querySelectorAll('.s7-chip').forEach(function(c) { c.classList.remove('on'); });
-            chip.classList.add('on');
+            var pane = chip.parentElement;
+            var multi = pane.hasAttribute('data-multi');
+            var isAll = chip.getAttribute('data-val') === 'all';
+            if (!multi || isAll) {
+              pane.querySelectorAll('.s7-chip').forEach(function(c) { c.classList.remove('on'); });
+              chip.classList.add('on');
+            } else {
+              var allChip = pane.querySelector('.s7-chip[data-val="all"]');
+              if (allChip) allChip.classList.remove('on');
+              chip.classList.toggle('on');
+              if (!pane.querySelector('.s7-chip.on') && allChip) allChip.classList.add('on');
+            }
+            syncRailDots();
           });
         });
-        document.getElementById(prefix + '-apply').addEventListener('click', function() {
-          var vals = {};
+        applyBtn.addEventListener('click', function() {
+          snapshot();
+          var vals = {}, any = false;
           document.querySelectorAll('.' + prefix + '-pane').forEach(function(p) {
-            var on = p.querySelector('.s7-chip.on');
-            vals[p.getAttribute('data-pane')] = on ? on.getAttribute('data-val') : 'all';
+            var v = paneVals(p).filter(function(x) { return x !== 'all'; });
+            var key = p.getAttribute('data-pane');
+            if (p.hasAttribute('data-multi')) vals[key] = v.length ? v : 'all';
+            else vals[key] = v.length ? v[0] : 'all';
+            if (v.length) any = true;
           });
+          if (trigger) trigger.classList.toggle('fs-filtered', any);
           onApply(vals);
           close();
         });
+        snapshot();
         return open;
       }
-      var openFarmsSheet = wireFilterSheet('farms-fs', function(vals) {
+      var openFarmsSheet = wireFilterSheet('farms-fs', 'farms-filter-btn', function(vals) {
         farmsFilter = vals.status || 'all';
         farmsLocFilter = vals.location || 'all';
         renderFarmsList();
@@ -5661,7 +5720,7 @@
         var cows = farm.cows.filter(function(c) {
           if (cattleAlertsOnly && !isAlertCow(c)) return false;
           if (cattleStatusFilter !== 'all' && c.status !== cattleStatusFilter) return false;
-          if (cattleBreedFilter !== 'all' && c.breed !== cattleBreedFilter) return false;
+          if (cattleBreedFilter !== 'all' && cattleBreedFilter.indexOf(c.breed) === -1) return false;
           if (cattleAgeFilter !== 'all' && ageBucket(c) !== cattleAgeFilter) return false;
           if (q && (c.name + ' ' + (c.nameHi || '')).toLowerCase().indexOf(q) === -1) return false;
           return true;
@@ -5834,7 +5893,7 @@
         var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
         if (farm) renderCattleList(farm);
       });
-      var openCattleSheet = wireFilterSheet('cattle-fs', function(vals) {
+      var openCattleSheet = wireFilterSheet('cattle-fs', 'cattle-filter-btn', function(vals) {
         cattleStatusFilter = vals.status || 'all';
         cattleBreedFilter = vals.breed || 'all';
         cattleAgeFilter = vals.age || 'all';
@@ -6216,6 +6275,50 @@
           row.style.cursor = 'pointer';
           row.addEventListener('click', function() { open(row.getAttribute('data-hk')); });
         });
+      })();
+
+      // ── Card quick sheet: question + proxied CTAs; View Details goes deeper ──
+      (function() {
+        var sheet = document.getElementById('ev-cs-sheet'), bd = document.getElementById('ev-cs-backdrop');
+        var curId = null, curPri = 'p1';
+        function close() { sheet.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
+        bd.addEventListener('click', close);
+        document.getElementById('ev-cs-close').addEventListener('click', close);
+        document.getElementById('ev-cs-details').addEventListener('click', function() {
+          close();
+          if (window.openCardDetail && curId) window.openCardDetail(curId, curPri);
+        });
+        window.openCardSheet = function(cardId, pri) {
+          var card = document.getElementById(cardId);
+          if (!card) return;
+          curId = cardId; curPri = pri;
+          var q = card.querySelector('.ev-anchor-bottom');
+          var title = card.querySelector('.ev-title');
+          var sub = card.querySelector('.ev-sub');
+          var meta = card.querySelector('.ev-meta');
+          var cow = card.querySelector('.ev-cow-breed');
+          document.getElementById('ev-cs-title').textContent = q ? q.textContent : (title ? title.textContent : '');
+          document.getElementById('ev-cs-cow').textContent = cow ? cow.textContent.replace(/\s+/g, ' · ').trim() : '';
+          document.getElementById('ev-cs-sub').textContent = sub ? sub.textContent : '';
+          document.getElementById('ev-cs-meta').textContent = meta ? meta.textContent : '';
+          var actions = document.getElementById('ev-cs-actions');
+          actions.innerHTML = '';
+          var btns = card.querySelectorAll('.ev-body button');
+          var picked = [];
+          for (var i = 0; i < btns.length && picked.length < 2; i++) picked.push(btns[i]);
+          picked.forEach(function(orig, idx) {
+            var primary = orig.classList.contains('ev-yes') || orig.classList.contains('ev-ack') || orig.classList.contains('ev-callvet') || idx === picked.length - 1;
+            var btn = document.createElement('button');
+            btn.className = 'hi';
+            var fullSpan = orig.querySelector('.ev-btn-full');
+            btn.textContent = (fullSpan ? fullSpan.textContent : orig.textContent).trim();
+            btn.setAttribute('style', 'flex:1; min-height:46px; border-radius:23px; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer; ' + (primary ? 'background:var(--greenink); border:none; color:#FFFFFF;' : 'background:transparent; border:1px solid var(--border); color:var(--text1);'));
+            btn.addEventListener('click', function() { close(); orig.click(); });
+            actions.appendChild(btn);
+          });
+          sheet.style.transform = 'translateY(0)';
+          bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+        };
       })();
 
       // Bridge called from the login script's applyLang() (a separate
