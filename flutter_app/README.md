@@ -36,13 +36,13 @@ You'll need to add the actual font files before it runs cleanly (see
 | "View full cycle" — 8-step bottom-sheet walkthrough of the full breeding/lactation year | ✅ Ported — `_FullCycleSheet` in `lib/screens/events_screen.dart` |
 | Events badge/dot sync across every nav | ✅ Ported — `AppState.openEventsCount` + `resolveEvent()` |
 | Dashboard (Home) | 🚧 Placeholder — content not designed yet in the HTML either |
-| Farms list — hero (Total Farms/Cattle/Alerts + activity ticker), search + two-pane filter sheet (Status/Location), farm cards (severity tag, chips row), Setup rows | ❌ **PENDING** — built in HTML, not yet ported |
-| Farm detail (cow list) — temp+level hero, Total Cattle/Unactioned tiles, search + filter sheet, cow cards, alerts-tile toggle | ❌ **PENDING** — built in HTML, not yet ported |
-| Cow profile — hero (photo/status/temp), Timeline (tappable event cards + detail sheet), Overview (weekly graph + tiles), Vet Logs; floating + actions (change status / vet / add heat·insem·preg) | ❌ **PENDING** — built in HTML, not yet ported |
-| Account / Settings — profile row → read-only Profile, Alert-sound toggle, Language + Dark-mode, Legal (Privacy/Terms), Help, Log Out | ❌ **PENDING** — built in HTML, not yet ported |
-| Vet & Emergency → Vet Contacts — onboarding via invite link (Pending/Confirmed/Declined), Add-Vet slide-up sheet, per-vet edit sheet | ❌ **PENDING** — built in HTML, not yet ported |
-| Farm Management — assign / reassign / remove manager or assign self, per farm | ❌ **PENDING** — built in HTML, not yet ported |
-| Events refinements — filter as two-pane bottom sheet, title opens walkthrough, P2/P3 fever-photo + Call-vet cards, past-event detail sheets | ❌ **PENDING** — Events is ported but these later changes are HTML-only |
+| Farms list — hero (Total Farms/Cattle/Alerts + activity ticker), search + two-pane filter sheet (Status/Location), farm cards (severity tag, chips row), Setup rows | ✅ Ported — `lib/screens/farms_screen.dart` |
+| Farm detail (cow list) — temp+level hero, Total Cattle/Unactioned tiles, search + filter sheet (Status/Breed/Age), cow cards + kebab, alerts-tile toggle | ✅ Ported — `lib/screens/farm_detail_screen.dart` |
+| Cow profile — hero (photo/status/temp), Timeline (tappable event cards + detail sheet), Overview (weekly graph + tiles), Vet Logs; floating + actions | ✅ Ported — `lib/screens/cow_profile_screen.dart` |
+| Account / Settings — profile row → read-only Profile, Alert-sound toggle, Language + Dark-mode, Legal (Privacy/Terms), Help, Log Out | ✅ Ported — `lib/screens/account_screen.dart` |
+| Vet Contacts — invite-link onboarding (Pending/Confirmed/Declined), Add-Vet sheet, per-vet edit sheet | ✅ Ported — `_VetsPage` in `lib/screens/account_screen.dart` |
+| Farm Management — assign / reassign / remove manager or assign self, per farm | ✅ Ported — `_FarmMgmtPage` in `lib/screens/account_screen.dart` |
+| Events refinements — filter-as-sheet, title-opens-walkthrough, P2/P3 fever-photo + Call-vet cards, past-event detail sheets | 🚧 Partial — Events base ported; these later HTML tweaks not yet reflected |
 | Farmer persona (stripped views) | ❌ Not designed in HTML yet — nothing to port |
 
 ## Structure
@@ -53,6 +53,8 @@ lib/
   i18n/strings.dart            — en/hi/bho strings, mirrors STRINGS in vanix_screens.html
   state/app_state.dart         — dark-mode, language, and openEventsCount — all persist app-wide
   models/milk_models.dart      — MilkEntry, Cow, seed data matching the HTML's mock values
+  models/farm_models.dart      — FarmModel, CowModel, VetModel, timeline/vet-log data (kFarms, kVets)
+  i18n/farm_strings.dart       — en/hi labels for Farms/Cow/Account (bho falls back to hi)
   widgets/
     vanix_bottom_nav.dart      — frosted nav bar, sliding droplet capsule + squish animation
     vanix_nav_items.dart       — shared 5-tab item builder (keeps badge/dot logic in one place)
@@ -67,6 +69,10 @@ lib/
     milk_summary_screen.dart   — breed filter, 8-week trend (CustomPainter), top cows, yield-by-breed
     events_screen.dart         — tabs, fever/heat/pregnancy/gestation/milking action-card state machines, reminders, history
     heat_alert_screen.dart     — full-screen "push notification" style Heat alert
+    farms_screen.dart          — Farms list: stat tiles, activity ticker, filter sheet, farm cards
+    farm_detail_screen.dart    — cow list: temp/level hero, Status/Breed/Age filters, alerts toggle, kebab
+    cow_profile_screen.dart    — Timeline / Overview / Vet Logs tabs + floating actions
+    account_screen.dart        — Settings, Profile, Vet Contacts, Farm Management, Privacy/Terms
 main.dart
 ```
 
