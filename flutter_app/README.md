@@ -46,6 +46,8 @@ You'll need to add the actual font files before it runs cleanly (see
 | Filters v2 (boxless rows, left radio/checkbox, white rail, Reset/Cancel everywhere) | ❌ Pending — HTML done, not yet ported to the Flutter filter sheets |
 | Milk summary polish (hero merges w/ page while open, header button stays a filter) | ❌ Pending — HTML done |
 | Cow profile v3 (underline tabs, per-segment timeline rail, borderless tiles, multi-step + sheet: status+reason, vet visit, vet log, heat/insem/preg/delivery) | ❌ Pending — HTML done, `cow_profile_screen.dart` still on the v2 pill-tab design |
+| Cow profile Milk Data tab (8-week graph, Highest/Lowest tiles, session history cards) | ❌ Pending — HTML done |
+| Add Cattle page (photo, type, breed/gender, age, status, belt/MAC, cow-history w/ lactation stepper) | ❌ Pending — HTML done, no Flutter screen yet |
 | Events inputs-as-sheets (vet picker callback sheet + generic form sheet for Fever/Gestation/P0 flows) | ❌ Pending — HTML done |
 | Farmer persona (stripped views) | ❌ Not designed in HTML yet — nothing to port |
 
