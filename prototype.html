@@ -5788,11 +5788,12 @@
           '<p style="font-size:9px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">' + window.t()[k] + '</p>' +
         '</div>';
       }
-      function ovStatCard(icon, big, unit, labelK, corner) {
-        return '<div style="flex:1; min-width:0; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">' +
+      function ovStatCard(icon, big, unit, labelK, corner, accent, tint) {
+        return '<div style="flex:1; min-width:0; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px; position:relative; overflow:hidden;">' +
+          '<span style="position:absolute; inset-inline-start:0; top:0; bottom:0; width:4px; background:' + accent + ';"></span>' +
           '<div style="display:flex; align-items:flex-start; justify-content:space-between; gap:6px;">' +
-            '<span style="color:var(--text2);">' + icon + '</span>' +
-            (corner ? '<span style="color:var(--text2);">' + corner + '</span>' : '') +
+            '<span style="display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:11px; background:' + tint + '; color:' + accent + ';">' + icon + '</span>' +
+            (corner ? '<span style="color:' + accent + '; opacity:0.55;">' + corner + '</span>' : '') +
           '</div>' +
           '<p style="margin:12px 0 0;"><span class="en" style="font-size:22px; font-weight:700; color:var(--text1);">' + big + '</span>' + (unit ? ' <span class="en" style="font-size:13px; font-weight:600; color:var(--text1);">' + unit + '</span>' : '') + '</p>' +
           '<p style="font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">' + window.t()[labelK] + '</p>' +
