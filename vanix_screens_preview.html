@@ -2076,6 +2076,18 @@
             <button id="callvet-send" data-k="sendVetReq" style="width:100%; min-height:48px; margin-top:10px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Send request</button>
           </div>
 
+          <!-- Generic event-form sheet — card inputs (vet logs, delivery notes) slide up here -->
+          <div id="evform-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
+          <div id="evform-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 20px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+            <div style="display:flex; align-items:center; margin-top:10px;">
+              <h3 id="evform-title" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Log</h3>
+              <button id="evform-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+            </div>
+            <p id="evform-sub" style="font-size:12px; color:var(--text2); margin:6px 0 0;"></p>
+            <div id="evform-body" style="max-height:420px; overflow-y:auto;"></div>
+          </div>
+
           <!-- PAST EVENT detail sheet — who took action + vet outcome -->
           <div id="hist-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
           <div id="hist-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
@@ -4089,6 +4101,22 @@
         document.getElementById('ev-vetlog-submit-' + idPrefix).addEventListener('click', onSubmit);
       }
 
+      // Card inputs never live inside the card — they slide up in this sheet.
+      function openEvForm(title, sub, html, wire) {
+        document.getElementById('evform-title').textContent = title;
+        document.getElementById('evform-sub').textContent = sub || '';
+        document.getElementById('evform-body').innerHTML = html;
+        if (wire) wire();
+        var sh = document.getElementById('evform-sheet'), bd = document.getElementById('evform-backdrop');
+        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeEvForm() {
+        var sh = document.getElementById('evform-sheet'), bd = document.getElementById('evform-backdrop');
+        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      document.getElementById('evform-close').addEventListener('click', closeEvForm);
+      document.getElementById('evform-backdrop').addEventListener('click', closeEvForm);
+
       // card morph helpers: swap card body + tint
       function evSetTint(card, bg, border) {
         card.style.background = bg;
@@ -4107,18 +4135,17 @@
           evResolve();
         });
         card.querySelector('.ev-yes').addEventListener('click', function() {
-          // Fever → select vet → log (date, vet name, notes + attachment).
-          body.innerHTML = vetPickerHtml('fever');
-          wireVetPicker('fever', function(vetName) {
-            body.innerHTML = '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Log · Fever</p>' +
-              '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">Kajri · Green Valley Farm · Vet: ' + vetName + '</p>' +
-              vetLogHtml('fever', vetName);
-            wireVetLog('fever', function() {
-              evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
-              card.querySelector('.ev-corner-badge').style.display = 'none';
-              body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Vet visit logged ✓</p>' +
-                '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Logged with ' + vetName + ' — Kajri · Fever · Green Valley Farm.</p>';
-              evResolve();
+          // Fever → vet-picker sheet → vet-log sheet (no inputs inside the card).
+          window.openVetSheet(function(vetName) {
+            openEvForm('Log · Fever', 'Kajri · Green Valley Farm · Vet: ' + vetName, vetLogHtml('fever', vetName), function() {
+              wireVetLog('fever', function() {
+                closeEvForm();
+                evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
+                card.querySelector('.ev-corner-badge').style.display = 'none';
+                body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Vet visit logged ✓</p>' +
+                  '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Logged with ' + vetName + ' — Kajri · Fever · Green Valley Farm.</p>';
+                evResolve();
+              });
             });
           });
         });
@@ -4259,9 +4286,7 @@
         // window (pre / suboptimal) it interposes a confirmation step first.
         // Picking one of the 3 onboarded vets then opens the log form.
         function showHeatVetPicker() {
-          vetEl.innerHTML = vetPickerHtml('heat');
-          vetEl.style.display = 'block';
-          wireVetPicker('heat', function(vetName) {
+          window.openVetSheet(function(vetName) {
             vetEl.style.display = 'none';
             // Vet called → the card now becomes the Insemination Window:
             // swap to the vet+syringe photo, reveal the 24h timer window and
@@ -4338,8 +4363,7 @@
 
       // reusable: diagnostic Yes -> vet-email request -> "requested" (Fever/Abortion/Fresh Cow, all P0)
       function evVetRequestFlow(card, body, cowLabel, farmLabel) {
-        body.innerHTML = vetPickerHtml(card.id);
-        wireVetPicker(card.id, function(vetName) {
+        window.openVetSheet(function(vetName) {
           evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
           var esc = card.querySelector('.ev-corner-badge'); if (esc) esc.style.display = 'none';
           body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Vet appointment requested ✓</p>' +
@@ -4399,9 +4423,9 @@
         function renderCallVet() {
           titleEl.textContent = '9-month check — call your vet for delivery';
           subEl.textContent = 'Approaching her due date — call a vet to be on hand for delivery.';
-          body.innerHTML = vetPickerHtml('gestation');
-          wireVetPicker('gestation', function(vetName) {
-            renderDeliveryAsk(vetName);
+          body.innerHTML = '<button id="ev-gestation-callvet" style="width:100%; min-height:44px; margin-top:12px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">' + window.t().ctaCallVet + '</button>';
+          document.getElementById('ev-gestation-callvet').addEventListener('click', function() {
+            window.openVetSheet(function(vetName) { renderDeliveryAsk(vetName); });
           });
         }
 
@@ -4426,16 +4450,20 @@
         function renderDeliveryLog(vetName) {
           titleEl.textContent = 'Delivery successful — log it';
           subEl.textContent = 'Add any notes from ' + vetName + ' before logging the delivery.';
-          body.innerHTML =
-            '<textarea id="ev-gestation-notes" placeholder="Delivery notes (optional)" rows="3" style="width:100%; margin-top:10px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
-            '<button id="ev-gestation-deliver" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log delivery</button>';
-          document.getElementById('ev-gestation-deliver').addEventListener('click', function() {
-            evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
-            body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Delivery logged ✓</p>' +
-              '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Lakshmi has moved to Calved. She\'ll appear in the Milk Log once you add her from the new lactation notification.</p>';
-            evResolve();
-            showMilkingNotif('Lakshmi');
-          });
+          body.innerHTML = '<p style="font-size:13px; color:var(--text2); margin:12px 0 0;">Logging delivery\u2026</p>';
+          openEvForm('Log delivery', 'Lakshmi \u00b7 ' + vetName,
+            '<textarea id="ev-gestation-notes" placeholder="Delivery notes (optional)" rows="3" style="width:100%; box-sizing:border-box; margin-top:10px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
+            '<button id="ev-gestation-deliver" style="width:100%; min-height:44px; margin-top:8px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);">Log delivery</button>',
+            function() {
+              document.getElementById('ev-gestation-deliver').addEventListener('click', function() {
+                closeEvForm();
+                evSetTint(card, 'var(--activebg)', 'var(--greendeep)');
+                body.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:12px 0 0;">Delivery logged ✓</p>' +
+                  '<p style="font-size:12px; color:var(--text2); margin:4px 0 0;">Lakshmi has moved to Calved. She\'ll appear in the Milk Log once you add her from the new lactation notification.</p>';
+                evResolve();
+                showMilkingNotif('Lakshmi');
+              });
+            });
         }
 
         card.querySelector('.ev-ack').addEventListener('click', renderCheck6);
@@ -6477,11 +6505,17 @@
             r.addEventListener('click', function() { picked = +r.getAttribute('data-i'); rows(); });
           });
         }
-        function open() { picked = 0; rows(); sheet.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto'; }
-        function close() { sheet.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
+        var pendingCb = null;
+        function open(cb) { pendingCb = (typeof cb === 'function') ? cb : null; picked = 0; rows(); sheet.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto'; }
+        function close() { pendingCb = null; sheet.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
         bd.addEventListener('click', close);
         document.getElementById('callvet-close').addEventListener('click', close);
-        document.getElementById('callvet-send').addEventListener('click', close);
+        document.getElementById('callvet-send').addEventListener('click', function() {
+          var cb = pendingCb; pendingCb = null;
+          sheet.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+          if (cb) cb(VETS_LOCAL[picked]);
+        });
+        window.openVetSheet = open;
         document.addEventListener('click', function(e) {
           var b = e.target.closest ? e.target.closest('.ev-callvet') : null;
           if (b) { e.stopPropagation(); open(); }
