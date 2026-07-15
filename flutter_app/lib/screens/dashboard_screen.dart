@@ -24,6 +24,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _navIndex = 0;
 
   void _onNavTap(int i) {
+    if (i == 1) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => FarmsScreen(appState: widget.appState))).then((_) => setState(() {}));
+      return;
+    }
     if (i == 2) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => MilkLogScreen(appState: widget.appState))).then((_) => setState(() {}));
       return;
@@ -33,7 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       return;
     }
     if (i == 4) {
-      widget.appState.toggleDark();
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => AccountScreen(appState: widget.appState))).then((_) => setState(() {}));
       return;
     }
     setState(() => _navIndex = i);
