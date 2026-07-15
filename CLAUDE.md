@@ -63,6 +63,7 @@ textOnDark   = #FFFFFF
 border       = #D8D0C5
 success      = #4DDE95
 warning      = #E8A020
+divider      = #EBE6DD  // lighter than border — for dividers/rails, not card outlines
 danger       = #D44C3A
 greenDeep    = #2EBD7E  // CTA fill (Continue/Confirm) with white text (#FFFFFF); input focus accents
 greenInk     = #1E7A52  // green as text/icon on white — the only green that passes AA on white
