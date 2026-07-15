@@ -2642,6 +2642,84 @@
             </div>
           </div>
 
+          <!-- ADD CATTLE — full-screen form, opened by the Farm Detail + FAB -->
+          <div id="page-add-cattle" style="position:absolute; inset:0; background:var(--bgwarm); z-index:50; transform:translateY(100%); transition:transform 0.5s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column;">
+            <div style="flex-shrink:0; display:flex; align-items:center; gap:12px; padding:16px 16px 12px; background:var(--bgwarm);">
+              <button id="ac-back" style="flex-shrink:0; width:36px; height:36px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+              <div style="flex:1; min-width:0;">
+                <p data-k="addCattle" style="font-size:21px; font-weight:700; color:var(--text1); margin:0; line-height:1.2;">Add Cattle</p>
+                <p id="ac-sub" style="font-size:13px; color:var(--text2); margin:2px 0 0;"><span data-k="acSubPre">Add a new cow to</span> <span id="ac-farm-name" class="en">Sunrise Dairy Farm</span></p>
+              </div>
+            </div>
+            <div style="flex:1; overflow-y:auto; padding:4px 16px 120px;">
+              <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;">Cow Photo</label>
+              <button id="ac-photo" style="width:100%; min-height:118px; border:1.5px dashed var(--border); border-radius:14px; background:var(--bgcard); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; cursor:pointer; font-family:var(--font-hi);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                <span data-k="acPhotoHint" style="font-size:13px; color:var(--text2);">Upload a PNG / JPG of the cow</span>
+              </button>
+
+              <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin-top:18px;">Cattle Type</label>
+              <select style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238C8780' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center;">
+                <option>Cow</option><option>Sheep</option><option>Goat</option>
+              </select>
+              <p style="font-size:11px; color:var(--text2); margin:6px 0 0; line-height:1.5; font-style:italic;" data-k="acTypeHint">Cow · Sheep · Goat — non-cow health scoring is flagged.</p>
+
+              <div style="display:flex; gap:12px; margin-top:18px;">
+                <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;">Breed</label><select style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238C8780' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center;"><option data-k="selectWord">Select</option><option>Jersey</option><option>Gir</option><option>Sahiwal</option><option>Ongole</option><option>Desi</option></select></div>
+                <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;">Gender</label><select style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238C8780' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center;"><option data-k="selectWord">Select</option><option data-k="genderFemale">Female</option><option data-k="genderMale">Male</option></select></div>
+              </div>
+
+              <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin-top:18px;" data-k="acCowName">Cow Name (easily recognisable)</label>
+              <input type="text" placeholder="e.g. Gowri" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
+
+              <div style="display:flex; gap:12px; margin-top:18px; align-items:flex-start;">
+                <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="ageWord">Age</label>
+                  <div style="display:flex; gap:8px;">
+                    <select style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238C8780' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; flex:1;"><option data-k="yearsWord">Years</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+                    <select style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238C8780' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; flex:1;"><option data-k="monthsWord">Months</option><option>0</option><option>3</option><option>6</option><option>9</option></select>
+                  </div>
+                </div>
+                <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="cowStatusWord">Cow Status</label><select style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238C8780' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center;"><option data-k="selectWord">Select</option><option data-k="stMilking">Milking</option><option data-k="stPreg">Pregnant</option><option data-k="statusUnknown">Unknown</option><option data-k="calfWord">Calf</option><option data-k="stDry">Dry state</option></select></div>
+              </div>
+
+              <p style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin-top:22px; font-size:12px;" data-k="acDeviceDetails">Device Details</p>
+              <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="acBeltNo">Cattle Belt Number</label>
+              <input type="text" placeholder="e.g. 026" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
+              <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin-top:16px;">MAC ID</label>
+              <input type="text" placeholder="A4:C1:38:2B:9F:11" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
+
+              <div style="display:flex; align-items:center; gap:8px; margin-top:22px;">
+                <p style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin:0;" data-k="acCowHistory">Cow History</p>
+                <span style="font-size:11px; color:var(--text2); font-style:italic;" data-k="optionalWord">(optional)</span>
+              </div>
+              <div style="display:flex; gap:18px; margin-top:10px;">
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:14px; color:var(--text1); font-family:var(--font-hi);"><input type="radio" name="ac-hist" checked style="accent-color:var(--greenink); width:18px; height:18px;"><span data-k="acFillHistory">Fill cow history</span></label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:14px; color:var(--text1); font-family:var(--font-hi);"><input type="radio" name="ac-hist" style="accent-color:var(--greenink); width:18px; height:18px;"><span data-k="acHistUnknown">History unknown</span></label>
+              </div>
+              <div id="ac-history" style="border-inline-start:2px dashed var(--border); margin-inline-start:6px; padding-inline-start:16px; margin-top:14px;">
+                <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="acLastHeat">Last Heat</label>
+                <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
+                <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin-top:14px;" data-k="acLastInsem">Last Insemination</label>
+                <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
+                <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin-top:14px;" data-k="acLastPreg">Last Pregnancy</label>
+                <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
+                <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin-top:14px;" data-k="acLastCalving">Last Calving</label>
+                <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
+                <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin-top:14px;" data-k="acLactationNo">Lactation Number</label>
+                <div style="display:flex; align-items:center; gap:0; width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); padding:0; overflow:hidden;">
+                  <span id="ac-lact-val" class="en" style="flex:1; padding:0 14px; font-size:15px; color:var(--text1);">2</span>
+                  <button id="ac-lact-minus" style="width:48px; align-self:stretch; border:none; border-inline-start:1px solid var(--border); background:transparent; font-size:20px; color:var(--text1); cursor:pointer;">–</button>
+                  <button id="ac-lact-plus" style="width:48px; align-self:stretch; border:none; border-inline-start:1px solid var(--border); background:transparent; font-size:20px; color:var(--text1); cursor:pointer;">+</button>
+                </div>
+                <p style="font-size:11px; color:var(--text2); margin:6px 0 0; line-height:1.5; font-style:italic;" data-k="acLactHint">Number stepper, not a date. Fields show only while "Fill cow history" is selected.</p>
+              </div>
+            </div>
+            <div style="flex-shrink:0; padding:12px 16px calc(12px + env(safe-area-inset-bottom)); background:var(--bgwarm); border-top:1px solid var(--border); display:flex; gap:10px;">
+              <button id="ac-cancel" data-k="cancelWord" style="flex:1; min-height:50px; border-radius:25px; border:1px solid var(--border); background:var(--bgcard); font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Cancel</button>
+              <button id="ac-save" data-k="saveWord" style="flex:1.6; min-height:50px; border-radius:25px; border:none; background:var(--greenink); color:#FFFFFF; font-size:15px; font-weight:700; font-family:var(--font-hi); cursor:pointer;">Save</button>
+            </div>
+          </div>
+
           <!-- FARM DETAIL — opened by tapping a farm row on the Farms list. -->
           <div id="page-farm-detail" style="position:absolute; inset:0; background:var(--bgwarm); z-index:41; display:none;">
             <div style="position:relative; height:100%; overflow:hidden;">
@@ -2819,7 +2897,7 @@
                wordCattle:'cattle', setupBadge:'Setup', noFarmsMatch:'No farms match this filter.',
                managerWord:'Manager', farmTempCaption:'Farm temp', searchCattle:'Search cattle',
                cattleAll:'All', cattleMilking:'Milking', cattleFever:'Fever', cattleHeat:'Heat',
-               cowTempCaption:'cow temp', addCattle:'Add Cattle', noCattleYet:'No cattle yet on this farm.', tapAddCattle:'Tap "Add Cattle" below to get started.', noCattleMatch:'No cattle match this filter.',
+               cowTempCaption:'cow temp', addCattle:'Add Cattle', noCattleYet:'No cattle yet on this farm.', tapAddCattle:'Tap "Add Cattle" below to get started.', noCattleMatch:'No cattle match this filter.', acSubPre:'Add a new cow to', acPhotoHint:'Upload a PNG / JPG of the cow', acTypeHint:'Cow \u00b7 Sheep \u00b7 Goat \u2014 non-cow health scoring is flagged.', selectWord:'Select', genderFemale:'Female', genderMale:'Male', acCowName:'Cow Name (easily recognisable)', yearsWord:'Years', monthsWord:'Months', cowStatusWord:'Cow Status', statusUnknown:'Unknown', calfWord:'Calf', acDeviceDetails:'Device Details', acBeltNo:'Cattle Belt Number', acCowHistory:'Cow History', optionalWord:'(optional)', acFillHistory:'Fill cow history', acHistUnknown:'History unknown', acLastHeat:'Last Heat', acLastInsem:'Last Insemination', acLastPreg:'Last Pregnancy', acLastCalving:'Last Calving', acLactationNo:'Lactation Number', acLactHint:'Number stepper, not a date. Fields show only while "Fill cow history" is selected.', saveWord:'Save',
                statusMilking:'Milking', statusPregnant:'Pregnant', statusHeatCycle:'Heat Cycle',
                evTitle:'Events', evSubtitle:'Health, breeding and reminders across all your farms', evViewFullCycle:'View full cycle', evNeedAction:'need action',
                qfType:'Type', qfUnactioned:'Unactioned', qfCriticality:'Criticality', qfCategory:'Category',
@@ -2901,7 +2979,7 @@
                wordCattle:'पशु', setupBadge:'सेटअप', noFarmsMatch:'इस फ़िल्टर से कोई खेत नहीं मिला।',
                managerWord:'प्रबंधक', farmTempCaption:'खेत का तापमान', searchCattle:'पशु खोजें',
                cattleAll:'सभी', cattleMilking:'दूध देने वाली', cattleFever:'बुखार', cattleHeat:'हीट',
-               cowTempCaption:'पशु का तापमान', addCattle:'पशु जोड़ें', noCattleYet:'इस खेत में अभी कोई पशु नहीं है।', tapAddCattle:'शुरू करने के लिए "पशु जोड़ें" दबाएँ।', noCattleMatch:'इस फ़िल्टर से कोई पशु नहीं मिला।',
+               cowTempCaption:'पशु का तापमान', addCattle:'पशु जोड़ें', noCattleYet:'इस खेत में अभी कोई पशु नहीं है।', tapAddCattle:'शुरू करने के लिए "पशु जोड़ें" दबाएँ।', noCattleMatch:'इस फ़िल्टर से कोई पशु नहीं मिला।', acSubPre:'इस खेत में नई गाय जोड़ें —', acPhotoHint:'गाय की PNG / JPG अपलोड करें', acTypeHint:'गाय \u00b7 भेड़ \u00b7 बकरी \u2014 गैर-गाय स्वास्थ्य स्कोरिंग चिह्नित होती है।', selectWord:'चुनें', genderFemale:'मादा', genderMale:'नर', acCowName:'गाय का नाम (आसानी से पहचानने योग्य)', yearsWord:'साल', monthsWord:'महीने', cowStatusWord:'गाय की स्थिति', statusUnknown:'अज्ञात', calfWord:'बछड़ा', acDeviceDetails:'डिवाइस विवरण', acBeltNo:'पशु बेल्ट नंबर', acCowHistory:'गाय का इतिहास', optionalWord:'(वैकल्पिक)', acFillHistory:'गाय का इतिहास भरें', acHistUnknown:'इतिहास अज्ञात', acLastHeat:'अंतिम हीट', acLastInsem:'अंतिम गर्भाधान', acLastPreg:'अंतिम गर्भावस्था', acLastCalving:'अंतिम प्रसव', acLactationNo:'स्तनपान संख्या', acLactHint:'संख्या स्टेपर, तारीख नहीं। ये फ़ील्ड केवल "गाय का इतिहास भरें" चुनने पर दिखते हैं।', saveWord:'सहेजें',
                statusMilking:'दूध दे रही', statusPregnant:'गर्भवती', statusHeatCycle:'हीट साइकिल',
                evTitle:'कार्यक्रम', evSubtitle:'आपके सभी खेतों में स्वास्थ्य, प्रजनन और अनुस्मारक', evViewFullCycle:'पूरा चक्र देखें', evNeedAction:'को कार्रवाई चाहिए',
                qfType:'प्रकार', qfUnactioned:'अनसुलझे', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
@@ -2983,7 +3061,7 @@
                wordCattle:'पशु', setupBadge:'सेटअप', noFarmsMatch:'ए फ़िल्टर से कवनो खेत ना मिलल।',
                managerWord:'प्रबंधक', farmTempCaption:'खेत के तापमान', searchCattle:'पशु खोजीं',
                cattleAll:'सगरी', cattleMilking:'दूध देवे वाली', cattleFever:'बुखार', cattleHeat:'हीट',
-               cowTempCaption:'पशु के तापमान', addCattle:'पशु जोड़ीं', noCattleYet:'ए खेत में अबतक कवनो पशु नइखे।', tapAddCattle:'शुरू करे खातिर "पशु जोड़ीं" दबाईं।', noCattleMatch:'ए फ़िल्टर से कवनो पशु ना मिलल।',
+               cowTempCaption:'पशु के तापमान', addCattle:'पशु जोड़ीं', noCattleYet:'ए खेत में अबतक कवनो पशु नइखे।', tapAddCattle:'शुरू करे खातिर "पशु जोड़ीं" दबाईं।', noCattleMatch:'ए फ़िल्टर से कवनो पशु ना मिलल।', acSubPre:'इस खेत में नई गाय जोड़ें —', acPhotoHint:'गाय की PNG / JPG अपलोड करें', acTypeHint:'गाय \u00b7 भेड़ \u00b7 बकरी \u2014 गैर-गाय स्वास्थ्य स्कोरिंग चिह्नित होती है।', selectWord:'चुनें', genderFemale:'मादा', genderMale:'नर', acCowName:'गाय का नाम (आसानी से पहचानने योग्य)', yearsWord:'साल', monthsWord:'महीने', cowStatusWord:'गाय की स्थिति', statusUnknown:'अज्ञात', calfWord:'बछड़ा', acDeviceDetails:'डिवाइस विवरण', acBeltNo:'पशु बेल्ट नंबर', acCowHistory:'गाय का इतिहास', optionalWord:'(वैकल्पिक)', acFillHistory:'गाय का इतिहास भरें', acHistUnknown:'इतिहास अज्ञात', acLastHeat:'अंतिम हीट', acLastInsem:'अंतिम गर्भाधान', acLastPreg:'अंतिम गर्भावस्था', acLastCalving:'अंतिम प्रसव', acLactationNo:'स्तनपान संख्या', acLactHint:'संख्या स्टेपर, तारीख नहीं। ये फ़ील्ड केवल "गाय का इतिहास भरें" चुनने पर दिखते हैं।', saveWord:'सहेजें',
                statusMilking:'दूध देत बा', statusPregnant:'गर्भवती', statusHeatCycle:'हीट साइकिल',
                evTitle:'कार्यक्रम', evSubtitle:'रउरा सगरी खेत में स्वास्थ्य, प्रजनन आ अनुस्मारक', evViewFullCycle:'पूरा चक्र देखीं', evNeedAction:'के कार्रवाई के जरूरत',
                qfType:'प्रकार', qfUnactioned:'ना सुलझल', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
@@ -6143,9 +6221,28 @@
       document.getElementById('farm-detail-back').addEventListener('click', function() {
         farmDetailPage.style.display = 'none';
       });
-      document.getElementById('farm-detail-fab').addEventListener('click', function() {
-        // Add Cattle is a future flow — no-op placeholder for now.
-      });
+      // ── Add Cattle page ──
+      var acPage = document.getElementById('page-add-cattle');
+      function openAddCattle() {
+        var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
+        document.getElementById('ac-farm-name').textContent = farm ? loc(farm, 'name') : '';
+        acPage.style.transform = 'translateY(0)';
+      }
+      function closeAddCattle() { acPage.style.transform = 'translateY(100%)'; }
+      document.getElementById('farm-detail-fab').addEventListener('click', openAddCattle);
+      document.getElementById('ac-back').addEventListener('click', closeAddCattle);
+      document.getElementById('ac-cancel').addEventListener('click', closeAddCattle);
+      document.getElementById('ac-save').addEventListener('click', closeAddCattle);
+      (function() {
+        var histRadios = document.querySelectorAll('input[name="ac-hist"]');
+        var histBox = document.getElementById('ac-history');
+        histRadios.forEach(function(r, i) {
+          r.addEventListener('change', function() { histBox.style.display = (i === 0 && r.checked) ? 'block' : 'none'; });
+        });
+        var lact = 2, valEl = document.getElementById('ac-lact-val');
+        document.getElementById('ac-lact-minus').addEventListener('click', function() { if (lact > 0) { lact--; valEl.textContent = lact; } });
+        document.getElementById('ac-lact-plus').addEventListener('click', function() { lact++; valEl.textContent = lact; });
+      })();
 
 
       // ── Account section ──
