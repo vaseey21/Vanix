@@ -873,17 +873,28 @@
     .ev-field-row { display: flex; gap: 10px; }
     .ev-field-row > * { flex: 1 1 0; min-width: 0; }
 
-    /* filter sheet — option rows (tinted, never white) + category rail */
-    .s7-chip { display:flex; align-items:center; gap:10px; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:10px; border-radius:14px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi); }
-    .s7-chip svg { flex-shrink:0; color:var(--greenink); }
-    .s7-chip::after { content:''; width:20px; height:20px; border-radius:50%; border:2px solid var(--greenink); margin-inline-start:auto; flex-shrink:0; box-sizing:border-box; }
-    .s7-chip.on { background:var(--greenink) !important; color:#FFFFFF !important; border-color:var(--greenink) !important; font-weight:600; }
-    .s7-chip.on svg { color:#FFFFFF; }
-    .s7-chip.on::after { background:#FFFFFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M20 6 9 17l-5-5' fill='none' stroke='%231E7A52' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat; border-color:#FFFFFF; }
-    .s7-cat { display:flex; align-items:center; gap:10px; background:transparent; color:var(--text1); border-inline-start:3px solid transparent !important; }
+    /* Filter header cleanup: no icon chip, no close circle, smaller title */
+    #farms-fs-close, #cattle-fs-close, #ev-fs-close, #s7-close { display:none !important; }
+    #farms-fs-sheet h3, #cattle-fs-sheet h3, #ev-fs-sheet h3, #s7-sheet h3 { font-size:17px !important; }
+    /* filter sheet — Swiggy-style: white rail w/ dividers, bordered option rows,
+       radio (single) / checkbox (multi), selected = greenInk outline + 10% fill */
+    .s7-chip { display:flex; align-items:center; gap:12px; width:100%; text-align:start; min-height:50px; padding:0 14px; margin-bottom:10px; border-radius:14px; border:1.5px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:500; font-family:var(--font-hi); }
+    .s7-chip svg { display:none; }
+    .s7-chip::after { content:''; width:22px; height:22px; border-radius:50%; border:2px solid var(--border); margin-inline-start:auto; flex-shrink:0; box-sizing:border-box; transition:border-color 0.15s, background 0.15s; }
+    .s7-pane[data-multi] .s7-chip::after { border-radius:6px; }
+    .s7-chip.on { background:var(--activebg) !important; color:var(--text1) !important; border-color:var(--greenink) !important; font-weight:600; }
+    /* multi-select selected → checkbox with tick */
+    .s7-pane[data-multi] .s7-chip.on::after { border-color:var(--greenink); background:var(--greenink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M20 6 9 17l-5-5' fill='none' stroke='%23FFFFFF' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/13px no-repeat; }
+    /* single-select selected → filled radio dot */
+    .s7-pane:not([data-multi]) .s7-chip.on::after { border:6px solid var(--greenink); background:var(--bgcard); }
+    .s7-cat { display:flex; align-items:center; gap:10px; background:transparent; color:var(--text1); border-inline-start:3px solid transparent !important; border-bottom:1px solid var(--border); }
     .s7-cat svg { flex-shrink:0; color:var(--text2); }
-    .s7-cat.on { background:var(--activebg); color:var(--greenink); font-weight:700; border-inline-start:3px solid var(--greenink) !important; border-radius:0 14px 14px 0; }
+    .s7-cat.on { background:transparent; color:var(--greenink); font-weight:700; border-inline-start:3px solid var(--greenink) !important; }
     .s7-cat.on svg { color:var(--greenink); }
+    /* left rail = full white with divider lines */
+    #s7-cats, .fs-cats-rail { background:var(--bgcard) !important; }
+    #flow-root.dark #s7-cats, #flow-root.dark .fs-cats-rail { background:#1E1E1E !important; }
+    #flow-root.dark .s7-cat, #flow-root.dark .s7-chip { border-color:#333333; }
     #flow-root.dark .m-late { cursor: pointer; }
 
     /* pending approval sub-card + updated badge */
@@ -1479,7 +1490,7 @@
           <div id="s7-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:9; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
             <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
             <div style="display:flex; align-items:center; gap:12px; margin-top:10px;">
-              <span style="width:42px; height:42px; border-radius:50%; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--greenink);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></span>
+              
               <h3 style="font-size:20px; font-weight:700; color:var(--text1); margin:0; flex:1;">Filters</h3>
               <button id="s7-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
             </div>
@@ -2099,7 +2110,7 @@
           <div id="ev-fs-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
             <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
             <div style="display:flex; align-items:center; gap:12px; margin-top:10px;">
-              <span style="width:42px; height:42px; border-radius:50%; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--greenink);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></span>
+              
               <h3 data-k="filterWord" style="font-size:20px; font-weight:700; color:var(--text1); margin:0; flex:1;">Filter</h3>
               <button id="ev-fs-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
             </div>
@@ -2300,7 +2311,7 @@
           <div id="farms-fs-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
             <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
             <div style="display:flex; align-items:center; gap:12px; margin-top:10px;">
-              <span style="width:42px; height:42px; border-radius:50%; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--greenink);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></span>
+              
               <h3 data-k="filterWord" style="font-size:20px; font-weight:700; color:var(--text1); margin:0; flex:1;">Filter</h3>
               <button id="farms-fs-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
             </div>
@@ -2787,7 +2798,7 @@
           <div id="cattle-fs-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
             <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
             <div style="display:flex; align-items:center; gap:12px; margin-top:10px;">
-              <span style="width:42px; height:42px; border-radius:50%; background:var(--activebg); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--greenink);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></span>
+              
               <h3 data-k="filterWord" style="font-size:20px; font-weight:700; color:var(--text1); margin:0; flex:1;">Filter</h3>
               <button id="cattle-fs-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
             </div>
