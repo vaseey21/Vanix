@@ -122,7 +122,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
                         children: [
                           Flexible(
                             child: Text(widget.cow.nm(_lang),
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: textColor), overflow: TextOverflow.ellipsis),
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: textColor), overflow: TextOverflow.ellipsis),
                           ),
                           const SizedBox(width: VanixSpacing.sm),
                           _beltChip(),
