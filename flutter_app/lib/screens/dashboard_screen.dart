@@ -462,38 +462,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
             decoration: _cardDeco(),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(children: [
+              _scheduleRow('9h ${_t('dashLeft')}', 'dashInsemWindow', titlePrefix: 'Gauri', barColor: VanixColors.greenInk, timeColor: VanixColors.greenInk, divider: true),
               _scheduleRow('11:00 AM', 'dashVaccDrive', sub: 'dashStartsIn', barColor: VanixColors.greenDeep, divider: true),
               _scheduleRow('4:30 PM', 'dashVetVisit', barColor: _border, divider: true),
               _scheduleRow('6:00 PM', 'dashMilkLogging', barColor: _border, divider: false),
             ]),
           )
-        else
+        else ...[
           Container(
             decoration: _cardDeco(),
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: RichText(
-                        text: TextSpan(children: [
-                          TextSpan(text: _t('dashFmd'), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
-                          TextSpan(text: ' — 5 ${_t('dashCows')}, Green Villa', style: const TextStyle(fontSize: 14, color: VanixColors.textHint)),
-                        ]),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    const Text('5d', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: VanixColors.warning)),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(_t('dashRemindersNote'), style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: VanixColors.textHint)),
-              ],
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(children: [
+              _scheduleRow('5${_t('dashDays')}', 'dashFmd', sub: null, detail: '5 ${_t('dashCows')}, Green Villa', barColor: VanixColors.warning, timeColor: VanixColors.warning, divider: false),
+            ]),
           ),
+          const SizedBox(height: 8),
+          Text(_t('dashRemindersNote'), style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: VanixColors.textHint)),
+        ],
       ],
     );
   }
