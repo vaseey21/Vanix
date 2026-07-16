@@ -44,6 +44,8 @@ class CowModel {
 class FarmModel {
   final String id, name, nameHi, location, locationHi, locKey;
   String manager, managerHi;
+  bool managerInvitePending = false;
+  String managerInviteEmail = '';
   final int cattle, milkToday, alerts, critical, heat, fever, insem;
   final String temp;
   final FarmStatus status;
