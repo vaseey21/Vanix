@@ -23,6 +23,9 @@ class MilkEntry {
   String? lateNote; // e.g. "4h 25m after milking"
   bool pendingApproval;
   String? pendingLabel; // e.g. "+5 L (second entry)"
+  String? pendingKind; // 'edit' | 'delete' | 'add' — what the farmer requested
+  double? pendingLitres; // proposed new/added litres (for edit/add)
+  String? pendingBy; // who submitted the request
   bool updated;
   TimeOfDay? updatedAt;
 
