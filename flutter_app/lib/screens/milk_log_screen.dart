@@ -317,7 +317,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
                   child: SizedBox(
-                    height: 76,
+                    height: 92,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
@@ -335,7 +335,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(b.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.textPrimary)),
-                                      Text(b.sub, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, height: 1.25, color: VanixColors.textHint)),
+                                      Text(b.sub, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
                                     ],
                                   ),
                                 ),
@@ -522,12 +522,17 @@ class _EntryCard extends StatelessWidget {
               height: 64,
               decoration: BoxDecoration(color: _boxColor, borderRadius: BorderRadius.circular(14)),
               alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('${entry.litres}', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white)),
-                  const Text('Ltrs', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: Colors.white70)),
-                ],
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('${entry.litres}', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, height: 1.05, color: Colors.white)),
+                    const Text('Ltrs', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, height: 1.0, color: Colors.white70)),
+                  ],
+                ),
               ),
             ),
           ],
