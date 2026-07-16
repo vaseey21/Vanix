@@ -205,7 +205,7 @@ class _FarmsScreenState extends State<FarmsScreen> with SingleTickerProviderStat
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(FS.t(lang, 'farmsTitle'), style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: textColor)),
+          Text(FS.t(lang, 'farmsTitle'), style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
           const SizedBox(height: 4),
           Text(FS.t(lang, 'farmsSubtitle'), style: const TextStyle(fontSize: 13, color: VanixColors.textHint)),
           const SizedBox(height: 18),
