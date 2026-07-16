@@ -420,7 +420,7 @@ class _LoginPanel extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(t.title, style: TextStyle(fontSize: 26, fontWeight: FontWeight.w600, color: textColor)),
+            Text(t.title, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
             _PillButton(label: native, onTap: onLanguageTap, isDark: isDark),
           ],
         ),
