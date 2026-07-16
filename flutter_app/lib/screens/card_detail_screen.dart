@@ -77,12 +77,18 @@ class CardDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 20, 4),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
               child: Row(
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back, color: textColor),
-                    onPressed: () => Navigator.of(context).pop(),
+                  SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back, color: textColor),
+                      onPressed: () => Navigator.of(context).pop(),
+                      padding: EdgeInsets.zero,
+                      alignment: AlignmentDirectional.centerStart,
+                    ),
                   ),
                   Expanded(
                     child: Text('Details', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: textColor)),
