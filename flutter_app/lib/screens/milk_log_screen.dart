@@ -359,6 +359,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                             entry: entry,
                             isDark: isDark,
                             isFarmer: widget.appState.isFarmer,
+                            lang: widget.appState.languageCode,
                             onTap: () => _openEntryActions(entry),
                             onApprove: () => _approvePending(entry),
                             onReject: () => _rejectPending(entry),
