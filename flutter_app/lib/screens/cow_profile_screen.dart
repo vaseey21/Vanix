@@ -176,17 +176,14 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   }
 
   Widget _circleBtn(IconData icon, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      customBorder: const CircleBorder(),
-      child: Container(
-        width: 44, height: 44,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
-        ),
-        child: Icon(icon, size: 22, color: _isDark ? Colors.white : VanixColors.textPrimary),
+    return SizedBox(
+      width: 48,
+      height: 48,
+      child: IconButton(
+        onPressed: onTap,
+        padding: EdgeInsets.zero,
+        alignment: AlignmentDirectional.centerStart,
+        icon: Icon(icon, size: 22, color: _isDark ? Colors.white : VanixColors.textPrimary),
       ),
     );
   }
