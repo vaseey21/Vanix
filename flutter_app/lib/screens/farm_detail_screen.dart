@@ -349,15 +349,18 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                             style: TextStyle(fontSize: 13, color: farm.managerInvitePending ? VanixColors.warning : subColor, fontWeight: farm.managerInvitePending ? FontWeight.w600 : FontWeight.w400),
                           ),
                         ),
-                        const SizedBox(width: 5),
-                        InkWell(
-                          onTap: () => _openManagerChooser(farm),
-                          borderRadius: BorderRadius.circular(11),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4),
-                            child: Icon(Icons.edit_outlined, size: 13, color: subColor),
+                        // Manager edit is owner-only
+                        if (!widget.appState.isFarmer) ...[
+                          const SizedBox(width: 5),
+                          InkWell(
+                            onTap: () => _openManagerChooser(farm),
+                            borderRadius: BorderRadius.circular(11),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Icon(Icons.edit_outlined, size: 13, color: subColor),
+                            ),
                           ),
-                        ),
+                        ],
                       ]),
                     ],
                   ),
