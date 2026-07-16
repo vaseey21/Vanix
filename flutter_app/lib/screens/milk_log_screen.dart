@@ -103,18 +103,73 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
       MaterialPageRoute(builder: (_) => MilkAddEntryScreen(appState: widget.appState, allEntries: _entries, today: _today, editing: editing)),
     );
     if (result == null) return;
+    final farmer = widget.appState.isFarmer;
     setState(() {
       if (result.delete && editing != null) {
-        _entries.removeWhere((e) => e.id == editing.id);
+        if (farmer) {
+          _requestDelete(editing);
+        } else {
+          _entries.removeWhere((e) => e.id == editing.id);
+        }
       } else if (result.entry != null) {
         final idx = _entries.indexWhere((e) => e.id == result.entry!.id);
         if (idx >= 0) {
-          _entries[idx] = result.entry!;
+          if (farmer) {
+            // Farmer edits are a request, not a direct change.
+            _requestEdit(_entries[idx], result.entry!.litres);
+          } else {
+            _entries[idx] = result.entry!;
+          }
         } else {
+          // A brand-new entry is logging (allowed for farmers too).
           _entries.add(result.entry!);
         }
       }
     });
+  }
+
+  // ── Farmer edit/delete → pending owner-approval request (mirrors the
+  // .m-sub pending sub-card in prototype.html). Owner approves/rejects. ──
+  void _requestEdit(MilkEntry e, double proposed) {
+    e.pendingApproval = true;
+    e.pendingKind = 'edit';
+    e.pendingLitres = proposed;
+    e.pendingBy = e.manager;
+    e.pendingLabel = '${FS.t(widget.appState.languageCode, 'mpEditTo')} $proposed L';
+  }
+
+  void _requestDelete(MilkEntry e) {
+    e.pendingApproval = true;
+    e.pendingKind = 'delete';
+    e.pendingBy = e.manager;
+    e.pendingLabel = FS.t(widget.appState.languageCode, 'mpDeleteEntry');
+  }
+
+  void _approvePending(MilkEntry e) {
+    setState(() {
+      if (e.pendingKind == 'delete') {
+        _entries.removeWhere((x) => x.id == e.id);
+        return;
+      }
+      if (e.pendingKind == 'add') {
+        e.litres = double.parse((e.litres + (e.pendingLitres ?? 0)).toStringAsFixed(1));
+      } else if (e.pendingKind == 'edit') {
+        e.litres = e.pendingLitres ?? e.litres;
+      }
+      e.updated = true;
+      e.updatedAt = TimeOfDay.now();
+      _clearPending(e);
+    });
+  }
+
+  void _rejectPending(MilkEntry e) => setState(() => _clearPending(e));
+
+  void _clearPending(MilkEntry e) {
+    e.pendingApproval = false;
+    e.pendingKind = null;
+    e.pendingLitres = null;
+    e.pendingLabel = null;
+    e.pendingBy = null;
   }
 
   void _openEntryActions(MilkEntry entry) {
