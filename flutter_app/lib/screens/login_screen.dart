@@ -107,6 +107,20 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const Positioned.fill(child: _HeroBackground()),
                 Align(
+                  alignment: Alignment.topLeft,
+                  child: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 14, top: 4),
+                      child: _PersonaToggle(
+                        label: widget.appState.isOwner
+                            ? 'Owner'
+                            : (widget.appState.isSingleFarm ? 'Farmer · 1' : 'Farmer · N'),
+                        onTap: widget.appState.cyclePersona,
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
                   alignment: Alignment.topRight,
                   child: SafeArea(
                     child: Padding(
