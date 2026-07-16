@@ -418,77 +418,352 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     );
   }
 
-  // ── Overview tab ──────────────────────────────────────────────────────
+  // ── Overview tab (v2 — colourful) ─────────────────────────────────────
   Widget _buildOverview() {
-    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
-    final cardBg = _isDark ? VanixColors.darkSecond : VanixColors.bgCard;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: const EdgeInsets.all(VanixSpacing.lg),
-          decoration: BoxDecoration(
-            color: cardBg,
-            borderRadius: BorderRadius.circular(VanixRadius.lg),
-            border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border, width: 0.5),
-            boxShadow: _isDark ? VanixShadow.cardDark : VanixShadow.card,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(FS.t(_lang, 'wkMilkTitle'), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: textColor)),
-              const SizedBox(height: VanixSpacing.md),
-              SizedBox(
-                height: 140,
-                width: double.infinity,
-                child: CustomPaint(painter: _WeeklyPainter(values: _weekly, isDark: _isDark)),
-              ),
-              const SizedBox(height: 6),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  for (final d in const ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'])
-                    Text(d, style: const TextStyle(fontSize: 10, color: VanixColors.textHint)),
-                ],
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: VanixSpacing.md),
-        Row(
-          children: [
-            Expanded(child: _overviewTile('avgYield', '11.7 L')),
-            const SizedBox(width: VanixSpacing.sm),
-            Expanded(child: _overviewTile('lactationDay', '45')),
-          ],
-        ),
+        Row(children: [
+          Expanded(child: _ovStatCard(Icons.calendar_today_outlined, '19 Mar', 'ovLastHeat', VanixColors.warning, VanixColors.warning.withOpacity(0.14), corner: Icons.trending_up)),
+          const SizedBox(width: VanixSpacing.sm),
+          Expanded(child: _ovStatCard(Icons.calendar_today_outlined, '14 Apr', 'ovNextHeat', VanixColors.greenInk, VanixColors.activeBg, corner: Icons.calendar_month_outlined)),
+        ]),
         const SizedBox(height: VanixSpacing.sm),
-        Row(
-          children: [
-            Expanded(child: _overviewTile('avgTempLabel', '32.1°C')),
-            const SizedBox(width: VanixSpacing.sm),
-            Expanded(child: _overviewTile('heatCycles', '3')),
-          ],
-        ),
+        Row(children: [
+          Expanded(child: _ovStatCard(Icons.device_thermostat, '18 Jun', 'ovLastSpike', VanixColors.danger, VanixColors.danger.withOpacity(0.12), corner: Icons.trending_up)),
+          const SizedBox(width: VanixSpacing.sm),
+          Expanded(child: _ovStatCard(Icons.pets, '1', 'ovNumCalving', VanixColors.accentBlue, VanixColors.accentBlue.withOpacity(0.12), corner: Icons.pets)),
+        ]),
+        const SizedBox(height: VanixSpacing.xl),
+        _sectionLabel('tempWord'),
+        _tempCard(),
+        const SizedBox(height: VanixSpacing.xl),
+        _sectionLabel('actStatus'),
+        _activityCard(),
+        const SizedBox(height: VanixSpacing.xl),
+        _sectionLabel('remindersWord'),
+        _remindersCard(),
       ],
     );
   }
 
-  Widget _overviewTile(String labelKey, String value) {
-    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
+  Widget _sectionLabel(String key) => Padding(
+        padding: const EdgeInsets.only(bottom: VanixSpacing.sm),
+        child: Text(FS.t(_lang, key).toUpperCase(),
+            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 0.6, color: VanixColors.textHint)),
+      );
+
+  Widget _card({required Widget child, EdgeInsetsGeometry? padding}) {
     return Container(
-      padding: const EdgeInsets.all(VanixSpacing.md),
+      padding: padding ?? const EdgeInsets.all(VanixSpacing.lg),
       decoration: BoxDecoration(
         color: _isDark ? VanixColors.darkSecond : VanixColors.bgCard,
-        border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
-        borderRadius: BorderRadius.circular(VanixRadius.md),
+        borderRadius: BorderRadius.circular(VanixRadius.lg),
+        border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border, width: 0.5),
+        boxShadow: _isDark ? VanixShadow.cardDark : VanixShadow.card,
       ),
+      child: child,
+    );
+  }
+
+  Widget _ovStatCard(IconData icon, String big, String labelKey, Color accent, Color tint, {IconData? corner}) {
+    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(VanixRadius.lg),
+      child: Stack(children: [
+        _card(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 34, height: 34,
+                    decoration: BoxDecoration(color: tint, borderRadius: BorderRadius.circular(11)),
+                    child: Icon(icon, size: 18, color: accent),
+                  ),
+                  if (corner != null) Icon(corner, size: 18, color: accent.withOpacity(0.5)),
+                ],
+              ),
+              const SizedBox(height: VanixSpacing.md),
+              Text(big, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: textColor)),
+              const SizedBox(height: 4),
+              Text(FS.t(_lang, labelKey).toUpperCase(),
+                  style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.4, color: VanixColors.textHint)),
+            ],
+          ),
+        ),
+        PositionedDirectional(start: 0, top: 0, bottom: 0, child: Container(width: 4, color: accent)),
+      ]),
+    );
+  }
+
+  Widget _tempCard() {
+    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
+    return _card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(FS.t(_lang, labelKey), style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
-          const SizedBox(height: 4),
-          Text(value, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: textColor)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 12, vertical: 4),
+                decoration: BoxDecoration(color: VanixColors.activeBg, borderRadius: BorderRadius.circular(14)),
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Container(width: 7, height: 7, decoration: const BoxDecoration(color: VanixColors.greenDeep, shape: BoxShape.circle)),
+                  const SizedBox(width: 6),
+                  Text(FS.t(_lang, 'tempNormal'), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+                ]),
+              ),
+              Row(children: [
+                Text('33°C', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: textColor)),
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                    Text(FS.t(_lang, 'todayWord'), style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: textColor)),
+                    const SizedBox(width: 4),
+                    Icon(Icons.keyboard_arrow_down, size: 14, color: textColor),
+                  ]),
+                ),
+              ]),
+            ],
+          ),
+          const SizedBox(height: VanixSpacing.md),
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Column(children: const [
+              Text('40°C', style: TextStyle(fontSize: 9, color: VanixColors.textHint)),
+              SizedBox(height: 36),
+              Text('30°C', style: TextStyle(fontSize: 9, color: VanixColors.textHint)),
+              SizedBox(height: 36),
+              Text('20°C', style: TextStyle(fontSize: 9, color: VanixColors.textHint)),
+            ]),
+            const SizedBox(width: VanixSpacing.sm),
+            Expanded(
+              child: Column(children: [
+                SizedBox(
+                  height: 120,
+                  width: double.infinity,
+                  child: CustomPaint(painter: _TempPainter(isDark: _isDark)),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    for (final x in const ['00:00', '06:00', '12:00', '18:00', '24:00'])
+                      Text(x, style: const TextStyle(fontSize: 9, color: VanixColors.textHint)),
+                  ],
+                ),
+              ]),
+            ),
+          ]),
+        ],
+      ),
+    );
+  }
+
+  Widget _activityCard() {
+    final acts = [
+      (Icons.pets, '210', 'actRumination', VanixColors.greenInk, VanixColors.activeBg),
+      (Icons.restaurant, '268', 'actFeeding', VanixColors.warning, VanixColors.warning.withOpacity(0.14)),
+      (Icons.directions_walk, '96', 'actStanding', VanixColors.accentBlue, VanixColors.accentBlue.withOpacity(0.12)),
+      (Icons.bedtime_outlined, '512', 'actResting', VanixColors.accentViolet, VanixColors.accentViolet.withOpacity(0.12)),
+    ];
+    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
+    return _card(
+      padding: const EdgeInsets.symmetric(vertical: VanixSpacing.md, horizontal: 6),
+      child: Row(
+        children: [
+          for (var i = 0; i < acts.length; i++)
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                decoration: BoxDecoration(
+                  border: i == 0 ? null : Border(left: BorderSide(color: _isDark ? VanixColors.darkDivider : VanixColors.divider)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 28, height: 28,
+                      decoration: BoxDecoration(color: acts[i].$5, borderRadius: BorderRadius.circular(9)),
+                      child: Icon(acts[i].$1, size: 15, color: acts[i].$4),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(crossAxisAlignment: CrossAxisAlignment.baseline, textBaseline: TextBaseline.alphabetic, children: [
+                      Text(acts[i].$2, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: textColor)),
+                      const SizedBox(width: 3),
+                      const Text('min', style: TextStyle(fontSize: 10, color: VanixColors.textHint)),
+                    ]),
+                    const SizedBox(height: 3),
+                    Text(FS.t(_lang, acts[i].$3).toUpperCase(),
+                        style: const TextStyle(fontSize: 9, fontWeight: FontWeight.w600, letterSpacing: 0.3, color: VanixColors.textHint)),
+                  ],
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _remindersCard() {
+    return Container(
+      padding: const EdgeInsets.all(VanixSpacing.xl),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(VanixRadius.lg),
+        border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border, width: 1.5, style: BorderStyle.solid),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.notifications_none, size: 17, color: VanixColors.textHint),
+          const SizedBox(width: 8),
+          Text(FS.t(_lang, 'noActiveReminders'), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: VanixColors.textHint)),
+        ],
+      ),
+    );
+  }
+
+  // ── Milk Data tab (colourful, read-only) ──────────────────────────────
+  Widget _buildMilkData() {
+    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
+    final history = const [
+      (date: '12 Jun 2026', m: '7:30', e: '6:00', total: '12.5', missing: false),
+      (date: '13 Jun 2026', m: '7:00', e: '5:30', total: '14.5', missing: false),
+      (date: '14 Jun 2026', m: '6:45', e: '', total: '6.5', missing: true),
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _sectionLabel('wkYield8'),
+        _card(
+          padding: const EdgeInsets.fromLTRB(VanixSpacing.md, VanixSpacing.lg, VanixSpacing.md, VanixSpacing.lg),
+          child: SizedBox(
+            height: 96,
+            width: double.infinity,
+            child: CustomPaint(painter: _WeeklyPainter(values: const [40, 47, 44, 50, 46, 58, 47, 45], isDark: _isDark, peakIndex: 5)),
+          ),
+        ),
+        const SizedBox(height: VanixSpacing.md),
+        Row(children: [
+          Expanded(child: _weekTile('58', 'highestWeek', '16 Jun', VanixColors.greenDeep, VanixColors.greenInk)),
+          const SizedBox(width: VanixSpacing.sm),
+          Expanded(child: _weekTile('47', 'lowestWeek', '30 Jun', VanixColors.warning, VanixColors.warningInk)),
+        ]),
+        const SizedBox(height: VanixSpacing.xl),
+        _sectionLabel('milkLogHistory'),
+        for (final r in history) _milkHistoryRow(r.date, r.m, r.e, r.total, r.missing),
+        const SizedBox(height: 4),
+        Text(FS.t(_lang, 'milkDataReadonly'),
+            style: const TextStyle(fontSize: 11, height: 1.5, fontStyle: FontStyle.italic, color: VanixColors.textHint)),
+      ],
+    );
+  }
+
+  Widget _weekTile(String big, String labelKey, String sub, Color accent, Color numColor) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(VanixRadius.lg),
+      child: Stack(children: [
+        _card(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(crossAxisAlignment: CrossAxisAlignment.baseline, textBaseline: TextBaseline.alphabetic, children: [
+                Text(big, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: numColor)),
+                const SizedBox(width: 4),
+                const Text('L', style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
+              ]),
+              const SizedBox(height: 4),
+              Text(FS.t(_lang, labelKey).toUpperCase(),
+                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: 0.3, color: VanixColors.textHint)),
+              const SizedBox(height: 1),
+              Text(sub, style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
+            ],
+          ),
+        ),
+        PositionedDirectional(start: 0, top: 0, bottom: 0, child: Container(width: 4, color: accent)),
+      ]),
+    );
+  }
+
+  Widget _sessionPill(bool morning) {
+    final bg = morning ? VanixColors.warning.withOpacity(0.16) : VanixColors.accentBlue.withOpacity(0.12);
+    final fg = morning ? VanixColors.warningInk : VanixColors.accentBlue;
+    return Container(
+      constraints: const BoxConstraints(minWidth: 74),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(VanixRadius.md)),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        Icon(morning ? Icons.wb_sunny_outlined : Icons.nightlight_outlined, size: 12, color: fg),
+        const SizedBox(width: 5),
+        Text(FS.t(_lang, morning ? 'sessMorning' : 'sessEvening'),
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: fg)),
+      ]),
+    );
+  }
+
+  Widget _milkSessRow(bool morning, String time, bool missing) {
+    return Padding(
+      padding: EdgeInsets.only(top: morning ? 0 : 6),
+      child: Row(children: [
+        _sessionPill(morning),
+        const SizedBox(width: 8),
+        if (missing)
+          Row(children: [
+            Text(FS.t(_lang, 'missingWord'), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.danger)),
+            const SizedBox(width: 4),
+            const Icon(Icons.close, size: 12, color: VanixColors.danger),
+          ])
+        else ...[
+          Text(time, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: _isDark ? Colors.white : VanixColors.textPrimary)),
+          const SizedBox(width: 4),
+          const Icon(Icons.check, size: 13, color: VanixColors.greenDeep),
+        ],
+      ]),
+    );
+  }
+
+  Widget _milkHistoryRow(String date, String m, String e, String total, bool missing) {
+    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
+    return Container(
+      margin: const EdgeInsets.only(bottom: VanixSpacing.md),
+      padding: const EdgeInsets.all(VanixSpacing.lg),
+      decoration: BoxDecoration(
+        color: _isDark ? VanixColors.darkSecond : VanixColors.bgCard,
+        borderRadius: BorderRadius.circular(VanixRadius.lg),
+        border: missing
+            ? Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border, width: 1.5)
+            : Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border, width: 0.5),
+        boxShadow: missing ? null : (_isDark ? VanixShadow.cardDark : VanixShadow.card),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _milkSessRow(true, m, false),
+                _milkSessRow(false, e, missing),
+              ],
+            ),
+          ),
+          const SizedBox(width: VanixSpacing.md),
+          Text(date, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.textHint)),
+          const SizedBox(width: VanixSpacing.md),
+          Row(crossAxisAlignment: CrossAxisAlignment.baseline, textBaseline: TextBaseline.alphabetic, children: [
+            Text(total, style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700, color: missing ? VanixColors.danger : VanixColors.greenInk)),
+            const SizedBox(width: 3),
+            const Text('Lts', style: TextStyle(fontSize: 11, color: VanixColors.textHint)),
+          ]),
         ],
       ),
     );
