@@ -115,6 +115,17 @@ class FS {
       'dashGoodNews': 'Good News', 'dashRecovered': 'recovered', 'dashFeverCaught': 'fever caught by collar, treated by Dr. Sharma', 'dashDaysAgo': 'days ago',
       'dashConfPreg': 'confirmed pregnant', 'dashInseminated': 'Inseminated', 'dashConfYesterday': 'confirmed yesterday',
       'dashCalved': 'calved', 'dashHealthyCalf': 'healthy calf, now in the Milk Log', 'dashYesterday': 'Yesterday', 'dashTriageDone': 'Logged — thanks', 'dashUpdates': 'Updates', 'dashToday': 'Today',
+      // Cow action flow engine
+      'eventDate': 'Event date', 'eventTime': 'Time', 'caConfirm': 'Confirm', 'caDone': 'Done',
+      'caYes': 'Yes', 'caNo': 'No', 'pickVet': 'Pick a vet', 'schedVisit': 'Schedule visit',
+      'visitScheduled': 'Vet visit scheduled', 'notesPh': 'Notes', 'attachFile': 'Attach file', 'attached': 'Attached',
+      'saveLog': 'Save log', 'insemTypeTitle': 'Insemination type', 'logDetails': 'Log details',
+      'obs21': '21-day observation started', 'gest9': '9-month gestation started',
+      'heatQ': 'Is {cow} in heat?', 'heatConfirmed': 'Heat confirmed', 'pregQ': 'Confirm pregnancy for {cow}?',
+      'deliveryQ': 'Was the delivery successful?', 'deliveryLogged': 'Delivery logged', 'lossLogged': 'Loss recorded',
+      'lossReasonTitle': 'Reason for loss', 'lossReasonPh': 'Describe what happened',
+      'statusNoteTitle': 'Reason', 'statusNotePh': 'Why is the status changing?', 'statusChanged': 'Status updated',
+      'vlCustomT': 'Vet log', 'vetLogSaved': 'Vet log saved',
     },
     'hi': {
       'farmsTitle': 'खेत', 'farmsSubtitle': 'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें',
