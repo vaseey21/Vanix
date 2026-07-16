@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:vanix/app_state.dart';
+import 'package:vanix/state/app_state.dart';
 import 'package:vanix/models/farm_models.dart';
 import 'package:vanix/screens/cow_profile_screen.dart';
 
