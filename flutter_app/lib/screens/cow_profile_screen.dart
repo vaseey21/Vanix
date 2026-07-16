@@ -771,7 +771,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
     return Column(
       children: [
-        for (final log in _vetLogs)
+        for (final log in [..._extraVetLogs, ..._vetLogs])
           Container(
             margin: const EdgeInsets.only(bottom: VanixSpacing.md),
             padding: const EdgeInsets.all(VanixSpacing.lg),
