@@ -5,6 +5,7 @@ import '../state/app_state.dart';
 import '../theme/vanix_theme.dart';
 import '../widgets/language_sheet.dart';
 import 'dashboard_screen.dart';
+import 'farmer_dashboard_screen.dart';
 
 enum _Panel { login, otp }
 
