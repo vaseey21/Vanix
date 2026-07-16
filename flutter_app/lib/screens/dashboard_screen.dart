@@ -318,9 +318,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget _farmAlertRow(String name, {String? crit, String? plain}) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(name, style: TextStyle(fontSize: 14, color: _text1)),
+        Expanded(child: Text(name, style: TextStyle(fontSize: 14, color: _text1))),
+        const SizedBox(width: 8),
         crit != null
             ? Text(crit, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.danger))
             : Text(plain!, style: const TextStyle(fontSize: 14, color: VanixColors.textHint)),
