@@ -251,6 +251,9 @@ class FS {
       'sendMgrInvite': 'दूसरे फार्म प्रबंधक को निमंत्रण भेजें', 'invitePending': 'निमंत्रण लंबित',
       'resendInvite': 'निमंत्रण पुनः भेजें', 'cancelInvite': 'निमंत्रण रद्द करें',
       'mgrInviteHint': 'प्रबंधक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।',
+      'groupsSub': 'समूह बनाएं और उनमें पशु जोड़ें', 'newGroupBtn': '+ नया समूह', 'noGroupsYet': 'अभी कोई समूह नहीं',
+      'groupNamePh': 'समूह का नाम', 'createGroup': 'समूह बनाएं', 'addCattleBtn': '+ पशु जोड़ें',
+      'noCowsInGroup': 'इस समूह में अभी कोई पशु नहीं', 'addToGroupTitle': 'समूह में जोड़ें', 'cowsWord': 'पशु',
     },
   };
 }
