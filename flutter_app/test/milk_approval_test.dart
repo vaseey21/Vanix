@@ -15,7 +15,7 @@ Future<void> _tapFirstEntryDelete(WidgetTester tester) async {
 
 void main() {
   testWidgets('Farmer delete → pending request, not removed, no Approve', (tester) async {
-    tester.view.physicalSize = const Size(430, 1600);
+    tester.view.physicalSize = const Size(540, 2200);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
 
