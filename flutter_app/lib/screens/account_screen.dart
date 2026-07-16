@@ -1032,7 +1032,7 @@ class _Hero extends StatelessWidget {
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(14)),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 28, offset: const Offset(0, 12))],
       ),
-      child: Text(title, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: isDark ? Colors.white : VanixColors.textPrimary)),
+      child: Text(title, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: isDark ? Colors.white : VanixColors.textPrimary)),
     );
   }
 }
