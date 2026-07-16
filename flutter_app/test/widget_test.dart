@@ -8,7 +8,7 @@ import 'package:vanix/main.dart';
 
 void main() {
   testWidgets('VanixApp boots without throwing', (WidgetTester tester) async {
-    await tester.pumpWidget(const VanixApp());
+    await tester.pumpWidget(VanixApp());
     await tester.pump();
     expect(find.byType(MaterialApp), findsOneWidget);
   });
