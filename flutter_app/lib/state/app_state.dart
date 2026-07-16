@@ -11,6 +11,10 @@ class AppState extends ChangeNotifier {
   bool _isDark = false;
   String _languageCode = 'hi'; // default locale per CLAUDE.md
   int _openEventsCount = 14;
+  // Persona: 'owner' (full access) or 'farmer' (action-first, restricted).
+  // farmCount 'single' vs 'multi' controls the Farmer's Farms behaviour.
+  String _persona = 'owner';
+  String _farmCount = 'multi';
   // "text" = plain description-first Events cards (no icons/photos — the
   // pre-illustration-pass design); "image" = the whiteboard-sketched
   // photo-illustration cards (Fever, Heat so far). Toggled next to dark
