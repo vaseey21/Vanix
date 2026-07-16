@@ -145,6 +145,20 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                     ],
                   ),
                 ),
+                PositionedDirectional(
+                  end: 18,
+                  bottom: 104,
+                  child: FloatingActionButton(
+                    heroTag: 'addCattleFab',
+                    backgroundColor: VanixColors.greenInk,
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => AddCattleScreen(appState: widget.appState, farm: widget.farm),
+                      ));
+                    },
+                    child: const Icon(Icons.add, color: Colors.white),
+                  ),
+                ),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: VanixBottomNav(
