@@ -80,7 +80,9 @@ class _AccountScreenState extends State<AccountScreen> {
             body: Stack(
               children: [
                 Positioned.fill(
-                  child: ListView(
+                  child: SafeArea(
+                    bottom: false,
+                    child: ListView(
                     padding: const EdgeInsets.only(bottom: 130),
                     children: [
                       _Hero(title: FS.t(lang, 'navAccount'), isDark: isDark),
