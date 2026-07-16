@@ -123,7 +123,9 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
             body: Stack(
               children: [
                 Positioned.fill(
-                  child: ListView(
+                  child: SafeArea(
+                    bottom: false,
+                    child: ListView(
                     padding: const EdgeInsetsDirectional.only(bottom: 120),
                     children: [
                       _hero(isDark),
