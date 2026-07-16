@@ -11,6 +11,7 @@ import 'farms_screen.dart';
 import 'milk_log_screen.dart';
 import 'events_screen.dart';
 import 'groups_screen.dart';
+import 'login_screen.dart';
 
 /// Account / Settings — screen 11. Faithful port of #page-account plus its
 /// sub-pages (#page-profile, #page-vets, #page-farmmgmt, #page-privacy,
