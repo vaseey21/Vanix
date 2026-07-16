@@ -354,7 +354,15 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                     children: [
                       for (final group in _groupedEntries.entries) ...[
                         Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(group.key.toUpperCase(), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.5, color: VanixColors.textHint))),
-                        for (final entry in group.value) _EntryCard(entry: entry, isDark: isDark, onTap: () => _openEntryActions(entry)),
+                        for (final entry in group.value)
+                          _EntryCard(
+                            entry: entry,
+                            isDark: isDark,
+                            isFarmer: widget.appState.isFarmer,
+                            onTap: () => _openEntryActions(entry),
+                            onApprove: () => _approvePending(entry),
+                            onReject: () => _rejectPending(entry),
+                          ),
                         const SizedBox(height: 8),
                       ],
                     ],
