@@ -259,6 +259,11 @@ class FS {
       'groupsSub': 'समूह बनाएं और उनमें पशु जोड़ें', 'newGroupBtn': '+ नया समूह', 'noGroupsYet': 'अभी कोई समूह नहीं',
       'groupNamePh': 'समूह का नाम', 'createGroup': 'समूह बनाएं', 'addCattleBtn': '+ पशु जोड़ें',
       'noCowsInGroup': 'इस समूह में अभी कोई पशु नहीं', 'addToGroupTitle': 'समूह में जोड़ें', 'cowsWord': 'पशु',
+      // Farmer dashboard
+      'fpGreeting': 'आज आपका फार्म', 'fpImmediate': 'तुरंत', 'fpTodos': 'करने के काम', 'fpOpen': 'खोलें',
+      'fpHeat': 'हीट का पता चला', 'fpHeatSub': 'गर्भाधान की पुष्टि और लॉग करें', 'fpFever': 'बुखार चेतावनी', 'fpFeverSub': 'तेज़ तापमान — पशु चिकित्सक बुलाएँ',
+      'fpDelivery': 'प्रसव देय', 'fpDeliverySub': 'ब्यांत का परिणाम पुष्टि करें', 'fpVetAppt': 'पशु चिकित्सक भेंट', 'fpVetApptSub': 'आज शाम 4:30 — डॉ. शर्मा',
+      'fpInsem': 'गर्भाधान विंडो', 'fpInsemSub': '9 घंटे बचे — सर्वोत्तम विंडो', 'fpMilkLog': 'शाम दूध लॉगिंग', 'fpMilkLogSub': 'शाम 5 बजे के बाद देय',
     },
   };
 }
