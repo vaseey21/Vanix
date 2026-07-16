@@ -874,7 +874,8 @@ class _LegalPage extends StatelessWidget {
         return Theme(
           data: theme,
           child: Scaffold(
-            body: ListView(
+            body: SafeArea(
+              child: ListView(
               padding: const EdgeInsets.only(bottom: 40),
               children: [
                 _HeroBack(title: title, isDark: isDark),
