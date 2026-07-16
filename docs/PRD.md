@@ -12,7 +12,7 @@
 | **Status of PRD** | Draft |
 
 > **Live prototype:** https://vaseey21.github.io/Vanix/prototype.html · **Screen gallery:** https://vaseey21.github.io/Vanix/vanix_screens.html
-> **Design source (Figma):** `vanix_sketches.fig` — _add shareable Figma link here_
+> **Design source (Figma):** [vanix-sketches](https://www.figma.com/design/WtA4azO1Y5UxExe9MF83aH/vanix-sketches?node-id=0-1) (see the **Sketches** page)
 
 ---
 
@@ -98,7 +98,7 @@ Explicitly **not** in scope for this mobile app, and why:
 
 ## Design
 
-**Figma:** `vanix_sketches.fig` — _add shareable link_. Live prototype linked at the top of this document. The design system is documented in `vanix_design_system.html`.
+**Figma:** [vanix-sketches](https://www.figma.com/design/WtA4azO1Y5UxExe9MF83aH/vanix-sketches?node-id=0-1) — sketches live on the **Sketches** page. Live prototype linked at the top of this document. The design system is documented in `vanix_design_system.html`.
 
 ### Sketches (early)
 
@@ -111,7 +111,7 @@ Six essentials pulled from the sketch file, representing the core loop *detect �
 5. **Farms overview** — multi-farm severity.
 6. **Heat → insemination flow** — the single evolving 24-hour card.
 
-_→ Link each sketch to its Figma frame once shareable URLs are available._
+_→ Sketches: [https://www.figma.com/design/WtA4azO1Y5UxExe9MF83aH/vanix-sketches?node-id=0-1](https://www.figma.com/design/WtA4azO1Y5UxExe9MF83aH/vanix-sketches?node-id=0-1) (Sketches page)._
 
 ### Wireframes — accepted vs rejected
 
