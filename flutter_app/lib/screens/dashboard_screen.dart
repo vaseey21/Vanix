@@ -129,43 +129,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   TextStyle get _secLbl => const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 0.6, color: VanixColors.textHint);
 
-  // ── Header (no bell/avatar — profile is in the bottom nav) ──
+  // ── Header: logo (left) + farm selector (right). SafeArea (top) already
+  // clears the device status bar; this just adds a little breathing room. ──
   Widget _header() {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16, 22, 16, 6),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 6),
+      child: Row(
         children: [
-          Text(_t('dashGreeting').toUpperCase(),
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.8, color: VanixColors.textHint)),
-          const SizedBox(height: 3),
-          Text('James', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, height: 1.15, color: _text1)),
-          const SizedBox(height: 3),
-          const Text('Thursday, 16 July', style: TextStyle(fontSize: 13, color: VanixColors.textHint)),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Flexible(
-                child: Container(
-                  height: 38,
-                  padding: const EdgeInsetsDirectional.symmetric(horizontal: 14),
-                  decoration: BoxDecoration(color: _cardBg, borderRadius: BorderRadius.circular(19), border: Border.all(color: _border)),
-                  child: Row(mainAxisSize: MainAxisSize.min, children: [
-                    Icon(Icons.home_outlined, size: 15, color: _text1),
-                    const SizedBox(width: 8),
-                    Flexible(child: Text('${_t('dashAllFarms')} (3)', overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1))),
-                    const SizedBox(width: 4),
-                    Icon(Icons.keyboard_arrow_down, size: 16, color: _text1),
-                  ]),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Row(mainAxisSize: MainAxisSize.min, children: [
-                const Icon(Icons.bar_chart, size: 15, color: VanixColors.greenInk),
-                const SizedBox(width: 5),
-                Text('${_t('dashLive')} · 74/77', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+          Text.rich(
+            TextSpan(children: [
+              TextSpan(text: 'My', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700, color: _text1)),
+              const TextSpan(text: 'Bovine', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700, color: VanixColors.greenInk)),
+            ]),
+          ),
+          const Spacer(),
+          Flexible(
+            child: Container(
+              height: 38,
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 14),
+              decoration: BoxDecoration(color: _cardBg, borderRadius: BorderRadius.circular(19), border: Border.all(color: _border)),
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                Icon(Icons.home_outlined, size: 15, color: _text1),
+                const SizedBox(width: 8),
+                Flexible(child: Text('${_t('dashAllFarms')} (3)', overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1))),
+                const SizedBox(width: 4),
+                Icon(Icons.keyboard_arrow_down, size: 16, color: _text1),
               ]),
-            ],
+            ),
           ),
         ],
       ),
