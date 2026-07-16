@@ -133,7 +133,9 @@ class _FarmsScreenState extends State<FarmsScreen> with SingleTickerProviderStat
             body: Stack(
               children: [
                 Positioned.fill(
-                  child: ListView(
+                  child: SafeArea(
+                    bottom: false,
+                    child: ListView(
                     padding: const EdgeInsetsDirectional.only(bottom: 120),
                     children: [
                       _buildHero(isDark, lang, textColor, totalFarms, totalCattle, totalAlerts),
