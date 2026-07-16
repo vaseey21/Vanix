@@ -12,10 +12,6 @@ import 'package:vanix/screens/cow_profile_screen.dart';
 Widget _host(Widget child) => MaterialApp(home: child);
 
 void main() {
-  setUp(() {
-    // ignore: invalid_use_of_visible_for_testing_member
-  });
-
   testWidgets('Cow actions sheet: Heat flow shows date + time fields', (tester) async {
     tester.view.physicalSize = const Size(430, 932);
     tester.view.devicePixelRatio = 1.0;
