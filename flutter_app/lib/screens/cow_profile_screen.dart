@@ -41,6 +41,10 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     VetLog('vl3t', 'vl3n', 'Dr. Iyer', '8 Jan 2026'),
   ];
 
+  // Farmer-added vet logs (raw text, not localization keys) — rendered above
+  // the seed logs. FS.t returns the string unchanged when it isn't a known key.
+  final List<VetLog> _extraVetLogs = [];
+
   String get _lang => widget.appState.languageCode;
   bool get _isDark => widget.appState.isDark;
 
