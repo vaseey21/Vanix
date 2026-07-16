@@ -57,7 +57,7 @@ class _AddCattleScreenState extends State<AddCattleScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(FS.t(_lang, 'addCattle'),
-                              style: TextStyle(fontSize: 21, fontWeight: FontWeight.w700, color: textColor)),
+                              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
                           const SizedBox(height: 2),
                           Text('${FS.t(_lang, 'acSubPre')} ${widget.farm.nm(_lang)}',
                               style: const TextStyle(fontSize: 13, color: VanixColors.textHint)),
