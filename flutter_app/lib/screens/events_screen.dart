@@ -451,6 +451,7 @@ class _EventsScreenState extends State<EventsScreen> {
                   ),
               ],
             ),
+            ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
