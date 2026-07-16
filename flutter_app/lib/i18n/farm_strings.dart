@@ -125,7 +125,7 @@ class FS {
       'deliveryQ': 'Was the delivery successful?', 'deliveryLogged': 'Delivery logged', 'lossLogged': 'Loss recorded',
       'lossReasonTitle': 'Reason for loss', 'lossReasonPh': 'Describe what happened',
       'statusNoteTitle': 'Reason', 'statusNotePh': 'Why is the status changing?', 'statusChanged': 'Status updated',
-      'vlCustomT': 'Vet log', 'vetLogSaved': 'Vet log saved',
+      'vlCustomT': 'Vet log', 'vetLogSaved': 'Vet log saved', 'hideWord': 'Hide',
     },
     'hi': {
       'farmsTitle': 'खेत', 'farmsSubtitle': 'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें',
