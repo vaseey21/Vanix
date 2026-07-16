@@ -29,7 +29,7 @@ void main() {
 
     await tester.tap(find.text('Send Invite to another farm manager'));
     await tester.pumpAndSettle();
-    await tester.enterText(find.byType(TextField), 'newmanager@test.com');
+    await tester.enterText(find.widgetWithText(TextField, 'Email address'), 'newmanager@test.com');
     await tester.tap(find.text('Confirm & assign'));
     await tester.pumpAndSettle();
 
