@@ -907,9 +907,11 @@ class _ActionsSheetState extends State<_ActionsSheet> {
           if (!_statusView) ...[
             _row(Icons.sync, FS.t(lang, 'changeStatus'), () => setState(() => _statusView = true), trailing: Icons.chevron_right),
             _row(Icons.medical_services_outlined, FS.t(lang, 'reqVetVisit'), () => widget.onAction(FS.t(lang, 'reqVetVisit'))),
+            _row(Icons.description_outlined, FS.t(lang, 'addVetLog'), () => widget.onAction(FS.t(lang, 'addVetLog'))),
             _row(Icons.favorite_border, FS.t(lang, 'addHeat'), () => widget.onAction(FS.t(lang, 'addHeat'))),
             _row(Icons.colorize_outlined, FS.t(lang, 'addInsem'), () => widget.onAction(FS.t(lang, 'addInsem'))),
             _row(Icons.pregnant_woman_outlined, FS.t(lang, 'addPreg'), () => widget.onAction(FS.t(lang, 'addPreg'))),
+            _row(Icons.child_friendly_outlined, FS.t(lang, 'addDelivery'), () => widget.onAction(FS.t(lang, 'addDelivery'))),
           ] else ...[
             for (final k in _statusKeys) _row(Icons.circle_outlined, FS.t(lang, k), () => widget.onAction(FS.t(lang, k))),
           ],
