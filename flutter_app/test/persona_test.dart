@@ -27,9 +27,9 @@ void main() {
 
     expect(find.text('Priority'), findsOneWidget);
     expect(find.text('To do'), findsOneWidget);
-    // Priority tab shows event-style cards (cow + type eyebrow)
-    expect(_hasText(tester, 'Gauri'), isTrue);
-    expect(_hasText(tester, 'Kajri'), isTrue);
+    // Priority tab shows event-style cards (type eyebrow + question)
+    expect(find.text('In heat?'), findsOneWidget);
+    expect(find.text('Is she unwell?'), findsOneWidget);
 
     // Switch to To-do
     await tester.tap(find.text('To do'));
