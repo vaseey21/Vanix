@@ -189,7 +189,8 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('${entry.cow} — ${entry.session.label} · ${entry.litres} L', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
-              const Padding(padding: EdgeInsets.only(top: 4), child: Text('Changes are sent to the Farm Owner for approval', style: TextStyle(fontSize: 12, color: VanixColors.textHint))),
+              if (widget.appState.isFarmer)
+                const Padding(padding: EdgeInsets.only(top: 4), child: Text('Changes are sent to the Farm Owner for approval', style: TextStyle(fontSize: 12, color: VanixColors.textHint))),
               const SizedBox(height: 16),
               ListTile(
                 contentPadding: EdgeInsets.zero,
