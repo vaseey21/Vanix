@@ -139,6 +139,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                       ),
                     ],
                   ),
+                  ),
                 ),
                 PositionedDirectional(
                   end: 18,
