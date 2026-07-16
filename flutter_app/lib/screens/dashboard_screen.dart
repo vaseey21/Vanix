@@ -170,43 +170,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _bell() {
-    return SizedBox(
-      width: 44, height: 44,
-      child: Stack(
-        children: [
-          Container(
-            width: 44, height: 44,
-            decoration: BoxDecoration(color: _cardBg, shape: BoxShape.circle, border: Border.all(color: _border)),
-            child: Icon(Icons.notifications_none, size: 20, color: _text1),
-          ),
-          PositionedDirectional(
-            end: -2, top: -2,
-            child: Container(
-              constraints: const BoxConstraints(minWidth: 18),
-              height: 18,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              decoration: BoxDecoration(
-                color: VanixColors.danger,
-                borderRadius: BorderRadius.circular(9),
-                border: Border.all(color: _isDark ? VanixColors.darkPrimary : VanixColors.bgWarm, width: 2),
-              ),
-              child: const Text('3', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   // ── Stat grid (2x2) ──
   Widget _statGrid() {
     return Column(children: [
       Row(children: [
         Expanded(child: _statCard('77', 'statTotalCattle', _subGreen('+3 ', 'dashAddedToday'))),
         const SizedBox(width: 12),
-        Expanded(child: _statCard('14', 'dashActiveAlerts', _subColor('2 ', 'criticalWord', VanixColors.danger))),
+        Expanded(child: _statCard('14', 'statUnactionedAlerts', _subColor('2 ', 'criticalWord', VanixColors.danger), onInfo: _openAlertsSheet)),
       ]),
       const SizedBox(height: 12),
       Row(children: [
@@ -217,8 +187,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ]);
   }
 
-  Widget _statCard(String num, String labelKey, Widget sub) {
-    return Container(
+  Widget _statCard(String num, String labelKey, Widget sub, {VoidCallback? onInfo}) {
+    final card = Container(
       decoration: _cardDeco(),
       padding: const EdgeInsets.fromLTRB(14, 15, 14, 15),
       child: Column(
