@@ -82,13 +82,15 @@ class _GroupsScreenState extends State<GroupsScreen> {
             icon: Icon(Icons.chevron_left, size: 26, color: _text1),
           ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(_t('rowCattleGroups'), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: _text1)),
-            const SizedBox(height: 2),
-            Text(_t('groupsSub'), style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(_t('rowCattleGroups'), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: _text1)),
+              const SizedBox(height: 2),
+              Text(_t('groupsSub'), style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
+            ],
+          ),
         ),
       ]),
     );
