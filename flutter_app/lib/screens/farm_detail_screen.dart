@@ -337,7 +337,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(farm.nm(_lang), style: TextStyle(fontSize: 21, fontWeight: FontWeight.w700, height: 1.2, color: textColor)),
+                      Text(farm.nm(_lang), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, height: 1.2, color: textColor)),
                       const SizedBox(height: 2),
                       Row(children: [
                         Flexible(
