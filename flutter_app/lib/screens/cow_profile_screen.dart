@@ -196,7 +196,13 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   Widget _kebab() {
     return PopupMenuButton<String>(
       icon: Icon(Icons.more_vert, color: _isDark ? Colors.white : VanixColors.textPrimary),
-      onSelected: (v) => _snack('${_actionVerb(v)}…'),
+      onSelected: (v) {
+        if (v == 'group') {
+          showAddToGroupSheet(context, widget.appState, widget.farm.id, widget.cow.no);
+        } else {
+          _snack('${_actionVerb(v)}…');
+        }
+      },
       itemBuilder: (context) => [
         PopupMenuItem(value: 'edit', child: Text(FS.t(_lang, 'editWord'))),
         PopupMenuItem(value: 'group', child: Text(FS.t(_lang, 'addToGroup'))),
