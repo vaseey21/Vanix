@@ -130,6 +130,9 @@ class FS {
       'sendMgrInvite': 'Send Invite to another farm manager', 'invitePending': 'Invite pending',
       'resendInvite': 'Resend invite', 'cancelInvite': 'Cancel invite',
       'mgrInviteHint': 'An invite link is emailed to the manager — they confirm before being added.',
+      'groupsSub': 'Create groups and add cattle to them', 'newGroupBtn': '+ New Group', 'noGroupsYet': 'No groups yet',
+      'groupNamePh': 'Group name', 'createGroup': 'Create group', 'addCattleBtn': '+ Add cattle',
+      'noCowsInGroup': 'No cattle in this group yet', 'addToGroupTitle': 'Add to group', 'cowsWord': 'cattle',
     },
     'hi': {
       'farmsTitle': 'खेत', 'farmsSubtitle': 'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें',
