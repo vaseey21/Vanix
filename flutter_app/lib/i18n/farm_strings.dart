@@ -103,6 +103,18 @@ class FS {
       'acLastHeat': 'Last Heat', 'acLastInsem': 'Last Insemination', 'acLastPreg': 'Last Pregnancy',
       'acLastCalving': 'Last Calving', 'acLactationNo': 'Lactation Number',
       'acLactHint': 'Number stepper, not a date. Fields show only while "Fill cow history" is selected.',
+      // Dashboard (Screen 03)
+      'dashGreeting': 'Good morning,', 'dashAllFarms': 'All Farms', 'dashLive': 'Live', 'dashAddedToday': 'added today',
+      'dashActiveAlerts': 'Active Alerts', 'dashPendingTasks': 'Pending Tasks', 'dashDueToday': 'due today', 'dashOverdue': 'overdue',
+      'dashPregnant': 'Pregnant', 'dashDueThisWeek': 'due this week', 'dashActionAlerts': 'Action Alerts', 'dashWaiting': 'waiting',
+      'dashYesFever': 'Yes, fever', 'noWord': 'No', 'dashViewEvents': 'View all in Events', 'dashEditsApproval': 'Edits awaiting your approval',
+      'dashMilkMissing': 'Milk sessions missing today', 'dashInsemWindow': 'insemination window', 'dashLeft': 'left',
+      'dashFarmsNeedAction': 'Farms needing action', 'dashOffline': 'offline', 'dashTodaySchedule': "Today's Schedule",
+      'dashVaccDrive': 'Vaccination Drive', 'dashStartsIn': 'Starts in 15 mins', 'dashVetVisit': 'Vet Visit', 'dashMilkLogging': 'Evening Milk Logging',
+      'dashThisWeek': 'This Week', 'dashFmd': 'FMD vaccination', 'dashCows': 'cows', 'dashRemindersNote': 'Items beyond 7 days stay in Events reminders',
+      'dashGoodNews': 'Good News', 'dashRecovered': 'recovered', 'dashFeverCaught': 'fever caught by collar, treated by Dr. Sharma', 'dashDaysAgo': 'days ago',
+      'dashConfPreg': 'confirmed pregnant', 'dashInseminated': 'Inseminated', 'dashConfYesterday': 'confirmed yesterday',
+      'dashCalved': 'calved', 'dashHealthyCalf': 'healthy calf, now in the Milk Log', 'dashYesterday': 'Yesterday', 'dashTriageDone': 'Logged — thanks',
     },
     'hi': {
       'farmsTitle': 'खेत', 'farmsSubtitle': 'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें',
