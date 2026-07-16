@@ -25,6 +25,30 @@ class AppState extends ChangeNotifier {
   String get languageCode => _languageCode;
   int get openEventsCount => _openEventsCount;
   bool get displayImageMode => _displayImageMode;
+  String get persona => _persona;
+  String get farmCount => _farmCount;
+  bool get isFarmer => _persona == 'farmer';
+  bool get isOwner => _persona == 'owner';
+  bool get isSingleFarm => _persona == 'farmer' && _farmCount == 'single';
+
+  /// Cycle Owner → Farmer(multi) → Farmer(single) → Owner (demo control).
+  void cyclePersona() {
+    if (_persona == 'owner') {
+      _persona = 'farmer';
+      _farmCount = 'multi';
+    } else if (_farmCount == 'multi') {
+      _farmCount = 'single';
+    } else {
+      _persona = 'owner';
+    }
+    notifyListeners();
+  }
+
+  void setPersona(String p, {String farmCount = 'multi'}) {
+    _persona = p;
+    _farmCount = farmCount;
+    notifyListeners();
+  }
 
   void toggleDark() {
     _isDark = !_isDark;
