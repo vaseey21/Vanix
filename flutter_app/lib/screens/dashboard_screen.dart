@@ -26,6 +26,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int _navIndex = 0;
   bool _triaged = false;
+  String _schTab = 'today';
 
   String get _lang => widget.appState.languageCode;
   bool get _isDark => widget.appState.isDark;
@@ -332,7 +333,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 foregroundColor: _text1,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
               ),
-              onPressed: () => setState(() => _triaged = true),
+              onPressed: onDone,
               child: Text(_t('noWord'), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
             ),
           ),
@@ -345,7 +346,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
               ),
-              onPressed: () => setState(() => _triaged = true),
+              onPressed: onDone,
               child: Text(_t('dashYesFever'), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
             ),
           ),
