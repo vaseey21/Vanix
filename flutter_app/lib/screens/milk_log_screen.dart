@@ -211,7 +211,13 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                 title: const Text('Delete entry', style: TextStyle(color: VanixColors.danger)),
                 onTap: () {
                   Navigator.pop(context);
-                  setState(() => _entries.removeWhere((e) => e.id == entry.id));
+                  setState(() {
+                    if (widget.appState.isFarmer) {
+                      _requestDelete(entry);
+                    } else {
+                      _entries.removeWhere((e) => e.id == entry.id);
+                    }
+                  });
                 },
               ),
             ],
