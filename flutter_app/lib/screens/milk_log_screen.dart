@@ -497,6 +497,14 @@ class _EntryCard extends StatelessWidget {
                       Text(entry.time.format(context), style: const TextStyle(fontSize: 13, color: VanixColors.textHint)),
                       const SizedBox(width: 8),
                       if (entry.onTime) const Icon(Icons.check, size: 14, color: VanixColors.greenInk) else const Icon(Icons.schedule, size: 14, color: VanixColors.warningInk),
+                      if (entry.updated) ...[
+                        const SizedBox(width: 8),
+                        Row(mainAxisSize: MainAxisSize.min, children: [
+                          const Icon(Icons.refresh, size: 12, color: VanixColors.greenInk),
+                          const SizedBox(width: 3),
+                          Text(FS.t('en', 'mpUpdated'), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+                        ]),
+                      ],
                     ],
                   ),
                   const SizedBox(height: 6),
