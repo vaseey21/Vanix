@@ -189,7 +189,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Text(num, style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700, height: 1, color: _text1)),
               if (liveSuffix != null) ...[
                 const SizedBox(width: 6),
-                Text(liveSuffix, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+                Flexible(
+                  child: Text(liveSuffix,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+                ),
               ],
             ],
           ),
