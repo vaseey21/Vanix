@@ -3,21 +3,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vanix/screens/dashboard_screen.dart';
 import 'package:vanix/state/app_state.dart';
 
-// Searches both Text and RichText/TextSpan trees for a substring.
 bool _hasText(WidgetTester tester, String needle) {
   for (final e in find.byType(RichText).evaluate()) {
-    final rt = e.widget as RichText;
-    if (rt.text.toPlainText().contains(needle)) return true;
+    if ((e.widget as RichText).text.toPlainText().contains(needle)) return true;
   }
   for (final e in find.byType(Text).evaluate()) {
-    final tw = e.widget as Text;
-    if ((tw.data ?? '').contains(needle)) return true;
+    if (((e.widget as Text).data ?? '').contains(needle)) return true;
   }
   return false;
 }
 
 void main() {
-  testWidgets('DashboardScreen renders (light) with no exceptions/overflow', (tester) async {
+  testWidgets('Dashboard v2 renders (light) with no exceptions/overflow', (tester) async {
     tester.view.physicalSize = const Size(430, 932);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -25,23 +22,39 @@ void main() {
     await tester.pump();
     expect(tester.takeException(), isNull);
     expect(find.text('James'), findsOneWidget);
-    expect(find.text('77'), findsOneWidget);
+    expect(find.text('Unactioned Alerts'), findsOneWidget);
+    // bell + avatar removed
+    expect(find.byIcon(Icons.notifications_none), findsNothing);
+    // schedule tabs present
+    expect(find.text('Today'), findsWidgets);
+    expect(find.text('This Week'), findsWidgets);
+    // info button (near top) opens the alerts sheet with the triage question
+    await tester.tap(find.byIcon(Icons.info_outline));
+    await tester.pumpAndSettle();
     expect(_hasText(tester, 'Kajri'), isTrue);
-    expect(find.text('Sunrise Dairy'), findsWidgets);
-    // triage buttons render; tapping "Yes, fever" collapses to logged state
-    expect(_hasText(tester, 'Yes, fever'), isTrue);
-    await tester.tap(find.text('Yes, fever'), warnIfMissed: false);
+    expect(find.text('Yes, fever'), findsOneWidget);
+    await tester.tap(find.text('Yes, fever'));
     await tester.pump();
     expect(_hasText(tester, 'Logged'), isTrue);
     expect(tester.takeException(), isNull);
+    // close the sheet, then scroll the dashboard → Updates section builds
+    await tester.tap(find.byIcon(Icons.close));
+    await tester.pumpAndSettle();
+    await tester.dragUntilVisible(
+      find.textContaining('Bhoori'),
+      find.byType(Scrollable).first,
+      const Offset(0, -300),
+    );
+    await tester.pump();
+    expect(_hasText(tester, 'Bhoori'), isTrue);
+    expect(tester.takeException(), isNull);
   });
 
-  testWidgets('DashboardScreen renders (dark) with no exceptions', (tester) async {
+  testWidgets('Dashboard v2 renders (dark) with no exceptions', (tester) async {
     tester.view.physicalSize = const Size(430, 932);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
-    final app = AppState()..setLanguage('en')..toggleDark();
-    await tester.pumpWidget(MaterialApp(home: DashboardScreen(appState: app)));
+    await tester.pumpWidget(MaterialApp(home: DashboardScreen(appState: AppState()..setLanguage('en')..toggleDark())));
     await tester.pump();
     expect(tester.takeException(), isNull);
     expect(find.text('James'), findsOneWidget);

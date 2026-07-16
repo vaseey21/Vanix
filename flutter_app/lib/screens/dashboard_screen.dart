@@ -11,10 +11,11 @@ import 'farms_screen.dart';
 import 'account_screen.dart';
 
 /// Home dashboard — Screen 03. Mirrors #s1-dash in prototype.html: greeting
-/// header (bell + avatar), All-Farms selector + live collars, 2x2 stat cards,
-/// Action Alerts with per-farm breakdown + inline triage, edits/milk-missing
-/// cards, insemination-window timer, farms-needing-action, today's schedule,
-/// this-week, and good-news — over the shared bottom nav.
+/// header (no bell/avatar — profile lives in the nav), All-Farms selector +
+/// live collars, 2x2 stat cards (the Unactioned-Alerts card opens a detail
+/// sheet with the per-farm breakdown + Kajri triage via its info button),
+/// a Today/This-week tabbed schedule, edits/milk-missing cards, insemination
+/// timer, farms-needing-action, and an icon-less Updates list.
 class DashboardScreen extends StatefulWidget {
   final AppState appState;
   const DashboardScreen({super.key, required this.appState});
