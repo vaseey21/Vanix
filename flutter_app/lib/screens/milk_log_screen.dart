@@ -531,7 +531,66 @@ class _EntryCard extends StatelessWidget {
               ),
             ),
           ],
+            ),
+            if (entry.pendingApproval) _pendingSub(context),
+          ],
         ),
+      ),
+    );
+  }
+
+  // Pending owner-approval sub-card (mirrors .m-sub in prototype.html).
+  // Owner sees Approve / ✕; farmer sees the pending status only.
+  Widget _pendingSub(BuildContext context) {
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    return Container(
+      margin: const EdgeInsets.only(top: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF262626) : VanixColors.bgWarm,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: isDark ? const Color(0xFF3A3A3A) : VanixColors.border),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(entry.pendingLabel ?? '', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: textColor)),
+                const SizedBox(height: 2),
+                Text('${FS.t(lang, 'mpBy')} ${entry.pendingBy ?? ''} · ${FS.t(lang, 'mpPendingApproval')}',
+                    style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
+              ],
+            ),
+          ),
+          if (!isFarmer) ...[
+            const SizedBox(width: 8),
+            OutlinedButton(
+              onPressed: onReject,
+              style: OutlinedButton.styleFrom(
+                minimumSize: const Size(0, 34),
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                side: BorderSide(color: isDark ? const Color(0xFF3A3A3A) : VanixColors.border),
+                foregroundColor: textColor,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
+              ),
+              child: const Text('✕', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+            ),
+            const SizedBox(width: 6),
+            ElevatedButton(
+              onPressed: onApprove,
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(0, 34),
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                backgroundColor: VanixColors.greenInk,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
+              ),
+              child: Text(FS.t(lang, 'mpApprove'), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+            ),
+          ],
+        ],
       ),
     );
   }
