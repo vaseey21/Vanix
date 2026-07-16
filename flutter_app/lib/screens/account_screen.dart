@@ -816,6 +816,7 @@ class _FarmMgmtPageState extends State<_FarmMgmtPage> {
                 ),
               ],
             ),
+            ),
           ),
         );
       },
