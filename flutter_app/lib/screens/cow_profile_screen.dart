@@ -3,6 +3,7 @@ import '../i18n/farm_strings.dart';
 import '../models/farm_models.dart';
 import '../state/app_state.dart';
 import '../theme/vanix_theme.dart';
+import 'groups_screen.dart';
 
 /// Cow Profile — mirrors #page-cow in prototype.html: hero (photo, name +
 /// belt, breed, age, kebab, Status + Current Temp tiles), a 3-tab segmented
