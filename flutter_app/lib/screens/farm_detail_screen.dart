@@ -40,13 +40,6 @@ const Map<String, _CowTag> _kCowTag = {
   'Milking': _CowTag(VanixColors.greenInk, 'healthyWord'),
 };
 
-const Map<String, String> _kStatusLabelKey = {
-  'Milking': 'statusMilking',
-  'Pregnant': 'statusPregnant',
-  'Heat': 'statusHeatCycle',
-  'Fever': 'statusFeverAlert',
-};
-
 class _FarmDetailScreenState extends State<FarmDetailScreen> {
   final int _navIndex = 1;
   final TextEditingController _search = TextEditingController();
