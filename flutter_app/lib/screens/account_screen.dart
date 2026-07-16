@@ -230,6 +230,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ],
                   ),
+                  ),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
