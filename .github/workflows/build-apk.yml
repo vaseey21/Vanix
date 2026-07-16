@@ -36,16 +36,3 @@ jobs:
           name: vanix-debug-apk
           path: flutter_app/build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 30
-
-      # Also publish as a GitHub Release asset — downloadable directly from
-      # github.com/objects.githubusercontent.com, unlike the Actions artifact
-      # store (Azure Blob), which is unreachable from some restricted networks.
-      - name: Publish debug APK as a release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          cp build/app/outputs/flutter-apk/app-debug.apk /tmp/vanix-debug.apk
-          gh release create "apk-run-${{ github.run_number }}" /tmp/vanix-debug.apk \
-            --repo "${{ github.repository }}" \
-            --title "Debug APK — build ${{ github.run_number }}" \
-            --notes "Automated debug build from commit ${{ github.sha }}. Frontend-only, no backend wired up yet."
