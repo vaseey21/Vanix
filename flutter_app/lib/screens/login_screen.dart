@@ -465,9 +465,8 @@ class _FieldLabel extends StatelessWidget {
 class _UnderlineField extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
-  final bool isDark, obscure;
-  final VoidCallback? onChanged;
-  const _UnderlineField({required this.controller, required this.hint, required this.isDark, this.obscure = false, this.onChanged});
+  final bool isDark;
+  const _UnderlineField({required this.controller, required this.hint, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -475,9 +474,7 @@ class _UnderlineField extends StatelessWidget {
     final lineColor = isDark ? const Color(0x66FFFFFF) : const Color(0xFFCCCCCC);
     return TextField(
       controller: controller,
-      obscureText: obscure,
       style: TextStyle(fontSize: 17, color: textColor),
-      onChanged: (_) => onChanged?.call(),
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyle(fontSize: 13, color: isDark ? const Color(0x73FFFFFF) : VanixColors.textHint),
