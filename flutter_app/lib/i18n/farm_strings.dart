@@ -244,6 +244,10 @@ class FS {
       'lossReasonTitle': 'हानि का कारण', 'lossReasonPh': 'क्या हुआ बताएं',
       'statusNoteTitle': 'कारण', 'statusNotePh': 'स्थिति क्यों बदल रही है?', 'statusChanged': 'स्थिति अपडेट',
       'vlCustomT': 'पशु चिकित्सक लॉग', 'vetLogSaved': 'पशु चिकित्सक लॉग सहेजा गया', 'hideWord': 'छुपाएं',
+      'manageFarmMgr': 'फार्म प्रबंधक प्रबंधित करें', 'selectNewMgr': 'नया फार्म प्रबंधक चुनें',
+      'sendMgrInvite': 'दूसरे फार्म प्रबंधक को निमंत्रण भेजें', 'invitePending': 'निमंत्रण लंबित',
+      'resendInvite': 'निमंत्रण पुनः भेजें', 'cancelInvite': 'निमंत्रण रद्द करें',
+      'mgrInviteHint': 'प्रबंधक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।',
     },
   };
 }
