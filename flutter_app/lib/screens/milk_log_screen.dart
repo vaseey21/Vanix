@@ -504,7 +504,7 @@ class _EntryCard extends StatelessWidget {
                         Row(mainAxisSize: MainAxisSize.min, children: [
                           const Icon(Icons.refresh, size: 12, color: VanixColors.greenInk),
                           const SizedBox(width: 3),
-                          Text(FS.t('en', 'mpUpdated'), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+                          Text(FS.t(lang, 'mpUpdated'), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
                         ]),
                       ],
                     ],
