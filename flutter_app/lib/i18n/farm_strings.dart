@@ -92,6 +92,17 @@ class FS {
       'farmMgmtSub': 'Assign or remove a manager for each farm', 'unassignedWord': 'Unassigned', 'reassignWord': 'Reassign',
       'assignManager': 'Assign manager', 'assignMe': 'Assign to me', 'removeManager': 'Remove manager',
       'mgrNamePh': 'Manager name', 'confirmAssign': 'Confirm & assign', 'legalUpdated': 'Last Updated: July 1, 2026',
+      // Add Cattle
+      'cancelWord': 'Cancel', 'saveWord': 'Save', 'selectWord': 'Select', 'selectDate': 'Select date',
+      'genderWord': 'Gender', 'yearsWord': 'Years', 'monthsWord': 'Months', 'optionalWord': '(optional)',
+      'acSubPre': 'Add a new cow to', 'acPhotoLabel': 'Cow Photo', 'acPhotoHint': 'Upload a PNG / JPG of the cow',
+      'acCattleType': 'Cattle Type', 'acTypeCow': 'Cow', 'acTypeHint': 'Cow · Sheep · Goat — non-cow health scoring is flagged.',
+      'acCowName': 'Cow Name (easily recognisable)', 'cowStatusWord': 'Cow Status',
+      'acDeviceDetails': 'Device Details', 'acBeltNo': 'Cattle Belt Number', 'acMacId': 'MAC ID',
+      'acCowHistory': 'Cow History', 'acFillHistory': 'Fill cow history', 'acHistUnknown': 'History unknown',
+      'acLastHeat': 'Last Heat', 'acLastInsem': 'Last Insemination', 'acLastPreg': 'Last Pregnancy',
+      'acLastCalving': 'Last Calving', 'acLactationNo': 'Lactation Number',
+      'acLactHint': 'Number stepper, not a date. Fields show only while "Fill cow history" is selected.',
     },
     'hi': {
       'farmsTitle': 'खेत', 'farmsSubtitle': 'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें',
