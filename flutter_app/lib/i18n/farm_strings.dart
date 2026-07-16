@@ -239,7 +239,7 @@ class FS {
       'deliveryQ': 'क्या प्रसव सफल रहा?', 'deliveryLogged': 'प्रसव दर्ज', 'lossLogged': 'हानि दर्ज',
       'lossReasonTitle': 'हानि का कारण', 'lossReasonPh': 'क्या हुआ बताएं',
       'statusNoteTitle': 'कारण', 'statusNotePh': 'स्थिति क्यों बदल रही है?', 'statusChanged': 'स्थिति अपडेट',
-      'vlCustomT': 'पशु चिकित्सक लॉग', 'vetLogSaved': 'पशु चिकित्सक लॉग सहेजा गया',
+      'vlCustomT': 'पशु चिकित्सक लॉग', 'vetLogSaved': 'पशु चिकित्सक लॉग सहेजा गया', 'hideWord': 'छुपाएं',
     },
   };
 }
