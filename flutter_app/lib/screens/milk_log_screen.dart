@@ -299,6 +299,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                 ),
               ],
             ),
+            ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
