@@ -327,6 +327,7 @@ class _ProfilePage extends StatelessWidget {
                 ),
               ],
             ),
+            ),
           ),
         );
       },
