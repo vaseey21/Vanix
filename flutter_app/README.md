@@ -50,7 +50,6 @@ You'll need to add the actual font files before it runs cleanly (see
 | Add Cattle page (photo, type, breed/gender, age, status, belt/MAC, cow-history w/ lactation stepper) | ✅ Ported — `add_cattle_screen.dart`, opened by the Farm Detail + FAB |
 | Cow actions sheet — Add vet log / Add Delivery rows added; deeper multi-step flows (reason note, vet picker → schedule/type/log) still simplified to a snackbar | 🚧 Partial |
 | Events inputs-as-sheets (vet picker callback sheet + generic form sheet for Fever/Gestation/P0 flows) | ❌ Pending — HTML done |
-| Filters v2 (boxless rows, left radio/checkbox, lighter divider token) — Flutter filter sheets still on the older bordered-row design | ❌ Pending — HTML done |
 | Farmer persona (stripped views) | ❌ Not designed in HTML yet — nothing to port |
 
 ## Structure
