@@ -547,101 +547,45 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // ── This week ──
-  Widget _thisWeek() {
+  // ── Updates (icon-less: event · details · time) ──
+  Widget _updates() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(_t('dashThisWeek').toUpperCase(), style: _secLbl),
+        Text(_t('dashUpdates').toUpperCase(), style: _secLbl),
         const SizedBox(height: 10),
         Container(
           decoration: _cardDeco(),
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(children: [
-                        TextSpan(text: _t('dashFmd'), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
-                        TextSpan(text: ' — 5 ${_t('dashCows')}, Green Villa', style: const TextStyle(fontSize: 14, color: VanixColors.textHint)),
-                      ]),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  const Text('5d', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: VanixColors.warning)),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(_t('dashRemindersNote'), style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: VanixColors.textHint)),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  // ── Good news ──
-  Widget _goodNews() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(_t('dashGoodNews').toUpperCase(), style: _secLbl),
-        const SizedBox(height: 10),
-        Container(
-          decoration: _cardDeco(),
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(children: [
-            _newsRow(
-              leading: const Text('🎉', style: TextStyle(fontSize: 17)),
-              boldName: 'Bhoori', rest: ' ${_t('dashRecovered')}', tail: ' — ${_t('dashFeverCaught')}',
-              meta: '2 ${_t('dashDaysAgo')}', divider: true),
-            _newsRow(
-              leading: _dot(),
-              boldName: 'Mohini', rest: ' ${_t('dashConfPreg')}', tail: '',
-              meta: '${_t('dashInseminated')} 18 Sep · ${_t('dashConfYesterday')}', divider: true),
-            _newsRow(
-              leading: _dot(),
-              boldName: 'Ganga', rest: ' ${_t('dashCalved')}', tail: ' — ${_t('dashHealthyCalf')}',
-              meta: '${_t('dashYesterday')}, 05:40', divider: false),
+            _updateRow('Bhoori — ${_t('dashRecovered')}', _t('dashFeverCaught'), '2d', divider: true),
+            _updateRow('Mohini — ${_t('dashConfPreg')}', '${_t('dashInseminated')} 18 Sep', _t('dashYesterday'), divider: true),
+            _updateRow('Ganga — ${_t('dashCalved')}', _t('dashHealthyCalf'), '05:40', divider: false),
           ]),
         ),
       ],
     );
   }
 
-  Widget _dot() => Container(
-      width: 8, height: 8, margin: const EdgeInsets.only(top: 6),
-      decoration: const BoxDecoration(color: VanixColors.greenDeep, shape: BoxShape.circle));
-
-  Widget _newsRow({required Widget leading, required String boldName, required String rest, required String tail, required String meta, required bool divider}) {
+  Widget _updateRow(String event, String details, String time, {required bool divider}) {
     return Container(
       decoration: BoxDecoration(border: divider ? Border(bottom: BorderSide(color: _divider)) : null),
-      padding: EdgeInsets.only(top: 12, bottom: divider ? 12 : 0),
+      padding: const EdgeInsets.symmetric(vertical: 13),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 20, child: Align(alignment: Alignment.topLeft, child: leading)),
-          const SizedBox(width: 9),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RichText(
-                  text: TextSpan(children: [
-                    TextSpan(text: boldName, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, height: 1.4, color: _text1)),
-                    TextSpan(text: rest, style: TextStyle(fontSize: 14, height: 1.4, color: _text1)),
-                    TextSpan(text: tail, style: const TextStyle(fontSize: 14, height: 1.4, color: VanixColors.textHint)),
-                  ]),
-                ),
+                Text(event, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
                 const SizedBox(height: 3),
-                Text(meta, style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
+                Text(details, style: const TextStyle(fontSize: 12, height: 1.4, color: VanixColors.textHint)),
               ],
             ),
           ),
+          const SizedBox(width: 12),
+          Text(time, style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
         ],
       ),
     );
