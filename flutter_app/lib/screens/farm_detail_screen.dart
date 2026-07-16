@@ -194,10 +194,11 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: 44,
-                height: 44,
+                width: 48,
+                height: 48,
                 child: IconButton(
                   padding: EdgeInsets.zero,
+                  alignment: AlignmentDirectional.centerStart,
                   onPressed: () => Navigator.of(context).pop(),
                   icon: Icon(Icons.chevron_left, size: 26, color: textColor),
                 ),
