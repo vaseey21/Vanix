@@ -217,13 +217,13 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   }
 
   Widget _statusTile(({String key, Color bg, Color ink}) st) {
-    final tileBg = _isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm;
+    final tileBg = _isDark ? VanixColors.darkSubSurface : VanixColors.bgCard;
     return Container(
       padding: const EdgeInsets.all(VanixSpacing.md),
       decoration: BoxDecoration(
         color: tileBg,
-        border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
         borderRadius: BorderRadius.circular(VanixRadius.md),
+        boxShadow: _isDark ? VanixShadow.cardDark : VanixShadow.card,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
