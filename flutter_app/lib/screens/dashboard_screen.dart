@@ -74,6 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 Positioned.fill(
                   child: SafeArea(
+                    bottom: false,
                     child: ListView(
                       padding: const EdgeInsetsDirectional.only(bottom: 128),
                       children: [
