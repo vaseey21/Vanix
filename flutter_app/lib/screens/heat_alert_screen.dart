@@ -220,17 +220,17 @@ class _AlertCard extends StatelessWidget {
           GraphPanel(
             isDark: isDark,
             label: 'TEMPERATURE — LAST 10 READINGS',
-            child: SizedBox(
-              height: 34,
-              width: double.infinity,
-              child: CustomPaint(painter: SparklinePainter(data.temps, highlightLast: true)),
-            ),
             footer: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('${data.temps.reduce((a, b) => a < b ? a : b).toStringAsFixed(1)}°C', style: TextStyle(fontSize: 10, color: isDark ? Colors.white.withValues(alpha: 0.6) : VanixColors.textHint)),
                 Text('${data.temps.reduce((a, b) => a > b ? a : b).toStringAsFixed(1)}°C', style: TextStyle(fontSize: 10, color: isDark ? Colors.white.withValues(alpha: 0.6) : VanixColors.textHint)),
               ],
+            ),
+            child: SizedBox(
+              height: 34,
+              width: double.infinity,
+              child: CustomPaint(painter: SparklinePainter(data.temps, highlightLast: true)),
             ),
           ),
           const SizedBox(height: 8),

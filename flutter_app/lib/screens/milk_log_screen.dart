@@ -133,7 +133,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('${entry.cow} — ${entry.session.label} · ${entry.litres} L', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
-              Padding(padding: const EdgeInsets.only(top: 4), child: Text('Changes are sent to the Farm Owner for approval', style: TextStyle(fontSize: 12, color: VanixColors.textHint))),
+              const Padding(padding: EdgeInsets.only(top: 4), child: Text('Changes are sent to the Farm Owner for approval', style: TextStyle(fontSize: 12, color: VanixColors.textHint))),
               const SizedBox(height: 16),
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -216,7 +216,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Text('TOTAL MILK', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1, color: VanixColors.textHint)),
+                      const Text('TOTAL MILK', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1, color: VanixColors.textHint)),
                       const SizedBox(height: 6),
                       Row(
                         children: [
@@ -269,8 +269,8 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(b.title, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.textPrimary)),
-                                      Text(b.sub, style: TextStyle(fontSize: 12, color: VanixColors.textHint)),
+                                      Text(b.title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.textPrimary)),
+                                      Text(b.sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
                                     ],
                                   ),
                                 ),
@@ -288,7 +288,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       for (final group in _groupedEntries.entries) ...[
-                        Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(group.key.toUpperCase(), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.5, color: VanixColors.textHint))),
+                        Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(group.key.toUpperCase(), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.5, color: VanixColors.textHint))),
                         for (final entry in group.value) _EntryCard(entry: entry, isDark: isDark, onTap: () => _openEntryActions(entry)),
                         const SizedBox(height: 8),
                       ],

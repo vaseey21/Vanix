@@ -366,7 +366,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
                                   ],
                                 ),
                               ),
-                              Icon(Icons.chevron_right, size: 18, color: VanixColors.textHint),
+                              const Icon(Icons.chevron_right, size: 18, color: VanixColors.textHint),
                             ],
                           ),
                         ),
@@ -536,7 +536,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
           ),
           const SizedBox(height: VanixSpacing.md),
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Column(children: const [
+            const Column(children: [
               Text('40°C', style: TextStyle(fontSize: 9, color: VanixColors.textHint)),
               SizedBox(height: 36),
               Text('30°C', style: TextStyle(fontSize: 9, color: VanixColors.textHint)),
@@ -622,7 +622,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.notifications_none, size: 17, color: VanixColors.textHint),
+          const Icon(Icons.notifications_none, size: 17, color: VanixColors.textHint),
           const SizedBox(width: 8),
           Text(FS.t(_lang, 'noActiveReminders'), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: VanixColors.textHint)),
         ],
@@ -632,7 +632,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
 
   // ── Milk Data tab (colourful, read-only) ──────────────────────────────
   Widget _buildMilkData() {
-    final history = const [
+    const history = [
       (date: '12 Jun 2026', m: '7:30', e: '6:00', total: '12.5', missing: false),
       (date: '13 Jun 2026', m: '7:00', e: '5:30', total: '14.5', missing: false),
       (date: '14 Jun 2026', m: '6:45', e: '', total: '6.5', missing: true),
@@ -987,7 +987,7 @@ class _WeeklyPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final lineColor = VanixColors.greenInk;
+    const lineColor = VanixColors.greenInk;
     final max = values.reduce((a, b) => a > b ? a : b);
     final min = values.reduce((a, b) => a < b ? a : b);
     final range = (max - min) == 0 ? 1.0 : (max - min);

@@ -63,11 +63,11 @@ class _MilkSummaryScreenState extends State<MilkSummaryScreen> {
         children: [
           Text('TOTAL MILK', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1, color: hintColor)),
           const SizedBox(height: 6),
-          Row(
+          const Row(
             children: [
-              const Text('38.6 L', style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700)),
-              const SizedBox(width: 10),
-              const Text('▲ 8% vs yesterday', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+              Text('38.6 L', style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700)),
+              SizedBox(width: 10),
+              Text('▲ 8% vs yesterday', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
             ],
           ),
           const SizedBox(height: 20),

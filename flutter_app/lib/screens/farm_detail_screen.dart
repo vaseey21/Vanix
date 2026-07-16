@@ -675,7 +675,7 @@ class _CattleFilterSheetState extends State<_CattleFilterSheet> {
         return _chipList([
           _Opt('all', t('allWord')),
           _Opt('Jersey', t('breedJersey')),
-          _Opt('HF Cross', 'HF Cross'),
+          const _Opt('HF Cross', 'HF Cross'),
           _Opt('Gir', t('breedGir')),
           _Opt('Sahiwal', t('breedSahiwal')),
           _Opt('Ongole', t('breedOngole')),

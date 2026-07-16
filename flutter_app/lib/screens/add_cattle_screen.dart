@@ -211,7 +211,7 @@ class _AddCattleScreenState extends State<AddCattleScreen> {
       decoration: _fieldDeco,
       child: Row(children: [
         Expanded(child: Text(value, style: TextStyle(fontSize: 15, color: isPlaceholder ? VanixColors.textHint : textColor))),
-        Icon(Icons.keyboard_arrow_down, size: 18, color: VanixColors.textHint),
+        const Icon(Icons.keyboard_arrow_down, size: 18, color: VanixColors.textHint),
       ]),
     );
   }

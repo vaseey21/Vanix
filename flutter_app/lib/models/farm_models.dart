@@ -86,15 +86,15 @@ final List<FarmModel> kFarms = [
     manager: 'Ramesh C', managerHi: 'रमेश सी', cattle: 32, milkToday: 56, alerts: 2, critical: 2,
     heat: 2, fever: 1, insem: 1, temp: '33°C', status: FarmStatus.attention,
     cows: [
-      CowModel(name: 'Gowri', nameHi: 'गौरी', no: 1, age: '2.2 yrs', ageHi: '2.2 साल', belt: 'Belt 60', beltHi: 'बेल्ट 60', breed: 'Jersey', breedHi: 'जर्सी', status: 'Milking', temp: '32°C', trend: 'up', photo: _mi, info: [
+      const CowModel(name: 'Gowri', nameHi: 'गौरी', no: 1, age: '2.2 yrs', ageHi: '2.2 साल', belt: 'Belt 60', beltHi: 'बेल्ट 60', breed: 'Jersey', breedHi: 'जर्सी', status: 'Milking', temp: '32°C', trend: 'up', photo: _mi, info: [
         InfoCell('labelMilkToday', '12 L'), InfoCell('labelLastMilking', '6:45 AM'), InfoCell('labelLactation', 'Day 45', valueHi: 'दिन 45')]),
-      CowModel(name: 'Giri', nameHi: 'गिरि', no: 2, age: '4 yrs', ageHi: '4 साल', belt: 'Belt 12', beltHi: 'बेल्ट 12', breed: 'HF Cross', breedHi: 'एचएफ क्रॉस', status: 'Pregnant', temp: '34°C', trend: 'up', photo: _ge, info: [
+      const CowModel(name: 'Giri', nameHi: 'गिरि', no: 2, age: '4 yrs', ageHi: '4 साल', belt: 'Belt 12', beltHi: 'बेल्ट 12', breed: 'HF Cross', breedHi: 'एचएफ क्रॉस', status: 'Pregnant', temp: '34°C', trend: 'up', photo: _ge, info: [
         InfoCell('labelDueDate', '12 Aug', valueHi: '12 अगस्त'), InfoCell('labelPregnancy', '5 Months', valueHi: '5 महीने'), InfoCell('labelLastCheck', '15 May', valueHi: '15 मई')]),
-      CowModel(name: 'Ramya', nameHi: 'रम्या', no: 3, age: '3 yrs', ageHi: '3 साल', belt: 'Belt 45', beltHi: 'बेल्ट 45', breed: 'Gir', breedHi: 'गिर', status: 'Heat', temp: '36°C', trend: 'up', photo: _he, info: [
+      const CowModel(name: 'Ramya', nameHi: 'रम्या', no: 3, age: '3 yrs', ageHi: '3 साल', belt: 'Belt 45', beltHi: 'बेल्ट 45', breed: 'Gir', breedHi: 'गिर', status: 'Heat', temp: '36°C', trend: 'up', photo: _he, info: [
         InfoCell('labelHeatDetected', '6:10 AM'), InfoCell('labelInsemination', 'Due Today', valueHi: 'आज देय'), InfoCell('labelHeatStage', 'Standing Heat', valueHi: 'स्टैंडिंग हीट')]),
-      CowModel(name: 'Lakshmi', nameHi: 'लक्ष्मी', no: 4, age: '5 yrs', ageHi: '5 साल', belt: 'Belt 08', beltHi: 'बेल्ट 08', breed: 'Sahiwal', breedHi: 'साहीवाल', status: 'Fever', temp: '39.2°C', trend: 'up', photo: _fe, info: [
+      const CowModel(name: 'Lakshmi', nameHi: 'लक्ष्मी', no: 4, age: '5 yrs', ageHi: '5 साल', belt: 'Belt 08', beltHi: 'बेल्ट 08', breed: 'Sahiwal', breedHi: 'साहीवाल', status: 'Fever', temp: '39.2°C', trend: 'up', photo: _fe, info: [
         InfoCell('labelTempRecorded', '39.2°C'), InfoCell('labelRecordedAt', '9:15 AM'), InfoCell('labelSeverity', 'High', valueHi: 'उच्च')]),
-      CowModel(name: 'Nandini', nameHi: 'नंदिनी', no: 5, age: '2.8 yrs', ageHi: '2.8 साल', belt: 'Belt 22', beltHi: 'बेल्ट 22', breed: 'Ongole', breedHi: 'ओंगोल', status: 'Milking', temp: '31°C', trend: 'down', photo: _me, info: [
+      const CowModel(name: 'Nandini', nameHi: 'नंदिनी', no: 5, age: '2.8 yrs', ageHi: '2.8 साल', belt: 'Belt 22', beltHi: 'बेल्ट 22', breed: 'Ongole', breedHi: 'ओंगोल', status: 'Milking', temp: '31°C', trend: 'down', photo: _me, info: [
         InfoCell('labelMilkToday', '8 L'), InfoCell('labelLastMilking', '6:10 AM'), InfoCell('labelLactation', 'Day 30', valueHi: 'दिन 30')]),
     ],
   ),
@@ -104,9 +104,9 @@ final List<FarmModel> kFarms = [
     manager: 'Rakesh H', managerHi: 'राकेश एच', cattle: 20, milkToday: 42, alerts: 0, critical: 0,
     heat: 0, fever: 0, insem: 0, temp: '31°C', status: FarmStatus.healthy,
     cows: [
-      CowModel(name: 'Meera', nameHi: 'मीरा', no: 1, age: '3.5 yrs', ageHi: '3.5 साल', belt: 'Belt 21', beltHi: 'बेल्ट 21', breed: 'Jersey', breedHi: 'जर्सी', status: 'Milking', temp: '31°C', trend: 'up', photo: _mi, info: [
+      const CowModel(name: 'Meera', nameHi: 'मीरा', no: 1, age: '3.5 yrs', ageHi: '3.5 साल', belt: 'Belt 21', beltHi: 'बेल्ट 21', breed: 'Jersey', breedHi: 'जर्सी', status: 'Milking', temp: '31°C', trend: 'up', photo: _mi, info: [
         InfoCell('labelMilkToday', '11 L'), InfoCell('labelLastMilking', '7:00 AM'), InfoCell('labelLactation', 'Day 80', valueHi: 'दिन 80')]),
-      CowModel(name: 'Kaveri', nameHi: 'कावेरी', no: 2, age: '2 yrs', ageHi: '2 साल', belt: 'Belt 8', beltHi: 'बेल्ट 8', breed: 'Desi', breedHi: 'देसी', status: 'Milking', temp: '32°C', trend: 'up', photo: _me, info: [
+      const CowModel(name: 'Kaveri', nameHi: 'कावेरी', no: 2, age: '2 yrs', ageHi: '2 साल', belt: 'Belt 8', beltHi: 'बेल्ट 8', breed: 'Desi', breedHi: 'देसी', status: 'Milking', temp: '32°C', trend: 'up', photo: _me, info: [
         InfoCell('labelMilkToday', '9 L'), InfoCell('labelLastMilking', '6:30 AM'), InfoCell('labelLactation', 'Day 112', valueHi: 'दिन 112')]),
     ],
   ),
@@ -116,9 +116,9 @@ final List<FarmModel> kFarms = [
     manager: 'Vimal E', managerHi: 'विमल ई', cattle: 25, milkToday: 20, alerts: 0, critical: 0,
     heat: 0, fever: 0, insem: 0, temp: '30°C', status: FarmStatus.healthy,
     cows: [
-      CowModel(name: 'Chinnu', nameHi: 'चिन्नू', no: 1, age: '5 yrs', ageHi: '5 साल', belt: 'Belt 3', beltHi: 'बेल्ट 3', breed: 'Gir', breedHi: 'गिर', status: 'Milking', temp: '30°C', trend: 'up', photo: _mi, info: [
+      const CowModel(name: 'Chinnu', nameHi: 'चिन्नू', no: 1, age: '5 yrs', ageHi: '5 साल', belt: 'Belt 3', beltHi: 'बेल्ट 3', breed: 'Gir', breedHi: 'गिर', status: 'Milking', temp: '30°C', trend: 'up', photo: _mi, info: [
         InfoCell('labelMilkToday', '10 L'), InfoCell('labelLastMilking', '6:15 AM'), InfoCell('labelLactation', 'Day 60', valueHi: 'दिन 60')]),
-      CowModel(name: 'Devi', nameHi: 'देवी', no: 2, age: '1.8 yrs', ageHi: '1.8 साल', belt: 'Belt 27', beltHi: 'बेल्ट 27', breed: 'Sahiwal', breedHi: 'साहीवाल', status: 'Pregnant', temp: '31°C', trend: 'up', photo: _ge, info: [
+      const CowModel(name: 'Devi', nameHi: 'देवी', no: 2, age: '1.8 yrs', ageHi: '1.8 साल', belt: 'Belt 27', beltHi: 'बेल्ट 27', breed: 'Sahiwal', breedHi: 'साहीवाल', status: 'Pregnant', temp: '31°C', trend: 'up', photo: _ge, info: [
         InfoCell('labelDueDate', '2 Oct', valueHi: '2 अक्टूबर'), InfoCell('labelPregnancy', '3 Months', valueHi: '3 महीने'), InfoCell('labelLastCheck', '20 Jun', valueHi: '20 जून')]),
     ],
   ),

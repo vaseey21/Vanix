@@ -170,17 +170,17 @@ class CardDetailScreen extends StatelessWidget {
                     GraphPanel(
                       isDark: isDark,
                       label: 'TEMPERATURE — LAST 10 DAYS',
-                      child: SizedBox(
-                        height: 40,
-                        width: double.infinity,
-                        child: CustomPaint(painter: SparklinePainter(temps, highlightLast: true)),
-                      ),
                       footer: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('${temps.reduce((a, b) => a < b ? a : b).toStringAsFixed(1)}°C baseline', style: TextStyle(fontSize: 10, color: isDark ? Colors.white.withValues(alpha: 0.6) : VanixColors.textHint)),
                           Text('${temps.last.toStringAsFixed(1)}°C today', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: VanixColors.danger)),
                         ],
+                      ),
+                      child: SizedBox(
+                        height: 40,
+                        width: double.infinity,
+                        child: CustomPaint(painter: SparklinePainter(temps, highlightLast: true)),
                       ),
                     ),
                     const SizedBox(height: 10),

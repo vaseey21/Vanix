@@ -207,23 +207,23 @@ class _MilkAddEntryScreenState extends State<MilkAddEntryScreen> {
           padding: const EdgeInsets.all(20),
           child: ListView(
             children: [
-              Text('FARM', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
+              const Text('FARM', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
-                value: _farm,
+                initialValue: _farm,
                 items: [for (final f in MilkSeed.farms) DropdownMenuItem(value: f, child: Text(f))],
                 onChanged: (v) => setState(() => _farm = v!),
               ),
               const SizedBox(height: 20),
-              Text('COW', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
+              const Text('COW', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
               const SizedBox(height: 8),
               DropdownButtonFormField<Cow>(
-                value: _cow,
+                initialValue: _cow,
                 items: [for (final c in MilkSeed.cows) DropdownMenuItem(value: c, child: Text(c.display, overflow: TextOverflow.ellipsis))],
                 onChanged: (v) => setState(() => _cow = v!),
               ),
               const SizedBox(height: 20),
-              Text('DATE', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
+              const Text('DATE', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
               const SizedBox(height: 8),
               InkWell(
                 onTap: _pickDate,
@@ -239,7 +239,7 @@ class _MilkAddEntryScreenState extends State<MilkAddEntryScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              Text('MILKING SESSION', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
+              const Text('MILKING SESSION', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -248,9 +248,9 @@ class _MilkAddEntryScreenState extends State<MilkAddEntryScreen> {
                   Expanded(child: _SessionPill(label: 'Evening', active: _session == MilkSession.evening, locked: _eveningLocked, onTap: () => _selectSession(MilkSession.evening))),
                 ],
               ),
-              if (_eveningLocked) Padding(padding: const EdgeInsets.only(top: 6), child: Text('Evening unlocks at 17:00 today', style: TextStyle(fontSize: 11, color: VanixColors.textHint))),
+              if (_eveningLocked) const Padding(padding: EdgeInsets.only(top: 6), child: Text('Evening unlocks at 17:00 today', style: TextStyle(fontSize: 11, color: VanixColors.textHint))),
               const SizedBox(height: 24),
-              Text('LITRES', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
+              const Text('LITRES', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
               const SizedBox(height: 8),
               TextField(
                 controller: _litresCtrl,
