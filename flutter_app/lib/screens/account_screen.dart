@@ -903,6 +903,7 @@ class _LegalPage extends StatelessWidget {
                 ),
               ],
             ),
+            ),
           ),
         );
       },
