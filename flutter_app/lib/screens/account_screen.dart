@@ -841,53 +841,68 @@ class _FarmMgmtPageState extends State<_FarmMgmtPage> {
                               Text(farm.nm(lang), style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: textColor)),
                               Padding(
                                 padding: const EdgeInsets.only(top: 3),
-                                child: farm.assigned
-                                    ? Text('${FS.t(lang, 'managerWord')}: ${farm.mgr(lang)}', style: TextStyle(fontSize: 12, color: isDark ? const Color(0xB3FFFFFF) : VanixColors.textHint))
-                                    : Text(FS.t(lang, 'unassignedWord'), style: const TextStyle(fontSize: 12, color: VanixColors.danger)),
+                                child: farm.managerInvitePending
+                                    ? Text('${FS.t(lang, 'invitePending')} — ${farm.managerInviteEmail}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.warning))
+                                    : farm.assigned
+                                        ? Text('${FS.t(lang, 'managerWord')}: ${farm.mgr(lang)}', style: TextStyle(fontSize: 12, color: isDark ? const Color(0xB3FFFFFF) : VanixColors.textHint))
+                                        : Text(FS.t(lang, 'unassignedWord'), style: const TextStyle(fontSize: 12, color: VanixColors.danger)),
                               ),
                               const SizedBox(height: 12),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: _PillButton(
-                                      label: farm.assigned ? FS.t(lang, 'reassignWord') : FS.t(lang, 'assignManager'),
-                                      textColor: VanixColors.greenInk,
-                                      bg: VanixColors.activeBg,
-                                      borderColor: VanixColors.greenInk,
-                                      onTap: () => _openAssignSheet(farm),
+                              if (farm.managerInvitePending) ...[
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: _PillButton(
+                                        label: FS.t(lang, 'resendInvite'),
+                                        textColor: VanixColors.greenInk,
+                                        bg: VanixColors.activeBg,
+                                        borderColor: VanixColors.greenInk,
+                                        onTap: () {},
+                                      ),
                                     ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _PillButton(
+                                        label: FS.t(lang, 'cancelInvite'),
+                                        textColor: VanixColors.danger,
+                                        bg: Colors.transparent,
+                                        borderColor: VanixColors.danger,
+                                        onTap: () => setState(() {
+                                          farm.managerInvitePending = false;
+                                          farm.managerInviteEmail = '';
+                                        }),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ] else ...[
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: _PillButton(
+                                    label: farm.assigned ? FS.t(lang, 'reassignWord') : FS.t(lang, 'assignManager'),
+                                    textColor: VanixColors.greenInk,
+                                    bg: VanixColors.activeBg,
+                                    borderColor: VanixColors.greenInk,
+                                    onTap: () => _openChooseSheet(farm),
                                   ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
+                                ),
+                                if (farm.assigned) ...[
+                                  const SizedBox(height: 8),
+                                  SizedBox(
+                                    width: double.infinity,
                                     child: _PillButton(
-                                      label: FS.t(lang, 'assignMe'),
-                                      textColor: textColor,
+                                      label: FS.t(lang, 'removeManager'),
+                                      textColor: VanixColors.danger,
                                       bg: Colors.transparent,
-                                      borderColor: isDark ? VanixColors.darkBorder : VanixColors.border,
+                                      borderColor: VanixColors.danger,
+                                      minHeight: 36,
                                       onTap: () => setState(() {
-                                        farm.manager = 'James Redmark';
-                                        farm.managerHi = 'जेम्स रेडमार्क';
+                                        farm.manager = 'Unassigned';
+                                        farm.managerHi = 'नियुक्त नहीं';
                                       }),
                                     ),
                                   ),
                                 ],
-                              ),
-                              if (farm.assigned) ...[
-                                const SizedBox(height: 8),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: _PillButton(
-                                    label: FS.t(lang, 'removeManager'),
-                                    textColor: VanixColors.danger,
-                                    bg: Colors.transparent,
-                                    borderColor: VanixColors.danger,
-                                    minHeight: 36,
-                                    onTap: () => setState(() {
-                                      farm.manager = 'Unassigned';
-                                      farm.managerHi = 'नियुक्त नहीं';
-                                    }),
-                                  ),
-                                ),
                               ],
                             ],
                           ),
