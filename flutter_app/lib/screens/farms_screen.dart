@@ -175,6 +175,7 @@ class _FarmsScreenState extends State<FarmsScreen> with SingleTickerProviderStat
                       ),
                     ],
                   ),
+                  ),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
