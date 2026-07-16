@@ -978,52 +978,57 @@ class _DottedPainter extends CustomPainter {
   bool shouldRepaint(covariant _DottedPainter oldDelegate) => oldDelegate.color != color;
 }
 
-// ── Weekly milk line graph ──────────────────────────────────────────────
+// ── Weekly milk line graph — green area fill + optional single peak dot ──
 class _WeeklyPainter extends CustomPainter {
   final List<double> values;
   final bool isDark;
-  _WeeklyPainter({required this.values, required this.isDark});
+  final int? peakIndex; // when set, only this point gets a dot
+  _WeeklyPainter({required this.values, required this.isDark, this.peakIndex});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final lineColor = isDark ? VanixColors.greenDeep : VanixColors.greenInk;
-    final gridColor = (isDark ? Colors.white : Colors.black).withOpacity(0.08);
+    final lineColor = VanixColors.greenInk;
     final max = values.reduce((a, b) => a > b ? a : b);
     final min = values.reduce((a, b) => a < b ? a : b);
     final range = (max - min) == 0 ? 1.0 : (max - min);
     final chartHeight = size.height;
 
-    final gridPaint = Paint()
-      ..color = gridColor
-      ..strokeWidth = 1;
-    for (var i = 0; i <= 3; i++) {
-      final y = chartHeight / 3 * i;
-      canvas.drawLine(Offset(0, y), Offset(size.width, y), gridPaint);
-    }
+    // single baseline
+    canvas.drawLine(
+      Offset(0, chartHeight / 2),
+      Offset(size.width, chartHeight / 2),
+      Paint()..color = (isDark ? VanixColors.darkDivider : VanixColors.divider)..strokeWidth = 1,
+    );
 
     Offset pointAt(int i) {
       final x = values.length == 1 ? 0.0 : size.width / (values.length - 1) * i;
-      final y = chartHeight - ((values[i] - min) / range) * (chartHeight - 8) - 4;
+      final y = chartHeight - ((values[i] - min) / range) * (chartHeight - 10) - 5;
       return Offset(x, y);
     }
 
     final path = Path();
-    final fillPath = Path();
+    final fillPath = Path()..moveTo(0, chartHeight);
     for (var i = 0; i < values.length; i++) {
       final p = pointAt(i);
       if (i == 0) {
         path.moveTo(p.dx, p.dy);
-        fillPath.moveTo(p.dx, chartHeight);
-        fillPath.lineTo(p.dx, p.dy);
       } else {
         path.lineTo(p.dx, p.dy);
-        fillPath.lineTo(p.dx, p.dy);
       }
+      fillPath.lineTo(p.dx, p.dy);
     }
-    fillPath.lineTo(pointAt(values.length - 1).dx, chartHeight);
+    fillPath.lineTo(size.width, chartHeight);
     fillPath.close();
 
-    canvas.drawPath(fillPath, Paint()..color = lineColor.withOpacity(0.10)..style = PaintingStyle.fill);
+    canvas.drawPath(
+      fillPath,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [VanixColors.greenDeep.withOpacity(0.28), VanixColors.greenDeep.withOpacity(0)],
+        ).createShader(Rect.fromLTWH(0, 0, size.width, chartHeight)),
+    );
     canvas.drawPath(
       path,
       Paint()
@@ -1034,13 +1039,70 @@ class _WeeklyPainter extends CustomPainter {
         ..strokeJoin = StrokeJoin.round,
     );
 
-    for (var i = 0; i < values.length; i++) {
-      final p = pointAt(i);
-      canvas.drawCircle(p, 3, Paint()..color = lineColor);
-      canvas.drawCircle(p, 3, Paint()..color = Colors.white..style = PaintingStyle.stroke..strokeWidth = 1.5);
+    if (peakIndex != null) {
+      final p = pointAt(peakIndex!);
+      canvas.drawCircle(p, 3.2, Paint()..color = VanixColors.greenDeep);
+      canvas.drawCircle(p, 3.2, Paint()..color = (isDark ? VanixColors.darkSecond : Colors.white)..style = PaintingStyle.stroke..strokeWidth = 1.2);
+    } else {
+      for (var i = 0; i < values.length; i++) {
+        final p = pointAt(i);
+        canvas.drawCircle(p, 3, Paint()..color = lineColor);
+      }
     }
   }
 
   @override
-  bool shouldRepaint(covariant _WeeklyPainter oldDelegate) => oldDelegate.values != values || oldDelegate.isDark != isDark;
+  bool shouldRepaint(covariant _WeeklyPainter oldDelegate) =>
+      oldDelegate.values != values || oldDelegate.isDark != isDark || oldDelegate.peakIndex != peakIndex;
+}
+
+// ── 24-hour temperature line — green→orange→red gradient + 39°C guide ────
+class _TempPainter extends CustomPainter {
+  final bool isDark;
+  _TempPainter({required this.isDark});
+
+  static const List<double> _temps = [30, 30, 29.5, 30, 30.5, 30, 32.5, 31.5, 31, 34, 32.5, 32, 35];
+  static const double _lo = 20, _hi = 40;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    double yFor(double v) => size.height - ((v - _lo) / (_hi - _lo)) * size.height;
+
+    // fever threshold guide at 39°C
+    final guideY = yFor(39);
+    final guidePaint = Paint()
+      ..color = VanixColors.danger.withOpacity(0.5)
+      ..strokeWidth = 1;
+    for (double x = 0; x < size.width; x += 6) {
+      canvas.drawLine(Offset(x, guideY), Offset(x + 3, guideY), guidePaint);
+    }
+
+    final path = Path();
+    for (var i = 0; i < _temps.length; i++) {
+      final x = size.width / (_temps.length - 1) * i;
+      final y = yFor(_temps[i]);
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+    canvas.drawPath(
+      path,
+      Paint()
+        ..shader = const LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: [VanixColors.greenDeep, VanixColors.warning, VanixColors.danger],
+          stops: [0.0, 0.5, 0.8],
+        ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
+        ..strokeWidth = 2.4
+        ..style = PaintingStyle.stroke
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _TempPainter oldDelegate) => oldDelegate.isDark != isDark;
 }
