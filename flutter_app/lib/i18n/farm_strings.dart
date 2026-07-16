@@ -183,6 +183,17 @@ class FS {
       'farmMgmtSub': 'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', 'unassignedWord': 'नियुक्त नहीं', 'reassignWord': 'फिर से नियुक्त करें',
       'assignManager': 'प्रबंधक नियुक्त करें', 'assignMe': 'मुझे नियुक्त करें', 'removeManager': 'प्रबंधक हटाएँ',
       'mgrNamePh': 'प्रबंधक का नाम', 'confirmAssign': 'पुष्टि करें और नियुक्त करें', 'legalUpdated': 'अंतिम अपडेट: 1 जुलाई 2026',
+      // Add Cattle
+      'cancelWord': 'रद्द करें', 'saveWord': 'सहेजें', 'selectWord': 'चुनें', 'selectDate': 'तारीख चुनें',
+      'genderWord': 'लिंग', 'yearsWord': 'साल', 'monthsWord': 'महीने', 'optionalWord': '(वैकल्पिक)',
+      'acSubPre': 'इस खेत में नई गाय जोड़ें —', 'acPhotoLabel': 'गाय की फ़ोटो', 'acPhotoHint': 'गाय की PNG / JPG अपलोड करें',
+      'acCattleType': 'पशु प्रकार', 'acTypeCow': 'गाय', 'acTypeHint': 'गाय · भेड़ · बकरी — गैर-गाय स्वास्थ्य स्कोरिंग चिह्नित होती है।',
+      'acCowName': 'गाय का नाम (आसानी से पहचानने योग्य)', 'cowStatusWord': 'गाय की स्थिति',
+      'acDeviceDetails': 'डिवाइस विवरण', 'acBeltNo': 'पशु बेल्ट नंबर', 'acMacId': 'MAC आईडी',
+      'acCowHistory': 'गाय का इतिहास', 'acFillHistory': 'गाय का इतिहास भरें', 'acHistUnknown': 'इतिहास अज्ञात',
+      'acLastHeat': 'अंतिम हीट', 'acLastInsem': 'अंतिम गर्भाधान', 'acLastPreg': 'अंतिम गर्भावस्था',
+      'acLastCalving': 'अंतिम प्रसव', 'acLactationNo': 'स्तनपान संख्या',
+      'acLactHint': 'संख्या स्टेपर, तारीख नहीं। ये फ़ील्ड केवल "गाय का इतिहास भरें" चुनने पर दिखते हैं।',
     },
   };
 }
