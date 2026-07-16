@@ -304,7 +304,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _triageBlock() {
+  Widget _triageBlock({required VoidCallback onDone}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
