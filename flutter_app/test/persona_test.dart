@@ -16,7 +16,7 @@ bool _hasText(WidgetTester tester, String needle) {
 }
 
 void main() {
-  testWidgets('Farmer dashboard: Immediate/To-dos tabs render, no overflow', (tester) async {
+  testWidgets('Farmer dashboard: Priority/To-do tabs render, no overflow', (tester) async {
     tester.view.physicalSize = const Size(430, 932);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
@@ -25,13 +25,13 @@ void main() {
     await tester.pumpWidget(MaterialApp(home: FarmerDashboardScreen(appState: appState)));
     await tester.pump();
 
-    expect(find.text('Immediate'), findsOneWidget);
-    expect(find.text('To-dos'), findsOneWidget);
+    expect(find.text('Priority'), findsOneWidget);
+    expect(find.text('To do'), findsOneWidget);
     expect(_hasText(tester, 'Heat detected'), isTrue);
     expect(find.text('Open'), findsWidgets);
 
     // Switch to To-dos
-    await tester.tap(find.text('To-dos'));
+    await tester.tap(find.text('To do'));
     await tester.pump();
     expect(_hasText(tester, 'Insemination window'), isTrue);
     expect(tester.takeException(), isNull);

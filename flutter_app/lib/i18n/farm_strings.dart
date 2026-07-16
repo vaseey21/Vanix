@@ -134,7 +134,7 @@ class FS {
       'groupNamePh': 'Group name', 'createGroup': 'Create group', 'addCattleBtn': '+ Add cattle',
       'noCowsInGroup': 'No cattle in this group yet', 'addToGroupTitle': 'Add to group', 'cowsWord': 'cattle',
       // Farmer dashboard
-      'fpGreeting': 'Your farm today', 'fpImmediate': 'Immediate', 'fpTodos': 'To-dos', 'fpOpen': 'Open',
+      'fpGreeting': 'Your farm today', 'fpImmediate': 'Priority', 'fpTodos': 'To do', 'fpOpen': 'Open',
       'fpHeat': 'Heat detected', 'fpHeatSub': 'Confirm & log insemination', 'fpFever': 'Fever alert', 'fpFeverSub': 'High temperature — call a vet',
       'fpDelivery': 'Delivery due', 'fpDeliverySub': 'Confirm the calving outcome', 'fpVetAppt': 'Vet appointment', 'fpVetApptSub': 'Today 4:30 PM — Dr. Sharma',
       'fpInsem': 'Insemination window', 'fpInsemSub': '9h left — optimal window', 'fpMilkLog': 'Evening milk logging', 'fpMilkLogSub': 'Due after 5:00 PM',
@@ -263,7 +263,7 @@ class FS {
       'groupNamePh': 'समूह का नाम', 'createGroup': 'समूह बनाएं', 'addCattleBtn': '+ पशु जोड़ें',
       'noCowsInGroup': 'इस समूह में अभी कोई पशु नहीं', 'addToGroupTitle': 'समूह में जोड़ें', 'cowsWord': 'पशु',
       // Farmer dashboard
-      'fpGreeting': 'आज आपका फार्म', 'fpImmediate': 'तुरंत', 'fpTodos': 'करने के काम', 'fpOpen': 'खोलें',
+      'fpGreeting': 'आज आपका फार्म', 'fpImmediate': 'प्राथमिकता', 'fpTodos': 'करने के काम', 'fpOpen': 'खोलें',
       'fpHeat': 'हीट का पता चला', 'fpHeatSub': 'गर्भाधान की पुष्टि और लॉग करें', 'fpFever': 'बुखार चेतावनी', 'fpFeverSub': 'तेज़ तापमान — पशु चिकित्सक बुलाएँ',
       'fpDelivery': 'प्रसव देय', 'fpDeliverySub': 'ब्यांत का परिणाम पुष्टि करें', 'fpVetAppt': 'पशु चिकित्सक भेंट', 'fpVetApptSub': 'आज शाम 4:30 — डॉ. शर्मा',
       'fpInsem': 'गर्भाधान विंडो', 'fpInsemSub': '9 घंटे बचे — सर्वोत्तम विंडो', 'fpMilkLog': 'शाम दूध लॉगिंग', 'fpMilkLogSub': 'शाम 5 बजे के बाद देय',
