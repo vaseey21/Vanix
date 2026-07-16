@@ -167,6 +167,9 @@
     #flow-root.dark #s1-dash { background: #111111 !important; }
     #flow-root.dark #s1-dash > div > p { color: #8C8780 !important; }
     /* ── Unified frosted nav: identical metrics everywhere; sliding droplet capsule ── */
+    /* Persona gating — owner-only surfaces hidden for the Farmer persona */
+    #flow-root.persona-farmer [data-owner-only] { display:none !important; }
+    #flow-root.persona-farmer .m-sub-actions { display:none !important; }
     .vnav { position:absolute; left:14px; right:14px; bottom:26px; z-index:5; background:rgba(255,255,255,0.42); -webkit-backdrop-filter:blur(18px) saturate(1.4); backdrop-filter:blur(18px) saturate(1.4); border:1px solid rgba(255,255,255,0.55); border-radius:36px; display:flex; padding:5px; box-shadow:0 14px 36px rgba(0,0,0,0.20); }
     .vcap { position:absolute; top:5px; inset-inline-start:5px; width:calc((100% - 10px) / 5); height:56px; background:#FFFFFF; border-radius:28px; box-shadow:0 4px 14px rgba(0,0,0,0.10); transition:transform 0.34s cubic-bezier(0.32,1.04,0.36,1); will-change:transform; }
     .vcap.squish { animation: vsquish 0.34s cubic-bezier(0.32,1.04,0.36,1); }
@@ -1034,6 +1037,12 @@
             </span>
           </button>
 
+          <!-- PERSONA TOGGLE (Owner / Farmer) — demo control, top-left -->
+          <button id="s1-persona" title="Switch persona (demo)" style="position:absolute; top:16px; left:14px; z-index:5; height:30px; border-radius:15px; border:1px solid rgba(255,255,255,0.35); background:rgba(0,0,0,0.28); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding:0 12px; display:flex; align-items:center; gap:6px; color:#FFFFFF; font-size:12px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+            <span id="s1-persona-label">Owner</span>
+          </button>
+
           <!-- VIDEO LAYER — fades in during transition -->
           <div id="s1-video" style="position:absolute; inset:0; opacity:0; transition: opacity 2.2s ease; z-index:1;">
             <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; object-position:center top; position:absolute; inset:0;">
@@ -1173,7 +1182,7 @@
 
               <!-- Farms needing action -->
               <div style="padding:20px 16px 0;">
-                <p data-k="dashFarmsNeedAction" style="font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0; margin-bottom:10px;">Farms needing action</p>
+                <p data-k="dashFarmsNeedAction" style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0; margin-bottom:10px;">Farms needing action</p>
                 <button id="dash-farmaction" style="width:100%; text-align:start; background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); display:flex; align-items:center; gap:12px; cursor:pointer; font-family:var(--font-hi);">
                   <div style="flex:1; min-width:0;">
                     <div style="display:flex; align-items:center; gap:8px;"><span style="font-size:16px; font-weight:700; color:var(--text1);">Sunrise Dairy</span><span style="font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:#FFFFFF; background:var(--danger); border-radius:8px; padding:2px 8px;" data-k="sevCritical">CRITICAL</span></div>
@@ -1185,7 +1194,7 @@
 
               <!-- Updates (icon-less: event · details · time) -->
               <div style="padding:20px 16px 0;">
-                <p data-k="dashUpdates" style="font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0; margin-bottom:10px;">Updates</p>
+                <p data-k="dashUpdates" style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0; margin-bottom:10px;">Updates</p>
                 <div style="background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); padding:2px 16px;">
                   <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:13px 0; border-bottom:1px solid var(--divider);">
                     <div style="flex:1; min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Bhoori — <span data-k="dashRecovered">recovered</span></p><p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.4;" data-k="dashFeverCaught">fever caught by collar, treated by Dr. Sharma</p></div>
@@ -1263,7 +1272,70 @@
             </nav>
           </div>
 
+          <!-- ── FARMER DASHBOARD (simpler, action-first) ── -->
+          <div id="farmer-dash" style="position:absolute; inset:0; background:var(--bgwarm); z-index:6; transform:translateY(100%); transition: transform 0.6s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column;">
+            <div id="farmer-dash-scroll" style="flex:1; overflow-y:auto; padding:0 0 128px;">
+              <!-- Header: logo + greeting -->
+              <div style="padding:calc(20px + env(safe-area-inset-top, 0px)) 16px 6px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                  <img src="https://mybovine.ai/assets/logos/vanix-logo.svg" alt="MyBovine" style="height:22px; width:auto; display:block; flex-shrink:0;">
+                  <span data-k="fpGreeting" style="font-size:13px; font-weight:600; color:var(--text2);">Your farm today</span>
+                </div>
+              </div>
+              <!-- Immediate / To-dos tabs -->
+              <div style="padding:14px 16px 0;">
+                <div style="display:flex; gap:8px; margin-bottom:14px;">
+                  <button class="fp-tab on" data-tab="immediate" data-k="fpImmediate" style="min-height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--danger); background:var(--danger); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Immediate</button>
+                  <button class="fp-tab" data-tab="todos" data-k="fpTodos" style="min-height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">To-dos</button>
+                </div>
+                <div id="fp-immediate">
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--danger); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpHeat">Heat detected</span> — Ramya</p><p data-k="fpHeatSub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--danger); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpFever">Fever alert</span> — Lakshmi</p><p data-k="fpFeverSub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--warning); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpDelivery">Delivery due</span> — Giri</p><p data-k="fpDeliverySub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                </div>
+                <div id="fp-todos" style="display:none;">
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--greenink); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpVetAppt">Vet appointment</span> — Kajri</p><p data-k="fpVetApptSub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--warning); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpInsem">Insemination window</span> — Gauri</p><p data-k="fpInsemSub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--border); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpMilkLog">Evening milk logging</span></p><p data-k="fpMilkLogSub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                </div>
+              </div>
+            </div>
+            <!-- ── BOTTOM NAV (farmer) ── -->
+            <nav class="vnav" id="farmer-dash-nav">
+              <div class="vcap"></div>
+              <button class="vtab on" data-i="0">
+                <span style="position:relative; display:flex;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
+                  <span class="ev-dot" style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
+                </span>
+                <span class="vlab s1-nav-l en" data-k="navHome">Home</span>
+              </button>
+              <button class="vtab" data-i="1">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navFarms">Farms</span>
+              </button>
+              <button class="vtab" data-i="2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navMilk">Milk</span>
+              </button>
+              <button class="vtab" data-i="3">
+                <span style="position:relative; display:flex;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  <span style="position:absolute; top:-5px; right:-8px; min-width:15px; height:15px; border-radius:8px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px;" class="en ev-badge">3</span>
+                </span>
+                <span class="vlab s1-nav-l en" data-k="navEvents">Events</span>
+              </button>
+              <button class="vtab" data-i="4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navAccount">Account</span>
+              </button>
+            </nav>
+          </div>
+
           <!-- SPLASH BG — off-white, fades out -->
+          <!-- LANDING LOGIN CTA — shown over the video until tapped -->
+          <button id="s1-landing" data-k="title" style="position:absolute; left:32px; right:32px; bottom:calc(48px + env(safe-area-inset-bottom,0px)); z-index:4; min-height:52px; border-radius:26px; border:none; background:var(--greendeep); color:#FFFFFF; font-size:16px; font-weight:600; font-family:var(--font-hi); box-shadow:0 10px 30px rgba(0,0,0,0.30); opacity:0; pointer-events:none; transition:opacity 0.6s ease; cursor:pointer;">Login</button>
+
           <div id="s1-splash-bg" style="position:absolute; inset:0; background:var(--bgwarm); transition: opacity 0.8s ease; z-index:2; pointer-events:none;"></div>
 
           <!-- ANIMATED LOGO — sits above splash bg, moves from centre → hero position -->
@@ -2511,11 +2583,11 @@
 
                 <p data-k="grpFarmMgmt" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:16px 0 8px;">Farm Management</p>
                 <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
-                  <div class="acct-row" data-page="page-farmmgmt" style="display:flex; align-items:center; gap:10px; padding:13px 14px; border-bottom:1px solid var(--border); cursor:pointer;">
+                  <div class="acct-row" data-owner-only data-page="page-farmmgmt" style="display:flex; align-items:center; gap:10px; padding:13px 14px; border-bottom:1px solid var(--border); cursor:pointer;">
                     <div style="flex:1; min-width:0;"><p data-k="grpFarmMgmt" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Farm Management</p><p data-k="acctFarmSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Sunrise Dairy Farm</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
                   </div>
-                  <div style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
-                    <div style="flex:1; min-width:0;"><p data-k="rowCattleGroups" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Cattle Groups</p><p data-k="acctGroupsSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Desi, Jersey, Holstein Friesian, Sahiwal</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  <div class="acct-row" data-owner-only data-page="page-groups" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
+                    <div style="flex:1; min-width:0;"><p data-k="rowCattleGroups" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Cattle Groups</p><p id="acct-groups-sub" data-k="acctGroupsSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Desi, Jersey, Holstein Friesian, Sahiwal</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
                   </div>
                 </div>
 
@@ -2525,7 +2597,7 @@
                     <div style="flex:1; min-width:0;"><p data-k="rowSound" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Alert sound</p><p data-k="soundSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Alerts always notify — sound can be muted</p></div>
                     <span class="acct-toggle" style="width:40px; height:22px; border-radius:12px; background:var(--greenink); position:relative; flex-shrink:0; transition:background 0.2s;"><span style="position:absolute; top:2px; inset-inline-start:20px; width:18px; height:18px; border-radius:50%; background:#FFFFFF; transition:inset-inline-start 0.2s;"></span></span>
                   </div>
-                  <div class="acct-row" data-page="page-vets" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
+                  <div class="acct-row" data-owner-only data-page="page-vets" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
                     <div style="flex:1; min-width:0;"><p data-k="rowVets" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Vet &amp; Emergency Contacts</p><p data-k="vetsSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Who gets called when you tap "Call Vet"</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
                   </div>
                 </div>
@@ -2564,7 +2636,7 @@
                 </div>
 
                 <div style="margin-top:16px; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
-                  <div style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;"><p data-k="rowLogout" style="flex:1; font-size:14px; font-weight:600; color:var(--danger); margin:0;">Log Out</p></div>
+                  <div id="s1-logout" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;"><p data-k="rowLogout" style="flex:1; font-size:14px; font-weight:600; color:var(--danger); margin:0;">Log Out</p></div>
                 </div>
 
               </div>
@@ -2643,7 +2715,7 @@
                 <div style="display:flex; align-items:center; gap:6px;">
                   <button class="acct-back" data-close="page-vets" style="flex-shrink:0; width:32px; height:32px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
                   <div>
-                    <h2 data-k="rowVets" style="font-size:19px; font-weight:700; color:var(--text1); margin:0;">Vet &amp; Emergency Contacts</h2>
+                    <h2 data-k="rowVets" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">Vet &amp; Emergency Contacts</h2>
                     <p data-k="vetsSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Who gets called when you tap "Call Vet"</p>
                   </div>
                 </div>
@@ -2742,7 +2814,7 @@
                 <div style="display:flex; align-items:center; gap:6px;">
                   <button class="acct-back" data-close="page-farmmgmt" style="flex-shrink:0; width:32px; height:32px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
                   <div>
-                    <h2 data-k="grpFarmMgmt" style="font-size:19px; font-weight:700; color:var(--text1); margin:0;">Farm Management</h2>
+                    <h2 data-k="grpFarmMgmt" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">Farm Management</h2>
                     <p data-k="farmMgmtSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Assign or remove a manager for each farm</p>
                   </div>
                 </div>
@@ -2752,8 +2824,19 @@
               </div>
             </div>
             </div>
-            <!-- Reassign form sheet -->
+            <!-- Manage-manager chooser + reassign/invite form sheets -->
             <div id="fm-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:46;"></div>
+            <div id="fm-choose-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+              <div style="display:flex; align-items:center; margin-top:10px;">
+                <h3 data-k="manageFarmMgr" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Manage farm manager</h3>
+                <button id="fm-choose-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+              </div>
+              <p id="fm-choose-farm" class="en" style="font-size:12px; color:var(--text2); margin:6px 0 14px;"></p>
+              <button id="fm-choose-select" data-k="selectNewMgr" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; font-family:var(--font-hi); cursor:pointer; color:var(--text1);">Select a new farm manager</button>
+              <button id="fm-choose-invite" data-k="sendMgrInvite" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; font-family:var(--font-hi); cursor:pointer; color:var(--text1);">Send Invite to another farm manager</button>
+              <button id="fm-choose-self" data-k="assignMe" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; font-family:var(--font-hi); cursor:pointer; color:var(--text1);">Assign to me</button>
+            </div>
             <div id="fm-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
               <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
               <div style="display:flex; align-items:center; margin-top:10px;">
@@ -2761,11 +2844,78 @@
                 <button id="fm-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
               </div>
               <p id="fm-sheet-farm" class="en" style="font-size:12px; color:var(--text2); margin:6px 0 0;"></p>
+              <p id="fm-invite-hint" data-k="mgrInviteHint" style="display:none; font-size:11px; color:var(--text2); margin:6px 0 0; line-height:1.5;">An invite link is emailed to the manager — they confirm before being added.</p>
               <input type="text" id="fm-name" placeholder="Manager name" data-k="mgrNamePh" data-k-placeholder style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px; margin-top:14px; font-family:var(--font-hi);">
               <input type="tel" id="fm-phone" placeholder="Mobile number" data-k="phonePh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
               <input type="email" id="fm-email" placeholder="Email address" data-k="emailPh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
               <button id="fm-assign-save" data-k="confirmAssign" style="width:100%; min-height:48px; margin-top:8px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Confirm &amp; assign</button>
             </div>
+          </div>
+
+          <!-- CATTLE GROUPS — create groups, add/remove cattle -->
+          <div id="page-groups" style="position:absolute; inset:0; background:var(--bgwarm); z-index:44; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 40px;">
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button class="acct-back" data-close="page-groups" style="flex-shrink:0; width:32px; height:32px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                  <div>
+                    <h2 data-k="rowCattleGroups" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">Cattle Groups</h2>
+                    <p data-k="groupsSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Create groups and add cattle to them</p>
+                  </div>
+                </div>
+              </div>
+              <div style="padding:14px 16px 0;">
+                <button id="groups-new-btn" data-k="newGroupBtn" style="width:100%; min-height:46px; border-radius:14px; border:1.5px dashed var(--border); background:transparent; color:var(--greenink); font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">+ New Group</button>
+                <div id="groups-list" style="margin-top:12px;"></div>
+              </div>
+            </div>
+            </div>
+            <!-- New-group name sheet -->
+            <div id="grp-new-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:46;"></div>
+            <div id="grp-new-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+              <div style="display:flex; align-items:center; margin-top:10px;">
+                <h3 data-k="newGroupBtn" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">+ New Group</h3>
+                <button id="grp-new-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+              </div>
+              <input type="text" id="grp-new-name" placeholder="Group name" data-k="groupNamePh" data-k-placeholder style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px; margin-top:14px; font-family:var(--font-hi);">
+              <button id="grp-new-save" data-k="createGroup" style="width:100%; min-height:48px; margin-top:8px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Create group</button>
+            </div>
+            <!-- Group detail sheet: cows in group + add cattle -->
+            <div id="grp-detail-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:46;"></div>
+            <div id="grp-detail-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; max-height:78vh; display:flex; flex-direction:column; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+              <div style="display:flex; align-items:center; margin-top:10px;">
+                <h3 id="grp-detail-title" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Group</h3>
+                <button id="grp-detail-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+              </div>
+              <div id="grp-detail-cows" style="margin-top:12px; overflow-y:auto; flex:1;"></div>
+              <button id="grp-add-cattle-btn" data-k="addCattleBtn" style="width:100%; min-height:46px; margin-top:12px; border-radius:23px; border:1px solid var(--greenink); background:var(--activebg); color:var(--greenink); font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer; flex-shrink:0;">+ Add cattle</button>
+            </div>
+            <!-- Add-cattle picker sheet: checkbox list of every cow across farms -->
+            <div id="grp-pick-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:48;"></div>
+            <div id="grp-pick-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; max-height:78vh; display:flex; flex-direction:column; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:49; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+              <div style="display:flex; align-items:center; margin-top:10px;">
+                <h3 data-k="addCattleBtn" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">+ Add cattle</h3>
+                <button id="grp-pick-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+              </div>
+              <div id="grp-pick-list" style="margin-top:12px; overflow-y:auto; flex:1;"></div>
+              <button id="grp-pick-save" data-k="saveWord" style="width:100%; min-height:48px; margin-top:12px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer; flex-shrink:0;">Save</button>
+            </div>
+          </div>
+
+          <!-- ADD TO GROUP (from a cow's kebab menu) — pick which group(s) this cow belongs to -->
+          <div id="cow-grp-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:50;"></div>
+          <div id="cow-grp-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; max-height:70vh; display:flex; flex-direction:column; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:51; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+            <div style="display:flex; align-items:center; margin-top:10px;">
+              <h3 data-k="addToGroupTitle" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Add to group</h3>
+              <button id="cow-grp-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+            </div>
+            <div id="cow-grp-list" style="margin-top:12px; overflow-y:auto; flex:1;"></div>
+            <button id="cow-grp-save" data-k="saveWord" style="width:100%; min-height:48px; margin-top:12px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer; flex-shrink:0;">Save</button>
           </div>
 
           <!-- COW PROFILE — opened by tapping a cattle card. Timeline / Overview / Vet Logs. -->
@@ -2780,7 +2930,7 @@
                   </button>
                   <img id="cow-photo" src="assets/images/milking_started_photo.jpg" alt="" style="width:64px; height:64px; border-radius:16px; object-fit:cover; flex-shrink:0;">
                   <div style="flex:1; min-width:0; margin-inline-start:4px;">
-                    <p id="cow-name" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; line-height:1.2;">Gowri</p>
+                    <p id="cow-name" style="font-size:20px; font-weight:700; color:var(--text1); margin:0; line-height:1.2;">Gowri</p>
                     <p id="cow-breed" style="font-size:12px; color:var(--text2); margin:2px 0 0;">Jersey</p>
                     <p id="cow-age" class="en" style="font-size:12px; color:var(--text2); margin:1px 0 0;">2.2 yrs</p>
                   </div>
@@ -2788,7 +2938,7 @@
                     <button id="cow-kebab" style="width:36px; height:36px; border-radius:50%; border:none; background:transparent; color:var(--text1); font-size:18px; line-height:1; cursor:pointer;">⋮</button>
                     <div id="cow-kebab-menu" style="display:none; position:absolute; top:40px; inset-inline-end:0; z-index:10; min-width:160px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,0.2); padding:4px;">
                       <button data-k="editWord" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Edit</button>
-                      <button data-k="addToGroup" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Add to group</button>
+                      <button id="cow-kebab-addgroup" data-k="addToGroup" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Add to group</button>
                       <button data-k="deleteWord" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--danger); font-family:var(--font-hi);">Delete</button>
                     </div>
                   </div>
@@ -2819,21 +2969,6 @@
               </div>
 
             </div><!-- /scroll -->
-            <!-- Timeline event detail sheet -->
-            <div id="cow-tl-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:46;"></div>
-            <div id="cow-tl-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
-              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
-              <div style="display:flex; align-items:flex-start; gap:10px; margin-top:12px;">
-                <span id="cow-tl-dot" style="width:12px; height:12px; border-radius:50%; background:var(--greendeep); flex-shrink:0; margin-top:5px;"></span>
-                <div style="flex:1; min-width:0;">
-                  <p id="cow-tl-title" style="font-size:16px; font-weight:700; color:var(--text1); margin:0;">Event</p>
-                  <p id="cow-tl-date" class="en" style="font-size:11px; color:var(--text2); margin:3px 0 0;">Date</p>
-                </div>
-                <button id="cow-tl-close" style="width:34px; height:34px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
-              </div>
-              <p id="cow-tl-desc" style="font-size:13px; color:var(--text2); margin:12px 0 4px; line-height:1.6;">Description</p>
-            </div>
-
             <!-- Cow actions sheet (from the floating + button) -->
             <div id="cow-add-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:48;"></div>
             <div id="cow-add-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:49; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
@@ -2938,15 +3073,18 @@
 
               <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
                 <div style="display:flex; align-items:flex-start; gap:6px;">
-                  <button id="farm-detail-back" style="flex-shrink:0; width:34px; height:34px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;">
+                  <button id="farm-detail-back" style="flex-shrink:0; width:34px; height:34px; margin-inline-start:-7px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
                   </button>
                   <div style="flex:1;">
-                    <p id="farm-detail-name" class="en" style="font-size:21px; font-weight:700; color:var(--text1); margin:0; line-height:1.2;">Sunrise Dairy Farm</p>
-                    <p id="farm-detail-manager" class="en" style="font-size:13px; color:var(--text2); margin:2px 0 0;">Ramesh C · Manager</p>
+                    <p id="farm-detail-name" class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0; line-height:1.2;">Sunrise Dairy Farm</p>
+                    <div style="display:flex; align-items:center; gap:5px; margin-top:2px;">
+                      <p id="farm-detail-manager" class="en" style="font-size:13px; color:var(--text2); margin:0;">Ramesh C · Manager</p>
+                      <button id="farm-detail-manager-edit" data-owner-only title="Manage" style="width:22px; height:22px; flex-shrink:0; border:none; background:transparent; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text2);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+                    </div>
                   </div>
                   <div style="flex-shrink:0; text-align:end;">
-                    <p id="farm-detail-temp" class="en" style="font-size:19px; font-weight:700; color:var(--text1); margin:0;">33°C</p>
+                    <p id="farm-detail-temp" class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">33°C</p>
                     <p id="farm-detail-temp-level" class="en" style="font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:#8A5A00; margin:2px 0 0;">High</p>
                   </div>
                 </div>
@@ -3075,17 +3213,41 @@
       // ── Splash sequence — runs ONCE ──
       // Logo holds centre on off-white, video fades in slowly,
       // logo floats up + shrinks + turns white, sheet slides up.
+      var landingBtn = document.getElementById('s1-landing');
+      // Landing: video plays, logo floats to a top resting spot, Login CTA appears.
       setTimeout(function() {
         video.style.opacity  = '1';
         splash.style.opacity = '0';
-        logo.style.transform = 'translate(-50%, calc(-50% - 280px)) scale(0.78)';
+        logo.style.transform = 'translate(-50%, calc(-50% - 300px)) scale(0.85)';
         logo.style.filter    = 'brightness(0) invert(1)';
-
         setTimeout(function() {
-          sheet.style.transform = 'translateY(0)';
-          setTimeout(function() { splash.style.display = 'none'; }, 800);
-        }, 1100);
+          if (landingBtn) { landingBtn.style.opacity = '1'; landingBtn.style.pointerEvents = 'auto'; }
+          splash.style.display = 'none';
+        }, 900);
       }, 1200);
+
+      // Tap Login → logo rises to the hero spot + sheet slides up.
+      function openLoginSheet() {
+        logo.style.transform = 'translate(-50%, calc(-50% - 340px)) scale(0.78)';
+        if (landingBtn) { landingBtn.style.opacity = '0'; landingBtn.style.pointerEvents = 'none'; }
+        sheet.style.transform = 'translateY(0)';
+      }
+      if (landingBtn) landingBtn.addEventListener('click', openLoginSheet);
+
+      // Logout (Account) → return to the landing / login screen.
+      function logoutToLogin() {
+        ['s1-dash','farmer-dash'].forEach(function(id){ var el=document.getElementById(id); if(el) el.style.transform='translateY(100%)'; });
+        ['page-farms','page-farm-detail','page-cow','page-milk','page-events','page-account','page-groups','page-farmmgmt','page-add-cattle'].forEach(function(id){ var el=document.getElementById(id); if(el) el.style.display='none'; });
+        if (typeof otpPanel !== 'undefined' && otpPanel) otpPanel.style.display='none';
+        if (typeof loginPanel !== 'undefined' && loginPanel) loginPanel.style.display='block';
+        sheet.style.transform='translateY(100%)';
+        splash.style.display='none';
+        logo.style.transform='translate(-50%, calc(-50% - 300px)) scale(0.85)';
+        logo.style.filter='brightness(0) invert(1)';
+        if (landingBtn) { landingBtn.style.opacity='1'; landingBtn.style.pointerEvents='auto'; }
+      }
+      var logoutBtn = document.getElementById('s1-logout');
+      if (logoutBtn) logoutBtn.addEventListener('click', logoutToLogin);
 
       // ── Sheet panel swap: Login → OTP → back ──
       var loginPanel = document.getElementById('s1-login-panel');
@@ -3171,7 +3333,7 @@
                tlVetNoteD:'Routine deworming completed; next dose due in 6 months.',
                tlCollarD:'Smart collar Belt 60 assigned and calibrated over 10 days.',
                tlAddedD:'Registered on Sunrise Dairy Farm by Ramesh C.',
-               farmOwner:'Farm Owner', grpFarmMgmt:'Farm Management', acctFarmSub:'Sunrise Dairy Farm', rowCattleGroups:'Cattle Groups', acctGroupsSub:'Desi, Jersey, Holstein Friesian, Sahiwal',
+               farmOwner:'Farm Owner', grpFarmMgmt:'Farm Management', acctFarmSub:'Sunrise Dairy Farm', rowCattleGroups:'Cattle Groups', acctGroupsSub:'Desi, Jersey, Holstein Friesian, Sahiwal', groupsSub:'Create groups and add cattle to them', newGroupBtn:'+ New Group', noGroupsYet:'No groups yet', groupNamePh:'Group name', createGroup:'Create group', addCattleBtn:'+ Add cattle', noCowsInGroup:'No cattle in this group yet', addToGroupTitle:'Add to group', saveWord:'Save', cowsWord:'cattle',
                grpAlerts:'Alerts & Contacts', rowSound:'Alert sound', soundSub:'Alerts always notify \u2014 sound can be muted', rowVets:'Vet Contacts', vetsSub:'Who gets called when you tap "Call Vet"',
                grpApp:'App', rowLanguage:'Language', rowDark:'Dark mode', grpLegal:'Legal', rowPrivacy:'Privacy Policy', rowTerms:'Terms of Service', grpSupport:'Support', rowHelp:'Help & FAQs', helpSub:'Common guides for common tasks', rowLogout:'Log Out',
                profTitle:'Profile', fldName:'Full Name', fldPhone:'Phone No.', phoneHint:'Used for SMS alerts & emergency contacts', fldEmail:'Email Address', emailHint:'Login email & vet report copies', fldRole:'Role',
@@ -3179,7 +3341,7 @@
                grpYourVets:'Your Vets', grpEmergency:'Emergency Contacts', vetConfirmed:'CONFIRMED', vetPending:'PENDING', vetDeclined:'DECLINED',
                vetPendingNote:'Confirmation link sent \u2014 waiting for the vet to accept', vetDeclinedNote:'Declined the invite', vetResend:'Resend invite',
                addVet:'+ Add Vet', addContact:'+ Add Contact', vetNamePh:'Vet name', phonePh:'Phone number', sendInvite:'Send invite link', demoConfirm:'(demo) Confirm', demoDecline:'(demo) Decline',
-               emgFarmManager:'Farm Manager', vetSpec1:'Large animal vet \u00b7 6.2 km away', vetSpec2:'Cattle specialist \u00b7 9 km away', vetSpec3:'General vet \u00b7 12 km away', legalUpdated:'Last Updated: July 1, 2026', breedWord:'Breed', ageWord:'Age', breedGir:'Gir', breedDesi:'Desi', ageUnder2:'Under 2 yrs', age2to4:'2 \u2013 4 yrs', ageOver4:'Over 4 yrs', editVet:'Edit vet', roleVet:'Veterinarian', saveChanges:'Save changes', emailPh:'Email address', inviteHint:'An invite link is emailed to the vet — they confirm before being added.', farmMgmtSub:'Assign or remove a manager for each farm', unassignedWord:'Unassigned', reassignWord:'Reassign', assignManager:'Assign manager', assignMe:'Assign to me', removeManager:'Remove manager', mgrNamePh:'Manager name', confirmAssign:'Confirm & assign', addVetTitle:'Add a vet', resetFilters:'Reset filters', cancelWord:'Cancel', addVetLog:'Add vet log', addDelivery:'Add Delivery', statusNoteTitle:'Reason for status change', statusNotePh:'Write the reason (required)', statusChanged:'Status updated', caConfirm:'Confirm', pickVet:'Choose a vet', schedVisit:'Schedule visit', visitScheduled:'Visit scheduled', notesPh:'Notes', attachFile:'Attach file', attached:'Attached', saveLog:'Save log', insemTypeTitle:'Insemination type', logDetails:'Log details', obs21:'21-day observation started', gest9:'9-month gestation period started', heatQ:'Is {cow} in heat?', heatConfirmed:'Heat confirmed — monitoring started', pregQ:'Confirm pregnancy for {cow}?', deliveryQ:'Was the delivery successful?', deliveryLogged:'Delivery logged — cow moved to Calved', lossLogged:'Loss recorded — vet notified', lossReasonTitle:'What happened?', lossReasonPh:'Reason (required)', caYes:'Yes', caNo:'No', caNext:'Next', caDone:'Done', vlCustomT:'Vet note', vetLogSaved:'Vet log saved', sevAction:'ACTION', tempGraphTitle:'TEMPERATURE \u2014 LAST 10 DAYS', moveGraphTitle:'MOVEMENT \u2014 LAST 10 DAYS', ctaCallVet:'Call vet', callVetTitle:'Call a vet', callVetSub:"Pick a vet — they'll be sent the details.", sendVetReq:'Send request', actionedBy:'Actioned by', vetOutcome:'Vet outcome', histActorRamesh:'Ramesh Kumar (Farmer)', histActorRao:'Dr. Rao (Vet)', histActorSystem:'System — auto-detected by collar', histVetPregfail:'Heat returned on day 16, so pregnancy did not hold. Monitoring resumed for the next cycle.', histVetDone2:'Dr. Sharma visited, administered antibiotics, and confirmed the temperature was back to normal.', histVetInsem:'Dr. Rao performed artificial insemination within the optimal window; pregnancy check scheduled for 3 Jul.' },
+               emgFarmManager:'Farm Manager', vetSpec1:'Large animal vet \u00b7 6.2 km away', vetSpec2:'Cattle specialist \u00b7 9 km away', vetSpec3:'General vet \u00b7 12 km away', legalUpdated:'Last Updated: July 1, 2026', breedWord:'Breed', ageWord:'Age', breedGir:'Gir', breedDesi:'Desi', ageUnder2:'Under 2 yrs', age2to4:'2 \u2013 4 yrs', ageOver4:'Over 4 yrs', editVet:'Edit vet', roleVet:'Veterinarian', saveChanges:'Save changes', emailPh:'Email address', inviteHint:'An invite link is emailed to the vet — they confirm before being added.', farmMgmtSub:'Assign or remove a manager for each farm', unassignedWord:'Unassigned', reassignWord:'Reassign', assignManager:'Assign manager', assignMe:'Assign to me', manageFarmMgr:'Manage farm manager', selectNewMgr:'Select a new farm manager', sendMgrInvite:'Send invite to another farm manager', invitePending:'Invite pending', mgrInviteHint:'An invite link is emailed to the manager — they confirm before being added.', resendInvite:'Resend invite', cancelInvite:'Cancel invite', mgrInviteSentSub:'Invite sent — awaiting response', invitedWord:'Invited', removeManager:'Remove manager', mgrNamePh:'Manager name', confirmAssign:'Confirm & assign', addVetTitle:'Add a vet', resetFilters:'Reset filters', cancelWord:'Cancel', addVetLog:'Add vet log', addDelivery:'Add Delivery', statusNoteTitle:'Reason for status change', statusNotePh:'Write the reason (required)', statusChanged:'Status updated', caConfirm:'Confirm', eventDate:'Event date', eventTime:'Time', pickVet:'Choose a vet', schedVisit:'Schedule visit', visitScheduled:'Visit scheduled', notesPh:'Notes', attachFile:'Attach file', attached:'Attached', saveLog:'Save log', insemTypeTitle:'Insemination type', logDetails:'Log details', obs21:'21-day observation started', gest9:'9-month gestation period started', heatQ:'Is {cow} in heat?', heatConfirmed:'Heat confirmed — monitoring started', pregQ:'Confirm pregnancy for {cow}?', deliveryQ:'Was the delivery successful?', deliveryLogged:'Delivery logged — cow moved to Calved', lossLogged:'Loss recorded — vet notified', lossReasonTitle:'What happened?', lossReasonPh:'Reason (required)', caYes:'Yes', caNo:'No', caNext:'Next', caDone:'Done', hideWord:'Hide', vlCustomT:'Vet note', vetLogSaved:'Vet log saved', sevAction:'ACTION', tempGraphTitle:'TEMPERATURE \u2014 LAST 10 DAYS', moveGraphTitle:'MOVEMENT \u2014 LAST 10 DAYS', ctaCallVet:'Call vet', callVetTitle:'Call a vet', callVetSub:"Pick a vet — they'll be sent the details.", sendVetReq:'Send request', actionedBy:'Actioned by', vetOutcome:'Vet outcome', histActorRamesh:'Ramesh Kumar (Farmer)', histActorRao:'Dr. Rao (Vet)', histActorSystem:'System — auto-detected by collar', histVetPregfail:'Heat returned on day 16, so pregnancy did not hold. Monitoring resumed for the next cycle.', histVetDone2:'Dr. Sharma visited, administered antibiotics, and confirmed the temperature was back to normal.', histVetInsem:'Dr. Rao performed artificial insemination within the optimal window; pregnancy check scheduled for 3 Jul.' },
         hi:  { title:'लॉगिन', email:'ईमेल', cont:'जारी रखें',
                vtitle:'सत्यापन', sent:'OTP भेजा गया', desc:'अपने खाते में सुरक्षित लॉगिन के लिए कोड डालें।',
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
@@ -3253,7 +3415,7 @@
                tlVetNoteD:'नियमित डीवर्मिंग पूर्ण; अगली खुराक 6 महीने में।',
                tlCollarD:'स्मार्ट कॉलर बेल्ट 60 लगाया गया और 10 दिनों में कैलिब्रेट हुआ।',
                tlAddedD:'रमेश सी द्वारा सनराइज़ डेयरी फार्म पर पंजीकृत।',
-               farmOwner:'फार्म मालिक', grpFarmMgmt:'फार्म प्रबंधन', acctFarmSub:'सनराइज़ डेयरी फार्म', rowCattleGroups:'पशु समूह', acctGroupsSub:'देसी, जर्सी, होल्स्टीन फ़्रीज़ियन, साहीवाल',
+               farmOwner:'फार्म मालिक', grpFarmMgmt:'फार्म प्रबंधन', acctFarmSub:'सनराइज़ डेयरी फार्म', rowCattleGroups:'पशु समूह', acctGroupsSub:'देसी, जर्सी, होल्स्टीन फ़्रीज़ियन, साहीवाल', groupsSub:'समूह बनाएं और उनमें पशु जोड़ें', newGroupBtn:'+ नया समूह', noGroupsYet:'अभी कोई समूह नहीं', groupNamePh:'समूह का नाम', createGroup:'समूह बनाएं', addCattleBtn:'+ पशु जोड़ें', noCowsInGroup:'इस समूह में अभी कोई पशु नहीं', addToGroupTitle:'समूह में जोड़ें', saveWord:'सहेजें', cowsWord:'पशु',
                grpAlerts:'अलर्ट और संपर्क', rowSound:'अलर्ट ध्वनि', soundSub:'अलर्ट हमेशा आते हैं \u2014 ध्वनि बंद की जा सकती है', rowVets:'पशु चिकित्सक संपर्क', vetsSub:'"पशु चिकित्सक बुलाएँ" दबाने पर किसे कॉल होती है',
                grpApp:'ऐप', rowLanguage:'भाषा', rowDark:'डार्क मोड', grpLegal:'कानूनी', rowPrivacy:'गोपनीयता नीति', rowTerms:'सेवा की शर्तें', grpSupport:'सहायता', rowHelp:'सहायता और सामान्य प्रश्न', helpSub:'सामान्य कार्यों के लिए गाइड', rowLogout:'लॉग आउट',
                profTitle:'प्रोफ़ाइल', fldName:'पूरा नाम', fldPhone:'फ़ोन नंबर', phoneHint:'SMS अलर्ट और आपातकालीन संपर्क के लिए', fldEmail:'ईमेल पता', emailHint:'लॉगिन ईमेल और वेट रिपोर्ट प्रतियाँ', fldRole:'भूमिका',
@@ -3261,7 +3423,7 @@
                grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
                vetPendingNote:'पुष्टि लिंक भेजा गया \u2014 पशु चिकित्सक की स्वीकृति बाकी', vetDeclinedNote:'निमंत्रण अस्वीकार किया', vetResend:'फिर से भेजें',
                addVet:'+ पशु चिकित्सक जोड़ें', addContact:'+ संपर्क जोड़ें', vetNamePh:'पशु चिकित्सक का नाम', phonePh:'फ़ोन नंबर', sendInvite:'निमंत्रण लिंक भेजें', demoConfirm:'(डेमो) पुष्टि', demoDecline:'(डेमो) अस्वीकार',
-               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक', editVet:'पशु चिकित्सक संपादित करें', roleVet:'पशु चिकित्सक', saveChanges:'परिवर्तन सहेजें', emailPh:'ईमेल पता', inviteHint:'पशु चिकित्सक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', farmMgmtSub:'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', unassignedWord:'नियुक्त नहीं', reassignWord:'फिर से नियुक्त करें', assignManager:'प्रबंधक नियुक्त करें', assignMe:'मुझे नियुक्त करें', removeManager:'प्रबंधक हटाएँ', mgrNamePh:'प्रबंधक का नाम', confirmAssign:'पुष्टि करें और नियुक्त करें', addVetTitle:'पशु चिकित्सक जोड़ें', resetFilters:'फ़िल्टर रीसेट करें', cancelWord:'रद्द करें', addVetLog:'पशु चिकित्सक लॉग जोड़ें', addDelivery:'प्रसव जोड़ें', statusNoteTitle:'स्थिति बदलने का कारण', statusNotePh:'कारण लिखें (अनिवार्य)', statusChanged:'स्थिति बदल गई', caConfirm:'पुष्टि करें', pickVet:'पशु चिकित्सक चुनें', schedVisit:'दौरे का समय तय करें', visitScheduled:'दौरा तय हो गया', notesPh:'नोट्स', attachFile:'फ़ाइल जोड़ें', attached:'जोड़ी गई', saveLog:'लॉग सहेजें', insemTypeTitle:'गर्भाधान का प्रकार', logDetails:'लॉग विवरण', obs21:'21 दिन की निगरानी शुरू', gest9:'9 महीने की गर्भावस्था अवधि शुरू', heatQ:'क्या {cow} हीट में है?', heatConfirmed:'हीट की पुष्टि — निगरानी शुरू', pregQ:'{cow} के गर्भ की पुष्टि करें?', deliveryQ:'क्या प्रसव सफल रहा?', deliveryLogged:'प्रसव दर्ज — गाय कैल्व्ड में', lossLogged:'नुकसान दर्ज — पशु चिकित्सक को सूचना', lossReasonTitle:'क्या हुआ?', lossReasonPh:'कारण (अनिवार्य)', caYes:'हाँ', caNo:'नहीं', caNext:'आगे', caDone:'हो गया', vlCustomT:'पशु चिकित्सक नोट', vetLogSaved:'पशु चिकित्सक लॉग सहेजा गया', sevAction:'कार्रवाई', tempGraphTitle:'तापमान \u2014 पिछले 10 दिन', moveGraphTitle:'चाल \u2014 पिछले 10 दिन', ctaCallVet:'पशु चिकित्सक बुलाएँ', callVetTitle:'पशु चिकित्सक बुलाएँ', callVetSub:'एक पशु चिकित्सक चुनें — उन्हें विवरण भेजा जाएगा।', sendVetReq:'अनुरोध भेजें', actionedBy:'कार्रवाई की', vetOutcome:'पशु चिकित्सक परिणाम', histActorRamesh:'रमेश कुमार (किसान)', histActorRao:'डॉ. राव (पशु चिकित्सक)', histActorSystem:'सिस्टम — कॉलर द्वारा स्वतः पहचाना गया', histVetPregfail:'16वें दिन हीट लौटी, इसलिए गर्भ नहीं ठहरा। अगले चक्र की निगरानी फिर शुरू।', histVetDone2:'डॉ. शर्मा ने दौरा किया, एंटीबायोटिक दी, और तापमान सामान्य होने की पुष्टि की।', histVetInsem:'डॉ. राव ने सर्वोत्तम विंडो में कृत्रिम गर्भाधान किया; गर्भ जांच 3 जुलाई को निर्धारित।' },
+               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक', editVet:'पशु चिकित्सक संपादित करें', roleVet:'पशु चिकित्सक', saveChanges:'परिवर्तन सहेजें', emailPh:'ईमेल पता', inviteHint:'पशु चिकित्सक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', farmMgmtSub:'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', unassignedWord:'नियुक्त नहीं', reassignWord:'फिर से नियुक्त करें', assignManager:'प्रबंधक नियुक्त करें', assignMe:'मुझे नियुक्त करें', manageFarmMgr:'फार्म प्रबंधक प्रबंधित करें', selectNewMgr:'नया फार्म प्रबंधक चुनें', sendMgrInvite:'दूसरे फार्म प्रबंधक को निमंत्रण भेजें', invitePending:'निमंत्रण लंबित', mgrInviteHint:'प्रबंधक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', resendInvite:'निमंत्रण पुनः भेजें', cancelInvite:'निमंत्रण रद्द करें', mgrInviteSentSub:'निमंत्रण भेजा गया — प्रतिक्रिया की प्रतीक्षा', invitedWord:'आमंत्रित', removeManager:'प्रबंधक हटाएँ', mgrNamePh:'प्रबंधक का नाम', confirmAssign:'पुष्टि करें और नियुक्त करें', addVetTitle:'पशु चिकित्सक जोड़ें', resetFilters:'फ़िल्टर रीसेट करें', cancelWord:'रद्द करें', addVetLog:'पशु चिकित्सक लॉग जोड़ें', addDelivery:'प्रसव जोड़ें', statusNoteTitle:'स्थिति बदलने का कारण', statusNotePh:'कारण लिखें (अनिवार्य)', statusChanged:'स्थिति बदल गई', caConfirm:'पुष्टि करें', eventDate:'घटना की तारीख', eventTime:'समय', pickVet:'पशु चिकित्सक चुनें', schedVisit:'दौरे का समय तय करें', visitScheduled:'दौरा तय हो गया', notesPh:'नोट्स', attachFile:'फ़ाइल जोड़ें', attached:'जोड़ी गई', saveLog:'लॉग सहेजें', insemTypeTitle:'गर्भाधान का प्रकार', logDetails:'लॉग विवरण', obs21:'21 दिन की निगरानी शुरू', gest9:'9 महीने की गर्भावस्था अवधि शुरू', heatQ:'क्या {cow} हीट में है?', heatConfirmed:'हीट की पुष्टि — निगरानी शुरू', pregQ:'{cow} के गर्भ की पुष्टि करें?', deliveryQ:'क्या प्रसव सफल रहा?', deliveryLogged:'प्रसव दर्ज — गाय कैल्व्ड में', lossLogged:'नुकसान दर्ज — पशु चिकित्सक को सूचना', lossReasonTitle:'क्या हुआ?', lossReasonPh:'कारण (अनिवार्य)', caYes:'हाँ', caNo:'नहीं', caNext:'आगे', caDone:'हो गया', hideWord:'छुपाएं', vlCustomT:'पशु चिकित्सक नोट', vetLogSaved:'पशु चिकित्सक लॉग सहेजा गया', sevAction:'कार्रवाई', tempGraphTitle:'तापमान \u2014 पिछले 10 दिन', moveGraphTitle:'चाल \u2014 पिछले 10 दिन', ctaCallVet:'पशु चिकित्सक बुलाएँ', callVetTitle:'पशु चिकित्सक बुलाएँ', callVetSub:'एक पशु चिकित्सक चुनें — उन्हें विवरण भेजा जाएगा।', sendVetReq:'अनुरोध भेजें', actionedBy:'कार्रवाई की', vetOutcome:'पशु चिकित्सक परिणाम', histActorRamesh:'रमेश कुमार (किसान)', histActorRao:'डॉ. राव (पशु चिकित्सक)', histActorSystem:'सिस्टम — कॉलर द्वारा स्वतः पहचाना गया', histVetPregfail:'16वें दिन हीट लौटी, इसलिए गर्भ नहीं ठहरा। अगले चक्र की निगरानी फिर शुरू।', histVetDone2:'डॉ. शर्मा ने दौरा किया, एंटीबायोटिक दी, और तापमान सामान्य होने की पुष्टि की।', histVetInsem:'डॉ. राव ने सर्वोत्तम विंडो में कृत्रिम गर्भाधान किया; गर्भ जांच 3 जुलाई को निर्धारित।' },
         bho: { title:'लॉगिन', email:'ईमेल', cont:'आगे बढ़ीं',
                vtitle:'सत्यापन', sent:'OTP भेजल गइल', desc:'आपन खाता में सुरक्षित लॉगिन खातिर कोड डालीं।',
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
@@ -3335,7 +3497,7 @@
                tlVetNoteD:'नियमित डीवर्मिंग पूर्ण; अगली खुराक 6 महीने में।',
                tlCollarD:'स्मार्ट कॉलर बेल्ट 60 लगाया गया और 10 दिनों में कैलिब्रेट हुआ।',
                tlAddedD:'रमेश सी द्वारा सनराइज़ डेयरी फार्म पर पंजीकृत।',
-               farmOwner:'फार्म मालिक', grpFarmMgmt:'फार्म प्रबंधन', acctFarmSub:'सनराइज़ डेयरी फार्म', rowCattleGroups:'पशु समूह', acctGroupsSub:'देसी, जर्सी, होल्स्टीन फ़्रीज़ियन, साहीवाल',
+               farmOwner:'फार्म मालिक', grpFarmMgmt:'फार्म प्रबंधन', acctFarmSub:'सनराइज़ डेयरी फार्म', rowCattleGroups:'पशु समूह', acctGroupsSub:'देसी, जर्सी, होल्स्टीन फ़्रीज़ियन, साहीवाल', groupsSub:'समूह बनाएं और उनमें पशु जोड़ें', newGroupBtn:'+ नया समूह', noGroupsYet:'अभी कोई समूह नहीं', groupNamePh:'समूह का नाम', createGroup:'समूह बनाएं', addCattleBtn:'+ पशु जोड़ें', noCowsInGroup:'इस समूह में अभी कोई पशु नहीं', addToGroupTitle:'समूह में जोड़ें', saveWord:'सहेजें', cowsWord:'पशु',
                grpAlerts:'अलर्ट और संपर्क', rowSound:'अलर्ट ध्वनि', soundSub:'अलर्ट हमेशा आते हैं \u2014 ध्वनि बंद की जा सकती है', rowVets:'पशु चिकित्सक संपर्क', vetsSub:'"पशु चिकित्सक बुलाएँ" दबाने पर किसे कॉल होती है',
                grpApp:'ऐप', rowLanguage:'भाषा', rowDark:'डार्क मोड', grpLegal:'कानूनी', rowPrivacy:'गोपनीयता नीति', rowTerms:'सेवा की शर्तें', grpSupport:'सहायता', rowHelp:'सहायता और सामान्य प्रश्न', helpSub:'सामान्य कार्यों के लिए गाइड', rowLogout:'लॉग आउट',
                profTitle:'प्रोफ़ाइल', fldName:'पूरा नाम', fldPhone:'फ़ोन नंबर', phoneHint:'SMS अलर्ट और आपातकालीन संपर्क के लिए', fldEmail:'ईमेल पता', emailHint:'लॉगिन ईमेल और वेट रिपोर्ट प्रतियाँ', fldRole:'भूमिका',
@@ -3343,9 +3505,26 @@
                grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
                vetPendingNote:'पुष्टि लिंक भेजा गया \u2014 पशु चिकित्सक की स्वीकृति बाकी', vetDeclinedNote:'निमंत्रण अस्वीकार किया', vetResend:'फिर से भेजें',
                addVet:'+ पशु चिकित्सक जोड़ें', addContact:'+ संपर्क जोड़ें', vetNamePh:'पशु चिकित्सक का नाम', phonePh:'फ़ोन नंबर', sendInvite:'निमंत्रण लिंक भेजें', demoConfirm:'(डेमो) पुष्टि', demoDecline:'(डेमो) अस्वीकार',
-               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक', editVet:'पशु चिकित्सक संपादित करें', roleVet:'पशु चिकित्सक', saveChanges:'परिवर्तन सहेजें', emailPh:'ईमेल पता', inviteHint:'पशु चिकित्सक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', farmMgmtSub:'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', unassignedWord:'नियुक्त नहीं', reassignWord:'फिर से नियुक्त करें', assignManager:'प्रबंधक नियुक्त करें', assignMe:'मुझे नियुक्त करें', removeManager:'प्रबंधक हटाएँ', mgrNamePh:'प्रबंधक का नाम', confirmAssign:'पुष्टि करें और नियुक्त करें', addVetTitle:'पशु चिकित्सक जोड़ें', resetFilters:'फ़िल्टर रीसेट करें', cancelWord:'रद्द करें', addVetLog:'पशु चिकित्सक लॉग जोड़ें', addDelivery:'प्रसव जोड़ें', statusNoteTitle:'स्थिति बदलने का कारण', statusNotePh:'कारण लिखें (अनिवार्य)', statusChanged:'स्थिति बदल गई', caConfirm:'पुष्टि करें', pickVet:'पशु चिकित्सक चुनें', schedVisit:'दौरे का समय तय करें', visitScheduled:'दौरा तय हो गया', notesPh:'नोट्स', attachFile:'फ़ाइल जोड़ें', attached:'जोड़ी गई', saveLog:'लॉग सहेजें', insemTypeTitle:'गर्भाधान का प्रकार', logDetails:'लॉग विवरण', obs21:'21 दिन की निगरानी शुरू', gest9:'9 महीने की गर्भावस्था अवधि शुरू', heatQ:'क्या {cow} हीट में है?', heatConfirmed:'हीट की पुष्टि — निगरानी शुरू', pregQ:'{cow} के गर्भ की पुष्टि करें?', deliveryQ:'क्या प्रसव सफल रहा?', deliveryLogged:'प्रसव दर्ज — गाय कैल्व्ड में', lossLogged:'नुकसान दर्ज — पशु चिकित्सक को सूचना', lossReasonTitle:'क्या हुआ?', lossReasonPh:'कारण (अनिवार्य)', caYes:'हाँ', caNo:'नहीं', caNext:'आगे', caDone:'हो गया', vlCustomT:'पशु चिकित्सक नोट', vetLogSaved:'पशु चिकित्सक लॉग सहेजा गया', sevAction:'कार्रवाई', tempGraphTitle:'तापमान \u2014 पिछले 10 दिन', moveGraphTitle:'चाल \u2014 पिछले 10 दिन', ctaCallVet:'पशु चिकित्सक बुलाएँ', callVetTitle:'पशु चिकित्सक बुलाएँ', callVetSub:'एक पशु चिकित्सक चुनें — उन्हें विवरण भेजा जाएगा।', sendVetReq:'अनुरोध भेजें', actionedBy:'कार्रवाई की', vetOutcome:'पशु चिकित्सक परिणाम', histActorRamesh:'रमेश कुमार (किसान)', histActorRao:'डॉ. राव (पशु चिकित्सक)', histActorSystem:'सिस्टम — कॉलर द्वारा स्वतः पहचाना गया', histVetPregfail:'16वें दिन हीट लौटी, इसलिए गर्भ नहीं ठहरा। अगले चक्र की निगरानी फिर शुरू।', histVetDone2:'डॉ. शर्मा ने दौरा किया, एंटीबायोटिक दी, और तापमान सामान्य होने की पुष्टि की।', histVetInsem:'डॉ. राव ने सर्वोत्तम विंडो में कृत्रिम गर्भाधान किया; गर्भ जांच 3 जुलाई को निर्धारित।' }
+               emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक', editVet:'पशु चिकित्सक संपादित करें', roleVet:'पशु चिकित्सक', saveChanges:'परिवर्तन सहेजें', emailPh:'ईमेल पता', inviteHint:'पशु चिकित्सक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', farmMgmtSub:'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', unassignedWord:'नियुक्त नहीं', reassignWord:'फिर से नियुक्त करें', assignManager:'प्रबंधक नियुक्त करें', assignMe:'मुझे नियुक्त करें', manageFarmMgr:'फार्म प्रबंधक प्रबंधित करें', selectNewMgr:'नया फार्म प्रबंधक चुनें', sendMgrInvite:'दूसरे फार्म प्रबंधक को निमंत्रण भेजें', invitePending:'निमंत्रण लंबित', mgrInviteHint:'प्रबंधक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', resendInvite:'निमंत्रण पुनः भेजें', cancelInvite:'निमंत्रण रद्द करें', mgrInviteSentSub:'निमंत्रण भेजा गया — प्रतिक्रिया की प्रतीक्षा', invitedWord:'आमंत्रित', removeManager:'प्रबंधक हटाएँ', mgrNamePh:'प्रबंधक का नाम', confirmAssign:'पुष्टि करें और नियुक्त करें', addVetTitle:'पशु चिकित्सक जोड़ें', resetFilters:'फ़िल्टर रीसेट करें', cancelWord:'रद्द करें', addVetLog:'पशु चिकित्सक लॉग जोड़ें', addDelivery:'प्रसव जोड़ें', statusNoteTitle:'स्थिति बदलने का कारण', statusNotePh:'कारण लिखें (अनिवार्य)', statusChanged:'स्थिति बदल गई', caConfirm:'पुष्टि करें', eventDate:'घटना की तारीख', eventTime:'समय', pickVet:'पशु चिकित्सक चुनें', schedVisit:'दौरे का समय तय करें', visitScheduled:'दौरा तय हो गया', notesPh:'नोट्स', attachFile:'फ़ाइल जोड़ें', attached:'जोड़ी गई', saveLog:'लॉग सहेजें', insemTypeTitle:'गर्भाधान का प्रकार', logDetails:'लॉग विवरण', obs21:'21 दिन की निगरानी शुरू', gest9:'9 महीने की गर्भावस्था अवधि शुरू', heatQ:'क्या {cow} हीट में है?', heatConfirmed:'हीट की पुष्टि — निगरानी शुरू', pregQ:'{cow} के गर्भ की पुष्टि करें?', deliveryQ:'क्या प्रसव सफल रहा?', deliveryLogged:'प्रसव दर्ज — गाय कैल्व्ड में', lossLogged:'नुकसान दर्ज — पशु चिकित्सक को सूचना', lossReasonTitle:'क्या हुआ?', lossReasonPh:'कारण (अनिवार्य)', caYes:'हाँ', caNo:'नहीं', caNext:'आगे', caDone:'हो गया', hideWord:'छुपाएं', vlCustomT:'पशु चिकित्सक नोट', vetLogSaved:'पशु चिकित्सक लॉग सहेजा गया', sevAction:'कार्रवाई', tempGraphTitle:'तापमान \u2014 पिछले 10 दिन', moveGraphTitle:'चाल \u2014 पिछले 10 दिन', ctaCallVet:'पशु चिकित्सक बुलाएँ', callVetTitle:'पशु चिकित्सक बुलाएँ', callVetSub:'एक पशु चिकित्सक चुनें — उन्हें विवरण भेजा जाएगा।', sendVetReq:'अनुरोध भेजें', actionedBy:'कार्रवाई की', vetOutcome:'पशु चिकित्सक परिणाम', histActorRamesh:'रमेश कुमार (किसान)', histActorRao:'डॉ. राव (पशु चिकित्सक)', histActorSystem:'सिस्टम — कॉलर द्वारा स्वतः पहचाना गया', histVetPregfail:'16वें दिन हीट लौटी, इसलिए गर्भ नहीं ठहरा। अगले चक्र की निगरानी फिर शुरू।', histVetDone2:'डॉ. शर्मा ने दौरा किया, एंटीबायोटिक दी, और तापमान सामान्य होने की पुष्टि की।', histVetInsem:'डॉ. राव ने सर्वोत्तम विंडो में कृत्रिम गर्भाधान किया; गर्भ जांच 3 जुलाई को निर्धारित।' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
+      (function(){
+        var FP = {
+          en: { fpGreeting:'Your farm today', fpImmediate:'Immediate', fpTodos:'To-dos', fpOpen:'Open', fpAllClear:'All clear \u2014 nothing needs you right now',
+                fpHeat:'Heat detected', fpHeatSub:'Confirm & log insemination', fpFever:'Fever alert', fpFeverSub:'High temperature \u2014 call a vet',
+                fpDelivery:'Delivery due', fpDeliverySub:'Confirm the calving outcome', fpVetAppt:'Vet appointment', fpVetApptSub:'Today 4:30 PM \u2014 Dr. Sharma',
+                fpInsem:'Insemination window', fpInsemSub:'9h left \u2014 optimal window', fpMilkLog:'Evening milk logging', fpMilkLogSub:'Due after 5:00 PM' },
+          hi: { fpGreeting:'\u0906\u091c \u0906\u092a\u0915\u093e \u092b\u093e\u0930\u094d\u092e', fpImmediate:'\u0924\u0941\u0930\u0902\u0924', fpTodos:'\u0915\u0930\u0928\u0947 \u0915\u0947 \u0915\u093e\u092e', fpOpen:'\u0916\u094b\u0932\u0947\u0902', fpAllClear:'\u0938\u092c \u0920\u0940\u0915 \u2014 \u0905\u092d\u0940 \u0915\u0941\u091b \u0928\u0939\u0940\u0902',
+                fpHeat:'\u0939\u0940\u091f \u0915\u093e \u092a\u0924\u093e \u091a\u0932\u093e', fpHeatSub:'\u0917\u0930\u094d\u092d\u093e\u0927\u093e\u0928 \u0915\u0940 \u092a\u0941\u0937\u094d\u091f\u093f \u0914\u0930 \u0932\u0949\u0917 \u0915\u0930\u0947\u0902', fpFever:'\u092c\u0941\u0916\u093e\u0930 \u091a\u0947\u0924\u093e\u0935\u0928\u0940', fpFeverSub:'\u0924\u0947\u091c\u093c \u0924\u093e\u092a\u092e\u093e\u0928 \u2014 \u092a\u0936\u0941 \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u0915 \u092c\u0941\u0932\u093e\u090f\u0902',
+                fpDelivery:'\u092a\u094d\u0930\u0938\u0935 \u0926\u0947\u092f', fpDeliverySub:'\u092c\u094d\u092f\u093e\u0902\u0924 \u0915\u093e \u092a\u0930\u093f\u0923\u093e\u092e \u092a\u0941\u0937\u094d\u091f\u093f \u0915\u0930\u0947\u0902', fpVetAppt:'\u092a\u0936\u0941 \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u0915 \u092d\u0947\u0902\u091f', fpVetApptSub:'\u0906\u091c \u0936\u093e\u092e 4:30 \u2014 \u0921\u0949. \u0936\u0930\u094d\u092e\u093e',
+                fpInsem:'\u0917\u0930\u094d\u092d\u093e\u0927\u093e\u0928 \u0935\u093f\u0902\u0921\u094b', fpInsemSub:'9 \u0918\u0902\u091f\u0947 \u092c\u091a\u0947 \u2014 \u0938\u0930\u094d\u0935\u094b\u0924\u094d\u0924\u092e \u0935\u093f\u0902\u0921\u094b', fpMilkLog:'\u0936\u093e\u092e \u0926\u0942\u0927 \u0932\u0949\u0917\u093f\u0902\u0917', fpMilkLogSub:'\u0936\u093e\u092e 5 \u092c\u091c\u0947 \u0915\u0947 \u092c\u093e\u0926 \u0926\u0947\u092f' },
+          bho: { fpGreeting:'\u0906\u091c \u0930\u090a\u0930\u093e \u092b\u093e\u0930\u094d\u092e', fpImmediate:'\u0924\u0941\u0930\u0902\u0924', fpTodos:'\u0915\u0930\u0947 \u0915\u0947 \u0915\u093e\u092e', fpOpen:'\u0916\u094b\u0932\u0940\u0902', fpAllClear:'\u0938\u092c \u0920\u0940\u0915 \u2014 \u0905\u092d\u0940 \u0915\u091b\u0942 \u0928\u093e',
+                fpHeat:'\u0939\u0940\u091f \u0915\u0947 \u092a\u0924\u093e \u091a\u0932\u0932', fpHeatSub:'\u0917\u0930\u094d\u092d\u093e\u0927\u093e\u0928 \u0915\u0947 \u092a\u0941\u0937\u094d\u091f\u093f \u0906 \u0932\u0949\u0917 \u0915\u0930\u0940\u0902', fpFever:'\u092c\u0941\u0916\u093e\u0930 \u091a\u0947\u0924\u093e\u0935\u0928\u0940', fpFeverSub:'\u0924\u0947\u091c\u093c \u0924\u093e\u092a\u092e\u093e\u0928 \u2014 \u092a\u0936\u0941 \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u0915 \u092c\u0941\u0932\u093e\u0908\u0902',
+                fpDelivery:'\u092a\u094d\u0930\u0938\u0935 \u0926\u0947\u092f', fpDeliverySub:'\u092c\u094d\u092f\u093e\u0902\u0924 \u0915\u0947 \u0928\u0924\u0940\u091c\u093e \u092a\u0941\u0937\u094d\u091f\u093f \u0915\u0930\u0940\u0902', fpVetAppt:'\u092a\u0936\u0941 \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u0915 \u092d\u0947\u0902\u091f', fpVetApptSub:'\u0906\u091c \u0938\u093e\u0902\u091d 4:30 \u2014 \u0921\u0949. \u0936\u0930\u094d\u092e\u093e',
+                fpInsem:'\u0917\u0930\u094d\u092d\u093e\u0927\u093e\u0928 \u0935\u093f\u0902\u0921\u094b', fpInsemSub:'9 \u0918\u0902\u091f\u093e \u092c\u093e\u0915\u0940 \u2014 \u0938\u0930\u094d\u0935\u094b\u0924\u094d\u0924\u092e \u0935\u093f\u0902\u0921\u094b', fpMilkLog:'\u0938\u093e\u0902\u091d \u0926\u0942\u0927 \u0932\u0949\u0917\u093f\u0902\u0917', fpMilkLogSub:'\u0938\u093e\u0902\u091d 5 \u092c\u091c\u0947 \u0915\u0947 \u092c\u093e\u0926 \u0926\u0947\u092f' }
+        };
+        for (var l in FP) { if (STRINGS[l]) { for (var k in FP[l]) STRINGS[l][k] = FP[l][k]; } }
+      })();
       function t() { return STRINGS[lang]; }
       // Login/OTP lives in its own <script> tag, separate from the main app
       // script (Farms/Milk/Events) — expose the translation lookup on window
@@ -3494,6 +3673,30 @@
         applyDisplayMode();
       });
 
+      // ── Persona (Owner / Farmer) demo control ──
+      window.VANIX_PERSONA = localStorage.getItem('vanixPersona') || 'owner'; // 'owner' | 'farmer'
+      window.VANIX_FARMS = localStorage.getItem('vanixFarms') || 'multi';     // 'multi' | 'single'
+      function applyPersona() {
+        var farmer = window.VANIX_PERSONA === 'farmer';
+        var root = document.getElementById('flow-root');
+        root.classList.toggle('persona-farmer', farmer);
+        root.classList.toggle('persona-owner', !farmer);
+        root.classList.toggle('farms-single', farmer && window.VANIX_FARMS === 'single');
+        var pl = document.getElementById('s1-persona-label');
+        if (pl) pl.textContent = !farmer ? 'Owner' : (window.VANIX_FARMS === 'single' ? 'Farmer \u00b7 1' : 'Farmer \u00b7 N');
+      }
+      applyPersona();
+      var personaBtn = document.getElementById('s1-persona');
+      if (personaBtn) personaBtn.addEventListener('click', function() {
+        // cycle: owner -> farmer(multi) -> farmer(single) -> owner
+        if (window.VANIX_PERSONA === 'owner') { window.VANIX_PERSONA = 'farmer'; window.VANIX_FARMS = 'multi'; }
+        else if (window.VANIX_FARMS === 'multi') { window.VANIX_FARMS = 'single'; }
+        else { window.VANIX_PERSONA = 'owner'; }
+        localStorage.setItem('vanixPersona', window.VANIX_PERSONA);
+        localStorage.setItem('vanixFarms', window.VANIX_FARMS);
+        applyPersona();
+      });
+
       // timer and resend are mutually exclusive: countdown first, then resend replaces it
       var resendWrap = document.getElementById('s1-resend-wrap');
       function startTimer() {
@@ -3537,10 +3740,14 @@
       confirmBtn.addEventListener('click', function() {
         if (confirmBtn.disabled) return;
         clearInterval(countdown);
-        document.getElementById('s1-dash').style.transform = 'translateY(0)';
-        if (window.wireDash) window.wireDash();
+        if (window.VANIX_PERSONA === 'farmer') {
+          document.getElementById('farmer-dash').style.transform = 'translateY(0)';
+          if (window.wireFarmerDash) window.wireFarmerDash();
+        } else {
+          document.getElementById('s1-dash').style.transform = 'translateY(0)';
+          if (window.wireDash) window.wireDash();
+        }
       });
-
       // ── Dashboard interactions (idempotent; runs on load + on reveal) ──
       window.wireDash = function() {
         if (window.__dashWired) return; window.__dashWired = true;
@@ -3869,7 +4076,7 @@
               '<p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;">' + label + '</p>' +
               '<p style="font-size:11px; color:var(--text2); margin:2px 0 0;">By Suresh · ' + nowHM() + ' · Pending owner approval</p>' +
             '</div>' +
-            '<div style="display:flex; gap:6px; flex-shrink:0;">' +
+            '<div class="m-sub-actions" style="display:flex; gap:6px; flex-shrink:0;">' +
               '<button class="m-reject" style="height:34px; padding:0 14px; border-radius:17px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi);">✕</button>' +
               '<button class="m-approve" style="height:34px; padding:0 14px; border-radius:17px; border:none; background:var(--greenink); color:#FFFFFF; font-size:12px; font-weight:600; font-family:var(--font-hi);">Approve</button>' +
             '</div>' +
@@ -5594,6 +5801,45 @@
         nav.querySelectorAll('.vtab').forEach(function(x) { x.classList.toggle('on', +x.getAttribute('data-i') === i); });
       }
 
+      window.wireFarmerDash = function() {
+        if (!window.__farmerWired) {
+          window.__farmerWired = true;
+          var fnav = document.getElementById('farmer-dash-nav');
+          if (fnav) wireNav(fnav, function(i) {
+            if (i === 1) setTimeout(function() {
+              if (window.VANIX_FARMS === 'single') { openFarmDetail(FARMS[0].id); }
+              else { farmsPage.style.display = 'block'; }
+              resetNav(fnav, 0);
+            }, 280);
+            if (i === 2) setTimeout(function() { milkPage.style.display = 'block'; resetNav(fnav, 0); }, 280);
+            if (i === 3) setTimeout(function() { eventsPage.style.display = 'block'; resetNav(fnav, 0); }, 280);
+            if (i === 4) setTimeout(function() { openAccountPage(); resetNav(fnav, 0); }, 280);
+          });
+          document.querySelectorAll('.fp-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+              var which = tab.getAttribute('data-tab');
+              document.querySelectorAll('.fp-tab').forEach(function(x) {
+                var on = x === tab, imm = x.getAttribute('data-tab') === 'immediate';
+                x.classList.toggle('on', on);
+                x.style.background = on ? (imm ? 'var(--danger)' : 'var(--greenink)') : 'var(--bgcard)';
+                x.style.color = on ? '#FFFFFF' : 'var(--text1)';
+                x.style.borderColor = on ? (imm ? 'var(--danger)' : 'var(--greenink)') : 'var(--border)';
+                x.style.fontWeight = on ? '600' : '500';
+              });
+              document.getElementById('fp-immediate').style.display = which === 'immediate' ? 'block' : 'none';
+              document.getElementById('fp-todos').style.display = which === 'todos' ? 'block' : 'none';
+            });
+          });
+          document.querySelectorAll('.fp-action').forEach(function(b) {
+            b.addEventListener('click', function() { eventsPage.style.display = 'block'; });
+          });
+        }
+        // single-farm farmer lands directly in his farm's detail
+        if (window.VANIX_FARMS === 'single' && typeof FARMS !== 'undefined' && FARMS.length) {
+          setTimeout(function() { openFarmDetail(FARMS[0].id); }, 300);
+        }
+      };
+
       wireNav(dashNav, function(i) {
         if (i === 1) setTimeout(function() {
           farmsPage.style.display = 'block';
@@ -5743,6 +5989,20 @@
         { id:'highland', name:'Highland Farm', nameHi:'हाइलैंड फार्म', manager:'Unassigned', managerHi:'नियुक्त नहीं', cattle:0, status:'setup',
           location:'—', temp:'—', milkToday:0, milk7:0, milk30:0, alerts:0, critical:0, trendPct:0, heat:0, fever:0, insem:0, cows:[] }
       ];
+      var GROUPS = [
+        { id:'g1', name:'Desi', members:[] },
+        { id:'g2', name:'Jersey', members:[{ farmId:'sunrise', no:1 }, { farmId:'greenvilla', no:1 }] },
+        { id:'g3', name:'Holstein Friesian', members:[{ farmId:'sunrise', no:2 }] },
+        { id:'g4', name:'Sahiwal', members:[{ farmId:'sunrise', no:4 }, { farmId:'stones', no:2 }] }
+      ];
+      function allCowsFlat() {
+        var out = [];
+        FARMS.forEach(function(f) { f.cows.forEach(function(c) { out.push({ farm:f, cow:c }); }); });
+        return out;
+      }
+      function groupHasCow(g, farmId, no) {
+        return g.members.some(function(m) { return m.farmId === farmId && m.no === no; });
+      }
       // Proper nouns (farm/cow/manager names, age/belt captions) render in
       // Devanagari for hi/bho and English otherwise.
       function loc(obj, field) {
@@ -5976,11 +6236,11 @@
         if (v >= 22) return { k:'tempNormal', color:'var(--greenink)' };
         return { k:'tempLow', color:'var(--text2)' };
       }
-      function kebabMenuHtml() {
+      function kebabMenuHtml(farmId, no) {
         var item = 'display:flex; align-items:center; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;';
         return '<div class="cow-kebab-menu" style="display:none; position:absolute; bottom:38px; inset-inline-end:0; z-index:6; min-width:160px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,0.2); padding:4px;">' +
           '<button style="' + item + ' color:var(--text1);">' + window.t().editWord + '</button>' +
-          '<button style="' + item + ' color:var(--text1);">' + window.t().addToGroup + '</button>' +
+          '<button class="cow-grp-trigger" data-farm="' + farmId + '" data-no="' + no + '" style="' + item + ' color:var(--text1);">' + window.t().addToGroup + '</button>' +
           '<button style="' + item + ' color:var(--danger);">' + window.t().deleteWord + '</button>' +
         '</div>';
       }
@@ -6013,7 +6273,7 @@
             '</div>' +
             '<div style="position:absolute; bottom:10px; inset-inline-end:10px;">' +
               '<button class="cow-kebab" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:15px; line-height:1; cursor:pointer;">⋮</button>' +
-              kebabMenuHtml() +
+              kebabMenuHtml(farm.id, c.no) +
             '</div>' +
           '</div>';
         }).join('');
@@ -6036,7 +6296,11 @@
           });
         });
         document.querySelectorAll('#cattle-list .cow-kebab-menu button').forEach(function(b) {
-          b.addEventListener('click', function(e) { e.stopPropagation(); b.parentElement.style.display = 'none'; });
+          b.addEventListener('click', function(e) {
+            e.stopPropagation();
+            b.parentElement.style.display = 'none';
+            if (b.classList.contains('cow-grp-trigger')) openCowGroupSheet(b.getAttribute('data-farm'), +b.getAttribute('data-no'));
+          });
         });
       }
 
@@ -6056,34 +6320,42 @@
         { k:'tlCollar',   d:'14 Jun 2025', c:'var(--text2)' },
         { k:'tlAdded',    d:'12 Jun 2025', c:'var(--text2)' }
       ];
+      var tlExpanded = {};
       function renderCowTimeline() {
         document.getElementById('cow-pane-timeline').innerHTML =
           COW_TIMELINE.map(function(ev, i) {
-            var last = i === COW_TIMELINE.length - 1;
-            return '<div style="position:relative; padding-inline-start:25px;">' +
-              (last ? '' : '<span style="position:absolute; inset-inline-start:9px; top:24px; bottom:-14px; width:2px; background:var(--border);"></span>') +
-              '<span style="position:absolute; inset-inline-start:3px; top:14px; width:14px; height:14px; border-radius:50%; background:' + ev.c + '; border:3px solid var(--bgcard);"></span>' +
-              '<div class="cow-tl-card" data-tl="' + i + '">' +
+            var first = i === 0, last = i === COW_TIMELINE.length - 1;
+            var open = !!tlExpanded[i];
+            var desc = window.t()[ev.k + 'D'] || '';
+            return '<div style="display:flex; align-items:center; margin-bottom:10px;">' +
+              '<div style="position:relative; width:20px; align-self:stretch; flex-shrink:0; display:flex; align-items:center; justify-content:center;">' +
+                (first ? '' : '<span style="position:absolute; inset-inline-start:9px; top:0; height:50%; width:2px; background:var(--border);"></span>') +
+                (last ? '' : '<span style="position:absolute; inset-inline-start:9px; top:50%; bottom:-10px; width:2px; background:var(--border);"></span>') +
+                '<span style="position:relative; width:14px; height:14px; border-radius:50%; background:' + ev.c + '; border:3px solid var(--bgcard); z-index:1;"></span>' +
+              '</div>' +
+              '<div class="cow-tl-card" data-tl="' + i + '" style="flex:1; min-width:0; margin:0;">' +
                 '<p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;">' + window.t()[ev.k] + '</p>' +
                 '<p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0;">' + ev.d + '</p>' +
+                (open ? '<p style="font-size:12px; color:var(--text2); margin:10px 0 0; line-height:1.6;">' + desc + '</p>' +
+                  '<button class="cow-tl-hide" data-tl="' + i + '" style="margin-top:10px; min-height:32px; padding:0 14px; border-radius:16px; border:1px solid var(--border); background:transparent; font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">' + window.t().hideWord + '</button>' : '') +
               '</div>' +
             '</div>';
           }).join('');
         document.querySelectorAll('.cow-tl-card').forEach(function(card) {
-          card.addEventListener('click', function() { openTlDetail(COW_TIMELINE[+card.getAttribute('data-tl')]); });
+          card.addEventListener('click', function(e) {
+            if (e.target.closest('.cow-tl-hide')) return;
+            var i = +card.getAttribute('data-tl');
+            tlExpanded[i] = !tlExpanded[i];
+            renderCowTimeline();
+          });
         });
-      }
-      function openTlDetail(ev) {
-        document.getElementById('cow-tl-dot').style.background = ev.c;
-        document.getElementById('cow-tl-title').textContent = window.t()[ev.k];
-        document.getElementById('cow-tl-date').textContent = ev.d;
-        document.getElementById('cow-tl-desc').textContent = window.t()[ev.k + 'D'] || '';
-        var sh = document.getElementById('cow-tl-sheet'), bd = document.getElementById('cow-tl-backdrop');
-        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
-      }
-      function closeTlDetail() {
-        var sh = document.getElementById('cow-tl-sheet'), bd = document.getElementById('cow-tl-backdrop');
-        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+        document.querySelectorAll('.cow-tl-hide').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            tlExpanded[+btn.getAttribute('data-tl')] = false;
+            renderCowTimeline();
+          });
+        });
       }
       function ovTile(val, k) {
         return '<div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 8px; text-align:center;">' +
@@ -6149,7 +6421,7 @@
                   '</linearGradient></defs>' +
                   // fever threshold guide at 39°C
                   '<line x1="0" y1="' + (40 - (39 - lo) / (hi - lo) * 40).toFixed(1) + '" x2="100" y2="' + (40 - (39 - lo) / (hi - lo) * 40).toFixed(1) + '" stroke="var(--danger)" stroke-width="0.4" stroke-dasharray="2 2" opacity="0.5"/>' +
-                  '<polyline points="' + pts + '" fill="none" stroke="url(#ov-temp-grad)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>' +
+                  '<polyline points="' + pts + '" fill="none" stroke="url(#ov-temp-grad)" stroke-width="1.3" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>' +
                 '</svg>' +
                 '<div class="en" style="display:flex; justify-content:space-between; font-size:9px; color:var(--text2); margin-top:4px;">' + xlabels.map(function(x) { return '<span>' + x + '</span>'; }).join('') + '</div>' +
               '</div>' +
@@ -6206,16 +6478,25 @@
             '<p style="margin:0; flex-shrink:0; text-align:end;"><span class="en" style="font-size:19px; font-weight:700; color:' + (r.missing ? 'var(--danger)' : 'var(--greenink)') + ';">' + r.total + '</span> <span class="en" style="font-size:11px; color:var(--text2);">Lts</span></p>' +
           '</div>';
         }).join('');
+        var milkXlabels = vals.map(function(v, i) { return 'W' + (i + 1); });
         document.getElementById('cow-pane-milk').innerHTML =
           '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">' + t.wkYield8 + '</p>' +
           '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:16px 14px;">' +
-            '<svg viewBox="0 0 100 38" preserveAspectRatio="none" style="display:block; width:100%; height:96px; overflow:visible;">' +
-              '<defs><linearGradient id="cow-milk-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2EBD7E" stop-opacity="0.28"/><stop offset="1" stop-color="#2EBD7E" stop-opacity="0"/></linearGradient></defs>' +
-              '<line x1="0" y1="19" x2="100" y2="19" stroke="var(--divider)" stroke-width="0.5"/>' +
-              '<polygon points="0,38 ' + pts + ' 100,38" fill="url(#cow-milk-fill)"/>' +
-              '<polyline points="' + pts + '" fill="none" stroke="var(--greenink)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>' +
-              '<circle cx="' + px + '" cy="' + py + '" r="2.6" fill="var(--greendeep)" stroke="var(--bgcard)" stroke-width="1"/>' +
-            '</svg>' +
+            '<div style="display:flex; gap:8px;">' +
+              '<div class="en" style="display:flex; flex-direction:column; justify-content:space-between; font-size:9px; color:var(--text2); padding:2px 0;">' +
+                '<span>' + max + 'L</span><span>' + Math.round((max + min) / 2) + 'L</span><span>' + min + 'L</span>' +
+              '</div>' +
+              '<div style="flex:1; min-width:0; position:relative;">' +
+                '<svg viewBox="0 0 100 38" preserveAspectRatio="none" style="display:block; width:100%; height:96px; overflow:visible;">' +
+                  '<defs><linearGradient id="cow-milk-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2EBD7E" stop-opacity="0.28"/><stop offset="1" stop-color="#2EBD7E" stop-opacity="0"/></linearGradient></defs>' +
+                  '<line x1="0" y1="19" x2="100" y2="19" stroke="var(--divider)" stroke-width="0.5"/>' +
+                  '<polygon points="0,38 ' + pts + ' 100,38" fill="url(#cow-milk-fill)"/>' +
+                  '<polyline points="' + pts + '" fill="none" stroke="var(--greenink)" stroke-width="1.1" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>' +
+                '</svg>' +
+                '<span style="position:absolute; left:' + px + '%; top:' + (py / 38 * 100).toFixed(1) + '%; width:7px; height:7px; margin:-3.5px 0 0 -3.5px; border-radius:50%; background:var(--greendeep); border:1px solid var(--bgcard); box-sizing:border-box;"></span>' +
+                '<div class="en" style="display:flex; justify-content:space-between; font-size:9px; color:var(--text2); margin-top:4px;">' + milkXlabels.map(function(x) { return '<span>' + x + '</span>'; }).join('') + '</div>' +
+              '</div>' +
+            '</div>' +
           '</div>' +
           '<div style="display:flex; gap:8px; margin-top:10px;">' +
             '<div style="flex:1; position:relative; overflow:hidden; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 14px 14px 16px;"><span style="position:absolute; inset-inline-start:0; top:0; bottom:0; width:4px; background:var(--greendeep);"></span><p style="margin:0;"><span class="en" style="font-size:22px; font-weight:700; color:var(--greenink);">58</span> <span class="en" style="font-size:12px; color:var(--text2);">L</span></p><p style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.03em; color:var(--text2); margin:4px 0 0;">' + t.highestWeek + '</p><p class="en" style="font-size:11px; color:var(--text2); margin:1px 0 0;">16 Jun</p></div>' +
@@ -6320,14 +6601,15 @@
       document.querySelectorAll('#cow-kebab-menu button').forEach(function(b) {
         b.addEventListener('click', function(e) { e.stopPropagation(); document.getElementById('cow-kebab-menu').style.display = 'none'; });
       });
+      document.getElementById('cow-kebab-addgroup').addEventListener('click', function() {
+        if (currentCow) openCowGroupSheet(currentCow.farmId, currentCow.no);
+      });
       document.querySelectorAll('.cow-tab').forEach(function(tab) {
         tab.addEventListener('click', function() {
           cowTab = tab.getAttribute('data-tab');
           syncCowTabs();
         });
       });
-      document.getElementById('cow-tl-close').addEventListener('click', closeTlDetail);
-      document.getElementById('cow-tl-backdrop').addEventListener('click', closeTlDetail);
       // ── Floating + : multi-step actions sheet — every flow completes in-sheet ──
       var CA_VETS = ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'];
       var caStack = [], caCtx = {};
@@ -6352,6 +6634,9 @@
       function caCta(id, label, disabled) {
         return '<button id="' + id + '"' + (disabled ? ' disabled' : '') + ' style="width:100%; min-height:48px; margin-top:12px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:24px; font-size:15px; font-weight:600; font-family:var(--font-hi); cursor:pointer; opacity:' + (disabled ? '0.45' : '1') + ';">' + label + '</button>';
       }
+      function caLabel(txt) { return '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:0 0 6px;">' + txt + '</label>'; }
+      function caDateInput(id) { return '<input type="date" id="' + id + '" class="en" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">'; }
+      function caTimeInput(id) { return '<input type="time" id="' + id + '" class="en" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">'; }
       function caRequire(taId, btnId, onOk) {
         var ta = document.getElementById(taId), btn = document.getElementById(btnId);
         ta.addEventListener('input', function() {
@@ -6482,8 +6767,19 @@
             caCta('ca-heat-yes', t.caYes) +
             '<button id="ca-heat-no" style="width:100%; min-height:46px; margin-top:8px; border:1px solid var(--border); border-radius:24px; background:var(--bgcard); font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">' + t.caNo + '</button>',
           wire: function() {
-            document.getElementById('ca-heat-yes').addEventListener('click', function() { caDone(t.heatConfirmed); });
+            document.getElementById('ca-heat-yes').addEventListener('click', function() { caGo('heatWhen'); });
             document.getElementById('ca-heat-no').addEventListener('click', cowAddClose);
+          } };
+      };
+      caViews.heatWhen = function() {
+        var t = window.t();
+        return { title: t.addHeat,
+          html: '<p style="font-size:13px; color:var(--text2); margin:0 0 12px;">' + caCowName() + '</p>' +
+            caLabel(t.eventDate) + caDateInput('ca-heat-date') +
+            caLabel(t.eventTime) + caTimeInput('ca-heat-time') +
+            caCta('ca-heat-when-ok', t.caConfirm),
+          wire: function() {
+            document.getElementById('ca-heat-when-ok').addEventListener('click', function() { caDone(t.heatConfirmed); });
           } };
       };
       caViews.pregConfirm = function() {
@@ -6493,8 +6789,18 @@
             caCta('ca-preg-yes', t.caYes) +
             '<button id="ca-preg-no" style="width:100%; min-height:46px; margin-top:8px; border:1px solid var(--border); border-radius:24px; background:var(--bgcard); font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">' + t.caNo + '</button>',
           wire: function() {
-            document.getElementById('ca-preg-yes').addEventListener('click', function() { caDone(t.gest9); });
+            document.getElementById('ca-preg-yes').addEventListener('click', function() { caGo('pregWhen'); });
             document.getElementById('ca-preg-no').addEventListener('click', cowAddClose);
+          } };
+      };
+      caViews.pregWhen = function() {
+        var t = window.t();
+        return { title: t.addPreg,
+          html: '<p style="font-size:13px; color:var(--text2); margin:0 0 12px;">' + caCowName() + '</p>' +
+            caLabel(t.eventDate) + caDateInput('ca-preg-date') +
+            caCta('ca-preg-when-ok', t.caConfirm),
+          wire: function() {
+            document.getElementById('ca-preg-when-ok').addEventListener('click', function() { caDone(t.gest9); });
           } };
       };
       caViews.insemType = function() {
@@ -6552,7 +6858,8 @@
         var ok = caCtx.flow === 'delYes';
         return { title: t.logDetails,
           html: '<p style="font-size:13px; color:var(--text2); margin:0 0 10px;">' + caCtx.vet + ' — ' + caCowName() + '</p>' +
-            caTextarea('ca-dl-notes', t.notesPh) +
+            caLabel(t.eventDate) + caDateInput('ca-dl-date') +
+            caLabel(t.notesPh) + caTextarea('ca-dl-notes', t.notesPh) +
             caCta('ca-dl-save', t.saveLog),
           wire: function() {
             document.getElementById('ca-dl-save').addEventListener('click', function() {
@@ -6586,7 +6893,7 @@
         farmDetailPage.style.display = 'block';
       }
       function refreshFarmDetailHeader(farm) {
-        document.getElementById('farm-detail-manager').textContent = loc(farm, 'manager') + ' · ' + window.t().managerWord;
+        setFarmManagerLine();
         document.getElementById('farm-detail-critical').textContent = farm.critical + ' ' + window.t().criticalWord;
         var lvl = farmTempLevel(farm.temp);
         var lvlEl = document.getElementById('farm-detail-temp-level');
@@ -6628,6 +6935,7 @@
           if (el) el.style.display = 'none';
         });
         syncAccountUi();
+        if (typeof updateGroupsSub === 'function') updateGroupsSub();
         accountPage.style.display = 'block';
       }
       window.openAccountPage = openAccountPage;
@@ -6635,6 +6943,7 @@
         row.addEventListener('click', function() {
           var pid = row.getAttribute('data-page');
           if (pid === 'page-farmmgmt' && typeof renderFarmMgmt === 'function') renderFarmMgmt();
+          if (pid === 'page-groups' && typeof renderGroupsPage === 'function') renderGroupsPage();
           document.getElementById(pid).style.display = 'block';
         });
       });
@@ -6798,47 +7107,96 @@
 
       // ── Farm Management: assign / remove a manager, or assign self ──
       var fmFarmId = null;
+      function farmById(id) { return FARMS.filter(function(x) { return x.id === id; })[0]; }
+      function setFarmManagerLine() {
+        var el = document.getElementById('farm-detail-manager');
+        if (!el || !currentFarmId) return;
+        var f = farmById(currentFarmId);
+        if (!f) return;
+        if (f.managerStatus === 'pending') {
+          el.textContent = window.t().invitePending + ' — ' + (f.managerInvite || '');
+        } else {
+          var assigned = f.manager && f.manager !== 'Unassigned';
+          el.textContent = assigned ? (loc(f, 'manager') + ' · ' + window.t().managerWord) : window.t().unassignedWord;
+        }
+      }
       function renderFarmMgmt() {
         var listEl = document.getElementById('farmmgmt-list');
         if (!listEl) return;
         listEl.innerHTML = FARMS.filter(function(f) { return f.status !== 'setup'; }).map(function(f) {
-          var assigned = f.manager && f.manager !== 'Unassigned';
-          var mgrLine = assigned
-            ? '<p style="font-size:12px; color:var(--text2); margin:3px 0 0;">' + window.t().managerWord + ': ' + loc(f, 'manager') + '</p>'
-            : '<p style="font-size:12px; color:var(--danger); margin:3px 0 0;">' + window.t().unassignedWord + '</p>';
+          var pending = f.managerStatus === 'pending';
+          var assigned = !pending && f.manager && f.manager !== 'Unassigned';
+          var mgrLine = pending
+            ? '<p style="font-size:12px; color:var(--warning); margin:3px 0 0; font-weight:600;">' + window.t().invitePending + ' — ' + (f.managerInvite || '') + '</p>'
+            : assigned
+              ? '<p style="font-size:12px; color:var(--text2); margin:3px 0 0;">' + window.t().managerWord + ': ' + loc(f, 'manager') + '</p>'
+              : '<p style="font-size:12px; color:var(--danger); margin:3px 0 0;">' + window.t().unassignedWord + '</p>';
           var btn = 'flex:1; min-height:38px; border-radius:19px; font-size:12px; font-weight:600; font-family:var(--font-hi); cursor:pointer;';
+          if (pending) {
+            return '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px; margin-bottom:12px;">' +
+              '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + loc(f, 'name') + '</p>' + mgrLine +
+              '<div style="display:flex; gap:8px; margin-top:12px;">' +
+                '<button class="fm-resend" data-f="' + f.id + '" style="' + btn + ' border:1px solid var(--greenink); background:var(--activebg); color:var(--greenink);">' + window.t().resendInvite + '</button>' +
+                '<button class="fm-cancel-invite" data-f="' + f.id + '" style="' + btn + ' border:1px solid var(--danger); background:transparent; color:var(--danger);">' + window.t().cancelInvite + '</button>' +
+              '</div>' +
+            '</div>';
+          }
           return '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px; margin-bottom:12px;">' +
             '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + loc(f, 'name') + '</p>' + mgrLine +
             '<div style="display:flex; gap:8px; margin-top:12px;">' +
-              '<button class="fm-assign" data-f="' + f.id + '" style="' + btn + ' border:1px solid var(--greenink); background:var(--activebg); color:var(--greenink);">' + (assigned ? window.t().reassignWord : window.t().assignManager) + '</button>' +
-              '<button class="fm-self" data-f="' + f.id + '" style="' + btn + ' border:1px solid var(--border); background:transparent; color:var(--text1);">' + window.t().assignMe + '</button>' +
+              '<button class="fm-choose" data-f="' + f.id + '" style="' + btn + ' border:1px solid var(--greenink); background:var(--activebg); color:var(--greenink);">' + (assigned ? window.t().reassignWord : window.t().assignManager) + '</button>' +
             '</div>' +
             (assigned ? '<button class="fm-remove" data-f="' + f.id + '" style="width:100%; min-height:36px; margin-top:8px; border-radius:18px; border:1px solid var(--danger); background:transparent; color:var(--danger); font-size:12px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + window.t().removeManager + '</button>' : '') +
           '</div>';
         }).join('');
-        listEl.querySelectorAll('.fm-assign').forEach(function(b) {
-          b.addEventListener('click', function() { openFmSheet(b.getAttribute('data-f')); });
-        });
-        listEl.querySelectorAll('.fm-self').forEach(function(b) {
-          b.addEventListener('click', function() {
-            var f = FARMS.filter(function(x) { return x.id === b.getAttribute('data-f'); })[0];
-            if (f) { f.manager = 'James Redmark'; f.managerHi = 'जेम्स रेडमार्क'; renderFarmMgmt(); renderFarmsList(); }
-          });
+        listEl.querySelectorAll('.fm-choose').forEach(function(b) {
+          b.addEventListener('click', function() { openFmChoose(b.getAttribute('data-f')); });
         });
         listEl.querySelectorAll('.fm-remove').forEach(function(b) {
           b.addEventListener('click', function() {
-            var f = FARMS.filter(function(x) { return x.id === b.getAttribute('data-f'); })[0];
-            if (f) { f.manager = 'Unassigned'; f.managerHi = 'नियुक्त नहीं'; renderFarmMgmt(); renderFarmsList(); }
+            var f = farmById(b.getAttribute('data-f'));
+            if (f) { f.manager = 'Unassigned'; f.managerHi = 'नियुक्त नहीं'; f.managerStatus = 'none'; f.managerInvite = ''; renderFarmMgmt(); renderFarmsList(); setFarmManagerLine(); }
+          });
+        });
+        listEl.querySelectorAll('.fm-resend').forEach(function(b) {
+          b.addEventListener('click', function() {
+            var f = farmById(b.getAttribute('data-f'));
+            if (f) { /* no-op demo resend */ renderFarmMgmt(); }
+          });
+        });
+        listEl.querySelectorAll('.fm-cancel-invite').forEach(function(b) {
+          b.addEventListener('click', function() {
+            var f = farmById(b.getAttribute('data-f'));
+            if (f) { f.managerStatus = 'none'; f.managerInvite = ''; renderFarmMgmt(); renderFarmsList(); setFarmManagerLine(); }
           });
         });
       }
-      function openFmSheet(farmId) {
+      function openFmChoose(farmId) {
         fmFarmId = farmId;
-        var f = FARMS.filter(function(x) { return x.id === farmId; })[0];
+        var f = farmById(farmId);
+        document.getElementById('fm-choose-farm').textContent = f ? loc(f, 'name') : '';
+        var sh = document.getElementById('fm-choose-sheet'), bd = document.getElementById('fm-backdrop');
+        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeFmChoose() {
+        var sh = document.getElementById('fm-choose-sheet'), bd = document.getElementById('fm-backdrop');
+        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      var fmMode = 'assign';
+      function openFmSheet(farmId, mode) {
+        fmFarmId = farmId;
+        fmMode = mode || 'assign';
+        var f = farmById(farmId);
         document.getElementById('fm-sheet-farm').textContent = f ? loc(f, 'name') : '';
         document.getElementById('fm-name').value = '';
         document.getElementById('fm-phone').value = '';
         document.getElementById('fm-email').value = '';
+        var invite = fmMode === 'invite';
+        document.getElementById('fm-sheet-title').textContent = window.t()[invite ? 'sendMgrInvite' : 'selectNewMgr'];
+        document.getElementById('fm-name').style.display = invite ? 'none' : 'block';
+        document.getElementById('fm-phone').style.display = invite ? 'none' : 'block';
+        document.getElementById('fm-invite-hint').style.display = invite ? 'block' : 'none';
+        closeFmChoose();
         var sh = document.getElementById('fm-sheet'), bd = document.getElementById('fm-backdrop');
         sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
@@ -6846,18 +7204,189 @@
         var sh = document.getElementById('fm-sheet'), bd = document.getElementById('fm-backdrop');
         sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
+      document.getElementById('fm-choose-close').addEventListener('click', closeFmChoose);
+      document.getElementById('fm-choose-select').addEventListener('click', function() { openFmSheet(fmFarmId, 'assign'); });
+      document.getElementById('fm-choose-invite').addEventListener('click', function() { openFmSheet(fmFarmId, 'invite'); });
+      document.getElementById('fm-choose-self').addEventListener('click', function() {
+        var f = farmById(fmFarmId);
+        if (f) { f.manager = 'James Redmark'; f.managerHi = 'जेम्स रेडमार्क'; f.managerStatus = 'active'; f.managerInvite = ''; renderFarmMgmt(); renderFarmsList(); setFarmManagerLine(); }
+        closeFmChoose();
+      });
       document.getElementById('fm-close').addEventListener('click', closeFmSheet);
-      document.getElementById('fm-backdrop').addEventListener('click', closeFmSheet);
+      document.getElementById('fm-backdrop').addEventListener('click', function() { closeFmSheet(); closeFmChoose(); });
       document.getElementById('fm-assign-save').addEventListener('click', function() {
-        var nm = (document.getElementById('fm-name').value || '').trim();
-        if (nm && fmFarmId) {
-          var f = FARMS.filter(function(x) { return x.id === fmFarmId; })[0];
-          if (f) { f.manager = nm; f.managerHi = nm; }
-          renderFarmMgmt(); renderFarmsList();
+        var f = farmById(fmFarmId);
+        if (!f) { closeFmSheet(); return; }
+        if (fmMode === 'invite') {
+          var em = (document.getElementById('fm-email').value || '').trim();
+          if (em) { f.managerStatus = 'pending'; f.managerInvite = em; }
+        } else {
+          var nm = (document.getElementById('fm-name').value || '').trim();
+          if (nm) { f.manager = nm; f.managerHi = nm; f.managerStatus = 'active'; f.managerInvite = ''; }
         }
+        renderFarmMgmt(); renderFarmsList(); setFarmManagerLine();
         closeFmSheet();
       });
+      document.getElementById('farm-detail-manager-edit').addEventListener('click', function() {
+        if (currentFarmId) openFmChoose(currentFarmId);
+      });
       renderFarmMgmt();
+
+      // ── Cattle Groups (Account > Cattle Groups) ──
+      function updateGroupsSub() {
+        var el = document.getElementById('acct-groups-sub');
+        if (el) el.textContent = GROUPS.length ? GROUPS.map(function(g) { return g.name; }).join(', ') : window.t().noGroupsYet;
+      }
+      function renderGroupsPage() {
+        updateGroupsSub();
+        var listEl = document.getElementById('groups-list');
+        if (!listEl) return;
+        if (!GROUPS.length) {
+          listEl.innerHTML = '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:20px;">' + window.t().noGroupsYet + '</p>';
+          return;
+        }
+        listEl.innerHTML = GROUPS.map(function(g) {
+          return '<div class="grp-row" data-g="' + g.id + '" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px; margin-bottom:10px; cursor:pointer;">' +
+            '<p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">' + g.name + '</p>' +
+            '<span class="en" style="font-size:12px; color:var(--text2);">' + g.members.length + ' ' + window.t().cowsWord + '</span>' +
+          '</div>';
+        }).join('');
+        listEl.querySelectorAll('.grp-row').forEach(function(row) {
+          row.addEventListener('click', function() { openGroupDetail(row.getAttribute('data-g')); });
+        });
+      }
+      function groupById(id) { return GROUPS.filter(function(g) { return g.id === id; })[0]; }
+      var grpDetailId = null;
+      function openGroupDetail(id) {
+        grpDetailId = id;
+        renderGroupDetail();
+        var sh = document.getElementById('grp-detail-sheet'), bd = document.getElementById('grp-detail-backdrop');
+        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeGroupDetail() {
+        var sh = document.getElementById('grp-detail-sheet'), bd = document.getElementById('grp-detail-backdrop');
+        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      function renderGroupDetail() {
+        var g = groupById(grpDetailId);
+        if (!g) return;
+        document.getElementById('grp-detail-title').textContent = g.name;
+        var cowsEl = document.getElementById('grp-detail-cows');
+        if (!g.members.length) {
+          cowsEl.innerHTML = '<p style="text-align:center; color:var(--text2); font-size:13px; margin:12px 0;">' + window.t().noCowsInGroup + '</p>';
+          return;
+        }
+        cowsEl.innerHTML = g.members.map(function(m) {
+          var f = farmById(m.farmId);
+          var c = f ? f.cows.filter(function(x) { return x.no === m.no; })[0] : null;
+          if (!c) return '';
+          return '<div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid var(--divider);">' +
+            '<div style="min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">' + loc(c, 'name') + '</p><p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0;">' + loc(f, 'name') + '</p></div>' +
+            '<button class="grp-remove-cow" data-farm="' + m.farmId + '" data-no="' + m.no + '" style="width:30px; height:30px; border-radius:50%; border:none; background:var(--bgwarm); color:var(--text2); font-size:14px; cursor:pointer; flex-shrink:0;">✕</button>' +
+          '</div>';
+        }).join('');
+        cowsEl.querySelectorAll('.grp-remove-cow').forEach(function(b) {
+          b.addEventListener('click', function() {
+            var farmId = b.getAttribute('data-farm'), no = +b.getAttribute('data-no');
+            g.members = g.members.filter(function(m) { return !(m.farmId === farmId && m.no === no); });
+            renderGroupDetail(); renderGroupsPage();
+          });
+        });
+      }
+      document.getElementById('grp-detail-close').addEventListener('click', closeGroupDetail);
+      document.getElementById('grp-detail-backdrop').addEventListener('click', closeGroupDetail);
+      document.getElementById('groups-new-btn').addEventListener('click', function() {
+        document.getElementById('grp-new-name').value = '';
+        var sh = document.getElementById('grp-new-sheet'), bd = document.getElementById('grp-new-backdrop');
+        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      });
+      function closeGrpNew() {
+        var sh = document.getElementById('grp-new-sheet'), bd = document.getElementById('grp-new-backdrop');
+        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      document.getElementById('grp-new-close').addEventListener('click', closeGrpNew);
+      document.getElementById('grp-new-backdrop').addEventListener('click', closeGrpNew);
+      document.getElementById('grp-new-save').addEventListener('click', function() {
+        var nm = (document.getElementById('grp-new-name').value || '').trim();
+        if (nm) {
+          var g = { id:'g' + Date.now(), name:nm, members:[] };
+          GROUPS.push(g);
+          renderGroupsPage();
+          closeGrpNew();
+          openGroupDetail(g.id);
+        }
+      });
+      function renderGrpPickList() {
+        var listEl = document.getElementById('grp-pick-list');
+        listEl.innerHTML = allCowsFlat().map(function(o) {
+          var checked = groupHasCow(groupById(grpDetailId), o.farm.id, o.cow.no);
+          return '<label style="display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--divider); cursor:pointer;">' +
+            '<input type="checkbox" class="grp-pick-chk" data-farm="' + o.farm.id + '" data-no="' + o.cow.no + '"' + (checked ? ' checked' : '') + ' style="width:18px; height:18px; accent-color:var(--greenink); flex-shrink:0;">' +
+            '<span style="font-size:14px; color:var(--text1);">' + loc(o.cow, 'name') + ' <span class="en" style="font-size:11px; color:var(--text2);">— ' + loc(o.farm, 'name') + '</span></span>' +
+          '</label>';
+        }).join('');
+      }
+      document.getElementById('grp-add-cattle-btn').addEventListener('click', function() {
+        renderGrpPickList();
+        var sh = document.getElementById('grp-pick-sheet'), bd = document.getElementById('grp-pick-backdrop');
+        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      });
+      function closeGrpPick() {
+        var sh = document.getElementById('grp-pick-sheet'), bd = document.getElementById('grp-pick-backdrop');
+        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      document.getElementById('grp-pick-close').addEventListener('click', closeGrpPick);
+      document.getElementById('grp-pick-backdrop').addEventListener('click', closeGrpPick);
+      document.getElementById('grp-pick-save').addEventListener('click', function() {
+        var g = groupById(grpDetailId);
+        if (g) {
+          document.querySelectorAll('.grp-pick-chk').forEach(function(chk) {
+            var farmId = chk.getAttribute('data-farm'), no = +chk.getAttribute('data-no');
+            var has = groupHasCow(g, farmId, no);
+            if (chk.checked && !has) g.members.push({ farmId: farmId, no: no });
+            else if (!chk.checked && has) g.members = g.members.filter(function(m) { return !(m.farmId === farmId && m.no === no); });
+          });
+          renderGroupDetail(); renderGroupsPage();
+        }
+        closeGrpPick();
+      });
+
+      // ── Add-to-group sheet (from a cow's kebab menu, in Farm Detail or Cow Profile) ──
+      var cowGrpCtx = null;
+      function openCowGroupSheet(farmId, no) {
+        cowGrpCtx = { farmId: farmId, no: no };
+        var listEl = document.getElementById('cow-grp-list');
+        listEl.innerHTML = GROUPS.length
+          ? GROUPS.map(function(g) {
+              var checked = groupHasCow(g, farmId, no);
+              return '<label style="display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--divider); cursor:pointer;">' +
+                '<input type="checkbox" class="cow-grp-chk" data-g="' + g.id + '"' + (checked ? ' checked' : '') + ' style="width:18px; height:18px; accent-color:var(--greenink); flex-shrink:0;">' +
+                '<span style="font-size:14px; color:var(--text1);">' + g.name + '</span>' +
+              '</label>';
+            }).join('')
+          : '<p style="text-align:center; color:var(--text2); font-size:13px; margin:12px 0;">' + window.t().noGroupsYet + '</p>';
+        var sh = document.getElementById('cow-grp-sheet'), bd = document.getElementById('cow-grp-backdrop');
+        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeCowGroupSheet() {
+        var sh = document.getElementById('cow-grp-sheet'), bd = document.getElementById('cow-grp-backdrop');
+        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      document.getElementById('cow-grp-close').addEventListener('click', closeCowGroupSheet);
+      document.getElementById('cow-grp-backdrop').addEventListener('click', closeCowGroupSheet);
+      document.getElementById('cow-grp-save').addEventListener('click', function() {
+        if (cowGrpCtx) {
+          document.querySelectorAll('.cow-grp-chk').forEach(function(chk) {
+            var g = groupById(chk.getAttribute('data-g'));
+            if (!g) return;
+            var has = groupHasCow(g, cowGrpCtx.farmId, cowGrpCtx.no);
+            if (chk.checked && !has) g.members.push({ farmId: cowGrpCtx.farmId, no: cowGrpCtx.no });
+            else if (!chk.checked && has) g.members = g.members.filter(function(m) { return !(m.farmId === cowGrpCtx.farmId && m.no === cowGrpCtx.no); });
+          });
+          updateGroupsSub();
+        }
+        closeCowGroupSheet();
+      });
 
       // ── Call-vet sheet (P2 inspection cards) ──
       (function() {
