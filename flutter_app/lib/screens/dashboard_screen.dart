@@ -127,39 +127,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   TextStyle get _secLbl => const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 0.6, color: VanixColors.textHint);
 
-  // ── Header ──
+  // ── Header (no bell/avatar — profile is in the bottom nav) ──
   Widget _header() {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 22, 16, 6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(_t('dashGreeting').toUpperCase(),
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.8, color: VanixColors.textHint)),
-                    const SizedBox(height: 3),
-                    Text('James', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, height: 1.15, color: _text1)),
-                    const SizedBox(height: 3),
-                    const Text('Thursday, 16 July', style: TextStyle(fontSize: 13, color: VanixColors.textHint)),
-                  ],
-                ),
-              ),
-              _bell(),
-              const SizedBox(width: 10),
-              Container(
-                width: 44, height: 44,
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(color: VanixColors.darkPrimary, shape: BoxShape.circle),
-                child: const Text('JR', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14)),
-              ),
-            ],
-          ),
+          Text(_t('dashGreeting').toUpperCase(),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.8, color: VanixColors.textHint)),
+          const SizedBox(height: 3),
+          Text('James', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, height: 1.15, color: _text1)),
+          const SizedBox(height: 3),
+          const Text('Thursday, 16 July', style: TextStyle(fontSize: 13, color: VanixColors.textHint)),
           const SizedBox(height: 16),
           Row(
             children: [
