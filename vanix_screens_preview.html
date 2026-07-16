@@ -167,6 +167,9 @@
     #flow-root.dark #s1-dash { background: #111111 !important; }
     #flow-root.dark #s1-dash > div > p { color: #8C8780 !important; }
     /* ── Unified frosted nav: identical metrics everywhere; sliding droplet capsule ── */
+    /* Persona gating — owner-only surfaces hidden for the Farmer persona */
+    #flow-root.persona-farmer [data-owner-only] { display:none !important; }
+    #flow-root.persona-farmer .m-sub-actions { display:none !important; }
     .vnav { position:absolute; left:14px; right:14px; bottom:26px; z-index:5; background:rgba(255,255,255,0.42); -webkit-backdrop-filter:blur(18px) saturate(1.4); backdrop-filter:blur(18px) saturate(1.4); border:1px solid rgba(255,255,255,0.55); border-radius:36px; display:flex; padding:5px; box-shadow:0 14px 36px rgba(0,0,0,0.20); }
     .vcap { position:absolute; top:5px; inset-inline-start:5px; width:calc((100% - 10px) / 5); height:56px; background:#FFFFFF; border-radius:28px; box-shadow:0 4px 14px rgba(0,0,0,0.10); transition:transform 0.34s cubic-bezier(0.32,1.04,0.36,1); will-change:transform; }
     .vcap.squish { animation: vsquish 0.34s cubic-bezier(0.32,1.04,0.36,1); }
@@ -1034,6 +1037,12 @@
             </span>
           </button>
 
+          <!-- PERSONA TOGGLE (Owner / Farmer) — demo control, top-left -->
+          <button id="s1-persona" title="Switch persona (demo)" style="position:absolute; top:16px; left:14px; z-index:5; height:30px; border-radius:15px; border:1px solid rgba(255,255,255,0.35); background:rgba(0,0,0,0.28); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding:0 12px; display:flex; align-items:center; gap:6px; color:#FFFFFF; font-size:12px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+            <span id="s1-persona-label">Owner</span>
+          </button>
+
           <!-- VIDEO LAYER — fades in during transition -->
           <div id="s1-video" style="position:absolute; inset:0; opacity:0; transition: opacity 2.2s ease; z-index:1;">
             <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; object-position:center top; position:absolute; inset:0;">
@@ -1257,6 +1266,66 @@
                 <span class="vlab s1-nav-l en" data-k="navEvents">Events</span>
               </button>
               <button class="vtab" id="s1-acct" data-i="4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navAccount">Account</span>
+              </button>
+            </nav>
+          </div>
+
+          <!-- ── FARMER DASHBOARD (simpler, action-first) ── -->
+          <div id="farmer-dash" style="position:absolute; inset:0; background:var(--bgwarm); z-index:6; transform:translateY(100%); transition: transform 0.6s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column;">
+            <div id="farmer-dash-scroll" style="flex:1; overflow-y:auto; padding:0 0 128px;">
+              <!-- Header: logo + greeting -->
+              <div style="padding:calc(20px + env(safe-area-inset-top, 0px)) 16px 6px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                  <img src="https://mybovine.ai/assets/logos/vanix-logo.svg" alt="MyBovine" style="height:22px; width:auto; display:block; flex-shrink:0;">
+                  <span data-k="fpGreeting" style="font-size:13px; font-weight:600; color:var(--text2);">Your farm today</span>
+                </div>
+              </div>
+              <!-- Immediate / To-dos tabs -->
+              <div style="padding:14px 16px 0;">
+                <div style="display:flex; gap:8px; margin-bottom:14px;">
+                  <button class="fp-tab on" data-tab="immediate" data-k="fpImmediate" style="min-height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--danger); background:var(--danger); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Immediate</button>
+                  <button class="fp-tab" data-tab="todos" data-k="fpTodos" style="min-height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">To-dos</button>
+                </div>
+                <div id="fp-immediate">
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--danger); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpHeat">Heat detected</span> — Ramya</p><p data-k="fpHeatSub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--danger); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpFever">Fever alert</span> — Lakshmi</p><p data-k="fpFeverSub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--warning); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpDelivery">Delivery due</span> — Giri</p><p data-k="fpDeliverySub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                </div>
+                <div id="fp-todos" style="display:none;">
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--greenink); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpVetAppt">Vet appointment</span> — Kajri</p><p data-k="fpVetApptSub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--warning); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpInsem">Insemination window</span> — Gauri</p><p data-k="fpInsemSub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                  <div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border-radius:16px; padding:14px; margin-bottom:10px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><div style="width:4px; align-self:stretch; background:var(--border); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:15px; font-weight:600; color:var(--text1); margin:0;"><span data-k="fpMilkLog">Evening milk logging</span></p><p data-k="fpMilkLogSub" style="font-size:12px; color:var(--text2); margin:3px 0 0;"></p></div><button class="fp-action" data-k="fpOpen" style="flex-shrink:0; min-height:36px; padding:0 16px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Open</button></div>
+                </div>
+              </div>
+            </div>
+            <!-- ── BOTTOM NAV (farmer) ── -->
+            <nav class="vnav" id="farmer-dash-nav">
+              <div class="vcap"></div>
+              <button class="vtab on" data-i="0">
+                <span style="position:relative; display:flex;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
+                  <span class="ev-dot" style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
+                </span>
+                <span class="vlab s1-nav-l en" data-k="navHome">Home</span>
+              </button>
+              <button class="vtab" data-i="1">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navFarms">Farms</span>
+              </button>
+              <button class="vtab" data-i="2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7S5.5 10.5 5.5 15a6.5 6.5 0 0 0 13 0c0-4.5-6.5-12.3-6.5-12.3z"/></svg>
+                <span class="vlab s1-nav-l en" data-k="navMilk">Milk</span>
+              </button>
+              <button class="vtab" data-i="3">
+                <span style="position:relative; display:flex;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  <span style="position:absolute; top:-5px; right:-8px; min-width:15px; height:15px; border-radius:8px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:600; display:flex; align-items:center; justify-content:center; padding:0 4px;" class="en ev-badge">3</span>
+                </span>
+                <span class="vlab s1-nav-l en" data-k="navEvents">Events</span>
+              </button>
+              <button class="vtab" data-i="4">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
                 <span class="vlab s1-nav-l en" data-k="navAccount">Account</span>
               </button>
@@ -2511,10 +2580,10 @@
 
                 <p data-k="grpFarmMgmt" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:16px 0 8px;">Farm Management</p>
                 <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
-                  <div class="acct-row" data-page="page-farmmgmt" style="display:flex; align-items:center; gap:10px; padding:13px 14px; border-bottom:1px solid var(--border); cursor:pointer;">
+                  <div class="acct-row" data-owner-only data-page="page-farmmgmt" style="display:flex; align-items:center; gap:10px; padding:13px 14px; border-bottom:1px solid var(--border); cursor:pointer;">
                     <div style="flex:1; min-width:0;"><p data-k="grpFarmMgmt" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Farm Management</p><p data-k="acctFarmSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Sunrise Dairy Farm</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
                   </div>
-                  <div class="acct-row" data-page="page-groups" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
+                  <div class="acct-row" data-owner-only data-page="page-groups" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
                     <div style="flex:1; min-width:0;"><p data-k="rowCattleGroups" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Cattle Groups</p><p id="acct-groups-sub" data-k="acctGroupsSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Desi, Jersey, Holstein Friesian, Sahiwal</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
                   </div>
                 </div>
@@ -2525,7 +2594,7 @@
                     <div style="flex:1; min-width:0;"><p data-k="rowSound" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Alert sound</p><p data-k="soundSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Alerts always notify — sound can be muted</p></div>
                     <span class="acct-toggle" style="width:40px; height:22px; border-radius:12px; background:var(--greenink); position:relative; flex-shrink:0; transition:background 0.2s;"><span style="position:absolute; top:2px; inset-inline-start:20px; width:18px; height:18px; border-radius:50%; background:#FFFFFF; transition:inset-inline-start 0.2s;"></span></span>
                   </div>
-                  <div class="acct-row" data-page="page-vets" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
+                  <div class="acct-row" data-owner-only data-page="page-vets" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
                     <div style="flex:1; min-width:0;"><p data-k="rowVets" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Vet &amp; Emergency Contacts</p><p data-k="vetsSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Who gets called when you tap "Call Vet"</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
                   </div>
                 </div>
@@ -3008,7 +3077,7 @@
                     <p id="farm-detail-name" class="en" style="font-size:21px; font-weight:700; color:var(--text1); margin:0; line-height:1.2;">Sunrise Dairy Farm</p>
                     <div style="display:flex; align-items:center; gap:5px; margin-top:2px;">
                       <p id="farm-detail-manager" class="en" style="font-size:13px; color:var(--text2); margin:0;">Ramesh C · Manager</p>
-                      <button id="farm-detail-manager-edit" title="Manage" style="width:22px; height:22px; flex-shrink:0; border:none; background:transparent; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text2);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+                      <button id="farm-detail-manager-edit" data-owner-only title="Manage" style="width:22px; height:22px; flex-shrink:0; border:none; background:transparent; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text2);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
                     </div>
                   </div>
                   <div style="flex-shrink:0; text-align:end;">
@@ -3412,6 +3481,23 @@
                emgFarmManager:'फार्म प्रबंधक', vetSpec1:'बड़े पशु चिकित्सक \u00b7 6.2 किमी दूर', vetSpec2:'गौ विशेषज्ञ \u00b7 9 किमी दूर', vetSpec3:'सामान्य पशु चिकित्सक \u00b7 12 किमी दूर', legalUpdated:'अंतिम अपडेट: 1 जुलाई 2026', breedWord:'नस्ल', ageWord:'उम्र', breedGir:'गिर', breedDesi:'देसी', ageUnder2:'2 साल से कम', age2to4:'2 \u2013 4 साल', ageOver4:'4 साल से अधिक', editVet:'पशु चिकित्सक संपादित करें', roleVet:'पशु चिकित्सक', saveChanges:'परिवर्तन सहेजें', emailPh:'ईमेल पता', inviteHint:'पशु चिकित्सक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', farmMgmtSub:'हर फार्म के लिए प्रबंधक नियुक्त या हटाएँ', unassignedWord:'नियुक्त नहीं', reassignWord:'फिर से नियुक्त करें', assignManager:'प्रबंधक नियुक्त करें', assignMe:'मुझे नियुक्त करें', manageFarmMgr:'फार्म प्रबंधक प्रबंधित करें', selectNewMgr:'नया फार्म प्रबंधक चुनें', sendMgrInvite:'दूसरे फार्म प्रबंधक को निमंत्रण भेजें', invitePending:'निमंत्रण लंबित', mgrInviteHint:'प्रबंधक को एक निमंत्रण लिंक ईमेल किया जाता है — जोड़े जाने से पहले वे पुष्टि करते हैं।', resendInvite:'निमंत्रण पुनः भेजें', cancelInvite:'निमंत्रण रद्द करें', mgrInviteSentSub:'निमंत्रण भेजा गया — प्रतिक्रिया की प्रतीक्षा', invitedWord:'आमंत्रित', removeManager:'प्रबंधक हटाएँ', mgrNamePh:'प्रबंधक का नाम', confirmAssign:'पुष्टि करें और नियुक्त करें', addVetTitle:'पशु चिकित्सक जोड़ें', resetFilters:'फ़िल्टर रीसेट करें', cancelWord:'रद्द करें', addVetLog:'पशु चिकित्सक लॉग जोड़ें', addDelivery:'प्रसव जोड़ें', statusNoteTitle:'स्थिति बदलने का कारण', statusNotePh:'कारण लिखें (अनिवार्य)', statusChanged:'स्थिति बदल गई', caConfirm:'पुष्टि करें', eventDate:'घटना की तारीख', eventTime:'समय', pickVet:'पशु चिकित्सक चुनें', schedVisit:'दौरे का समय तय करें', visitScheduled:'दौरा तय हो गया', notesPh:'नोट्स', attachFile:'फ़ाइल जोड़ें', attached:'जोड़ी गई', saveLog:'लॉग सहेजें', insemTypeTitle:'गर्भाधान का प्रकार', logDetails:'लॉग विवरण', obs21:'21 दिन की निगरानी शुरू', gest9:'9 महीने की गर्भावस्था अवधि शुरू', heatQ:'क्या {cow} हीट में है?', heatConfirmed:'हीट की पुष्टि — निगरानी शुरू', pregQ:'{cow} के गर्भ की पुष्टि करें?', deliveryQ:'क्या प्रसव सफल रहा?', deliveryLogged:'प्रसव दर्ज — गाय कैल्व्ड में', lossLogged:'नुकसान दर्ज — पशु चिकित्सक को सूचना', lossReasonTitle:'क्या हुआ?', lossReasonPh:'कारण (अनिवार्य)', caYes:'हाँ', caNo:'नहीं', caNext:'आगे', caDone:'हो गया', hideWord:'छुपाएं', vlCustomT:'पशु चिकित्सक नोट', vetLogSaved:'पशु चिकित्सक लॉग सहेजा गया', sevAction:'कार्रवाई', tempGraphTitle:'तापमान \u2014 पिछले 10 दिन', moveGraphTitle:'चाल \u2014 पिछले 10 दिन', ctaCallVet:'पशु चिकित्सक बुलाएँ', callVetTitle:'पशु चिकित्सक बुलाएँ', callVetSub:'एक पशु चिकित्सक चुनें — उन्हें विवरण भेजा जाएगा।', sendVetReq:'अनुरोध भेजें', actionedBy:'कार्रवाई की', vetOutcome:'पशु चिकित्सक परिणाम', histActorRamesh:'रमेश कुमार (किसान)', histActorRao:'डॉ. राव (पशु चिकित्सक)', histActorSystem:'सिस्टम — कॉलर द्वारा स्वतः पहचाना गया', histVetPregfail:'16वें दिन हीट लौटी, इसलिए गर्भ नहीं ठहरा। अगले चक्र की निगरानी फिर शुरू।', histVetDone2:'डॉ. शर्मा ने दौरा किया, एंटीबायोटिक दी, और तापमान सामान्य होने की पुष्टि की।', histVetInsem:'डॉ. राव ने सर्वोत्तम विंडो में कृत्रिम गर्भाधान किया; गर्भ जांच 3 जुलाई को निर्धारित।' }
       };
       var lang = localStorage.getItem('vanixLang') || 'en';
+      (function(){
+        var FP = {
+          en: { fpGreeting:'Your farm today', fpImmediate:'Immediate', fpTodos:'To-dos', fpOpen:'Open', fpAllClear:'All clear \u2014 nothing needs you right now',
+                fpHeat:'Heat detected', fpHeatSub:'Confirm & log insemination', fpFever:'Fever alert', fpFeverSub:'High temperature \u2014 call a vet',
+                fpDelivery:'Delivery due', fpDeliverySub:'Confirm the calving outcome', fpVetAppt:'Vet appointment', fpVetApptSub:'Today 4:30 PM \u2014 Dr. Sharma',
+                fpInsem:'Insemination window', fpInsemSub:'9h left \u2014 optimal window', fpMilkLog:'Evening milk logging', fpMilkLogSub:'Due after 5:00 PM' },
+          hi: { fpGreeting:'\u0906\u091c \u0906\u092a\u0915\u093e \u092b\u093e\u0930\u094d\u092e', fpImmediate:'\u0924\u0941\u0930\u0902\u0924', fpTodos:'\u0915\u0930\u0928\u0947 \u0915\u0947 \u0915\u093e\u092e', fpOpen:'\u0916\u094b\u0932\u0947\u0902', fpAllClear:'\u0938\u092c \u0920\u0940\u0915 \u2014 \u0905\u092d\u0940 \u0915\u0941\u091b \u0928\u0939\u0940\u0902',
+                fpHeat:'\u0939\u0940\u091f \u0915\u093e \u092a\u0924\u093e \u091a\u0932\u093e', fpHeatSub:'\u0917\u0930\u094d\u092d\u093e\u0927\u093e\u0928 \u0915\u0940 \u092a\u0941\u0937\u094d\u091f\u093f \u0914\u0930 \u0932\u0949\u0917 \u0915\u0930\u0947\u0902', fpFever:'\u092c\u0941\u0916\u093e\u0930 \u091a\u0947\u0924\u093e\u0935\u0928\u0940', fpFeverSub:'\u0924\u0947\u091c\u093c \u0924\u093e\u092a\u092e\u093e\u0928 \u2014 \u092a\u0936\u0941 \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u0915 \u092c\u0941\u0932\u093e\u090f\u0902',
+                fpDelivery:'\u092a\u094d\u0930\u0938\u0935 \u0926\u0947\u092f', fpDeliverySub:'\u092c\u094d\u092f\u093e\u0902\u0924 \u0915\u093e \u092a\u0930\u093f\u0923\u093e\u092e \u092a\u0941\u0937\u094d\u091f\u093f \u0915\u0930\u0947\u0902', fpVetAppt:'\u092a\u0936\u0941 \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u0915 \u092d\u0947\u0902\u091f', fpVetApptSub:'\u0906\u091c \u0936\u093e\u092e 4:30 \u2014 \u0921\u0949. \u0936\u0930\u094d\u092e\u093e',
+                fpInsem:'\u0917\u0930\u094d\u092d\u093e\u0927\u093e\u0928 \u0935\u093f\u0902\u0921\u094b', fpInsemSub:'9 \u0918\u0902\u091f\u0947 \u092c\u091a\u0947 \u2014 \u0938\u0930\u094d\u0935\u094b\u0924\u094d\u0924\u092e \u0935\u093f\u0902\u0921\u094b', fpMilkLog:'\u0936\u093e\u092e \u0926\u0942\u0927 \u0932\u0949\u0917\u093f\u0902\u0917', fpMilkLogSub:'\u0936\u093e\u092e 5 \u092c\u091c\u0947 \u0915\u0947 \u092c\u093e\u0926 \u0926\u0947\u092f' },
+          bho: { fpGreeting:'\u0906\u091c \u0930\u090a\u0930\u093e \u092b\u093e\u0930\u094d\u092e', fpImmediate:'\u0924\u0941\u0930\u0902\u0924', fpTodos:'\u0915\u0930\u0947 \u0915\u0947 \u0915\u093e\u092e', fpOpen:'\u0916\u094b\u0932\u0940\u0902', fpAllClear:'\u0938\u092c \u0920\u0940\u0915 \u2014 \u0905\u092d\u0940 \u0915\u091b\u0942 \u0928\u093e',
+                fpHeat:'\u0939\u0940\u091f \u0915\u0947 \u092a\u0924\u093e \u091a\u0932\u0932', fpHeatSub:'\u0917\u0930\u094d\u092d\u093e\u0927\u093e\u0928 \u0915\u0947 \u092a\u0941\u0937\u094d\u091f\u093f \u0906 \u0932\u0949\u0917 \u0915\u0930\u0940\u0902', fpFever:'\u092c\u0941\u0916\u093e\u0930 \u091a\u0947\u0924\u093e\u0935\u0928\u0940', fpFeverSub:'\u0924\u0947\u091c\u093c \u0924\u093e\u092a\u092e\u093e\u0928 \u2014 \u092a\u0936\u0941 \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u0915 \u092c\u0941\u0932\u093e\u0908\u0902',
+                fpDelivery:'\u092a\u094d\u0930\u0938\u0935 \u0926\u0947\u092f', fpDeliverySub:'\u092c\u094d\u092f\u093e\u0902\u0924 \u0915\u0947 \u0928\u0924\u0940\u091c\u093e \u092a\u0941\u0937\u094d\u091f\u093f \u0915\u0930\u0940\u0902', fpVetAppt:'\u092a\u0936\u0941 \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u0915 \u092d\u0947\u0902\u091f', fpVetApptSub:'\u0906\u091c \u0938\u093e\u0902\u091d 4:30 \u2014 \u0921\u0949. \u0936\u0930\u094d\u092e\u093e',
+                fpInsem:'\u0917\u0930\u094d\u092d\u093e\u0927\u093e\u0928 \u0935\u093f\u0902\u0921\u094b', fpInsemSub:'9 \u0918\u0902\u091f\u093e \u092c\u093e\u0915\u0940 \u2014 \u0938\u0930\u094d\u0935\u094b\u0924\u094d\u0924\u092e \u0935\u093f\u0902\u0921\u094b', fpMilkLog:'\u0938\u093e\u0902\u091d \u0926\u0942\u0927 \u0932\u0949\u0917\u093f\u0902\u0917', fpMilkLogSub:'\u0938\u093e\u0902\u091d 5 \u092c\u091c\u0947 \u0915\u0947 \u092c\u093e\u0926 \u0926\u0947\u092f' }
+        };
+        for (var l in FP) { if (STRINGS[l]) { for (var k in FP[l]) STRINGS[l][k] = FP[l][k]; } }
+      })();
       function t() { return STRINGS[lang]; }
       // Login/OTP lives in its own <script> tag, separate from the main app
       // script (Farms/Milk/Events) — expose the translation lookup on window
@@ -3560,6 +3646,30 @@
         applyDisplayMode();
       });
 
+      // ── Persona (Owner / Farmer) demo control ──
+      window.VANIX_PERSONA = localStorage.getItem('vanixPersona') || 'owner'; // 'owner' | 'farmer'
+      window.VANIX_FARMS = localStorage.getItem('vanixFarms') || 'multi';     // 'multi' | 'single'
+      function applyPersona() {
+        var farmer = window.VANIX_PERSONA === 'farmer';
+        var root = document.getElementById('flow-root');
+        root.classList.toggle('persona-farmer', farmer);
+        root.classList.toggle('persona-owner', !farmer);
+        root.classList.toggle('farms-single', farmer && window.VANIX_FARMS === 'single');
+        var pl = document.getElementById('s1-persona-label');
+        if (pl) pl.textContent = !farmer ? 'Owner' : (window.VANIX_FARMS === 'single' ? 'Farmer \u00b7 1' : 'Farmer \u00b7 N');
+      }
+      applyPersona();
+      var personaBtn = document.getElementById('s1-persona');
+      if (personaBtn) personaBtn.addEventListener('click', function() {
+        // cycle: owner -> farmer(multi) -> farmer(single) -> owner
+        if (window.VANIX_PERSONA === 'owner') { window.VANIX_PERSONA = 'farmer'; window.VANIX_FARMS = 'multi'; }
+        else if (window.VANIX_FARMS === 'multi') { window.VANIX_FARMS = 'single'; }
+        else { window.VANIX_PERSONA = 'owner'; }
+        localStorage.setItem('vanixPersona', window.VANIX_PERSONA);
+        localStorage.setItem('vanixFarms', window.VANIX_FARMS);
+        applyPersona();
+      });
+
       // timer and resend are mutually exclusive: countdown first, then resend replaces it
       var resendWrap = document.getElementById('s1-resend-wrap');
       function startTimer() {
@@ -3603,8 +3713,13 @@
       confirmBtn.addEventListener('click', function() {
         if (confirmBtn.disabled) return;
         clearInterval(countdown);
-        document.getElementById('s1-dash').style.transform = 'translateY(0)';
-        if (window.wireDash) window.wireDash();
+        if (window.VANIX_PERSONA === 'farmer') {
+          document.getElementById('farmer-dash').style.transform = 'translateY(0)';
+          if (window.wireFarmerDash) window.wireFarmerDash();
+        } else {
+          document.getElementById('s1-dash').style.transform = 'translateY(0)';
+          if (window.wireDash) window.wireDash();
+        }
       });
       // ── Dashboard interactions (idempotent; runs on load + on reveal) ──
       window.wireDash = function() {
@@ -3934,7 +4049,7 @@
               '<p style="font-size:13px; font-weight:600; color:var(--text1); margin:0;">' + label + '</p>' +
               '<p style="font-size:11px; color:var(--text2); margin:2px 0 0;">By Suresh · ' + nowHM() + ' · Pending owner approval</p>' +
             '</div>' +
-            '<div style="display:flex; gap:6px; flex-shrink:0;">' +
+            '<div class="m-sub-actions" style="display:flex; gap:6px; flex-shrink:0;">' +
               '<button class="m-reject" style="height:34px; padding:0 14px; border-radius:17px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi);">✕</button>' +
               '<button class="m-approve" style="height:34px; padding:0 14px; border-radius:17px; border:none; background:var(--greenink); color:#FFFFFF; font-size:12px; font-weight:600; font-family:var(--font-hi);">Approve</button>' +
             '</div>' +
@@ -5658,6 +5773,45 @@
         cap.style.transition = '';
         nav.querySelectorAll('.vtab').forEach(function(x) { x.classList.toggle('on', +x.getAttribute('data-i') === i); });
       }
+
+      window.wireFarmerDash = function() {
+        if (!window.__farmerWired) {
+          window.__farmerWired = true;
+          var fnav = document.getElementById('farmer-dash-nav');
+          if (fnav) wireNav(fnav, function(i) {
+            if (i === 1) setTimeout(function() {
+              if (window.VANIX_FARMS === 'single') { openFarmDetail(FARMS[0].id); }
+              else { farmsPage.style.display = 'block'; }
+              resetNav(fnav, 0);
+            }, 280);
+            if (i === 2) setTimeout(function() { milkPage.style.display = 'block'; resetNav(fnav, 0); }, 280);
+            if (i === 3) setTimeout(function() { eventsPage.style.display = 'block'; resetNav(fnav, 0); }, 280);
+            if (i === 4) setTimeout(function() { openAccountPage(); resetNav(fnav, 0); }, 280);
+          });
+          document.querySelectorAll('.fp-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+              var which = tab.getAttribute('data-tab');
+              document.querySelectorAll('.fp-tab').forEach(function(x) {
+                var on = x === tab, imm = x.getAttribute('data-tab') === 'immediate';
+                x.classList.toggle('on', on);
+                x.style.background = on ? (imm ? 'var(--danger)' : 'var(--greenink)') : 'var(--bgcard)';
+                x.style.color = on ? '#FFFFFF' : 'var(--text1)';
+                x.style.borderColor = on ? (imm ? 'var(--danger)' : 'var(--greenink)') : 'var(--border)';
+                x.style.fontWeight = on ? '600' : '500';
+              });
+              document.getElementById('fp-immediate').style.display = which === 'immediate' ? 'block' : 'none';
+              document.getElementById('fp-todos').style.display = which === 'todos' ? 'block' : 'none';
+            });
+          });
+          document.querySelectorAll('.fp-action').forEach(function(b) {
+            b.addEventListener('click', function() { eventsPage.style.display = 'block'; });
+          });
+        }
+        // single-farm farmer lands directly in his farm's detail
+        if (window.VANIX_FARMS === 'single' && typeof FARMS !== 'undefined' && FARMS.length) {
+          setTimeout(function() { openFarmDetail(FARMS[0].id); }, 300);
+        }
+      };
 
       wireNav(dashNav, function(i) {
         if (i === 1) setTimeout(function() {
