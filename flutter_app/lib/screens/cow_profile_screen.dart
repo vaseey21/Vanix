@@ -199,8 +199,8 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
       onSelected: (v) => _snack('${_actionVerb(v)}…'),
       itemBuilder: (context) => [
         PopupMenuItem(value: 'edit', child: Text(FS.t(_lang, 'editWord'))),
-        PopupMenuItem(value: 'delete', child: Text(FS.t(_lang, 'deleteWord'))),
         PopupMenuItem(value: 'group', child: Text(FS.t(_lang, 'addToGroup'))),
+        PopupMenuItem(value: 'delete', child: Text(FS.t(_lang, 'deleteWord'))),
       ],
     );
   }
