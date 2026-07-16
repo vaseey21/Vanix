@@ -485,7 +485,8 @@ class _VetsPageState extends State<_VetsPage> {
         return Theme(
           data: theme,
           child: Scaffold(
-            body: ListView(
+            body: SafeArea(
+              child: ListView(
               padding: const EdgeInsets.only(bottom: 40),
               children: [
                 _HeroBack(title: FS.t(lang, 'rowVets'), subtitle: FS.t(lang, 'vetsSub'), isDark: isDark),
