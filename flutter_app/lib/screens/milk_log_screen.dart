@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../i18n/strings.dart';
+import '../i18n/farm_strings.dart';
 import '../models/milk_models.dart';
 import '../state/app_state.dart';
 import '../theme/vanix_theme.dart';
