@@ -503,7 +503,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _scheduleRow(String time, String titleKey, {String? sub, required Color barColor, required bool divider}) {
+  Widget _scheduleRow(String time, String titleKey,
+      {String? sub, String? detail, String? titlePrefix, Color? timeColor, required Color barColor, required bool divider}) {
     return Container(
       decoration: BoxDecoration(
         border: divider ? Border(bottom: BorderSide(color: _divider)) : null,
@@ -511,7 +512,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: IntrinsicHeight(
         child: Row(children: [
-          SizedBox(width: 64, child: Text(time, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: _text1))),
+          SizedBox(width: 64, child: Text(time, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: timeColor ?? _text1))),
           const SizedBox(width: 14),
           Container(width: 3, decoration: BoxDecoration(color: barColor, borderRadius: BorderRadius.circular(2))),
           const SizedBox(width: 14),
@@ -520,10 +521,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(_t(titleKey), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
+                titlePrefix != null
+                    ? RichText(
+                        text: TextSpan(children: [
+                          TextSpan(text: '$titlePrefix ', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
+                          TextSpan(text: '— ${_t(titleKey)}', style: const TextStyle(fontSize: 14, color: VanixColors.textHint)),
+                        ]),
+                      )
+                    : Text(_t(titleKey), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
                 if (sub != null) ...[
                   const SizedBox(height: 2),
                   Text(_t(sub), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+                ],
+                if (detail != null) ...[
+                  const SizedBox(height: 2),
+                  Text(detail, style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
                 ],
               ],
             ),
