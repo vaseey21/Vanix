@@ -21,7 +21,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(home: DashboardScreen(appState: AppState()..setLanguage('en'))));
     await tester.pump();
     expect(tester.takeException(), isNull);
-    expect(find.text('James'), findsOneWidget);
+    expect(_hasText(tester, 'MyBovine'), isTrue);
     expect(find.text('Unactioned Alerts'), findsOneWidget);
     // bell + avatar removed
     expect(find.byIcon(Icons.notifications_none), findsNothing);
