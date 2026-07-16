@@ -260,7 +260,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Milk Log', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: textColor)),
+                          Text('Milk Log', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
                           Row(
                             children: [
                               _PeriodPill(
