@@ -205,6 +205,37 @@ class _HeroBackground extends StatelessWidget {
   }
 }
 
+/// Demo persona switcher (top-left on login): Owner → Farmer·N → Farmer·1.
+class _PersonaToggle extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+  const _PersonaToggle({required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 30,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          color: Colors.black.withValues(alpha: 0.28),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.35)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.person_outline, size: 13, color: Colors.white),
+            const SizedBox(width: 6),
+            Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _ThemeToggle extends StatelessWidget {
   final bool isDark;
   final VoidCallback onTap;
