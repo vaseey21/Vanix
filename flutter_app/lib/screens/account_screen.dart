@@ -516,6 +516,7 @@ class _VetsPageState extends State<_VetsPage> {
                 ),
               ],
             ),
+            ),
           ),
         );
       },
