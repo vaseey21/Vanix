@@ -142,12 +142,13 @@ class _AccountScreenState extends State<AccountScreen> {
                                   ),
                                   onTap: () => setState(() => _soundOn = !_soundOn),
                                 ),
-                                _AccountRow(
-                                  isDark: isDark,
-                                  title: FS.t(lang, 'rowVets'),
-                                  subtitle: FS.t(lang, 'vetsSub'),
-                                  onTap: () => _push(_VetsPage(appState: widget.appState)),
-                                ),
+                                if (!widget.appState.isFarmer)
+                                  _AccountRow(
+                                    isDark: isDark,
+                                    title: FS.t(lang, 'rowVets'),
+                                    subtitle: FS.t(lang, 'vetsSub'),
+                                    onTap: () => _push(_VetsPage(appState: widget.appState)),
+                                  ),
                               ],
                             ),
 
