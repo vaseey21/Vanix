@@ -139,9 +139,56 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
+                // MyBovine logo — near the top on the landing screen.
                 Align(
-                  alignment: Alignment.bottomCenter,
-                  child: _SheetContainer(isDark: isDark, child: _buildPanel(isDark)),
+                  alignment: const Alignment(0, -0.62),
+                  child: SafeArea(
+                    child: Text.rich(TextSpan(children: const [
+                      TextSpan(text: 'My', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: Colors.white)),
+                      TextSpan(text: 'Bovine', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: Color(0xFF4DDE95))),
+                    ])),
+                  ),
+                ),
+                // Landing CTA — slides out as the sheet slides in.
+                AnimatedSlide(
+                  duration: const Duration(milliseconds: 450),
+                  curve: Curves.easeOutCubic,
+                  offset: _landing ? Offset.zero : const Offset(0, 2),
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 300),
+                    opacity: _landing ? 1 : 0,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SafeArea(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(32, 0, 32, 40),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () => setState(() => _landing = false),
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(0, 52),
+                                backgroundColor: VanixColors.greenDeep,
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)),
+                              ),
+                              child: Text(t.title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                // Login sheet — slides up once Login is tapped.
+                AnimatedSlide(
+                  duration: const Duration(milliseconds: 550),
+                  curve: const Cubic(0.32, 0.72, 0, 1),
+                  offset: _landing ? const Offset(0, 1) : Offset.zero,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: _SheetContainer(isDark: isDark, child: _buildPanel(isDark)),
+                  ),
                 ),
               ],
             ),
