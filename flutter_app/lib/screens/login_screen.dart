@@ -140,10 +140,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 // MyBovine logo — near the top on the landing screen.
-                Align(
-                  alignment: const Alignment(0, -0.62),
+                const Align(
+                  alignment: Alignment(0, -0.62),
                   child: SafeArea(
-                    child: Text.rich(TextSpan(children: const [
+                    child: Text.rich(TextSpan(children: [
                       TextSpan(text: 'My', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: Colors.white)),
                       TextSpan(text: 'Bovine', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: Color(0xFF4DDE95))),
                     ])),
