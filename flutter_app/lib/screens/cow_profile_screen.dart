@@ -1021,7 +1021,7 @@ class _ActionsSheetState extends State<_ActionsSheet> {
                 Icon(it.$1, size: 20, color: VanixColors.greenInk),
                 const SizedBox(width: VanixSpacing.md),
                 Expanded(child: Text(it.$2, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: _text1))),
-                Icon(Icons.chevron_right, size: 18, color: VanixColors.textHint),
+                const Icon(Icons.chevron_right, size: 18, color: VanixColors.textHint),
               ]),
             ),
           ),
@@ -1144,7 +1144,7 @@ class _ActionsSheetState extends State<_ActionsSheet> {
 
   Widget _noteStep(String prompt, String ph, TextEditingController c, VoidCallback onOk) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(padding: const EdgeInsets.only(bottom: 10), child: Text(prompt, style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      Padding(padding: const EdgeInsets.only(bottom: 10), child: Text(prompt, style: const TextStyle(fontSize: 13, color: VanixColors.textHint))),
       _textArea(c, ph),
       const SizedBox(height: 4),
       _cta(_t('caConfirm'), c.text.trim().isEmpty ? null : onOk),
