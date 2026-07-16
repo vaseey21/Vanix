@@ -172,6 +172,134 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
     );
   }
 
+  // ── Manage farm manager: 3-option chooser (select / invite / assign self) ──
+  void _openManagerChooser(FarmModel farm) {
+    final lang = _lang;
+    final isDark = widget.appState.isDark;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        final bg = isDark ? const Color(0xFF1C1C1C) : Colors.white;
+        final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+        Widget optionBtn(String label, VoidCallback onTap) => Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: onTap,
+                  style: OutlinedButton.styleFrom(
+                    alignment: Alignment.centerLeft,
+                    minimumSize: const Size(0, 48),
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    side: BorderSide(color: isDark ? VanixColors.darkBorder : VanixColors.border),
+                    foregroundColor: textColor,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
+                  child: Text(label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                ),
+              ),
+            );
+        return Container(
+          decoration: BoxDecoration(color: bg, borderRadius: const BorderRadius.vertical(top: Radius.circular(24))),
+          padding: const EdgeInsets.fromLTRB(24, 8, 24, 28),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(child: Container(width: 36, height: 4, decoration: BoxDecoration(color: VanixColors.greenInk, borderRadius: BorderRadius.circular(2)))),
+              const SizedBox(height: 12),
+              Row(children: [
+                Expanded(child: Text(FS.t(lang, 'manageFarmMgr'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: textColor))),
+                IconButton(onPressed: () => Navigator.pop(ctx), icon: Icon(Icons.close, size: 18, color: textColor)),
+              ]),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 14),
+                child: Text(farm.nm(lang), style: TextStyle(fontSize: 12, color: isDark ? const Color(0xB3FFFFFF) : VanixColors.textHint)),
+              ),
+              optionBtn(FS.t(lang, 'selectNewMgr'), () { Navigator.pop(ctx); _openManagerForm(farm, invite: false); }),
+              optionBtn(FS.t(lang, 'sendMgrInvite'), () { Navigator.pop(ctx); _openManagerForm(farm, invite: true); }),
+              optionBtn(FS.t(lang, 'assignMe'), () {
+                setState(() {
+                  farm.manager = 'James Redmark';
+                  farm.managerHi = 'जेम्स रेडमार्क';
+                  farm.managerInvitePending = false;
+                  farm.managerInviteEmail = '';
+                });
+                Navigator.pop(ctx);
+              }),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _openManagerForm(FarmModel farm, {required bool invite}) {
+    final lang = _lang;
+    final isDark = widget.appState.isDark;
+    final nameC = TextEditingController();
+    final emailC = TextEditingController();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        final bg = isDark ? const Color(0xFF1C1C1C) : Colors.white;
+        final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+        return Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+          child: Container(
+            decoration: BoxDecoration(color: bg, borderRadius: const BorderRadius.vertical(top: Radius.circular(24))),
+            padding: const EdgeInsets.fromLTRB(24, 8, 24, 28),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(child: Container(width: 36, height: 4, decoration: BoxDecoration(color: VanixColors.greenInk, borderRadius: BorderRadius.circular(2)))),
+                const SizedBox(height: 12),
+                Row(children: [
+                  Expanded(child: Text(FS.t(lang, invite ? 'sendMgrInvite' : 'selectNewMgr'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: textColor))),
+                  IconButton(onPressed: () => Navigator.pop(ctx), icon: Icon(Icons.close, size: 18, color: textColor)),
+                ]),
+                Text(farm.nm(lang), style: TextStyle(fontSize: 12, color: isDark ? const Color(0xB3FFFFFF) : VanixColors.textHint)),
+                const SizedBox(height: 14),
+                if (invite) ...[
+                  TextField(controller: emailC, keyboardType: TextInputType.emailAddress, style: TextStyle(fontSize: 13, color: textColor), decoration: InputDecoration(hintText: FS.t(lang, 'emailPh'))),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text(FS.t(lang, 'mgrInviteHint'), style: TextStyle(fontSize: 11, height: 1.5, color: isDark ? const Color(0xB3FFFFFF) : VanixColors.textHint)),
+                  ),
+                ] else
+                  TextField(controller: nameC, style: TextStyle(fontSize: 13, color: textColor), decoration: InputDecoration(hintText: FS.t(lang, 'mgrNamePh'))),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        if (invite) {
+                          final em = emailC.text.trim();
+                          if (em.isNotEmpty) { farm.managerInvitePending = true; farm.managerInviteEmail = em; }
+                        } else {
+                          final nm = nameC.text.trim();
+                          if (nm.isNotEmpty) { farm.manager = nm; farm.managerHi = nm; farm.managerInvitePending = false; farm.managerInviteEmail = ''; }
+                        }
+                      });
+                      Navigator.pop(ctx);
+                    },
+                    child: Text(FS.t(lang, 'confirmAssign')),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   // ── Hero ──────────────────────────────────────────────────────────────
   Widget _hero(bool isDark) {
     final farm = widget.farm;
