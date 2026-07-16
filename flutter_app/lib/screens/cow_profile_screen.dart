@@ -654,11 +654,33 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
         _sectionLabel('wkYield8'),
         _card(
           padding: const EdgeInsets.fromLTRB(VanixSpacing.md, VanixSpacing.lg, VanixSpacing.md, VanixSpacing.lg),
-          child: SizedBox(
-            height: 96,
-            width: double.infinity,
-            child: CustomPaint(painter: _WeeklyPainter(values: const [40, 47, 44, 50, 46, 58, 47, 45], isDark: _isDark, peakIndex: 5)),
-          ),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const Column(children: [
+              Text('60L', style: TextStyle(fontSize: 9, color: VanixColors.textHint)),
+              SizedBox(height: 36),
+              Text('48L', style: TextStyle(fontSize: 9, color: VanixColors.textHint)),
+              SizedBox(height: 36),
+              Text('36L', style: TextStyle(fontSize: 9, color: VanixColors.textHint)),
+            ]),
+            const SizedBox(width: VanixSpacing.sm),
+            Expanded(
+              child: Column(children: [
+                SizedBox(
+                  height: 96,
+                  width: double.infinity,
+                  child: CustomPaint(painter: _WeeklyPainter(values: const [40, 47, 44, 50, 46, 58, 47, 45], isDark: _isDark, peakIndex: 5)),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    for (var i = 1; i <= 8; i++)
+                      Text('W$i', style: const TextStyle(fontSize: 9, color: VanixColors.textHint)),
+                  ],
+                ),
+              ]),
+            ),
+          ]),
         ),
         const SizedBox(height: VanixSpacing.md),
         Row(children: [
