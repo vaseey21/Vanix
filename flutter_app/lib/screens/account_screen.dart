@@ -105,25 +105,27 @@ class _AccountScreenState extends State<AccountScreen> {
                               ],
                             ),
 
-                            // Farm Management group
-                            _GroupLabel(FS.t(lang, 'grpFarmMgmt'), isDark: isDark),
-                            _GroupCard(
-                              isDark: isDark,
-                              children: [
-                                _AccountRow(
-                                  isDark: isDark,
-                                  title: FS.t(lang, 'grpFarmMgmt'),
-                                  subtitle: FS.t(lang, 'acctFarmSub'),
-                                  onTap: () => _push(_FarmMgmtPage(appState: widget.appState)),
-                                ),
-                                _AccountRow(
-                                  isDark: isDark,
-                                  title: FS.t(lang, 'rowCattleGroups'),
-                                  subtitle: FS.t(lang, 'acctGroupsSub'),
-                                  onTap: () {},
-                                ),
-                              ],
-                            ),
+                            // Farm Management group — owner only
+                            if (!widget.appState.isFarmer) ...[
+                              _GroupLabel(FS.t(lang, 'grpFarmMgmt'), isDark: isDark),
+                              _GroupCard(
+                                isDark: isDark,
+                                children: [
+                                  _AccountRow(
+                                    isDark: isDark,
+                                    title: FS.t(lang, 'grpFarmMgmt'),
+                                    subtitle: FS.t(lang, 'acctFarmSub'),
+                                    onTap: () => _push(_FarmMgmtPage(appState: widget.appState)),
+                                  ),
+                                  _AccountRow(
+                                    isDark: isDark,
+                                    title: FS.t(lang, 'rowCattleGroups'),
+                                    subtitle: FS.t(lang, 'acctGroupsSub'),
+                                    onTap: () {},
+                                  ),
+                                ],
+                              ),
+                            ],
 
                             // Alerts & Contacts
                             _GroupLabel(FS.t(lang, 'grpAlerts'), isDark: isDark),
