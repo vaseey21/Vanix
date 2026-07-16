@@ -170,20 +170,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 38,
-                padding: const EdgeInsetsDirectional.symmetric(horizontal: 14),
-                decoration: BoxDecoration(color: _cardBg, borderRadius: BorderRadius.circular(19), border: Border.all(color: _border)),
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Icon(Icons.home_outlined, size: 15, color: _text1),
-                  const SizedBox(width: 8),
-                  Text('${_t('dashAllFarms')} (3)', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
-                  const SizedBox(width: 4),
-                  Icon(Icons.keyboard_arrow_down, size: 16, color: _text1),
-                ]),
+              Flexible(
+                child: Container(
+                  height: 38,
+                  padding: const EdgeInsetsDirectional.symmetric(horizontal: 14),
+                  decoration: BoxDecoration(color: _cardBg, borderRadius: BorderRadius.circular(19), border: Border.all(color: _border)),
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(Icons.home_outlined, size: 15, color: _text1),
+                    const SizedBox(width: 8),
+                    Flexible(child: Text('${_t('dashAllFarms')} (3)', overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1))),
+                    const SizedBox(width: 4),
+                    Icon(Icons.keyboard_arrow_down, size: 16, color: _text1),
+                  ]),
+                ),
               ),
+              const SizedBox(width: 10),
               Row(mainAxisSize: MainAxisSize.min, children: [
                 const Icon(Icons.bar_chart, size: 15, color: VanixColors.greenInk),
                 const SizedBox(width: 5),
