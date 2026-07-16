@@ -82,11 +82,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           child: _statGrid(),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                          child: _actionAlerts(),
+                          padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
+                          child: _scheduleTabs(),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                           child: _twoCards(),
                         ),
                         Padding(
@@ -99,15 +99,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
-                          child: _todaySchedule(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
-                          child: _thisWeek(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
-                          child: _goodNews(),
+                          child: _updates(),
                         ),
                       ],
                     ),
