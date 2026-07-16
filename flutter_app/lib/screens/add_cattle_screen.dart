@@ -41,16 +41,17 @@ class _AddCattleScreenState extends State<AddCattleScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(
-                      onTap: () => Navigator.of(context).pop(),
-                      customBorder: const CircleBorder(),
-                      child: Container(
-                        width: 34, height: 34,
-                        alignment: Alignment.center,
-                        child: Icon(Icons.chevron_left, color: textColor),
+                    SizedBox(
+                      width: 48,
+                      height: 48,
+                      child: IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        padding: EdgeInsets.zero,
+                        alignment: AlignmentDirectional.centerStart,
+                        icon: Icon(Icons.chevron_left, color: textColor),
                       ),
                     ),
-                    const SizedBox(width: 6),
+                    const SizedBox(width: 2),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
