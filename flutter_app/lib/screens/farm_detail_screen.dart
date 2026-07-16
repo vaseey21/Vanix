@@ -211,7 +211,26 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                     children: [
                       Text(farm.nm(_lang), style: TextStyle(fontSize: 21, fontWeight: FontWeight.w700, height: 1.2, color: textColor)),
                       const SizedBox(height: 2),
-                      Text('${farm.mgr(_lang)} · ${FS.t(_lang, 'managerWord')}', style: TextStyle(fontSize: 13, color: subColor)),
+                      Row(children: [
+                        Flexible(
+                          child: Text(
+                            farm.managerInvitePending
+                                ? '${FS.t(_lang, 'invitePending')} — ${farm.managerInviteEmail}'
+                                : '${farm.mgr(_lang)} · ${FS.t(_lang, 'managerWord')}',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 13, color: farm.managerInvitePending ? VanixColors.warning : subColor, fontWeight: farm.managerInvitePending ? FontWeight.w600 : FontWeight.w400),
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        InkWell(
+                          onTap: () => _openManagerChooser(farm),
+                          borderRadius: BorderRadius.circular(11),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: Icon(Icons.edit_outlined, size: 13, color: subColor),
+                          ),
+                        ),
+                      ]),
                     ],
                   ),
                 ),
