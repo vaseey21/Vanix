@@ -20,6 +20,7 @@ class CowProfileScreen extends StatefulWidget {
 
 class _CowProfileScreenState extends State<CowProfileScreen> {
   int _tab = 0;
+  final Set<int> _tlExpanded = {};
 
   // Timeline events — (key, date, dot color).
   static final List<TimelineEvent> _timeline = [
