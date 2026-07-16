@@ -834,12 +834,16 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (context) => _ActionsSheet(
+      builder: (_) => _ActionsSheet(
         isDark: _isDark,
         lang: _lang,
-        onAction: (label) {
-          Navigator.pop(context);
-          _snack('$label…');
+        cowName: widget.cow.nm(_lang),
+        vets: const ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'],
+        onAddVetLog: (log) {
+          setState(() {
+            _extraVetLogs.insert(0, log);
+            _tab = 3; // Vet Logs tab
+          });
         },
       ),
     );
@@ -847,8 +851,6 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
 
   void _snack(String msg) {
     if (!mounted) return;
-    // TODO: route to the matching Events alert-card flow (Heat / Insemination /
-    // Pregnancy / vet request) — cross-screen navigation deferred.
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('${FS.t(_lang, 'cowActions')}: $msg'), duration: const Duration(seconds: 1)),
     );
