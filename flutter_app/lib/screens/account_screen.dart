@@ -916,7 +916,7 @@ class _Hero extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm,
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(14)),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.18), blurRadius: 28, offset: const Offset(0, 12))],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 28, offset: const Offset(0, 12))],
       ),
       child: Text(title, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: isDark ? Colors.white : VanixColors.textPrimary)),
     );
@@ -937,7 +937,7 @@ class _HeroBack extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm,
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(14)),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.18), blurRadius: 28, offset: const Offset(0, 12))],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 28, offset: const Offset(0, 12))],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

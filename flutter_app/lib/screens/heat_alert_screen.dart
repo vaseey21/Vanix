@@ -105,12 +105,12 @@ class _HeatAlertScreenState extends State<HeatAlertScreen> {
                       child: Container(
                         width: 32,
                         height: 32,
-                        decoration: BoxDecoration(color: widget.isDark ? Colors.white.withOpacity(0.14) : Colors.black.withOpacity(0.08), shape: BoxShape.circle),
+                        decoration: BoxDecoration(color: widget.isDark ? Colors.white.withValues(alpha: 0.14) : Colors.black.withValues(alpha: 0.08), shape: BoxShape.circle),
                         alignment: Alignment.center,
                         child: Icon(Icons.close, color: widget.isDark ? Colors.white : VanixColors.textPrimary, size: 16),
                       ),
                     ),
-                    Text('${_index + 1} of ${_kAlerts.length}', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: widget.isDark ? Colors.white.withOpacity(0.75) : VanixColors.textHint)),
+                    Text('${_index + 1} of ${_kAlerts.length}', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: widget.isDark ? Colors.white.withValues(alpha: 0.75) : VanixColors.textHint)),
                   ],
                 ),
               ),
@@ -175,7 +175,7 @@ class _ArrowButton extends StatelessWidget {
       child: Container(
         width: 32,
         height: 32,
-        decoration: BoxDecoration(color: isDark ? Colors.white.withOpacity(0.14) : Colors.black.withOpacity(0.08), shape: BoxShape.circle),
+        decoration: BoxDecoration(color: isDark ? Colors.white.withValues(alpha: 0.14) : Colors.black.withValues(alpha: 0.08), shape: BoxShape.circle),
         alignment: Alignment.center,
         child: Icon(icon, color: isDark ? Colors.white : VanixColors.textPrimary, size: 20),
       ),
@@ -203,7 +203,7 @@ class _AlertCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-          Text('${data.farm} · detected ${data.time}', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: isDark ? Colors.white.withOpacity(0.75) : VanixColors.textHint)),
+          Text('${data.farm} · detected ${data.time}', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: isDark ? Colors.white.withValues(alpha: 0.75) : VanixColors.textHint)),
           const SizedBox(height: 12),
           Container(
             width: 84,
@@ -215,7 +215,7 @@ class _AlertCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text('Heat cycle detected — ${data.name}', textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: isDark ? Colors.white : VanixColors.textPrimary)),
           const SizedBox(height: 6),
-          Text(data.reason, textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: isDark ? Colors.white.withOpacity(0.75) : VanixColors.textHint, height: 1.6)),
+          Text(data.reason, textAlign: TextAlign.center, style: TextStyle(fontSize: 12, color: isDark ? Colors.white.withValues(alpha: 0.75) : VanixColors.textHint, height: 1.6)),
           const SizedBox(height: 12),
           GraphPanel(
             isDark: isDark,
@@ -228,8 +228,8 @@ class _AlertCard extends StatelessWidget {
             footer: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('${data.temps.reduce((a, b) => a < b ? a : b).toStringAsFixed(1)}°C', style: TextStyle(fontSize: 10, color: isDark ? Colors.white.withOpacity(0.6) : VanixColors.textHint)),
-                Text('${data.temps.reduce((a, b) => a > b ? a : b).toStringAsFixed(1)}°C', style: TextStyle(fontSize: 10, color: isDark ? Colors.white.withOpacity(0.6) : VanixColors.textHint)),
+                Text('${data.temps.reduce((a, b) => a < b ? a : b).toStringAsFixed(1)}°C', style: TextStyle(fontSize: 10, color: isDark ? Colors.white.withValues(alpha: 0.6) : VanixColors.textHint)),
+                Text('${data.temps.reduce((a, b) => a > b ? a : b).toStringAsFixed(1)}°C', style: TextStyle(fontSize: 10, color: isDark ? Colors.white.withValues(alpha: 0.6) : VanixColors.textHint)),
               ],
             ),
           ),
@@ -263,7 +263,7 @@ class _AlertCard extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
-                style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48), side: BorderSide(color: isDark ? Colors.white.withOpacity(0.4) : VanixColors.border), foregroundColor: isDark ? Colors.white : VanixColors.textPrimary),
+                style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48), side: BorderSide(color: isDark ? Colors.white.withValues(alpha: 0.4) : VanixColors.border), foregroundColor: isDark ? Colors.white : VanixColors.textPrimary),
                 onPressed: onNo,
                 child: const Text('No'),
               ),

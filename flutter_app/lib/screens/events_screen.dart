@@ -63,9 +63,9 @@ class _HeatWindowBar extends StatelessWidget {
                   child: Row(
                     children: [
                       const Spacer(flex: 25),
-                      Container(width: 1, color: Colors.black.withOpacity(0.18)),
+                      Container(width: 1, color: Colors.black.withValues(alpha: 0.18)),
                       const Spacer(flex: 50),
-                      Container(width: 1, color: Colors.black.withOpacity(0.18)),
+                      Container(width: 1, color: Colors.black.withValues(alpha: 0.18)),
                       const Spacer(flex: 25),
                     ],
                   ),
@@ -315,7 +315,7 @@ class _EventsScreenState extends State<EventsScreen> {
               children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
-                  decoration: BoxDecoration(color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm, boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.18), blurRadius: 28, offset: const Offset(0, 12))]),
+                  decoration: BoxDecoration(color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm, boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 28, offset: const Offset(0, 12))]),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -1880,7 +1880,7 @@ class _ActionCard extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.black.withOpacity(0.45), Colors.transparent, Colors.black.withOpacity(0.7)],
+                colors: [Colors.black.withValues(alpha: 0.45), Colors.transparent, Colors.black.withValues(alpha: 0.7)],
                 stops: const [0.0, 0.5, 1.0],
               ),
             ),
@@ -2164,7 +2164,7 @@ class _HistoryRow extends StatelessWidget {
                 const SizedBox(height: 5),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-                  decoration: BoxDecoration(color: stageColor.withOpacity(0.12), border: Border.all(color: stageColor), borderRadius: BorderRadius.circular(9)),
+                  decoration: BoxDecoration(color: stageColor.withValues(alpha: 0.12), border: Border.all(color: stageColor), borderRadius: BorderRadius.circular(9)),
                   child: Text(stage, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: stageColor)),
                 ),
                 const SizedBox(height: 4),

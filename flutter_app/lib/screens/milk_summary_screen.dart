@@ -236,7 +236,7 @@ class _TrendPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final lineColor = isDark ? VanixColors.greenDeep : VanixColors.greenInk;
-    final gridColor = (isDark ? Colors.white : Colors.black).withOpacity(0.08);
+    final gridColor = (isDark ? Colors.white : Colors.black).withValues(alpha: 0.08);
     final max = values.reduce((a, b) => a > b ? a : b);
     final min = values.reduce((a, b) => a < b ? a : b);
     final range = (max - min) == 0 ? 1 : (max - min);
@@ -271,7 +271,7 @@ class _TrendPainter extends CustomPainter {
     fillPath.lineTo(pointAt(values.length - 1).dx, chartHeight);
     fillPath.close();
 
-    canvas.drawPath(fillPath, Paint()..color = lineColor.withOpacity(0.10)..style = PaintingStyle.fill);
+    canvas.drawPath(fillPath, Paint()..color = lineColor.withValues(alpha: 0.10)..style = PaintingStyle.fill);
     canvas.drawPath(path, Paint()..color = lineColor..strokeWidth = 2..style = PaintingStyle.stroke..strokeCap = StrokeCap.round..strokeJoin = StrokeJoin.round);
 
     final maxIdx = values.indexOf(max);
@@ -285,7 +285,7 @@ class _TrendPainter extends CustomPainter {
 
     if (tooltipIndex != null) {
       final p = pointAt(tooltipIndex!);
-      canvas.drawLine(Offset(p.dx, 0), Offset(p.dx, chartHeight), Paint()..color = lineColor.withOpacity(0.3)..strokeWidth = 1);
+      canvas.drawLine(Offset(p.dx, 0), Offset(p.dx, chartHeight), Paint()..color = lineColor.withValues(alpha: 0.3)..strokeWidth = 1);
     }
   }
 

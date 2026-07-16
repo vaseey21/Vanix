@@ -137,7 +137,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
               const SizedBox(height: 16),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                tileColor: VanixColors.bgWarm.withOpacity(isDark ? 0.06 : 1),
+                tileColor: VanixColors.bgWarm.withValues(alpha: isDark ? 0.06 : 1),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 leading: const Icon(Icons.edit_outlined),
                 title: const Text('Edit entry'),
@@ -149,7 +149,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
               const SizedBox(height: 8),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                tileColor: VanixColors.dangerBg.withOpacity(isDark ? 0.10 : 1),
+                tileColor: VanixColors.dangerBg.withValues(alpha: isDark ? 0.10 : 1),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 leading: const Icon(Icons.delete_outline, color: VanixColors.danger),
                 title: const Text('Delete entry', style: TextStyle(color: VanixColors.danger)),
@@ -188,7 +188,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
               children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(16, 18, 16, 20),
-                  decoration: BoxDecoration(color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm, boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.18), blurRadius: 28, offset: const Offset(0, 12))]),
+                  decoration: BoxDecoration(color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm, boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 28, offset: const Offset(0, 12))]),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

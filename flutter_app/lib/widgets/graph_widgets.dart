@@ -18,14 +18,14 @@ class GraphPanel extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: isDark ? Colors.white.withOpacity(0.06) : VanixColors.bgCard,
+        color: isDark ? Colors.white.withValues(alpha: 0.06) : VanixColors.bgCard,
         border: isDark ? null : Border.all(color: VanixColors.border),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.6, color: isDark ? Colors.white.withOpacity(0.6) : VanixColors.textHint)),
+          Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.6, color: isDark ? Colors.white.withValues(alpha: 0.6) : VanixColors.textHint)),
           const SizedBox(height: 4),
           child,
           if (footer != null) footer!,

@@ -91,7 +91,7 @@ class _VanixBottomNavState extends State<VanixBottomNav> with SingleTickerProvid
               color: barColor,
               borderRadius: BorderRadius.circular(36),
               border: Border.all(color: borderColor),
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.20), blurRadius: 36, offset: const Offset(0, 14))],
+              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.20), blurRadius: 36, offset: const Offset(0, 14))],
             ),
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -123,7 +123,7 @@ class _VanixBottomNavState extends State<VanixBottomNav> with SingleTickerProvid
                             decoration: BoxDecoration(
                               color: capsuleColor,
                               borderRadius: BorderRadius.circular(28),
-                              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: 14, offset: const Offset(0, 4))],
+                              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.10), blurRadius: 14, offset: const Offset(0, 4))],
                             ),
                           ),
                         ),

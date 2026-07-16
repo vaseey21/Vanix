@@ -422,15 +422,15 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
-          Expanded(child: _ovStatCard(Icons.calendar_today_outlined, '19 Mar', 'ovLastHeat', VanixColors.warning, VanixColors.warning.withOpacity(0.14), corner: Icons.trending_up)),
+          Expanded(child: _ovStatCard(Icons.calendar_today_outlined, '19 Mar', 'ovLastHeat', VanixColors.warning, VanixColors.warning.withValues(alpha: 0.14), corner: Icons.trending_up)),
           const SizedBox(width: VanixSpacing.sm),
           Expanded(child: _ovStatCard(Icons.calendar_today_outlined, '14 Apr', 'ovNextHeat', VanixColors.greenInk, VanixColors.activeBg, corner: Icons.calendar_month_outlined)),
         ]),
         const SizedBox(height: VanixSpacing.sm),
         Row(children: [
-          Expanded(child: _ovStatCard(Icons.device_thermostat, '18 Jun', 'ovLastSpike', VanixColors.danger, VanixColors.danger.withOpacity(0.12), corner: Icons.trending_up)),
+          Expanded(child: _ovStatCard(Icons.device_thermostat, '18 Jun', 'ovLastSpike', VanixColors.danger, VanixColors.danger.withValues(alpha: 0.12), corner: Icons.trending_up)),
           const SizedBox(width: VanixSpacing.sm),
-          Expanded(child: _ovStatCard(Icons.pets, '1', 'ovNumCalving', VanixColors.accentBlue, VanixColors.accentBlue.withOpacity(0.12), corner: Icons.pets)),
+          Expanded(child: _ovStatCard(Icons.pets, '1', 'ovNumCalving', VanixColors.accentBlue, VanixColors.accentBlue.withValues(alpha: 0.12), corner: Icons.pets)),
         ]),
         const SizedBox(height: VanixSpacing.xl),
         _sectionLabel('tempWord'),
@@ -482,7 +482,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
                     decoration: BoxDecoration(color: tint, borderRadius: BorderRadius.circular(11)),
                     child: Icon(icon, size: 18, color: accent),
                   ),
-                  if (corner != null) Icon(corner, size: 18, color: accent.withOpacity(0.5)),
+                  if (corner != null) Icon(corner, size: 18, color: accent.withValues(alpha: 0.5)),
                 ],
               ),
               const SizedBox(height: VanixSpacing.md),
@@ -570,9 +570,9 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   Widget _activityCard() {
     final acts = [
       (Icons.pets, '210', 'actRumination', VanixColors.greenInk, VanixColors.activeBg),
-      (Icons.restaurant, '268', 'actFeeding', VanixColors.warning, VanixColors.warning.withOpacity(0.14)),
-      (Icons.directions_walk, '96', 'actStanding', VanixColors.accentBlue, VanixColors.accentBlue.withOpacity(0.12)),
-      (Icons.bedtime_outlined, '512', 'actResting', VanixColors.accentViolet, VanixColors.accentViolet.withOpacity(0.12)),
+      (Icons.restaurant, '268', 'actFeeding', VanixColors.warning, VanixColors.warning.withValues(alpha: 0.14)),
+      (Icons.directions_walk, '96', 'actStanding', VanixColors.accentBlue, VanixColors.accentBlue.withValues(alpha: 0.12)),
+      (Icons.bedtime_outlined, '512', 'actResting', VanixColors.accentViolet, VanixColors.accentViolet.withValues(alpha: 0.12)),
     ];
     final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
     return _card(
@@ -693,7 +693,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   }
 
   Widget _sessionPill(bool morning) {
-    final bg = morning ? VanixColors.warning.withOpacity(0.16) : VanixColors.accentBlue.withOpacity(0.12);
+    final bg = morning ? VanixColors.warning.withValues(alpha: 0.16) : VanixColors.accentBlue.withValues(alpha: 0.12);
     final fg = morning ? VanixColors.warningInk : VanixColors.accentBlue;
     return Container(
       constraints: const BoxConstraints(minWidth: 74),
@@ -1028,7 +1028,7 @@ class _WeeklyPainter extends CustomPainter {
         ..shader = LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [VanixColors.greenDeep.withOpacity(0.28), VanixColors.greenDeep.withOpacity(0)],
+          colors: [VanixColors.greenDeep.withValues(alpha: 0.28), VanixColors.greenDeep.withValues(alpha: 0)],
         ).createShader(Rect.fromLTWH(0, 0, size.width, chartHeight)),
     );
     canvas.drawPath(
@@ -1073,7 +1073,7 @@ class _TempPainter extends CustomPainter {
     // fever threshold guide at 39°C
     final guideY = yFor(39);
     final guidePaint = Paint()
-      ..color = VanixColors.danger.withOpacity(0.5)
+      ..color = VanixColors.danger.withValues(alpha: 0.5)
       ..strokeWidth = 1;
     for (double x = 0; x < size.width; x += 6) {
       canvas.drawLine(Offset(x, guideY), Offset(x + 3, guideY), guidePaint);

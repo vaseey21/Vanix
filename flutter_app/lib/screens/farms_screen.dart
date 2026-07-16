@@ -197,7 +197,7 @@ class _FarmsScreenState extends State<FarmsScreen> with SingleTickerProviderStat
       decoration: BoxDecoration(
         color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm,
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(isDark ? 0.35 : 0.10), blurRadius: 24, offset: const Offset(0, 10))],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: isDark ? 0.35 : 0.10), blurRadius: 24, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -533,7 +533,7 @@ class _Chip extends StatelessWidget {
             Text(label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 9, fontWeight: FontWeight.w600, color: ink.withOpacity(0.85))),
+                style: TextStyle(fontSize: 9, fontWeight: FontWeight.w600, color: ink.withValues(alpha: 0.85))),
           ],
         ),
       ),

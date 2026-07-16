@@ -155,7 +155,7 @@ class CardDetailScreen extends StatelessWidget {
                         child: Center(
                           child: Text(
                             cowBreed != null ? '$cowName · $cowBreed' : cowName!,
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? Colors.white.withOpacity(0.85) : VanixColors.textPrimary),
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? Colors.white.withValues(alpha: 0.85) : VanixColors.textPrimary),
                           ),
                         ),
                       ),
@@ -165,7 +165,7 @@ class CardDetailScreen extends StatelessWidget {
                     ],
                     if (manager != null) Padding(padding: const EdgeInsets.only(top: 4), child: Text('Manager: $manager', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: VanixColors.textHint))),
                     if (meta != null) Padding(padding: const EdgeInsets.only(top: 4), child: Text(meta!, style: const TextStyle(fontSize: 12, color: VanixColors.textHint))),
-                    Padding(padding: const EdgeInsets.only(top: 10), child: Text(sub, style: TextStyle(fontSize: 14, height: 1.6, color: isDark ? Colors.white.withOpacity(0.85) : VanixColors.textPrimary))),
+                    Padding(padding: const EdgeInsets.only(top: 10), child: Text(sub, style: TextStyle(fontSize: 14, height: 1.6, color: isDark ? Colors.white.withValues(alpha: 0.85) : VanixColors.textPrimary))),
                     const SizedBox(height: 16),
                     GraphPanel(
                       isDark: isDark,
@@ -178,7 +178,7 @@ class CardDetailScreen extends StatelessWidget {
                       footer: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('${temps.reduce((a, b) => a < b ? a : b).toStringAsFixed(1)}°C baseline', style: TextStyle(fontSize: 10, color: isDark ? Colors.white.withOpacity(0.6) : VanixColors.textHint)),
+                          Text('${temps.reduce((a, b) => a < b ? a : b).toStringAsFixed(1)}°C baseline', style: TextStyle(fontSize: 10, color: isDark ? Colors.white.withValues(alpha: 0.6) : VanixColors.textHint)),
                           Text('${temps.last.toStringAsFixed(1)}°C today', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: VanixColors.danger)),
                         ],
                       ),

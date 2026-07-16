@@ -181,7 +181,7 @@ class _HeroBackground extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFF203A2C), Color(0xFF0E1A14)]),
       ),
-      child: Container(color: Colors.black.withOpacity(0.45)),
+      child: Container(color: Colors.black.withValues(alpha: 0.45)),
     );
   }
 }
@@ -201,9 +201,9 @@ class _ThemeToggle extends StatelessWidget {
         height: 30,
         padding: const EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration(
-          color: isDark ? Colors.black.withOpacity(0.60) : Colors.black.withOpacity(0.28),
+          color: isDark ? Colors.black.withValues(alpha: 0.60) : Colors.black.withValues(alpha: 0.28),
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: isDark ? Colors.white.withOpacity(0.20) : Colors.white.withOpacity(0.35)),
+          border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.20) : Colors.white.withValues(alpha: 0.35)),
         ),
         child: AnimatedAlign(
           duration: const Duration(milliseconds: 350),
@@ -215,7 +215,7 @@ class _ThemeToggle extends StatelessWidget {
             decoration: BoxDecoration(
               color: isDark ? const Color(0xFF333333) : Colors.white,
               shape: BoxShape.circle,
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.30), blurRadius: 6, offset: const Offset(0, 2))],
+              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.30), blurRadius: 6, offset: const Offset(0, 2))],
             ),
             child: Icon(isDark ? Icons.dark_mode : Icons.wb_sunny_outlined, size: 13, color: isDark ? const Color(0xFFF5F5F5) : const Color(0xFF555555)),
           ),
@@ -242,9 +242,9 @@ class _DisplayModeToggle extends StatelessWidget {
         height: 30,
         padding: const EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.28),
+          color: Colors.black.withValues(alpha: 0.28),
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.white.withOpacity(0.35)),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.35)),
         ),
         child: AnimatedAlign(
           duration: const Duration(milliseconds: 350),
@@ -256,7 +256,7 @@ class _DisplayModeToggle extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.30), blurRadius: 6, offset: const Offset(0, 2))],
+              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.30), blurRadius: 6, offset: const Offset(0, 2))],
             ),
             child: Icon(imageMode ? Icons.image_outlined : Icons.notes, size: 13, color: const Color(0xFF555555)),
           ),
@@ -278,10 +278,10 @@ class _SheetContainer extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(32, 0, 32, 40),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0x9E101010) : Colors.white.withOpacity(0.72),
+        color: isDark ? const Color(0x9E101010) : Colors.white.withValues(alpha: 0.72),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        border: Border(top: BorderSide(color: Colors.white.withOpacity(isDark ? 0.10 : 0.55))),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.18), blurRadius: 32, offset: const Offset(0, -8))],
+        border: Border(top: BorderSide(color: Colors.white.withValues(alpha: isDark ? 0.10 : 0.55))),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 32, offset: const Offset(0, -8))],
       ),
       child: SafeArea(
         top: false,
@@ -508,7 +508,7 @@ class _PillButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
           border: Border.all(color: isDark ? const Color(0x4DFFFFFF) : VanixColors.border),
-          color: isDark ? Colors.black.withOpacity(0.30) : Colors.white.withOpacity(0.55),
+          color: isDark ? Colors.black.withValues(alpha: 0.30) : Colors.white.withValues(alpha: 0.55),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(

@@ -189,7 +189,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
       decoration: BoxDecoration(
         color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm,
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(14)),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.18), blurRadius: 28, offset: const Offset(0, 12))],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 28, offset: const Offset(0, 12))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,7 +292,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
         decoration: BoxDecoration(
-          color: isDark ? VanixColors.dangerBg.withOpacity(0.14) : VanixColors.dangerBg,
+          color: isDark ? VanixColors.dangerBg.withValues(alpha: 0.14) : VanixColors.dangerBg,
           border: Border.all(color: VanixColors.danger, width: _alertsOnly ? 2 : 1),
           borderRadius: BorderRadius.circular(16),
         ),
