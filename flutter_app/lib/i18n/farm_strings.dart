@@ -138,6 +138,9 @@ class FS {
       'fpHeat': 'Heat detected', 'fpHeatSub': 'Confirm & log insemination', 'fpFever': 'Fever alert', 'fpFeverSub': 'High temperature — call a vet',
       'fpDelivery': 'Delivery due', 'fpDeliverySub': 'Confirm the calving outcome', 'fpVetAppt': 'Vet appointment', 'fpVetApptSub': 'Today 4:30 PM — Dr. Sharma',
       'fpInsem': 'Insemination window', 'fpInsemSub': '9h left — optimal window', 'fpMilkLog': 'Evening milk logging', 'fpMilkLogSub': 'Due after 5:00 PM',
+      // Milk-edit approval
+      'mpPendingApproval': 'Pending owner approval', 'mpEditTo': 'Edit to', 'mpDeleteEntry': 'Delete entry',
+      'mpApprove': 'Approve', 'mpUpdated': 'Updated', 'mpBy': 'By',
     },
     'hi': {
       'farmsTitle': 'खेत', 'farmsSubtitle': 'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें',
