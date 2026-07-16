@@ -943,7 +943,7 @@ class _HeroBack extends StatelessWidget {
   Widget build(BuildContext context) {
     final textColor = isDark ? Colors.white : VanixColors.textPrimary;
     return Container(
-      padding: const EdgeInsets.fromLTRB(10, 18, 16, 18),
+      padding: const EdgeInsetsDirectional.fromSTEB(16, 18, 16, 18),
       decoration: BoxDecoration(
         color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm,
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(14)),
@@ -952,13 +952,14 @@ class _HeroBack extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          InkWell(
-            onTap: () => Navigator.of(context).pop(),
-            customBorder: const CircleBorder(),
-            child: SizedBox(
-              width: 44,
-              height: 44,
-              child: Icon(Icons.chevron_left, size: 24, color: textColor),
+          SizedBox(
+            width: 48,
+            height: 48,
+            child: IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              padding: EdgeInsets.zero,
+              alignment: AlignmentDirectional.centerStart,
+              icon: Icon(Icons.chevron_left, size: 24, color: textColor),
             ),
           ),
           Expanded(
