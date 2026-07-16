@@ -49,7 +49,7 @@ You'll need to add the actual font files before it runs cleanly (see
 | Cow profile v3 — underline tabs, borderless shadowed tiles, kebab Delete-last, colourful Overview v2 (stat cards + green→orange→red temperature line + activity + reminders) | ✅ Ported — `cow_profile_screen.dart` |
 | Cow profile Milk Data tab (green area-fill 8-week graph, accent Highest/Lowest tiles, sun/moon session pills, session history) | ✅ Ported — `cow_profile_screen.dart` (`_buildMilkData`) |
 | Add Cattle page (photo, type, breed/gender, age, status, belt/MAC, cow-history w/ lactation stepper) | ✅ Ported — `add_cattle_screen.dart`, opened by the Farm Detail + FAB |
-| Cow actions sheet — Add vet log / Add Delivery rows added; deeper multi-step flows (reason note, vet picker → schedule/type/log) still simplified to a snackbar | 🚧 Partial |
+| Cow actions sheet — full multi-step flow engine (change status + reason, request vet visit + schedule, add vet log, Heat w/ date+time, Insemination vet→type→log, Pregnancy w/ date, Delivery yes/no→vet→log) | ✅ Ported — `_ActionsSheet` in `cow_profile_screen.dart` |
 | Events inputs-as-sheets (vet picker callback sheet + generic form sheet for Fever/Gestation/P0 flows) | ❌ Pending — HTML done |
 | Farmer persona (stripped views) | ❌ Not designed in HTML yet — nothing to port |
 
