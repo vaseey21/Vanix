@@ -84,7 +84,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!_otpFilled) return;
     _timer?.cancel();
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => DashboardScreen(appState: widget.appState)),
+      MaterialPageRoute(
+        builder: (_) => widget.appState.isFarmer
+            ? FarmerDashboardScreen(appState: widget.appState)
+            : DashboardScreen(appState: widget.appState),
+      ),
     );
   }
 
