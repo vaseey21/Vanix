@@ -445,23 +445,75 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // ── Today's schedule ──
-  Widget _todaySchedule() {
+  // ── Schedule with Today / This week tabs ──
+  Widget _scheduleTabs() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(_t('dashTodaySchedule').toUpperCase(), style: _secLbl),
-        const SizedBox(height: 10),
-        Container(
-          decoration: _cardDeco(),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(children: [
-            _scheduleRow('11:00 AM', 'dashVaccDrive', sub: 'dashStartsIn', barColor: VanixColors.greenDeep, divider: true),
-            _scheduleRow('4:30 PM', 'dashVetVisit', barColor: _border, divider: true),
-            _scheduleRow('6:00 PM', 'dashMilkLogging', barColor: _border, divider: false),
-          ]),
-        ),
+        Row(children: [
+          _schTabBtn('today', 'dashToday'),
+          const SizedBox(width: 8),
+          _schTabBtn('week', 'dashThisWeek'),
+        ]),
+        const SizedBox(height: 12),
+        if (_schTab == 'today')
+          Container(
+            decoration: _cardDeco(),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(children: [
+              _scheduleRow('11:00 AM', 'dashVaccDrive', sub: 'dashStartsIn', barColor: VanixColors.greenDeep, divider: true),
+              _scheduleRow('4:30 PM', 'dashVetVisit', barColor: _border, divider: true),
+              _scheduleRow('6:00 PM', 'dashMilkLogging', barColor: _border, divider: false),
+            ]),
+          )
+        else
+          Container(
+            decoration: _cardDeco(),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(children: [
+                          TextSpan(text: _t('dashFmd'), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
+                          TextSpan(text: ' — 5 ${_t('dashCows')}, Green Villa', style: const TextStyle(fontSize: 14, color: VanixColors.textHint)),
+                        ]),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    const Text('5d', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: VanixColors.warning)),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(_t('dashRemindersNote'), style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: VanixColors.textHint)),
+              ],
+            ),
+          ),
       ],
+    );
+  }
+
+  Widget _schTabBtn(String tab, String labelKey) {
+    final on = _schTab == tab;
+    return InkWell(
+      onTap: () => setState(() => _schTab = tab),
+      borderRadius: BorderRadius.circular(17),
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 34),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: on ? VanixColors.greenInk : _cardBg,
+          borderRadius: BorderRadius.circular(17),
+          border: Border.all(color: on ? VanixColors.greenInk : _border),
+        ),
+        child: Text(_t(labelKey),
+            style: TextStyle(fontSize: 13, fontWeight: on ? FontWeight.w600 : FontWeight.w500, color: on ? Colors.white : _text1)),
+      ),
     );
   }
 
