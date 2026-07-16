@@ -1012,22 +1012,11 @@
             <!-- ── FARM-OWNER DASHBOARD (Screen 03) ── -->
             <div id="dash-scroll" style="flex:1; overflow-y:auto; padding:0 0 128px;">
 
-              <!-- Header -->
+              <!-- Header (no bell/avatar — profile lives in the bottom nav) -->
               <div style="padding:22px 16px 6px;">
-                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
-                  <div style="min-width:0;">
-                    <p data-k="dashGreeting" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0;">Good morning,</p>
-                    <h1 style="font-size:24px; font-weight:700; color:var(--text1); margin:3px 0 0; line-height:1.15;">James</h1>
-                    <p id="dash-date" class="en" style="font-size:13px; color:var(--text2); margin:3px 0 0;">Thursday, 16 July</p>
-                  </div>
-                  <div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">
-                    <button id="dash-bell" title="Notifications" style="position:relative; width:44px; height:44px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0;">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-                      <span class="en" style="position:absolute; top:-4px; inset-inline-end:-4px; min-width:18px; height:18px; border-radius:9px; background:var(--danger); color:#FFFFFF; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; padding:0 4px; border:2px solid var(--bgwarm);">3</span>
-                    </button>
-                    <div style="width:44px; height:44px; border-radius:50%; background:var(--dark1); color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; flex-shrink:0;">JR</div>
-                  </div>
-                </div>
+                <p data-k="dashGreeting" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0;">Good morning,</p>
+                <h1 style="font-size:24px; font-weight:700; color:var(--text1); margin:3px 0 0; line-height:1.15;">James</h1>
+                <p id="dash-date" class="en" style="font-size:13px; color:var(--text2); margin:3px 0 0;">Thursday, 16 July</p>
                 <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:16px;">
                   <button id="dash-farmsel" style="display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 14px; border-radius:19px; border:1px solid var(--border); background:var(--bgcard); font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span data-k="dashAllFarms">All Farms</span><span class="en">&nbsp;(3)</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
                   <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
@@ -1041,7 +1030,10 @@
               <div style="padding:8px 16px 0;">
                 <div style="display:flex; gap:12px;">
                   <div class="m-stat-card" style="flex:1; min-width:0; background:var(--bgcard); border-radius:18px; padding:15px 14px;"><p class="en" style="font-size:30px; font-weight:700; color:var(--text1); margin:0; line-height:1;">77</p><p data-k="statTotalCattle" style="font-size:12px; font-weight:600; color:var(--text1); margin:9px 0 0;">Total Cattle</p><p style="font-size:11px; color:var(--greenink); font-weight:600; margin:3px 0 0;"><span class="en">+3 </span><span data-k="dashAddedToday">added today</span></p></div>
-                  <div class="m-stat-card" style="flex:1; min-width:0; background:var(--bgcard); border-radius:18px; padding:15px 14px;"><p class="en" style="font-size:30px; font-weight:700; color:var(--text1); margin:0; line-height:1;">14</p><p data-k="dashActiveAlerts" style="font-size:12px; font-weight:600; color:var(--text1); margin:9px 0 0;">Active Alerts</p><p style="font-size:11px; color:var(--danger); font-weight:600; margin:3px 0 0;"><span class="en">2 </span><span data-k="criticalWord">critical</span></p></div>
+                  <div class="m-stat-card" style="flex:1; min-width:0; position:relative; background:var(--bgcard); border-radius:18px; padding:15px 14px;">
+                    <button id="dash-alerts-info" title="Details" style="position:absolute; top:10px; inset-inline-end:10px; width:26px; height:26px; border-radius:50%; border:none; background:transparent; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></button>
+                    <p class="en" style="font-size:30px; font-weight:700; color:var(--text1); margin:0; line-height:1;">14</p><p data-k="statUnactionedAlerts" style="font-size:12px; font-weight:600; color:var(--text1); margin:9px 0 0;">Unactioned Alerts</p><p style="font-size:11px; color:var(--danger); font-weight:600; margin:3px 0 0;"><span class="en">2 </span><span data-k="criticalWord">critical</span></p>
+                  </div>
                 </div>
                 <div style="display:flex; gap:12px; margin-top:12px;">
                   <div class="m-stat-card" style="flex:1; min-width:0; background:var(--bgcard); border-radius:18px; padding:15px 14px;"><p class="en" style="font-size:30px; font-weight:700; color:var(--text1); margin:0; line-height:1;">8</p><p data-k="dashPendingTasks" style="font-size:12px; font-weight:600; color:var(--text1); margin:9px 0 0;">Pending Tasks</p><p style="font-size:11px; color:var(--text2); font-weight:500; margin:3px 0 0;"><span class="en">5 </span><span data-k="dashDueToday">due today</span><span class="en"> · 3 </span><span data-k="dashOverdue">overdue</span></p></div>
@@ -1049,34 +1041,28 @@
                 </div>
               </div>
 
-              <!-- Action Alerts -->
-              <div style="padding:16px 16px 0;">
-                <div style="background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);">
-                  <div style="display:flex; align-items:center; justify-content:space-between;">
-                    <p data-k="dashActionAlerts" style="font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0;">Action Alerts</p>
-                    <p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;"><span class="en">14</span> <span style="font-size:12px; font-weight:600; color:var(--danger);"><span class="en">· 2 </span><span data-k="criticalWord">critical</span></span></p>
+              <!-- Schedule with Today / This week tabs -->
+              <div style="padding:20px 16px 0;">
+                <div style="display:flex; gap:8px; margin-bottom:12px;">
+                  <button class="dash-sch-tab on" data-tab="today" data-k="dashToday" style="min-height:34px; padding:0 16px; border-radius:17px; border:1px solid var(--greenink); background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Today</button>
+                  <button class="dash-sch-tab" data-tab="week" data-k="dashThisWeek" style="min-height:34px; padding:0 16px; border-radius:17px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">This Week</button>
+                </div>
+                <div id="dash-sch-today" style="background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); padding:4px 16px;">
+                  <div style="display:flex; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid var(--divider);"><span class="en" style="font-size:13px; font-weight:700; color:var(--text1); width:64px; flex-shrink:0;">11:00 AM</span><div style="width:3px; align-self:stretch; background:var(--greendeep); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="dashVaccDrive">Vaccination Drive</p><p class="en" style="font-size:11px; color:var(--greenink); margin:2px 0 0; font-weight:600;">Starts in 15 mins</p></div></div>
+                  <div style="display:flex; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid var(--divider);"><span class="en" style="font-size:13px; font-weight:700; color:var(--text1); width:64px; flex-shrink:0;">4:30 PM</span><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px;"></div><div style="flex:1;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="dashVetVisit">Vet Visit</p></div></div>
+                  <div style="display:flex; align-items:center; gap:14px; padding:12px 0;"><span class="en" style="font-size:13px; font-weight:700; color:var(--text1); width:64px; flex-shrink:0;">6:00 PM</span><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px;"></div><div style="flex:1;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="dashMilkLogging">Evening Milk Logging</p></div></div>
+                </div>
+                <div id="dash-sch-week" style="display:none; background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);">
+                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px;">
+                    <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;"><span data-k="dashFmd">FMD vaccination</span> <span style="font-weight:400; color:var(--text2);">— <span class="en">5</span> <span data-k="dashCows">cows</span>, Green Villa</span></p>
+                    <span class="en" style="font-size:13px; font-weight:700; color:var(--warning); flex-shrink:0;">5<span data-k="dashDays" style="font-weight:600;">d</span></span>
                   </div>
-                  <div style="height:1px; background:var(--divider); margin:12px 0;"></div>
-                  <div style="display:flex; justify-content:space-between; font-size:14px; color:var(--text1); margin-bottom:9px;"><span>Sunrise Dairy</span><span style="color:var(--text2);"><span class="en">9</span> <span style="color:var(--danger); font-weight:600;"><span class="en">· 2 </span><span data-k="criticalWord">critical</span></span></span></div>
-                  <div style="display:flex; justify-content:space-between; font-size:14px; color:var(--text1); margin-bottom:9px;"><span>Green Villa</span><span class="en" style="color:var(--text2);">3</span></div>
-                  <div style="display:flex; justify-content:space-between; font-size:14px; color:var(--text1);"><span>Stones Dairy</span><span class="en" style="color:var(--text2);">2</span></div>
-                  <div style="height:1px; background:var(--divider); margin:12px 0;"></div>
-                  <div id="dash-triage">
-                    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-                      <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Is Kajri unwell? <span style="font-weight:400; color:var(--text2);">— Sunrise</span></p>
-                      <span class="en" style="font-size:12px; color:var(--text2); flex-shrink:0;">2h <span data-k="dashWaiting">waiting</span></span>
-                    </div>
-                    <div style="display:flex; gap:8px; margin-top:10px;">
-                      <button class="dash-triage-btn" data-v="no" style="flex:1; min-height:40px; border-radius:20px; border:1px solid var(--border); background:var(--bgcard); font-size:13px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;" data-k="noWord">No</button>
-                      <button class="dash-triage-btn" data-v="yes" style="flex:1; min-height:40px; border-radius:20px; border:none; background:var(--greenink); font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi); cursor:pointer;" data-k="dashYesFever">Yes, fever</button>
-                    </div>
-                  </div>
-                  <button id="dash-viewevents" style="display:block; width:100%; text-align:center; margin-top:14px; background:transparent; border:none; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;"><span data-k="dashViewEvents">View all in Events</span> &nbsp;&rarr;</button>
+                  <p data-k="dashRemindersNote" style="font-size:11px; color:var(--text2); margin:8px 0 0; font-style:italic;">Items beyond 7 days stay in Events reminders</p>
                 </div>
               </div>
 
               <!-- Two half cards -->
-              <div style="padding:12px 16px 0; display:flex; gap:12px;">
+              <div style="padding:16px 16px 0; display:flex; gap:12px;">
                 <div style="flex:1; background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><p class="en" style="font-size:26px; font-weight:700; color:var(--text1); margin:0;">2</p><p data-k="dashEditsApproval" style="font-size:13px; color:var(--text1); margin:6px 0 0; line-height:1.35;">Edits awaiting your approval</p></div>
                 <div style="flex:1; background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);"><p class="en" style="font-size:26px; font-weight:700; color:var(--warning); margin:0;">3</p><p data-k="dashMilkMissing" style="font-size:13px; color:var(--text1); margin:6px 0 0; line-height:1.35;">Milk sessions missing today</p></div>
               </div>
@@ -1102,47 +1088,52 @@
                 </button>
               </div>
 
-              <!-- Today's Schedule -->
+              <!-- Updates (icon-less: event · details · time) -->
               <div style="padding:20px 16px 0;">
-                <p data-k="dashTodaySchedule" style="font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0; margin-bottom:10px;">Today's Schedule</p>
-                <div style="background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); padding:4px 16px;">
-                  <div style="display:flex; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid var(--divider);"><span class="en" style="font-size:13px; font-weight:700; color:var(--text1); width:64px; flex-shrink:0;">11:00 AM</span><div style="width:3px; align-self:stretch; background:var(--greendeep); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="dashVaccDrive">Vaccination Drive</p><p class="en" style="font-size:11px; color:var(--greenink); margin:2px 0 0; font-weight:600;">Starts in 15 mins</p></div></div>
-                  <div style="display:flex; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid var(--divider);"><span class="en" style="font-size:13px; font-weight:700; color:var(--text1); width:64px; flex-shrink:0;">4:30 PM</span><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px;"></div><div style="flex:1;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="dashVetVisit">Vet Visit</p></div></div>
-                  <div style="display:flex; align-items:center; gap:14px; padding:12px 0;"><span class="en" style="font-size:13px; font-weight:700; color:var(--text1); width:64px; flex-shrink:0;">6:00 PM</span><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px;"></div><div style="flex:1;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="dashMilkLogging">Evening Milk Logging</p></div></div>
-                </div>
-              </div>
-
-              <!-- This Week -->
-              <div style="padding:20px 16px 0;">
-                <p data-k="dashThisWeek" style="font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0; margin-bottom:10px;">This Week</p>
-                <div style="background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);">
-                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px;">
-                    <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;"><span data-k="dashFmd">FMD vaccination</span> <span style="font-weight:400; color:var(--text2);">— <span class="en">5</span> <span data-k="dashCows">cows</span>, Green Villa</span></p>
-                    <span class="en" style="font-size:13px; font-weight:700; color:var(--warning); flex-shrink:0;">5<span data-k="dashDays" style="font-weight:600;">d</span></span>
+                <p data-k="dashUpdates" style="font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0; margin-bottom:10px;">Updates</p>
+                <div style="background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); padding:2px 16px;">
+                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:13px 0; border-bottom:1px solid var(--divider);">
+                    <div style="flex:1; min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Bhoori — <span data-k="dashRecovered">recovered</span></p><p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.4;" data-k="dashFeverCaught">fever caught by collar, treated by Dr. Sharma</p></div>
+                    <span class="en" style="font-size:11px; color:var(--text2); flex-shrink:0; white-space:nowrap;">2d</span>
                   </div>
-                  <p data-k="dashRemindersNote" style="font-size:11px; color:var(--text2); margin:8px 0 0; font-style:italic;">Items beyond 7 days stay in Events reminders</p>
-                </div>
-              </div>
-
-              <!-- Good News -->
-              <div style="padding:20px 16px 0;">
-                <p data-k="dashGoodNews" style="font-size:12px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text2); margin:0; margin-bottom:10px;">Good News</p>
-                <div style="background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);">
-                  <div style="display:flex; align-items:flex-start; gap:11px; padding-bottom:12px; border-bottom:1px solid var(--divider);">
-                    <span style="font-size:17px; flex-shrink:0;">🎉</span>
-                    <div style="flex:1; min-width:0;"><p style="font-size:14px; color:var(--text1); margin:0; line-height:1.4;"><strong>Bhoori</strong> <span data-k="dashRecovered">recovered</span> <span style="color:var(--text2);">— <span data-k="dashFeverCaught">fever caught by collar, treated by Dr. Sharma</span></span></p><p class="en" style="font-size:11px; color:var(--text2); margin:3px 0 0;">2 <span data-k="dashDaysAgo">days ago</span></p></div>
+                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:13px 0; border-bottom:1px solid var(--divider);">
+                    <div style="flex:1; min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Mohini — <span data-k="dashConfPreg">confirmed pregnant</span></p><p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.4;"><span data-k="dashInseminated">Inseminated</span> 18 Sep</p></div>
+                    <span class="en" style="font-size:11px; color:var(--text2); flex-shrink:0; white-space:nowrap;" data-k="dashYesterday">Yesterday</span>
                   </div>
-                  <div style="display:flex; align-items:flex-start; gap:11px; padding:12px 0; border-bottom:1px solid var(--divider);">
-                    <span style="width:8px; height:8px; border-radius:50%; background:var(--greendeep); flex-shrink:0; margin-top:6px;"></span>
-                    <div style="flex:1; min-width:0;"><p style="font-size:14px; color:var(--text1); margin:0; line-height:1.4;"><strong>Mohini</strong> <span data-k="dashConfPreg">confirmed pregnant</span></p><p class="en" style="font-size:11px; color:var(--text2); margin:3px 0 0;"><span data-k="dashInseminated">Inseminated</span> 18 Sep · <span data-k="dashConfYesterday">confirmed yesterday</span></p></div>
-                  </div>
-                  <div style="display:flex; align-items:flex-start; gap:11px; padding-top:12px;">
-                    <span style="width:8px; height:8px; border-radius:50%; background:var(--greendeep); flex-shrink:0; margin-top:6px;"></span>
-                    <div style="flex:1; min-width:0;"><p style="font-size:14px; color:var(--text1); margin:0; line-height:1.4;"><strong>Ganga</strong> <span data-k="dashCalved">calved</span> <span style="color:var(--text2);">— <span data-k="dashHealthyCalf">healthy calf, now in the Milk Log</span></span></p><p class="en" style="font-size:11px; color:var(--text2); margin:3px 0 0;"><span data-k="dashYesterday">Yesterday</span>, 05:40</p></div>
+                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:13px 0;">
+                    <div style="flex:1; min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Ganga — <span data-k="dashCalved">calved</span></p><p style="font-size:12px; color:var(--text2); margin:3px 0 0; line-height:1.4;" data-k="dashHealthyCalf">healthy calf, now in the Milk Log</p></div>
+                    <span class="en" style="font-size:11px; color:var(--text2); flex-shrink:0; white-space:nowrap;">05:40</span>
                   </div>
                 </div>
               </div>
 
+            </div>
+
+            <!-- Unactioned-alerts detail sheet (opened by the info button on the stat card) -->
+            <div id="dash-alerts-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
+            <div id="dash-alerts-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 24px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+              <div style="display:flex; align-items:center; margin-top:10px;">
+                <h3 data-k="statUnactionedAlerts" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Unactioned Alerts</h3>
+                <button id="dash-alerts-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+              </div>
+              <p style="font-size:15px; font-weight:700; color:var(--text1); margin:12px 0 0;"><span class="en">14</span> <span style="font-size:12px; font-weight:600; color:var(--danger);"><span class="en">· 2 </span><span data-k="criticalWord">critical</span></span></p>
+              <div style="height:1px; background:var(--divider); margin:12px 0;"></div>
+              <div style="display:flex; justify-content:space-between; font-size:14px; color:var(--text1); margin-bottom:9px;"><span>Sunrise Dairy</span><span style="color:var(--text2);"><span class="en">9</span> <span style="color:var(--danger); font-weight:600;"><span class="en">· 2 </span><span data-k="criticalWord">critical</span></span></span></div>
+              <div style="display:flex; justify-content:space-between; font-size:14px; color:var(--text1); margin-bottom:9px;"><span>Green Villa</span><span class="en" style="color:var(--text2);">3</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:14px; color:var(--text1);"><span>Stones Dairy</span><span class="en" style="color:var(--text2);">2</span></div>
+              <div style="height:1px; background:var(--divider); margin:12px 0;"></div>
+              <div id="dash-triage">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+                  <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Is Kajri unwell? <span style="font-weight:400; color:var(--text2);">— Sunrise</span></p>
+                  <span class="en" style="font-size:12px; color:var(--text2); flex-shrink:0;">2h <span data-k="dashWaiting">waiting</span></span>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                  <button class="dash-triage-btn" data-v="no" style="flex:1; min-height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bgcard); font-size:13px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;" data-k="noWord">No</button>
+                  <button class="dash-triage-btn" data-v="yes" style="flex:1; min-height:44px; border-radius:22px; border:none; background:var(--greenink); font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi); cursor:pointer;" data-k="dashYesFever">Yes, fever</button>
+                </div>
+              </div>
+              <button id="dash-viewevents" style="display:block; width:100%; min-height:48px; margin-top:14px; background:var(--greenink); border:none; border-radius:24px; font-size:14px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi); cursor:pointer;"><span data-k="dashViewEvents">View all in Events</span> &nbsp;&rarr;</button>
             </div>
 
             <!-- ── BOTTOM NAV — frosted floating bar, active tab = white capsule (Starbucks style) ── -->
@@ -3055,7 +3046,7 @@
                histInsem:'Inseminated \u2014 Mohini', histInsemSub:'Within the 18h window \u2014 pregnancy check set for 3 Jul',
                stageMilking:'MILKING', stageHeatWatch:'HEAT WATCH', stageRecovered:'RECOVERED', stage21Day:'21-DAY WATCH',
                prioP0:'CRITICAL', prioP1:'MEDIUM', prioP2:'MEDIUM', prioP3:'LOW',
-               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters', dashGreeting:'Good morning,', dashAllFarms:'All Farms', dashLive:'Live', dashAddedToday:'added today', dashActiveAlerts:'Active Alerts', dashPendingTasks:'Pending Tasks', dashDueToday:'due today', dashOverdue:'overdue', dashPregnant:'Pregnant', dashDueThisWeek:'due this week', dashActionAlerts:'Action Alerts', dashWaiting:'waiting', dashYesFever:'Yes, fever', dashViewEvents:'View all in Events', dashEditsApproval:'Edits awaiting your approval', dashMilkMissing:'Milk sessions missing today', dashInsemWindow:'insemination window', dashLeft:'left', dashFarmsNeedAction:'Farms needing action', dashOffline:'offline', dashTodaySchedule:"Today's Schedule", dashVaccDrive:'Vaccination Drive', dashVetVisit:'Vet Visit', dashMilkLogging:'Evening Milk Logging', dashThisWeek:'This Week', dashFmd:'FMD vaccination', dashCows:'cows', dashDays:'d', dashRemindersNote:'Items beyond 7 days stay in Events reminders', dashGoodNews:'Good News', dashRecovered:'recovered', dashFeverCaught:'fever caught by collar, treated by Dr. Sharma', dashDaysAgo:'days ago', dashConfPreg:'confirmed pregnant', dashInseminated:'Inseminated', dashConfYesterday:'confirmed yesterday', dashCalved:'calved', dashHealthyCalf:'healthy calf, now in the Milk Log', dashYesterday:'Yesterday', dashTriageDone:'Logged — thanks',
+               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters', dashGreeting:'Good morning,', dashAllFarms:'All Farms', dashLive:'Live', dashAddedToday:'added today', dashActiveAlerts:'Active Alerts', dashPendingTasks:'Pending Tasks', dashDueToday:'due today', dashOverdue:'overdue', dashPregnant:'Pregnant', dashDueThisWeek:'due this week', dashActionAlerts:'Action Alerts', dashWaiting:'waiting', dashYesFever:'Yes, fever', dashViewEvents:'View all in Events', dashEditsApproval:'Edits awaiting your approval', dashMilkMissing:'Milk sessions missing today', dashInsemWindow:'insemination window', dashLeft:'left', dashFarmsNeedAction:'Farms needing action', dashOffline:'offline', dashTodaySchedule:"Today's Schedule", dashVaccDrive:'Vaccination Drive', dashVetVisit:'Vet Visit', dashMilkLogging:'Evening Milk Logging', dashThisWeek:'This Week', dashFmd:'FMD vaccination', dashCows:'cows', dashDays:'d', dashRemindersNote:'Items beyond 7 days stay in Events reminders', dashGoodNews:'Good News', dashRecovered:'recovered', dashFeverCaught:'fever caught by collar, treated by Dr. Sharma', dashDaysAgo:'days ago', dashConfPreg:'confirmed pregnant', dashInseminated:'Inseminated', dashConfYesterday:'confirmed yesterday', dashCalved:'calved', dashHealthyCalf:'healthy calf, now in the Milk Log', dashYesterday:'Yesterday', dashTriageDone:'Logged — thanks', dashUpdates:'Updates', dashToday:'Today',
                catFever:'Fever', catHeat:'Heat', catPregnancy:'Pregnancy', catGestation:'Gestation', catMilking:'Milking', catLactation:'Lactation', catPregLoss:'Pregnancy loss', catFreshCow:'Fresh cow',
                catMastitis:'Mastitis', catLameness:'Lameness', catKetosis:'Ketosis', catHeatStress:'Heat stress', catCalibration:'Calibration', farmGreenValley:'Green Valley Farm', farmSunrise:'Sunrise Dairy',
                farmsSubtitle:'Manage all your dairy farms in one place', yourFarms:'Your Farms', periodToday:'Today', period7:'Last 7 days', period30:'Last 30 days',
@@ -3137,7 +3128,7 @@
                histInsem:'गर्भाधान हुआ \u2014 मोहिनी', histInsemSub:'18 घंटे की विंडो में \u2014 गर्भ जांच 3 जुलाई को',
                stageMilking:'दूध दे रही', stageHeatWatch:'हीट निगरानी', stageRecovered:'स्वस्थ हुई', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें', dashGreeting:'सुप्रभात,', dashAllFarms:'सभी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़े गए', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'इस सप्ताह देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हाँ, बुखार', dashViewEvents:'सभी कार्यक्रम देखें', dashEditsApproval:'आपकी मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटे दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहिए खेत', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज का कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'शाम की दूध लॉगिंग', dashThisWeek:'इस सप्ताह', dashFmd:'खुरपका टीकाकरण', dashCows:'गायें', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं', dashGoodNews:'अच्छी खबर', dashRecovered:'ठीक हो गई', dashFeverCaught:'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', dashDaysAgo:'दिन पहले', dashConfPreg:'गर्भ की पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'कल पुष्टि हुई', dashCalved:'ब्याई', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'कल', dashTriageDone:'दर्ज — धन्यवाद',
+               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें', dashGreeting:'सुप्रभात,', dashAllFarms:'सभी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़े गए', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'इस सप्ताह देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हाँ, बुखार', dashViewEvents:'सभी कार्यक्रम देखें', dashEditsApproval:'आपकी मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटे दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहिए खेत', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज का कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'शाम की दूध लॉगिंग', dashThisWeek:'इस सप्ताह', dashFmd:'खुरपका टीकाकरण', dashCows:'गायें', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं', dashGoodNews:'अच्छी खबर', dashRecovered:'ठीक हो गई', dashFeverCaught:'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', dashDaysAgo:'दिन पहले', dashConfPreg:'गर्भ की पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'कल पुष्टि हुई', dashCalved:'ब्याई', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'कल', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताज़ा ब्याई',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
@@ -3219,7 +3210,7 @@
                histInsem:'गर्भाधान भइल \u2014 मोहिनी', histInsemSub:'18 घंटा के विंडो में \u2014 गर्भ जांच 3 जुलाई के',
                stageMilking:'दूध देत बिया', stageHeatWatch:'हीट निगरानी', stageRecovered:'ठीक भइल', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं', dashGreeting:'सुप्रभात,', dashAllFarms:'सगरी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़ल', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'ए हफ्ता देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हँ, बुखार', dashViewEvents:'सब कार्यक्रम देखीं', dashEditsApproval:'रउरा मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटल दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहीं खेत', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज के कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'सांझ के दूध लॉगिंग', dashThisWeek:'ए हफ्ता', dashFmd:'खुरपका टीकाकरण', dashCows:'गाई', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहेला', dashGoodNews:'अच्छा खबर', dashRecovered:'ठीक हो गइल', dashFeverCaught:'कॉलर बुखार पकड़लस, डॉ. शर्मा इलाज कइलन', dashDaysAgo:'दिन पहिले', dashConfPreg:'गर्भ के पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'काल्ह पुष्टि भइल', dashCalved:'ब्याइल', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'काल्ह', dashTriageDone:'दर्ज — धन्यवाद',
+               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं', dashGreeting:'सुप्रभात,', dashAllFarms:'सगरी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़ल', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'ए हफ्ता देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हँ, बुखार', dashViewEvents:'सब कार्यक्रम देखीं', dashEditsApproval:'रउरा मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटल दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहीं खेत', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज के कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'सांझ के दूध लॉगिंग', dashThisWeek:'ए हफ्ता', dashFmd:'खुरपका टीकाकरण', dashCows:'गाई', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहेला', dashGoodNews:'अच्छा खबर', dashRecovered:'ठीक हो गइल', dashFeverCaught:'कॉलर बुखार पकड़लस, डॉ. शर्मा इलाज कइलन', dashDaysAgo:'दिन पहिले', dashConfPreg:'गर्भ के पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'काल्ह पुष्टि भइल', dashCalved:'ब्याइल', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'काल्ह', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताजा बियाइल',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
@@ -3444,10 +3435,35 @@
       // ── Dashboard interactions (idempotent; runs on load + on reveal) ──
       window.wireDash = function() {
         if (window.__dashWired) return; window.__dashWired = true;
+        // Alerts detail sheet
+        var aSheet = document.getElementById('dash-alerts-sheet');
+        var aBack = document.getElementById('dash-alerts-backdrop');
+        function openAlerts() { aSheet.style.transform = 'translateY(0)'; aBack.style.opacity = '1'; aBack.style.pointerEvents = 'auto'; }
+        function closeAlerts() { aSheet.style.transform = 'translateY(100%)'; aBack.style.opacity = '0'; aBack.style.pointerEvents = 'none'; }
+        var info = document.getElementById('dash-alerts-info'); if (info) info.addEventListener('click', openAlerts);
+        var ac = document.getElementById('dash-alerts-close'); if (ac) ac.addEventListener('click', closeAlerts);
+        if (aBack) aBack.addEventListener('click', closeAlerts);
+        // Triage buttons (inside the sheet)
         document.querySelectorAll('.dash-triage-btn').forEach(function(btn) {
           btn.addEventListener('click', function() {
             var box = document.getElementById('dash-triage');
             if (box) box.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:2px 0;">\u2713 ' + (window.t ? window.t().dashTriageDone : 'Logged — thanks') + '</p>';
+          });
+        });
+        // Schedule Today / This week tabs
+        document.querySelectorAll('.dash-sch-tab').forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            var which = tab.getAttribute('data-tab');
+            document.querySelectorAll('.dash-sch-tab').forEach(function(t) {
+              var on = t === tab;
+              t.classList.toggle('on', on);
+              t.style.background = on ? 'var(--greenink)' : 'var(--bgcard)';
+              t.style.color = on ? '#FFFFFF' : 'var(--text1)';
+              t.style.borderColor = on ? 'var(--greenink)' : 'var(--border)';
+              t.style.fontWeight = on ? '600' : '500';
+            });
+            document.getElementById('dash-sch-today').style.display = which === 'today' ? 'block' : 'none';
+            document.getElementById('dash-sch-week').style.display = which === 'week' ? 'block' : 'none';
           });
         });
         var goEvents = function() {
