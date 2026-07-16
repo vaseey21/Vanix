@@ -10,6 +10,7 @@ import 'milk_log_screen.dart';
 import 'events_screen.dart';
 import 'account_screen.dart';
 import 'cow_profile_screen.dart';
+import 'add_cattle_screen.dart';
 
 /// Farm Detail (cow list) — screen 05. Mirrors #page-farm-detail +
 /// renderCattleList + the cattle-fs filter sheet + the alerts-tile toggle
