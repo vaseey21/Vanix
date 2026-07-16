@@ -206,6 +206,18 @@ class FS {
       'acLastHeat': 'अंतिम हीट', 'acLastInsem': 'अंतिम गर्भाधान', 'acLastPreg': 'अंतिम गर्भावस्था',
       'acLastCalving': 'अंतिम प्रसव', 'acLactationNo': 'स्तनपान संख्या',
       'acLactHint': 'संख्या स्टेपर, तारीख नहीं। ये फ़ील्ड केवल "गाय का इतिहास भरें" चुनने पर दिखते हैं।',
+      // Dashboard (Screen 03)
+      'dashGreeting': 'सुप्रभात,', 'dashAllFarms': 'सभी खेत', 'dashLive': 'लाइव', 'dashAddedToday': 'आज जोड़े गए',
+      'dashActiveAlerts': 'सक्रिय अलर्ट', 'dashPendingTasks': 'बाकी काम', 'dashDueToday': 'आज देय', 'dashOverdue': 'बकाया',
+      'dashPregnant': 'गर्भवती', 'dashDueThisWeek': 'इस सप्ताह देय', 'dashActionAlerts': 'कार्रवाई अलर्ट', 'dashWaiting': 'से इंतज़ार',
+      'dashYesFever': 'हाँ, बुखार', 'noWord': 'नहीं', 'dashViewEvents': 'सभी कार्यक्रम देखें', 'dashEditsApproval': 'आपकी मंज़ूरी बाकी संपादन',
+      'dashMilkMissing': 'आज छूटे दूध सत्र', 'dashInsemWindow': 'गर्भाधान विंडो', 'dashLeft': 'बाकी',
+      'dashFarmsNeedAction': 'ध्यान चाहिए खेत', 'dashOffline': 'ऑफ़लाइन', 'dashTodaySchedule': 'आज का कार्यक्रम',
+      'dashVaccDrive': 'टीकाकरण अभियान', 'dashStartsIn': '15 मिनट में शुरू', 'dashVetVisit': 'पशु चिकित्सक भेंट', 'dashMilkLogging': 'शाम की दूध लॉगिंग',
+      'dashThisWeek': 'इस सप्ताह', 'dashFmd': 'खुरपका टीकाकरण', 'dashCows': 'गायें', 'dashRemindersNote': '7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं',
+      'dashGoodNews': 'अच्छी खबर', 'dashRecovered': 'ठीक हो गई', 'dashFeverCaught': 'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', 'dashDaysAgo': 'दिन पहले',
+      'dashConfPreg': 'गर्भ की पुष्टि', 'dashInseminated': 'गर्भाधान', 'dashConfYesterday': 'कल पुष्टि हुई',
+      'dashCalved': 'ब्याई', 'dashHealthyCalf': 'स्वस्थ बछड़ा, अब दूध लॉग में', 'dashYesterday': 'कल', 'dashTriageDone': 'दर्ज — धन्यवाद',
     },
   };
 }
