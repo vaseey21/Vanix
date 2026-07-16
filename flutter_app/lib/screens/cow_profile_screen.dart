@@ -41,8 +41,6 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     VetLog('vl3t', 'vl3n', 'Dr. Iyer', '8 Jan 2026'),
   ];
 
-  static const List<double> _weekly = [10, 12, 11, 13, 12, 12.5, 11.5];
-
   String get _lang => widget.appState.languageCode;
   bool get _isDark => widget.appState.isDark;
 
