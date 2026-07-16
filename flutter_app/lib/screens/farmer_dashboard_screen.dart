@@ -169,8 +169,8 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
   // (Heat→insemination→vet log; Fever→call vet→schedule→log; Delivery→confirm).
   List<Widget> _immediateRows() => [
         _priorityCard('cattleFever', 'Kajri', 'Sahiwal', 'cardFeverQ', VanixColors.danger, VanixColors.dangerBg, VanixColors.danger),
-        _priorityCard('cattleHeat', 'Gauri', 'Gir', 'cardHeatQ', VanixColors.warning, VanixColors.warnBg, VanixColors.warningInk),
-        _priorityCard('fpDelivery', 'Lakshmi', 'HF Cross', 'cardGestationQ', VanixColors.warning, VanixColors.warnBg, VanixColors.warningInk),
+        _priorityCard('cattleHeat', 'Gauri', 'Gir', 'cardHeatQ', VanixColors.warning, VanixColors.warningBg, VanixColors.warningInk),
+        _priorityCard('fpDelivery', 'Lakshmi', 'HF Cross', 'cardGestationQ', VanixColors.warning, VanixColors.warningBg, VanixColors.warningInk),
       ];
 
   Widget _priorityCard(String typeKey, String cow, String breed, String qKey, Color border, Color tint, Color eyebrow) {

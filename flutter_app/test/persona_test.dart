@@ -27,13 +27,15 @@ void main() {
 
     expect(find.text('Priority'), findsOneWidget);
     expect(find.text('To do'), findsOneWidget);
-    expect(_hasText(tester, 'Heat detected'), isTrue);
-    expect(find.text('Open'), findsWidgets);
+    // Priority tab shows event-style cards (cow + type eyebrow)
+    expect(_hasText(tester, 'Gauri'), isTrue);
+    expect(_hasText(tester, 'Kajri'), isTrue);
 
-    // Switch to To-dos
+    // Switch to To-do
     await tester.tap(find.text('To do'));
     await tester.pump();
     expect(_hasText(tester, 'Insemination window'), isTrue);
+    expect(find.text('Open'), findsWidgets);
     expect(tester.takeException(), isNull);
   });
 
