@@ -632,7 +632,6 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
 
   // ── Milk Data tab (colourful, read-only) ──────────────────────────────
   Widget _buildMilkData() {
-    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
     final history = const [
       (date: '12 Jun 2026', m: '7:30', e: '6:00', total: '12.5', missing: false),
       (date: '13 Jun 2026', m: '7:00', e: '5:30', total: '14.5', missing: false),
