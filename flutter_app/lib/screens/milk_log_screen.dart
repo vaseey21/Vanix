@@ -334,8 +334,8 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(b.title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.textPrimary)),
-                                      Text(b.sub, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+                                      Text(b.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.textPrimary)),
+                                      Text(b.sub, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, height: 1.25, color: VanixColors.textHint)),
                                     ],
                                   ),
                                 ),
