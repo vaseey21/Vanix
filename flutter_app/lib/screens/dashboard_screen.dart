@@ -92,10 +92,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           child: _twoCards(),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                          child: _insemTimer(),
-                        ),
-                        Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
                           child: _farmsNeedingAction(),
                         ),
