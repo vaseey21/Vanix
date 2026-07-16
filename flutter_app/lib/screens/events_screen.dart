@@ -310,7 +310,9 @@ class _EventsScreenState extends State<EventsScreen> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: ListView(
+            child: SafeArea(
+              bottom: false,
+              child: ListView(
               padding: const EdgeInsets.only(bottom: 120),
               children: [
                 Container(
