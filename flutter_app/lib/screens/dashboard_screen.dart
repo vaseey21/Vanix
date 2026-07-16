@@ -179,14 +179,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ]);
   }
 
-  Widget _statCard(String num, String labelKey, Widget sub, {VoidCallback? onInfo}) {
+  Widget _statCard(String num, String labelKey, Widget sub, {VoidCallback? onInfo, String? liveSuffix}) {
     final card = Container(
       decoration: _cardDeco(),
       padding: const EdgeInsets.fromLTRB(14, 15, 14, 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(num, style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700, height: 1, color: _text1)),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(num, style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700, height: 1, color: _text1)),
+              if (liveSuffix != null) ...[
+                const SizedBox(width: 6),
+                Text(liveSuffix, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+              ],
+            ],
+          ),
           const SizedBox(height: 9),
           Text(_t(labelKey), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: _text1)),
           const SizedBox(height: 3),
