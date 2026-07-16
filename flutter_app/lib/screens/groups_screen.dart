@@ -5,6 +5,63 @@ import '../models/group_models.dart';
 import '../state/app_state.dart';
 import '../theme/vanix_theme.dart';
 
+/// Add-to-group sheet, reachable from a cow's kebab (Farm Detail / Cow
+/// Profile). Mirrors #cow-grp-sheet in prototype.html — a checkbox list of
+/// every group with this cow's membership toggled.
+Future<void> showAddToGroupSheet(BuildContext context, AppState appState, String farmId, int no) {
+  final lang = appState.languageCode;
+  final isDark = appState.isDark;
+  final text1 = isDark ? Colors.white : VanixColors.textPrimary;
+  final border = isDark ? VanixColors.darkBorder : VanixColors.border;
+  return showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (ctx) => StatefulBuilder(
+      builder: (ctx, setSheet) => Container(
+        constraints: BoxConstraints(maxHeight: MediaQuery.of(ctx).size.height * 0.7),
+        decoration: BoxDecoration(color: isDark ? const Color(0xFF1C1C1C) : Colors.white, borderRadius: const BorderRadius.vertical(top: Radius.circular(24))),
+        padding: const EdgeInsets.fromLTRB(24, 8, 24, 28),
+        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Center(child: Container(width: 36, height: 4, decoration: BoxDecoration(color: border, borderRadius: BorderRadius.circular(2)))),
+          const SizedBox(height: 12),
+          Row(children: [
+            Expanded(child: Text(FS.t(lang, 'addToGroupTitle'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: text1))),
+            IconButton(onPressed: () => Navigator.pop(ctx), icon: Icon(Icons.close, size: 18, color: text1)),
+          ]),
+          if (kGroups.isEmpty)
+            Padding(padding: const EdgeInsets.symmetric(vertical: 12), child: Text(FS.t(lang, 'noGroupsYet'), style: const TextStyle(fontSize: 13, color: VanixColors.textHint)))
+          else
+            Flexible(
+              child: SingleChildScrollView(
+                child: Column(children: kGroups.map((g) {
+                  return CheckboxListTile(
+                    contentPadding: EdgeInsets.zero,
+                    dense: true,
+                    controlAffinity: ListTileControlAffinity.leading,
+                    activeColor: VanixColors.greenInk,
+                    value: g.has(farmId, no),
+                    onChanged: (v) { g.toggle(farmId, no, v ?? false); setSheet(() {}); },
+                    title: Text(g.name, style: TextStyle(fontSize: 14, color: text1)),
+                  );
+                }).toList()),
+              ),
+            ),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => Navigator.pop(ctx),
+              style: ElevatedButton.styleFrom(minimumSize: const Size(0, 48), backgroundColor: VanixColors.greenInk, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
+              child: Text(FS.t(lang, 'saveWord'), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+            ),
+          ),
+        ]),
+      ),
+    ),
+  );
+}
+
 /// Cattle Groups (Account → Cattle Groups) — owner-only. Mirrors #page-groups
 /// in prototype.html: create groups, open a group to add/remove cattle.
 class GroupsScreen extends StatefulWidget {
