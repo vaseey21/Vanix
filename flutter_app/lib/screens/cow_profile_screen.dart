@@ -729,7 +729,6 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   }
 
   Widget _milkHistoryRow(String date, String m, String e, String total, bool missing) {
-    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
     return Container(
       margin: const EdgeInsets.only(bottom: VanixSpacing.md),
       padding: const EdgeInsets.all(VanixSpacing.lg),
