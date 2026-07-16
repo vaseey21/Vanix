@@ -1340,7 +1340,7 @@ class _WeeklyPainter extends CustomPainter {
       path,
       Paint()
         ..color = lineColor
-        ..strokeWidth = 2
+        ..strokeWidth = 1.3
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round
         ..strokeJoin = StrokeJoin.round,
@@ -1348,12 +1348,12 @@ class _WeeklyPainter extends CustomPainter {
 
     if (peakIndex != null) {
       final p = pointAt(peakIndex!);
-      canvas.drawCircle(p, 3.2, Paint()..color = VanixColors.greenDeep);
-      canvas.drawCircle(p, 3.2, Paint()..color = (isDark ? VanixColors.darkSecond : Colors.white)..style = PaintingStyle.stroke..strokeWidth = 1.2);
+      canvas.drawCircle(p, 2.6, Paint()..color = VanixColors.greenDeep);
+      canvas.drawCircle(p, 2.6, Paint()..color = (isDark ? VanixColors.darkSecond : Colors.white)..style = PaintingStyle.stroke..strokeWidth = 1);
     } else {
       for (var i = 0; i < values.length; i++) {
         final p = pointAt(i);
-        canvas.drawCircle(p, 3, Paint()..color = lineColor);
+        canvas.drawCircle(p, 2.2, Paint()..color = lineColor);
       }
     }
   }
