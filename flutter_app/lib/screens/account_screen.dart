@@ -69,7 +69,6 @@ class _AccountScreenState extends State<AccountScreen> {
         final lang = widget.appState.languageCode;
         final t = VanixStrings.of(lang);
         final theme = isDark ? vanixDarkTheme(languageCode: lang) : vanixLightTheme(languageCode: lang);
-        final textColor = isDark ? Colors.white : VanixColors.textPrimary;
 
         final currentLangNative = VanixLanguage.supported
             .firstWhere((l) => l.code == lang, orElse: () => VanixLanguage.supported[1])
