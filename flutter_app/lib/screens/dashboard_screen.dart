@@ -202,6 +202,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
     );
+    if (onInfo == null) return card;
+    return Stack(
+      children: [
+        card,
+        PositionedDirectional(
+          top: 6, end: 6,
+          child: IconButton(
+            iconSize: 18,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 30, minHeight: 30),
+            onPressed: onInfo,
+            icon: const Icon(Icons.info_outline, color: VanixColors.textHint),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _subGreen(String prefix, String key) => Text('$prefix${_t(key)}',
