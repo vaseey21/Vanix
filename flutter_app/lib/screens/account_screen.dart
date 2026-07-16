@@ -121,7 +121,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     isDark: isDark,
                                     title: FS.t(lang, 'rowCattleGroups'),
                                     subtitle: FS.t(lang, 'acctGroupsSub'),
-                                    onTap: () {},
+                                    onTap: () => _push(GroupsScreen(appState: widget.appState)),
                                   ),
                                 ],
                               ),
