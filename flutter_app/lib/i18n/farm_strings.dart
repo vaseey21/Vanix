@@ -138,6 +138,7 @@ class FS {
       'fpHeat': 'Heat detected', 'fpHeatSub': 'Confirm & log insemination', 'fpFever': 'Fever alert', 'fpFeverSub': 'High temperature — call a vet',
       'fpDelivery': 'Delivery due', 'fpDeliverySub': 'Confirm the calving outcome', 'fpVetAppt': 'Vet appointment', 'fpVetApptSub': 'Today 4:30 PM — Dr. Sharma',
       'fpInsem': 'Insemination window', 'fpInsemSub': '9h left — optimal window', 'fpMilkLog': 'Evening milk logging', 'fpMilkLogSub': 'Due after 5:00 PM',
+      'cardFeverQ': 'Is she unwell?', 'cardHeatQ': 'In heat?', 'cardGestationQ': 'Vet check due',
       // Milk-edit approval
       'mpPendingApproval': 'Pending owner approval', 'mpEditTo': 'Edit to', 'mpDeleteEntry': 'Delete entry',
       'mpApprove': 'Approve', 'mpUpdated': 'Updated', 'mpBy': 'By',
@@ -267,6 +268,7 @@ class FS {
       'fpHeat': 'हीट का पता चला', 'fpHeatSub': 'गर्भाधान की पुष्टि और लॉग करें', 'fpFever': 'बुखार चेतावनी', 'fpFeverSub': 'तेज़ तापमान — पशु चिकित्सक बुलाएँ',
       'fpDelivery': 'प्रसव देय', 'fpDeliverySub': 'ब्यांत का परिणाम पुष्टि करें', 'fpVetAppt': 'पशु चिकित्सक भेंट', 'fpVetApptSub': 'आज शाम 4:30 — डॉ. शर्मा',
       'fpInsem': 'गर्भाधान विंडो', 'fpInsemSub': '9 घंटे बचे — सर्वोत्तम विंडो', 'fpMilkLog': 'शाम दूध लॉगिंग', 'fpMilkLogSub': 'शाम 5 बजे के बाद देय',
+      'cardFeverQ': 'क्या वह अस्वस्थ है?', 'cardHeatQ': 'हीट में है?', 'cardGestationQ': 'वेट जांच देय',
       // Milk-edit approval
       'mpPendingApproval': 'मालिक की मंज़ूरी बाकी', 'mpEditTo': 'बदलें', 'mpDeleteEntry': 'प्रविष्टि हटाएँ',
       'mpApprove': 'मंज़ूर करें', 'mpUpdated': 'अपडेट', 'mpBy': 'द्वारा',

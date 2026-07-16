@@ -164,11 +164,55 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
     );
   }
 
+  // Priority tab = event-style cards (mirrors the HTML #fp-immediate cards).
+  // Tapping opens the Events screen where the card's full flow runs
+  // (Heat→insemination→vet log; Fever→call vet→schedule→log; Delivery→confirm).
   List<Widget> _immediateRows() => [
-        _row(VanixColors.danger, 'fpHeat', 'Ramya', 'fpHeatSub'),
-        _row(VanixColors.danger, 'fpFever', 'Lakshmi', 'fpFeverSub'),
-        _row(VanixColors.warning, 'fpDelivery', 'Giri', 'fpDeliverySub'),
+        _priorityCard('cattleFever', 'Kajri', 'Sahiwal', 'cardFeverQ', VanixColors.danger, VanixColors.dangerBg, VanixColors.danger),
+        _priorityCard('cattleHeat', 'Gauri', 'Gir', 'cardHeatQ', VanixColors.warning, VanixColors.warnBg, VanixColors.warningInk),
+        _priorityCard('fpDelivery', 'Lakshmi', 'HF Cross', 'cardGestationQ', VanixColors.warning, VanixColors.warnBg, VanixColors.warningInk),
       ];
+
+  Widget _priorityCard(String typeKey, String cow, String breed, String qKey, Color border, Color tint, Color eyebrow) {
+    final tintBg = _isDark ? VanixColors.darkSecond : tint;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: InkWell(
+        onTap: _openEvents,
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+          decoration: BoxDecoration(
+            color: tintBg,
+            borderRadius: BorderRadius.circular(16),
+            border: Border(
+              left: BorderSide(color: border, width: 4),
+              top: BorderSide(color: border),
+              right: BorderSide(color: border),
+              bottom: BorderSide(color: border),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(_t(typeKey).toUpperCase(),
+                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 0.5, color: eyebrow)),
+              const SizedBox(height: 4),
+              Text.rich(TextSpan(children: [
+                TextSpan(text: cow, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: _text1)),
+                TextSpan(text: '  —  $breed', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: VanixColors.textHint)),
+              ])),
+              const SizedBox(height: 6),
+              Row(children: [
+                Expanded(child: Text(_t(qKey), style: const TextStyle(fontSize: 13, color: VanixColors.textHint))),
+                const Icon(Icons.chevron_right, size: 18, color: VanixColors.textHint),
+              ]),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   List<Widget> _todoRows() => [
         _row(VanixColors.greenInk, 'fpVetAppt', 'Kajri', 'fpVetApptSub'),
