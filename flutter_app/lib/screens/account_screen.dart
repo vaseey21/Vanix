@@ -225,7 +225,10 @@ class _AccountScreenState extends State<AccountScreen> {
                                   title: FS.t(lang, 'rowLogout'),
                                   titleColor: VanixColors.danger,
                                   showChevron: false,
-                                  onTap: () {},
+                                  onTap: () => Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(builder: (_) => LoginScreen(appState: widget.appState)),
+                                    (route) => false,
+                                  ),
                                 ),
                               ],
                             ),
