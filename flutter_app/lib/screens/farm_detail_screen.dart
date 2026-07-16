@@ -675,7 +675,9 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
           ),
           child: Icon(Icons.more_vert, size: 16, color: textColor),
         ),
-        onSelected: (_) {}, // demo no-ops
+        onSelected: (v) {
+          if (v == 'group') showAddToGroupSheet(context, widget.appState, widget.farm.id, cow.no);
+        },
         itemBuilder: (_) => [
           PopupMenuItem(value: 'edit', height: 40, child: Text(FS.t(_lang, 'editWord'), style: TextStyle(fontSize: 13, color: textColor))),
           PopupMenuItem(value: 'delete', height: 40, child: Text(FS.t(_lang, 'deleteWord'), style: TextStyle(fontSize: 13, color: textColor))),
