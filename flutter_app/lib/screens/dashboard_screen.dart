@@ -376,31 +376,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // ── Insemination timer ──
-  Widget _insemTimer() {
-    return Container(
-      decoration: _cardDeco(),
-      padding: const EdgeInsets.all(16),
-      child: Row(children: [
-        Container(
-          width: 38, height: 38,
-          decoration: BoxDecoration(color: VanixColors.activeBg, borderRadius: BorderRadius.circular(11)),
-          child: const Icon(Icons.schedule, size: 19, color: VanixColors.greenInk),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: RichText(
-            text: TextSpan(children: [
-              TextSpan(text: 'Gauri ', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
-              TextSpan(text: '— ${_t('dashInsemWindow')}', style: const TextStyle(fontSize: 14, color: VanixColors.textHint)),
-            ]),
-          ),
-        ),
-        Text('9h ${_t('dashLeft')}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: VanixColors.greenInk)),
-      ]),
-    );
-  }
-
   // ── Farms needing action ──
   Widget _farmsNeedingAction() {
     return Column(
