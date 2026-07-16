@@ -28,6 +28,8 @@ void main() {
     // schedule tabs present
     expect(find.text('Today'), findsWidgets);
     expect(find.text('This Week'), findsWidgets);
+    // Gauri insemination window is folded into Today's schedule, not a separate card
+    expect(_hasText(tester, 'insemination window'), isTrue);
     // info button (near top) opens the alerts sheet with the triage question
     await tester.tap(find.byIcon(Icons.info_outline));
     await tester.pumpAndSettle();
