@@ -457,10 +457,11 @@ class _EntryCard extends StatelessWidget {
   final MilkEntry entry;
   final bool isDark;
   final bool isFarmer;
+  final String lang;
   final VoidCallback onTap;
   final VoidCallback onApprove;
   final VoidCallback onReject;
-  const _EntryCard({required this.entry, required this.isDark, required this.isFarmer, required this.onTap, required this.onApprove, required this.onReject});
+  const _EntryCard({required this.entry, required this.isDark, required this.isFarmer, required this.lang, required this.onTap, required this.onApprove, required this.onReject});
 
   Color get _boxColor {
     if (entry.litres >= 8) return VanixColors.greenInk;
