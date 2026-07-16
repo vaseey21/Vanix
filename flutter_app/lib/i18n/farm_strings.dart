@@ -126,6 +126,10 @@ class FS {
       'lossReasonTitle': 'Reason for loss', 'lossReasonPh': 'Describe what happened',
       'statusNoteTitle': 'Reason', 'statusNotePh': 'Why is the status changing?', 'statusChanged': 'Status updated',
       'vlCustomT': 'Vet log', 'vetLogSaved': 'Vet log saved', 'hideWord': 'Hide',
+      'manageFarmMgr': 'Manage farm manager', 'selectNewMgr': 'Select a new farm manager',
+      'sendMgrInvite': 'Send Invite to another farm manager', 'invitePending': 'Invite pending',
+      'resendInvite': 'Resend invite', 'cancelInvite': 'Cancel invite',
+      'mgrInviteHint': 'An invite link is emailed to the manager — they confirm before being added.',
     },
     'hi': {
       'farmsTitle': 'खेत', 'farmsSubtitle': 'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें',
