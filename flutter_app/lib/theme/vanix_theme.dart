@@ -30,6 +30,12 @@ class VanixColors {
 
   static const Color activeBg = Color(0xFFE8F5EE);
   static const Color border = Color(0xFFD8D0C5);
+  static const Color divider = Color(0xFFEBE6DD); // lighter than border — rails/dividers only
+  static const Color darkDivider = Color(0xFF2A2A2A);
+
+  // Extra accents used by the colourful Overview / Milk Data cards
+  static const Color accentBlue = Color(0xFF2563EB);
+  static const Color accentViolet = Color(0xFF7C3AED);
 
   // Semantic
   static const Color warning = Color(0xFFE8A020);
