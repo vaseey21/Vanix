@@ -45,10 +45,12 @@ You'll need to add the actual font files before it runs cleanly (see
 | Events refinements — filter-as-sheet, title-opens-walkthrough, P2/P3 fever-photo + Call-vet cards, past-event detail sheets | 🚧 Partial — Events base ported; these later HTML tweaks not yet reflected |
 | Filters v2 (boxless rows, left radio/checkbox, white rail, Reset/Cancel everywhere) | ❌ Pending — HTML done, not yet ported to the Flutter filter sheets |
 | Milk summary polish (hero merges w/ page while open, header button stays a filter) | ❌ Pending — HTML done |
-| Cow profile v3 (underline tabs, per-segment timeline rail, borderless tiles, multi-step + sheet: status+reason, vet visit, vet log, heat/insem/preg/delivery) | ❌ Pending — HTML done, `cow_profile_screen.dart` still on the v2 pill-tab design |
-| Cow profile Milk Data tab (8-week graph, Highest/Lowest tiles, session history cards) | ❌ Pending — HTML done |
-| Add Cattle page (photo, type, breed/gender, age, status, belt/MAC, cow-history w/ lactation stepper) | ❌ Pending — HTML done, no Flutter screen yet |
+| Cow profile v3 — underline tabs, borderless shadowed tiles, kebab Delete-last, colourful Overview v2 (stat cards + green→orange→red temperature line + activity + reminders) | ✅ Ported — `cow_profile_screen.dart` |
+| Cow profile Milk Data tab (green area-fill 8-week graph, accent Highest/Lowest tiles, sun/moon session pills, session history) | ✅ Ported — `cow_profile_screen.dart` (`_buildMilkData`) |
+| Add Cattle page (photo, type, breed/gender, age, status, belt/MAC, cow-history w/ lactation stepper) | ✅ Ported — `add_cattle_screen.dart`, opened by the Farm Detail + FAB |
+| Cow actions sheet — Add vet log / Add Delivery rows added; deeper multi-step flows (reason note, vet picker → schedule/type/log) still simplified to a snackbar | 🚧 Partial |
 | Events inputs-as-sheets (vet picker callback sheet + generic form sheet for Fever/Gestation/P0 flows) | ❌ Pending — HTML done |
+| Filters v2 (boxless rows, left radio/checkbox, lighter divider token) — Flutter filter sheets still on the older bordered-row design | ❌ Pending — HTML done |
 | Farmer persona (stripped views) | ❌ Not designed in HTML yet — nothing to port |
 
 ## Structure
