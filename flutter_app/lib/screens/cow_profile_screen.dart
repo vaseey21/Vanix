@@ -262,33 +262,34 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     );
   }
 
-  // ── Tab bar ───────────────────────────────────────────────────────────
+  // ── Tab bar — underline tabs flush at the hero's bottom edge ────────────
   Widget _buildTabBar() {
-    final trackBg = _isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm;
-    final labels = ['tabTimeline', 'tabOverview', 'tabVetLogs'];
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(color: trackBg, borderRadius: BorderRadius.circular(VanixRadius.pill)),
+    final labels = ['tabTimeline', 'tabOverview', 'tabMilkData', 'tabVetLogs'];
+    return Transform.translate(
+      offset: const Offset(0, VanixSpacing.lg),
       child: Row(
         children: [
           for (var i = 0; i < labels.length; i++)
             Expanded(
               child: InkWell(
                 onTap: () => setState(() => _tab = i),
-                borderRadius: BorderRadius.circular(VanixRadius.pill),
                 child: Container(
-                  height: 36,
+                  constraints: const BoxConstraints(minHeight: 44),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: _tab == i ? VanixColors.greenInk : Colors.transparent,
-                    borderRadius: BorderRadius.circular(VanixRadius.pill),
+                    border: Border(
+                      bottom: BorderSide(
+                        color: _tab == i ? VanixColors.greenInk : Colors.transparent,
+                        width: 3,
+                      ),
+                    ),
                   ),
                   child: Text(
                     FS.t(_lang, labels[i]),
                     style: TextStyle(
                       fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: _tab == i ? Colors.white : (_isDark ? VanixColors.textOnDarkDim : VanixColors.textPrimary),
+                      fontWeight: _tab == i ? FontWeight.w600 : FontWeight.w500,
+                      color: _tab == i ? VanixColors.greenInk : VanixColors.textHint,
                     ),
                   ),
                 ),
@@ -304,6 +305,8 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
       case 1:
         return _buildOverview();
       case 2:
+        return _buildMilkData();
+      case 3:
         return _buildVetLogs();
       case 0:
       default:
