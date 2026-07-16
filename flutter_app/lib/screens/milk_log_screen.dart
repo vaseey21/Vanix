@@ -183,7 +183,9 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: ListView(
+            child: SafeArea(
+              bottom: false,
+              child: ListView(
               padding: const EdgeInsets.only(bottom: 120),
               children: [
                 Container(
