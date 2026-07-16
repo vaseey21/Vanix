@@ -229,6 +229,17 @@ class FS {
       'dashGoodNews': 'अच्छी खबर', 'dashRecovered': 'ठीक हो गई', 'dashFeverCaught': 'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', 'dashDaysAgo': 'दिन पहले',
       'dashConfPreg': 'गर्भ की पुष्टि', 'dashInseminated': 'गर्भाधान', 'dashConfYesterday': 'कल पुष्टि हुई',
       'dashCalved': 'ब्याई', 'dashHealthyCalf': 'स्वस्थ बछड़ा, अब दूध लॉग में', 'dashYesterday': 'कल', 'dashTriageDone': 'दर्ज — धन्यवाद', 'dashUpdates': 'अपडेट', 'dashToday': 'आज',
+      // Cow action flow engine
+      'eventDate': 'घटना की तारीख', 'eventTime': 'समय', 'caConfirm': 'पुष्टि करें', 'caDone': 'हो गया',
+      'caYes': 'हाँ', 'caNo': 'नहीं', 'pickVet': 'पशु चिकित्सक चुनें', 'schedVisit': 'भेंट निर्धारित करें',
+      'visitScheduled': 'पशु चिकित्सक भेंट निर्धारित', 'notesPh': 'टिप्पणियाँ', 'attachFile': 'फ़ाइल संलग्न करें', 'attached': 'संलग्न',
+      'saveLog': 'लॉग सहेजें', 'insemTypeTitle': 'गर्भाधान प्रकार', 'logDetails': 'लॉग विवरण',
+      'obs21': '21-दिन की निगरानी शुरू', 'gest9': '9-महीने का गर्भकाल शुरू',
+      'heatQ': 'क्या {cow} गर्मी में है?', 'heatConfirmed': 'गर्मी की पुष्टि', 'pregQ': '{cow} के लिए गर्भ की पुष्टि करें?',
+      'deliveryQ': 'क्या प्रसव सफल रहा?', 'deliveryLogged': 'प्रसव दर्ज', 'lossLogged': 'हानि दर्ज',
+      'lossReasonTitle': 'हानि का कारण', 'lossReasonPh': 'क्या हुआ बताएं',
+      'statusNoteTitle': 'कारण', 'statusNotePh': 'स्थिति क्यों बदल रही है?', 'statusChanged': 'स्थिति अपडेट',
+      'vlCustomT': 'पशु चिकित्सक लॉग', 'vetLogSaved': 'पशु चिकित्सक लॉग सहेजा गया',
     },
   };
 }
