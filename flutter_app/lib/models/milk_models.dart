@@ -44,6 +44,9 @@ class MilkEntry {
     this.lateNote,
     this.pendingApproval = false,
     this.pendingLabel,
+    this.pendingKind,
+    this.pendingLitres,
+    this.pendingBy,
     this.updated = false,
     this.updatedAt,
   }) : assert(litres >= 0);
