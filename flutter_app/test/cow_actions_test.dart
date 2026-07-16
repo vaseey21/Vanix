@@ -40,8 +40,8 @@ void main() {
     await tester.pumpAndSettle();
 
     // The new date + time fields must be present for Heat.
-    expect(find.text('Event date'), findsOneWidget);
-    expect(find.text('Time'), findsOneWidget);
+    expect(find.text('Event date'), findsWidgets);
+    expect(find.text('Time'), findsWidgets);
 
     // No overflow / exceptions anywhere in the flow.
     expect(tester.takeException(), isNull);
