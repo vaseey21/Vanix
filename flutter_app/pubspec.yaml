@@ -20,7 +20,10 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/logos/vanix-logo.svg
+    # TODO: assets/logos/vanix-logo.svg is referenced in CLAUDE.md as the source
+    # of truth but isn't present in this repo yet and nothing in lib/ uses it —
+    # add the real file to assets/logos/ and re-list it here (plus flutter_svg
+    # in pubspec dependencies) once available.
     - assets/images/cow_lying.png
     - assets/images/cow_icon.png
     - assets/images/bull_icon.png
