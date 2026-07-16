@@ -228,47 +228,65 @@ class _DashboardScreenState extends State<DashboardScreen> {
       '$p1${_t(k1)}$p2${k2 != null ? _t(k2) : ''}',
       style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: VanixColors.textHint));
 
-  // ── Action Alerts ──
-  Widget _actionAlerts() {
-    return Container(
-      decoration: _cardDeco(),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(_t('dashActionAlerts').toUpperCase(), style: _secLbl),
-              Row(children: [
-                Text('14', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: _text1)),
-                Text('  · 2 ${_t('criticalWord')}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.danger)),
-              ]),
-            ],
-          ),
-          _hr(),
-          _farmAlertRow('Sunrise Dairy', crit: '9  · 2 ${_t('criticalWord')}'),
-          const SizedBox(height: 9),
-          _farmAlertRow('Green Villa', plain: '3'),
-          const SizedBox(height: 9),
-          _farmAlertRow('Stones Dairy', plain: '2'),
-          _hr(),
-          if (_triaged)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              child: Text('✓ ${_t('dashTriageDone')}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-            )
-          else
-            _triageBlock(),
-          const SizedBox(height: 14),
-          Center(
-            child: InkWell(
-              onTap: () => _onNavTap(3),
-              child: Text('${_t('dashViewEvents')}  →', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-            ),
-          ),
-        ],
-      ),
+  // ── Unactioned Alerts detail sheet (opened by the stat-card info button) ──
+  void _openAlertsSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: _isDark ? VanixColors.darkSecond : VanixColors.bgCard,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (sheetCtx) {
+        return StatefulBuilder(
+          builder: (sheetCtx, setSheet) {
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(child: Container(width: 36, height: 4, margin: const EdgeInsets.only(bottom: 8), decoration: BoxDecoration(color: _border, borderRadius: BorderRadius.circular(2)))),
+                  Row(children: [
+                    Expanded(child: Text(_t('statUnactionedAlerts'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: _text1))),
+                    IconButton(onPressed: () => Navigator.of(sheetCtx).pop(), icon: Icon(Icons.close, color: _text1)),
+                  ]),
+                  Row(children: [
+                    Text('14', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: _text1)),
+                    Text('  · 2 ${_t('criticalWord')}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.danger)),
+                  ]),
+                  _hr(),
+                  _farmAlertRow('Sunrise Dairy', crit: '9  · 2 ${_t('criticalWord')}'),
+                  const SizedBox(height: 9),
+                  _farmAlertRow('Green Villa', plain: '3'),
+                  const SizedBox(height: 9),
+                  _farmAlertRow('Stones Dairy', plain: '2'),
+                  _hr(),
+                  if (_triaged)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: Text('✓ ${_t('dashTriageDone')}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+                    )
+                  else
+                    _triageBlock(onDone: () { setState(() => _triaged = true); setSheet(() {}); }),
+                  const SizedBox(height: 14),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(0, 48),
+                        backgroundColor: VanixColors.greenInk,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                      ),
+                      onPressed: () { Navigator.of(sheetCtx).pop(); _onNavTap(3); },
+                      child: Text('${_t('dashViewEvents')}  →', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
