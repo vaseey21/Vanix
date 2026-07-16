@@ -27,6 +27,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   _Panel _panel = _Panel.login;
+  // Landing: video + logo at top + a Login CTA at bottom. Tapping Login
+  // slides the sheet up (mirrors the HTML splash → landing → sheet flow).
+  bool _landing = true;
 
   final _emailCtrl = TextEditingController();
   final List<TextEditingController> _otpCtrls = List.generate(6, (_) => TextEditingController());
