@@ -57,6 +57,6 @@ void main() {
     await tester.pumpWidget(MaterialApp(home: DashboardScreen(appState: AppState()..setLanguage('en')..toggleDark())));
     await tester.pump();
     expect(tester.takeException(), isNull);
-    expect(find.text('James'), findsOneWidget);
+    expect(_hasText(tester, 'MyBovine'), isTrue);
   });
 }
