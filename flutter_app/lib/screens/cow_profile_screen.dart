@@ -1403,7 +1403,7 @@ class _TempPainter extends CustomPainter {
           colors: [VanixColors.greenDeep, VanixColors.warning, VanixColors.danger],
           stops: [0.0, 0.5, 0.8],
         ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
-        ..strokeWidth = 2.4
+        ..strokeWidth = 1.4
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round
         ..strokeJoin = StrokeJoin.round,
