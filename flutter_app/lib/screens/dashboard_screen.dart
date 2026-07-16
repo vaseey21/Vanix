@@ -166,7 +166,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _statGrid() {
     return Column(children: [
       Row(children: [
-        Expanded(child: _statCard('77', 'statTotalCattle', _subGreen('+3 ', 'dashAddedToday'))),
+        Expanded(child: _statCard('77', 'statTotalCattle', _subGreen('+3 ', 'dashAddedToday'), liveSuffix: '(74/77 ${_t('dashLive')})')),
         const SizedBox(width: 12),
         Expanded(child: _statCard('14', 'statUnactionedAlerts', _subColor('2 ', 'criticalWord', VanixColors.danger), onInfo: _openAlertsSheet)),
       ]),
