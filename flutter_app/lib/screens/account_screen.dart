@@ -268,7 +268,8 @@ class _ProfilePage extends StatelessWidget {
         return Theme(
           data: theme,
           child: Scaffold(
-            body: ListView(
+            body: SafeArea(
+              child: ListView(
               padding: const EdgeInsets.only(bottom: 40),
               children: [
                 _HeroBack(title: FS.t(lang, 'profTitle'), isDark: isDark),
