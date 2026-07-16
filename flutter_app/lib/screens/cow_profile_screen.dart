@@ -317,7 +317,6 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   // ── Timeline tab ──────────────────────────────────────────────────────
   Widget _buildTimeline() {
     final sheetBg = _isDark ? VanixColors.darkSecond : VanixColors.bgCard;
-    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
     return Container(
       padding: const EdgeInsets.all(VanixSpacing.lg),
       decoration: BoxDecoration(
@@ -328,54 +327,43 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
       child: Column(
         children: [
           for (var i = 0; i < _timeline.length; i++)
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // dotted rail
-                  Column(
-                    children: [
-                      Container(width: 12, height: 12, decoration: BoxDecoration(color: _timeline[i].dot, shape: BoxShape.circle)),
-                      if (i != _timeline.length - 1)
-                        Expanded(child: _DottedLine(color: _isDark ? VanixColors.darkBorder : VanixColors.border)),
-                    ],
-                  ),
-                  const SizedBox(width: VanixSpacing.md),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: VanixSpacing.md),
-                      child: InkWell(
-                        onTap: () => _openTlDetail(_timeline[i]),
-                        borderRadius: BorderRadius.circular(VanixRadius.md),
-                        child: Container(
-                          padding: const EdgeInsets.all(VanixSpacing.md),
-                          decoration: BoxDecoration(
-                            color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgCard,
-                            borderRadius: BorderRadius.circular(VanixRadius.md),
-                            border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border, width: 0.5),
-                            boxShadow: _isDark ? VanixShadow.cardDark : VanixShadow.card,
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(FS.t(_lang, _timeline[i].key),
-                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: textColor)),
-                                    const SizedBox(height: 2),
-                                    Text(_timeline[i].date, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
-                                  ],
-                                ),
+            Padding(
+              padding: EdgeInsets.only(bottom: i == _timeline.length - 1 ? 0 : VanixSpacing.md),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // dotted rail — the dot sits at the vertical center of the
+                    // card regardless of its height (2-line vs. expanded).
+                    SizedBox(
+                      width: 12,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          if (i != 0)
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: FractionallySizedBox(
+                                heightFactor: 0.5,
+                                child: _DottedLine(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
                               ),
-                              const Icon(Icons.chevron_right, size: 18, color: VanixColors.textHint),
-                            ],
-                          ),
-                        ),
+                            ),
+                          if (i != _timeline.length - 1)
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: FractionallySizedBox(
+                                heightFactor: 0.5,
+                                child: _DottedLine(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
+                              ),
+                            ),
+                          Container(width: 12, height: 12, decoration: BoxDecoration(color: _timeline[i].dot, shape: BoxShape.circle)),
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: VanixSpacing.md),
+                    Expanded(child: _timelineCard(i)),
+                  ],
+                ),
               ),
             ),
         ],
@@ -383,38 +371,59 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     );
   }
 
-  void _openTlDetail(TimelineEvent ev) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        final bg = _isDark ? VanixColors.darkSecond : Colors.white;
-        final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
-        return Container(
-          decoration: BoxDecoration(color: bg, borderRadius: const BorderRadius.vertical(top: Radius.circular(VanixRadius.pill))),
-          padding: const EdgeInsets.fromLTRB(VanixSpacing.xl, VanixSpacing.xl, VanixSpacing.xl, 28),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(width: 12, height: 12, decoration: BoxDecoration(color: ev.dot, shape: BoxShape.circle)),
-                  const SizedBox(width: VanixSpacing.sm),
-                  Expanded(
-                    child: Text(FS.t(_lang, ev.key), style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: textColor)),
+  Widget _timelineCard(int i) {
+    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
+    final ev = _timeline[i];
+    final open = _tlExpanded.contains(i);
+    return InkWell(
+      onTap: () => setState(() { open ? _tlExpanded.remove(i) : _tlExpanded.add(i); }),
+      borderRadius: BorderRadius.circular(VanixRadius.md),
+      child: Container(
+        padding: const EdgeInsets.all(VanixSpacing.md),
+        decoration: BoxDecoration(
+          color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgCard,
+          borderRadius: BorderRadius.circular(VanixRadius.md),
+          border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border, width: 0.5),
+          boxShadow: _isDark ? VanixShadow.cardDark : VanixShadow.card,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(FS.t(_lang, ev.key), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: textColor)),
+                      const SizedBox(height: 2),
+                      Text(ev.date, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+                    ],
                   ),
-                ],
-              ),
-              const SizedBox(height: 4),
-              Text(ev.date, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+                ),
+                Icon(open ? Icons.expand_less : Icons.chevron_right, size: 18, color: VanixColors.textHint),
+              ],
+            ),
+            if (open) ...[
               const SizedBox(height: VanixSpacing.md),
               Text(FS.t(_lang, '${ev.key}D'),
-                  style: TextStyle(fontSize: 15, height: 1.6, color: _isDark ? VanixColors.textOnDarkDim : VanixColors.textPrimary)),
+                  style: TextStyle(fontSize: 12, height: 1.6, color: _isDark ? VanixColors.textOnDarkDim : VanixColors.textHint)),
+              const SizedBox(height: VanixSpacing.md),
+              OutlinedButton(
+                onPressed: () => setState(() => _tlExpanded.remove(i)),
+                style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(0, 32),
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  side: BorderSide(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
+                  foregroundColor: textColor,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                ),
+                child: Text(FS.t(_lang, 'hideWord'), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+              ),
             ],
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
