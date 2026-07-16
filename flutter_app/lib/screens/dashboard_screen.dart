@@ -56,8 +56,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Scaffold(
             body: Stack(
               children: [
-                const Positioned.fill(
-                  child: Center(child: Text('Dashboard — Screen 03', style: TextStyle(letterSpacing: 1, color: VanixColors.textHint, fontWeight: FontWeight.w500))),
+                Positioned.fill(
+                  child: SafeArea(
+                    bottom: false,
+                    child: const Center(child: Text('Dashboard — Screen 03', style: TextStyle(letterSpacing: 1, color: VanixColors.textHint, fontWeight: FontWeight.w500))),
+                  ),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
