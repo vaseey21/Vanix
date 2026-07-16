@@ -38,10 +38,11 @@ You'll need to add the actual font files before it runs cleanly (see
 | Dashboard (Home) | 🚧 Placeholder — content not designed yet in the HTML either |
 | Farms list — hero (Total Farms/Cattle/Alerts + activity ticker), search + two-pane filter sheet (Status/Location), farm cards (severity tag, chips row), Setup rows | ✅ Ported — `lib/screens/farms_screen.dart` |
 | Farm detail (cow list) — temp+level hero, Total Cattle/Unactioned tiles, search + filter sheet (Status/Breed/Age), cow cards + kebab, alerts-tile toggle | ✅ Ported — `lib/screens/farm_detail_screen.dart` |
-| Cow profile — hero (photo/status/temp), Timeline (tappable event cards + detail sheet), Overview (weekly graph + tiles), Vet Logs; floating + actions | ✅ Ported — `lib/screens/cow_profile_screen.dart` |
+| Cow profile — hero (photo/status/temp), Timeline (dots centered on cards, tap-to-expand inline w/ Hide instead of a bottom sheet), Overview (thinner weekly graph + tiles), Vet Logs; floating + actions | ✅ Ported — `lib/screens/cow_profile_screen.dart` |
 | Account / Settings — profile row → read-only Profile, Alert-sound toggle, Language + Dark-mode, Legal (Privacy/Terms), Help, Log Out | ✅ Ported — `lib/screens/account_screen.dart` |
 | Vet Contacts — invite-link onboarding (Pending/Confirmed/Declined), Add-Vet sheet, per-vet edit sheet | ✅ Ported — `_VetsPage` in `lib/screens/account_screen.dart` |
-| Farm Management — assign / reassign / remove manager or assign self, per farm | ✅ Ported — `_FarmMgmtPage` in `lib/screens/account_screen.dart` |
+| Farm Management — 3-option manager chooser (select new / send invite w/ Pending state + Resend/Cancel / assign self), remove manager, per farm; same chooser reachable via a pencil icon on the Farm Detail hero | ✅ Ported — `_FarmMgmtPage` in `lib/screens/account_screen.dart` + `farm_detail_screen.dart` |
+| Cattle Groups (Account → Cattle Groups: create groups, add/remove cattle; "Add to group" from a cow's kebab menu in Farm Detail / Cow Profile) | ❌ Pending — HTML done in `vanix_screens_preview.html`/`prototype.html` (`page-groups`, `cow-grp-sheet`), not yet ported to Flutter |
 | Events refinements — filter-as-sheet, title-opens-walkthrough, P2/P3 fever-photo + Call-vet cards, past-event detail sheets | 🚧 Partial — Events base ported; these later HTML tweaks not yet reflected |
 | Filters v2 (boxless rows, left radio/checkbox, white rail, Reset/Cancel everywhere) | ❌ Pending — HTML done, not yet ported to the Flutter filter sheets |
 | Milk summary polish (hero merges w/ page while open, header button stays a filter) | ❌ Pending — HTML done |
