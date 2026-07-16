@@ -857,88 +857,382 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   }
 }
 
-// ── Actions bottom sheet (two views: main list → status list) ───────────
+// ── Actions bottom sheet — full multi-step flow engine (mirrors caViews in
+// prototype.html): status+reason, vet visit+schedule, vet log, heat (date+time),
+// insemination (vet→type→log), pregnancy (date), delivery (yes/no→vet→log). ──
 class _ActionsSheet extends StatefulWidget {
   final bool isDark;
   final String lang;
-  final void Function(String label) onAction;
-  const _ActionsSheet({required this.isDark, required this.lang, required this.onAction});
+  final String cowName;
+  final List<String> vets;
+  final void Function(VetLog) onAddVetLog;
+  const _ActionsSheet({required this.isDark, required this.lang, required this.cowName, required this.vets, required this.onAddVetLog});
 
   @override
   State<_ActionsSheet> createState() => _ActionsSheetState();
 }
 
 class _ActionsSheetState extends State<_ActionsSheet> {
-  bool _statusView = false;
+  final List<String> _stack = ['main'];
+  String _flow = '', _status = '', _vet = '', _insemType = '', _doneMsg = '';
+  bool _attach = false;
+  String _date = '', _time = '';
+  final _reason = TextEditingController();
+  final _notes = TextEditingController();
 
-  static const _statusKeys = ['stInHeat', 'stInsem', 'stPreg', 'stDelivered', 'stCalvInt', 'stMilking', 'stDry'];
+  bool get isDark => widget.isDark;
+  Color get _text1 => isDark ? Colors.white : VanixColors.textPrimary;
+  Color get _border => isDark ? VanixColors.darkBorder : VanixColors.border;
+  Color get _fieldBg => isDark ? VanixColors.darkSubSurface : VanixColors.bgCard;
+  String _t(String k) => FS.t(widget.lang, k);
+  String get _step => _stack.last;
+
+  @override
+  void dispose() {
+    _reason.dispose();
+    _notes.dispose();
+    super.dispose();
+  }
+
+  void _go(String v) => setState(() => _stack.add(v));
+  void _back() { if (_stack.length > 1) setState(() => _stack.removeLast()); }
+  void _done(String msg) => setState(() { _doneMsg = msg; _stack.add('done'); });
+
+  Future<void> _pickDate() async {
+    final d = await showDatePicker(context: context, initialDate: DateTime(2026, 7, 16), firstDate: DateTime(2024), lastDate: DateTime(2027));
+    if (d != null) setState(() => _date = '${d.day}/${d.month}/${d.year}');
+  }
+
+  Future<void> _pickTime() async {
+    final tm = await showTimePicker(context: context, initialTime: const TimeOfDay(hour: 9, minute: 0));
+    if (tm != null) setState(() => _time = tm.format(context));
+  }
 
   @override
   Widget build(BuildContext context) {
-    final bg = widget.isDark ? VanixColors.darkSecond : Colors.white;
-    final textColor = widget.isDark ? Colors.white : VanixColors.textPrimary;
-    final lang = widget.lang;
-    return Container(
-      decoration: BoxDecoration(color: bg, borderRadius: const BorderRadius.vertical(top: Radius.circular(VanixRadius.pill))),
-      padding: const EdgeInsets.fromLTRB(VanixSpacing.xl, VanixSpacing.lg, VanixSpacing.xl, 28),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(width: 40, height: 4, decoration: BoxDecoration(color: VanixColors.greenDeep, borderRadius: BorderRadius.circular(2))),
-          ),
-          const SizedBox(height: VanixSpacing.lg),
-          Row(
-            children: [
-              if (_statusView)
-                InkWell(
-                  onTap: () => setState(() => _statusView = false),
-                  customBorder: const CircleBorder(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Icon(Icons.chevron_left, color: textColor),
-                  ),
-                ),
-              Text(FS.t(lang, _statusView ? 'changeStatus' : 'cowActions'),
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: textColor)),
-            ],
-          ),
-          const SizedBox(height: VanixSpacing.md),
-          if (!_statusView) ...[
-            _row(Icons.sync, FS.t(lang, 'changeStatus'), () => setState(() => _statusView = true), trailing: Icons.chevron_right),
-            _row(Icons.medical_services_outlined, FS.t(lang, 'reqVetVisit'), () => widget.onAction(FS.t(lang, 'reqVetVisit'))),
-            _row(Icons.description_outlined, FS.t(lang, 'addVetLog'), () => widget.onAction(FS.t(lang, 'addVetLog'))),
-            _row(Icons.favorite_border, FS.t(lang, 'addHeat'), () => widget.onAction(FS.t(lang, 'addHeat'))),
-            _row(Icons.colorize_outlined, FS.t(lang, 'addInsem'), () => widget.onAction(FS.t(lang, 'addInsem'))),
-            _row(Icons.pregnant_woman_outlined, FS.t(lang, 'addPreg'), () => widget.onAction(FS.t(lang, 'addPreg'))),
-            _row(Icons.child_friendly_outlined, FS.t(lang, 'addDelivery'), () => widget.onAction(FS.t(lang, 'addDelivery'))),
-          ] else ...[
-            for (final k in _statusKeys) _row(Icons.circle_outlined, FS.t(lang, k), () => widget.onAction(FS.t(lang, k))),
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _row(IconData icon, String label, VoidCallback onTap, {IconData? trailing}) {
-    final textColor = widget.isDark ? Colors.white : VanixColors.textPrimary;
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(VanixRadius.md),
+    final bg = isDark ? VanixColors.darkSecond : Colors.white;
+    final v = _view();
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
-        constraints: const BoxConstraints(minHeight: 48),
-        padding: const EdgeInsetsDirectional.symmetric(vertical: 6),
-        child: Row(
+        decoration: BoxDecoration(color: bg, borderRadius: const BorderRadius.vertical(top: Radius.circular(VanixRadius.pill))),
+        padding: const EdgeInsets.fromLTRB(VanixSpacing.xl, VanixSpacing.md, VanixSpacing.xl, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, size: 20, color: VanixColors.greenInk),
-            const SizedBox(width: VanixSpacing.md),
-            Expanded(child: Text(label, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: textColor))),
-            if (trailing != null) Icon(trailing, size: 18, color: VanixColors.textHint),
+            Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: _border, borderRadius: BorderRadius.circular(2)))),
+            const SizedBox(height: VanixSpacing.md),
+            Row(
+              children: [
+                if (_stack.length > 1 && _step != 'done')
+                  InkWell(
+                    onTap: _back,
+                    customBorder: const CircleBorder(),
+                    child: Padding(padding: const EdgeInsets.only(right: 6), child: Icon(Icons.chevron_left, color: _text1)),
+                  ),
+                Expanded(child: Text(v.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: _text1))),
+                InkWell(
+                  onTap: () => Navigator.of(context).pop(),
+                  customBorder: const CircleBorder(),
+                  child: Icon(Icons.close, color: _text1),
+                ),
+              ],
+            ),
+            const SizedBox(height: VanixSpacing.md),
+            Flexible(child: SingleChildScrollView(child: v.body)),
           ],
         ),
       ),
     );
+  }
+
+  ({String title, Widget body}) _view() {
+    switch (_step) {
+      case 'statusList':
+        return (title: _t('changeStatus'), body: _list(
+          const ['stInHeat', 'stInsem', 'stPreg', 'stDelivered', 'stCalvInt', 'stMilking', 'stDry'],
+          (k) { _status = _t(k); _go('statusNote'); }));
+      case 'statusNote':
+        return (title: _t('changeStatus'), body: _noteStep(
+          '${_t('statusNoteTitle')} — $_status', _t('statusNotePh'), _reason,
+          () => _done('${_t('statusChanged')} — $_status')));
+      case 'vetPick':
+        return (title: _t('pickVet'), body: _list(widget.vets, (name) {
+          _vet = name;
+          if (_flow == 'visit') { _go('schedule'); }
+          else if (_flow == 'vetlog') { _go('vetlogForm'); }
+          else if (_flow == 'insem') { _go('insemType'); }
+          else { _go('deliveryLog'); } // delYes / delNo
+        }, raw: true));
+      case 'schedule':
+        return (title: _t('schedVisit'), body: _scheduleStep());
+      case 'vetlogForm':
+        return (title: _t('addVetLog'), body: _vetlogStep());
+      case 'heatConfirm':
+        return (title: _t('addHeat'), body: _confirmStep(_t('heatQ').replaceAll('{cow}', widget.cowName), () => _go('heatWhen')));
+      case 'heatWhen':
+        return (title: _t('addHeat'), body: _whenStep(withTime: true, onOk: () => _done(_t('heatConfirmed'))));
+      case 'pregConfirm':
+        return (title: _t('addPreg'), body: _confirmStep(_t('pregQ').replaceAll('{cow}', widget.cowName), () => _go('pregWhen')));
+      case 'pregWhen':
+        return (title: _t('addPreg'), body: _whenStep(withTime: false, onOk: () => _done(_t('gest9'))));
+      case 'insemType':
+        return (title: _t('insemTypeTitle'), body: _list(
+          const ['Artificial', 'Conventional', 'IVF', 'Embryo Transfer'],
+          (ty) { _insemType = ty; _go('insemLog'); }, raw: true, subtitle: _vet));
+      case 'insemLog':
+        return (title: _t('logDetails'), body: _insemLogStep());
+      case 'deliveryConfirm':
+        return (title: _t('addDelivery'), body: _deliveryConfirmStep());
+      case 'lossReason':
+        return (title: _t('addDelivery'), body: _noteStep(_t('lossReasonTitle'), _t('lossReasonPh'), _reason, () { _flow = 'delNo'; _go('vetPick'); }));
+      case 'deliveryLog':
+        return (title: _t('logDetails'), body: _deliveryLogStep());
+      case 'done':
+        return (title: _t('cowActions'), body: _doneStep());
+      case 'main':
+      default:
+        return (title: _t('cowActions'), body: _mainList());
+    }
+  }
+
+  // ── shared step widgets ──
+  Widget _mainList() {
+    final items = <(IconData, String, VoidCallback)>[
+      (Icons.sync, _t('changeStatus'), () => _go('statusList')),
+      (Icons.medical_services_outlined, _t('reqVetVisit'), () { _flow = 'visit'; _go('vetPick'); }),
+      (Icons.description_outlined, _t('addVetLog'), () { _flow = 'vetlog'; _attach = false; _go('vetPick'); }),
+      (Icons.favorite_border, _t('addHeat'), () => _go('heatConfirm')),
+      (Icons.colorize_outlined, _t('addInsem'), () { _flow = 'insem'; _go('vetPick'); }),
+      (Icons.pregnant_woman_outlined, _t('addPreg'), () => _go('pregConfirm')),
+      (Icons.child_friendly_outlined, _t('addDelivery'), () => _go('deliveryConfirm')),
+    ];
+    return Column(
+      children: [
+        for (final it in items)
+          InkWell(
+            onTap: it.$3,
+            borderRadius: BorderRadius.circular(VanixRadius.md),
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 48),
+              padding: const EdgeInsetsDirectional.symmetric(vertical: 6),
+              child: Row(children: [
+                Icon(it.$1, size: 20, color: VanixColors.greenInk),
+                const SizedBox(width: VanixSpacing.md),
+                Expanded(child: Text(it.$2, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: _text1))),
+                Icon(Icons.chevron_right, size: 18, color: VanixColors.textHint),
+              ]),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _list(List<String> keys, void Function(String) onTap, {bool raw = false, String? subtitle}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (subtitle != null) Padding(padding: const EdgeInsets.only(bottom: 10), child: Text(subtitle, style: const TextStyle(fontSize: 13, color: VanixColors.textHint))),
+        for (final k in keys)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: InkWell(
+              onTap: () => onTap(k),
+              borderRadius: BorderRadius.circular(14),
+              child: Container(
+                constraints: const BoxConstraints(minHeight: 48),
+                alignment: AlignmentDirectional.centerStart,
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                decoration: BoxDecoration(color: _fieldBg, borderRadius: BorderRadius.circular(14), border: Border.all(color: _border)),
+                child: Text(raw ? k : _t(k), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: _text1)),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _label(String txt) => Padding(padding: const EdgeInsets.only(bottom: 6, top: 2), child: Text(txt, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.textHint)));
+
+  Widget _fieldBox({required Widget child}) => Container(
+        height: 46, margin: const EdgeInsets.only(bottom: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 14),
+        decoration: BoxDecoration(color: _fieldBg, borderRadius: BorderRadius.circular(14), border: Border.all(color: _border)),
+        alignment: AlignmentDirectional.centerStart,
+        child: child,
+      );
+
+  Widget _pickerField(String value, String placeholder, IconData icon, VoidCallback onTap) => InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
+        child: _fieldBox(child: Row(children: [
+          Expanded(child: Text(value.isEmpty ? placeholder : value, style: TextStyle(fontSize: 14, color: value.isEmpty ? VanixColors.textHint : _text1))),
+          Icon(icon, size: 16, color: VanixColors.textHint),
+        ])),
+      );
+
+  Widget _cta(String label, VoidCallback? onOk) => SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size(0, 48),
+            backgroundColor: VanixColors.greenInk,
+            foregroundColor: Colors.white,
+            disabledBackgroundColor: VanixColors.greenInk.withValues(alpha: 0.45),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          ),
+          onPressed: onOk,
+          child: Text(label, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+        ),
+      );
+
+  Widget _textArea(TextEditingController c, String ph) => Container(
+        margin: const EdgeInsets.only(bottom: 8),
+        decoration: BoxDecoration(color: _fieldBg, borderRadius: BorderRadius.circular(14), border: Border.all(color: _border)),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+        child: TextField(
+          controller: c,
+          maxLines: 3,
+          onChanged: (_) => setState(() {}),
+          style: TextStyle(fontSize: 14, color: _text1),
+          decoration: InputDecoration(border: InputBorder.none, hintText: ph, hintStyle: const TextStyle(color: VanixColors.textHint, fontSize: 14)),
+        ),
+      );
+
+  Widget _confirmStep(String question, VoidCallback onYes) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(padding: const EdgeInsets.only(bottom: 14), child: Text(question, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: _text1))),
+      _cta(_t('caYes'), onYes),
+      const SizedBox(height: 8),
+      SizedBox(
+        width: double.infinity,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(minimumSize: const Size(0, 46), side: BorderSide(color: _border), foregroundColor: _text1, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(_t('caNo'), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+        ),
+      ),
+    ]);
+  }
+
+  Widget _whenStep({required bool withTime, required VoidCallback onOk}) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(padding: const EdgeInsets.only(bottom: 12), child: Text(widget.cowName, style: const TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      _label(_t('eventDate')),
+      _pickerField(_date, _t('eventDate'), Icons.calendar_today_outlined, _pickDate),
+      if (withTime) ...[
+        _label(_t('eventTime')),
+        _pickerField(_time, _t('eventTime'), Icons.schedule, _pickTime),
+      ],
+      const SizedBox(height: 4),
+      _cta(_t('caConfirm'), onOk),
+    ]);
+  }
+
+  Widget _scheduleStep() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(padding: const EdgeInsets.only(bottom: 12), child: Text('$_vet — ${widget.cowName}', style: const TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      _label(_t('eventDate')),
+      _pickerField(_date, _t('eventDate'), Icons.calendar_today_outlined, _pickDate),
+      _label(_t('eventTime')),
+      _pickerField(_time, _t('eventTime'), Icons.schedule, _pickTime),
+      const SizedBox(height: 4),
+      _cta(_t('caConfirm'), () => _done('${_t('visitScheduled')} — $_vet')),
+    ]);
+  }
+
+  Widget _noteStep(String prompt, String ph, TextEditingController c, VoidCallback onOk) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(padding: const EdgeInsets.only(bottom: 10), child: Text(prompt, style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      _textArea(c, ph),
+      const SizedBox(height: 4),
+      _cta(_t('caConfirm'), c.text.trim().isEmpty ? null : onOk),
+    ]);
+  }
+
+  Widget _vetlogStep() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(padding: const EdgeInsets.only(bottom: 12), child: Text('$_vet — ${widget.cowName}', style: const TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      _label(_t('notesPh')),
+      _textArea(_notes, _t('notesPh')),
+      Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: OutlinedButton.icon(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: _attach ? VanixColors.greenInk : _text1,
+            side: BorderSide(color: _attach ? VanixColors.greenInk : _border),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
+          onPressed: () => setState(() => _attach = !_attach),
+          icon: const Icon(Icons.attach_file, size: 15),
+          label: Text(_attach ? '${_t('attached')} · Photo.jpg' : _t('attachFile'), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+        ),
+      ),
+      const SizedBox(height: 10),
+      _cta(_t('saveLog'), _notes.text.trim().isEmpty ? null : () {
+        widget.onAddVetLog(VetLog(_t('vlCustomT'), _notes.text.trim(), _vet, '16/7/2026', attachment: _attach ? 'Photo.jpg' : null));
+        _done(_t('vetLogSaved'));
+      }),
+    ]);
+  }
+
+  Widget _insemLogStep() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(padding: const EdgeInsets.only(bottom: 12), child: Text('$_vet · $_insemType — ${widget.cowName}', style: const TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      _label(_t('eventDate')),
+      _pickerField(_date, _t('eventDate'), Icons.calendar_today_outlined, _pickDate),
+      _label(_t('eventTime')),
+      _pickerField(_time, _t('eventTime'), Icons.schedule, _pickTime),
+      _label(_t('notesPh')),
+      _textArea(_notes, _t('notesPh')),
+      const SizedBox(height: 4),
+      _cta(_t('saveLog'), () => _done(_t('obs21'))),
+    ]);
+  }
+
+  Widget _deliveryConfirmStep() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(padding: const EdgeInsets.only(bottom: 14), child: Text(_t('deliveryQ'), style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: _text1))),
+      _cta(_t('caYes'), () { _flow = 'delYes'; _go('vetPick'); }),
+      const SizedBox(height: 8),
+      SizedBox(
+        width: double.infinity,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(minimumSize: const Size(0, 46), side: BorderSide(color: _border), foregroundColor: _text1, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
+          onPressed: () { _flow = 'delNo'; _reason.clear(); _go('lossReason'); },
+          child: Text(_t('caNo'), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+        ),
+      ),
+    ]);
+  }
+
+  Widget _deliveryLogStep() {
+    final ok = _flow == 'delYes';
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(padding: const EdgeInsets.only(bottom: 12), child: Text('$_vet — ${widget.cowName}', style: const TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      _label(_t('eventDate')),
+      _pickerField(_date, _t('eventDate'), Icons.calendar_today_outlined, _pickDate),
+      _label(_t('notesPh')),
+      _textArea(_notes, _t('notesPh')),
+      const SizedBox(height: 4),
+      _cta(_t('saveLog'), () => _done(ok ? _t('deliveryLogged') : _t('lossLogged'))),
+    ]);
+  }
+
+  Widget _doneStep() {
+    return Column(children: [
+      const SizedBox(height: 8),
+      Container(
+        width: 56, height: 56,
+        decoration: const BoxDecoration(color: VanixColors.activeBg, shape: BoxShape.circle),
+        child: const Icon(Icons.check, color: VanixColors.greenInk, size: 26),
+      ),
+      const SizedBox(height: 14),
+      Text(_doneMsg, textAlign: TextAlign.center, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, height: 1.5, color: _text1)),
+      const SizedBox(height: 16),
+      _cta(_t('caDone'), () => Navigator.of(context).pop()),
+    ]);
   }
 }
 
