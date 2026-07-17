@@ -10,9 +10,11 @@ List<VanixNavItem> buildVanixNavItems(VanixStrings t, AppState appState) {
   final count = appState.openEventsCount;
   return [
     VanixNavItem(icon: Icons.home_outlined, label: t.navHome, showDot: count > 0),
-    VanixNavItem(icon: Icons.pets_outlined, label: t.navFarms),
+    // Farms — custom cow-head line icon (no Material equivalent), matching the
+    // stroke SVG in prototype.html's nav.
+    VanixNavItem(iconBuilder: (color) => CowHeadIcon(color: color, size: 20), label: t.navFarms),
     VanixNavItem(icon: Icons.water_drop_outlined, label: t.navMilk),
-    VanixNavItem(icon: Icons.event_note_outlined, label: t.navEvents, badgeCount: count),
-    VanixNavItem(icon: Icons.person_outline, label: t.navAccount),
+    VanixNavItem(icon: Icons.calendar_today_outlined, label: t.navEvents, badgeCount: count),
+    VanixNavItem(icon: Icons.account_circle_outlined, label: t.navAccount),
   ];
 }
