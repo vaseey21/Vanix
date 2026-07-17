@@ -2908,7 +2908,7 @@
 
           <!-- ADD TO GROUP (from a cow's kebab menu) — pick which group(s) this cow belongs to -->
           <div id="cow-grp-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:50;"></div>
-          <div id="cow-grp-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; max-height:70vh; display:flex; flex-direction:column; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:51; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+          <div id="cow-grp-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; max-height:70vh; display:flex; flex-direction:column; transform:translateY(100%); pointer-events:none; transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:51; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
             <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
             <div style="display:flex; align-items:center; margin-top:10px;">
               <h3 data-k="addToGroupTitle" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Add to group</h3>
@@ -3203,7 +3203,7 @@
       </div><!-- /phone -->
     </div><!-- /screen-wrap -->
 
-    <script>window.VANIX_BUILD='build-2026-07-16-landing-priority';console.log('MyBovine build-2026-07-16-landing-priority');</script>
+    <script>window.VANIX_BUILD='build-2026-07-17-tap-fix';console.log('MyBovine build-2026-07-17-tap-fix');</script>
 <script>
     (function() {
       var video   = document.getElementById('s1-video');
@@ -4546,11 +4546,11 @@
         document.getElementById('evform-body').innerHTML = html;
         if (wire) wire();
         var sh = document.getElementById('evform-sheet'), bd = document.getElementById('evform-backdrop');
-        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+        sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
       function closeEvForm() {
         var sh = document.getElementById('evform-sheet'), bd = document.getElementById('evform-backdrop');
-        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+        sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
       document.getElementById('evform-close').addEventListener('click', closeEvForm);
       document.getElementById('evform-backdrop').addEventListener('click', closeEvForm);
@@ -6150,8 +6150,8 @@
           });
           syncRailDots();
         }
-        function close() { sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
-        function open()  { restore(); sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto'; }
+        function close() { sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
+        function open()  { restore(); sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto'; }
         function cancel() { restore(); close(); }
         bd.addEventListener('click', cancel);
         closeBtn.addEventListener('click', cancel);
@@ -7066,11 +7066,11 @@
         document.getElementById('vet-edit-email').textContent = v.email || '—';
         document.getElementById('vet-edit-phone').textContent = v.phone || '—';
         var sh = document.getElementById('vet-edit-sheet'), bd = document.getElementById('vet-edit-backdrop');
-        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+        sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
       function closeVetEdit() {
         var sh = document.getElementById('vet-edit-sheet'), bd = document.getElementById('vet-edit-backdrop');
-        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+        sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
       document.getElementById('vet-edit-close').addEventListener('click', closeVetEdit);
       document.getElementById('vet-edit-backdrop').addEventListener('click', closeVetEdit);
@@ -7084,9 +7084,9 @@
       });
       (function() {
         var sh = document.getElementById('add-vet-sheet'), bd = document.getElementById('add-vet-backdrop');
-        function close() { sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
+        function close() { sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
         document.getElementById('add-vet-btn').addEventListener('click', function() {
-          sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+          sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
         });
         document.getElementById('add-vet-close').addEventListener('click', close);
         bd.addEventListener('click', close);
@@ -7177,11 +7177,11 @@
         var f = farmById(farmId);
         document.getElementById('fm-choose-farm').textContent = f ? loc(f, 'name') : '';
         var sh = document.getElementById('fm-choose-sheet'), bd = document.getElementById('fm-backdrop');
-        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+        sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
       function closeFmChoose() {
         var sh = document.getElementById('fm-choose-sheet'), bd = document.getElementById('fm-backdrop');
-        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+        sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
       var fmMode = 'assign';
       function openFmSheet(farmId, mode) {
@@ -7199,11 +7199,11 @@
         document.getElementById('fm-invite-hint').style.display = invite ? 'block' : 'none';
         closeFmChoose();
         var sh = document.getElementById('fm-sheet'), bd = document.getElementById('fm-backdrop');
-        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+        sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
       function closeFmSheet() {
         var sh = document.getElementById('fm-sheet'), bd = document.getElementById('fm-backdrop');
-        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+        sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
       document.getElementById('fm-choose-close').addEventListener('click', closeFmChoose);
       document.getElementById('fm-choose-select').addEventListener('click', function() { openFmSheet(fmFarmId, 'assign'); });
@@ -7262,11 +7262,11 @@
         grpDetailId = id;
         renderGroupDetail();
         var sh = document.getElementById('grp-detail-sheet'), bd = document.getElementById('grp-detail-backdrop');
-        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+        sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
       function closeGroupDetail() {
         var sh = document.getElementById('grp-detail-sheet'), bd = document.getElementById('grp-detail-backdrop');
-        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+        sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
       function renderGroupDetail() {
         var g = groupById(grpDetailId);
@@ -7299,11 +7299,11 @@
       document.getElementById('groups-new-btn').addEventListener('click', function() {
         document.getElementById('grp-new-name').value = '';
         var sh = document.getElementById('grp-new-sheet'), bd = document.getElementById('grp-new-backdrop');
-        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+        sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       });
       function closeGrpNew() {
         var sh = document.getElementById('grp-new-sheet'), bd = document.getElementById('grp-new-backdrop');
-        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+        sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
       document.getElementById('grp-new-close').addEventListener('click', closeGrpNew);
       document.getElementById('grp-new-backdrop').addEventListener('click', closeGrpNew);
@@ -7330,11 +7330,11 @@
       document.getElementById('grp-add-cattle-btn').addEventListener('click', function() {
         renderGrpPickList();
         var sh = document.getElementById('grp-pick-sheet'), bd = document.getElementById('grp-pick-backdrop');
-        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+        sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       });
       function closeGrpPick() {
         var sh = document.getElementById('grp-pick-sheet'), bd = document.getElementById('grp-pick-backdrop');
-        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+        sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
       document.getElementById('grp-pick-close').addEventListener('click', closeGrpPick);
       document.getElementById('grp-pick-backdrop').addEventListener('click', closeGrpPick);
@@ -7367,11 +7367,11 @@
             }).join('')
           : '<p style="text-align:center; color:var(--text2); font-size:13px; margin:12px 0;">' + window.t().noGroupsYet + '</p>';
         var sh = document.getElementById('cow-grp-sheet'), bd = document.getElementById('cow-grp-backdrop');
-        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+        sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
       function closeCowGroupSheet() {
         var sh = document.getElementById('cow-grp-sheet'), bd = document.getElementById('cow-grp-backdrop');
-        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+        sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
       document.getElementById('cow-grp-close').addEventListener('click', closeCowGroupSheet);
       document.getElementById('cow-grp-backdrop').addEventListener('click', closeCowGroupSheet);
