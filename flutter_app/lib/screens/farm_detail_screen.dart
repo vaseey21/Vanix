@@ -385,12 +385,15 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
             ],
           ),
           const SizedBox(height: 14),
-          Row(
-            children: [
-              Expanded(child: _statTile(value: '${farm.cattle}', label: FS.t(_lang, 'statTotalCattle'), isDark: isDark)),
-              const SizedBox(width: 8),
-              Expanded(child: _alertsTile(isDark)),
-            ],
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(child: _statTile(value: '${farm.cattle}', label: FS.t(_lang, 'statTotalCattle'), isDark: isDark)),
+                const SizedBox(width: 8),
+                Expanded(child: _alertsTile(isDark)),
+              ],
+            ),
           ),
         ],
       ),
