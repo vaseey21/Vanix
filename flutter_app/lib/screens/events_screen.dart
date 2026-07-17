@@ -1000,10 +1000,15 @@ class _EventsScreenState extends State<EventsScreen> {
           channel: 'App notification · Confirm with vet',
           manager: manager,
           illustrationAssets: const ['assets/images/pregnancy_icon.png'],
+          imageMode: widget.appState.displayImageMode,
           photoBg: 'assets/images/gestation_photo.jpg',
+          photoCowBreed: 'Mohini · Gir/Sahiwal',
           title: 'Pregnancy check due — Mohini',
           sub: '21 days since insemination and no heat detected — confirm if she appears pregnant.',
           meta: 'Sunrise Dairy · Belt 91 · inseminated 12 Jun',
+          photoQuestion: 'Is Mohini pregnant?',
+          onPhotoNo: () => setState(() { _preg = _PregState.failed; widget.appState.resolveEvent(); }),
+          onPhotoYes: () => setState(() { _preg = _PregState.confirmed; widget.appState.resolveEvent(); }),
           child: Padding(
             padding: const EdgeInsets.only(top: 12),
             child: Row(
