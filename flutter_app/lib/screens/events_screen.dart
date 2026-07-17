@@ -349,7 +349,8 @@ class _EventsScreenState extends State<EventsScreen> {
                     ],
                   ),
                 ),
-                Padding(
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
                   child: Row(
                     children: [
