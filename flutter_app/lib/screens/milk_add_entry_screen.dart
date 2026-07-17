@@ -404,8 +404,9 @@ class _MilkAddEntryScreenState extends State<MilkAddEntryScreen> {
 class _SessionPill extends StatelessWidget {
   final String label;
   final bool active, locked;
+  final Color textColor, borderColor;
   final VoidCallback onTap;
-  const _SessionPill({required this.label, required this.active, required this.locked, required this.onTap});
+  const _SessionPill({required this.label, required this.active, required this.locked, required this.textColor, required this.borderColor, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
