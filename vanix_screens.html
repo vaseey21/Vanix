@@ -2316,6 +2316,13 @@
             <div id="ev-cs-actions" style="display:flex; gap:8px; margin-top:14px;"></div>
           </div>
 
+          <!-- IMAGE-MODE CARD SLOT — slides up the ACTUAL full-bleed alert card node (same card, identical styling) -->
+          <div id="ev-cardslot-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:46;"></div>
+          <div id="ev-cardslot-sheet" style="position:absolute; left:0; right:0; bottom:0; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47;">
+            <div style="display:flex; justify-content:center; padding:8px 0 4px;"><div style="width:40px; height:5px; background:rgba(255,255,255,0.8); border-radius:3px;"></div></div>
+            <div id="ev-cardslot-body" style="padding:0 10px 14px;"></div>
+          </div>
+
           <!-- FILTER BOTTOM SHEET — two-pane: rail left, options right (mirrors the Milk Log sheet) -->
           <div id="ev-fs-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
           <div id="ev-fs-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 12px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
@@ -3223,7 +3230,7 @@
       </div><!-- /phone -->
     </div><!-- /screen-wrap -->
 
-    <script>window.VANIX_BUILD='build-2026-07-17-image-alert-sheet';console.log('MyBovine build-2026-07-17-image-alert-sheet');</script>
+    <script>window.VANIX_BUILD='build-2026-07-17-samecard';console.log('MyBovine build-2026-07-17-samecard');</script>
 <script>
     (function() {
       var video   = document.getElementById('s1-video');
@@ -7481,9 +7488,35 @@
         bd.addEventListener('click', close);
         document.getElementById('ev-cs-close').addEventListener('click', close);
         document.getElementById('ev-cs-photo-close').addEventListener('click', close);
+        // Image-mode: slide up the ACTUAL full-bleed card node (same card).
+        var slotSheet = document.getElementById('ev-cardslot-sheet'), slotBd = document.getElementById('ev-cardslot-backdrop'), slotBody = document.getElementById('ev-cardslot-body');
+        var slotReturn = null;
+        function closeCardSlot() {
+          if (slotReturn && slotReturn.card.parentNode === slotBody) {
+            if (slotReturn.next && slotReturn.next.parentNode === slotReturn.parent) slotReturn.parent.insertBefore(slotReturn.card, slotReturn.next);
+            else slotReturn.parent.appendChild(slotReturn.card);
+          }
+          slotReturn = null;
+          slotSheet.style.transform = 'translateY(100%)';
+          slotBd.style.opacity = '0'; slotBd.style.pointerEvents = 'none';
+        }
+        slotBd.addEventListener('click', closeCardSlot);
+        slotBody.addEventListener('click', function(e) { if (e.target.closest && e.target.closest('.ev-body button')) setTimeout(closeCardSlot, 60); });
+        window.closeCardSlot = closeCardSlot;
+        var CS_PHOTO_CARDS = { 'ev-fever':1,'ev-heat':1,'ev-preg':1,'ev-gestation':1,'ev-abort':1,'ev-freshcow':1,'ev-milk-notif':1,'ev-lactation-check':1 };
         window.openCardSheet = function(cardId, pri) {
           var card = document.getElementById(cardId);
           if (!card) return;
+          // Image (full-bleed) mode + a photo card: present the REAL card in a
+          // slide-up so it is literally the same card as on the Events screen.
+          if (document.getElementById('flow-root').classList.contains('display-fullbleed') && CS_PHOTO_CARDS[cardId] && card.classList.contains('ev-photo-card')) {
+            if (card.parentNode === slotBody) return;
+            slotReturn = { card: card, parent: card.parentNode, next: card.nextSibling };
+            slotBody.appendChild(card);
+            slotSheet.style.transform = 'translateY(0)';
+            slotBd.style.opacity = '1'; slotBd.style.pointerEvents = 'auto';
+            return;
+          }
           curId = cardId; curPri = pri;
           var q = card.querySelector('.ev-anchor-bottom');
           var title = card.querySelector('.ev-title');
@@ -7573,7 +7606,7 @@
                  'ev-cs-backdrop':46,'ev-cs-sheet':47,
                  'callvet-backdrop':46,'callvet-sheet':47,
                  'evform-backdrop':46,'evform-sheet':47,
-                 'hist-backdrop':46,'hist-sheet':47};
+                 'hist-backdrop':46,'hist-sheet':47,'ev-cardslot-backdrop':46,'ev-cardslot-sheet':47};
         Object.keys(Z).forEach(function(id){
           var el = document.getElementById(id);
           if(!el) return;
