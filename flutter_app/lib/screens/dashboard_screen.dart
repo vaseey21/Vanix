@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../i18n/farm_strings.dart';
 import '../i18n/strings.dart';
+import '../models/farm_models.dart';
 import '../state/app_state.dart';
 import '../theme/vanix_theme.dart';
 import '../widgets/vanix_bottom_nav.dart';
