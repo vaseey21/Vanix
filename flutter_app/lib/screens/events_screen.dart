@@ -284,6 +284,8 @@ class _EventsScreenState extends State<EventsScreen> {
     }
   }
 
+  // ignore: unused_element  (walkthrough + full-screen push kept for future
+  // wiring to a real backend/OS notification; no in-app entry point for now)
   Future<void> _showFullCycleSheet(BuildContext context) async {
     final result = await Navigator.of(context).push<String?>(MaterialPageRoute(builder: (_) => HeatAlertScreen(isDark: widget.appState.isDark), fullscreenDialog: true));
     if (!context.mounted) return;
