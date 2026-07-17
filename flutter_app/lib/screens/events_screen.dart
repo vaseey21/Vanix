@@ -300,7 +300,6 @@ class _EventsScreenState extends State<EventsScreen> {
     final isDark = widget.appState.isDark;
     final t = VanixStrings.of(widget.appState.languageCode);
     final textColor = isDark ? Colors.white : VanixColors.textPrimary;
-    final openCount = widget.appState.openEventsCount;
 
     return Scaffold(
       body: Stack(
