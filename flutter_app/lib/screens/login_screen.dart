@@ -625,7 +625,7 @@ class _UnderlineField extends StatelessWidget {
       style: TextStyle(fontSize: 17, color: textColor),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(fontSize: 13, color: isDark ? const Color(0x73FFFFFF) : VanixColors.textHint),
+        hintStyle: TextStyle(fontSize: 15, color: isDark ? const Color(0x99FFFFFF) : const Color(0xFF6B655C)),
         filled: false,
         contentPadding: const EdgeInsets.only(bottom: 10),
         border: UnderlineInputBorder(borderSide: BorderSide(color: lineColor)),
