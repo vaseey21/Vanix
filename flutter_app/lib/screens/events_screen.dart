@@ -671,6 +671,9 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Fresh cow health dip — Ganga',
           sub: 'Calved 6 days ago and her health score has dropped — early days post-calving carry higher metabolic risk.',
           meta: 'Green Valley Farm · Belt 27 · Day 6 post-calving',
+          photoQuestion: 'Is Ganga unwell?',
+          onPhotoNo: () => setState(() { _freshCow = _VetFlowState.falseAlarm; widget.appState.resolveEvent(); }),
+          onPhotoYes: () => setState(() => _freshCow = _VetFlowState.awaitingEmail),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
