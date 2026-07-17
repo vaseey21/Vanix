@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.19.0
+  video_player: ^2.13.0
 
 dev_dependencies:
   flutter_test:
@@ -20,6 +21,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/hero.mp4
     # TODO: assets/logos/vanix-logo.svg is referenced in CLAUDE.md as the source
     # of truth but isn't present in this repo yet and nothing in lib/ uses it —
     # add the real file to assets/logos/ and re-list it here (plus flutter_svg
