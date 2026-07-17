@@ -39,10 +39,34 @@ class _LoginScreenState extends State<LoginScreen> {
   int _secondsLeft = 30;
   bool _showResend = false;
 
+  VideoPlayerController? _videoCtrl;
+  bool _videoReady = false;
+
   VanixStrings get t => VanixStrings.of(widget.appState.languageCode);
 
   @override
+  void initState() {
+    super.initState();
+    _initVideo();
+  }
+
+  Future<void> _initVideo() async {
+    final ctrl = VideoPlayerController.asset('assets/images/hero.mp4');
+    _videoCtrl = ctrl;
+    try {
+      await ctrl.initialize();
+      await ctrl.setVolume(0);
+      await ctrl.setLooping(true);
+      await ctrl.play();
+      if (mounted) setState(() => _videoReady = true);
+    } catch (_) {
+      // Fall back to the gradient/first-frame background silently.
+    }
+  }
+
+  @override
   void dispose() {
+    _videoCtrl?.dispose();
     _timer?.cancel();
     for (final c in _otpCtrls) {
       c.dispose();
