@@ -160,15 +160,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                // MyBovine logo — near the top on the landing screen.
-                const Align(
-                  alignment: Alignment(0, -0.62),
-                  child: SafeArea(
-                    child: Text.rich(TextSpan(children: [
-                      TextSpan(text: 'My', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: Colors.white)),
-                      TextSpan(text: 'Bovine', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: Color(0xFF4DDE95))),
-                    ])),
-                  ),
+                // MyBovine logo — near the top on the landing screen. Same
+                // vanix-logo.svg the HTML uses (loaded from mybovine.ai, like
+                // the HTML does); styled text is the offline fallback.
+                Align(
+                  alignment: const Alignment(0, -0.62),
+                  child: SafeArea(child: _BrandLogo()),
                 ),
                 // Landing CTA — slides out as the sheet slides in.
                 AnimatedSlide(
