@@ -2189,7 +2189,15 @@
           <div id="ev-cs-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
           <div id="ev-cs-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
             <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
-            <div style="display:flex; align-items:flex-start; gap:10px; margin-top:10px;">
+            <!-- Image-mode banner: full cow photo + caption + question, mirrors the full-bleed alert card -->
+            <div id="ev-cs-photo" style="display:none; position:relative; margin:6px -24px 2px; height:300px; background-size:cover; background-position:center 20%; background-repeat:no-repeat; border-radius:16px; overflow:hidden;">
+              <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.88) 100%);"></div>
+              <button id="ev-cs-photo-close" style="position:absolute; top:12px; left:12px; width:32px; height:32px; border-radius:50%; border:none; background:rgba(0,0,0,0.4); color:#fff; font-size:14px; cursor:pointer;">✕</button>
+              <span id="ev-cs-photo-roundel" style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; font-weight:700;">!</span>
+              <p id="ev-cs-photo-cow" class="en" style="position:absolute; top:16px; left:52px; margin:0; color:#fff; font-size:14px; font-weight:700; text-shadow:0 1px 4px rgba(0,0,0,0.6);"></p>
+              <p id="ev-cs-photo-q" style="position:absolute; left:16px; right:16px; bottom:16px; margin:0; color:#fff; font-size:20px; font-weight:700; text-shadow:0 1px 6px rgba(0,0,0,0.6);"></p>
+            </div>
+            <div id="ev-cs-textwrap" style="display:flex; align-items:flex-start; gap:10px; margin-top:10px;">
               <div style="flex:1; min-width:0;">
                 <h3 id="ev-cs-title" style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">Question</h3>
                 <p id="ev-cs-cow" class="en" style="font-size:12px; font-weight:600; color:var(--greenink); margin:4px 0 0;"></p>
@@ -2198,7 +2206,6 @@
             </div>
             <p id="ev-cs-sub" style="font-size:13px; color:var(--text2); margin:10px 0 0; line-height:1.6;"></p>
             <p id="ev-cs-meta" class="en" style="font-size:11px; color:var(--text2); margin:6px 0 0;"></p>
-            <button id="ev-cs-details" data-k="viewDetailsLabel" style="border:none; background:transparent; padding:8px 0 0; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;">View Details ›</button>
             <div id="ev-cs-actions" style="display:flex; gap:8px; margin-top:14px;"></div>
           </div>
 
@@ -3107,7 +3114,7 @@
 
         </div><!-- /layer stack -->
   </div>
-<script>window.VANIX_BUILD='build-2026-07-17-cards-alerts';console.log('MyBovine build-2026-07-17-cards-alerts');</script>
+<script>window.VANIX_BUILD='build-2026-07-17-image-alert-sheet';console.log('MyBovine build-2026-07-17-image-alert-sheet');</script>
 <script>
     (function() {
       var video   = document.getElementById('s1-video');
@@ -7321,10 +7328,7 @@
         function close() { sheet.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
         bd.addEventListener('click', close);
         document.getElementById('ev-cs-close').addEventListener('click', close);
-        document.getElementById('ev-cs-details').addEventListener('click', function() {
-          close();
-          if (window.openCardDetail && curId) window.openCardSheet(curId, curPri);
-        });
+        document.getElementById('ev-cs-photo-close').addEventListener('click', close);
         window.openCardSheet = function(cardId, pri) {
           var card = document.getElementById(cardId);
           if (!card) return;
@@ -7335,9 +7339,31 @@
           var meta = card.querySelector('.ev-meta');
           var cow = card.querySelector('.ev-cow-breed');
           document.getElementById('ev-cs-title').textContent = q ? q.textContent : (title ? title.textContent : '');
-          document.getElementById('ev-cs-cow').textContent = cow ? cow.textContent.replace(/\s+/g, ' · ').trim() : '';
+          var evcsCn = card.querySelector('.ev-cow-name'), evcsSb = card.querySelector('.ev-cow-sub');
+          var evcsCowTxt = evcsCn ? (evcsCn.textContent.trim() + (evcsSb ? ' · ' + evcsSb.textContent.trim() : '')) : (cow ? cow.textContent.replace(/\s+/g, ' · ').trim() : '');
+          document.getElementById('ev-cs-cow').textContent = evcsCowTxt;
           document.getElementById('ev-cs-sub').textContent = sub ? sub.textContent : '';
           document.getElementById('ev-cs-meta').textContent = meta ? meta.textContent : '';
+          // Image mode (full-bleed toggle): show the cow photo banner instead of
+          // the plain text block, so the slide-up matches the image alert card.
+          var EVCS_PHOTO = {'ev-fever':'fever_photo.jpg','ev-heat':'heat_photo.jpg','ev-preg':'gestation_photo.jpg','ev-gestation':'gestation_photo.jpg','ev-abort':'vetvisit_photo.jpg','ev-freshcow':'vetvisit_photo.jpg','ev-milk-notif':'milking_started_photo.jpg','ev-lactation-check':'milking_ended_photo.jpg'};
+          var evcsImg = document.getElementById('flow-root').classList.contains('display-fullbleed');
+          var evcsFile = EVCS_PHOTO[cardId];
+          if (cardId === 'ev-heat' && card.classList.contains('ev-heat-inseminating')) evcsFile = 'insemination_photo.jpg';
+          var evcsPhoto = document.getElementById('ev-cs-photo'), evcsTextwrap = document.getElementById('ev-cs-textwrap');
+          var evcsSub = document.getElementById('ev-cs-sub'), evcsMeta = document.getElementById('ev-cs-meta');
+          var evcsQ = q ? q.textContent : (title ? title.textContent : '');
+          if (evcsImg && evcsFile) {
+            evcsPhoto.style.display = 'block';
+            evcsPhoto.style.backgroundImage = "url('assets/images/" + evcsFile + "')";
+            document.getElementById('ev-cs-photo-cow').textContent = evcsCowTxt;
+            document.getElementById('ev-cs-photo-q').textContent = evcsQ;
+            document.getElementById('ev-cs-photo-roundel').style.background = (pri === 'p0') ? 'var(--danger)' : 'var(--warning)';
+            evcsTextwrap.style.display = 'none'; evcsSub.style.display = 'none'; evcsMeta.style.display = 'none';
+          } else {
+            evcsPhoto.style.display = 'none';
+            evcsTextwrap.style.display = 'flex'; evcsSub.style.display = ''; evcsMeta.style.display = '';
+          }
           var actions = document.getElementById('ev-cs-actions');
           actions.innerHTML = '';
           var btns = card.querySelectorAll('.ev-body button');
@@ -7349,7 +7375,7 @@
             btn.className = 'hi';
             var fullSpan = orig.querySelector('.ev-btn-full');
             btn.textContent = (fullSpan ? fullSpan.textContent : orig.textContent).trim();
-            btn.setAttribute('style', 'flex:1; min-height:46px; border-radius:23px; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer; ' + (primary ? 'background:var(--greenink); border:none; color:#FFFFFF;' : 'background:transparent; border:1px solid var(--border); color:var(--text1);'));
+            btn.setAttribute('style', 'flex:1; min-height:46px; border-radius:23px; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer; ' + (primary ? 'background:' + (evcsImg ? 'var(--greendeep)' : 'var(--greenink)') + '; border:none; color:#FFFFFF;' : 'background:transparent; border:1px solid var(--border); color:var(--text1);'));
             btn.addEventListener('click', function() { close(); orig.click(); });
             actions.appendChild(btn);
           });
