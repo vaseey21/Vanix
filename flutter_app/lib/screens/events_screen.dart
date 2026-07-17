@@ -105,7 +105,7 @@ Widget _iconLabel(IconData icon, String label) {
     children: [
       Icon(icon, size: 16),
       const SizedBox(width: 6),
-      Text(label),
+      Flexible(child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center)),
     ],
   );
 }
