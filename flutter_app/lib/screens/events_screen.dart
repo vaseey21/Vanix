@@ -10,8 +10,6 @@ import 'milk_log_screen.dart';
 import 'farms_screen.dart';
 import 'account_screen.dart';
 
-enum _Tab { all, action, warnings, reminders }
-
 /// Onboarded vets — contacting a vet is a pick, not a manual email entry.
 /// Mirrors ONBOARDED_VETS in vanix_screens.html.
 const List<String> kOnboardedVets = ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'];
