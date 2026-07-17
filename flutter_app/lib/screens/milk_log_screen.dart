@@ -38,6 +38,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
   late List<MilkEntry> _entries;
   String _period = 'Today';
   MilkFilter _filter = const MilkFilter();
+  bool _showSummary = false;
 
   final List<_Banner> _banners = [
     _Banner('3 cows below 7-day average', 'Kajri, Dhauli and Mohini need attention', VanixColors.warningBg, VanixColors.warning, VanixColors.warningInk),
