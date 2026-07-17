@@ -1688,47 +1688,6 @@ class _VetPickerState extends State<_VetPicker> {
   }
 }
 
-class _CountPill extends StatelessWidget {
-  final int count;
-  const _CountPill({required this.count});
-
-  @override
-  Widget build(BuildContext context) {
-    final clear = count == 0;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(color: clear ? VanixColors.activeBg : VanixColors.dangerBg, border: Border.all(color: clear ? VanixColors.greenDeep : VanixColors.danger), borderRadius: BorderRadius.circular(14)),
-      child: Text(clear ? 'All clear' : '$count need${count == 1 ? 's' : ''} action', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: clear ? VanixColors.greenInk : VanixColors.dangerInk)),
-    );
-  }
-}
-
-class _TabChip extends StatelessWidget {
-  final String label;
-  final bool active, isDark;
-  final VoidCallback onTap;
-  const _TabChip({required this.label, required this.active, required this.isDark, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
-      child: Container(
-        height: 36,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? VanixColors.darkPrimary : (isDark ? const Color(0xFF1C1C1C) : VanixColors.bgCard),
-          border: Border.all(color: active ? VanixColors.darkPrimary : VanixColors.border),
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: Text(label, style: TextStyle(fontSize: 13, fontWeight: active ? FontWeight.w600 : FontWeight.w500, color: active ? Colors.white : (isDark ? Colors.white : VanixColors.textPrimary))),
-      ),
-    );
-  }
-}
-
 class _SectionLabel extends StatelessWidget {
   final String text;
   const _SectionLabel(this.text);
