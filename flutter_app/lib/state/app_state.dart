@@ -19,7 +19,7 @@ class AppState extends ChangeNotifier {
   // pre-illustration-pass design); "image" = the whiteboard-sketched
   // photo-illustration cards (Fever, Heat so far). Toggled next to dark
   // mode on the login screen, applies app-wide.
-  bool _displayImageMode = false;
+  bool _displayImageMode = true;
 
   bool get isDark => _isDark;
   String get languageCode => _languageCode;
