@@ -66,7 +66,8 @@ class _LanguageSheetState extends State<_LanguageSheet> {
                   Expanded(
                     child: TextField(
                       style: TextStyle(fontSize: 14, color: textColor),
-                      decoration: InputDecoration(hintText: 'Search language', hintStyle: TextStyle(color: hintColor), border: InputBorder.none, enabledBorder: InputBorder.none, focusedBorder: InputBorder.none, filled: false, contentPadding: EdgeInsets.zero, isDense: true),
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(hintText: 'Search', hintStyle: TextStyle(color: hintColor), border: InputBorder.none, enabledBorder: InputBorder.none, focusedBorder: InputBorder.none, filled: false, contentPadding: EdgeInsets.zero, isDense: true),
                       onChanged: (v) => setState(() => _query = v),
                     ),
                   ),
