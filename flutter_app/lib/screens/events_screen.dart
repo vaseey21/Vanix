@@ -395,7 +395,7 @@ class _EventsScreenState extends State<EventsScreen> {
                       ],
                     ),
                   ),
-                if (_tab == _Tab.all)
+                if (true)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
                     child: Column(
