@@ -6,15 +6,33 @@ import '../theme/vanix_theme.dart';
 /// vanix_screens.html: breed filter, 8-week trend chart, hi/lo tiles,
 /// top-5 cows, yield-by-breed bars. Single measure = single hue
 /// (greenInk light / greenDeep dark), per the design rule — no legend.
-class MilkSummaryScreen extends StatefulWidget {
+class MilkSummaryScreen extends StatelessWidget {
   final AppState appState;
   const MilkSummaryScreen({super.key, required this.appState});
 
   @override
-  State<MilkSummaryScreen> createState() => _MilkSummaryScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Milk Log'), actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.download_outlined))]),
+      body: MilkSummaryContent(appState: appState, padding: const EdgeInsets.fromLTRB(16, 16, 16, 32), showTotalHeader: true),
+    );
+  }
 }
 
-class _MilkSummaryScreenState extends State<MilkSummaryScreen> {
+/// Reusable analytics body — breed filter, 8-week trend chart, hi/lo tiles,
+/// top-5 cows, yield-by-breed bars. Used both as a standalone route
+/// (MilkSummaryScreen) and expanded in place inside the Milk Log page.
+class MilkSummaryContent extends StatefulWidget {
+  final AppState appState;
+  final EdgeInsets padding;
+  final bool showTotalHeader;
+  const MilkSummaryContent({super.key, required this.appState, this.padding = EdgeInsets.zero, this.showTotalHeader = false});
+
+  @override
+  State<MilkSummaryContent> createState() => _MilkSummaryContentState();
+}
+
+class _MilkSummaryContentState extends State<MilkSummaryContent> {
   static const _weeks = ['9 Jun', '16 Jun', '23 Jun', '30 Jun', '7 Jul', '14 Jul', '21 Jul', '28 Jul'];
   static const _allTrend = [520.0, 588.0, 540.0, 560.0, 575.0, 610.0, 590.0, 605.0];
 
