@@ -1942,7 +1942,6 @@ class _ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (imageMode && photoBg != null) return _buildPhotoCard(context);
     final accentColor = leftAccentColor ?? border;
     final titleColor = isDark ? Colors.white : VanixColors.textPrimary;
     // Flutter forbids a borderRadius on a border with non-uniform colors/widths,
@@ -1955,108 +1954,56 @@ class _ActionCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
     );
 
-    Widget body;
-    if (imageMode && (avatarEmoji != null || conditionIcon != null || illustrationAssets != null)) {
-      // Illustration-first list card (whiteboard sketch): cow · breed →
-      // big illustration → the question + Yes/No (already bundled in
-      // `child`) — no title/manager/View-Details row, tapping anywhere on
-      // the card opens the fuller detail view.
-      final cowName = title.contains('—') ? title.split('—').last.trim() : title.split(' ').first;
-      const breedByName = {'Kajri': 'Jersey', 'Mohini': 'Gir/Sahiwal', 'Ganga': 'Ongole', 'Gauri': 'Desi', 'Lakshmi': 'Ongole'};
-      final illustration = illustrationAssets != null
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (var i = 0; i < illustrationAssets!.length; i++) ...[
-                  if (i > 0) const SizedBox(width: 10),
-                  Image.asset(illustrationAssets![i], width: 72, fit: BoxFit.contain),
-                ],
-                if (conditionIcon != null) ...[
-                  const SizedBox(width: 10),
-                  Icon(conditionIcon, size: 26, color: conditionIconColor ?? VanixColors.danger),
-                ],
-              ],
-            )
-          : conditionIcon != null
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.asset('assets/images/cow_lying.png', width: 96, fit: BoxFit.contain),
-                const SizedBox(width: 10),
-                Icon(conditionIcon, size: 26, color: conditionIconColor ?? VanixColors.danger),
-              ],
-            )
-          : Container(
-              width: 96,
-              height: 88,
-              decoration: BoxDecoration(color: bg, border: Border.all(color: border), borderRadius: BorderRadius.circular(20)),
-              alignment: Alignment.center,
-              child: Text(avatarEmoji!, style: const TextStyle(fontSize: 40)),
-            );
-      body = Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (priority != _Priority.p0) _PriorityChip(priority: priority),
-          Padding(
-            padding: const EdgeInsets.only(top: 6),
-            child: Text(
-              breedByName[cowName] != null ? '$cowName · ${breedByName[cowName]}' : cowName,
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: titleColor),
+    // Compact contained-banner card (mirrors the P2 mastitis card in the
+    // HTML): an optional rounded photo banner on top, then the title +
+    // manager line, then the question / flow buttons bundled in `child`.
+    // No priority chip, no "View Details" link.
+    final body = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (photoBg != null) ...[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              photoBg!,
+              width: double.infinity,
+              height: 130,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stack) => Container(
+                width: double.infinity,
+                height: 130,
+                color: isDark ? const Color(0xFF2A2A2A) : VanixColors.border,
+              ),
             ),
           ),
-          Padding(padding: const EdgeInsets.only(top: 8), child: illustration),
-          child,
+          const SizedBox(height: 10),
         ],
-      );
-    } else {
-      body = Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: titleColor)),
-                    if (manager != null) Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.person_outline, size: 12, color: VanixColors.textHint),
-                          const SizedBox(width: 3),
-                          Text(manager!, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: VanixColors.textHint)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              // P0 cards signal severity via the red card tint + corner badge
-              // instead of a text chip (see _CornerBadge below).
-              if (priority != _Priority.p0) _PriorityChip(priority: priority),
-            ],
+        Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: titleColor)),
+        if (manager != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.person_outline, size: 12, color: VanixColors.textHint),
+                const SizedBox(width: 3),
+                Flexible(child: Text(manager!, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: VanixColors.textHint))),
+              ],
+            ),
           ),
-          child,
-        ],
-      );
-    }
+        child,
+      ],
+    );
 
-    final card = InkWell(
-      borderRadius: BorderRadius.circular(16),
-      onTap: null,
-      child: Container(
-        decoration: decoration,
-        clipBehavior: Clip.antiAlias,
-        child: Stack(
-          children: [
-            // 4px severity accent down the left edge (mirrors the HTML border-left)
-            PositionedDirectional(start: 0, top: 0, bottom: 0, child: Container(width: 4, color: accentColor)),
-            Padding(padding: const EdgeInsets.all(14), child: body),
-          ],
-        ),
+    final card = Container(
+      decoration: decoration,
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
+        children: [
+          // 4px severity accent down the left edge (mirrors the HTML border-left)
+          PositionedDirectional(start: 0, top: 0, bottom: 0, child: Container(width: 4, color: accentColor)),
+          Padding(padding: const EdgeInsets.all(14), child: body),
+        ],
       ),
     );
     if (priority != _Priority.p0) return card;
