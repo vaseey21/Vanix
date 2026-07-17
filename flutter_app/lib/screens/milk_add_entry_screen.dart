@@ -193,81 +193,208 @@ class _MilkAddEntryScreenState extends State<MilkAddEntryScreen> {
   Widget build(BuildContext context) {
     final isEdit = widget.editing != null;
     final isDark = widget.appState.isDark;
+    final bg = isDark ? VanixColors.darkPrimary : VanixColors.bgWarm;
+    final cardBg = isDark ? VanixColors.darkSecond : VanixColors.bgCard;
     final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    final borderColor = isDark ? VanixColors.darkBorder : VanixColors.border;
+    const hintColor = VanixColors.textHint;
+
+    InputDecoration fieldDecoration() => InputDecoration(
+          isDense: true,
+          filled: true,
+          fillColor: cardBg,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
+          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: borderColor)),
+          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: VanixColors.greenInk)),
+        );
+
+    Widget sectionLabel(String text) => Text(
+          text,
+          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: hintColor),
+        );
+
+    Widget helperText(String text) => Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Text(text, style: const TextStyle(fontSize: 10, color: hintColor)),
+        );
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(isEdit ? 'Edit Milk Entry' : 'Add Milk Entry'),
-        actions: [
-          if (isEdit) IconButton(onPressed: _confirmDelete, icon: const Icon(Icons.delete_outline, color: VanixColors.danger)),
-        ],
-      ),
+      backgroundColor: bg,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: ListView(
-            children: [
-              const Text('FARM', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
-              const SizedBox(height: 8),
-              DropdownButtonFormField<String>(
-                initialValue: _farm,
-                items: [for (final f in MilkSeed.farms) DropdownMenuItem(value: f, child: Text(f))],
-                onChanged: (v) => setState(() => _farm = v!),
+        child: Column(
+          children: [
+            // ── Custom header — back chevron (40x40) + title, matches #s8 header ──
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(24, 14, 24, 4),
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: cardBg,
+                        border: Border.all(color: borderColor),
+                      ),
+                      child: Icon(Icons.chevron_left, size: 22, color: textColor),
+                    ),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Text(
+                      isEdit ? 'Edit Milk Entry' : 'Add Milk Entry',
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor),
+                    ),
+                  ),
+                  if (isEdit)
+                    InkWell(
+                      onTap: _confirmDelete,
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        alignment: Alignment.center,
+                        child: const Icon(Icons.delete_outline, size: 22, color: VanixColors.danger),
+                      ),
+                    ),
+                ],
               ),
-              const SizedBox(height: 20),
-              const Text('COW', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
-              const SizedBox(height: 8),
-              DropdownButtonFormField<Cow>(
-                initialValue: _cow,
-                items: [for (final c in MilkSeed.cows) DropdownMenuItem(value: c, child: Text(c.display, overflow: TextOverflow.ellipsis))],
-                onChanged: (v) => setState(() => _cow = v!),
-              ),
-              const SizedBox(height: 20),
-              const Text('DATE', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
-              const SizedBox(height: 8),
-              InkWell(
-                onTap: _pickDate,
-                child: InputDecorator(
-                  decoration: const InputDecoration(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsetsDirectional.fromSTEB(24, 18, 24, 8),
+                children: [
+                  sectionLabel('FARM'),
+                  const SizedBox(height: 6),
+                  DropdownButtonFormField<String>(
+                    initialValue: _farm,
+                    decoration: fieldDecoration(),
+                    style: TextStyle(fontSize: 15, color: textColor),
+                    dropdownColor: cardBg,
+                    items: [for (final f in MilkSeed.farms) DropdownMenuItem(value: f, child: Text(f))],
+                    onChanged: (v) => setState(() => _farm = v!),
+                  ),
+                  const SizedBox(height: 14),
+                  sectionLabel('COW'),
+                  const SizedBox(height: 6),
+                  DropdownButtonFormField<Cow>(
+                    initialValue: _cow,
+                    decoration: fieldDecoration(),
+                    style: TextStyle(fontSize: 15, color: textColor),
+                    dropdownColor: cardBg,
+                    isExpanded: true,
+                    items: [for (final c in MilkSeed.cows) DropdownMenuItem(value: c, child: Text(c.display, overflow: TextOverflow.ellipsis))],
+                    onChanged: (v) => setState(() => _cow = v!),
+                  ),
+                  helperText('Only CALVED and MILKING cows are listed'),
+                  const SizedBox(height: 14),
+                  sectionLabel('DATE'),
+                  const SizedBox(height: 6),
+                  InkWell(
+                    onTap: _pickDate,
+                    child: InputDecorator(
+                      decoration: fieldDecoration(),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('${_date.day}/${_date.month}/${_date.year}', style: TextStyle(fontSize: 15, color: textColor)),
+                          Icon(Icons.calendar_today_outlined, size: 16, color: hintColor),
+                        ],
+                      ),
+                    ),
+                  ),
+                  helperText('Defaults to today · future dates not allowed'),
+                  const SizedBox(height: 14),
+                  sectionLabel('MILKING SESSION'),
+                  const SizedBox(height: 6),
+                  Row(
                     children: [
-                      Text('${_date.day}/${_date.month}/${_date.year}', style: TextStyle(color: textColor)),
-                      const Icon(Icons.calendar_today_outlined, size: 16),
+                      Expanded(child: _SessionPill(label: 'Morning', active: _session == MilkSession.morning, locked: false, onTap: () => _selectSession(MilkSession.morning))),
+                      const SizedBox(width: 8),
+                      Expanded(child: _SessionPill(label: 'Evening', active: _session == MilkSession.evening, locked: _eveningLocked, onTap: () => _selectSession(MilkSession.evening))),
                     ],
                   ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text('MILKING SESSION', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(child: _SessionPill(label: 'Morning', active: _session == MilkSession.morning, locked: false, onTap: () => _selectSession(MilkSession.morning))),
-                  const SizedBox(width: 10),
-                  Expanded(child: _SessionPill(label: 'Evening', active: _session == MilkSession.evening, locked: _eveningLocked, onTap: () => _selectSession(MilkSession.evening))),
+                  helperText('Defaults to the current time of day'),
+                  const SizedBox(height: 28),
+                  sectionLabel('LITRES'),
+                  const SizedBox(height: 10),
+                  Container(
+                    decoration: const BoxDecoration(
+                      border: Border(bottom: BorderSide(color: Color(0xFF9A948A), width: 1.5)),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _litresCtrl,
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: textColor),
+                            decoration: InputDecoration(
+                              isDense: true,
+                              border: InputBorder.none,
+                              contentPadding: const EdgeInsets.only(bottom: 10),
+                              hintText: '0.0',
+                              hintStyle: const TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: hintColor),
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Text('Ltrs', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: hintColor)),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              if (_eveningLocked) const Padding(padding: EdgeInsets.only(top: 6), child: Text('Evening unlocks at 17:00 today', style: TextStyle(fontSize: 11, color: VanixColors.textHint))),
-              const SizedBox(height: 24),
-              const Text('LITRES', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: VanixColors.textHint)),
-              const SizedBox(height: 8),
-              TextField(
-                controller: _litresCtrl,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
-                decoration: const InputDecoration(border: UnderlineInputBorder(), suffixText: 'L'),
-              ),
-              const SizedBox(height: 32),
-              Row(
+            ),
+            // ── Pinned footer — Cancel / Save, matches #s8-actions ──
+            Container(
+              color: bg,
+              padding: const EdgeInsetsDirectional.fromSTEB(24, 12, 24, 16),
+              child: Row(
                 children: [
-                  Expanded(child: OutlinedButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel'))),
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.pop(context),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: textColor,
+                          side: BorderSide(color: borderColor),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                        ),
+                        child: const Text('Cancel', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                      ),
+                    ),
+                  ),
                   const SizedBox(width: 10),
-                  Expanded(child: ElevatedButton(onPressed: _onSave, child: const Text('Save'))),
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: _onSave,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: VanixColors.greenInk,
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                        ),
+                        child: const Text('Save', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -282,23 +409,29 @@ class _SessionPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(24),
-      child: Container(
-        height: 44,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: active ? VanixColors.darkPrimary : Colors.transparent,
-          border: Border.all(color: active ? VanixColors.darkPrimary : VanixColors.border),
-          borderRadius: BorderRadius.circular(24),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (locked) const Padding(padding: EdgeInsets.only(right: 6), child: Icon(Icons.lock_outline, size: 13, color: VanixColors.textHint)),
-            Text(label, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: active ? Colors.white : (locked ? VanixColors.textHint : VanixColors.textPrimary))),
-          ],
+    // Matches #s8-sessions: active = greenInk fill/border + white w600 text;
+    // locked (Evening before 17:00) = 0.4 opacity, no lock icon (per HTML).
+    return Opacity(
+      opacity: locked ? 0.4 : 1,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(21),
+        child: Container(
+          height: 42,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: active ? VanixColors.greenInk : Colors.transparent,
+            border: Border.all(color: active ? VanixColors.greenInk : VanixColors.border),
+            borderRadius: BorderRadius.circular(21),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: active ? FontWeight.w600 : FontWeight.w500,
+              color: active ? Colors.white : VanixColors.textPrimary,
+            ),
+          ),
         ),
       ),
     );
