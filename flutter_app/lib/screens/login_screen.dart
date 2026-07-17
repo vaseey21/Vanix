@@ -264,17 +264,45 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-/// Placeholder for the looping hero video + 45% dark scrim from the HTML.
-/// Dev: replace with a VideoPlayerController playing assets/hero.mp4.
+/// Looping, muted hero video with a 45% dark scrim (matches the HTML). When
+/// the controller isn't ready it falls back gracefully to the brand gradient,
+/// which also shows through beneath the video as it fades in.
 class _HeroBackground extends StatelessWidget {
-  const _HeroBackground();
+  final VideoPlayerController? controller;
+  const _HeroBackground({this.controller});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFF203A2C), Color(0xFF0E1A14)]),
-      ),
-      child: Container(color: Colors.black.withValues(alpha: 0.45)),
+    final ready = controller != null && controller!.value.isInitialized;
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // Fallback / underlay gradient.
+        const DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFF203A2C), Color(0xFF0E1A14)]),
+          ),
+        ),
+        // Cover-fit video, faded in (mirrors CSS opacity 2.2s ease).
+        AnimatedOpacity(
+          duration: const Duration(milliseconds: 2200),
+          opacity: ready ? 1 : 0,
+          child: ready
+              ? FittedBox(
+                  fit: BoxFit.cover,
+                  clipBehavior: Clip.hardEdge,
+                  alignment: Alignment.topCenter,
+                  child: SizedBox(
+                    width: controller!.value.size.width,
+                    height: controller!.value.size.height,
+                    child: VideoPlayer(controller!),
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
+        // 45% dark scrim.
+        Container(color: Colors.black.withValues(alpha: 0.45)),
+      ],
     );
   }
 }
