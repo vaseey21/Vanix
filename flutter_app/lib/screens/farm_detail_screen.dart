@@ -681,8 +681,8 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
         },
         itemBuilder: (_) => [
           PopupMenuItem(value: 'edit', height: 40, child: Text(FS.t(_lang, 'editWord'), style: TextStyle(fontSize: 13, color: textColor))),
-          PopupMenuItem(value: 'delete', height: 40, child: Text(FS.t(_lang, 'deleteWord'), style: TextStyle(fontSize: 13, color: textColor))),
           PopupMenuItem(value: 'group', height: 40, child: Text(FS.t(_lang, 'addToGroup'), style: TextStyle(fontSize: 13, color: textColor))),
+          PopupMenuItem(value: 'delete', height: 40, child: Text(FS.t(_lang, 'deleteWord'), style: const TextStyle(fontSize: 13, color: VanixColors.danger))),
         ],
       ),
     );
