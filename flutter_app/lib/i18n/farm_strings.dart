@@ -111,7 +111,7 @@ class FS {
       'dashMilkMissing': 'Milk sessions missing today', 'dashInsemWindow': 'insemination window', 'dashLeft': 'left',
       'dashFarmsNeedAction': 'Farms needing action', 'dashOffline': 'offline', 'dashTodaySchedule': "Today's Schedule",
       'dashVaccDrive': 'Vaccination Drive', 'dashStartsIn': 'Starts in 15 mins', 'dashVetVisit': 'Vet Visit', 'dashMilkLogging': 'Evening Milk Logging',
-      'dashThisWeek': 'This Week', 'dashFmd': 'FMD vaccination', 'dashCows': 'cows', 'dashRemindersNote': 'Items beyond 7 days stay in Events reminders',
+      'dashThisWeek': 'This Week', 'dashFmd': 'FMD vaccination', 'dashCows': 'cows', 'dashDays': 'd', 'dashRemindersNote': 'Items beyond 7 days stay in Events reminders',
       'dashGoodNews': 'Good News', 'dashRecovered': 'recovered', 'dashFeverCaught': 'fever caught by collar, treated by Dr. Sharma', 'dashDaysAgo': 'days ago',
       'dashConfPreg': 'confirmed pregnant', 'dashInseminated': 'Inseminated', 'dashConfYesterday': 'confirmed yesterday',
       'dashCalved': 'calved', 'dashHealthyCalf': 'healthy calf, now in the Milk Log', 'dashYesterday': 'Yesterday', 'dashTriageDone': 'Logged — thanks', 'dashUpdates': 'Updates', 'dashToday': 'Today',
