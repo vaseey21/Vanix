@@ -343,13 +343,10 @@ class _EventsScreenState extends State<EventsScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Tapping the title opens the full-cycle walkthrough
-                      // (mirrors ev-title-btn in the HTML).
+                      // Plain title — the 'View full cycle' walkthrough entry
+                      // was removed, so the title no longer opens anything.
                       Flexible(
-                        child: InkWell(
-                          onTap: () => _showFullCycleSheet(context),
-                          child: Text('Events', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
-                        ),
+                        child: Text('Events', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
                       ),
                       const SizedBox(width: 8),
                       _FilterButton(isDark: isDark, onTap: () => _openFilterSheet(context)),
