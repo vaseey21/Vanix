@@ -1945,9 +1945,15 @@ class _ActionCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
       onTap: null,
       child: Container(
-        padding: const EdgeInsets.all(14),
         decoration: decoration,
-        child: body,
+        clipBehavior: Clip.antiAlias,
+        child: Stack(
+          children: [
+            // 4px severity accent down the left edge (mirrors the HTML border-left)
+            PositionedDirectional(start: 0, top: 0, bottom: 0, child: Container(width: 4, color: accentColor)),
+            Padding(padding: const EdgeInsets.all(14), child: body),
+          ],
+        ),
       ),
     );
     if (priority != _Priority.p0) return card;
