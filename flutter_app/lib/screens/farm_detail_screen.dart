@@ -737,14 +737,6 @@ class _CattleFilterSheetState extends State<_CattleFilterSheet> {
             padding: const EdgeInsets.only(top: 12),
             child: Row(
               children: [
-                Container(
-                  width: 42,
-                  height: 42,
-                  decoration: const BoxDecoration(shape: BoxShape.circle, color: VanixColors.activeBg),
-                  alignment: Alignment.center,
-                  child: const Icon(Icons.filter_list, size: 18, color: VanixColors.greenInk),
-                ),
-                const SizedBox(width: 12),
                 Expanded(child: Text(t('filterWord'), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: textColor))),
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
