@@ -14,7 +14,9 @@ class MilkSummaryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Milk Log'), actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.download_outlined))]),
-      body: MilkSummaryContent(appState: appState, padding: const EdgeInsets.fromLTRB(16, 16, 16, 32), showTotalHeader: true),
+      body: SingleChildScrollView(
+        child: MilkSummaryContent(appState: appState, padding: const EdgeInsets.fromLTRB(16, 16, 16, 32), showTotalHeader: true),
+      ),
     );
   }
 }
