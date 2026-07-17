@@ -3079,6 +3079,46 @@
             </div>
           </div>
 
+          <!-- SETUP FARM — full-screen slide-up opened from the "Setup Farm" pill on the Farms list -->
+          <div id="page-setup-farm" style="position:absolute; inset:0; background:var(--bgwarm); z-index:50; transform:translateY(100%); transition:transform 0.5s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column;">
+            <div style="flex-shrink:0; display:flex; align-items:center; gap:12px; padding:16px 16px 12px; background:var(--bgwarm);">
+              <button id="sf-back" style="flex-shrink:0; width:34px; height:34px; border-radius:50%; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+              <div style="flex:1; min-width:0;">
+                <p class="en" style="font-size:22px; font-weight:600; color:var(--text1); margin:0; line-height:1.2;">Setup Farm</p>
+                <p id="sf-farm-name" class="en" style="font-size:13px; color:var(--text2); margin:2px 0 0;">Highland Farm</p>
+              </div>
+            </div>
+            <div style="flex:1; overflow-y:auto; padding:4px 16px 40px;">
+              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:16px;">
+                <p class="en" style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">Invite a farm manager</p>
+                <p class="en" style="font-size:12px; color:var(--text2); margin:4px 0 0; line-height:1.5;">They get an email invite and manage this farm once they accept.</p>
+                <div id="sf-invite-form" style="margin-top:12px;">
+                  <input id="sf-inv-name" class="en" placeholder="Manager name" style="display:block; width:100%; box-sizing:border-box; min-height:48px; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); margin-bottom:10px;">
+                  <input id="sf-inv-email" type="email" class="en" placeholder="Email" style="display:block; width:100%; box-sizing:border-box; min-height:48px; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); margin-bottom:10px;">
+                  <input id="sf-inv-phone" type="tel" class="en" placeholder="Phone" style="display:block; width:100%; box-sizing:border-box; min-height:48px; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
+                  <button id="sf-inv-send" class="en" style="width:100%; min-height:48px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:15px; font-weight:600; font-family:var(--font-hi); margin-top:12px; cursor:pointer;">Send invite</button>
+                </div>
+                <div id="sf-invite-pending" style="display:none; margin-top:12px; align-items:center; gap:10px; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px;">
+                  <div style="flex:1; min-width:0;">
+                    <p id="sf-pending-name" class="en" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Farm manager</p>
+                    <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Invite sent — waiting for them to accept</p>
+                  </div>
+                  <span class="en" style="flex-shrink:0; font-size:10px; font-weight:700; letter-spacing:0.05em; color:#8A5A00; background:var(--warnbg); border-radius:10px; padding:4px 10px;">PENDING</span>
+                </div>
+              </div>
+              <p class="en" style="text-align:center; font-size:11px; font-weight:700; letter-spacing:0.08em; color:var(--text2); margin:14px 0;">OR</p>
+              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:16px;">
+                <p class="en" style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">Assign myself</p>
+                <p class="en" style="font-size:12px; color:var(--text2); margin:4px 0 0; line-height:1.5;">You manage this farm yourself — no invite needed.</p>
+                <button id="sf-assign-self" class="en" style="display:block; width:100%; min-height:48px; border-radius:24px; border:1px solid var(--greenink); background:transparent; color:var(--greenink); font-size:15px; font-weight:600; font-family:var(--font-hi); margin-top:12px; cursor:pointer;">Assign myself</button>
+                <div id="sf-assigned" style="display:none; margin-top:12px; text-align:center; background:var(--activebg); border-radius:12px; padding:16px;">
+                  <p class="en" style="font-size:14px; font-weight:700; color:var(--greenink); margin:0;">✓ You manage this farm</p>
+                </div>
+              </div>
+              <button id="sf-done" class="en" style="display:none; width:100%; min-height:50px; border-radius:25px; border:none; background:var(--greenink); color:#FFFFFF; font-size:15px; font-weight:700; font-family:var(--font-hi); margin-top:18px; cursor:pointer;">Done</button>
+            </div>
+          </div>
+
           <!-- FARM DETAIL — opened by tapping a farm row on the Farms list. -->
           <div id="page-farm-detail" style="position:absolute; inset:0; background:var(--bgwarm); z-index:41; display:none;">
             <div style="position:relative; height:100%; overflow:hidden;">
@@ -3100,18 +3140,19 @@
                     <p id="farm-detail-temp" class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">33°C</p>
                     <p id="farm-detail-temp-level" class="en" style="font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:#8A5A00; margin:2px 0 0;">High</p>
                   </div>
-                </div>
-                <div style="display:flex; gap:8px; margin-top:14px;">
-                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 8px; text-align:center;">
-                    <p class="en" id="farm-detail-cattle" style="font-size:24px; font-weight:700; color:var(--text1); margin:0;">32</p>
-                    <p data-k="statTotalCattle" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Total Cattle</p>
-                  </div>
-                  <div id="farm-detail-alerts-tile" style="flex:1; background:var(--dangerbg); border:1px solid var(--danger); border-radius:16px; padding:14px 8px; text-align:center; cursor:pointer;">
-                    <p class="en" id="farm-detail-alerts" style="font-size:24px; font-weight:700; color:var(--text1); margin:0;">2</p>
-                    <p data-k="statUnactionedAlerts" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
-                    <p id="farm-detail-critical" class="en" style="font-size:10px; font-weight:600; color:var(--danger); margin:3px 0 0;">2 critical</p>
+                  <div style="flex-shrink:0; display:flex; margin-inline-start:2px;">
+                    <button id="fd-download-btn" title="Download report" style="width:40px; height:40px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg></button>
+                    <button id="fd-share-btn" title="Share report with a vet" style="width:40px; height:40px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>
                   </div>
                 </div>
+                <!-- Range picker + 2x2 farm-level count tiles (Fever / Heat / Insemination / Pregnant) -->
+                <div id="fd-range-row" style="display:flex; gap:6px; margin-top:14px; overflow-x:auto;">
+                  <button class="fd-range-chip en" data-range="today" style="flex-shrink:0; height:34px; padding:0 14px; border-radius:17px; border:1px solid var(--border); background:var(--bgcard); font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Today</button>
+                  <button class="fd-range-chip en" data-range="week" style="flex-shrink:0; height:34px; padding:0 14px; border-radius:17px; border:1px solid var(--border); background:var(--bgcard); font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">This week</button>
+                  <button class="fd-range-chip en" data-range="month" style="flex-shrink:0; height:34px; padding:0 14px; border-radius:17px; border:1px solid var(--border); background:var(--bgcard); font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">This month</button>
+                  <button class="fd-range-chip en" data-range="custom" style="flex-shrink:0; height:34px; padding:0 14px; border-radius:17px; border:1px solid var(--border); background:var(--bgcard); font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Custom</button>
+                </div>
+                <div id="fd-stat-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;"></div>
               </div>
 
               <div style="padding:14px 16px 0;">
@@ -3122,6 +3163,8 @@
                   </div>
                   <button id="cattle-filter-btn" style="flex-shrink:0; width:46px; height:46px; border-radius:14px; border:1px solid var(--border); background:var(--bgcard); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></button>
                 </div>
+
+                <div id="fd-rumination"></div>
 
                 <div id="cattle-list" style="margin-top:12px;"></div>
 
@@ -3172,6 +3215,33 @@
             <button id="cattle-fs-apply" data-k="applyFilters" style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:14px;">Apply filters</button>
           </div>
 
+          <!-- fd DOWNLOAD-REPORT bottom sheet -->
+          <div id="fd-dl-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
+          <div id="fd-dl-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 24px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+            <div style="display:flex; align-items:center; gap:12px; margin-top:10px;">
+              <h3 class="en" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Farm report</h3>
+              <button id="fd-dl-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
+            </div>
+            <button id="fd-dl-full" class="en" style="width:100%; display:flex; align-items:center; gap:10px; min-height:48px; padding:0 4px; margin-top:6px; border:none; border-bottom:1px solid var(--divider); background:transparent; font-size:15px; font-weight:500; color:var(--text1); text-align:start; cursor:pointer;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Download report</button>
+            <button id="fd-dl-critical" class="en" style="width:100%; display:flex; align-items:center; gap:10px; min-height:48px; padding:0 4px; border:none; background:transparent; font-size:15px; font-weight:500; color:var(--danger); text-align:start; cursor:pointer;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Download critical report</button>
+          </div>
+
+          <!-- fd CUSTOM-RANGE bottom sheet -->
+          <div id="fd-range-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
+          <div id="fd-range-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 24px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+            <div style="display:flex; align-items:center; gap:12px; margin-top:10px;">
+              <h3 class="en" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Custom range</h3>
+              <button id="fd-range-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
+            </div>
+            <label class="en" style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:14px 0 7px;">From</label>
+            <input type="date" id="fd-range-from" class="en" style="display:block; width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
+            <label class="en" style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:14px 0 7px;">To</label>
+            <input type="date" id="fd-range-to" class="en" style="display:block; width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
+            <button id="fd-range-apply" class="en" style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:16px; cursor:pointer;">Apply</button>
+          </div>
+
             <button id="farm-detail-fab" title="Add cattle" style="position:absolute; right:18px; bottom:28px; width:56px; height:56px; border-radius:50%; background:var(--greenink); border:none; box-shadow:0 10px 24px rgba(0,0,0,0.28); padding:0; display:flex; align-items:center; justify-content:center; z-index:3;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
             </button>
@@ -3216,7 +3286,7 @@
       </div><!-- /phone -->
     </div><!-- /screen-wrap -->
 
-    <script>window.VANIX_BUILD='build-2026-07-18-login-events';console.log('MyBovine build-2026-07-18-login-events');</script>
+    <script>window.VANIX_BUILD='build-2026-07-18-farm-roadmap';console.log('MyBovine build-2026-07-18-farm-roadmap');</script>
 <script>
     (function() {
       var video   = document.getElementById('s1-video');
@@ -5932,7 +6002,7 @@
         { id:'sunrise', name:'Sunrise Dairy Farm', nameHi:'सनराइज़ डेयरी फार्म', manager:'Ramesh C', managerHi:'रमेश सी', cattle:32, status:'attention',
           location:'Coimbatore, Tamil Nadu', locationHi:'कोयंबटूर, तमिलनाडु', locKey:'coimbatore',
           temp:'33°C', milkToday:56, milk7:392, milk30:1680, alerts:2, critical:2, trendPct:12,
-          heat:2, fever:1, insem:1,
+          heat:2, fever:1, insem:1, preg:2,
           cows:[
             { name:'Gowri', nameHi:'गौरी', no:1, breed:'Jersey', breedHi:'जर्सी', age:'2.2 yrs', ageHi:'2.2 साल', belt:'Belt 60', beltHi:'बेल्ट 60', status:'Milking', temp:'32°C', trend:'up', photo:'assets/images/milking_started_photo.jpg',
               info:[ {k:'labelMilkToday', v:'12 L'}, {k:'labelLastMilking', v:'6:45 AM'}, {k:'labelLactation', v:'Day 45', vHi:'दिन 45'} ] },
@@ -5948,7 +6018,7 @@
         { id:'greenvilla', name:'Green Villa Dairy Farm', nameHi:'ग्रीन विला डेयरी फार्म', manager:'Rakesh H', managerHi:'राकेश एच', cattle:20, status:'healthy',
           location:'Erode, Tamil Nadu', locationHi:'एरोड, तमिलनाडु', locKey:'erode',
           temp:'31°C', milkToday:42, milk7:301, milk30:1290, alerts:0, critical:0, trendPct:5,
-          heat:0, fever:0, insem:0,
+          heat:0, fever:0, insem:0, preg:1,
           cows:[
             { name:'Meera', nameHi:'मीरा', no:1, breed:'Jersey', breedHi:'जर्सी', age:'3.5 yrs', ageHi:'3.5 साल', belt:'Belt 21', beltHi:'बेल्ट 21', status:'Milking', temp:'31°C', trend:'up', photo:'assets/images/milking_started_photo.jpg',
               info:[ {k:'labelMilkToday', v:'11 L'}, {k:'labelLastMilking', v:'7:00 AM'}, {k:'labelLactation', v:'Day 80', vHi:'दिन 80'} ] },
@@ -5958,7 +6028,7 @@
         { id:'stones', name:'Stones Dairy Farm', nameHi:'स्टोन्स डेयरी फार्म', manager:'Vimal E', managerHi:'विमल ई', cattle:25, status:'healthy',
           location:'Salem, Tamil Nadu', locationHi:'सेलम, तमिलनाडु', locKey:'salem',
           temp:'30°C', milkToday:20, milk7:149, milk30:635, alerts:0, critical:0, trendPct:4,
-          heat:0, fever:0, insem:0,
+          heat:0, fever:0, insem:0, preg:1,
           cows:[
             { name:'Chinnu', nameHi:'चिन्नू', no:1, breed:'Gir', breedHi:'गिर', age:'5 yrs', ageHi:'5 साल', belt:'Belt 3', beltHi:'बेल्ट 3', status:'Milking', temp:'30°C', trend:'up', photo:'assets/images/milking_started_photo.jpg',
               info:[ {k:'labelMilkToday', v:'10 L'}, {k:'labelLastMilking', v:'6:15 AM'}, {k:'labelLactation', v:'Day 60', vHi:'दिन 60'} ] },
@@ -5966,7 +6036,7 @@
               info:[ {k:'labelDueDate', v:'2 Oct', vHi:'2 अक्टूबर'}, {k:'labelPregnancy', v:'3 Months', vHi:'3 महीने'}, {k:'labelLastCheck', v:'20 Jun', vHi:'20 जून'} ] }
           ] },
         { id:'highland', name:'Highland Farm', nameHi:'हाइलैंड फार्म', manager:'Unassigned', managerHi:'नियुक्त नहीं', cattle:0, status:'setup',
-          location:'—', temp:'—', milkToday:0, milk7:0, milk30:0, alerts:0, critical:0, trendPct:0, heat:0, fever:0, insem:0, cows:[] }
+          location:'—', temp:'—', milkToday:0, milk7:0, milk30:0, alerts:0, critical:0, trendPct:0, heat:0, fever:0, insem:0, preg:0, cows:[] }
       ];
       var GROUPS = [
         { id:'g1', name:'Desi', members:[] },
@@ -6018,7 +6088,7 @@
       }
       var PIN_SVG = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-inline-end:3px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
       var PERSON_SVG = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-inline-end:3px;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>';
-      var COWHEAD_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/></svg>';
+      var COWHEAD_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>';
       var farmsLocFilter = 'all';
       function renderFarmsList() {
         var q = (document.getElementById('farms-search').value || '').trim().toLowerCase();
@@ -6053,6 +6123,7 @@
             '<div style="display:flex; gap:6px; margin-top:12px;">' +
               farmChip('var(--dangerbg)', 'var(--danger)', f.heat, window.t().cattleHeat) +
               farmChip('var(--bgwarm)', 'var(--text1)', f.insem, window.t().insemWord) +
+              farmChip('rgba(37,99,235,0.10)', '#2563EB', f.preg, window.t().statusPregnant) +
               farmChip('var(--warnbg)', '#8A5A00', f.fever, window.t().cattleFever) +
               farmChip('var(--activebg)', 'var(--greenink)', f.milkToday + ' L', window.t().statMilkToday) +
             '</div>' +
@@ -6060,6 +6131,12 @@
         }).join('') || '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">' + window.t().noFarmsMatch + '</p>';
         document.querySelectorAll('.farm-row').forEach(function(row) {
           row.addEventListener('click', function() { openFarmDetail(row.getAttribute('data-farm')); });
+        });
+        document.querySelectorAll('#farms-list .farm-setup-pill').forEach(function(pill) {
+          pill.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openSetupFarm(pill.closest('.farm-row').getAttribute('data-farm'));
+          });
         });
         farmsSyncStats();
         buildFarmsTicker();
@@ -6555,14 +6632,6 @@
         if (farm) renderCattleList(farm);
       });
       document.getElementById('cattle-filter-btn').addEventListener('click', openCattleSheet);
-      // Unactioned-alerts tile: toggle to show only alert cows (Fever/Heat)
-      document.getElementById('farm-detail-alerts-tile').addEventListener('click', function() {
-        cattleAlertsOnly = !cattleAlertsOnly;
-        this.style.outline = cattleAlertsOnly ? '2px solid var(--danger)' : 'none';
-        this.style.outlineOffset = '1px';
-        var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
-        if (farm) renderCattleList(farm);
-      });
       document.addEventListener('click', function() {
         document.querySelectorAll('.cow-kebab-menu').forEach(function(m) { m.style.display = 'none'; });
         document.querySelectorAll('.vet-kebab-menu').forEach(function(m) { m.style.display = 'none'; });
@@ -6861,19 +6930,18 @@
         if (!farm) return;
         currentFarmId = farmId;
         cattleStatusFilter = 'all'; cattleBreedFilter = 'all'; cattleAgeFilter = 'all'; cattleAlertsOnly = false;
-        var atile = document.getElementById('farm-detail-alerts-tile'); if (atile) atile.style.outline = 'none';
+        fdRange = 'today';
         document.getElementById('cattle-search').value = '';
         document.getElementById('farm-detail-name').textContent = loc(farm, 'name');
         document.getElementById('farm-detail-temp').textContent = farm.temp;
-        document.getElementById('farm-detail-cattle').textContent = farm.cattle;
-        document.getElementById('farm-detail-alerts').textContent = farm.alerts;
         refreshFarmDetailHeader(farm);
         renderCattleList(farm);
         farmDetailPage.style.display = 'block';
       }
       function refreshFarmDetailHeader(farm) {
         setFarmManagerLine();
-        document.getElementById('farm-detail-critical').textContent = farm.critical + ' ' + window.t().criticalWord;
+        renderFdTiles(farm);
+        renderFdRumination(farm);
         var lvl = farmTempLevel(farm.temp);
         var lvlEl = document.getElementById('farm-detail-temp-level');
         lvlEl.textContent = window.t()[lvl.k];
@@ -6904,6 +6972,159 @@
         document.getElementById('ac-lact-minus').addEventListener('click', function() { if (lact > 0) { lact--; valEl.textContent = lact; } });
         document.getElementById('ac-lact-plus').addEventListener('click', function() { lact++; valEl.textContent = lact; });
       })();
+
+      // ── Farm-level roadmap: report download/share, range tiles, rumination, setup page ──
+      var vanixToastTimer = null;
+      function showToast(msg) {
+        var el = document.getElementById('vanix-toast');
+        if (!el) {
+          el = document.createElement('div');
+          el.id = 'vanix-toast';
+          el.className = 'en';
+          el.setAttribute('style', 'position:absolute; left:50%; bottom:118px; transform:translateX(-50%); z-index:60; background:#111111; color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); padding:10px 18px; border-radius:20px; box-shadow:0 8px 20px rgba(0,0,0,0.3); opacity:0; transition:opacity 0.3s ease; pointer-events:none; white-space:nowrap; max-width:85%; overflow:hidden; text-overflow:ellipsis;');
+          document.getElementById('flow-root').appendChild(el);
+        }
+        el.textContent = msg;
+        clearTimeout(vanixToastTimer);
+        requestAnimationFrame(function() { el.style.opacity = '1'; });
+        vanixToastTimer = setTimeout(function() { el.style.opacity = '0'; }, 2200);
+      }
+      // Download-report sheet (farm-detail hero)
+      (function() {
+        var sh = document.getElementById('fd-dl-sheet'), bd = document.getElementById('fd-dl-backdrop');
+        function open() { sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto'; }
+        function close() { sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
+        document.getElementById('fd-download-btn').addEventListener('click', open);
+        bd.addEventListener('click', close);
+        document.getElementById('fd-dl-close').addEventListener('click', close);
+        document.getElementById('fd-dl-full').addEventListener('click', function() { close(); showToast('Report downloaded'); });
+        document.getElementById('fd-dl-critical').addEventListener('click', function() { close(); showToast('Critical report downloaded'); });
+      })();
+      // Share report with a vet — reuses the existing vet-picker sheet
+      document.getElementById('fd-share-btn').addEventListener('click', function() {
+        window.openVetSheet(function(vetName) { showToast('Report shared with ' + vetName); });
+      });
+      // Range-scoped count tiles (Fever / Heat / Insemination / Pregnant)
+      var FD_RANGE_STATS = {
+        sunrise:    { today:{fever:1,heat:2,insem:1,preg:2}, week:{fever:2,heat:4,insem:3,preg:2}, month:{fever:3,heat:9,insem:7,preg:3}, custom:{fever:2,heat:5,insem:4,preg:2} },
+        greenvilla: { today:{fever:0,heat:0,insem:0,preg:1}, week:{fever:0,heat:1,insem:1,preg:1}, month:{fever:1,heat:3,insem:2,preg:1}, custom:{fever:0,heat:2,insem:1,preg:1} },
+        stones:     { today:{fever:0,heat:0,insem:0,preg:1}, week:{fever:1,heat:1,insem:0,preg:1}, month:{fever:1,heat:2,insem:2,preg:2}, custom:{fever:1,heat:1,insem:1,preg:1} }
+      };
+      var fdRange = 'today';
+      function fdPaintRangeChips() {
+        document.querySelectorAll('.fd-range-chip').forEach(function(c) {
+          var on = c.getAttribute('data-range') === fdRange;
+          c.style.background = on ? 'var(--activebg)' : 'var(--bgcard)';
+          c.style.borderColor = on ? 'var(--greendeep)' : 'var(--border)';
+          c.style.color = on ? 'var(--greenink)' : 'var(--text1)';
+          c.style.fontWeight = on ? '700' : '600';
+        });
+      }
+      function fdTile(label, color, val) {
+        return '<div class="m-stat-card" style="position:relative; overflow:hidden; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 8px; text-align:center;">' +
+          '<span style="position:absolute; inset-inline-start:0; top:0; bottom:0; width:4px; background:' + color + ';"></span>' +
+          '<p class="en" style="font-size:22px; font-weight:700; color:var(--text1); margin:0;">' + val + '</p>' +
+          '<p style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:' + color + '; margin:4px 0 0;">' + label + '</p>' +
+        '</div>';
+      }
+      function renderFdTiles(farm) {
+        var s = (FD_RANGE_STATS[farm.id] || {})[fdRange] || { fever:0, heat:0, insem:0, preg:0 };
+        var t = window.t();
+        document.getElementById('fd-stat-grid').innerHTML =
+          fdTile(t.cattleFever, 'var(--danger)', s.fever) +
+          fdTile(t.cattleHeat, 'var(--warning)', s.heat) +
+          fdTile(t.insemWord, 'var(--greenink)', s.insem) +
+          fdTile(t.statusPregnant, 'var(--text1)', s.preg);
+        fdPaintRangeChips();
+      }
+      function fdCurrentFarm() { return FARMS.filter(function(f) { return f.id === currentFarmId; })[0]; }
+      var fdRangeSheet = document.getElementById('fd-range-sheet'), fdRangeBd = document.getElementById('fd-range-backdrop');
+      function openFdRangeSheet() { fdRangeSheet.style.transform = 'translateY(0)'; fdRangeBd.style.opacity = '1'; fdRangeBd.style.pointerEvents = 'auto'; }
+      function closeFdRangeSheet() { fdRangeSheet.style.transform = 'translateY(100%)'; fdRangeBd.style.opacity = '0'; fdRangeBd.style.pointerEvents = 'none'; }
+      fdRangeBd.addEventListener('click', closeFdRangeSheet);
+      document.getElementById('fd-range-close').addEventListener('click', closeFdRangeSheet);
+      document.getElementById('fd-range-apply').addEventListener('click', function() {
+        fdRange = 'custom';
+        closeFdRangeSheet();
+        var farm = fdCurrentFarm();
+        if (farm) renderFdTiles(farm);
+      });
+      document.querySelectorAll('.fd-range-chip').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          var r = chip.getAttribute('data-range');
+          if (r === 'custom') { openFdRangeSheet(); return; }
+          fdRange = r;
+          var farm = fdCurrentFarm();
+          if (farm) renderFdTiles(farm);
+        });
+      });
+      // Daily herd rumination pattern + anomaly detection (read-only)
+      var FD_RUMINATION = {
+        sunrise: { pts:[38,41,43,42,39,36,34,38,42,45,46,44,43,42,18,14,20,40,43,44,42,40,39,38], anomaly:{ from:14, to:16, note:'Anomaly detected — rumination dipped 14:00–16:00' } },
+        normal:  { pts:[38,40,42,41,39,36,34,37,41,44,46,45,43,42,41,40,42,44,45,43,41,40,39,38] }
+      };
+      function renderFdRumination(farm) {
+        var box = document.getElementById('fd-rumination');
+        if (!farm.cows.length) { box.innerHTML = ''; return; }
+        var data = FD_RUMINATION[farm.id] || FD_RUMINATION.normal;
+        var anomaly = data.anomaly || null;
+        function xy(v, i) { return (i / (data.pts.length - 1) * 100).toFixed(1) + ',' + (42 - v / 60 * 40).toFixed(1); }
+        var pts = data.pts.map(xy).join(' ');
+        var dipPts = anomaly ? data.pts.slice(anomaly.from - 1, anomaly.to + 2).map(function(v, j) { return xy(v, anomaly.from - 1 + j); }).join(' ') : '';
+        var pill = anomaly
+          ? '<span class="en" style="display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:14px; background:var(--warnbg); font-size:12px; font-weight:600; color:#8A5A00;"><span style="width:7px; height:7px; border-radius:50%; background:var(--warning);"></span>Anomaly</span>'
+          : '<span class="en" style="display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:14px; background:var(--activebg); font-size:12px; font-weight:600; color:var(--greenink);"><span style="width:7px; height:7px; border-radius:50%; background:var(--greendeep);"></span>Normal pattern</span>';
+        var xlabels = ['00:00', '06:00', '12:00', '18:00', '24:00'];
+        box.innerHTML =
+          '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px; margin-top:12px;">' +
+            '<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">' +
+              '<p class="en" style="font-size:13px; font-weight:700; color:var(--text1); margin:0;">Herd rumination — today</p>' + pill +
+            '</div>' +
+            '<svg viewBox="0 0 100 44" preserveAspectRatio="none" style="display:block; width:100%; height:96px; margin-top:12px;">' +
+              '<line x1="0" y1="42" x2="100" y2="42" stroke="var(--divider)" stroke-width="0.5"/>' +
+              '<polyline points="' + pts + '" fill="none" stroke="var(--greendeep)" stroke-width="1.3" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>' +
+              (dipPts ? '<polyline points="' + dipPts + '" fill="none" stroke="var(--warning)" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>' : '') +
+            '</svg>' +
+            '<div class="en" style="display:flex; justify-content:space-between; font-size:9px; color:var(--text2); margin-top:4px;">' + xlabels.map(function(x) { return '<span>' + x + '</span>'; }).join('') + '</div>' +
+            (anomaly ? '<p class="en" style="font-size:12px; font-weight:600; color:#8A5A00; margin:10px 0 0; line-height:1.5;">' + anomaly.note + '</p>' : '') +
+          '</div>';
+      }
+      // ── Setup Farm page (Highland) ──
+      var sfPage = document.getElementById('page-setup-farm');
+      var sfFarmId = null;
+      function openSetupFarm(farmId) {
+        var farm = FARMS.filter(function(f) { return f.id === farmId; })[0];
+        if (!farm) return;
+        sfFarmId = farmId;
+        document.getElementById('sf-farm-name').textContent = loc(farm, 'name');
+        document.getElementById('sf-invite-form').style.display = 'block';
+        document.getElementById('sf-invite-pending').style.display = 'none';
+        document.getElementById('sf-assign-self').style.display = 'block';
+        document.getElementById('sf-assigned').style.display = 'none';
+        document.getElementById('sf-done').style.display = 'none';
+        ['sf-inv-name', 'sf-inv-email', 'sf-inv-phone'].forEach(function(id) { document.getElementById(id).value = ''; });
+        sfPage.style.transform = 'translateY(0)';
+      }
+      function closeSetupFarm() { sfPage.style.transform = 'translateY(100%)'; }
+      document.getElementById('sf-back').addEventListener('click', closeSetupFarm);
+      document.getElementById('sf-inv-send').addEventListener('click', function() {
+        var name = document.getElementById('sf-inv-name').value.trim() || 'Farm manager';
+        document.getElementById('sf-pending-name').textContent = name;
+        document.getElementById('sf-invite-form').style.display = 'none';
+        document.getElementById('sf-invite-pending').style.display = 'flex';
+        document.getElementById('sf-done').style.display = 'block';
+      });
+      document.getElementById('sf-assign-self').addEventListener('click', function() {
+        this.style.display = 'none';
+        document.getElementById('sf-assigned').style.display = 'block';
+        document.getElementById('sf-done').style.display = 'block';
+        var f = FARMS.filter(function(x) { return x.id === sfFarmId; })[0];
+        if (f) { f.status = 'healthy'; f.manager = 'James Redmark'; f.managerHi = 'जेम्स रेडमार्क'; f.managerStatus = 'active'; }
+      });
+      document.getElementById('sf-done').addEventListener('click', function() {
+        closeSetupFarm();
+        renderFarmsList();
+      });
 
 
       // ── Account section ──
