@@ -323,7 +323,8 @@ class _EventsScreenState extends State<EventsScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Events', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
+                          Expanded(child: Text('Events', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor))),
+                          const SizedBox(width: 8),
                           _CountPill(count: openCount),
                         ],
                       ),
