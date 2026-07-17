@@ -76,21 +76,24 @@ class _MilkSummaryContentState extends State<MilkSummaryContent> {
     final maxWeek = _weeks[trend.indexOf(maxVal)];
     final minWeek = _weeks[trend.indexOf(minVal)];
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Milk Log'), actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.download_outlined))]),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+    return Padding(
+      padding: widget.padding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text('TOTAL MILK', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1, color: hintColor)),
-          const SizedBox(height: 6),
-          const Row(
-            children: [
-              Text('38.6 L', style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700)),
-              SizedBox(width: 10),
-              Text('▲ 8% vs yesterday', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-            ],
-          ),
-          const SizedBox(height: 20),
+          if (widget.showTotalHeader) ...[
+            Text('TOTAL MILK', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1, color: hintColor)),
+            const SizedBox(height: 6),
+            const Row(
+              children: [
+                Text('38.6 L', style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700)),
+                SizedBox(width: 10),
+                Text('▲ 8% vs yesterday', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+              ],
+            ),
+            const SizedBox(height: 20),
+          ],
           SizedBox(
             height: 36,
             child: ListView(
