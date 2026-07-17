@@ -336,12 +336,12 @@ class _MilkAddEntryScreenState extends State<MilkAddEntryScreen> {
                             controller: _litresCtrl,
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
                             style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: textColor),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               isDense: true,
                               border: InputBorder.none,
-                              contentPadding: const EdgeInsets.only(bottom: 10),
+                              contentPadding: EdgeInsets.only(bottom: 10),
                               hintText: '0.0',
-                              hintStyle: const TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: hintColor),
+                              hintStyle: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: hintColor),
                             ),
                           ),
                         ),
