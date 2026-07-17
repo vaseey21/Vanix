@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 /// resolving an action card anywhere decrements it everywhere at once.
 class AppState extends ChangeNotifier {
   bool _isDark = false;
-  String _languageCode = 'hi'; // default locale per CLAUDE.md
+  String _languageCode = 'en'; // default locale (per design call: English)
   int _openEventsCount = 14;
   // Persona: 'owner' (full access) or 'farmer' (action-first, restricted).
   // farmCount 'single' vs 'multi' controls the Farmer's Farms behaviour.
