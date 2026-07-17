@@ -183,7 +183,6 @@ class EventsScreen extends StatefulWidget {
 
 class _EventsScreenState extends State<EventsScreen> {
   final int _navIndex = 3;
-  _Tab _tab = _Tab.all;
 
   // P0 — critical
   _VetFlowState _fever = _VetFlowState.initial;
