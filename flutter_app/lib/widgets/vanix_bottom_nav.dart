@@ -252,7 +252,7 @@ class _NavTab extends StatelessWidget {
             Stack(
               clipBehavior: Clip.none,
               children: [
-                Icon(item.icon, size: 20, color: color),
+                item.iconBuilder != null ? item.iconBuilder!(color) : Icon(item.icon, size: 20, color: color),
                 if (item.showDot)
                   const Positioned(top: -2, right: -4, child: _Dot()),
                 if (item.badgeCount > 0)
