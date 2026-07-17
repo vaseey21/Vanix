@@ -168,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () => setState(() => _landing = false),
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(0, 52),
-                                backgroundColor: VanixColors.greenDeep,
+                                backgroundColor: VanixColors.greenInk,
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)),
                               ),
