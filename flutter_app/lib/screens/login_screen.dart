@@ -560,11 +560,14 @@ class _PillButton extends StatelessWidget {
   final String label;
   final bool isDark;
   final VoidCallback onTap;
-  const _PillButton({required this.label, required this.isDark, required this.onTap});
+  // onDark: the over-photo landing variant — dark translucent fill + white
+  // border + white text, matching the Owner persona pill on the left.
+  final bool onDark;
+  const _PillButton({required this.label, required this.isDark, required this.onTap, this.onDark = false});
 
   @override
   Widget build(BuildContext context) {
-    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    final textColor = onDark ? Colors.white : (isDark ? Colors.white : VanixColors.textPrimary);
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
@@ -572,8 +575,8 @@ class _PillButton extends StatelessWidget {
         height: 32,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
-          border: Border.all(color: isDark ? const Color(0x4DFFFFFF) : VanixColors.border),
-          color: isDark ? Colors.black.withValues(alpha: 0.30) : Colors.white.withValues(alpha: 0.55),
+          border: Border.all(color: onDark ? Colors.white.withValues(alpha: 0.35) : (isDark ? const Color(0x4DFFFFFF) : VanixColors.border)),
+          color: onDark ? Colors.black.withValues(alpha: 0.28) : (isDark ? Colors.black.withValues(alpha: 0.30) : Colors.white.withValues(alpha: 0.55)),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
