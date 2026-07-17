@@ -1801,6 +1801,15 @@ class _ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Full-bleed compact photo card (Image display mode): the photo fills the
+    // whole card, cow name/breed top-left, severity badge top-right, short
+    // question + No/Yes over the bottom scrim. Mirrors
+    // #flow-root.display-fullbleed .ev-photo-card in prototype.html, capped at
+    // a compact ~300px height. Only the two-button question states use it;
+    // form/message states fall through to the contained-banner layout below.
+    if (imageMode && photoBg != null && photoQuestion != null && onPhotoYes != null && onPhotoNo != null) {
+      return _buildFullBleedPhotoCard();
+    }
     final accentColor = leftAccentColor ?? border;
     final titleColor = isDark ? Colors.white : VanixColors.textPrimary;
     // Flutter forbids a borderRadius on a border with non-uniform colors/widths,
