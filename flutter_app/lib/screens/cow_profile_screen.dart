@@ -207,7 +207,10 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
       itemBuilder: (context) => [
         PopupMenuItem(value: 'edit', child: Text(FS.t(_lang, 'editWord'))),
         PopupMenuItem(value: 'group', child: Text(FS.t(_lang, 'addToGroup'))),
-        PopupMenuItem(value: 'delete', child: Text(FS.t(_lang, 'deleteWord'))),
+        PopupMenuItem(
+          value: 'delete',
+          child: Text(FS.t(_lang, 'deleteWord'), style: const TextStyle(color: VanixColors.danger)),
+        ),
       ],
     );
   }
