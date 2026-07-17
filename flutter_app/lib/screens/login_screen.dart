@@ -134,9 +134,9 @@ class _LoginScreenState extends State<LoginScreen> {
             body: Stack(
               children: [
                 Positioned.fill(child: _HeroBackground(controller: _videoReady ? _videoCtrl : null)),
-                // Top toggle chips — persona top-LEFT, display-mode + theme
-                // top-RIGHT (mirrors #s1-persona / #s1-displaymode / #s1-theme),
-                // both sitting 16px below the status bar and on opposite edges.
+                // Top bar — persona toggle left, language selector right.
+                // (Display-mode + dark-mode toggles removed: the app is fixed
+                // to image cards + light mode.)
                 SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(14, 16, 14, 0),
@@ -150,9 +150,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           onTap: widget.appState.cyclePersona,
                         ),
                         const Spacer(),
-                        _DisplayModeToggle(imageMode: widget.appState.displayImageMode, onTap: widget.appState.toggleDisplayMode),
-                        const SizedBox(width: 8),
-                        _ThemeToggle(isDark: isDark, onTap: widget.appState.toggleDark),
+                        _PillButton(
+                          label: VanixLanguage.supported.firstWhere((l) => l.code == widget.appState.languageCode).native,
+                          isDark: isDark,
+                          onTap: () => showLanguageSheet(context, current: widget.appState.languageCode, onSelect: widget.appState.setLanguage),
+                        ),
                       ],
                     ),
                   ),
