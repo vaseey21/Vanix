@@ -1792,6 +1792,8 @@ class _ActionCard extends StatelessWidget {
     this.photoQuestion,
     this.onPhotoYes,
     this.onPhotoNo,
+    this.photoNoLabel = 'No',
+    this.photoYesLabel = 'Yes',
     required this.child,
     this.escalated = false,
     this.isDark = false,
