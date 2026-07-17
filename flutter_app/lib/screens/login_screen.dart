@@ -332,6 +332,27 @@ class _PersonaToggle extends StatelessWidget {
   }
 }
 
+/// The real MyBovine logo (same vanix-logo.svg the HTML landing uses).
+/// Falls back to the styled wordmark while loading / when offline.
+class _BrandLogo extends StatelessWidget {
+  const _BrandLogo();
+
+  static const _fallback = Text.rich(TextSpan(children: [
+    TextSpan(text: 'My', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: Colors.white)),
+    TextSpan(text: 'Bovine', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: Color(0xFF4DDE95))),
+  ]));
+
+  @override
+  Widget build(BuildContext context) {
+    return SvgPicture.network(
+      'https://mybovine.ai/assets/logos/vanix-logo.svg',
+      width: 250,
+      placeholderBuilder: (_) => _fallback,
+      errorBuilder: (_, __, ___) => _fallback,
+    );
+  }
+}
+
 class _SheetContainer extends StatelessWidget {
   final bool isDark;
   final Widget child;
