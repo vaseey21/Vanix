@@ -1872,7 +1872,7 @@ class _ActionCard extends StatelessWidget {
     final card = ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
-        onTap: () => _openDetails(context),
+        onTap: null,
         child: Ink(
           height: 300,
           decoration: BoxDecoration(
