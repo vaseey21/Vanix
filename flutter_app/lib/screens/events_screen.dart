@@ -2004,14 +2004,6 @@ class _ActionCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: TextButton(
-                        style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap, alignment: Alignment.centerLeft),
-                        onPressed: () => _openDetails(context),
-                        child: Text('View Details ›', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: isDark ? VanixColors.greenDeep : VanixColors.greenInk)),
-                      ),
-                    ),
                   ],
                 ),
               ),
