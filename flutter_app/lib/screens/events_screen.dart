@@ -295,6 +295,33 @@ class _EventsScreenState extends State<EventsScreen> {
     );
   }
 
+  // Lightweight filter sheet stub — keeps the Filter button functional
+  // without duplicating the full two-pane sheet wiring here.
+  void _openFilterSheet(BuildContext context) {
+    final isDark = widget.appState.isDark;
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: isDark ? const Color(0xFF1C1C1C) : VanixColors.bgCard,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      builder: (context) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Filter', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: isDark ? Colors.white : VanixColors.textPrimary)),
+              const SizedBox(height: 6),
+              const Text('All events are shown.', style: TextStyle(fontSize: 13, color: VanixColors.textHint)),
+              const SizedBox(height: 16),
+              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Close'))),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = widget.appState.isDark;
