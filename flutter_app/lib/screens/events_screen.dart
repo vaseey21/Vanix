@@ -1129,10 +1129,15 @@ class _EventsScreenState extends State<EventsScreen> {
         priority: _Priority.p1,
         channel: channel,
           manager: manager,
+        imageMode: widget.appState.displayImageMode,
         photoBg: 'assets/images/gestation_photo.jpg',
+        photoCowBreed: 'Lakshmi · Ongole',
         title: 'Vet on the way — Lakshmi',
         sub: '$_gestationVetName has been called for the delivery.',
         meta: meta,
+        photoQuestion: 'Delivery successful?',
+        onPhotoNo: () => setState(() { _gestation = _GestationState.deliveryFailed; widget.appState.resolveEvent(); }),
+        onPhotoYes: () => setState(() => _gestation = _GestationState.deliveryForm),
         child: Padding(
           padding: const EdgeInsets.only(top: 12),
           child: Column(
