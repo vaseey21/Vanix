@@ -303,7 +303,7 @@ class _MilkAddEntryScreenState extends State<MilkAddEntryScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('${_date.day}/${_date.month}/${_date.year}', style: TextStyle(fontSize: 15, color: textColor)),
-                          Icon(Icons.calendar_today_outlined, size: 16, color: hintColor),
+                          const Icon(Icons.calendar_today_outlined, size: 16, color: hintColor),
                         ],
                       ),
                     ),
