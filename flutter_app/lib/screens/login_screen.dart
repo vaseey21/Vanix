@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:video_player/video_player.dart';
 import '../i18n/strings.dart';
 import '../state/app_state.dart';
@@ -163,8 +164,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 // MyBovine logo — near the top on the landing screen. Same
                 // vanix-logo.svg the HTML uses (loaded from mybovine.ai, like
                 // the HTML does); styled text is the offline fallback.
-                Align(
-                  alignment: const Alignment(0, -0.62),
+                const Align(
+                  alignment: Alignment(0, -0.62),
                   child: SafeArea(child: _BrandLogo()),
                 ),
                 // Landing CTA — slides out as the sheet slides in.
