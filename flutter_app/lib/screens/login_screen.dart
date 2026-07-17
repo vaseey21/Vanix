@@ -134,32 +134,26 @@ class _LoginScreenState extends State<LoginScreen> {
             body: Stack(
               children: [
                 Positioned.fill(child: _HeroBackground(controller: _videoReady ? _videoCtrl : null)),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 14, top: 4),
-                      child: _PersonaToggle(
-                        label: widget.appState.isOwner
-                            ? 'Owner'
-                            : (widget.appState.isSingleFarm ? 'Farmer · 1' : 'Farmer · N'),
-                        onTap: widget.appState.cyclePersona,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 14, top: 4),
-                      child: Row(
-                        children: [
-                          _DisplayModeToggle(imageMode: widget.appState.displayImageMode, onTap: widget.appState.toggleDisplayMode),
-                          const SizedBox(width: 8),
-                          _ThemeToggle(isDark: isDark, onTap: widget.appState.toggleDark),
-                        ],
-                      ),
+                // Top toggle chips — persona top-LEFT, display-mode + theme
+                // top-RIGHT (mirrors #s1-persona / #s1-displaymode / #s1-theme),
+                // both sitting 16px below the status bar and on opposite edges.
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(14, 16, 14, 0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _PersonaToggle(
+                          label: widget.appState.isOwner
+                              ? 'Owner'
+                              : (widget.appState.isSingleFarm ? 'Farmer · 1' : 'Farmer · N'),
+                          onTap: widget.appState.cyclePersona,
+                        ),
+                        const Spacer(),
+                        _DisplayModeToggle(imageMode: widget.appState.displayImageMode, onTap: widget.appState.toggleDisplayMode),
+                        const SizedBox(width: 8),
+                        _ThemeToggle(isDark: isDark, onTap: widget.appState.toggleDark),
+                      ],
                     ),
                   ),
                 ),
