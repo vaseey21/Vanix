@@ -380,19 +380,14 @@ class _LoginPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textColor = isDark ? Colors.white : VanixColors.textPrimary;
-    final native = VanixLanguage.supported.firstWhere((l) => l.code == currentLanguage).native;
+    // Language selection lives only in the top-right of the landing page —
+    // the login sheet itself carries no language pill.
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 26),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(t.title, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
-            _PillButton(label: native, onTap: onLanguageTap, isDark: isDark),
-          ],
-        ),
+        Text(t.title, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
         const SizedBox(height: 36),
         _FieldLabel(t.email, isDark: isDark),
         _UnderlineField(controller: emailCtrl, hint: t.phEmail, isDark: isDark),
