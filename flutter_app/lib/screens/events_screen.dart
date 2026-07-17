@@ -1883,6 +1883,144 @@ class _ActionCard extends StatelessWidget {
       ],
     );
   }
+
+  Widget _buildFullBleedPhotoCard() {
+    // Severity badge — CRITICAL (p0) / MEDIUM (p1) / LOW (p2,p3).
+    String badgeText;
+    Color badgeColor;
+    switch (priority) {
+      case _Priority.p0:
+        badgeText = 'CRITICAL';
+        badgeColor = VanixColors.danger;
+        break;
+      case _Priority.p1:
+        badgeText = 'MEDIUM';
+        badgeColor = VanixColors.warning;
+        break;
+      case _Priority.p2:
+      case _Priority.p3:
+        badgeText = 'LOW';
+        badgeColor = VanixColors.textHint;
+        break;
+    }
+
+    final cowBreed = photoCowBreed ?? '';
+    final parts = cowBreed.split('·');
+    final cowName = parts.first.trim();
+    final breed = parts.length > 1 ? parts.sublist(1).join('·').trim() : '';
+
+    final noBtn = SizedBox(
+      height: 52,
+      child: OutlinedButton(
+        onPressed: onPhotoNo,
+        style: OutlinedButton.styleFrom(
+          backgroundColor: Colors.white.withValues(alpha: 0.12),
+          foregroundColor: Colors.white,
+          side: BorderSide(color: Colors.white.withValues(alpha: 0.5)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        ),
+        child: Text(photoNoLabel, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white)),
+      ),
+    );
+    final yesBtn = SizedBox(
+      height: 52,
+      child: ElevatedButton(
+        onPressed: onPhotoYes,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: VanixColors.greenInk,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        ),
+        child: Text(photoYesLabel, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white)),
+      ),
+    );
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: SizedBox(
+        height: 300,
+        width: double.infinity,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              photoBg!,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stack) => const ColoredBox(color: Color(0xFF0A2318)),
+            ),
+            // Two-band dark scrim — darker top for the caption, darker bottom
+            // for the question + buttons.
+            const DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xD1000000), Color(0x8C000000), Color(0x00000000),
+                    Color(0x00000000), Color(0xB8000000), Color(0xF2000000),
+                  ],
+                  stops: [0.0, 0.20, 0.33, 0.46, 0.58, 1.0],
+                ),
+              ),
+            ),
+            // Cow name + breed — top-left.
+            Positioned(
+              top: 18,
+              left: 20,
+              right: 68,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(cowName, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white, height: 1.2)),
+                  if (breed.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(breed, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.82))),
+                    ),
+                ],
+              ),
+            ),
+            // Severity badge — top-right.
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(18, 8, 16, 9),
+                decoration: BoxDecoration(
+                  color: badgeColor,
+                  borderRadius: const BorderRadius.only(topRight: Radius.circular(20), bottomLeft: Radius.circular(16)),
+                ),
+                child: Text(badgeText, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 0.66, color: Colors.white)),
+              ),
+            ),
+            // Question + CTAs — pinned bottom.
+            Positioned(
+              left: 20,
+              right: 20,
+              bottom: 20,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(photoQuestion!, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white, height: 1.2)),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(child: noBtn),
+                      const SizedBox(width: 12),
+                      Expanded(child: yesBtn),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 /// Single red circle + "!" badge for escalated P0 cards, replacing the old
