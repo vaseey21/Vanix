@@ -3,11 +3,86 @@ import 'package:flutter/material.dart';
 import '../theme/vanix_theme.dart';
 
 class VanixNavItem {
-  final IconData icon;
+  /// A Material icon, OR provide [iconBuilder] for a custom-painted glyph.
+  final IconData? icon;
+
+  /// Builds a custom icon widget tinted [color] (used for the cow-head Farms
+  /// tab). Takes precedence over [icon] when non-null.
+  final Widget Function(Color color)? iconBuilder;
   final String label;
   final int badgeCount; // 0 = no badge
   final bool showDot;
-  const VanixNavItem({required this.icon, required this.label, this.badgeCount = 0, this.showDot = false});
+  const VanixNavItem({this.icon, this.iconBuilder, required this.label, this.badgeCount = 0, this.showDot = false})
+      : assert(icon != null || iconBuilder != null);
+}
+
+/// Cow-head line icon painted to match the stroke SVG in prototype.html's nav.
+/// Recolours with [color] so it tracks active (greenInk) / inactive states.
+class CowHeadIcon extends StatelessWidget {
+  final Color color;
+  final double size;
+  const CowHeadIcon({super.key, required this.color, this.size = 20});
+
+  @override
+  Widget build(BuildContext context) => CustomPaint(size: Size.square(size), painter: _CowHeadPainter(color));
+}
+
+class _CowHeadPainter extends CustomPainter {
+  final Color color;
+  _CowHeadPainter(this.color);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final s = size.width / 24.0; // SVG viewBox is 24×24
+    canvas.save();
+    canvas.scale(s);
+    final stroke = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.9
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    // Top of head: elliptical arc M6 5.5 a6.3 3.6 0 0 1 12 0
+    final top = Path()..moveTo(6, 5.5);
+    top.arcToPoint(const Offset(18, 5.5), radius: const Radius.elliptical(6.3, 3.6), clockwise: true);
+    canvas.drawPath(top, stroke);
+
+    // Face outline down to the muzzle and back up.
+    final face = Path()
+      ..moveTo(6, 5.5)
+      ..cubicTo(5.4, 8.5, 6.8, 10.8, 8.2, 12.8)
+      ..cubicTo(9.2, 14.2, 9.5, 15.5, 9.5, 17.0)
+      ..arcToPoint(const Offset(14.5, 17.0), radius: const Radius.circular(2.6), clockwise: false)
+      ..cubicTo(14.5, 15.5, 14.8, 14.2, 15.8, 12.8)
+      ..cubicTo(17.2, 10.8, 18.6, 8.5, 18.0, 5.5);
+    canvas.drawPath(face, stroke);
+
+    // Horns.
+    final leftHorn = Path()
+      ..moveTo(6, 5.5)
+      ..cubicTo(4.5, 5.8, 3, 5, 3, 5)
+      ..cubicTo(3, 5, 3.8, 7.3, 6, 7.3);
+    canvas.drawPath(leftHorn, stroke);
+    final rightHorn = Path()
+      ..moveTo(18, 5.5)
+      ..cubicTo(19.5, 5.8, 21, 5, 21, 5)
+      ..cubicTo(21, 5, 20.2, 7.3, 18, 7.3);
+    canvas.drawPath(rightHorn, stroke);
+
+    // Mouth line.
+    canvas.drawLine(const Offset(9.9, 16.3), const Offset(14.1, 16.3), stroke);
+
+    // Nostrils (dots).
+    final dot = Paint()..color = color..style = PaintingStyle.fill;
+    canvas.drawCircle(const Offset(10.6, 18.4), 0.95, dot);
+    canvas.drawCircle(const Offset(13.4, 18.4), 0.95, dot);
+
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(_CowHeadPainter old) => old.color != color;
 }
 
 /// The frosted floating nav bar with the sliding "droplet" capsule.
