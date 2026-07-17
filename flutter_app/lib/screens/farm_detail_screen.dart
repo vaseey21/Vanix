@@ -550,6 +550,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: isDark ? VanixColors.darkSecond : VanixColors.bgCard,
+        border: Border.all(color: isDark ? VanixColors.darkBorder : VanixColors.border),
         borderRadius: BorderRadius.circular(18),
         boxShadow: isDark ? VanixShadow.cardDark : VanixShadow.card,
       ),
