@@ -1842,14 +1842,13 @@ class _ActionCard extends StatelessWidget {
     if (imageMode && photoBg != null) return _buildPhotoCard(context);
     final accentColor = leftAccentColor ?? border;
     final titleColor = isDark ? Colors.white : VanixColors.textPrimary;
+    // Flutter forbids a borderRadius on a border with non-uniform colors/widths,
+    // so the HTML's "1px all + 4px coloured left" can't be a raw Border. We use a
+    // uniform coloured outline (same severity colour the HTML border reads as) and
+    // paint the thicker left accent as a clipped stripe overlay below.
     final decoration = BoxDecoration(
       color: isDark ? const Color(0xFF1C1C1C) : bg,
-      border: Border(
-        top: BorderSide(color: border),
-        bottom: BorderSide(color: border),
-        left: BorderSide(color: accentColor, width: leftAccentWidth == 0 ? 1 : leftAccentWidth),
-        right: BorderSide(color: border),
-      ),
+      border: Border.all(color: accentColor, width: 1.5),
       borderRadius: BorderRadius.circular(16),
     );
 
