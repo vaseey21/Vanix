@@ -1000,6 +1000,7 @@ class _EventsScreenState extends State<EventsScreen> {
           channel: 'App notification · Confirm with vet',
           manager: manager,
           illustrationAssets: const ['assets/images/pregnancy_icon.png'],
+          photoBg: 'assets/images/gestation_photo.jpg',
           title: 'Pregnancy check due — Mohini',
           sub: '21 days since insemination and no heat detected — confirm if she appears pregnant.',
           meta: 'Sunrise Dairy · Belt 91 · inseminated 12 Jun',
@@ -1023,6 +1024,7 @@ class _EventsScreenState extends State<EventsScreen> {
           channel: 'App notification · Confirm with vet',
           manager: manager,
           illustrationAssets: const ['assets/images/pregnancy_icon.png'],
+          photoBg: 'assets/images/gestation_photo.jpg',
           title: 'Pregnancy check due — Mohini',
           sub: '21 days since insemination and no heat detected.',
           meta: 'Sunrise Dairy · Belt 91',
@@ -1046,6 +1048,7 @@ class _EventsScreenState extends State<EventsScreen> {
           channel: 'App notification · Confirm with vet',
           manager: manager,
           illustrationAssets: const ['assets/images/pregnancy_icon.png'],
+          photoBg: 'assets/images/gestation_photo.jpg',
           title: 'Pregnancy check due — Mohini',
           sub: '21 days since insemination and no heat detected.',
           meta: 'Sunrise Dairy · Belt 91',
@@ -1778,167 +1781,6 @@ class _ActionCard extends StatelessWidget {
     this.escalated = false,
     this.isDark = false,
   });
-
-  // Deterministic mock temp/movement series so the detail page's graphs have
-  // something to draw — no real 10-day sensor dataset exists yet. Seeded off
-  // the title so each card gets a stable, slightly different series; the
-  // final ("today") value is always the spike/dip that triggered the alert.
-  // Full-bleed photo card — Image display mode only (Fever, Heat so far):
-  // cow · breed caption over the photo, question + Yes/No (bundled in
-  // `child`) at the bottom on a dark gradient scrim. Bypasses the shared
-  // tinted-card decoration entirely since the photo needs to run edge to
-  // edge, including under the corner badge.
-  Widget _buildPhotoCard(BuildContext context) {
-    // Split "Kajri · Jersey" into name + breed (left-aligned caption).
-    final parts = (photoCowBreed ?? title).split('·');
-    final cowName = parts.first.trim();
-    final breed = parts.length > 1 ? parts.sublist(1).join('·').trim() : '';
-
-    // Severity badge: CRITICAL (p0/red) · MEDIUM (p1/amber) · LOW (p2,p3/grey).
-    late final String sevLabel;
-    late final Color sevColor;
-    switch (priority) {
-      case _Priority.p0:
-        sevLabel = 'CRITICAL';
-        sevColor = VanixColors.danger;
-      case _Priority.p1:
-        sevLabel = 'MEDIUM';
-        sevColor = VanixColors.warning;
-      case _Priority.p2:
-      case _Priority.p3:
-        sevLabel = 'LOW';
-        sevColor = VanixColors.textHint;
-    }
-
-    // Bottom content: short question + bare No/Yes when the flow callbacks are
-    // supplied (initial "needs action" state); otherwise the message/picker
-    // `child` (rendered white over the scrim).
-    final Widget bottom = onPhotoYes != null
-        ? Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                photoQuestion ?? '',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: Colors.white, letterSpacing: -0.3, height: 1.15),
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: onPhotoNo,
-                      style: OutlinedButton.styleFrom(
-                        minimumSize: const Size(0, 52),
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.white.withValues(alpha: 0.12),
-                        side: BorderSide(color: Colors.white.withValues(alpha: 0.5)),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                      ),
-                      child: const Text('No'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: onPhotoYes,
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(0, 52),
-                        backgroundColor: VanixColors.greenInk,
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                      ),
-                      child: const Text('Yes'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          )
-        : DefaultTextStyle.merge(style: const TextStyle(color: Colors.white), child: child);
-
-    final card = ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: SizedBox(
-        height: 430,
-        child: Stack(
-          children: [
-            Positioned.fill(child: Image.asset(photoBg!, fit: BoxFit.cover)),
-            // Two-band scrim: dark top (caption) → clear middle → dark bottom.
-            Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withValues(alpha: 0.82),
-                      Colors.black.withValues(alpha: 0.0),
-                      Colors.black.withValues(alpha: 0.0),
-                      Colors.black.withValues(alpha: 0.72),
-                      Colors.black.withValues(alpha: 0.95),
-                    ],
-                    stops: const [0.0, 0.30, 0.46, 0.62, 1.0],
-                  ),
-                ),
-              ),
-            ),
-            // Name + breed, top-left.
-            PositionedDirectional(
-              top: 18,
-              start: 20,
-              end: 76,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(cowName, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white, height: 1.2)),
-                  if (breed.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: Text(breed, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.82))),
-                    ),
-                ],
-              ),
-            ),
-            // Severity badge, top-right.
-            Positioned(
-              top: 0,
-              right: 0,
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(18, 8, 16, 9),
-                decoration: BoxDecoration(
-                  color: sevColor,
-                  borderRadius: const BorderRadius.only(topRight: Radius.circular(20), bottomLeft: Radius.circular(16)),
-                ),
-                child: Text(sevLabel, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 0.66, color: Colors.white)),
-              ),
-            ),
-            // Question + CTAs (or message) over the bottom scrim.
-            PositionedDirectional(
-              bottom: 16,
-              start: 20,
-              end: 20,
-              child: bottom,
-            ),
-          ],
-        ),
-      ),
-    );
-    if (priority != _Priority.p0) return card;
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        card,
-        if (escalated) const Positioned(top: -6, right: -6, child: _CornerBadge()),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
