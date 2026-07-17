@@ -1527,6 +1527,8 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: 'Reduced rumination this early in her milking cycle — a metabolic condition common just after calving.',
         meta: 'Green Valley Farm · Belt 52 · Day 12 in milk',
         question: 'Does Lakshmi seem lethargic or off her feed?',
+        photoQuestion: 'Lakshmi off feed?',
+        photoCowBreed: 'Lakshmi · Ongole',
         manager: 'Ramesh Kumar',
       );
 
