@@ -581,6 +581,9 @@ class _EventsScreenState extends State<EventsScreen> {
           title: 'Possible pregnancy loss — Mohini',
           sub: 'Sudden drop in rumination with a sustained temperature rise over the last 3 hours.',
           meta: 'Sunrise Dairy · Belt 91 · Day 48 of pregnancy',
+          photoQuestion: 'Mohini at risk?',
+          onPhotoNo: () => setState(() { _abort = _VetFlowState.falseAlarm; widget.appState.resolveEvent(); }),
+          onPhotoYes: () => setState(() => _abort = _VetFlowState.awaitingEmail),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
