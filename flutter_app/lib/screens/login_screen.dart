@@ -347,7 +347,7 @@ class _SheetContainer extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(32, 0, 32, 40),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0x9E101010) : Colors.white.withValues(alpha: 0.72),
+        color: isDark ? const Color(0x9E101010) : Colors.white.withValues(alpha: 0.94),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         border: Border(top: BorderSide(color: Colors.white.withValues(alpha: isDark ? 0.10 : 0.55))),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 32, offset: const Offset(0, -8))],
