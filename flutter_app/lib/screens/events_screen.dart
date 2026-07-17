@@ -1756,6 +1756,15 @@ class _ActionCard extends StatelessWidget {
   // conditionIcon/illustrationAssets when imageMode is true.
   final String? photoBg;
   final String? photoCowBreed;
+  // Full-bleed photo cards use a SHORT question + bare "No"/"Yes" CTAs over the
+  // bottom scrim instead of the verbose `child` (long question + "Yes, fever"
+  // etc.). When onPhotoYes is set, the photo card builds its own question/CTAs
+  // and the real flow runs through these callbacks; the underlying `child`
+  // (used in text mode) keeps the long copy. When onPhotoYes is null (message /
+  // vet-picker / form states) the photo card just renders `child`.
+  final String? photoQuestion;
+  final VoidCallback? onPhotoYes;
+  final VoidCallback? onPhotoNo;
   final Widget child;
   final bool escalated;
   final bool isDark;
