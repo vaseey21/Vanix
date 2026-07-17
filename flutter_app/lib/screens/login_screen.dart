@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: VanixColors.darkPrimary,
             body: Stack(
               children: [
-                const Positioned.fill(child: _HeroBackground()),
+                Positioned.fill(child: _HeroBackground(controller: _videoReady ? _videoCtrl : null)),
                 Align(
                   alignment: Alignment.topLeft,
                   child: SafeArea(
