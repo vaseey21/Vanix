@@ -314,9 +314,9 @@ class _MilkAddEntryScreenState extends State<MilkAddEntryScreen> {
                   const SizedBox(height: 6),
                   Row(
                     children: [
-                      Expanded(child: _SessionPill(label: 'Morning', active: _session == MilkSession.morning, locked: false, onTap: () => _selectSession(MilkSession.morning))),
+                      Expanded(child: _SessionPill(label: 'Morning', active: _session == MilkSession.morning, locked: false, textColor: textColor, borderColor: borderColor, onTap: () => _selectSession(MilkSession.morning))),
                       const SizedBox(width: 8),
-                      Expanded(child: _SessionPill(label: 'Evening', active: _session == MilkSession.evening, locked: _eveningLocked, onTap: () => _selectSession(MilkSession.evening))),
+                      Expanded(child: _SessionPill(label: 'Evening', active: _session == MilkSession.evening, locked: _eveningLocked, textColor: textColor, borderColor: borderColor, onTap: () => _selectSession(MilkSession.evening))),
                     ],
                   ),
                   helperText('Defaults to the current time of day'),
