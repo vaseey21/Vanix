@@ -1501,6 +1501,8 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: 'Temperature up and feeding down — possible udder infection.',
         meta: 'Green Valley Farm · Belt 09',
         question: 'Does Bhoori show swelling or milk changes?',
+        photoQuestion: 'Bhoori — mastitis?',
+        photoCowBreed: 'Bhoori · Sahiwal',
         manager: 'Ramesh Kumar',
       );
 
