@@ -428,7 +428,7 @@ class _LoginPanel extends StatelessWidget {
         _FieldLabel(t.email, isDark: isDark),
         _UnderlineField(controller: emailCtrl, hint: t.phEmail, isDark: isDark),
         const SizedBox(height: 44),
-        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onContinue, child: Text(t.cont))),
+        SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onContinue, style: ElevatedButton.styleFrom(backgroundColor: VanixColors.greenDeep, foregroundColor: Colors.white), child: Text(t.cont))),
       ],
     );
   }

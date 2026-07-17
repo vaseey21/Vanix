@@ -903,6 +903,14 @@
     #flow-root.dark #s8-page #s8-back { background: #1C1C1C !important; border-color: #3A3A3A !important; color: #F5F5F5 !important; }
     #flow-root.dark #s8-page #s8-cancel { color: #F5F5F5 !important; border-color: #3A3A3A !important; }
     #flow-root.dark #s8-page .en[style*="baseline"] { border-bottom-color: #3A3A3A !important; }
+
+    /* Flow overlays (event card sheet, vet picker, form, history, walkthrough,
+       card-detail page) are reparented to #flow-root at load so they render
+       above ANY active screen (incl. the Farmer dashboard) instead of being
+       trapped inside the hidden #page-events. Dark-mode surfaces preserved. */
+    #flow-root.dark #ev-cs-sheet, #flow-root.dark #callvet-sheet, #flow-root.dark #evform-sheet, #flow-root.dark #hist-sheet, #flow-root.dark #ev-seq-sheet { background:#111111 !important; }
+    #flow-root.dark #hist-sheet .ev-row, #flow-root.dark #hist-sheet .ev-rem { background:#1C1C1C !important; border-color:#3A3A3A !important; }
+    #flow-root.dark #hist-sheet .ev-row p, #flow-root.dark #hist-sheet .ev-rem p { color:#F5F5F5 !important; }
   
   </style>
 </head>
@@ -959,7 +967,7 @@
                 <input type="email" id="s1-in-email" placeholder="you@example.com" style="width:100%; background:transparent; border:none; border-bottom:1px solid #CCCCCC; font-size:17px; color:var(--text1); font-family:var(--font-hi); padding:0 0 10px;">
               </div>
 
-              <button id="s1-continue" style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:44px; cursor:pointer;">Continue</button>
+              <button id="s1-continue" style="width:100%; height:52px; background:var(--greendeep); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:44px; cursor:pointer;">Continue</button>
             </div>
 
             <!-- ── PANEL B: OTP (hidden until Continue) ── -->
@@ -7360,6 +7368,27 @@
         evUpdateBadges();
       };
     })();
+    </script>
+<script>
+      /* Lift flow overlays out of the (display:none when inactive) #page-events
+         container up to #flow-root, so the shared event-card flow is visible
+         when launched from the Farmer dashboard or the Cow-profile timeline —
+         not just from the active Events screen. z-index band sits above every
+         screen (max 44): detail-page/walkthrough 45, backdrops 46, sheets 47. */
+      (function(){
+        var fr = document.getElementById('flow-root'); if(!fr) return;
+        var Z = {'ev-detail-page':45,'ev-seq-sheet':45,
+                 'ev-cs-backdrop':46,'ev-cs-sheet':47,
+                 'callvet-backdrop':46,'callvet-sheet':47,
+                 'evform-backdrop':46,'evform-sheet':47,
+                 'hist-backdrop':46,'hist-sheet':47};
+        Object.keys(Z).forEach(function(id){
+          var el = document.getElementById(id);
+          if(!el) return;
+          if(el.parentNode !== fr) fr.appendChild(el);
+          el.style.zIndex = String(Z[id]);
+        });
+      })();
     </script>
 </body>
 </html>
