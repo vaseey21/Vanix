@@ -409,23 +409,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
   // ── Two half cards ──
   Widget _twoCards() {
     return Row(children: [
-      Expanded(child: _miniCard('2', 'dashEditsApproval', _text1)),
+      // Pending milk edits live in the Milk tab — tapping goes there.
+      Expanded(child: _miniCard('2', 'dashEditsApproval', _text1, onTap: () => _onNavTap(2))),
       const SizedBox(width: 12),
-      Expanded(child: _miniCard('3', 'dashMilkMissing', VanixColors.warning)),
+      Expanded(child: _miniCard('3', 'dashMilkMissing', VanixColors.warning, onTap: () => _onNavTap(2))),
     ]);
   }
 
-  Widget _miniCard(String num, String key, Color numColor) {
-    return Container(
-      decoration: _cardDeco(),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(num, style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: numColor)),
-          const SizedBox(height: 6),
-          Text(_t(key), style: TextStyle(fontSize: 13, height: 1.35, color: _text1)),
-        ],
+  Widget _miniCard(String num, String key, Color numColor, {VoidCallback? onTap}) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(18),
+      child: Container(
+        decoration: _cardDeco(),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(num, style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: numColor)),
+            const SizedBox(height: 6),
+            Text(_t(key), style: TextStyle(fontSize: 13, height: 1.35, color: _text1)),
+          ],
+        ),
       ),
     );
   }
