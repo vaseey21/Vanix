@@ -334,9 +334,18 @@ class _PersonaToggle extends StatelessWidget {
 }
 
 /// The real MyBovine logo (same vanix-logo.svg the HTML landing uses).
-/// Falls back to the styled wordmark while loading / when offline.
-class _BrandLogo extends StatelessWidget {
+/// Fetched defensively: renders the SVG only if the download really returned
+/// SVG markup; otherwise (offline, tests, bad response) shows the styled
+/// wordmark fallback — no uncaught parse errors.
+class _BrandLogo extends StatefulWidget {
   const _BrandLogo();
+
+  @override
+  State<_BrandLogo> createState() => _BrandLogoState();
+}
+
+class _BrandLogoState extends State<_BrandLogo> {
+  String? _svg;
 
   static const _fallback = Text.rich(TextSpan(children: [
     TextSpan(text: 'My', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: Colors.white)),
@@ -344,13 +353,30 @@ class _BrandLogo extends StatelessWidget {
   ]));
 
   @override
+  void initState() {
+    super.initState();
+    _fetch();
+  }
+
+  Future<void> _fetch() async {
+    try {
+      final client = HttpClient();
+      final req = await client.getUrl(Uri.parse('https://mybovine.ai/assets/logos/vanix-logo.svg'));
+      final res = await req.close();
+      if (res.statusCode == 200) {
+        final body = await res.transform(utf8.decoder).join();
+        if (body.contains('<svg') && mounted) setState(() => _svg = body);
+      }
+      client.close();
+    } catch (_) {
+      // Keep the wordmark fallback.
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SvgPicture.network(
-      'https://mybovine.ai/assets/logos/vanix-logo.svg',
-      width: 250,
-      placeholderBuilder: (_) => _fallback,
-      errorBuilder: (_, __, ___) => _fallback,
-    );
+    if (_svg == null) return _fallback;
+    return SvgPicture.string(_svg!, width: 250);
   }
 }
 
