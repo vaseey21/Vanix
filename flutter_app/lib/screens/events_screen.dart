@@ -1786,20 +1786,6 @@ class _ActionCard extends StatelessWidget {
   // something to draw — no real 10-day sensor dataset exists yet. Seeded off
   // the title so each card gets a stable, slightly different series; the
   // final ("today") value is always the spike/dip that triggered the alert.
-  List<double> _mockTemps() {
-    final h = title.hashCode;
-    final base = 38.2 + (h % 5) * 0.1;
-    return List.generate(9, (i) => base + ((h >> i) % 4) * 0.08)..add(base + 0.9);
-  }
-
-  List<int> _mockMoves() {
-    // Rise in temperature is a temperature-only signal — movement stays
-    // flat/normal, unlike the other cards where it also spikes.
-    if (title.startsWith('Rise in temperature')) return List.filled(10, 4);
-    final h = title.hashCode;
-    return List.generate(9, (i) => 3 + ((h >> i) % 5))..add(9 + (h % 3));
-  }
-
   // Full-bleed photo card — Image display mode only (Fever, Heat so far):
   // cow · breed caption over the photo, question + Yes/No (bundled in
   // `child`) at the bottom on a dark gradient scrim. Bypasses the shared
