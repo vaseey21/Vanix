@@ -1800,68 +1800,6 @@ class _ActionCard extends StatelessWidget {
     return List.generate(9, (i) => 3 + ((h >> i) % 5))..add(9 + (h % 3));
   }
 
-  void _openDetails(BuildContext context) {
-    String label;
-    Color pBg, pFg;
-    bool outline = false;
-    Color? borderColor;
-    switch (priority) {
-      case _Priority.p0:
-        label = 'P0 · CRITICAL';
-        pBg = const Color(0xFF8B2800);
-        pFg = Colors.white;
-        break;
-      case _Priority.p1:
-        label = 'P1 · ACTIONABLE';
-        pBg = VanixColors.warningInk;
-        pFg = Colors.white;
-        break;
-      case _Priority.p2:
-        label = 'P2 · WARNING';
-        pBg = VanixColors.warningBg;
-        pFg = VanixColors.warningInk;
-        outline = true;
-        borderColor = VanixColors.warning;
-        break;
-      case _Priority.p3:
-        label = 'P3 · WARNING';
-        pBg = VanixColors.bgCard;
-        pFg = VanixColors.textHint;
-        outline = true;
-        borderColor = VanixColors.border;
-        break;
-    }
-    const breedByName = {'Kajri': 'Jersey', 'Mohini': 'Gir/Sahiwal', 'Ganga': 'Ongole', 'Gauri': 'Desi', 'Lakshmi': 'Ongole'};
-    final hasIllustration = avatarEmoji != null || conditionIcon != null || illustrationAssets != null;
-    final cowName = title.contains('—') ? title.split('—').last.trim() : title.split(' ').first;
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => CardDetailScreen(
-        title: title,
-        sub: sub,
-        meta: meta,
-        manager: manager,
-        priorityLabel: label,
-        priorityBg: pBg,
-        priorityFg: pFg,
-        priorityOutline: outline,
-        priorityBorderColor: borderColor,
-        isDark: isDark,
-        temps: _mockTemps(),
-        moves: _mockMoves(),
-        moveIsFlat: _mockMoves().toSet().length == 1,
-        cta: child,
-        illustrationEmoji: (conditionIcon == null && illustrationAssets == null) ? avatarEmoji : null,
-        conditionIcon: conditionIcon,
-        conditionIconColor: conditionIconColor,
-        illustrationAssets: illustrationAssets,
-        cowName: hasIllustration ? cowName : null,
-        cowBreed: hasIllustration ? breedByName[cowName] : null,
-        illustrationTint: bg,
-        illustrationBorder: border,
-      ),
-    ));
-  }
-
   // Full-bleed photo card — Image display mode only (Fever, Heat so far):
   // cow · breed caption over the photo, question + Yes/No (bundled in
   // `child`) at the bottom on a dark gradient scrim. Bypasses the shared
