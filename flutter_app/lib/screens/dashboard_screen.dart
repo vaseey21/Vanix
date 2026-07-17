@@ -140,17 +140,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const Spacer(),
           Flexible(
-            child: Container(
-              height: 38,
-              padding: const EdgeInsetsDirectional.symmetric(horizontal: 14),
-              decoration: BoxDecoration(color: _cardBg, borderRadius: BorderRadius.circular(19), border: Border.all(color: _border)),
-              child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(Icons.home_outlined, size: 15, color: _text1),
-                const SizedBox(width: 8),
-                Flexible(child: Text('${_t('dashAllFarms')} (3)', overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1))),
-                const SizedBox(width: 4),
-                Icon(Icons.keyboard_arrow_down, size: 16, color: _text1),
-              ]),
+            child: InkWell(
+              onTap: _openFarmSelector,
+              borderRadius: BorderRadius.circular(19),
+              child: Container(
+                height: 38,
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 14),
+                decoration: BoxDecoration(color: _cardBg, borderRadius: BorderRadius.circular(19), border: Border.all(color: _border)),
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Flexible(child: Text(_farmSelLabel, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1))),
+                  const SizedBox(width: 4),
+                  Icon(Icons.keyboard_arrow_down, size: 16, color: _text1),
+                ]),
+              ),
             ),
           ),
         ],
