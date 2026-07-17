@@ -422,7 +422,7 @@ class _SessionPill extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: active ? VanixColors.greenInk : Colors.transparent,
-            border: Border.all(color: active ? VanixColors.greenInk : VanixColors.border),
+            border: Border.all(color: active ? VanixColors.greenInk : borderColor),
             borderRadius: BorderRadius.circular(21),
           ),
           child: Text(
@@ -430,7 +430,7 @@ class _SessionPill extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: active ? FontWeight.w600 : FontWeight.w500,
-              color: active ? Colors.white : VanixColors.textPrimary,
+              color: active ? Colors.white : textColor,
             ),
           ),
         ),
