@@ -13,11 +13,10 @@ enum _Panel { login, otp }
 /// Login → OTP → Dashboard — pure OTP login, no password anywhere. Mirrors
 /// the #s1-sheet flow in vanix_screens.html panel-for-panel.
 ///
-/// NOTE for dev: the HTML version plays a looping hero video behind the sheet
-/// (assets/hero.mp4) that fades in before the sheet slides up. Swap the
-/// `_HeroBackground` placeholder below for a real video_player widget once
-/// the asset pipeline is wired up — the timing/opacity choreography is a
-/// straightforward port of the CSS transition (`opacity 2.2s ease`).
+/// The HTML version plays a looping, muted, auto-playing hero video behind the
+/// sheet (assets/images/hero.mp4) with a dark scrim over it. `_HeroBackground`
+/// wires that up via video_player, fading the video in over the fallback
+/// gradient (mirrors the CSS `opacity 2.2s ease`).
 class LoginScreen extends StatefulWidget {
   final AppState appState;
   const LoginScreen({super.key, required this.appState});
