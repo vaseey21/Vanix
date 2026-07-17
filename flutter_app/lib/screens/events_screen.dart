@@ -1764,6 +1764,9 @@ class _ActionCard extends StatelessWidget {
   final String? photoQuestion;
   final VoidCallback? onPhotoYes;
   final VoidCallback? onPhotoNo;
+  // Short CTA labels for the full-bleed photo card (default No / Yes).
+  final String photoNoLabel;
+  final String photoYesLabel;
   final Widget child;
   final bool escalated;
   final bool isDark;
