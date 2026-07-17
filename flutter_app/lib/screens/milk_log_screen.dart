@@ -311,10 +311,11 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
             ),
             ),
           ),
-          // FAB — sits above the floating nav bar (mirrors #s7-fab right:18 bottom:104)
+          // FAB — sits above the floating nav bar (mirrors #s7-fab right:18 bottom:104),
+          // lifted by the device's bottom safe-area so it never overlaps the bar.
           Positioned(
             right: 18,
-            bottom: 104,
+            bottom: 104 + MediaQuery.of(context).padding.bottom,
             child: SizedBox(
               width: 56,
               height: 56,
