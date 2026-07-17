@@ -313,54 +313,23 @@ class _EventsScreenState extends State<EventsScreen> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
                   decoration: BoxDecoration(color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm, boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 28, offset: const Offset(0, 12))]),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(child: Text('Events', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor))),
-                          const SizedBox(width: 8),
-                          _CountPill(count: openCount),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Expanded(child: Text('Health, breeding and reminders across all your farms', style: TextStyle(fontSize: 12, color: VanixColors.textHint))),
-                          TextButton(
-                            style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-                            onPressed: () => _showFullCycleSheet(context),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text('View full cycle', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: isDark ? VanixColors.greenDeep : VanixColors.greenInk)),
-                                Icon(Icons.chevron_right, size: 14, color: isDark ? VanixColors.greenDeep : VanixColors.greenInk),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _TabChip(label: 'All', active: _tab == _Tab.all, isDark: isDark, onTap: () => setState(() => _tab = _Tab.all)),
+                      // Tapping the title opens the full-cycle walkthrough
+                      // (mirrors ev-title-btn in the HTML).
+                      Flexible(
+                        child: InkWell(
+                          onTap: () => _showFullCycleSheet(context),
+                          child: Text('Events', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
+                        ),
+                      ),
                       const SizedBox(width: 8),
-                      _TabChip(label: 'Needs action', active: _tab == _Tab.action, isDark: isDark, onTap: () => setState(() => _tab = _Tab.action)),
-                      const SizedBox(width: 8),
-                      _TabChip(label: 'Warnings', active: _tab == _Tab.warnings, isDark: isDark, onTap: () => setState(() => _tab = _Tab.warnings)),
-                      const SizedBox(width: 8),
-                      _TabChip(label: 'Reminders', active: _tab == _Tab.reminders, isDark: isDark, onTap: () => setState(() => _tab = _Tab.reminders)),
+                      _FilterButton(isDark: isDark, onTap: () => _openFilterSheet(context)),
                     ],
                   ),
                 ),
-                if (_tab == _Tab.all || _tab == _Tab.action)
+                if (true)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
                     child: Column(
