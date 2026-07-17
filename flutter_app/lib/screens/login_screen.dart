@@ -153,6 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _PillButton(
                           label: VanixLanguage.supported.firstWhere((l) => l.code == widget.appState.languageCode).native,
                           isDark: isDark,
+                          onDark: true,
                           onTap: () => showLanguageSheet(context, current: widget.appState.languageCode, onSelect: widget.appState.setLanguage),
                         ),
                       ],
