@@ -1428,7 +1428,7 @@ class _EventsScreenState extends State<EventsScreen> {
           priority: _Priority.p2,
           channel: 'App inbox · Physical inspection',
           manager: manager,
-          imageMode: isDark ? false : true,
+          imageMode: widget.appState.displayImageMode,
           photoBg: 'assets/images/fever_photo.jpg',
           photoCowBreed: photoCowBreed,
           title: title,
