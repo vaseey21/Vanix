@@ -605,7 +605,7 @@ class _FieldLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
-      child: Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1.1, color: isDark ? const Color(0xA6FFFFFF) : VanixColors.textHint)),
+      child: Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: 1.1, color: isDark ? const Color(0xA6FFFFFF) : VanixColors.textPrimary)),
     );
   }
 }
