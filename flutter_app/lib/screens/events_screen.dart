@@ -1514,6 +1514,8 @@ class _EventsScreenState extends State<EventsScreen> {
         sub: 'Barely standing and resting far more than usual — possible leg or hoof issue.',
         meta: 'Green Valley Farm · Belt 18',
         question: 'Does Dhauli seem to be limping?',
+        photoQuestion: 'Dhauli limping?',
+        photoCowBreed: 'Dhauli · Gir',
         manager: 'Ramesh Kumar',
       );
 
