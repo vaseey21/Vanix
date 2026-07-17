@@ -127,6 +127,51 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   TextStyle get _secLbl => const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 0.6, color: VanixColors.textHint);
 
+  String get _farmSelLabel {
+    if (_farmSel == 'all') return '${_t('dashAllFarms')} (${kFarms.length})';
+    return kFarms.firstWhere((f) => f.id == _farmSel).nm(_lang);
+  }
+
+  void _openFarmSelector() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        Widget row(String id, String label) {
+          final on = _farmSel == id;
+          return InkWell(
+            onTap: () {
+              setState(() => _farmSel = id);
+              Navigator.of(ctx).pop();
+            },
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 48),
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 20),
+              alignment: AlignmentDirectional.centerStart,
+              child: Row(children: [
+                Expanded(child: Text(label, style: TextStyle(fontSize: 15, fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: _text1))),
+                if (on) const Icon(Icons.check, size: 18, color: VanixColors.greenInk),
+              ]),
+            ),
+          );
+        }
+
+        return Container(
+          decoration: BoxDecoration(color: _cardBg, borderRadius: const BorderRadius.vertical(top: Radius.circular(24))),
+          padding: const EdgeInsets.only(top: 8, bottom: 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(width: 36, height: 4, margin: const EdgeInsets.only(bottom: 10), decoration: BoxDecoration(color: _border, borderRadius: BorderRadius.circular(2))),
+              row('all', '${_t('dashAllFarms')} (${kFarms.length})'),
+              for (final f in kFarms) row(f.id, f.nm(_lang)),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   // ── Header: logo (left) + farm selector (right). SafeArea (top) already
   // clears the device status bar; this just adds a little breathing room. ──
   Widget _header() {
