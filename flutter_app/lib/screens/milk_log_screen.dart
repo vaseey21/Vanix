@@ -239,11 +239,6 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
     final minE = _minEntry;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: VanixColors.darkPrimary,
-        onPressed: () => _openAddEntry(),
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
       body: Stack(
         children: [
           Positioned.fill(
@@ -252,69 +247,10 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
               child: ListView(
               padding: const EdgeInsets.only(bottom: 120),
               children: [
-                Container(
-                  padding: const EdgeInsets.fromLTRB(16, 18, 16, 20),
-                  decoration: BoxDecoration(color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm, boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 28, offset: const Offset(0, 12))]),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Milk Log', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
-                          Row(
-                            children: [
-                              _PeriodPill(
-                                label: _period,
-                                isDark: isDark,
-                                onTap: () => showOptionSheet(
-                                  context: context,
-                                  title: 'Show data for',
-                                  options: const ['Today', 'This Week', 'This Month', 'This Year', 'Custom…'],
-                                  current: _period,
-                                  onSelect: (v) => setState(() => _period = v),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              _IconCircle(icon: Icons.filter_list, isDark: isDark, onTap: () => showMilkFilterSheet(context, current: _filter, onApply: (f) => setState(() => _filter = f))),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      const Text('TOTAL MILK', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1, color: VanixColors.textHint)),
-                      const SizedBox(height: 6),
-                      Row(
-                        children: [
-                          Text('${total.toStringAsFixed(1)} L', style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: textColor)),
-                          const SizedBox(width: 10),
-                          const Flexible(child: Text('▲ 8% vs yesterday', overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk))),
-                          const Spacer(),
-                          _IconCircle(icon: Icons.download_outlined, isDark: isDark, onTap: () {}),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(child: _StatBox(value: '${_visibleTodayEntries.length}', label: 'Cows milked', isDark: isDark)),
-                          const SizedBox(width: 8),
-                          Expanded(child: _StatBox(value: maxE != null ? '${maxE.litres} L' : '—', label: maxE != null ? 'Max — ${maxE.cow}' : 'Max', isDark: isDark)),
-                          const SizedBox(width: 8),
-                          Expanded(child: _StatBox(value: minE != null ? '${minE.litres} L' : '—', label: minE != null ? 'Min — ${minE.cow}' : 'Min', isDark: isDark)),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton.icon(
-                          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => MilkSummaryScreen(appState: widget.appState))),
-                          icon: const Icon(Icons.chevron_right, size: 16, color: VanixColors.greenInk),
-                          label: const Text('View complete summary', style: TextStyle(color: VanixColors.greenInk, fontWeight: FontWeight.w600)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _buildHero(isDark, textColor, total, maxE, minE),
+                if (_showSummary)
+                  MilkSummaryContent(appState: widget.appState, padding: const EdgeInsets.fromLTRB(20, 16, 20, 0))
+                else ...[
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
                   child: SizedBox(
