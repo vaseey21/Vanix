@@ -306,13 +306,102 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                     ],
                   ),
                 ),
+                ],
               ],
             ),
+            ),
+          ),
+          // FAB — sits above the floating nav bar (mirrors #s7-fab right:18 bottom:104)
+          Positioned(
+            right: 18,
+            bottom: 104,
+            child: SizedBox(
+              width: 56,
+              height: 56,
+              child: FloatingActionButton(
+                backgroundColor: VanixColors.darkPrimary,
+                elevation: 6,
+                onPressed: () => _openAddEntry(),
+                child: const Icon(Icons.add, color: Colors.white),
+              ),
             ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: VanixBottomNav(isDark: isDark, selectedIndex: _navIndex, onTap: _onNavTap, items: buildVanixNavItems(t, widget.appState)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHero(bool isDark, Color textColor, double total, MilkEntry? maxE, MilkEntry? minE) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 18, 16, 20),
+      decoration: BoxDecoration(
+        color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm,
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(14)),
+        // Shadow drops while the summary is expanded so hero + summary read as one card.
+        boxShadow: _showSummary ? null : [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 28, offset: const Offset(0, 12))],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Milk Log', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
+              Row(
+                children: [
+                  _PeriodPill(
+                    label: _period,
+                    isDark: isDark,
+                    onTap: () => showOptionSheet(
+                      context: context,
+                      title: 'Show data for',
+                      options: const ['Today', 'This Week', 'This Month', 'This Year', 'Custom…'],
+                      current: _period,
+                      onSelect: (v) => setState(() => _period = v),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  // Top-right control is always the FILTER funnel (opens the milk filter sheet) —
+                  // in both the normal log view and the expanded summary view.
+                  _IconCircle(icon: Icons.filter_alt_outlined, isDark: isDark, onTap: () => showMilkFilterSheet(context, current: _filter, onApply: (f) => setState(() => _filter = f))),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          const Text('TOTAL MILK', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 1, color: VanixColors.textHint)),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              Text('${total.toStringAsFixed(1)} L', style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: textColor)),
+              const SizedBox(width: 10),
+              const Text('▲ 8% vs yesterday', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+              const Spacer(),
+              _IconCircle(icon: Icons.download_outlined, isDark: isDark, onTap: () {}),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(child: _StatBox(value: '${_visibleTodayEntries.length}', label: 'Cows milked', isDark: isDark)),
+              const SizedBox(width: 8),
+              Expanded(child: _StatBox(value: maxE != null ? '${maxE.litres} L' : '—', label: maxE != null ? 'Max — ${maxE.cow}' : 'Max', isDark: isDark)),
+              const SizedBox(width: 8),
+              Expanded(child: _StatBox(value: minE != null ? '${minE.litres} L' : '—', label: minE != null ? 'Min — ${minE.cow}' : 'Min', isDark: isDark)),
+            ],
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () => setState(() => _showSummary = !_showSummary),
+              icon: Icon(_showSummary ? Icons.expand_less : Icons.chevron_right, size: 16, color: VanixColors.greenInk),
+              label: Text(_showSummary ? 'Hide complete summary' : 'View complete summary', style: const TextStyle(color: VanixColors.greenInk, fontWeight: FontWeight.w600)),
+            ),
           ),
         ],
       ),
