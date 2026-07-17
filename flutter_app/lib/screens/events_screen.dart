@@ -379,7 +379,7 @@ class _EventsScreenState extends State<EventsScreen> {
                       ],
                     ),
                   ),
-                if (_tab == _Tab.all || _tab == _Tab.reminders)
+                if (true)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
                     child: Column(
