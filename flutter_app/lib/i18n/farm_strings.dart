@@ -241,7 +241,7 @@ class FS {
       'dashMilkMissing': 'आज छूटे दूध सत्र', 'dashInsemWindow': 'गर्भाधान विंडो', 'dashLeft': 'बाकी',
       'dashFarmsNeedAction': 'ध्यान चाहिए खेत', 'dashOffline': 'ऑफ़लाइन', 'dashTodaySchedule': 'आज का कार्यक्रम',
       'dashVaccDrive': 'टीकाकरण अभियान', 'dashStartsIn': '15 मिनट में शुरू', 'dashVetVisit': 'पशु चिकित्सक भेंट', 'dashMilkLogging': 'शाम की दूध लॉगिंग',
-      'dashThisWeek': 'इस सप्ताह', 'dashFmd': 'खुरपका टीकाकरण', 'dashCows': 'गायें', 'dashRemindersNote': '7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं',
+      'dashThisWeek': 'इस सप्ताह', 'dashFmd': 'खुरपका टीकाकरण', 'dashCows': 'गायें', 'dashDays': 'दि', 'dashRemindersNote': '7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं',
       'dashGoodNews': 'अच्छी खबर', 'dashRecovered': 'ठीक हो गई', 'dashFeverCaught': 'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', 'dashDaysAgo': 'दिन पहले',
       'dashConfPreg': 'गर्भ की पुष्टि', 'dashInseminated': 'गर्भाधान', 'dashConfYesterday': 'कल पुष्टि हुई',
       'dashCalved': 'ब्याई', 'dashHealthyCalf': 'स्वस्थ बछड़ा, अब दूध लॉग में', 'dashYesterday': 'कल', 'dashTriageDone': 'दर्ज — धन्यवाद', 'dashUpdates': 'अपडेट', 'dashToday': 'आज',
