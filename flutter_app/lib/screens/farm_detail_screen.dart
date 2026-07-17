@@ -511,7 +511,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
               border: Border.all(color: isDark ? VanixColors.darkBorder : VanixColors.border),
               borderRadius: BorderRadius.circular(14),
             ),
-            child: Icon(Icons.filter_list, size: 18, color: textColor),
+            child: Icon(Icons.filter_alt_outlined, size: 18, color: textColor),
           ),
         ),
       ],
