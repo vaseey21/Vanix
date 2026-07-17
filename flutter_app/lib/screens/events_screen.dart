@@ -1413,6 +1413,8 @@ class _EventsScreenState extends State<EventsScreen> {
     required String sub,
     required String meta,
     required String question,
+    required String photoQuestion,
+    required String photoCowBreed,
     String? manager,
   }) {
     switch (state) {
@@ -1426,10 +1428,17 @@ class _EventsScreenState extends State<EventsScreen> {
           priority: _Priority.p2,
           channel: 'App inbox · Physical inspection',
           manager: manager,
+          imageMode: isDark ? false : true,
           photoBg: 'assets/images/fever_photo.jpg',
+          photoCowBreed: photoCowBreed,
           title: title,
           sub: sub,
           meta: meta,
+          photoQuestion: photoQuestion,
+          photoNoLabel: 'No',
+          photoYesLabel: 'Flag it',
+          onPhotoNo: () => onChange(_InspectState.falseAlarm),
+          onPhotoYes: () => onChange(_InspectState.flagged),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
