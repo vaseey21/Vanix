@@ -1265,3 +1265,62 @@ class _Opt {
   final String value, label;
   const _Opt(this.value, this.label);
 }
+
+/// Paints the herd rumination sparkline (24 hourly points, 0–60 scale) with
+/// an optional 14:00–16:00 anomaly-dip segment in warning color.
+class _RuminationPainter extends CustomPainter {
+  final List<double> points;
+  final bool anomaly;
+  const _RuminationPainter({required this.points, required this.anomaly});
+
+  Offset _pt(Size size, int i) {
+    final x = i / (points.length - 1) * size.width;
+    final y = size.height - 4 - (points[i] / 60 * (size.height - 8));
+    return Offset(x, y);
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final basePaint = Paint()
+      ..color = VanixColors.greenDeep
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.6
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    final path = Path();
+    for (var i = 0; i < points.length; i++) {
+      final p = _pt(size, i);
+      if (i == 0) {
+        path.moveTo(p.dx, p.dy);
+      } else {
+        path.lineTo(p.dx, p.dy);
+      }
+    }
+    canvas.drawPath(path, basePaint);
+
+    if (anomaly) {
+      // Highlight the 14:00–16:00 dip (indices 14..16) in warning color.
+      final dipPaint = Paint()
+        ..color = VanixColors.warning
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.2
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round;
+      final dipPath = Path();
+      const from = 13, to = 17;
+      for (var i = from; i <= to && i < points.length; i++) {
+        final p = _pt(size, i);
+        if (i == from) {
+          dipPath.moveTo(p.dx, p.dy);
+        } else {
+          dipPath.lineTo(p.dx, p.dy);
+        }
+      }
+      canvas.drawPath(dipPath, dipPaint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _RuminationPainter oldDelegate) => oldDelegate.points != points || oldDelegate.anomaly != anomaly;
+}
