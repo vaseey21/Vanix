@@ -1083,6 +1083,277 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   }
 }
 
+// ── Report period bottom sheet — Today/This week/This month/Custom (From/To)
+// then "Download report" -> close + toast. Mirrors #cow-report-sheet in
+// prototype.html. Mock/demo only — no real file is produced. ──
+class _ReportPeriodSheet extends StatefulWidget {
+  final bool isDark;
+  final String lang;
+  final VoidCallback onDownloaded;
+  const _ReportPeriodSheet({required this.isDark, required this.lang, required this.onDownloaded});
+
+  @override
+  State<_ReportPeriodSheet> createState() => _ReportPeriodSheetState();
+}
+
+class _ReportPeriodSheetState extends State<_ReportPeriodSheet> {
+  String _period = 'today';
+  DateTime? _from;
+  DateTime? _to;
+
+  Color get _text1 => widget.isDark ? Colors.white : VanixColors.textPrimary;
+  Color get _border => widget.isDark ? VanixColors.darkBorder : VanixColors.border;
+  String _t(String k) => FS.t(widget.lang, k);
+
+  Future<void> _pick(bool from) async {
+    final d = await showDatePicker(
+      context: context,
+      initialDate: DateTime(2026, 7, from ? 13 : 20),
+      firstDate: DateTime(2024),
+      lastDate: DateTime(2027),
+    );
+    if (d == null) return;
+    setState(() { if (from) { _from = d; } else { _to = d; } });
+  }
+
+  Widget _radioRow(String value, String label) {
+    return InkWell(
+      onTap: () => setState(() => _period = value),
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 44),
+        child: Row(children: [
+          Radio<String>(value: value, groupValue: _period, activeColor: VanixColors.greenInk, onChanged: (v) => setState(() => _period = v!)),
+          Text(label, style: TextStyle(fontSize: 14, color: _text1)),
+        ]),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bg = widget.isDark ? VanixColors.darkSecond : Colors.white;
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        decoration: BoxDecoration(color: bg, borderRadius: const BorderRadius.vertical(top: Radius.circular(VanixRadius.pill))),
+        padding: const EdgeInsets.fromLTRB(VanixSpacing.xl, VanixSpacing.md, VanixSpacing.xl, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: _border, borderRadius: BorderRadius.circular(2)))),
+            const SizedBox(height: VanixSpacing.md),
+            Text(_t('downloadReportTitle'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: _text1)),
+            const SizedBox(height: VanixSpacing.sm),
+            _radioRow('today', _t('reportPeriodToday')),
+            _radioRow('week', _t('reportPeriodWeek')),
+            _radioRow('month', _t('reportPeriodMonth')),
+            _radioRow('custom', _t('reportPeriodCustom')),
+            if (_period == 'custom') ...[
+              const SizedBox(height: 8),
+              Row(children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => _pick(true),
+                    style: OutlinedButton.styleFrom(minimumSize: const Size(0, 46), side: BorderSide(color: _border), foregroundColor: _text1),
+                    child: Text(_from == null ? FS.t(widget.lang, 'fdFrom') : '${_from!.day}/${_from!.month}/${_from!.year}'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => _pick(false),
+                    style: OutlinedButton.styleFrom(minimumSize: const Size(0, 46), side: BorderSide(color: _border), foregroundColor: _text1),
+                    child: Text(_to == null ? FS.t(widget.lang, 'fdTo') : '${_to!.day}/${_to!.month}/${_to!.year}'),
+                  ),
+                ),
+              ]),
+            ],
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(minimumSize: const Size(0, 48), backgroundColor: VanixColors.greenInk, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  widget.onDownloaded();
+                },
+                child: Text(_t('downloadReportBtn'), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Full-screen activity log page — 14-day day-chip strip + 30-min action
+// rows for the selected date, deterministically generated from a hash of the
+// date string (mirrors actlogHash()/actlogRowsForDate() in prototype.html —
+// no DateTime.now()-based randomness in the seed). ──
+class _ActivityLogPage extends StatefulWidget {
+  final AppState appState;
+  final String cowName;
+  const _ActivityLogPage({required this.appState, required this.cowName});
+
+  @override
+  State<_ActivityLogPage> createState() => _ActivityLogPageState();
+}
+
+class _ActivityLogPageState extends State<_ActivityLogPage> {
+  static const List<(String, Color, Color, IconData)> _actions = [
+    ('Resting', Color(0xFF7C3AED), Color(0x1F7C3AED), Icons.bed_outlined),
+    ('Feeding', VanixColors.warning, Color(0x24E8A020), Icons.restaurant),
+    ('Ruminating', VanixColors.greenInk, VanixColors.activeBg, Icons.pets),
+    ('Standing', Color(0xFF2563EB), Color(0x1F2563EB), Icons.directions_walk),
+  ];
+
+  late DateTime _selected;
+  bool get _isDark => widget.appState.isDark;
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = DateTime(2026, 7, 20);
+  }
+
+  int _hash(String s) {
+    var h = 0;
+    for (final u in s.codeUnits) {
+      h = (h * 31 + u) & 0xFFFFFFFF;
+    }
+    return h;
+  }
+
+  String _dateKey(DateTime d) => '${d.year}-${d.month}-${d.day}';
+
+  List<(String action, Color color, Color bg, IconData icon, String duration, String start)> _rowsFor(DateTime d) {
+    final seed = _hash(_dateKey(d));
+    final rows = <(String, Color, Color, IconData, String, String)>[];
+    var slot = 0, i = 0;
+    while (slot < 24 * 60) {
+      final pick = _actions[(seed + i) % _actions.length];
+      final h = slot ~/ 60, m = slot % 60;
+      rows.add((pick.$1, pick.$2, pick.$3, pick.$4, '30 min', '${h.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')}'));
+      slot += 30;
+      i++;
+    }
+    return rows;
+  }
+
+  List<DateTime> get _chips {
+    const today = 20; // fixed "today" reference (2026-07-20) per CLAUDE.md currentDate
+    return List.generate(14, (i) => DateTime(2026, 7, today - 13 + i));
+  }
+
+  static const _wk = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  @override
+  Widget build(BuildContext context) {
+    final lang = widget.appState.languageCode;
+    final bg = _isDark ? VanixColors.darkPrimary : VanixColors.bgWarm;
+    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
+    final rows = _rowsFor(_selected);
+
+    return Scaffold(
+      backgroundColor: bg,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+              child: Row(children: [
+                InkWell(
+                  onTap: () => Navigator.of(context).pop(),
+                  customBorder: const CircleBorder(),
+                  child: SizedBox(width: 34, height: 34, child: Icon(Icons.chevron_left, color: textColor)),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text('${FS.t(lang, 'activityLogTitle')} — ${widget.cowName}',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: textColor)),
+                ),
+              ]),
+            ),
+            SizedBox(
+              height: 60,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                children: [
+                  for (final d in _chips)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: _dayChip(d, textColor),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 6),
+            Expanded(
+              child: ListView.separated(
+                padding: const EdgeInsets.fromLTRB(16, 4, 16, 40),
+                itemCount: rows.length,
+                separatorBuilder: (_, __) => Divider(height: 1, color: _isDark ? VanixColors.darkBorder : VanixColors.border),
+                itemBuilder: (context, i) {
+                  final r = rows[i];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(children: [
+                      Container(
+                        width: 32, height: 32,
+                        decoration: BoxDecoration(color: r.$3, borderRadius: BorderRadius.circular(10)),
+                        child: Icon(r.$4, size: 16, color: r.$2),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(r.$1, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: textColor)),
+                            const SizedBox(height: 2),
+                            Text('${r.$5} · ${r.$6}', style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+                          ],
+                        ),
+                      ),
+                    ]),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _dayChip(DateTime d, Color textColor) {
+    final on = _dateKey(d) == _dateKey(_selected);
+    return InkWell(
+      onTap: () => setState(() => _selected = d),
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        width: 46,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: on ? VanixColors.activeBg : (_isDark ? VanixColors.darkSubSurface : VanixColors.bgCard),
+          border: Border.all(color: on ? VanixColors.greenInk : (_isDark ? VanixColors.darkBorder : VanixColors.border)),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(_wk[d.weekday % 7], style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: on ? VanixColors.greenInk : VanixColors.textHint)),
+            const SizedBox(height: 2),
+            Text('${d.day}', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: on ? VanixColors.greenInk : textColor)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 // ── Actions bottom sheet — full multi-step flow engine (mirrors caViews in
 // prototype.html): status+reason, vet visit+schedule, vet log, heat (date+time),
 // insemination (vet→type→log), pregnancy (date), delivery (yes/no→vet→log). ──
