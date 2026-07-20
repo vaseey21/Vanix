@@ -610,20 +610,9 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
                 ]),
               ),
               Row(children: [
-                Text('33°C', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: textColor)),
+                Text(widget.appState.fmtTemp('33°C'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: textColor)),
                 const SizedBox(width: 8),
-                Container(
-                  padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Row(mainAxisSize: MainAxisSize.min, children: [
-                    Text(FS.t(_lang, 'todayWord'), style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: textColor)),
-                    const SizedBox(width: 4),
-                    Icon(Icons.keyboard_arrow_down, size: 14, color: textColor),
-                  ]),
-                ),
+                _tempRangeDropdown(textColor),
               ]),
             ],
           ),
@@ -642,16 +631,23 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
                 SizedBox(
                   height: 120,
                   width: double.infinity,
-                  child: CustomPaint(painter: _TempPainter(isDark: _isDark)),
+                  child: CustomPaint(
+                    painter: _TempPainter(
+                      isDark: _isDark,
+                      values: _tempRange == 'today' ? null : _weeklyTemps(_tempRangeSeed()),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 4),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    for (final x in const ['00:00', '06:00', '12:00', '18:00', '24:00'])
-                      Text(x, style: const TextStyle(fontSize: 9, color: VanixColors.textHint)),
-                  ],
-                ),
+                _tempRange == 'today'
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          for (final x in const ['00:00', '06:00', '12:00', '18:00', '24:00'])
+                            Text(x, style: const TextStyle(fontSize: 9, color: VanixColors.textHint)),
+                        ],
+                      )
+                    : Text(_tempRangeLabel(), style: const TextStyle(fontSize: 9, color: VanixColors.textHint)),
               ]),
             ),
           ]),
