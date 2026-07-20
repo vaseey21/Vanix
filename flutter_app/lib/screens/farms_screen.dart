@@ -10,6 +10,7 @@ import 'milk_log_screen.dart';
 import 'events_screen.dart';
 import 'account_screen.dart';
 import 'farm_detail_screen.dart';
+import 'setup_farm_screen.dart';
 
 /// Farms list — screen 04. Mirrors #page-farms in prototype.html:
 /// hero (title + subtitle, 3 stat tiles, auto-scrolling activity ticker),
