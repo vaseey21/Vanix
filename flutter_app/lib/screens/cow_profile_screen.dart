@@ -1494,5 +1494,5 @@ class _TempPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _TempPainter oldDelegate) => oldDelegate.isDark != isDark;
+  bool shouldRepaint(covariant _TempPainter oldDelegate) => oldDelegate.isDark != isDark || oldDelegate.values != values;
 }
