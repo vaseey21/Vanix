@@ -308,6 +308,7 @@ class FS {
       'fpDelivery': 'प्रसव देय', 'fpDeliverySub': 'ब्यांत का परिणाम पुष्टि करें', 'fpVetAppt': 'पशु चिकित्सक भेंट', 'fpVetApptSub': 'आज शाम 4:30 — डॉ. शर्मा',
       'fpInsem': 'गर्भाधान विंडो', 'fpInsemSub': '9 घंटे बचे — सर्वोत्तम विंडो', 'fpMilkLog': 'शाम दूध लॉगिंग', 'fpMilkLogSub': 'शाम 5 बजे के बाद देय',
       'cardFeverQ': 'क्या वह अस्वस्थ है?', 'cardHeatQ': 'हीट में है?', 'cardGestationQ': 'वेट जांच देय',
+      'fpVaccination': 'टीकाकरण', 'cardVaccQ': 'FMD देय — हो गया?',
       // Milk-edit approval
       'mpPendingApproval': 'मालिक की मंज़ूरी बाकी', 'mpEditTo': 'बदलें', 'mpDeleteEntry': 'प्रविष्टि हटाएँ',
       'mpApprove': 'मंज़ूर करें', 'mpUpdated': 'अपडेट', 'mpBy': 'द्वारा',
