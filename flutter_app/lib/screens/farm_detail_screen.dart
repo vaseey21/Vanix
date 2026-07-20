@@ -655,7 +655,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                   IconButton(onPressed: () => Navigator.pop(ctx), icon: Icon(Icons.close, size: 16, color: textColor)),
                 ]),
                 const SizedBox(height: 6),
-                Text(FS.t(lang, 'fdFrom').toUpperCase(), style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 0.5, color: VanixColors.textHint)),
+                Text(FS.t(lang, 'fdFrom').toUpperCase(), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 0.5, color: VanixColors.textHint)),
                 const SizedBox(height: 7),
                 InkWell(
                   onTap: () => pick(true),
@@ -669,7 +669,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                   ),
                 ),
                 const SizedBox(height: 14),
-                Text(FS.t(lang, 'fdTo').toUpperCase(), style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 0.5, color: VanixColors.textHint)),
+                Text(FS.t(lang, 'fdTo').toUpperCase(), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 0.5, color: VanixColors.textHint)),
                 const SizedBox(height: 7),
                 InkWell(
                   onTap: () => pick(false),
