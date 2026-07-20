@@ -176,6 +176,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
                     ],
                   ),
                 ),
+                _reportDownloadBtn(),
                 _kebab(),
               ],
             ),
