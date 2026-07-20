@@ -388,6 +388,8 @@ class _EventsScreenState extends State<EventsScreen> {
                         _buildLamenessCard(isDark),
                         const SizedBox(height: 10),
                         _buildKetosisCard(isDark),
+                        const SizedBox(height: 10),
+                        _buildVaccinationCard(isDark),
                       ],
                     ),
                   ),
