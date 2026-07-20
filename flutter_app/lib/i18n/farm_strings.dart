@@ -234,7 +234,7 @@ class FS {
       'rowCattleGroups': 'पशु समूह', 'acctGroupsSub': 'देसी, जर्सी, होल्स्टीन फ़्रीज़ियन, साहीवाल',
       'grpAlerts': 'अलर्ट और संपर्क', 'rowSound': 'अलर्ट ध्वनि', 'soundSub': 'अलर्ट हमेशा आते हैं — ध्वनि बंद की जा सकती है',
       'rowVets': 'पशु चिकित्सक संपर्क', 'vetsSub': '"पशु चिकित्सक बुलाएँ" दबाने पर किसे कॉल होती है',
-      'grpApp': 'ऐप', 'rowLanguage': 'भाषा', 'rowDark': 'डार्क मोड', 'grpLegal': 'कानूनी',
+      'grpApp': 'ऐप', 'rowLanguage': 'भाषा', 'rowDark': 'डार्क मोड', 'rowTempUnit': 'तापमान इकाई', 'grpLegal': 'कानूनी',
       'rowPrivacy': 'गोपनीयता नीति', 'rowTerms': 'सेवा की शर्तें', 'grpSupport': 'सहायता', 'rowHelp': 'सहायता और सामान्य प्रश्न',
       'helpSub': 'सामान्य कार्यों के लिए गाइड', 'rowLogout': 'लॉग आउट',
       'profTitle': 'प्रोफ़ाइल', 'fldName': 'पूरा नाम', 'fldPhone': 'फ़ोन नंबर', 'phoneHint': 'SMS अलर्ट और आपातकालीन संपर्क के लिए',
