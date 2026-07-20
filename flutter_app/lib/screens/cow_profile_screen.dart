@@ -1724,6 +1724,18 @@ class _ActionsSheetState extends State<_ActionsSheet> {
     ]);
   }
 
+  Widget _vaccineLogStep() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(padding: const EdgeInsets.only(bottom: 12), child: Text('$_vaccineType — ${widget.cowName}', style: const TextStyle(fontSize: 13, color: VanixColors.textHint))),
+      _label(_t('eventDate')),
+      _pickerField(_date, _t('eventDate'), Icons.calendar_today_outlined, _pickDate),
+      _label(_t('notesOptional')),
+      _textArea(_notes, _t('notesOptional')),
+      const SizedBox(height: 4),
+      _cta(_t('saveLog'), () => _done(_t('vaccinationLogged'))),
+    ]);
+  }
+
   Widget _doneStep() {
     return Column(children: [
       const SizedBox(height: 8),
