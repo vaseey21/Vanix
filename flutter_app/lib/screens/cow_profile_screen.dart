@@ -1486,6 +1486,12 @@ class _ActionsSheetState extends State<_ActionsSheet> {
         return (title: _t('addDelivery'), body: _noteStep(_t('lossReasonTitle'), _t('lossReasonPh'), _reason, () { _flow = 'delNo'; _go('vetPick'); }));
       case 'deliveryLog':
         return (title: _t('logDetails'), body: _deliveryLogStep());
+      case 'vaccineType':
+        return (title: _t('addVaccination'), body: _list(
+          const ['vaccineFmd', 'vaccineHs', 'vaccineBq', 'vaccineBrucellosis'],
+          (k) { _vaccineType = _t(k); _go('vaccineLog'); }));
+      case 'vaccineLog':
+        return (title: _t('addVaccination'), body: _vaccineLogStep());
       case 'done':
         return (title: _t('cowActions'), body: _doneStep());
       case 'main':
