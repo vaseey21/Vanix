@@ -487,6 +487,8 @@ class _FarmCard extends StatelessWidget {
                         const SizedBox(width: 6),
                         _Chip(bg: VanixColors.bgWarm, ink: VanixColors.textPrimary, value: '${farm.insem}', label: FS.t(lang, 'insemWord')),
                         const SizedBox(width: 6),
+                        _Chip(bg: const Color(0x1A2563EB), ink: const Color(0xFF2563EB), value: '${farm.preg}', label: FS.t(lang, 'statusPregnantChip')),
+                        const SizedBox(width: 6),
                         _Chip(bg: VanixColors.warningBg, ink: VanixColors.warningInk, value: '${farm.fever}', label: FS.t(lang, 'cattleFever')),
                         const SizedBox(width: 6),
                         _Chip(bg: VanixColors.activeBg, ink: VanixColors.greenInk, value: '${farm.milkToday} L', label: FS.t(lang, 'statMilkToday')),
