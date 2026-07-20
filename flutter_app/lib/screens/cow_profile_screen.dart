@@ -765,6 +765,27 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     );
   }
 
+  Widget _viewActivityLogRow() {
+    return InkWell(
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => _ActivityLogPage(appState: widget.appState, cowName: widget.cow.nm(_lang)),
+      )),
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 48),
+        alignment: AlignmentDirectional.centerStart,
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 4),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text('${FS.t(_lang, 'viewActivityLog')} ›',
+                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _remindersCard() {
     return Container(
       padding: const EdgeInsets.all(VanixSpacing.xl),
