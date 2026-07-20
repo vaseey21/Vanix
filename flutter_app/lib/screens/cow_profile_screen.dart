@@ -50,6 +50,17 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   String get _lang => widget.appState.languageCode;
   bool get _isDark => widget.appState.isDark;
 
+  /// Deterministic mock battery % from a hash of belt+name — mirrors
+  /// cowBatteryPct() in prototype.html. No data-model change needed.
+  int get _batteryPct {
+    final s = '${widget.cow.belt}${widget.cow.name}';
+    var h = 0;
+    for (final unit in s.codeUnits) {
+      h = (h * 31 + unit) & 0xFFFFFFFF;
+    }
+    return 20 + (h % 76);
+  }
+
   // Status → (labelKey, bg, ink) tint mapping — shared with Farm Detail.
   ({String key, Color bg, Color ink}) _statusStyle() {
     switch (widget.cow.status) {
