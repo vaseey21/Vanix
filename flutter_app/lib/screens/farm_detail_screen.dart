@@ -41,6 +41,37 @@ const Map<String, _CowTag> _kCowTag = {
   'Milking': _CowTag(VanixColors.greenInk, 'healthyWord'),
 };
 
+/// Range-scoped Fever/Heat/Insemination/Pregnant counts, keyed by farm id then
+/// range. Mirrors FD_RANGE_STATS in prototype.html.
+const Map<String, Map<String, Map<String, int>>> _kFdRangeStats = {
+  'sunrise': {
+    'today': {'fever': 1, 'heat': 2, 'insem': 1, 'preg': 2},
+    'week': {'fever': 2, 'heat': 4, 'insem': 3, 'preg': 2},
+    'month': {'fever': 3, 'heat': 9, 'insem': 7, 'preg': 3},
+    'custom': {'fever': 2, 'heat': 5, 'insem': 4, 'preg': 2},
+  },
+  'greenvilla': {
+    'today': {'fever': 0, 'heat': 0, 'insem': 0, 'preg': 1},
+    'week': {'fever': 0, 'heat': 1, 'insem': 1, 'preg': 1},
+    'month': {'fever': 1, 'heat': 3, 'insem': 2, 'preg': 1},
+    'custom': {'fever': 0, 'heat': 2, 'insem': 1, 'preg': 1},
+  },
+  'stones': {
+    'today': {'fever': 0, 'heat': 0, 'insem': 0, 'preg': 1},
+    'week': {'fever': 1, 'heat': 1, 'insem': 0, 'preg': 1},
+    'month': {'fever': 1, 'heat': 2, 'insem': 2, 'preg': 2},
+    'custom': {'fever': 1, 'heat': 1, 'insem': 1, 'preg': 1},
+  },
+};
+
+/// Herd rumination hourly points (0–23h), mirrors FD_RUMINATION.
+const List<double> _kRuminationSunrise = [
+  38, 41, 43, 42, 39, 36, 34, 38, 42, 45, 46, 44, 43, 42, 18, 14, 20, 40, 43, 44, 42, 40, 39, 38
+];
+const List<double> _kRuminationNormal = [
+  38, 40, 42, 41, 39, 36, 34, 37, 41, 44, 46, 45, 43, 42, 41, 40, 42, 44, 45, 43, 41, 40, 39, 38
+];
+
 class _FarmDetailScreenState extends State<FarmDetailScreen> {
   final int _navIndex = 1;
   final TextEditingController _search = TextEditingController();
@@ -49,6 +80,9 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
   String _breedFilter = 'all';
   String _ageFilter = 'all';
   bool _alertsOnly = false;
+
+  String _fdRange = 'today'; // today | week | month | custom
+  DateTime? _customFrom, _customTo;
 
   String get _lang => widget.appState.languageCode;
 
