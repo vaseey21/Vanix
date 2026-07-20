@@ -472,7 +472,7 @@ class _FarmCard extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.pets, size: 14, color: textColor),
+                              CowHeadIcon(color: textColor, size: 13),
                               const SizedBox(width: 4),
                               Text('${farm.cattle}', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: textColor)),
                             ],
