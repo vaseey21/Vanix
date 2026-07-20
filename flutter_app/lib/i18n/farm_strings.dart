@@ -159,6 +159,7 @@ class FS {
       'fpDelivery': 'Delivery due', 'fpDeliverySub': 'Confirm the calving outcome', 'fpVetAppt': 'Vet appointment', 'fpVetApptSub': 'Today 4:30 PM — Dr. Sharma',
       'fpInsem': 'Insemination window', 'fpInsemSub': '9h left — optimal window', 'fpMilkLog': 'Evening milk logging', 'fpMilkLogSub': 'Due after 5:00 PM',
       'cardFeverQ': 'Is she unwell?', 'cardHeatQ': 'In heat?', 'cardGestationQ': 'Vet check due',
+      'fpVaccination': 'Vaccination', 'cardVaccQ': 'FMD due — done?',
       // Milk-edit approval
       'mpPendingApproval': 'Pending owner approval', 'mpEditTo': 'Edit to', 'mpDeleteEntry': 'Delete entry',
       'mpApprove': 'Approve', 'mpUpdated': 'Updated', 'mpBy': 'By',
