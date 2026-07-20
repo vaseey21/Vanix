@@ -591,6 +591,69 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     );
   }
 
+  String _tempRangeSeed() {
+    if (_tempRange == 'custom' && _tempFrom != null && _tempTo != null) {
+      return '${widget.cow.name}-${_tempFrom!.toIso8601String()}-${_tempTo!.toIso8601String()}';
+    }
+    return '${widget.cow.name}-week';
+  }
+
+  String _fmtDate(DateTime d) => '${d.day}/${d.month}/${d.year}';
+
+  String _tempRangeLabel() {
+    switch (_tempRange) {
+      case 'custom':
+        if (_tempFrom != null && _tempTo != null) return '${_fmtDate(_tempFrom!)} – ${_fmtDate(_tempTo!)}';
+        return FS.t(_lang, 'fdRangeCustom');
+      case 'week':
+        return FS.t(_lang, 'fdRangeWeek');
+      default:
+        return FS.t(_lang, 'todayWord');
+    }
+  }
+
+  Future<void> _pickCustomTempRange() async {
+    final from = await showDatePicker(context: context, initialDate: DateTime(2026, 7, 13), firstDate: DateTime(2024), lastDate: DateTime(2027));
+    if (from == null || !mounted) return;
+    final to = await showDatePicker(context: context, initialDate: DateTime(2026, 7, 20), firstDate: from, lastDate: DateTime(2027));
+    if (to == null) return;
+    setState(() {
+      _tempRange = 'custom';
+      _tempFrom = from;
+      _tempTo = to;
+    });
+  }
+
+  Widget _tempRangeDropdown(Color textColor) {
+    return PopupMenuButton<String>(
+      offset: const Offset(0, 30),
+      onSelected: (v) {
+        if (v == 'custom') {
+          _pickCustomTempRange();
+        } else {
+          setState(() => _tempRange = v);
+        }
+      },
+      itemBuilder: (context) => [
+        PopupMenuItem(value: 'today', child: Text(FS.t(_lang, 'todayWord'))),
+        PopupMenuItem(value: 'week', child: Text(FS.t(_lang, 'fdRangeWeek'))),
+        PopupMenuItem(value: 'custom', child: Text(FS.t(_lang, 'fdRangeCustom'))),
+      ],
+      child: Container(
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 4),
+        decoration: BoxDecoration(
+          border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Text(_tempRangeLabel(), style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: textColor)),
+          const SizedBox(width: 4),
+          Icon(Icons.keyboard_arrow_down, size: 14, color: textColor),
+        ]),
+      ),
+    );
+  }
+
   Widget _tempCard() {
     final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
     return _card(
