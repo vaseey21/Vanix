@@ -23,6 +23,29 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   int _tab = 0;
   final Set<int> _tlExpanded = {};
 
+  // Overview temperature card range — Today (hourly, default) / This week
+  // (7-point mock) / Custom (From/To -> 7-point mock, range-labelled).
+  // Mirrors #cow-temp-range-btn in prototype.html.
+  String _tempRange = 'today';
+  DateTime? _tempFrom;
+  DateTime? _tempTo;
+
+  int _hashStr(String s) {
+    var h = 0;
+    for (final u in s.codeUnits) {
+      h = (h * 31 + u) & 0xFFFFFFFF;
+    }
+    return h;
+  }
+
+  /// Deterministic 7-point mock temperature trend seeded by [seed] — same
+  /// pattern as cowBatteryPct()/actlogHash() in prototype.html (hash-based,
+  /// no DateTime.now() randomness).
+  List<double> _weeklyTemps(String seed) {
+    final h = _hashStr(seed);
+    return List.generate(7, (i) => 29.5 + ((h >> (i * 3)) % 7) * 0.7);
+  }
+
   // Timeline events — (key, date, dot color).
   static final List<TimelineEvent> _timeline = [
     const TimelineEvent('tlMilking', '2 Jul 2026', VanixColors.greenDeep),
