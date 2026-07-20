@@ -1510,6 +1510,7 @@ class _ActionsSheetState extends State<_ActionsSheet> {
       (Icons.colorize_outlined, _t('addInsem'), () { _flow = 'insem'; _go('vetPick'); }),
       (Icons.pregnant_woman_outlined, _t('addPreg'), () => _go('pregConfirm')),
       (Icons.child_friendly_outlined, _t('addDelivery'), () => _go('deliveryConfirm')),
+      (Icons.vaccines_outlined, _t('addVaccination'), () => _go('vaccineType')),
     ];
     return Column(
       children: [
