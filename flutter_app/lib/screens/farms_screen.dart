@@ -93,6 +93,12 @@ class _FarmsScreenState extends State<FarmsScreen> with SingleTickerProviderStat
         .then((_) => setState(() {}));
   }
 
+  void _openSetupFarm(FarmModel farm) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => SetupFarmScreen(appState: widget.appState, farm: farm)))
+        .then((_) => setState(() {}));
+  }
+
   void _openFilterSheet() {
     final lang = widget.appState.languageCode;
     showModalBottomSheet(
