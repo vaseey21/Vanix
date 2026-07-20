@@ -229,6 +229,7 @@ class _EventsScreenState extends State<EventsScreen> {
   _InspectState _mastitis = _InspectState.initial;
   _InspectState _lameness = _InspectState.initial;
   _InspectState _ketosis = _InspectState.initial;
+  _InspectState _vaccination = _InspectState.initial;
   _AckState _proestrus = _AckState.initial;
 
   // P3 — info
