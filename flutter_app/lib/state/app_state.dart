@@ -21,6 +21,12 @@ class AppState extends ChangeNotifier {
   // mode on the login screen, applies app-wide.
   bool _displayImageMode = true;
 
+  // Temperature display unit — 'C' (default) or 'F'. Values are always
+  // STORED in Celsius everywhere in the model; fmtTemp() only converts for
+  // display, mirroring fmtTemp()/vanixTempUnit in prototype.html. Graph axis
+  // labels and historical/vet-log temp strings stay in Celsius by design.
+  String _tempUnit = 'C';
+
   bool get isDark => _isDark;
   String get languageCode => _languageCode;
   int get openEventsCount => _openEventsCount;
