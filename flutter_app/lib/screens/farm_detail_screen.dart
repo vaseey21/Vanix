@@ -410,7 +410,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(farm.temp, style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700, color: textColor)),
+                    Text(widget.appState.fmtTemp(farm.temp), style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700, color: textColor)),
                     const SizedBox(height: 2),
                     Text(
                       FS.t(_lang, levelKey).toUpperCase(),
