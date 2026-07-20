@@ -1447,13 +1447,15 @@ class _WeeklyPainter extends CustomPainter {
 // ── 24-hour temperature line — green→orange→red gradient + 39°C guide ────
 class _TempPainter extends CustomPainter {
   final bool isDark;
-  _TempPainter({required this.isDark});
+  final List<double> values;
+  _TempPainter({required this.isDark, List<double>? values}) : values = values ?? _defaultTemps;
 
-  static const List<double> _temps = [30, 30, 29.5, 30, 30.5, 30, 32.5, 31.5, 31, 34, 32.5, 32, 35];
+  static const List<double> _defaultTemps = [30, 30, 29.5, 30, 30.5, 30, 32.5, 31.5, 31, 34, 32.5, 32, 35];
   static const double _lo = 20, _hi = 40;
 
   @override
   void paint(Canvas canvas, Size size) {
+    final temps = values;
     double yFor(double v) => size.height - ((v - _lo) / (_hi - _lo)) * size.height;
 
     // fever threshold guide at 39°C
@@ -1466,9 +1468,9 @@ class _TempPainter extends CustomPainter {
     }
 
     final path = Path();
-    for (var i = 0; i < _temps.length; i++) {
-      final x = size.width / (_temps.length - 1) * i;
-      final y = yFor(_temps[i]);
+    for (var i = 0; i < temps.length; i++) {
+      final x = size.width / (temps.length - 1) * i;
+      final y = yFor(temps[i]);
       if (i == 0) {
         path.moveTo(x, y);
       } else {
