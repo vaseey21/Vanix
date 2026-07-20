@@ -79,7 +79,6 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
   String _statusFilter = 'all';
   String _breedFilter = 'all';
   String _ageFilter = 'all';
-  bool _alertsOnly = false;
 
   String _fdRange = 'today'; // today | week | month | custom
   DateTime? _customFrom, _customTo;
