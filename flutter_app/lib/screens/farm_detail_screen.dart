@@ -840,57 +840,6 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
     }
   }
 
-  Widget _statTile({required String value, required String label, required bool isDark}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-      decoration: BoxDecoration(
-        color: isDark ? VanixColors.darkSecond : VanixColors.bgCard,
-        border: Border.all(color: isDark ? VanixColors.darkBorder : VanixColors.border),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        children: [
-          Text(value, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: isDark ? Colors.white : VanixColors.textPrimary)),
-          const SizedBox(height: 4),
-          Text(
-            label.toUpperCase(),
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.4, color: isDark ? const Color(0xB3FFFFFF) : VanixColors.textHint),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _alertsTile(bool isDark) {
-    final farm = widget.farm;
-    return InkWell(
-      onTap: () => setState(() => _alertsOnly = !_alertsOnly),
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-        decoration: BoxDecoration(
-          color: isDark ? VanixColors.dangerBg.withValues(alpha: 0.14) : VanixColors.dangerBg,
-          border: Border.all(color: VanixColors.danger, width: _alertsOnly ? 2 : 1),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
-          children: [
-            Text('${farm.alerts}', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: isDark ? Colors.white : VanixColors.textPrimary)),
-            const SizedBox(height: 4),
-            Text(
-              FS.t(_lang, 'statUnactionedAlerts').toUpperCase(),
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.4, color: isDark ? const Color(0xB3FFFFFF) : VanixColors.textHint),
-            ),
-            const SizedBox(height: 3),
-            Text('${farm.critical} ${FS.t(_lang, 'criticalWord')}', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: VanixColors.danger)),
-          ],
-        ),
-      ),
-    );
-  }
-
   // ── Search + filter row ─────────────────────────────────────────────────
   Widget _searchRow(bool isDark) {
     final textColor = isDark ? Colors.white : VanixColors.textPrimary;
