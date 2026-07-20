@@ -175,7 +175,7 @@ class _FarmsScreenState extends State<FarmsScreen> with SingleTickerProviderStat
                                 children: [
                                   for (final f in list)
                                     f.status == FarmStatus.setup
-                                        ? _SetupFarmRow(farm: f, lang: lang, isDark: isDark, onTap: () => _openFarm(f))
+                                        ? _SetupFarmRow(farm: f, lang: lang, isDark: isDark, onTap: () => _openSetupFarm(f))
                                         : _FarmCard(farm: f, lang: lang, isDark: isDark, onTap: () => _openFarm(f)),
                                 ],
                               ),
