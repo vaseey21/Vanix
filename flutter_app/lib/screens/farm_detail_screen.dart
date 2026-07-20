@@ -114,7 +114,6 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
   List<CowModel> get _visibleCows {
     final q = _search.text.trim().toLowerCase();
     return widget.farm.cows.where((c) {
-      if (_alertsOnly && !c.isAlert) return false;
       if (_statusFilter != 'all' && c.status != _statusFilter) return false;
       if (_breedFilter != 'all' && c.breed != _breedFilter) return false;
       if (_ageFilter != 'all' && c.ageBucket != _ageFilter) return false;
