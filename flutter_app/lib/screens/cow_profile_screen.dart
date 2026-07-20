@@ -199,6 +199,37 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     );
   }
 
+  Widget _genderChip() {
+    return Container(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm,
+        border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
+        borderRadius: BorderRadius.circular(VanixRadius.sm),
+      ),
+      child: Text(FS.t(_lang, 'genderFemale'), style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: _isDark ? Colors.white : VanixColors.textPrimary)),
+    );
+  }
+
+  Widget _batteryChip() {
+    final pct = _batteryPct;
+    final low = pct <= 30;
+    final color = low ? VanixColors.danger : (_isDark ? Colors.white : VanixColors.textPrimary);
+    return Container(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm,
+        border: Border.all(color: low ? VanixColors.danger : (_isDark ? VanixColors.darkBorder : VanixColors.border)),
+        borderRadius: BorderRadius.circular(VanixRadius.sm),
+      ),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        Icon(low ? Icons.battery_alert : Icons.battery_full, size: 12, color: color),
+        const SizedBox(width: 3),
+        Text('$pct%', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color)),
+      ]),
+    );
+  }
+
   Widget _circleBtn(IconData icon, VoidCallback onTap) {
     return SizedBox(
       width: 48,
