@@ -91,7 +91,7 @@ class FS {
       'rowCattleGroups': 'Cattle Groups', 'acctGroupsSub': 'Desi, Jersey, Holstein Friesian, Sahiwal',
       'grpAlerts': 'Alerts & Contacts', 'rowSound': 'Alert sound', 'soundSub': 'Alerts always notify — sound can be muted',
       'rowVets': 'Vet Contacts', 'vetsSub': 'Who gets called when you tap "Call Vet"',
-      'grpApp': 'App', 'rowLanguage': 'Language', 'rowDark': 'Dark mode', 'grpLegal': 'Legal',
+      'grpApp': 'App', 'rowLanguage': 'Language', 'rowDark': 'Dark mode', 'rowTempUnit': 'Temperature unit', 'grpLegal': 'Legal',
       'rowPrivacy': 'Privacy Policy', 'rowTerms': 'Terms of Service', 'grpSupport': 'Support', 'rowHelp': 'Help & FAQs',
       'helpSub': 'Common guides for common tasks', 'rowLogout': 'Log Out',
       'profTitle': 'Profile', 'fldName': 'Full Name', 'fldPhone': 'Phone No.', 'phoneHint': 'Used for SMS alerts & emergency contacts',
