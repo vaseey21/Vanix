@@ -254,6 +254,36 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     );
   }
 
+  Widget _reportDownloadBtn() {
+    return SizedBox(
+      width: 40,
+      height: 40,
+      child: Material(
+        color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgCard,
+        shape: const CircleBorder(),
+        elevation: 1,
+        child: InkWell(
+          customBorder: const CircleBorder(),
+          onTap: _openReportSheet,
+          child: Icon(Icons.file_download_outlined, size: 18, color: _isDark ? Colors.white : VanixColors.textPrimary),
+        ),
+      ),
+    );
+  }
+
+  void _openReportSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => _ReportPeriodSheet(
+        isDark: _isDark,
+        lang: _lang,
+        onDownloaded: () => _snack('${FS.t(_lang, 'reportDownloaded')} — ${widget.cow.nm(_lang)}'),
+      ),
+    );
+  }
+
   Widget _circleBtn(IconData icon, VoidCallback onTap) {
     return SizedBox(
       width: 48,
