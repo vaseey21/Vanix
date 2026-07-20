@@ -1117,12 +1117,14 @@ class _ReportPeriodSheetState extends State<_ReportPeriodSheet> {
   }
 
   Widget _radioRow(String value, String label) {
+    final on = _period == value;
     return InkWell(
       onTap: () => setState(() => _period = value),
       child: Container(
         constraints: const BoxConstraints(minHeight: 44),
         child: Row(children: [
-          Radio<String>(value: value, groupValue: _period, activeColor: VanixColors.greenInk, onChanged: (v) => setState(() => _period = v!)),
+          Icon(on ? Icons.radio_button_checked : Icons.radio_button_unchecked, size: 18, color: on ? VanixColors.greenInk : _border),
+          const SizedBox(width: 10),
           Text(label, style: TextStyle(fontSize: 14, color: _text1)),
         ]),
       ),
