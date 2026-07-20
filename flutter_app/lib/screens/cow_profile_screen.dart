@@ -140,6 +140,13 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
                           _beltChip(),
                         ],
                       ),
+                      const SizedBox(height: 5),
+                      Wrap(
+                        spacing: VanixSpacing.sm,
+                        runSpacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [_genderChip(), _batteryChip()],
+                      ),
                       const SizedBox(height: 3),
                       Text(widget.cow.br(_lang), style: TextStyle(fontSize: 14, color: _isDark ? VanixColors.textOnDarkDim : VanixColors.textPrimary)),
                       Text(widget.cow.ag(_lang), style: const TextStyle(fontSize: 13, color: VanixColors.textHint)),
