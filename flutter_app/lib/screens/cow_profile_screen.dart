@@ -1371,7 +1371,7 @@ class _ActionsSheet extends StatefulWidget {
 
 class _ActionsSheetState extends State<_ActionsSheet> {
   final List<String> _stack = ['main'];
-  String _flow = '', _status = '', _vet = '', _insemType = '', _doneMsg = '';
+  String _flow = '', _status = '', _vet = '', _insemType = '', _doneMsg = '', _vaccineType = '';
   bool _attach = false;
   String _date = '', _time = '';
   final _reason = TextEditingController();
