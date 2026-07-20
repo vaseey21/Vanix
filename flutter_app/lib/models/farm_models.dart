@@ -46,16 +46,16 @@ class FarmModel {
   String manager, managerHi;
   bool managerInvitePending = false;
   String managerInviteEmail = '';
-  final int cattle, milkToday, alerts, critical, heat, fever, insem;
+  final int cattle, milkToday, alerts, critical, heat, fever, insem, preg;
   final String temp;
-  final FarmStatus status;
+  FarmStatus status; // mutable: Setup Farm "Assign myself" flips setup → healthy
   final List<CowModel> cows;
   FarmModel({
     required this.id, required this.name, required this.nameHi,
     required this.location, required this.locationHi, required this.locKey,
     required this.manager, required this.managerHi, required this.cattle,
     required this.milkToday, required this.alerts, required this.critical,
-    required this.heat, required this.fever, required this.insem,
+    required this.heat, required this.fever, required this.insem, this.preg = 0,
     required this.temp, required this.status, this.cows = const [],
   });
   String nm(String l) => l == 'en' ? name : nameHi;
