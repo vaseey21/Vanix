@@ -1535,6 +1535,84 @@ class _EventsScreenState extends State<EventsScreen> {
         manager: 'Ramesh Kumar',
       );
 
+  // Vaccination due — same P2 photo-header + title/manager compact card
+  // format as Mastitis/Lameness/Ketosis, but with "Not yet" (stays pending) /
+  // "Mark done" (resolves, syncs the badge) instead of a diagnostic
+  // No/Flag-it choice. Mirrors #ev-vaccination in vanix_screens.html.
+  Widget _buildVaccinationCard(bool isDark) {
+    const title = 'Vaccination due — Dhauli';
+    const sub = 'FMD booster due this week per the vaccination schedule.';
+    const meta = 'Green Valley Farm · Belt 09';
+    const manager = 'Ramesh Kumar';
+    switch (_vaccination) {
+      case _InspectState.initial:
+        return _ActionCard(
+          isDark: isDark,
+          bg: VanixColors.bgCard,
+          border: VanixColors.border,
+          leftAccentColor: VanixColors.warning,
+          leftAccentWidth: 2,
+          priority: _Priority.p2,
+          channel: 'App inbox · Vaccination schedule',
+          manager: manager,
+          photoBg: 'assets/images/vetvisit_photo.jpg',
+          title: title,
+          sub: sub,
+          meta: meta,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(padding: EdgeInsets.only(top: 12, bottom: 10), child: Text('FMD vaccination due — done?', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
+              Row(
+                children: [
+                  Expanded(child: OutlinedButton(onPressed: () => setState(() => _vaccination = _InspectState.falseAlarm), child: const Text('Not yet', style: TextStyle(fontSize: 12.5)))),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    flex: 2,
+                    child: ElevatedButton(
+                      onPressed: () => setState(() { _vaccination = _InspectState.flagged; widget.appState.resolveEvent(); }),
+                      child: _iconLabel(Icons.check, 'Mark done'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      case _InspectState.falseAlarm:
+        return _ActionCard(
+          isDark: isDark,
+          bg: VanixColors.bgCard,
+          border: VanixColors.border,
+          priority: _Priority.p2,
+          channel: 'App inbox · Vaccination schedule',
+          manager: manager,
+          photoBg: 'assets/images/vetvisit_photo.jpg',
+          title: title,
+          sub: sub,
+          meta: meta,
+          child: const Padding(padding: EdgeInsets.only(top: 12), child: Text('Still pending — you\'ll be reminded again.', style: TextStyle(fontSize: 13, color: VanixColors.textHint))),
+        );
+      case _InspectState.flagged:
+        return _ActionCard(
+          isDark: isDark,
+          bg: VanixColors.bgCard,
+          border: VanixColors.border,
+          priority: _Priority.p2,
+          channel: 'App inbox · Vaccination schedule',
+          manager: manager,
+          photoBg: 'assets/images/vetvisit_photo.jpg',
+          title: title,
+          sub: sub,
+          meta: meta,
+          child: const Padding(
+            padding: EdgeInsets.only(top: 12),
+            child: Text('FMD vaccination recorded for Dhauli.', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+          ),
+        );
+    }
+  }
+
   // shared: single-acknowledge card builder (Proestrus / Herd Heat Stress / Calibration)
   Widget _buildAckCard({
     required bool isDark,
