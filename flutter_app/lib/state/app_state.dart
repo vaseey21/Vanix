@@ -36,6 +36,32 @@ class AppState extends ChangeNotifier {
   bool get isFarmer => _persona == 'farmer';
   bool get isOwner => _persona == 'owner';
   bool get isSingleFarm => _persona == 'farmer' && _farmCount == 'single';
+  String get tempUnit => _tempUnit;
+
+  void setTempUnit(String u) {
+    if (u != 'C' && u != 'F') return;
+    if (u == _tempUnit) return;
+    _tempUnit = u;
+    notifyListeners();
+  }
+
+  /// Formats a Celsius value (accepts a raw number, or a string like
+  /// '33°C' / '39.2°C') into the currently selected display unit. Mirrors
+  /// fmtTemp() in prototype.html — always stored in Celsius, only the
+  /// display string changes.
+  String fmtTemp(String celsiusText) {
+    final m = RegExp(r'[\d.]+').firstMatch(celsiusText);
+    if (m == null) return celsiusText;
+    final v = double.tryParse(m.group(0)!);
+    if (v == null) return celsiusText;
+    if (_tempUnit == 'F') {
+      final f = v * 9 / 5 + 32;
+      return '${f.toStringAsFixed(1)}°F';
+    }
+    var s = v.toStringAsFixed(1);
+    if (s.endsWith('.0')) s = s.substring(0, s.length - 2);
+    return '$s°C';
+  }
 
   /// Cycle Owner → Farmer(multi) → Farmer(single) → Owner (demo control).
   void cyclePersona() {
