@@ -174,6 +174,17 @@ class _AccountScreenState extends State<AccountScreen> {
                                   ),
                                   onTap: () => widget.appState.toggleDark(),
                                 ),
+                                _AccountRow(
+                                  isDark: isDark,
+                                  title: FS.t(lang, 'rowTempUnit'),
+                                  trailing: _UnitToggle(
+                                    isDark: isDark,
+                                    unit: widget.appState.tempUnit,
+                                    onChanged: (u) => widget.appState.setTempUnit(u),
+                                  ),
+                                  showChevron: false,
+                                  onTap: () {},
+                                ),
                               ],
                             ),
 
