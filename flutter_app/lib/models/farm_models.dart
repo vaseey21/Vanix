@@ -104,7 +104,7 @@ final List<FarmModel> kFarms = [
     id: 'greenvilla', name: 'Green Villa Dairy Farm', nameHi: 'ग्रीन विला डेयरी फार्म',
     location: 'Erode, Tamil Nadu', locationHi: 'एरोड, तमिलनाडु', locKey: 'erode',
     manager: 'Rakesh H', managerHi: 'राकेश एच', cattle: 20, milkToday: 42, alerts: 0, critical: 0,
-    heat: 0, fever: 0, insem: 0, temp: '31°C', status: FarmStatus.healthy,
+    heat: 0, fever: 0, insem: 0, preg: 1, temp: '31°C', status: FarmStatus.healthy,
     cows: [
       const CowModel(name: 'Meera', nameHi: 'मीरा', no: 1, age: '3.5 yrs', ageHi: '3.5 साल', belt: 'Belt 21', beltHi: 'बेल्ट 21', breed: 'Jersey', breedHi: 'जर्सी', status: 'Milking', temp: '31°C', trend: 'up', photo: _mi, info: [
         InfoCell('labelMilkToday', '11 L'), InfoCell('labelLastMilking', '7:00 AM'), InfoCell('labelLactation', 'Day 80', valueHi: 'दिन 80')]),
