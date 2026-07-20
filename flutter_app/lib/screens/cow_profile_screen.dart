@@ -531,6 +531,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
         const SizedBox(height: VanixSpacing.xl),
         _sectionLabel('actStatus'),
         _activityCard(),
+        _viewActivityLogRow(),
         const SizedBox(height: VanixSpacing.xl),
         _sectionLabel('remindersWord'),
         _remindersCard(),
