@@ -266,7 +266,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
           Text(FS.t(_lang, 'currentTemp').toUpperCase(),
               style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.8, color: VanixColors.textHint)),
           const SizedBox(height: 6),
-          Text(widget.cow.temp, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: textColor)),
+          Text(widget.appState.fmtTemp(widget.cow.temp), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: textColor)),
         ],
       ),
     );
