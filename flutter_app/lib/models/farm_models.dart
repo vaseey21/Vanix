@@ -86,7 +86,7 @@ final List<FarmModel> kFarms = [
     id: 'sunrise', name: 'Sunrise Dairy Farm', nameHi: 'सनराइज़ डेयरी फार्म',
     location: 'Coimbatore, Tamil Nadu', locationHi: 'कोयंबटूर, तमिलनाडु', locKey: 'coimbatore',
     manager: 'Ramesh C', managerHi: 'रमेश सी', cattle: 32, milkToday: 56, alerts: 2, critical: 2,
-    heat: 2, fever: 1, insem: 1, temp: '33°C', status: FarmStatus.attention,
+    heat: 2, fever: 1, insem: 1, preg: 2, temp: '33°C', status: FarmStatus.attention,
     cows: [
       const CowModel(name: 'Gowri', nameHi: 'गौरी', no: 1, age: '2.2 yrs', ageHi: '2.2 साल', belt: 'Belt 60', beltHi: 'बेल्ट 60', breed: 'Jersey', breedHi: 'जर्सी', status: 'Milking', temp: '32°C', trend: 'up', photo: _mi, info: [
         InfoCell('labelMilkToday', '12 L'), InfoCell('labelLastMilking', '6:45 AM'), InfoCell('labelLactation', 'Day 45', valueHi: 'दिन 45')]),
