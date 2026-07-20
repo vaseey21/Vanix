@@ -1247,6 +1247,46 @@ class _Toggle extends StatelessWidget {
   }
 }
 
+/// °C / °F segmented toggle — drives AppState.tempUnit + fmtTemp() app-wide.
+class _UnitToggle extends StatelessWidget {
+  final bool isDark;
+  final String unit;
+  final ValueChanged<String> onChanged;
+  const _UnitToggle({required this.isDark, required this.unit, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    final border = isDark ? VanixColors.darkBorder : VanixColors.border;
+    Widget seg(String u, String label) {
+      final on = unit == u;
+      return InkWell(
+        onTap: () => onChanged(u),
+        child: Container(
+          constraints: const BoxConstraints(minWidth: 40, minHeight: 32),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+            color: on ? VanixColors.greenInk : Colors.transparent,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Text(label,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: on ? Colors.white : (isDark ? Colors.white : VanixColors.textPrimary),
+              )),
+        ),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(2),
+      decoration: BoxDecoration(border: Border.all(color: border), borderRadius: BorderRadius.circular(18)),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [seg('C', '°C'), seg('F', '°F')]),
+    );
+  }
+}
+
 class _FieldLabel extends StatelessWidget {
   final String label;
   final bool isDark;
