@@ -1018,17 +1018,47 @@
           <!-- DASHBOARD PLACEHOLDER — slides up over everything after OTP confirm -->
           <div id="s1-dash" style="position:absolute; inset:0; background:var(--bgwarm); z-index:6; transform:translateY(100%); transition: transform 0.6s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column;">
 
-            <!-- Empty content area (dashboard builds here) -->
-            <div style="flex:1; display:flex; align-items:center; justify-content:center; position:relative;">
-              <p style="font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:none; color:var(--text2);" class="en">Dashboard — Screen 03</p>
-              <!-- temp: colour blocks behind nav so the frosted blur is visible until real content exists -->
-              <div style="position:absolute; bottom:-20px; left:16px; right:16px; height:200px; display:flex; gap:12px;">
-                <div style="flex:1.2; background:#111111; border-radius:16px;"></div>
-                <div style="flex:1; display:flex; flex-direction:column; gap:12px;">
-                  <div style="flex:1; background:#FFFFFF; border-radius:16px; border:1px solid var(--border);"></div>
-                  <div style="flex:1; background:#DCEEDF; border-radius:16px;"></div>
+            <!-- ══ HOME DASHBOARD (screen 03) ══ -->
+            <div id="home-scroll" class="en" style="flex:1; overflow-y:auto; padding:0 16px 120px;">
+
+              <!-- header: wordmark + farm selector -->
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 0 12px;">
+                <span style="font-size:18px; font-weight:800; color:var(--text1); letter-spacing:-0.02em;">MyBovine<span style="color:var(--greenink);">.ai</span></span>
+                <div style="position:relative;">
+                  <button id="home-farm-btn" style="display:flex; align-items:center; gap:7px; height:38px; padding:0 14px; background:var(--bgcard); border:1px solid var(--border); border-radius:20px; font-size:13px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-4 8 4v13"/><path d="M4 21h16"/><path d="M9 21v-5a3 3 0 0 1 6 0v5"/></svg>
+                    <span id="home-farm-label">All Farms</span><span id="home-farm-count" style="color:var(--text2); font-weight:500;">(3)</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                  </button>
+                  <div id="home-farm-menu" style="display:none; position:absolute; right:0; top:44px; width:200px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.16); padding:6px; z-index:30;"><button class="home-farm-opt on" data-farm="all" data-count="(3)" style="display:block; width:100%; text-align:start; padding:9px 12px; border:none; background:var(--activebg); border-radius:9px; font-size:13px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">All Farms</button><button class="home-farm-opt" data-farm="Sunrise Dairy" data-count="" style="display:block; width:100%; text-align:start; padding:9px 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Sunrise Dairy</button><button class="home-farm-opt" data-farm="Green Villa Dairy" data-count="" style="display:block; width:100%; text-align:start; padding:9px 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Green Villa Dairy</button><button class="home-farm-opt" data-farm="Stones Dairy" data-count="" style="display:block; width:100%; text-align:start; padding:9px 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Stones Dairy</button></div>
                 </div>
               </div>
+
+              <!-- 6 compact tiles, 3 across x 2 rows -->
+              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;"><div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 12px 11px; min-width:0;"><p style="font-size:22px; font-weight:800; color:var(--text1); margin:0; line-height:1;">77</p><p style="font-size:12px; font-weight:600; color:var(--text1); margin:6px 0 0; line-height:1.2;">Total Cattle</p><p style="font-size:10px; color:var(--greenink); margin:3px 0 0; line-height:1.3;">74/77 live · +3 today</p></div><div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 12px 11px; min-width:0;"><p style="font-size:22px; font-weight:800; color:var(--text1); margin:0; line-height:1;">14</p><p style="font-size:12px; font-weight:600; color:var(--text1); margin:6px 0 0; line-height:1.2;">Unresolved alerts</p><p style="font-size:10px; color:var(--danger); margin:3px 0 0; line-height:1.3;">2 critical</p></div><div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 12px 11px; min-width:0;"><p style="font-size:22px; font-weight:800; color:var(--text1); margin:0; line-height:1;">8</p><p style="font-size:12px; font-weight:600; color:var(--text1); margin:6px 0 0; line-height:1.2;">Pending tasks</p><p style="font-size:10px; color:var(--text2); margin:3px 0 0; line-height:1.3;">5 due today</p></div><div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 12px 11px; min-width:0;"><p style="font-size:22px; font-weight:800; color:var(--text1); margin:0; line-height:1;">2 · 4</p><p style="font-size:12px; font-weight:600; color:var(--text1); margin:6px 0 0; line-height:1.2;">Pregnant · Heat</p><p style="font-size:10px; color:var(--text2); margin:3px 0 0; line-height:1.3;">2 pregnant, 4 in heat</p></div><div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 12px 11px; min-width:0;"><p style="font-size:22px; font-weight:800; color:var(--text1); margin:0; line-height:1;">2</p><p style="font-size:12px; font-weight:600; color:var(--text1); margin:6px 0 0; line-height:1.2;">Approvals pending</p><p style="font-size:10px; color:var(--text2); margin:3px 0 0; line-height:1.3;">awaiting you</p></div><div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 12px 11px; min-width:0;"><p style="font-size:22px; font-weight:800; color:var(--warning); margin:0; line-height:1;">3</p><p style="font-size:12px; font-weight:600; color:var(--text1); margin:6px 0 0; line-height:1.2;">Milking missed</p><p style="font-size:10px; color:var(--text2); margin:3px 0 0; line-height:1.3;">today</p></div></div>
+
+              <!-- timeline -->
+              <div style="display:flex; gap:8px; margin:18px 0 12px;">
+                <button class="home-tl-tab" data-tl="today" style="height:34px; padding:0 18px; border-radius:17px; border:1px solid var(--greenink); background:var(--greenink); color:#fff; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Today</button>
+                <button class="home-tl-tab" data-tl="week" style="height:34px; padding:0 18px; border-radius:17px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">This Week</button>
+              </div>
+              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
+                <div id="home-tl-today"><div style="display:flex; align-items:center; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--greenink);">9h left</div><div style="width:3px; align-self:stretch; background:var(--greenink); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Gauri<span style="font-weight:400; color:var(--text2);"> — insemination window</span></p></div><div style="display:flex; align-items:center; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--text1);">4:30 PM</div><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Vet Visit</p></div><div style="display:flex; align-items:center; padding:13px 16px;"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--text1);">6:00 PM</div><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Evening Milk Logging</p></div></div>
+                <div id="home-tl-week" style="display:none;"><div style="display:flex; align-items:center; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--text1);">Tue</div><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">FMD vaccination<span style="font-weight:400; color:var(--text2);"> — 5 cows, Green Villa</span></p></div><div style="display:flex; align-items:center; padding:13px 16px;"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--text1);">Thu</div><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Vet check-up<span style="font-weight:400; color:var(--text2);"> — Dr. Sharma</span></p></div></div>
+                <div style="border-top:1px solid var(--border); padding:11px 16px; text-align:center;"><button id="home-view-timeline" style="background:none; border:none; padding:0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;">View all &rsaquo;</button></div>
+              </div>
+
+              <!-- cow groups (replaces farms-needing-action) -->
+              <p style="font-size:12px; font-weight:600; letter-spacing:0.04em; color:var(--text2); margin:20px 0 10px;">Needs attention</p>
+              <button class="home-cowgroup" data-group="heat" style="display:flex; align-items:center; justify-content:space-between; width:100%; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:15px 16px; margin-bottom:10px; font-family:var(--font-hi); cursor:pointer;"><span style="font-size:15px; font-weight:600; color:var(--text1);">Cows in heat</span><span style="display:flex; align-items:center; gap:10px;"><span style="min-width:24px; height:24px; padding:0 7px; border-radius:12px; background:var(--activebg); color:var(--greenink); font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center;">4</span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></button><button class="home-cowgroup" data-group="gestation" style="display:flex; align-items:center; justify-content:space-between; width:100%; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:15px 16px; font-family:var(--font-hi); cursor:pointer;"><span style="font-size:15px; font-weight:600; color:var(--text1);">Cows in gestation</span><span style="display:flex; align-items:center; gap:10px;"><span style="min-width:24px; height:24px; padding:0 7px; border-radius:12px; background:var(--activebg); color:var(--greenink); font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center;">2</span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></button>
+
+              <!-- updates -->
+              <div style="display:flex; align-items:center; justify-content:space-between; margin:20px 0 10px;">
+                <p style="font-size:12px; font-weight:600; letter-spacing:0.04em; color:var(--text2); margin:0;">Updates</p>
+                <button id="home-view-updates" style="background:none; border:none; padding:0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;">View all &rsaquo;</button>
+              </div>
+              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;"><div style="display:flex; justify-content:space-between; gap:10px; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Bhoori — recovered</p><p style="font-size:12px; color:var(--text2); margin:3px 0 0;">Fever caught by collar, treated by Dr. Sharma</p></div><span style="font-size:11px; color:var(--text2); flex-shrink:0;">2d</span></div><div style="display:flex; justify-content:space-between; gap:10px; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Mohini — confirmed pregnant</p><p style="font-size:12px; color:var(--text2); margin:3px 0 0;">Inseminated 18 Sep</p></div><span style="font-size:11px; color:var(--text2); flex-shrink:0;">Yesterday</span></div><div style="display:flex; justify-content:space-between; gap:10px; padding:13px 16px;"><div style="min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Ganga — calved</p><p style="font-size:12px; color:var(--text2); margin:3px 0 0;">Healthy calf, now in the Milk Log</p></div><span style="font-size:11px; color:var(--text2); flex-shrink:0;">05:40</span></div></div>
+
             </div>
 
             <!-- ── BOTTOM NAV — frosted floating bar, active tab = white capsule (Starbucks style) ── -->
@@ -1037,12 +1067,12 @@
               <button class="vtab on" data-i="0">
                 <span style="position:relative; display:flex;">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
-                  <span class="ev-dot" style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
+                  
                 </span>
                 <span class="vlab s1-nav-l en" data-k="navHome">Home</span>
               </button>
               <button class="vtab" data-i="1">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-4 8 4v13"/><path d="M4 21h16"/><path d="M9 21v-5a3 3 0 0 1 6 0v5"/></svg>
                 <span class="vlab s1-nav-l en" data-k="navFarms">Farms</span>
               </button>
               <button class="vtab" data-i="2">
@@ -1061,7 +1091,68 @@
                 <span class="vlab s1-nav-l en" data-k="navAccount">Account</span>
               </button>
             </nav>
+            <!-- View all: schedule -->
+            <div id="home-timeline-all" class="en" style="position:absolute; inset:0; background:var(--bgwarm); z-index:60; transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); overflow-y:auto;"><div style="display:flex; align-items:center; gap:10px; padding:16px 16px 12px;"><button id="home-timeline-back" style="width:32px; height:32px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><p style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">Schedule</p></div><div style="padding:0 16px 40px;"><p style="font-size:12px; font-weight:600; letter-spacing:0.04em; color:var(--text2); margin:20px 0 10px;">Today</p><div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;"><div style="display:flex; align-items:center; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--greenink);">9h left</div><div style="width:3px; align-self:stretch; background:var(--greenink); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Gauri<span style="font-weight:400; color:var(--text2);"> — insemination window</span></p></div><div style="display:flex; align-items:center; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--text1);">4:30 PM</div><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Vet Visit</p></div><div style="display:flex; align-items:center; padding:13px 16px;"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--text1);">6:00 PM</div><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Evening Milk Logging</p></div></div><p style="font-size:12px; font-weight:600; letter-spacing:0.04em; color:var(--text2); margin:20px 0 10px;">This week</p><div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;"><div style="display:flex; align-items:center; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--text1);">Tue</div><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">FMD vaccination<span style="font-weight:400; color:var(--text2);"> — 5 cows, Green Villa</span></p></div><div style="display:flex; align-items:center; padding:13px 16px;"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--text1);">Thu</div><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Vet check-up<span style="font-weight:400; color:var(--text2);"> — Dr. Sharma</span></p></div></div><p style="font-size:12px; font-weight:600; letter-spacing:0.04em; color:var(--text2); margin:20px 0 10px;">Later</p><div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;"><div style="display:flex; align-items:center; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--text1);">12 Jul</div><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Delivery approaching<span style="font-weight:400; color:var(--text2);"> — Dhauli</span></p></div><div style="display:flex; align-items:center; padding:13px 16px;"><div style="width:58px; flex-shrink:0; font-size:12px; font-weight:700; color:var(--text1);">15 Jul</div><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px; margin:0 12px;"></div><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Quarterly vet check-up<span style="font-weight:400; color:var(--text2);"> — Sunrise Dairy</span></p></div></div></div></div>
+            <!-- View all: updates -->
+            <div id="home-updates-all" class="en" style="position:absolute; inset:0; background:var(--bgwarm); z-index:60; transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); overflow-y:auto;"><div style="display:flex; align-items:center; gap:10px; padding:16px 16px 12px;"><button id="home-updates-back" style="width:32px; height:32px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><p style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">Updates</p></div><div style="padding:0 16px 40px;"><div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;"><div style="display:flex; justify-content:space-between; gap:10px; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Bhoori — recovered</p><p style="font-size:12px; color:var(--text2); margin:3px 0 0;">Fever caught by collar, treated by Dr. Sharma</p></div><span style="font-size:11px; color:var(--text2); flex-shrink:0;">2d</span></div><div style="display:flex; justify-content:space-between; gap:10px; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Mohini — confirmed pregnant</p><p style="font-size:12px; color:var(--text2); margin:3px 0 0;">Inseminated 18 Sep</p></div><span style="font-size:11px; color:var(--text2); flex-shrink:0;">Yesterday</span></div><div style="display:flex; justify-content:space-between; gap:10px; padding:13px 16px;"><div style="min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Ganga — calved</p><p style="font-size:12px; color:var(--text2); margin:3px 0 0;">Healthy calf, now in the Milk Log</p></div><span style="font-size:11px; color:var(--text2); flex-shrink:0;">05:40</span></div><div style="display:flex; justify-content:space-between; gap:10px; padding:13px 16px; border-bottom:1px solid var(--border);"><div style="min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Sunrise Dairy — collar back online</p><p style="font-size:12px; color:var(--text2); margin:3px 0 0;">Belt 3 reconnected</p></div><span style="font-size:11px; color:var(--text2); flex-shrink:0;">2d</span></div><div style="display:flex; justify-content:space-between; gap:10px; padding:13px 16px;"><div style="min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Kajri — fever cleared</p><p style="font-size:12px; color:var(--text2); margin:3px 0 0;">Temperature back to normal</p></div><span style="font-size:11px; color:var(--text2); flex-shrink:0;">3d</span></div></div></div></div>
+            <!-- Cow group bottom sheet -->
+            <div id="home-cowgroup-scrim" style="position:absolute; inset:0; background:rgba(0,0,0,0.5); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:61;"></div>
+            <div id="home-cowgroup-sheet" class="en" style="position:absolute; left:0; right:0; bottom:0; max-height:70%; background:var(--bgcard); border-radius:24px 24px 0 0; transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); z-index:62; overflow-y:auto; box-shadow:0 -8px 32px rgba(0,0,0,0.22);">
+              <div style="display:flex; justify-content:center; padding:8px 0 4px;"><div style="width:36px; height:4px; background:#E0E0E0; border-radius:2px;"></div></div>
+              <p id="home-cowgroup-title" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; padding:6px 20px 4px;">Cows in heat</p>
+              <div id="home-cowgroup-list" style="padding:6px 20px 30px;"></div>
+            </div>
           </div>
+
+    <script>
+      (function(){
+        var btn=document.getElementById('home-farm-btn'), menu=document.getElementById('home-farm-menu');
+        if(btn){
+          btn.addEventListener('click', function(e){ e.stopPropagation(); menu.style.display = menu.style.display==='block'?'none':'block'; });
+          document.addEventListener('click', function(){ if(menu) menu.style.display='none'; });
+          document.querySelectorAll('.home-farm-opt').forEach(function(o){
+            o.addEventListener('click', function(e){ e.stopPropagation();
+              document.querySelectorAll('.home-farm-opt').forEach(function(x){ x.classList.remove('on'); x.style.background='transparent'; x.style.fontWeight='500'; });
+              o.classList.add('on'); o.style.background='var(--activebg)'; o.style.fontWeight='600';
+              var f=o.getAttribute('data-farm');
+              document.getElementById('home-farm-label').textContent = f==='all' ? 'All Farms' : f;
+              document.getElementById('home-farm-count').textContent = o.getAttribute('data-count');
+              menu.style.display='none';
+            });
+          });
+        }
+        document.querySelectorAll('.home-tl-tab').forEach(function(tab){
+          tab.addEventListener('click', function(){
+            document.querySelectorAll('.home-tl-tab').forEach(function(x){ var on=x===tab;
+              x.style.background=on?'var(--greenink)':'var(--bgcard)'; x.style.color=on?'#fff':'var(--text1)';
+              x.style.borderColor=on?'var(--greenink)':'var(--border)'; x.style.fontWeight=on?'600':'500'; });
+            var tl=tab.getAttribute('data-tl');
+            document.getElementById('home-tl-today').style.display = tl==='today'?'block':'none';
+            document.getElementById('home-tl-week').style.display = tl==='week'?'block':'none';
+          });
+        });
+        function openPage(id){ var el=document.getElementById(id); if(el) el.style.transform='translateY(0)'; }
+        function closePage(id){ var el=document.getElementById(id); if(el) el.style.transform='translateY(100%)'; }
+        var vt=document.getElementById('home-view-timeline'); if(vt) vt.addEventListener('click', function(){ openPage('home-timeline-all'); });
+        var vu=document.getElementById('home-view-updates'); if(vu) vu.addEventListener('click', function(){ openPage('home-updates-all'); });
+        var bt=document.getElementById('home-timeline-back'); if(bt) bt.addEventListener('click', function(){ closePage('home-timeline-all'); });
+        var bu=document.getElementById('home-updates-back'); if(bu) bu.addEventListener('click', function(){ closePage('home-updates-all'); });
+        var COW_GROUPS={ heat:['Gauri — Belt 41','Kajri — Belt 12','Radha — Belt 8','Sona — Belt 27'], gestation:['Mohini — Belt 91','Lakshmi — Belt 52'] };
+        var sheet=document.getElementById('home-cowgroup-sheet'), scrim=document.getElementById('home-cowgroup-scrim');
+        document.querySelectorAll('.home-cowgroup').forEach(function(c){
+          c.addEventListener('click', function(){
+            var g=c.getAttribute('data-group');
+            document.getElementById('home-cowgroup-title').textContent = g==='heat' ? 'Cows in heat' : 'Cows in gestation';
+            document.getElementById('home-cowgroup-list').innerHTML = COW_GROUPS[g].map(function(n){
+              return '<div style="display:flex; align-items:center; gap:12px; padding:12px 2px; border-bottom:1px solid var(--border);"><div style="width:40px; height:40px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:15px;">&#10005;</div><span style="font-size:14px; font-weight:600; color:var(--text1);">'+n+'</span></div>';
+            }).join('');
+            if(scrim){ scrim.style.opacity='1'; scrim.style.pointerEvents='auto'; } if(sheet) sheet.style.transform='translateY(0)';
+          });
+        });
+        function closeSheet(){ if(scrim){ scrim.style.opacity='0'; scrim.style.pointerEvents='none'; } if(sheet) sheet.style.transform='translateY(100%)'; }
+        if(scrim) scrim.addEventListener('click', closeSheet);
+      })();
+    </script>
 
           <!-- SPLASH BG — off-white, fades out -->
           <div id="s1-splash-bg" style="position:absolute; inset:0; background:var(--bgwarm); transition: opacity 0.8s ease; z-index:2; pointer-events:none;"></div>
@@ -1475,12 +1566,12 @@
             <button class="vtab" data-i="0">
               <span style="position:relative; display:flex;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
-                <span class="ev-dot" style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
+                
               </span>
               <span class="vlab s1-nav-l en" data-k="navHome">Home</span>
             </button>
             <button class="vtab" data-i="1">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-4 8 4v13"/><path d="M4 21h16"/><path d="M9 21v-5a3 3 0 0 1 6 0v5"/></svg>
               <span class="vlab s1-nav-l en" data-k="navFarms">Farms</span>
             </button>
             <button class="vtab on" data-i="2">
@@ -2020,12 +2111,12 @@
             <button class="vtab" data-i="0">
               <span style="position:relative; display:flex;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
-                <span class="ev-dot" style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
+                
               </span>
               <span class="vlab s1-nav-l en" data-k="navHome">Home</span>
             </button>
             <button class="vtab" data-i="1">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-4 8 4v13"/><path d="M4 21h16"/><path d="M9 21v-5a3 3 0 0 1 6 0v5"/></svg>
               <span class="vlab s1-nav-l en" data-k="navFarms">Farms</span>
             </button>
             <button class="vtab" data-i="2">
@@ -2143,12 +2234,12 @@
               <button class="vtab" data-i="0">
                 <span style="position:relative; display:flex;">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
-                  <span class="ev-dot" style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
+                  
                 </span>
                 <span class="vlab s1-nav-l en" data-k="navHome">Home</span>
               </button>
               <button class="vtab on" data-i="1">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-4 8 4v13"/><path d="M4 21h16"/><path d="M9 21v-5a3 3 0 0 1 6 0v5"/></svg>
                 <span class="vlab s1-nav-l en" data-k="navFarms">Farms</span>
               </button>
               <button class="vtab" data-i="2">
@@ -2233,12 +2324,12 @@
               <button class="vtab" data-i="0">
                 <span style="position:relative; display:flex;">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
-                  <span class="ev-dot" style="position:absolute; top:-2px; right:-4px; width:8px; height:8px; border-radius:50%; background:var(--danger);"></span>
+                  
                 </span>
                 <span class="vlab s1-nav-l en" data-k="navHome">Home</span>
               </button>
               <button class="vtab on" data-i="1">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-4 8 4v13"/><path d="M4 21h16"/><path d="M9 21v-5a3 3 0 0 1 6 0v5"/></svg>
                 <span class="vlab s1-nav-l en" data-k="navFarms">Farms</span>
               </button>
               <button class="vtab" data-i="2">
