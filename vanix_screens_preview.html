@@ -5381,27 +5381,27 @@
 
       // ── Farms list + Farm detail (mock data model) ──
       var FARMS = [
-        { id:'sunrise', name:'Sunrise Dairy Farm', manager:'Ramesh C', cattle:32, status:'attention',
-          temp:'33°C', milkToday:40, alerts:2,
+        { id:'sunrise', name:'Sunrise Dairy Farm', manager:'Ramesh C', loc:'Coimbatore, Tamil Nadu', cattle:32, status:'attention', severity:'critical',
+          temp:'33°C', milkToday:56, alerts:2, heat:2, insem:1, preg:2, fever:1,
           cows:[
             { name:'Gowri', no:1, age:'2.2 yrs', belt:'Belt 60', status:'Milking', temp:'32°C' },
             { name:'Giri', no:2, age:'4 yrs', belt:'Belt 12', status:'Pregnant', temp:'34°C' },
             { name:'Ramya', no:3, age:'3 yrs', belt:'Belt 45', status:'Heat', label:'Heat Cycle', temp:'36°C' }
           ] },
-        { id:'greenvilla', name:'Green Villa Dairy Farm', manager:'Rakesh H', cattle:20, status:'healthy',
-          temp:'31°C', milkToday:34, alerts:0,
+        { id:'greenvilla', name:'Green Villa Dairy Farm', manager:'Rakesh H', loc:'Erode, Tamil Nadu', cattle:20, status:'healthy',
+          temp:'31°C', milkToday:42, alerts:0, heat:0, insem:0, preg:1, fever:0,
           cows:[
             { name:'Meera', no:1, age:'3.5 yrs', belt:'Belt 21', status:'Milking', temp:'31°C' },
             { name:'Kaveri', no:2, age:'2 yrs', belt:'Belt 8', status:'Milking', temp:'32°C' }
           ] },
-        { id:'stones', name:'Stones Dairy Farm', manager:'Vimal E', cattle:25, status:'healthy',
-          temp:'30°C', milkToday:44, alerts:0,
+        { id:'stones', name:'Stones Dairy Farm', manager:'Vimal E', loc:'Salem, Tamil Nadu', cattle:25, status:'healthy',
+          temp:'30°C', milkToday:44, alerts:0, heat:0, insem:0, preg:1, fever:0,
           cows:[
             { name:'Chinnu', no:1, age:'5 yrs', belt:'Belt 3', status:'Milking', temp:'30°C' },
             { name:'Devi', no:2, age:'1.8 yrs', belt:'Belt 27', status:'Pregnant', temp:'31°C' }
           ] },
-        { id:'highland', name:'Highland Farm', manager:'Unassigned', cattle:0, status:'setup',
-          temp:'—', milkToday:0, alerts:0, cows:[] }
+        { id:'highland', name:'Highland Farm', manager:'Unassigned', loc:'Not set up', cattle:0, status:'setup',
+          temp:'—', milkToday:0, alerts:0, heat:0, insem:0, preg:0, fever:0, cows:[] }
       ];
       var farmsFilter = 'all';
       var currentFarmId = null;
@@ -5419,7 +5419,7 @@
           var sev = SEVERITY_BADGE[f.severity || 'critical'];
           return '<span class="farm-sev-badge" data-sev-k="' + sev.label + '" style="flex-shrink:0; height:26px; padding:0 12px; border-radius:13px; font-size:11px; font-weight:700; letter-spacing:0.04em; display:flex; align-items:center; background:' + sev.color + '; color:#fff; font-family:var(--font-hi);">' + window.t()[sev.label] + '</span>';
         }
-        return '<span style="flex-shrink:0; width:28px; height:28px; border-radius:50%; border:1.5px solid var(--text1); display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>';
+        return '<span style="flex-shrink:0; height:26px; padding:0 12px; border-radius:13px; font-size:11px; font-weight:700; letter-spacing:0.04em; display:flex; align-items:center; border:1px solid var(--greenink); color:var(--greenink); background:transparent; font-family:var(--font-hi);">Healthy</span>';
       }
 
       function renderFarmsList() {
@@ -5429,17 +5429,24 @@
           if (q && f.name.toLowerCase().indexOf(q) === -1) return false;
           return true;
         });
+        function fBox(v,l){ return '<div style="flex:1; text-align:center; border:1px solid var(--border); border-radius:12px; padding:7px 3px;"><p style="font-size:15px; font-weight:700; color:var(--text1); margin:0; line-height:1;">' + v + '</p><p style="font-size:9px; color:var(--text2); margin:3px 0 0; line-height:1.1;">' + l + '</p></div>'; }
         document.getElementById('farms-list').innerHTML = list.map(function(f) {
           var dashed = f.status === 'setup';
-          return '<div class="en farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:var(--bgcard); border:' + (dashed ? '2px dashed var(--border)' : '1px solid var(--border)') + '; border-radius:16px; padding:16px; margin-bottom:12px; cursor:pointer;">' +
-            '<div style="min-width:0;">' +
-              '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">' + f.name + '</p>' +
-              '<p style="font-size:13px; color:var(--text2); margin:2px 0 0;">' + f.cattle + ' ' + window.t().wordCattle + ' · ' + (f.manager === 'Unassigned' ? window.t().unassignedWord : f.manager) + '</p>' +
-            '</div>' +
-            '<div style="display:flex; align-items:center; gap:10px; flex-shrink:0;">' +
-              farmStatusBadge(f) +
-              '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>' +
-            '</div>' +
+          var mgr = (f.manager === 'Unassigned' ? window.t().unassignedWord : f.manager);
+          var boxes = dashed ? '' : '<div style="display:flex; gap:7px; margin-top:12px;">' +
+              fBox(f.heat, window.t().cattleHeat) + fBox(f.insem, 'Insem.') + fBox(f.preg, window.t().statusPregnant) + fBox(f.fever, window.t().cattleFever) + fBox(f.milkToday + ' L', window.t().statMilkToday) + '</div>';
+          return '<div class="en farm-row" data-farm="' + f.id + '" style="background:var(--bgcard); border:' + (dashed ? '2px dashed var(--border)' : '1px solid var(--border)') + '; border-radius:16px; padding:16px; margin-bottom:12px; cursor:pointer;">' +
+            '<div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px;">' +
+              '<div style="min-width:0;">' +
+                '<p style="font-size:17px; font-weight:700; color:var(--text1); margin:0;">' + f.name + '</p>' +
+                '<p style="font-size:12px; color:var(--text2); margin:4px 0 0; display:flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>' + f.loc + '</p>' +
+                '<p style="font-size:12px; color:var(--text2); margin:3px 0 0; display:flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>' + mgr + '</p>' +
+              '</div>' +
+              '<div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px; flex-shrink:0;">' +
+                farmStatusBadge(f) +
+                (dashed ? '' : '<span style="font-size:15px; font-weight:700; color:var(--text1); display:flex; align-items:center; gap:3px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.5a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0z"/></svg>' + f.temp + '</span>') +
+              '</div>' +
+            '</div>' + boxes +
           '</div>';
         }).join('') || '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">' + window.t().noFarmsMatch + '</p>';
         document.querySelectorAll('.farm-row').forEach(function(row) {
