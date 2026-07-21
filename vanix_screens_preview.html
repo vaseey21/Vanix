@@ -2265,47 +2265,68 @@
             <div style="position:relative; height:100%; overflow:hidden;">
             <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
 
-              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
-                <div style="display:flex; align-items:flex-start; gap:6px;">
-                  <button id="farm-detail-back" style="flex-shrink:0; width:32px; height:32px; margin-top:2px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:16px 16px 16px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <div style="display:flex; align-items:flex-start; gap:3px;">
+                  <button id="farm-detail-back" style="flex-shrink:0; width:30px; height:30px; margin-top:1px; margin-left:-6px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
                   </button>
-                  <div style="flex:1;">
-                    <p id="farm-detail-name" class="en" style="font-size:21px; font-weight:700; color:var(--text1); margin:0; line-height:1.2;">Sunrise Dairy Farm</p>
-                    <p id="farm-detail-manager" class="en" style="font-size:13px; color:var(--text2); margin:2px 0 0;">Ramesh C · Manager</p>
+                  <div style="flex:1; min-width:0;">
+                    <div style="display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;">
+                      <p id="farm-detail-name" class="en" style="font-size:21px; font-weight:700; color:var(--text1); margin:0; line-height:1.2;">Sunrise Dairy Farm</p>
+                      <span id="farm-detail-temp" class="en" style="font-size:15px; font-weight:700; color:var(--warning); white-space:nowrap;">33°C</span>
+                    </div>
+                    <p id="farm-detail-manager" class="en" style="font-size:13px; color:var(--text2); margin:3px 0 0; display:flex; align-items:center; gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>Ramesh C · Manager<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-inline-start:2px;"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></p>
                   </div>
-                  <div style="flex-shrink:0; text-align:end;">
-                    <p id="farm-detail-temp" class="en" style="font-size:19px; font-weight:700; color:var(--text1); margin:0;">33°C</p>
-                    <p data-k="farmTempCaption" style="font-size:11px; font-style:italic; color:var(--text2); margin:1px 0 0;">Farm temp</p>
+                  <div style="position:relative; flex-shrink:0;">
+                    <button id="farm-detail-menu-btn" style="width:32px; height:32px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--text1)" stroke="none"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg>
+                    </button>
+                    <div id="farm-detail-menu" style="display:none; position:absolute; right:0; top:36px; width:230px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.16); padding:6px; z-index:30;"><button class="fd-mopt" style="display:flex; align-items:center; gap:8px; width:100%; text-align:start; padding:10px 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Share report with vet</button><button class="fd-mopt" style="display:flex; align-items:center; gap:8px; width:100%; text-align:start; padding:10px 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download report</button><button class="fd-mopt" style="display:flex; align-items:center; gap:8px; width:100%; text-align:start; padding:10px 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Download critical report</button></div>
                   </div>
+                </div>
+                <div style="position:relative; margin-top:12px; display:inline-block;">
+                  <button id="fd-duration-btn" style="display:flex; align-items:center; gap:6px; height:32px; padding:0 14px; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; font-size:13px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><span id="fd-duration-label">Today</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                  <div id="fd-duration-menu" style="display:none; position:absolute; left:0; top:38px; width:170px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,0.16); padding:6px; z-index:30;"><button class="fd-dopt" data-d="Today" style="display:block; width:100%; text-align:start; padding:9px 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Today</button><button class="fd-dopt" data-d="This week" style="display:block; width:100%; text-align:start; padding:9px 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">This week</button><button class="fd-dopt" data-d="This month" style="display:block; width:100%; text-align:start; padding:9px 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">This month</button><button class="fd-dopt" data-d="Custom" style="display:block; width:100%; text-align:start; padding:9px 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Custom</button></div>
                 </div>
               </div>
 
+              <div style="display:flex; gap:20px; margin:0 16px; padding-top:8px; border-bottom:1px solid var(--border);">
+                <button id="fd-tab-cattle" class="fd-tab" style="background:none; border:none; padding:0 0 10px; font-size:15px; font-weight:600; color:var(--greenink); border-bottom:2px solid var(--greenink); font-family:var(--font-hi); cursor:pointer;">Cattle</button>
+                <button id="fd-tab-activity" class="fd-tab" style="background:none; border:none; padding:0 0 10px; font-size:15px; font-weight:600; color:var(--text2); border-bottom:2px solid transparent; font-family:var(--font-hi); cursor:pointer;">Activity</button>
+              </div>
+
               <div style="padding:14px 16px 0;">
-                <div style="display:flex; gap:8px;">
-                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
-                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-milk">40</span> <span style="font-size:12px; font-weight:600;">L</span> <span style="color:var(--greenink);">▲</span></p>
-                    <p data-k="statMilkToday" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:none; color:var(--text2); margin:4px 0 0;">Milk Today</p>
+                <div id="fd-cattle">
+                  <div style="display:flex; gap:8px;"><div style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-left:3px solid var(--danger); border-radius:12px; padding:9px 8px;"><p id="fd-stat-fever" class="en" style="font-size:18px; font-weight:700; color:var(--danger); margin:0; line-height:1;">0</p><p style="font-size:10px; color:var(--text2); margin:3px 0 0;">Fever</p></div><div style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-left:3px solid var(--warning); border-radius:12px; padding:9px 8px;"><p id="fd-stat-heat" class="en" style="font-size:18px; font-weight:700; color:var(--warning); margin:0; line-height:1;">0</p><p style="font-size:10px; color:var(--text2); margin:3px 0 0;">Heat</p></div><div style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-left:3px solid var(--greenink); border-radius:12px; padding:9px 8px;"><p id="fd-stat-insem" class="en" style="font-size:18px; font-weight:700; color:var(--greenink); margin:0; line-height:1;">0</p><p style="font-size:10px; color:var(--text2); margin:3px 0 0;">Insem.</p></div><div style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-left:3px solid var(--greendeep); border-radius:12px; padding:9px 8px;"><p id="fd-stat-preg" class="en" style="font-size:18px; font-weight:700; color:var(--greendeep); margin:0; line-height:1;">0</p><p style="font-size:10px; color:var(--text2); margin:3px 0 0;">Pregnant</p></div></div>
+
+                  <div class="farms-search-wrap" style="display:flex; align-items:center; gap:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; height:46px; padding:0 14px; margin-top:14px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                    <input type="text" id="cattle-search" placeholder="Search cattle" data-k="searchCattle" data-k-placeholder style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
                   </div>
-                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">
-                    <p class="en" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;"><span id="farm-detail-alerts">2</span> <span style="color:var(--danger);">▲</span></p>
-                    <p data-k="statUnactionedAlerts" style="font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:none; color:var(--text2); margin:4px 0 0;">Unactioned Alerts</p>
+
+                  <div id="cattle-status-tabs" style="display:flex; gap:8px; margin:12px 0 0; overflow-x:auto; padding-bottom:2px;">
+                    <button class="cattle-tab on en" data-status="all" data-k="cattleAll" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--greenink); background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi);">All</button>
+                    <button class="cattle-tab en" data-status="Milking" data-k="cattleMilking" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Milking</button>
+                    <button class="cattle-tab en" data-status="Fever" data-k="cattleFever" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Fever</button>
+                    <button class="cattle-tab en" data-status="Heat" data-k="cattleHeat" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Heat</button>
+                  </div>
+
+                  <div id="cattle-list" style="margin-top:12px;"></div>
+                </div>
+
+                <div id="fd-activity" style="display:none;">
+                  <div style="display:flex; gap:8px; margin-bottom:12px; overflow-x:auto; padding-bottom:2px;">
+                    <button id="fd-cowfilter" style="flex-shrink:0; display:flex; align-items:center; gap:6px; height:32px; padding:0 14px; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; font-size:12px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">All cows<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><button class="fd-behav" style="flex-shrink:0; height:30px; padding:0 12px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Standing</button><button class="fd-behav" style="flex-shrink:0; height:30px; padding:0 12px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Feeding</button><button class="fd-behav" style="flex-shrink:0; height:30px; padding:0 12px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Ruminating</button><button class="fd-behav" style="flex-shrink:0; height:30px; padding:0 12px; border-radius:15px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:12px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Sitting</button>
+                  </div>
+                  <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:16px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                      <p class="en" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Herd rumination — today</p>
+                      <span class="en" style="display:flex; align-items:center; gap:5px; font-size:11px; font-weight:600; color:var(--warning);"><span style="width:7px; height:7px; border-radius:50%; background:var(--warning);"></span>Anomaly</span>
+                    </div><svg viewBox="0 0 100 30" preserveAspectRatio="none" style="display:block; width:100%; height:70px;"><polyline points="0,12 10,10 20,11 30,9 40,11 50,10 55,12" fill="none" stroke="var(--greendeep)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/><polyline points="55,12 60,22 64,23 68,18 72,12" fill="none" stroke="var(--warning)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><polyline points="72,12 80,10 90,11 100,10" fill="none" stroke="var(--greendeep)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+                    <div class="en" style="display:flex; justify-content:space-between; font-size:10px; color:var(--text2); margin-top:6px;"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+                    <p class="en" style="font-size:12px; font-weight:600; color:var(--warning); margin:12px 0 0;">Anomaly detected — rumination dipped 14:00–16:00</p>
                   </div>
                 </div>
-
-                <div class="farms-search-wrap" style="display:flex; align-items:center; gap:8px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; height:46px; padding:0 14px; margin-top:14px;">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-                  <input type="text" id="cattle-search" placeholder="Search cattle" data-k="searchCattle" data-k-placeholder style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
-                </div>
-
-                <div id="cattle-status-tabs" style="display:flex; gap:8px; margin:12px 0 0; overflow-x:auto; padding-bottom:2px;">
-                  <button class="cattle-tab on en" data-status="all" data-k="cattleAll" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--greenink); background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi);">All</button>
-                  <button class="cattle-tab en" data-status="Milking" data-k="cattleMilking" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Milking</button>
-                  <button class="cattle-tab en" data-status="Fever" data-k="cattleFever" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Fever</button>
-                  <button class="cattle-tab en" data-status="Heat" data-k="cattleHeat" style="flex-shrink:0; height:36px; padding:0 16px; border-radius:18px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);">Heat</button>
-                </div>
-
-                <div id="cattle-list" style="margin-top:12px;"></div>
 
               </div>
 
@@ -5547,8 +5568,11 @@
         document.getElementById('cattle-search').value = '';
         document.getElementById('farm-detail-name').textContent = farm.name;
         document.getElementById('farm-detail-temp').textContent = farm.temp;
-        document.getElementById('farm-detail-milk').textContent = farm.milkToday;
-        document.getElementById('farm-detail-alerts').textContent = farm.alerts;
+        document.getElementById('fd-stat-fever').textContent = farm.fever;
+        document.getElementById('fd-stat-heat').textContent = farm.heat;
+        document.getElementById('fd-stat-insem').textContent = farm.insem;
+        document.getElementById('fd-stat-preg').textContent = farm.preg;
+        if (window.fdShowTab) window.fdShowTab('cattle');
         refreshFarmDetailHeader(farm);
         renderCattleList(farm);
         farmDetailPage.style.display = 'block';
@@ -5562,6 +5586,29 @@
       document.getElementById('farm-detail-fab').addEventListener('click', function() {
         // Add Cattle is a future flow — no-op placeholder for now.
       });
+      // Farm-detail: Cattle / Activity tabs, 3-dot menu, duration dropdown
+      window.fdShowTab = function(which) {
+        var c = document.getElementById('fd-cattle'), a = document.getElementById('fd-activity');
+        var tc = document.getElementById('fd-tab-cattle'), ta = document.getElementById('fd-tab-activity');
+        var on = which === 'activity';
+        if (c) c.style.display = on ? 'none' : 'block';
+        if (a) a.style.display = on ? 'block' : 'none';
+        if (tc) { tc.style.color = on ? 'var(--text2)' : 'var(--greenink)'; tc.style.borderBottomColor = on ? 'transparent' : 'var(--greenink)'; }
+        if (ta) { ta.style.color = on ? 'var(--greenink)' : 'var(--text2)'; ta.style.borderBottomColor = on ? 'var(--greenink)' : 'transparent'; }
+        var _fab=document.getElementById('farm-detail-fab'), _fabl=document.querySelector('#page-farm-detail [data-k="addCattle"]');
+        if (_fab) _fab.style.display = on ? 'none' : 'flex';
+        if (_fabl) _fabl.style.display = on ? 'none' : 'block';
+      };
+      var _tc = document.getElementById('fd-tab-cattle'); if (_tc) _tc.addEventListener('click', function(){ window.fdShowTab('cattle'); });
+      var _ta = document.getElementById('fd-tab-activity'); if (_ta) _ta.addEventListener('click', function(){ window.fdShowTab('activity'); });
+      var _mb = document.getElementById('farm-detail-menu-btn'), _mm = document.getElementById('farm-detail-menu');
+      if (_mb) { _mb.addEventListener('click', function(e){ e.stopPropagation(); _mm.style.display = _mm.style.display === 'block' ? 'none' : 'block'; });
+        document.addEventListener('click', function(){ if (_mm) _mm.style.display = 'none'; }); }
+      var _db = document.getElementById('fd-duration-btn'), _dm = document.getElementById('fd-duration-menu');
+      if (_db) { _db.addEventListener('click', function(e){ e.stopPropagation(); _dm.style.display = _dm.style.display === 'block' ? 'none' : 'block'; });
+        document.addEventListener('click', function(){ if (_dm) _dm.style.display = 'none'; });
+        document.querySelectorAll('.fd-dopt').forEach(function(o){ o.addEventListener('click', function(e){ e.stopPropagation();
+          document.getElementById('fd-duration-label').textContent = o.getAttribute('data-d'); _dm.style.display = 'none'; }); }); }
 
       // Bridge called from the login script's applyLang() (a separate
       // <script> tag/scope) whenever the language changes, so every screen
