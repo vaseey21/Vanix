@@ -230,6 +230,22 @@
     #flow-root.dark #farm-detail-manager { color: #8C8780 !important; }
     #flow-root.dark .cattle-tab:not(.on) { color: #F5F5F5 !important; }
     #flow-root.dark #farms-filter-btn svg, #flow-root.dark .farms-search-wrap svg { stroke: #8C8780 !important; }
+    /* Dark mode for Home / Farm cards / Cow / Account — re-scope surface tokens
+       so every var()-based card, text, border and page bg flips together
+       (accent tokens greenink/greendeep/danger/warning/activebg stay as-is). */
+    #flow-root.dark #home-scroll, #flow-root.dark #home-timeline-all, #flow-root.dark #home-updates-all,
+    #flow-root.dark #home-cowgroup-sheet, #flow-root.dark #page-cow-detail, #flow-root.dark #page-add-cattle,
+    #flow-root.dark #addcow-hist-sheet, #flow-root.dark #page-account, #flow-root.dark #page-farm-mgmt,
+    #flow-root.dark #page-vet-contacts, #flow-root.dark #acct-mgr-sheet, #flow-root.dark #acct-invite-sheet,
+    #flow-root.dark #acct-logout-scrim > div, #flow-root.dark #page-farms, #flow-root.dark #page-farm-detail {
+      --bgcard:#1C1C1C; --bgwarm:#111111; --bgcard-2:#262626; --text1:#F5F5F5; --text2:#9A948A; --border:#3A3A3A;
+    }
+    #flow-root.dark #page-account, #flow-root.dark #page-farm-mgmt, #flow-root.dark #page-vet-contacts,
+    #flow-root.dark #page-cow-detail, #flow-root.dark #page-add-cattle { background:#111111 !important; }
+    #flow-root.dark #page-add-cattle input, #flow-root.dark #page-add-cattle select,
+    #flow-root.dark #page-account input { background:#1C1C1C !important; color:#F5F5F5 !important; }
+    #flow-root.dark #home-farm-menu, #flow-root.dark #fd-duration-menu, #flow-root.dark #farm-detail-menu,
+    #flow-root.dark #cow-dur-menu { box-shadow:0 12px 30px rgba(0,0,0,0.5) !important; }
     /* Secondary/outline buttons on Events cards (No / Cancel / single-acknowledge /
        unselected method chips) are transparent-background — they inherit the
        dark card behind them, so their --text1 (black) text needs flipping too. */
@@ -5661,7 +5677,7 @@
     <script>
       (function(){
         var ap=document.getElementById('page-account');
-        window.openAccount=function(){ if(ap) ap.style.display='block'; };
+        window.openAccount=function(){ if(ap) ap.style.display='block'; var _on=document.getElementById('flow-root').classList.contains('dark'); var _t=document.getElementById('acct-dark-toggle'), _k=document.getElementById('acct-dark-knob'); if(_t){ _t.style.background=_on?'var(--greenink)':'var(--border)'; } if(_k){ _k.style.left=_on?'23px':'3px'; } };
         function show(id,on){ var e=document.getElementById(id); if(e) e.style.display=on?'block':'none'; }
         // Farm Management
         var FM_FARMS=[['Sunrise Dairy Farm','Ramesh C'],['Green Villa Dairy Farm','Rakesh H'],['Stones Dairy Farm','Vimal E']];
