@@ -2351,6 +2351,76 @@
               <button id="addcow-hist-save" style="min-height:50px; background:var(--greenink); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#fff; font-family:var(--font-hi); cursor:pointer;">Save history</button>
             </div>
           </div>
+          <!-- ══ ACCOUNT (screen 11) ══ -->
+          <div id="page-account" style="position:absolute; inset:0; background:var(--bgwarm); z-index:44; display:none;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 16px 120px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 0 6px;">
+                <p style="font-size:22px; font-weight:800; color:var(--greenink); margin:0;">Profile</p>
+              </div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px; margin:8px 0 18px;">
+                <div style="width:84px; height:84px; border-radius:50%; background:var(--activebg); color:var(--greenink); display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:800;">JR</div>
+                <div style="display:flex; gap:14px;"><button id="acct-photo-add" style="background:none; border:none; padding:0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;">Add photo</button><button id="acct-photo-remove" style="background:none; border:none; padding:0; font-size:12px; font-weight:600; color:var(--text2); font-family:var(--font-hi); cursor:pointer;">Remove</button></div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:14px;"><div><label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:0 0 5px;">Full name</label><input type="text" value="James Redmark" style="width:100%; min-height:48px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div><div><label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:0 0 5px;">Phone no.</label><input type="text" value="+91 98765 43210" style="width:100%; min-height:48px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"><p style="font-size:11px; color:var(--text2); margin:5px 0 0;">Used for SMS alerts & emergency contacts</p></div><div><label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:0 0 5px;">Email address</label><input type="text" value="james@sunrisedairy.in" style="width:100%; min-height:48px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"><p style="font-size:11px; color:var(--text2); margin:5px 0 0;">Login email & vet report copies</p></div><div><label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:0 0 5px;">Role</label><input type="text" value="Farm Owner" readonly style="width:100%; min-height:48px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div></div>
+
+              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-top:20px;"><button id="acct-farm-mgmt" style="display:flex; align-items:center; justify-content:space-between; width:100%; background:transparent; border:none; border-bottom:1px solid var(--border); padding:15px 16px; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><span>Farm Management</span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button><button id="acct-vet-contacts" style="display:flex; align-items:center; justify-content:space-between; width:100%; background:transparent; border:none; padding:15px 16px; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><span>Vet Contacts</span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button></div>
+
+              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-top:14px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:15px 16px; border-bottom:1px solid var(--border);">
+                  <span style="font-size:15px; font-weight:600; color:var(--text1);">Dark mode</span>
+                  <button id="acct-dark-toggle" style="width:46px; height:26px; border-radius:13px; border:none; background:var(--border); position:relative; cursor:pointer; padding:0;"><span id="acct-dark-knob" style="position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff; transition:left 0.2s ease;"></span></button>
+                </div><button id="acct-contact" style="display:flex; align-items:center; justify-content:space-between; width:100%; background:transparent; border:none; padding:15px 16px; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><span>Contact us</span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+              </div>
+
+              <button id="acct-logout" style="width:100%; margin-top:14px; min-height:52px; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; font-size:15px; font-weight:700; color:var(--danger); font-family:var(--font-hi); cursor:pointer;">Log Out</button>
+            </div>
+          </div>
+
+          <!-- Farm Management sub-page -->
+          <div id="page-farm-mgmt" style="position:absolute; inset:0; background:var(--bgwarm); z-index:45; display:none;">
+            <div style="display:flex; align-items:center; gap:6px; padding:16px 16px 12px;">
+              <button id="fm-back" style="width:30px; height:30px; margin-left:-6px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+              <p style="font-size:22px; font-weight:700; color:var(--text1); margin:0;">Farm Management</p>
+            </div>
+            <div style="padding:0 16px 40px;" id="fm-list"></div>
+          </div>
+
+          <!-- Vet Contacts sub-page -->
+          <div id="page-vet-contacts" style="position:absolute; inset:0; background:var(--bgwarm); z-index:45; display:none;">
+            <div style="display:flex; align-items:center; gap:6px; padding:16px 16px 4px;">
+              <button id="vc-back" style="width:30px; height:30px; margin-left:-6px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+              <p style="font-size:22px; font-weight:700; color:var(--text1); margin:0;">Vet Contacts</p>
+            </div>
+            <p style="font-size:13px; color:var(--text2); margin:0 0 12px; padding:0 16px 0 52px;">Who gets called when you tap &ldquo;Call Vet&rdquo;</p>
+            <div style="padding:0 16px 40px;" id="vc-list"></div>
+          </div>
+
+          <!-- Manager picker sheet -->
+          <div id="acct-mgr-scrim" style="position:absolute; inset:0; background:rgba(0,0,0,0.5); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:66;"></div>
+          <div id="acct-mgr-sheet" style="position:absolute; left:0; right:0; bottom:0; max-height:75%; background:var(--bgcard); border-radius:24px 24px 0 0; transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); z-index:67; overflow-y:auto; box-shadow:0 -8px 32px rgba(0,0,0,0.22);">
+            <div style="display:flex; justify-content:center; padding:8px 0 4px;"><div style="width:36px; height:4px; background:#E0E0E0; border-radius:2px;"></div></div>
+            <p style="font-size:18px; font-weight:700; color:var(--text1); margin:0; padding:6px 20px 2px;">Select a farm manager</p>
+            <p id="acct-mgr-farm" style="font-size:12px; color:var(--text2); margin:0; padding:0 20px 10px;">Sunrise Dairy Farm</p>
+            <div id="acct-mgr-list" style="padding:0 20px 8px;"></div>
+            <div style="padding:6px 20px 30px;"><button id="acct-mgr-invite" style="width:100%; min-height:48px; background:transparent; border:1px dashed var(--greenink); border-radius:14px; font-size:14px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;">+ Invite Farm Manager</button></div>
+          </div>
+
+          <!-- Invite sheet -->
+          <div id="acct-invite-scrim" style="position:absolute; inset:0; background:rgba(0,0,0,0.5); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:68;"></div>
+          <div id="acct-invite-sheet" style="position:absolute; left:0; right:0; bottom:0; background:var(--bgcard); border-radius:24px 24px 0 0; transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); z-index:69; box-shadow:0 -8px 32px rgba(0,0,0,0.22);">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px 4px;"><p style="font-size:18px; font-weight:700; color:var(--text1); margin:0;">Invite Farm Manager</p><button id="acct-invite-close" style="width:28px; height:28px; border:none; background:var(--bgwarm); border-radius:50%; font-size:15px; color:var(--text2); cursor:pointer;">&#10005;</button></div>
+            <p style="font-size:12px; color:var(--text2); margin:0; padding:0 20px 12px;">An invite link is sent — they confirm before being added.</p>
+            <div style="padding:0 20px 26px; display:flex; flex-direction:column; gap:12px;"><div><label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:0 0 5px;">Email address</label><input type="text" value="" style="width:100%; min-height:48px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div><div><label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:0 0 5px;">Phone number</label><input type="text" value="" style="width:100%; min-height:48px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div><button id="acct-invite-confirm" style="min-height:50px; background:var(--greenink); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#fff; font-family:var(--font-hi); cursor:pointer;">Confirm &amp; assign</button></div>
+          </div>
+
+          <!-- Logout confirm -->
+          <div id="acct-logout-scrim" style="position:absolute; inset:0; background:rgba(0,0,0,0.5); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:70; display:flex; align-items:center; justify-content:center;">
+            <div style="width:78%; background:var(--bgcard); border-radius:18px; padding:22px 20px; text-align:center;">
+              <p style="font-size:16px; font-weight:700; color:var(--text1); margin:0 0 6px;">Log out?</p>
+              <p style="font-size:13px; color:var(--text2); margin:0 0 18px;">You&rsquo;ll need to sign in again with an OTP.</p>
+              <div style="display:flex; gap:10px;"><button id="acct-logout-cancel" style="flex:1; min-height:46px; background:var(--bgwarm); border:1px solid var(--border); border-radius:23px; font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Cancel</button><button id="acct-logout-confirm" style="flex:1; min-height:46px; background:var(--danger); border:none; border-radius:23px; font-size:14px; font-weight:700; color:#fff; font-family:var(--font-hi); cursor:pointer;">Log out</button></div>
+            </div>
+          </div>
         </div><!-- /layer stack -->
   </div>
 <script>
@@ -3108,6 +3178,7 @@
 
       // ── App dark mode: tap Account tab anywhere (temporary home for the switch) ──
       document.getElementById('s1-acct').addEventListener('click', function() {
+        if (window.openAccount) { window.openAccount(); return; }
         document.getElementById('flow-root').classList.toggle('dark');
       });
 
@@ -5255,7 +5326,7 @@
           milkPage.style.display = 'none';
           resetNav(milkNav, 2);
         }, 280);
-        if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+        if (i === 4) { if (window.openAccount) window.openAccount(); }
       });
       wireNav(eventsNav, function(i) {
         if (i === 0) setTimeout(function() {
@@ -5272,7 +5343,7 @@
           eventsPage.style.display = 'none';
           resetNav(eventsNav, 3);
         }, 280);
-        if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+        if (i === 4) { if (window.openAccount) window.openAccount(); }
       });
       wireNav(farmsNav, function(i) {
         if (i === 0) setTimeout(function() {
@@ -5289,7 +5360,7 @@
           eventsPage.style.display = 'block';
           resetNav(farmsNav, 1);
         }, 280);
-        if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+        if (i === 4) { if (window.openAccount) window.openAccount(); }
       });
       wireNav(farmDetailNav, function(i) {
         if (i === 0) setTimeout(function() {
@@ -5316,7 +5387,7 @@
           resetNav(farmDetailNav, 1);
           resetNav(farmsNav, 1);
         }, 280);
-        if (i === 4) document.getElementById('flow-root').classList.toggle('dark');
+        if (i === 4) { if (window.openAccount) window.openAccount(); }
       });
 
       // ── Farms list + Farm detail (mock data model) ──
@@ -5584,6 +5655,67 @@
         function closeHist(){ if(hsc){hsc.style.opacity='0'; hsc.style.pointerEvents='none';} if(hs) hs.style.transform='translateY(100%)'; }
         if(hsc) hsc.addEventListener('click', closeHist);
         var hsv=document.getElementById('addcow-hist-save'); if(hsv) hsv.addEventListener('click', closeHist);
+      })();
+    </script>
+
+    <script>
+      (function(){
+        var ap=document.getElementById('page-account');
+        window.openAccount=function(){ if(ap) ap.style.display='block'; };
+        function show(id,on){ var e=document.getElementById(id); if(e) e.style.display=on?'block':'none'; }
+        // Farm Management
+        var FM_FARMS=[['Sunrise Dairy Farm','Ramesh C'],['Green Villa Dairy Farm','Rakesh H'],['Stones Dairy Farm','Vimal E']];
+        var MANAGERS=['Ramesh C','Rakesh H','Vimal E','Suresh Yadav'];
+        function renderFM(){
+          var el=document.getElementById('fm-list'); if(!el) return;
+          el.innerHTML=FM_FARMS.map(function(f){
+            return '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:16px; margin-bottom:12px;">'+
+              '<p style="font-size:16px; font-weight:700; color:var(--text1); margin:0;">'+f[0]+'</p>'+
+              '<p style="font-size:13px; color:var(--text2); margin:3px 0 12px;">Manager: '+f[1]+'</p>'+
+              '<button class="fm-reassign" data-farm="'+f[0]+'" style="width:100%; min-height:44px; background:var(--activebg); border:1px solid var(--greendeep); border-radius:22px; font-size:14px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;">Reassign</button></div>';
+          }).join('');
+          el.querySelectorAll('.fm-reassign').forEach(function(b){ b.addEventListener('click', function(){ openMgr(b.getAttribute('data-farm')); }); });
+        }
+        var af=document.getElementById('acct-farm-mgmt'); if(af) af.addEventListener('click', function(){ renderFM(); show('page-farm-mgmt',true); });
+        var fb=document.getElementById('fm-back'); if(fb) fb.addEventListener('click', function(){ show('page-farm-mgmt',false); });
+        // Vet contacts
+        var VETS=[['Dr. Sharma','Confirmed','ok'],['Dr. Rao','Confirmed','ok'],['Dr. Iyer','Pending','pend']];
+        function renderVC(){
+          var el=document.getElementById('vc-list'); if(!el) return;
+          el.innerHTML=VETS.map(function(v,i){
+            var badge = v[2]==='ok' ? '<span style="height:24px; padding:0 10px; border-radius:12px; border:1px solid var(--greendeep); color:var(--greenink); font-size:11px; font-weight:700; display:inline-flex; align-items:center;">Confirmed</span>' : '<span style="height:24px; padding:0 10px; border-radius:12px; background:var(--warnbg); border:1px solid var(--warning); color:#8A5A00; font-size:11px; font-weight:700; display:inline-flex; align-items:center;">Pending</span>';
+            var demo = v[2]==='pend' ? '<div style="display:flex; gap:8px; margin-top:10px;"><button class="vc-confirm" data-i="'+i+'" style="flex:1; min-height:40px; background:transparent; border:1px solid var(--greendeep); border-radius:20px; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;">(demo) Confirm</button><button style="flex:1; min-height:40px; background:transparent; border:1px solid var(--border); border-radius:20px; font-size:13px; font-weight:600; color:var(--danger); font-family:var(--font-hi); cursor:pointer;">(demo) Decline</button></div>' : '';
+            return '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; margin-bottom:10px;">'+
+              '<div style="display:flex; align-items:center; justify-content:space-between; gap:10px;"><span style="font-size:15px; font-weight:700; color:var(--text1);">'+v[0]+'</span>'+badge+'</div>'+demo+'</div>';
+          }).join('');
+          el.querySelectorAll('.vc-confirm').forEach(function(b){ b.addEventListener('click', function(){ VETS[+b.getAttribute('data-i')][2]='ok'; VETS[+b.getAttribute('data-i')][1]='Confirmed'; renderVC(); }); });
+        }
+        var av=document.getElementById('acct-vet-contacts'); if(av) av.addEventListener('click', function(){ renderVC(); show('page-vet-contacts',true); });
+        var vb=document.getElementById('vc-back'); if(vb) vb.addEventListener('click', function(){ show('page-vet-contacts',false); });
+        // manager picker + invite sheets
+        var mSheet=document.getElementById('acct-mgr-sheet'), mScrim=document.getElementById('acct-mgr-scrim');
+        function openMgr(farm){ document.getElementById('acct-mgr-farm').textContent=farm;
+          document.getElementById('acct-mgr-list').innerHTML=MANAGERS.map(function(m,i){ return '<button class="acct-mopt" style="display:flex; align-items:center; gap:10px; width:100%; text-align:start; min-height:46px; padding:0 12px; margin-bottom:8px; border:1px solid '+(i===0?'var(--greendeep)':'var(--border)')+'; background:'+(i===0?'var(--activebg)':'var(--bgcard)')+'; border-radius:12px; font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><span style="width:16px; height:16px; border-radius:50%; border:2px solid '+(i===0?'var(--greendeep)':'var(--border)')+'; background:'+(i===0?'var(--greendeep)':'transparent')+'; flex-shrink:0;"></span>'+m+'</button>'; }).join('');
+          mScrim.style.opacity='1'; mScrim.style.pointerEvents='auto'; mSheet.style.transform='translateY(0)';
+          document.querySelectorAll('.acct-mopt').forEach(function(o){ o.addEventListener('click', function(){ document.querySelectorAll('.acct-mopt').forEach(function(x){ x.style.borderColor='var(--border)'; x.style.background='var(--bgcard)'; x.querySelector('span').style.borderColor='var(--border)'; x.querySelector('span').style.background='transparent'; }); o.style.borderColor='var(--greendeep)'; o.style.background='var(--activebg)'; o.querySelector('span').style.borderColor='var(--greendeep)'; o.querySelector('span').style.background='var(--greendeep)'; }); });
+        }
+        function closeMgr(){ mScrim.style.opacity='0'; mScrim.style.pointerEvents='none'; mSheet.style.transform='translateY(100%)'; }
+        if(mScrim) mScrim.addEventListener('click', closeMgr);
+        var iSheet=document.getElementById('acct-invite-sheet'), iScrim=document.getElementById('acct-invite-scrim');
+        var mi=document.getElementById('acct-mgr-invite'); if(mi) mi.addEventListener('click', function(){ closeMgr(); iScrim.style.opacity='1'; iScrim.style.pointerEvents='auto'; iSheet.style.transform='translateY(0)'; });
+        function closeInvite(){ iScrim.style.opacity='0'; iScrim.style.pointerEvents='none'; iSheet.style.transform='translateY(100%)'; }
+        if(iScrim) iScrim.addEventListener('click', closeInvite);
+        var ic=document.getElementById('acct-invite-close'); if(ic) ic.addEventListener('click', closeInvite);
+        var icf=document.getElementById('acct-invite-confirm'); if(icf) icf.addEventListener('click', closeInvite);
+        // contact us + logout + dark toggle
+        var cu=document.getElementById('acct-contact'); if(cu) cu.addEventListener('click', function(){ window.location.href='mailto:support@vanix.com'; });
+        var lScrim=document.getElementById('acct-logout-scrim');
+        var lo=document.getElementById('acct-logout'); if(lo) lo.addEventListener('click', function(){ lScrim.style.opacity='1'; lScrim.style.pointerEvents='auto'; });
+        function closeLo(){ lScrim.style.opacity='0'; lScrim.style.pointerEvents='none'; }
+        var lc=document.getElementById('acct-logout-cancel'); if(lc) lc.addEventListener('click', closeLo);
+        var lcf=document.getElementById('acct-logout-confirm'); if(lcf) lcf.addEventListener('click', function(){ closeLo(); show('page-account',false); });
+        var dt=document.getElementById('acct-dark-toggle'), dk=document.getElementById('acct-dark-knob');
+        if(dt) dt.addEventListener('click', function(){ var on=document.getElementById('flow-root').classList.toggle('dark'); dt.style.background=on?'var(--greenink)':'var(--border)'; dk.style.left=on?'23px':'3px'; });
       })();
     </script>
 </body>
