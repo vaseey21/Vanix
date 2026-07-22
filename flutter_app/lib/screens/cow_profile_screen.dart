@@ -5,10 +5,13 @@ import '../state/app_state.dart';
 import '../theme/vanix_theme.dart';
 import 'groups_screen.dart';
 
-/// Cow Profile — mirrors #page-cow in prototype.html: hero (photo, name +
-/// belt, breed, age, kebab, Status + Current Temp tiles), a 3-tab segmented
-/// control (Timeline / Overview / Vet Logs), and a floating + actions sheet.
-/// Pushed detail page — no bottom nav.
+/// Cow Profile — mirrors #page-cow in vanix_screens_preview.html: full-bleed
+/// photo hero (name/breed/age/temp + gender/battery/status chips on the
+/// scrim, kebab = Edit / Add to group / Download Report / Share Report with
+/// vet / Delete), 5 underline tabs flush at the hero's bottom edge
+/// (Timeline / Overview / Activity / Milk Data / Vet Logs), and a floating +
+/// actions sheet (full multi-step flow engine). Pushed detail page — no
+/// bottom nav.
 class CowProfileScreen extends StatefulWidget {
   final AppState appState;
   final FarmModel farm;
