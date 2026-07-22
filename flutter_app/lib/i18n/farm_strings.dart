@@ -135,6 +135,9 @@ class FS {
       'dashGoodNews': 'Good News', 'dashRecovered': 'recovered', 'dashFeverCaught': 'fever caught by collar, treated by Dr. Sharma', 'dashDaysAgo': 'days ago',
       'dashConfPreg': 'confirmed pregnant', 'dashInseminated': 'Inseminated', 'dashConfYesterday': 'confirmed yesterday',
       'dashCalved': 'calved', 'dashHealthyCalf': 'healthy calf, now in the Milk Log', 'dashYesterday': 'Yesterday', 'dashTriageDone': 'Logged — thanks', 'dashUpdates': 'Updates', 'dashToday': 'Today',
+      'homeCowsPregnant': 'Cows\nPregnant', 'homeCowsHeat': 'Cows in\nHeat', 'homePendingApprovals': 'Pending\nApprovals',
+      'homeMilkingsMissed': 'Milkings\nMissed', 'homeUnresolvedAlerts': 'Unresolved\nAlerts',
+      'homeCowsInHeat': 'Cows in heat', 'homeCowsInGestation': 'Cows in gestation',
       // Cow action flow engine
       'eventDate': 'Event date', 'eventTime': 'Time', 'caConfirm': 'Confirm', 'caDone': 'Done',
       'caYes': 'Yes', 'caNo': 'No', 'pickVet': 'Pick a vet', 'schedVisit': 'Schedule visit',
