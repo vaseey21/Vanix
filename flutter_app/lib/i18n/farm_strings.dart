@@ -307,6 +307,13 @@ class FS {
       'homeCowsPregnant': 'गर्भवती\nगायें', 'homeCowsHeat': 'गर्मी में\nगायें', 'homePendingApprovals': 'लंबित\nमंज़ूरियाँ',
       'homeMilkingsMissed': 'छूटी\nदूध दुहाई', 'homeUnresolvedAlerts': 'अनसुलझी\nचेतावनी',
       'homeCowsInHeat': 'गर्मी में गायें', 'homeCowsInGestation': 'गर्भावस्था में गायें',
+      // Dashboard — Farm Status / Needs Attention / Approvals page (Screen 03 r3)
+      'farmStatusTitle': 'फार्म स्थिति', 'needsAttentionTitle': 'ध्यान चाहिए', 'viewAllWord': 'सभी देखें',
+      'rowPendingApprovals': 'मंज़ूरी बाकी', 'rowMilkingMissed': 'छूटे दूध सत्र', 'rowCriticalAlerts': 'गंभीर अलर्ट',
+      'approvalsPageTitle': 'मंज़ूरी', 'approvalsPendingHeader': 'मंज़ूरी बाकी', 'approvalsHistoryHeader': 'इतिहास',
+      'approvedWord': 'मंज़ूर', 'deniedWord': 'अस्वीकृत', 'approveWord': 'मंज़ूर करें', 'denyWord': 'अस्वीकार करें',
+      'bucketThisWeek': 'इस सप्ताह', 'bucketLastWeek': 'पिछला सप्ताह', 'bucketLastMonth': 'पिछला महीना',
+      'noApprovalsWord': 'इस फ़िल्टर में कुछ नहीं',
       // Cow action flow engine
       'eventDate': 'घटना की तारीख', 'eventTime': 'समय', 'caConfirm': 'पुष्टि करें', 'caDone': 'हो गया',
       'caYes': 'हाँ', 'caNo': 'नहीं', 'pickVet': 'पशु चिकित्सक चुनें', 'schedVisit': 'भेंट निर्धारित करें',
