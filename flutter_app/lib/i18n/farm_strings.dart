@@ -143,6 +143,13 @@ class FS {
       'homeCowsPregnant': 'Cows\nPregnant', 'homeCowsHeat': 'Cows in\nHeat', 'homePendingApprovals': 'Pending\nApprovals',
       'homeMilkingsMissed': 'Milkings\nMissed', 'homeUnresolvedAlerts': 'Unresolved\nAlerts',
       'homeCowsInHeat': 'Cows in heat', 'homeCowsInGestation': 'Cows in gestation',
+      // Dashboard — Farm Status / Needs Attention / Approvals page (Screen 03 r3)
+      'farmStatusTitle': 'Farm Status', 'needsAttentionTitle': 'Needs Attention', 'viewAllWord': 'View All',
+      'rowPendingApprovals': 'Pending Approvals', 'rowMilkingMissed': 'Milking Sessions Missed', 'rowCriticalAlerts': 'Critical Alerts',
+      'approvalsPageTitle': 'Approvals', 'approvalsPendingHeader': 'Pending Approvals', 'approvalsHistoryHeader': 'History',
+      'approvedWord': 'Approved', 'deniedWord': 'Denied', 'approveWord': 'Approve', 'denyWord': 'Deny',
+      'bucketThisWeek': 'This Week', 'bucketLastWeek': 'Last Week', 'bucketLastMonth': 'Last Month',
+      'noApprovalsWord': 'No approvals in this filter',
       // Cow action flow engine
       'eventDate': 'Event date', 'eventTime': 'Time', 'caConfirm': 'Confirm', 'caDone': 'Done',
       'caYes': 'Yes', 'caNo': 'No', 'pickVet': 'Pick a vet', 'schedVisit': 'Schedule visit',
