@@ -7007,7 +7007,7 @@
             '<span class="en" style="font-size:14px; font-weight:700; color:' + (on ? 'var(--greenink)' : 'var(--text1)') + ';">' + d.getDate() + '</span>' +
           '</button>';
         }).join('');
-        document.getElementById('cow-actlog-list').innerHTML = COW_ACTLOG_CARDS.map(function(card) {
+        document.getElementById('cow-actlog-list').innerHTML = cowActlogCards().map(function(card) {
           var open = !!cowActlogExpanded[card.key];
           var intervals = actlogIntervalsForActivity(cowActlogDate || '', card.meta.k);
           var body = intervals.length ? intervals.map(function(iv) {
