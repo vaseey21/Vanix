@@ -7710,7 +7710,7 @@
         if (dlc) dlc.addEventListener('click', function() { kebabMenu.style.display = 'none'; openReportPreview(true); });
         if (sh) sh.addEventListener('click', function() {
           kebabMenu.style.display = 'none';
-          window.openVetSheet(function(vetName) { showToast(window.t().reportSharedWithFarm ? window.t().reportSharedWithFarm.replace('{vet}', vetName) : 'Report shared with ' + vetName); });
+          window.openVetSheet(function(vetName) { showToast('Report shared with ' + vetName); });
         });
         if (mg) mg.addEventListener('click', function() {
           kebabMenu.style.display = 'none';
