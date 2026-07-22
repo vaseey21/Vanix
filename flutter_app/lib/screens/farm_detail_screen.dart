@@ -62,9 +62,6 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
   String _breedFilter = 'all';
   String _ageFilter = 'all';
 
-  String _fdRange = 'today'; // today | week | month | custom
-  DateTime? _customFrom, _customTo;
-
   String _fdTab = 'cattle'; // cattle | herd
   String _fdActivity = 'rumination'; // rumination | standing | resting | feeding
   String _fdHerdCow = 'all';
