@@ -11,12 +11,16 @@ import 'events_screen.dart';
 import 'farms_screen.dart';
 import 'account_screen.dart';
 
-/// Home dashboard — Screen 03. Mirrors #s1-dash in prototype.html: greeting
-/// header (no bell/avatar — profile lives in the nav), All-Farms selector +
-/// live collars, 2x2 stat cards (the Unactioned-Alerts card opens a detail
-/// sheet with the per-farm breakdown + Kajri triage via its info button),
-/// a Today/This-week tabbed schedule, edits/milk-missing cards, insemination
-/// timer, farms-needing-action, and an icon-less Updates list.
+/// Home dashboard — Screen 03 (Farm Owner). Mirrors #s1-dash /
+/// #dash-scroll in vanix_screens_preview.html (Home r2): header (logo +
+/// farm selector), 6 compact summary cards (Total Cattle / Cows Pregnant /
+/// Cows in Heat / Pending Approvals / Milkings Missed / Unresolved Alerts —
+/// the Unresolved-Alerts card's info button opens the per-farm breakdown +
+/// Kajri triage sheet), a Today/This-week tabbed schedule, a horizontal
+/// "Cows in heat" row (tapping a card opens the same full-screen heat-alert
+/// carousel + walkthrough as Events' "View full cycle"), a horizontal
+/// "Cows in gestation" row (tapping a card opens the walkthrough sheet
+/// directly at its gestation step), and an icon-less Updates list.
 class DashboardScreen extends StatefulWidget {
   final AppState appState;
   const DashboardScreen({super.key, required this.appState});
@@ -57,6 +61,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Color get _cardBg => _isDark ? VanixColors.darkSecond : VanixColors.bgCard;
   Color get _text1 => _isDark ? Colors.white : VanixColors.textPrimary;
+  Color get _text2 => VanixColors.textHint;
   Color get _border => _isDark ? VanixColors.darkBorder : VanixColors.border;
   Color get _divider => _isDark ? VanixColors.darkDivider : VanixColors.divider;
   List<BoxShadow> get _shadow => _isDark ? VanixShadow.cardDark : VanixShadow.card;
@@ -91,12 +96,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           child: _scheduleTabs(),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                          child: _twoCards(),
+                          padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          child: _cowsInHeatRow(),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
-                          child: _farmsNeedingAction(),
+                          padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          child: _cowsInGestationRow(),
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
@@ -124,9 +129,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   // ── Card shell ──
-  BoxDecoration _cardDeco() => BoxDecoration(color: _cardBg, borderRadius: BorderRadius.circular(18), boxShadow: _shadow);
+  BoxDecoration _cardDeco() => BoxDecoration(color: _cardBg, borderRadius: BorderRadius.circular(16), boxShadow: _shadow);
 
-  TextStyle get _secLbl => const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 0.6, color: VanixColors.textHint);
+  TextStyle get _secLbl => const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 0.6, color: VanixColors.textHint);
 
   String get _farmSelLabel {
     if (_farmSel == 'all') return '${_t('dashAllFarms')} (${kFarms.length})';
@@ -214,49 +219,41 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // ── Stat grid (2x2) ──
+  // ── Summary cards: 6 compact tiles (number + 2-line label), 3 per row —
+  // Total Cattle / Cows Pregnant / Cows in Heat, then Pending Approvals /
+  // Milkings Missed / Unresolved Alerts. Mirrors the `.m-stat-card` grid in
+  // #dash-scroll (Home r2) — plain number + label, no icons, no sub-line. ──
   Widget _statGrid() {
     return Column(children: [
       Row(children: [
-        Expanded(child: _statCard('77', 'statTotalCattle', _subGreen('+3 ', 'dashAddedToday'), liveSuffix: '(74/77 ${_t('dashLive')})')),
-        const SizedBox(width: 12),
-        Expanded(child: _statCard('14', 'statUnactionedAlerts', _subColor('2 ', 'criticalWord', VanixColors.danger), onInfo: _openAlertsSheet)),
+        Expanded(child: _statTile('77', 'statTotalCattle')),
+        const SizedBox(width: 10),
+        Expanded(child: _statTile('2', 'homeCowsPregnant')),
+        const SizedBox(width: 10),
+        Expanded(child: _statTile('4', 'homeCowsHeat')),
       ]),
-      const SizedBox(height: 12),
+      const SizedBox(height: 10),
       Row(children: [
-        Expanded(child: _statCard('8', 'dashPendingTasks', _subMuted('5 ', 'dashDueToday', ' · 3 ', 'dashOverdue'))),
-        const SizedBox(width: 12),
-        Expanded(child: _statCard('2', 'dashPregnant', _subMuted('1 ', 'dashDueThisWeek', '', null))),
+        Expanded(child: _statTile('2', 'homePendingApprovals')),
+        const SizedBox(width: 10),
+        Expanded(child: _statTile('3', 'homeMilkingsMissed')),
+        const SizedBox(width: 10),
+        Expanded(child: _statTile('14', 'homeUnresolvedAlerts', onInfo: _openAlertsSheet)),
       ]),
     ]);
   }
 
-  Widget _statCard(String num, String labelKey, Widget sub, {VoidCallback? onInfo, String? liveSuffix}) {
+  Widget _statTile(String num, String labelKey, {VoidCallback? onInfo}) {
+    // labelKey text may contain literal '\n' for a 2-line label (matches the
+    // HTML's white-space:pre-line labels, e.g. "Cows\nPregnant").
     final card = Container(
-      decoration: _cardDeco(),
-      padding: const EdgeInsets.fromLTRB(14, 15, 14, 15),
+      decoration: BoxDecoration(color: _cardBg, borderRadius: BorderRadius.circular(16)),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              Text(num, style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700, height: 1, color: _text1)),
-              if (liveSuffix != null) ...[
-                const SizedBox(width: 6),
-                Flexible(
-                  child: Text(liveSuffix,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-                ),
-              ],
-            ],
-          ),
-          const SizedBox(height: 9),
-          Text(_t(labelKey), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: _text1)),
-          const SizedBox(height: 3),
-          sub,
+          Text(num, textAlign: TextAlign.center, style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, height: 1, color: _text1)),
+          const SizedBox(height: 7),
+          Text(_t(labelKey), textAlign: TextAlign.center, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, height: 1.3, color: _text1)),
         ],
       ),
     );
@@ -265,11 +262,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       children: [
         card,
         PositionedDirectional(
-          top: 6, end: 6,
+          top: 2, end: 2,
           child: IconButton(
-            iconSize: 18,
+            iconSize: 15,
             padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 30, minHeight: 30),
+            constraints: const BoxConstraints(minWidth: 26, minHeight: 26),
             onPressed: onInfo,
             icon: const Icon(Icons.info_outline, color: VanixColors.textHint),
           ),
@@ -278,15 +275,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _subGreen(String prefix, String key) => Text('$prefix${_t(key)}',
-      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VanixColors.greenInk));
-  Widget _subColor(String prefix, String key, Color c) => Text('$prefix${_t(key)}',
-      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: c));
-  Widget _subMuted(String p1, String k1, String p2, String? k2) => Text(
-      '$p1${_t(k1)}$p2${k2 != null ? _t(k2) : ''}',
-      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: VanixColors.textHint));
-
-  // ── Unactioned Alerts detail sheet (opened by the stat-card info button) ──
+  // ── Unactioned Alerts detail sheet (opened by the info button on the
+  // Unresolved-Alerts card) — mirrors #dash-alerts-sheet. ──
   void _openAlertsSheet() {
     showModalBottomSheet(
       context: context,
@@ -412,76 +402,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // ── Two half cards ──
-  Widget _twoCards() {
-    return Row(children: [
-      // Pending milk edits live in the Milk tab — tapping goes there.
-      Expanded(child: _miniCard('2', 'dashEditsApproval', _text1, onTap: () => _onNavTap(2))),
-      const SizedBox(width: 12),
-      Expanded(child: _miniCard('3', 'dashMilkMissing', VanixColors.warning, onTap: () => _onNavTap(2))),
-    ]);
-  }
-
-  Widget _miniCard(String num, String key, Color numColor, {VoidCallback? onTap}) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
-      child: Container(
-        decoration: _cardDeco(),
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(num, style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: numColor)),
-            const SizedBox(height: 6),
-            Text(_t(key), style: TextStyle(fontSize: 13, height: 1.35, color: _text1)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // ── Farms needing action ──
-  Widget _farmsNeedingAction() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(_t('dashFarmsNeedAction').toUpperCase(), style: _secLbl),
-        const SizedBox(height: 10),
-        InkWell(
-          onTap: () => _onNavTap(1),
-          borderRadius: BorderRadius.circular(18),
-          child: Container(
-            decoration: _cardDeco(),
-            padding: const EdgeInsets.all(16),
-            child: Row(children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(children: [
-                      Text('Sunrise Dairy', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: _text1)),
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(color: VanixColors.danger, borderRadius: BorderRadius.circular(8)),
-                        child: Text(_t('sevCritical'), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.4, color: Colors.white)),
-                      ),
-                    ]),
-                    const SizedBox(height: 6),
-                    Text('1 ${_t('cattleFever')} · 2 ${_t('cattleHeat')} · collar 3 ${_t('dashOffline')}',
-                        style: const TextStyle(fontSize: 13, color: VanixColors.textHint)),
-                  ],
-                ),
-              ),
-              const Icon(Icons.chevron_right, size: 20, color: VanixColors.textHint),
-            ]),
-          ),
-        ),
-      ],
-    );
-  }
-
   // ── Schedule with Today / This week tabs ──
   Widget _scheduleTabs() {
     return Column(
@@ -581,6 +501,150 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // ── Cows in heat (horizontal scroll) — tapping any card opens the same
+  // full-screen heat-alert carousel + walkthrough as Events' "View full
+  // cycle" link (window.evOpenFullCycle in the HTML). ──
+  Widget _cowsInHeatRow() {
+    final cards = [
+      _HeatCardData('Gauri', 'Gir', 'Sunrise Dairy', 'assets/images/heat_photo.jpg'),
+      _HeatCardData('Kajri', 'Sahiwal', 'Green Villa', 'assets/images/insemination_photo.jpg'),
+      _HeatCardData('Rani', 'Ongole', 'Sunrise Dairy', 'assets/images/milking_started_photo.jpg'),
+      _HeatCardData('Chandni', 'Jersey', 'Stones Dairy', 'assets/images/milking_ended_photo.jpg'),
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(padding: const EdgeInsetsDirectional.only(start: 16, end: 16, bottom: 10), child: Text(_t('homeCowsInHeat').toUpperCase(), style: _secLbl)),
+        SizedBox(
+          height: 78,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
+            itemCount: cards.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            itemBuilder: (context, i) {
+              final c = cards[i];
+              return InkWell(
+                onTap: () => openFullCycleFlow(context, widget.appState),
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  width: 214,
+                  decoration: _cardDeco(),
+                  padding: const EdgeInsets.all(12),
+                  child: Row(children: [
+                    Container(
+                      width: 52, height: 52,
+                      decoration: BoxDecoration(color: VanixColors.bgWarm, borderRadius: BorderRadius.circular(12)),
+                      clipBehavior: Clip.antiAlias,
+                      child: Image.asset(c.photo, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox()),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(c.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: _text1)),
+                          const SizedBox(height: 2),
+                          Text(c.breed, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+                          const SizedBox(height: 2),
+                          Text(c.farm, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
+                        ],
+                      ),
+                    ),
+                  ]),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  // ── Cows in gestation (horizontal scroll) — each card shows a "Day N of
+  // 283" progress bar; tapping opens the walkthrough sheet directly at its
+  // gestation step (window.evOpenGestationSlider in the HTML). ──
+  Widget _cowsInGestationRow() {
+    final cards = [
+      _GestationCardData('Lakshmi', 'HF Cross', 'Green Villa', 'assets/images/gestation_photo.jpg', 186, 283),
+      _GestationCardData('Mohini', 'Gir', 'Sunrise Dairy', 'assets/images/delivery_photo.jpg', 94, 283),
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(padding: const EdgeInsetsDirectional.only(start: 16, end: 16, bottom: 10), child: Text(_t('homeCowsInGestation').toUpperCase(), style: _secLbl)),
+        SizedBox(
+          height: 128,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
+            itemCount: cards.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            itemBuilder: (context, i) {
+              final c = cards[i];
+              final frac = c.day / c.total;
+              return InkWell(
+                onTap: () => openGestationSliderFlow(context, widget.appState),
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  width: 214,
+                  decoration: _cardDeco(),
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(children: [
+                        Container(
+                          width: 52, height: 52,
+                          decoration: BoxDecoration(color: VanixColors.bgWarm, borderRadius: BorderRadius.circular(12)),
+                          clipBehavior: Clip.antiAlias,
+                          child: Image.asset(c.photo, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox()),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(c.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: _text1)),
+                              const SizedBox(height: 2),
+                              Text(c.breed, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+                              const SizedBox(height: 2),
+                              Text(c.farm, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
+                            ],
+                          ),
+                        ),
+                      ]),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Day ${c.day}', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+                          Text('of ${c.total}', style: const TextStyle(fontSize: 10, color: VanixColors.textHint)),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(3),
+                        child: LinearProgressIndicator(
+                          value: frac.clamp(0, 1),
+                          minHeight: 6,
+                          backgroundColor: _divider,
+                          valueColor: const AlwaysStoppedAnimation(VanixColors.greenDeep),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
   // ── Updates (icon-less: event · details · time) ──
   Widget _updates() {
     return Column(
@@ -624,4 +688,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
+}
+
+class _HeatCardData {
+  final String name, breed, farm, photo;
+  const _HeatCardData(this.name, this.breed, this.farm, this.photo);
+}
+
+class _GestationCardData {
+  final String name, breed, farm, photo;
+  final int day, total;
+  const _GestationCardData(this.name, this.breed, this.farm, this.photo, this.day, this.total);
 }
