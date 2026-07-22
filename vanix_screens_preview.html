@@ -7277,17 +7277,38 @@
           rows.push({
             action: pick.k, color: pick.color, bg: pick.bg, icon: pick.icon,
             duration: '30 min',
-            start: (startH < 10 ? '0' : '') + startH + ':' + (startM < 10 ? '0' : '') + startM
+            start: (startH < 10 ? '0' : '') + startH + ':' + (startM < 10 ? '0' : '') + startM,
+            startMin: slot
           });
           slot += 30;
           i++;
         }
         return rows;
       }
+      // Merge consecutive same-activity 30-min blocks for a date into
+      // variable-length intervals (e.g. "30 min 00:00–00:30" then a
+      // separate "20 min 00:30–00:50" once the activity changes).
+      function actlogIntervalsForActivity(dateStr, activityKey) {
+        var rows = actlogRowsForDate(dateStr);
+        var out = [];
+        var cur = null;
+        rows.forEach(function(r) {
+          if (r.action !== activityKey) { if (cur) { out.push(cur); cur = null; } return; }
+          if (cur && cur.endMin === r.startMin) { cur.endMin += 30; }
+          else { if (cur) out.push(cur); cur = { startMin: r.startMin, endMin: r.startMin + 30 }; }
+        });
+        if (cur) out.push(cur);
+        return out;
+      }
+      function actlogFormatTime(min) {
+        var h = Math.floor((min % 1440) / 60), m = min % 60;
+        return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
+      }
+      // 7 days, today first, going back — "today" selected by default.
       function actlogDayChips() {
         var chips = [];
         var today = new Date('2026-07-20T00:00:00');
-        for (var i = 13; i >= 0; i--) {
+        for (var i = 0; i <= 6; i++) {
           var d = new Date(today);
           d.setDate(d.getDate() - i);
           chips.push(d);
