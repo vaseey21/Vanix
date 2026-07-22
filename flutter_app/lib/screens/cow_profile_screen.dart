@@ -561,13 +561,113 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
         _sectionLabel('tempWord'),
         _tempCard(),
         const SizedBox(height: VanixSpacing.xl),
-        _sectionLabel('actStatus'),
-        _activityCard(),
-        _viewActivityLogRow(),
-        const SizedBox(height: VanixSpacing.xl),
         _sectionLabel('remindersWord'),
         _remindersCard(),
       ],
+    );
+  }
+
+  // ── Activity tab — Activity Status tiles + inline per-date activity log
+  // (day-chip strip + 30-min action rows), mirrors renderCowActivity() /
+  // renderCowActlog() in vanix_screens_preview.html (folded out of Overview
+  // into its own tab). ──
+  String _actlogDateKey(DateTime d) => '${d.year}-${d.month}-${d.day}';
+
+  List<DateTime> get _actlogChips {
+    const today = 20; // fixed "today" reference (2026-07-20) per CLAUDE.md currentDate
+    return List.generate(14, (i) => DateTime(2026, 7, today - 13 + i));
+  }
+
+  List<(String action, Color color, Color bg, IconData icon, String duration, String start)> _actlogRowsFor(DateTime d) {
+    final seed = _hashStr(_actlogDateKey(d));
+    const actions = <(String, Color, Color, IconData)>[
+      ('Resting', Color(0xFF7C3AED), Color(0x1F7C3AED), Icons.bed_outlined),
+      ('Feeding', VanixColors.warning, Color(0x24E8A020), Icons.restaurant),
+      ('Ruminating', VanixColors.greenInk, VanixColors.activeBg, Icons.pets),
+      ('Standing', Color(0xFF2563EB), Color(0x1F2563EB), Icons.directions_walk),
+    ];
+    final rows = <(String, Color, Color, IconData, String, String)>[];
+    var slot = 0, i = 0;
+    while (slot < 24 * 60) {
+      final pick = actions[(seed + i) % actions.length];
+      final h = slot ~/ 60, m = slot % 60;
+      rows.add((pick.$1, pick.$2, pick.$3, pick.$4, '30 min', '${h.toString().padLeft(2, '0')}:${m.toString().padLeft(2, '0')}'));
+      slot += 30;
+      i++;
+    }
+    return rows;
+  }
+
+  Widget _buildActivity() {
+    _actlogSelected ??= _actlogChips.last;
+    final rows = _actlogRowsFor(_actlogSelected!);
+    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _sectionLabel('actStatus'),
+        _activityCard(),
+        const SizedBox(height: VanixSpacing.xl),
+        _sectionLabel('activityLogWord'),
+        SizedBox(
+          height: 60,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              for (final d in _actlogChips)
+                Padding(padding: const EdgeInsetsDirectional.only(end: 8), child: _actlogChip(d)),
+            ],
+          ),
+        ),
+        const SizedBox(height: VanixSpacing.sm),
+        for (final r in rows)
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: _isDark ? VanixColors.darkBorder : VanixColors.border))),
+            child: Row(children: [
+              Container(width: 32, height: 32, decoration: BoxDecoration(color: r.$3, borderRadius: BorderRadius.circular(10)), child: Icon(r.$4, size: 16, color: r.$2)),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(r.$1, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: textColor)),
+                    const SizedBox(height: 2),
+                    Text('${r.$5} · ${r.$6}', style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
+                  ],
+                ),
+              ),
+            ]),
+          ),
+      ],
+    );
+  }
+
+  static const List<String> _wkShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  Widget _actlogChip(DateTime d) {
+    final on = _actlogSelected != null && _actlogDateKey(d) == _actlogDateKey(_actlogSelected!);
+    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
+    return InkWell(
+      onTap: () => setState(() => _actlogSelected = d),
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        width: 46,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: on ? VanixColors.activeBg : (_isDark ? VanixColors.darkSubSurface : VanixColors.bgCard),
+          border: Border.all(color: on ? VanixColors.greenInk : (_isDark ? VanixColors.darkBorder : VanixColors.border)),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(_wkShort[d.weekday % 7], style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: on ? VanixColors.greenInk : VanixColors.textHint)),
+            const SizedBox(height: 2),
+            Text('${d.day}', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: on ? VanixColors.greenInk : textColor)),
+          ],
+        ),
+      ),
     );
   }
 
