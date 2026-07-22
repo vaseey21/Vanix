@@ -198,6 +198,8 @@ class FS {
       'tickInsem': 'गर्भाधान — रम्या — आज देय',
       'managerWord': 'प्रबंधक', 'searchCattle': 'पशु खोजें', 'criticalWord': 'गंभीर',
       'tempVeryHigh': 'बहुत अधिक', 'tempHigh': 'अधिक', 'tempNormal': 'सामान्य', 'tempLow': 'कम',
+      'fdTabCattle': 'पशु', 'fdTabHerd': 'झुंड गतिविधि', 'activityWord': 'गतिविधि', 'herdCowsBtn': 'गायें',
+      'selectCowsWord': 'गायें चुनें', 'fdHerdTitlePre': 'झुंड', 'fdHerdTitlePost': 'आज',
       'statusMilking': 'दूध दे रही', 'statusPregnant': 'गर्भवती', 'statusHeatCycle': 'हीट साइकिल', 'statusFeverAlert': 'बुखार अलर्ट',
       'cowTempCaption': 'पशु का तापमान', 'noCattleYet': 'इस खेत में अभी कोई पशु नहीं है।', 'tapAddCattle': 'शुरू करने के लिए "पशु जोड़ें" दबाएँ।',
       'noCattleMatch': 'इस फ़िल्टर से कोई पशु नहीं मिला।', 'breedWord': 'नस्ल', 'ageWord': 'उम्र',
