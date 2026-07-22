@@ -388,7 +388,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   Widget _buildTabBar() {
     final labels = ['tabTimeline', 'tabOverview', 'tabActivity', 'tabMilkData', 'tabVetLogs'];
     return Container(
-      color: _isDark ? VanixColors.darkPrimary : VanixColors.bgWarm,
+      color: _isDark ? VanixColors.darkSecond : VanixColors.bgCard,
       child: Row(
         children: [
           for (var i = 0; i < labels.length; i++)
