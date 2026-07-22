@@ -269,171 +269,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // ── (Retired) Unactioned Alerts detail sheet — the Unresolved-Alerts
-  // stat tile that opened this was dropped from the 6-tile → 3-tile Farm
-  // Status grid (Home r3); "Critical Alerts" now routes straight to Events.
-  void _openAlertsSheetRETIRED() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: _isDark ? VanixColors.darkSecond : VanixColors.bgCard,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
-      builder: (sheetCtx) {
-        return StatefulBuilder(
-          builder: (sheetCtx, setSheet) {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(child: Container(width: 36, height: 4, margin: const EdgeInsets.only(bottom: 8), decoration: BoxDecoration(color: _border, borderRadius: BorderRadius.circular(2)))),
-                  Row(children: [
-                    Expanded(child: Text(_t('statUnactionedAlerts'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: _text1))),
-                    IconButton(onPressed: () => Navigator.of(sheetCtx).pop(), icon: Icon(Icons.close, color: _text1)),
-                  ]),
-                  Row(children: [
-                    Text('14', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: _text1)),
-                    Text('  · 2 ${_t('criticalWord')}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.danger)),
-                  ]),
-                  _hr(),
-                  _farmAlertRow('Sunrise Dairy', crit: '9  · 2 ${_t('criticalWord')}'),
-                  const SizedBox(height: 9),
-                  _farmAlertRow('Green Villa', plain: '3'),
-                  const SizedBox(height: 9),
-                  _farmAlertRow('Stones Dairy', plain: '2'),
-                  _hr(),
-                  if (_triaged)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2),
-                      child: Text('✓ ${_t('dashTriageDone')}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-                    )
-                  else
-                    _triageBlock(onDone: () { setState(() => _triaged = true); setSheet(() {}); }),
-                  const SizedBox(height: 14),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(0, 48),
-                        backgroundColor: VanixColors.greenInk,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-                      ),
-                      onPressed: () { Navigator.of(sheetCtx).pop(); _onNavTap(3); },
-                      child: Text('${_t('dashViewEvents')}  →', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  Widget _hr() => Padding(padding: const EdgeInsets.symmetric(vertical: 12), child: Container(height: 1, color: _divider));
-
-  Widget _farmAlertRow(String name, {String? crit, String? plain}) {
-    return Row(
-      children: [
-        Expanded(child: Text(name, style: TextStyle(fontSize: 14, color: _text1))),
-        const SizedBox(width: 8),
-        crit != null
-            ? Text(crit, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: VanixColors.danger))
-            : Text(plain!, style: const TextStyle(fontSize: 14, color: VanixColors.textHint)),
-      ],
-    );
-  }
-
-  Widget _triageBlock({required VoidCallback onDone}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: RichText(
-                text: TextSpan(children: [
-                  TextSpan(text: 'Is Kajri unwell? ', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
-                  const TextSpan(text: '— Sunrise', style: TextStyle(fontSize: 14, color: VanixColors.textHint)),
-                ]),
-              ),
-            ),
-            Text('2h ${_t('dashWaiting')}', style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Row(children: [
-          Expanded(
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                minimumSize: const Size(0, 40),
-                side: BorderSide(color: _border),
-                foregroundColor: _text1,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              ),
-              onPressed: onDone,
-              child: Text(_t('noWord'), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(0, 40),
-                backgroundColor: VanixColors.greenInk,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              ),
-              onPressed: onDone,
-              child: Text(_t('dashYesFever'), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-            ),
-          ),
-        ]),
-      ],
-    );
-  }
-
-  // ── Schedule with Today / This week tabs ──
-  Widget _scheduleTabs() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(children: [
-          _schTabBtn('today', 'dashToday'),
-          const SizedBox(width: 8),
-          _schTabBtn('week', 'dashThisWeek'),
-        ]),
-        const SizedBox(height: 12),
-        if (_schTab == 'today')
-          Container(
-            decoration: _cardDeco(),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(children: [
-              _scheduleRow('9h ${_t('dashLeft')}', 'dashInsemWindow', titlePrefix: 'Gauri', barColor: VanixColors.greenInk, timeColor: VanixColors.greenInk, divider: true),
-              _scheduleRow('11:00 AM', 'dashVaccDrive', sub: 'dashStartsIn', barColor: VanixColors.greenDeep, divider: true),
-              _scheduleRow('4:30 PM', 'dashVetVisit', barColor: _border, divider: true),
-              _scheduleRow('6:00 PM', 'dashMilkLogging', barColor: _border, divider: false),
-            ]),
-          )
-        else ...[
-          Container(
-            decoration: _cardDeco(),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(children: [
-              _scheduleRow('5${_t('dashDays')}', 'dashFmd', sub: null, detail: '5 ${_t('dashCows')}, Green Villa', barColor: VanixColors.warning, timeColor: VanixColors.warning, divider: false),
-            ]),
-          ),
-          const SizedBox(height: 8),
-          Text(_t('dashRemindersNote'), style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: VanixColors.textHint)),
-        ],
-      ],
-    );
-  }
-
+  // ── Today / This week tabs above Needs Attention — purely a visual
+  // toggle now (mirrors the HTML's simplification): both tabs render the
+  // same Needs Attention list, they just reflect which window the farm
+  // owner is scoping to. ──
   Widget _schTabBtn(String tab, String labelKey) {
     final on = _schTab == tab;
     return InkWell(
@@ -454,44 +293,56 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _scheduleRow(String time, String titleKey,
-      {String? sub, String? detail, String? titlePrefix, Color? timeColor, required Color barColor, required bool divider}) {
+  // ── Needs Attention: Today/This-week tab row (visual only) + 3
+  // tappable "View All" rows — Pending Approvals / Milking Sessions
+  // Missed / Critical Alerts. Mirrors #dash-scroll's Needs Attention
+  // block (Home r3), replacing the old per-time schedule rows. ──
+  Widget _scheduleTabs() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(children: [
+          _schTabBtn('today', 'dashToday'),
+          const SizedBox(width: 8),
+          _schTabBtn('week', 'dashThisWeek'),
+        ]),
+        const SizedBox(height: 12),
+        Padding(padding: const EdgeInsetsDirectional.only(bottom: 10), child: Text(_t('needsAttentionTitle').toUpperCase(), style: _secLbl)),
+        Container(
+          decoration: _cardDeco(),
+          padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+          child: Column(children: [
+            _needsAttentionRow('2', 'rowPendingApprovals', () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ApprovalsScreen(appState: widget.appState)))),
+            _needsAttentionRow('3', 'rowMilkingMissed', () => _onNavTap(2), divider: true),
+            _needsAttentionRow('14', 'rowCriticalAlerts', () => _onNavTap(3), divider: false),
+          ]),
+        ),
+      ],
+    );
+  }
+
+  Widget _needsAttentionRow(String count, String labelKey, VoidCallback onViewAll, {bool divider = true}) {
     return Container(
-      decoration: BoxDecoration(
-        border: divider ? Border(bottom: BorderSide(color: _divider)) : null,
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: IntrinsicHeight(
-        child: Row(children: [
-          SizedBox(width: 64, child: Text(time, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: timeColor ?? _text1))),
-          const SizedBox(width: 14),
-          Container(width: 3, decoration: BoxDecoration(color: barColor, borderRadius: BorderRadius.circular(2))),
-          const SizedBox(width: 14),
+      decoration: BoxDecoration(border: divider ? Border(bottom: BorderSide(color: _divider)) : null),
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                titlePrefix != null
-                    ? RichText(
-                        text: TextSpan(children: [
-                          TextSpan(text: '$titlePrefix ', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
-                          TextSpan(text: '— ${_t(titleKey)}', style: const TextStyle(fontSize: 14, color: VanixColors.textHint)),
-                        ]),
-                      )
-                    : Text(_t(titleKey), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
-                if (sub != null) ...[
-                  const SizedBox(height: 2),
-                  Text(_t(sub), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-                ],
-                if (detail != null) ...[
-                  const SizedBox(height: 2),
-                  Text(detail, style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
-                ],
-              ],
+            child: RichText(
+              text: TextSpan(children: [
+                TextSpan(text: '$count ', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
+                TextSpan(text: _t(labelKey), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1)),
+              ]),
             ),
           ),
-        ]),
+          const SizedBox(width: 12),
+          TextButton(
+            onPressed: onViewAll,
+            style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 32), foregroundColor: VanixColors.greenInk),
+            child: Text('${_t('viewAllWord')} ›', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+          ),
+        ],
       ),
     );
   }
