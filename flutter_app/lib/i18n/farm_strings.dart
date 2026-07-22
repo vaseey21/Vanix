@@ -126,7 +126,7 @@ class FS {
       'genderWord': 'Gender', 'yearsWord': 'Years', 'monthsWord': 'Months', 'optionalWord': '(optional)',
       'acSubPre': 'Add a new cow to', 'acPhotoLabel': 'Cow Photo', 'acPhotoHint': 'Upload a PNG / JPG of the cow',
       'acCattleType': 'Cattle Type', 'acTypeCow': 'Cow', 'acTypeHint': 'Cow · Sheep · Goat — non-cow health scoring is flagged.',
-      'acCowName': 'Cow Name (easily recognisable)', 'cowStatusWord': 'Cow Status', 'genderFemale': 'Female',
+      'acCowName': 'Name', 'cowStatusWord': 'Cow Status', 'genderFemale': 'Female',
       'acDeviceDetails': 'Device Details', 'acBeltNo': 'Cattle Belt Number', 'acMacId': 'MAC ID',
       'acCowHistory': 'Cow History', 'acFillHistory': 'Fill cow history', 'acHistUnknown': 'History unknown',
       'acLastHeat': 'Last Heat', 'acLastInsem': 'Last Insemination', 'acLastPreg': 'Last Pregnancy',
