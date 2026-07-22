@@ -125,25 +125,34 @@ class ReportPreviewScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: VanixColors.greenInk,
-                          foregroundColor: Colors.white,
-                          minimumSize: const Size(0, 48),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-                        ),
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(FS.t(lang, 'reportDownloaded')), duration: const Duration(seconds: 1)),
-                          );
-                        },
-                        child: Text(FS.t(lang, 'downloadWord'), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-                      ),
-                    ),
                   ],
+                ),
+              ),
+            ),
+            // Sticky footer — Download button pinned to the bottom, content
+            // scrolls independently above it (mirrors #report-preview-download
+            // moving out of the scrollable doc in vanix_screens_preview.html).
+            Container(
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 16),
+              decoration: BoxDecoration(
+                color: isDark ? VanixColors.darkPrimary : VanixColors.bgWarm,
+                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 12, offset: const Offset(0, -4))],
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: VanixColors.greenInk,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(0, 48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                  ),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(FS.t(lang, 'reportDownloaded')), duration: const Duration(seconds: 1)),
+                    );
+                  },
+                  child: Text(FS.t(lang, 'downloadWord'), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
                 ),
               ),
             ),
