@@ -116,7 +116,7 @@ class _ApprovalsScreenState extends State<ApprovalsScreen> {
                   _header(),
                   _filterChips(),
                   Expanded(
-                    child: (!pending.isNotEmpty && !hasHistory)
+                    child: (pending.isEmpty && !hasHistory)
                         ? Center(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 32),
