@@ -285,9 +285,8 @@ class _EventsScreenState extends State<EventsScreen> {
     }
   }
 
-  // Walkthrough + full-screen push kept for future wiring to a real backend /
-  // OS notification; there is no in-app entry point for now.
-  // ignore: unused_element
+  // Entry point for the "View full cycle" link — opens the full-screen heat
+  // alert carousel first, then drops into the bottom-sheet walkthrough.
   Future<void> _showFullCycleSheet(BuildContext context) async {
     final result = await Navigator.of(context).push<String?>(MaterialPageRoute(builder: (_) => HeatAlertScreen(isDark: widget.appState.isDark), fullscreenDialog: true));
     if (!context.mounted) return;
