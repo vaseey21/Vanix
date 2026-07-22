@@ -377,8 +377,8 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   // ── Tab bar — underline tabs flush at the hero's bottom edge ────────────
   Widget _buildTabBar() {
     final labels = ['tabTimeline', 'tabOverview', 'tabActivity', 'tabMilkData', 'tabVetLogs'];
-    return Transform.translate(
-      offset: const Offset(0, VanixSpacing.lg),
+    return Container(
+      color: _isDark ? VanixColors.darkPrimary : VanixColors.bgWarm,
       child: Row(
         children: [
           for (var i = 0; i < labels.length; i++)
