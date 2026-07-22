@@ -31,7 +31,9 @@ class _AddCattleScreenState extends State<AddCattleScreen> {
     return Theme(
       data: theme,
       child: Scaffold(
-        backgroundColor: _isDark ? VanixColors.darkPrimary : VanixColors.bgWarm,
+        // Background changed to white in light mode (was bgWarm) — mirrors
+        // #page-add-cattle's background:#FFFFFF in vanix_screens_preview.html.
+        backgroundColor: _isDark ? VanixColors.darkSecond : Colors.white,
         body: SafeArea(
           child: Column(
             children: [
