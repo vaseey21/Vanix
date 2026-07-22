@@ -2116,6 +2116,20 @@ class _ActionCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 2),
                       child: Text(breed, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.82))),
                     ),
+                  if (showOwnerContext && (meta != null || timeAgo != null))
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.4), borderRadius: BorderRadius.circular(8)),
+                        child: Text(
+                          [if (timeAgo != null) timeAgo, if (meta != null) meta].whereType<String>().join(' · '),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 11, color: Colors.white),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
