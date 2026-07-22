@@ -56,7 +56,10 @@ class FS {
       'labelTempRecorded': 'Temp Recorded', 'labelRecordedAt': 'Recorded At', 'labelSeverity': 'Severity',
       // Cow profile
       'currentTemp': 'Current Temp', 'tabTimeline': 'Timeline', 'tabOverview': 'Overview', 'tabVetLogs': 'Vet Logs',
-      'tabMilkData': 'Milk Data',
+      'tabMilkData': 'Milk Data', 'tabActivity': 'Activity',
+      'downloadReport': 'Download Report', 'shareReportVet': 'Share Report with vet',
+      'reportTypeTitle': 'Report type', 'fullReport': 'Full report', 'criticalReport': 'Critical report',
+      'activityLogWord': 'Activity log', 'reportSharedWith': 'Report shared with',
       'wkMilkTitle': 'Weekly milk production', 'avgYield': 'Avg Yield', 'lactationDay': 'Lactation Day',
       'avgTempLabel': 'Avg Temp', 'heatCycles': 'Heat Cycles',
       'ovLastHeat': 'Last Heat Cycle', 'ovNextHeat': 'Next Heat Cycle', 'ovLastSpike': 'Last Temp Spike',
