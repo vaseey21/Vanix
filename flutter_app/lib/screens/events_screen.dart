@@ -347,10 +347,21 @@ class _EventsScreenState extends State<EventsScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Plain title — the 'View full cycle' walkthrough entry
-                      // was removed, so the title no longer opens anything.
                       Flexible(
-                        child: Text('Events', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('Events', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
+                            GestureDetector(
+                              onTap: () => _showFullCycleSheet(context),
+                              child: const Padding(
+                                padding: EdgeInsets.only(top: 2),
+                                child: Text('View full cycle ›', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(width: 8),
                       _FilterButton(isDark: isDark, onTap: () => _openFilterSheet(context)),
