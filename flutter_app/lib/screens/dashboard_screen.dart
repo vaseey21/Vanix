@@ -13,15 +13,17 @@ import 'account_screen.dart';
 import 'approvals_screen.dart';
 
 /// Home dashboard — Screen 03 (Farm Owner). Mirrors #s1-dash /
-/// #dash-scroll in vanix_screens_preview.html (Home r2): header (logo +
-/// farm selector), 6 compact summary cards (Total Cattle / Cows Pregnant /
-/// Cows in Heat / Pending Approvals / Milkings Missed / Unresolved Alerts —
-/// the Unresolved-Alerts card's info button opens the per-farm breakdown +
-/// Kajri triage sheet), a Today/This-week tabbed schedule, a horizontal
-/// "Cows in heat" row (tapping a card opens the same full-screen heat-alert
-/// carousel + walkthrough as Events' "View full cycle"), a horizontal
-/// "Cows in gestation" row (tapping a card opens the walkthrough sheet
-/// directly at its gestation step), and an icon-less Updates list.
+/// #dash-scroll in vanix_screens_preview.html (Home r3): header (logo +
+/// farm selector), a "Farm Status" section with 3 compact stat cards
+/// (Total Cattle / Cows Pregnant / Cows in Heat), a Today/This-week tab
+/// row (now a purely visual toggle — both tabs show the same list) above
+/// a "Needs Attention" section with 3 tappable "View All" rows (Pending
+/// Approvals → [ApprovalsScreen], Milking Sessions Missed → Milk Log,
+/// Critical Alerts → Events), a horizontal "Cows in heat" row (tapping a
+/// card opens the same full-screen heat-alert carousel + walkthrough as
+/// Events' "View full cycle"), a horizontal "Cows in gestation" row
+/// (tapping a card opens the walkthrough sheet directly at its gestation
+/// step), and an icon-less Updates list.
 class DashboardScreen extends StatefulWidget {
   final AppState appState;
   const DashboardScreen({super.key, required this.appState});
