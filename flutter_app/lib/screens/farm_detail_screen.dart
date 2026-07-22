@@ -13,11 +13,14 @@ import 'cow_profile_screen.dart';
 import 'groups_screen.dart';
 import 'add_cattle_screen.dart';
 
-/// Farm Detail (cow list) — screen 05. Mirrors #page-farm-detail +
-/// renderCattleList + the cattle-fs filter sheet + the alerts-tile toggle
-/// in prototype.html. Hero (back / name / manager / farm temp + level, two
-/// stat tiles), search + two-pane filter, cow cards with corner severity tag
-/// and kebab menu, pinned bottom nav (Farms tab).
+/// Farm Detail (cow list) — screen 05 (r2). Mirrors #page-farm-detail in
+/// prototype.html: hero (back / name / manager / farm temp + level) with a
+/// Cattle / Herd Activity tab row flush to its bottom border. Cattle pane —
+/// search + two-pane filter (Status/Breed/Age), cow cards with corner
+/// severity tag and kebab menu. Herd Activity pane — a funnel filter
+/// (Activity/Cows two-pane sheet), a 2x2 activity summary grid
+/// (Rumination/Standing/Resting/Feeding), and a read-only rumination-style
+/// graph with a Normal/Anomaly pill. Pinned bottom nav (Farms tab).
 class FarmDetailScreen extends StatefulWidget {
   final AppState appState;
   final FarmModel farm;
