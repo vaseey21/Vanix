@@ -2418,7 +2418,9 @@ class _FullCycleSheetState extends State<_FullCycleSheet> {
   @override
   void initState() {
     super.initState();
-    if (widget.heatPreDecision == 'no') {
+    if (widget.initialStep != null) {
+      _step = widget.initialStep!;
+    } else if (widget.heatPreDecision == 'no') {
       _interruptedMessage = 'Cycle interrupted — heat not confirmed. Closing walkthrough.';
       _step = _SeqStep.interrupted;
     } else {
