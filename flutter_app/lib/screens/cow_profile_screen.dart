@@ -111,6 +111,10 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     return Theme(
       data: theme,
       child: Scaffold(
+        // #page-cow's own background moved from bgwarm to bgcard so there is
+        // no warm-colored band visible between the photo hero and the
+        // tab-bar/content below it — mirrors vanix_screens_preview.html.
+        backgroundColor: _isDark ? VanixColors.darkSecond : VanixColors.bgCard,
         floatingActionButton: FloatingActionButton(
           backgroundColor: VanixColors.greenInk,
           onPressed: _openActionsSheet,
