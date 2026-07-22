@@ -58,6 +58,36 @@ const Map<String, String> _kFdHerdHours = {
   'rumination': '7.2h', 'standing': '3.6h', 'resting': '8.9h', 'feeding': '4.1h',
 };
 
+/// Per-activity color + nominal "active window" (hour range) + mock hourly
+/// points (0–23h) — mirrors FD_ACT_META in vanix_screens_preview.html.
+/// Rumination's points come from _kRuminationSunrise/_kRuminationNormal
+/// (per-farm) instead of a fixed pts list here.
+class _FdActMeta {
+  final Color color;
+  final List<int> range;
+  final List<double>? pts;
+  const _FdActMeta({required this.color, required this.range, this.pts});
+}
+
+final Map<String, _FdActMeta> _kFdActMeta = {
+  'rumination': const _FdActMeta(color: VanixColors.greenDeep, range: [6, 20]),
+  'standing': const _FdActMeta(
+    color: Color(0xFF2563EB),
+    range: [8, 18],
+    pts: [10, 9, 8, 8, 9, 10, 12, 18, 28, 34, 36, 35, 33, 32, 34, 36, 35, 30, 20, 14, 11, 10, 9, 10],
+  ),
+  'resting': const _FdActMeta(
+    color: Color(0xFF7C3AED),
+    range: [20, 24],
+    pts: [12, 10, 9, 10, 12, 16, 20, 24, 30, 28, 25, 22, 20, 18, 16, 15, 14, 16, 20, 28, 36, 44, 46, 45],
+  ),
+  'feeding': const _FdActMeta(
+    color: VanixColors.warning,
+    range: [6, 9],
+    pts: [5, 5, 6, 8, 10, 14, 30, 42, 38, 20, 12, 10, 9, 9, 10, 12, 20, 34, 30, 16, 10, 8, 6, 5],
+  ),
+};
+
 class _FarmDetailScreenState extends State<FarmDetailScreen> {
   final int _navIndex = 1;
   final TextEditingController _search = TextEditingController();
