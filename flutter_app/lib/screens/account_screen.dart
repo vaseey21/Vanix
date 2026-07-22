@@ -117,7 +117,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     isDark: isDark,
                                     title: FS.t(lang, 'grpFarmMgmt'),
                                     subtitle: FS.t(lang, 'acctFarmSub'),
-                                    onTap: () => _push(_FarmMgmtPage(appState: widget.appState)),
+                                    onTap: () => _push(FarmMgmtPage(appState: widget.appState)),
                                   ),
                                   _AccountRow(
                                     isDark: isDark,
@@ -667,15 +667,15 @@ class _VetsPageState extends State<_VetsPage> {
 // ─────────────────────────────────────────────────────────────
 // FARM MANAGEMENT
 // ─────────────────────────────────────────────────────────────
-class _FarmMgmtPage extends StatefulWidget {
+class FarmMgmtPage extends StatefulWidget {
   final AppState appState;
-  const _FarmMgmtPage({required this.appState});
+  const FarmMgmtPage({required this.appState});
 
   @override
-  State<_FarmMgmtPage> createState() => _FarmMgmtPageState();
+  State<FarmMgmtPage> createState() => _FarmMgmtPageState();
 }
 
-class _FarmMgmtPageState extends State<_FarmMgmtPage> {
+class _FarmMgmtPageState extends State<FarmMgmtPage> {
   // Three-option chooser: select a new manager, send an invite (pending
   // state), or assign the current user. Mirrors #fm-choose-sheet in
   // prototype.html.

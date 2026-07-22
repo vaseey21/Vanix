@@ -12,6 +12,8 @@ import 'account_screen.dart';
 import 'cow_profile_screen.dart';
 import 'groups_screen.dart';
 import 'add_cattle_screen.dart';
+import 'account_screen.dart';
+import 'report_preview_screen.dart';
 
 /// Farm Detail (cow list) — screen 05 (r2). Mirrors #page-farm-detail in
 /// prototype.html: hero (back / name / manager / farm temp + level) with a
