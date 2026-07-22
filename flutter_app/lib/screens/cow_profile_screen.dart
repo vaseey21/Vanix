@@ -532,22 +532,15 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
                 Icon(open ? Icons.expand_less : Icons.chevron_right, size: 18, color: VanixColors.textHint),
               ],
             ),
+            // The "Hide" button was removed — collapsing now only happens by
+            // tapping the card again (same gesture as expanding); the
+            // trailing chevron (expand_less above) is the only affordance,
+            // mirroring .cow-tl-card::after rotating -90deg on `.open` in
+            // vanix_screens_preview.html.
             if (open) ...[
               const SizedBox(height: VanixSpacing.md),
               Text(FS.t(_lang, '${ev.key}D'),
                   style: TextStyle(fontSize: 12, height: 1.6, color: _isDark ? VanixColors.textOnDarkDim : VanixColors.textHint)),
-              const SizedBox(height: VanixSpacing.md),
-              OutlinedButton(
-                onPressed: () => setState(() => _tlExpanded.remove(i)),
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(0, 32),
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                  side: BorderSide(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
-                  foregroundColor: textColor,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                ),
-                child: Text(FS.t(_lang, 'hideWord'), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-              ),
             ],
           ],
         ),
