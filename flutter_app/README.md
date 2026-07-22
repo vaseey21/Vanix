@@ -84,7 +84,7 @@ lib/
     heat_alert_screen.dart     — full-screen "push notification" style Heat alert
     farms_screen.dart          — Farms list: stat tiles, activity ticker, filter sheet, farm cards
     farm_detail_screen.dart    — cow list: temp/level hero, Cattle/Herd Activity tabs, Status/Breed/Age filters, herd activity summary + rumination graph, kebab
-    cow_profile_screen.dart    — Timeline / Overview / Vet Logs tabs + floating actions
+    cow_profile_screen.dart    — full-bleed photo hero + Timeline / Overview / Activity / Milk Data / Vet Logs tabs + floating actions
     account_screen.dart        — Settings, Profile, Vet Contacts, Farm Management, Privacy/Terms
 main.dart
 ```
