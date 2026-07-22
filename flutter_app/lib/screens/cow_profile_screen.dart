@@ -220,39 +220,15 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
         child: Text(FS.t(_lang, st.key), style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: st.ink)),
       );
 
-  Widget _beltChip() {
-    return Container(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm,
-        border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
-        borderRadius: BorderRadius.circular(VanixRadius.sm),
-      ),
-      child: Text(widget.cow.bl(_lang), style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: _isDark ? Colors.white : VanixColors.textPrimary)),
-    );
-  }
-
-  Widget _genderChip() {
-    return Container(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm,
-        border: Border.all(color: _isDark ? VanixColors.darkBorder : VanixColors.border),
-        borderRadius: BorderRadius.circular(VanixRadius.sm),
-      ),
-      child: Text(FS.t(_lang, 'genderFemale'), style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: _isDark ? Colors.white : VanixColors.textPrimary)),
-    );
-  }
-
   Widget _batteryChip() {
     final pct = _batteryPct;
     final low = pct <= 30;
-    final color = low ? VanixColors.danger : (_isDark ? Colors.white : VanixColors.textPrimary);
+    final color = low ? const Color(0xFFFFD5CE) : Colors.white;
     return Container(
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm,
-        border: Border.all(color: low ? VanixColors.danger : (_isDark ? VanixColors.darkBorder : VanixColors.border)),
+        color: const Color(0x2EFFFFFF),
+        border: Border.all(color: low ? const Color(0xFFFFD5CE) : const Color(0x52FFFFFF)),
         borderRadius: BorderRadius.circular(VanixRadius.sm),
       ),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
@@ -263,24 +239,7 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     );
   }
 
-  Widget _reportDownloadBtn() {
-    return SizedBox(
-      width: 40,
-      height: 40,
-      child: Material(
-        color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgCard,
-        shape: const CircleBorder(),
-        elevation: 1,
-        child: InkWell(
-          customBorder: const CircleBorder(),
-          onTap: _openReportSheet,
-          child: Icon(Icons.file_download_outlined, size: 18, color: _isDark ? Colors.white : VanixColors.textPrimary),
-        ),
-      ),
-    );
-  }
-
-  void _openReportSheet() {
+  void _openReportSheet({required bool critical}) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -288,37 +247,114 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
       builder: (_) => _ReportPeriodSheet(
         isDark: _isDark,
         lang: _lang,
-        onDownloaded: () => _snack('${FS.t(_lang, 'reportDownloaded')} — ${widget.cow.nm(_lang)}'),
+        onDownloaded: () => _snack('${FS.t(_lang, critical ? 'fdCriticalDownloaded' : 'reportDownloaded')} — ${widget.cow.nm(_lang)}'),
       ),
     );
   }
 
-  Widget _circleBtn(IconData icon, VoidCallback onTap) {
-    return SizedBox(
-      width: 48,
-      height: 48,
-      child: IconButton(
-        onPressed: onTap,
-        padding: EdgeInsets.zero,
-        alignment: AlignmentDirectional.centerStart,
-        icon: Icon(icon, size: 22, color: _isDark ? Colors.white : VanixColors.textPrimary),
-      ),
+  // Report-type chooser (full / critical) -> report period sheet. Mirrors
+  // #cow-reptype-sheet -> #cow-report-sheet in vanix_screens_preview.html.
+  void _openReportTypeSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (sheetCtx) {
+        final bg = _isDark ? VanixColors.darkSecond : Colors.white;
+        final text1 = _isDark ? Colors.white : VanixColors.textPrimary;
+        Widget row(String label, VoidCallback onTap, {bool danger = false}) => InkWell(
+              onTap: onTap,
+              child: Container(
+                constraints: const BoxConstraints(minHeight: 48),
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(label, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: danger ? VanixColors.danger : text1)),
+              ),
+            );
+        return Container(
+          decoration: BoxDecoration(color: bg, borderRadius: const BorderRadius.vertical(top: Radius.circular(VanixRadius.pill))),
+          padding: const EdgeInsets.fromLTRB(VanixSpacing.xl, VanixSpacing.md, VanixSpacing.xl, 24),
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: _isDark ? VanixColors.darkBorder : VanixColors.border, borderRadius: BorderRadius.circular(2)))),
+            const SizedBox(height: VanixSpacing.md),
+            Text(FS.t(_lang, 'reportTypeTitle'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: text1)),
+            const SizedBox(height: 4),
+            row(FS.t(_lang, 'fullReport'), () { Navigator.of(sheetCtx).pop(); _openReportSheet(critical: false); }),
+            row(FS.t(_lang, 'criticalReport'), () { Navigator.of(sheetCtx).pop(); _openReportSheet(critical: true); }, danger: true),
+          ]),
+        );
+      },
     );
   }
 
+  // Share Report with vet -> vet picker -> toast. Mirrors cow-kebab-share ->
+  // window.openVetSheet() in vanix_screens_preview.html.
+  void _openShareWithVetSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (sheetCtx) {
+        final bg = _isDark ? VanixColors.darkSecond : Colors.white;
+        final text1 = _isDark ? Colors.white : VanixColors.textPrimary;
+        final border = _isDark ? VanixColors.darkBorder : VanixColors.border;
+        const vets = ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'];
+        return Container(
+          decoration: BoxDecoration(color: bg, borderRadius: const BorderRadius.vertical(top: Radius.circular(VanixRadius.pill))),
+          padding: const EdgeInsets.fromLTRB(VanixSpacing.xl, VanixSpacing.md, VanixSpacing.xl, 24),
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: border, borderRadius: BorderRadius.circular(2)))),
+            const SizedBox(height: VanixSpacing.md),
+            Text(FS.t(_lang, 'pickVet'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: text1)),
+            const SizedBox(height: VanixSpacing.md),
+            for (final v in vets)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(sheetCtx).pop();
+                    _snack('${FS.t(_lang, 'reportSharedWith')} $v');
+                  },
+                  borderRadius: BorderRadius.circular(14),
+                  child: Container(
+                    constraints: const BoxConstraints(minHeight: 48),
+                    alignment: AlignmentDirectional.centerStart,
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    decoration: BoxDecoration(color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgCard, borderRadius: BorderRadius.circular(14), border: Border.all(color: border)),
+                    child: Text(v, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: text1)),
+                  ),
+                ),
+              ),
+          ]),
+        );
+      },
+    );
+  }
+
+  // Kebab order: Edit / Add to group / Download Report / Share Report with
+  // vet / Delete — mirrors #cow-kebab-menu in vanix_screens_preview.html.
   Widget _kebab() {
     return PopupMenuButton<String>(
-      icon: Icon(Icons.more_vert, color: _isDark ? Colors.white : VanixColors.textPrimary),
+      icon: const Icon(Icons.more_vert, color: Colors.white),
       onSelected: (v) {
-        if (v == 'group') {
-          showAddToGroupSheet(context, widget.appState, widget.farm.id, widget.cow.no);
-        } else {
-          _snack('${_actionVerb(v)}…');
+        switch (v) {
+          case 'group':
+            showAddToGroupSheet(context, widget.appState, widget.farm.id, widget.cow.no);
+            break;
+          case 'download':
+            _openReportTypeSheet();
+            break;
+          case 'share':
+            _openShareWithVetSheet();
+            break;
+          default:
+            _snack('${_actionVerb(v)}…');
         }
       },
       itemBuilder: (context) => [
         PopupMenuItem(value: 'edit', child: Text(FS.t(_lang, 'editWord'))),
         PopupMenuItem(value: 'group', child: Text(FS.t(_lang, 'addToGroup'))),
+        PopupMenuItem(value: 'download', child: Text(FS.t(_lang, 'downloadReport'))),
+        PopupMenuItem(value: 'share', child: Text(FS.t(_lang, 'shareReportVet'))),
         PopupMenuItem(
           value: 'delete',
           child: Text(FS.t(_lang, 'deleteWord'), style: const TextStyle(color: VanixColors.danger)),
@@ -338,55 +374,9 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     }
   }
 
-  Widget _statusTile(({String key, Color bg, Color ink}) st) {
-    final tileBg = _isDark ? VanixColors.darkSubSurface : VanixColors.bgCard;
-    return Container(
-      padding: const EdgeInsets.all(VanixSpacing.md),
-      decoration: BoxDecoration(
-        color: tileBg,
-        borderRadius: BorderRadius.circular(VanixRadius.md),
-        boxShadow: _isDark ? VanixShadow.cardDark : VanixShadow.card,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('STATUS', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.8, color: VanixColors.textHint)),
-          const SizedBox(height: 6),
-          Container(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(color: st.bg, borderRadius: BorderRadius.circular(VanixRadius.pill)),
-            child: Text(FS.t(_lang, st.key), style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: st.ink)),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _tempTile() {
-    final tileBg = _isDark ? VanixColors.darkSubSurface : VanixColors.bgCard;
-    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
-    return Container(
-      padding: const EdgeInsets.all(VanixSpacing.md),
-      decoration: BoxDecoration(
-        color: tileBg,
-        borderRadius: BorderRadius.circular(VanixRadius.md),
-        boxShadow: _isDark ? VanixShadow.cardDark : VanixShadow.card,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(FS.t(_lang, 'currentTemp').toUpperCase(),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.8, color: VanixColors.textHint)),
-          const SizedBox(height: 6),
-          Text(widget.appState.fmtTemp(widget.cow.temp), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: textColor)),
-        ],
-      ),
-    );
-  }
-
   // ── Tab bar — underline tabs flush at the hero's bottom edge ────────────
   Widget _buildTabBar() {
-    final labels = ['tabTimeline', 'tabOverview', 'tabMilkData', 'tabVetLogs'];
+    final labels = ['tabTimeline', 'tabOverview', 'tabActivity', 'tabMilkData', 'tabVetLogs'];
     return Transform.translate(
       offset: const Offset(0, VanixSpacing.lg),
       child: Row(
