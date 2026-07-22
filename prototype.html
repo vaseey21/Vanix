@@ -2850,58 +2850,52 @@
             <div style="position:relative; height:100%; overflow:hidden;">
             <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
 
-              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
-                <div style="display:flex; align-items:flex-start; gap:8px;">
-                  <button id="cow-back" style="flex-shrink:0; width:40px; height:40px; margin-inline-start:-10px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+              <!-- Cow hero: full-width photo background + overlay -->
+              <div class="m-hero" style="position:relative; overflow:hidden; box-shadow:0 12px 28px rgba(0,0,0,0.18); z-index:2;">
+                <img id="cow-photo" src="assets/images/milking_started_photo.jpg" alt="" style="width:100%; height:224px; object-fit:cover; display:block;">
+                <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.05) 32%, rgba(0,0,0,0.12) 52%, rgba(0,0,0,0.82) 100%);"></div>
+                <div style="position:absolute; top:calc(10px + env(safe-area-inset-top,0px)); left:0; right:0; display:flex; align-items:center; justify-content:space-between; padding:0 10px;">
+                  <button id="cow-back" style="width:38px; height:38px; border-radius:50%; border:none; background:rgba(0,0,0,0.35); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
                   </button>
-                  <div style="flex:1; min-width:0; margin-inline-start:4px;">
-                    <p id="cow-name" style="font-size:22px; font-weight:600; color:var(--text1); margin:0; line-height:1.2;">Gowri</p>
-                    <p id="cow-breed" style="font-size:12px; color:var(--text2); margin:2px 0 0;">Jersey</p>
-                    <p id="cow-age" class="en" style="font-size:12px; color:var(--text2); margin:1px 0 0;">2.2 yrs</p>
-                    <div style="display:flex; align-items:center; gap:6px; margin-top:4px;">
-                      <span id="cow-gender-chip" class="en" style="font-size:11px; font-weight:600; color:var(--text2); background:var(--bgwarm); border:1px solid var(--border); border-radius:8px; padding:1px 7px;">Female</span>
-                      <span id="cow-battery-chip" class="en" style="display:inline-flex; align-items:center; gap:3px; font-size:11px; font-weight:600; color:var(--text2); background:var(--bgwarm); border:1px solid var(--border); border-radius:8px; padding:1px 7px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 10v4"/></svg><span id="cow-battery-val">82%</span></span>
-                    </div>
-                  </div>
-                  <button id="cow-report-btn" title="Download report" style="flex-shrink:0; width:40px; height:40px; border-radius:50%; border:none; background:var(--bgcard); box-shadow:0 2px 8px rgba(0,0,0,0.08); display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer; margin-inline-start:2px;">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M4 17v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
-                  </button>
-                  <div style="flex-shrink:0; position:relative;">
-                    <button id="cow-kebab" style="width:36px; height:36px; border-radius:50%; border:none; background:transparent; color:var(--text1); font-size:18px; line-height:1; cursor:pointer;">⋮</button>
-                    <div id="cow-kebab-menu" style="display:none; position:absolute; top:40px; inset-inline-end:0; z-index:10; min-width:160px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,0.2); padding:4px;">
-                      <button data-k="editWord" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Edit</button>
-                      <button id="cow-kebab-addgroup" data-k="addToGroup" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Add to group</button>
-                      <button data-k="deleteWord" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--danger); font-family:var(--font-hi);">Delete</button>
+                  <div style="position:relative;">
+                    <button id="cow-kebab" style="width:38px; height:38px; border-radius:50%; border:none; background:rgba(0,0,0,0.35); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); color:#fff; font-size:18px; line-height:1; cursor:pointer;">⋮</button>
+                    <div id="cow-kebab-menu" style="display:none; position:absolute; top:42px; inset-inline-end:0; z-index:10; min-width:214px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,0.2); padding:4px;">
+                      <button data-k="editWord" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Edit</button>
+                      <button id="cow-kebab-addgroup" data-k="addToGroup" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Add to group</button>
+                      <button id="cow-kebab-download" data-k="downloadReport" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Download Report</button>
+                      <button id="cow-kebab-share" data-k="shareReportVet" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:14px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Share Report with vet</button>
+                      <button data-k="deleteWord" style="display:block; width:100%; text-align:start; min-height:42px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:14px; font-weight:500; color:var(--danger); font-family:var(--font-hi); cursor:pointer;">Delete</button>
                     </div>
                   </div>
                 </div>
-                <div style="display:flex; margin:14px -16px -18px;">
-                  <button class="cow-tab on" data-tab="timeline" data-k="tabTimeline" style="flex:1; min-height:44px; border:none; border-bottom:3px solid var(--greenink); background:transparent; color:var(--greenink); font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Timeline</button>
-                  <button class="cow-tab" data-tab="overview" data-k="tabOverview" style="flex:1; min-height:44px; border:none; border-bottom:3px solid transparent; background:transparent; color:var(--text2); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Overview</button>
-                  <button class="cow-tab" data-tab="activity" data-k="tabActivity" style="flex:1; min-height:44px; border:none; border-bottom:3px solid transparent; background:transparent; color:var(--text2); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Activity</button>
-                  <button class="cow-tab" data-tab="milkdata" data-k="tabMilkData" style="flex:1; min-height:44px; border:none; border-bottom:3px solid transparent; background:transparent; color:var(--text2); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Milk Data</button>
-                  <button class="cow-tab" data-tab="vetlogs" data-k="tabVetLogs" style="flex:1; min-height:44px; border:none; border-bottom:3px solid transparent; background:transparent; color:var(--text2); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Vet Logs</button>
+                <div style="position:absolute; left:0; right:0; bottom:0; padding:16px;">
+                  <p id="cow-name" style="font-size:22px; font-weight:600; color:#fff; margin:0; line-height:1.2;">Gowri</p>
+                  <div style="display:flex; align-items:center; flex-wrap:wrap; gap:7px; margin-top:5px;">
+                    <span id="cow-breed" style="font-size:13px; color:rgba(255,255,255,0.92);">Jersey</span>
+                    <span style="color:rgba(255,255,255,0.5);">·</span>
+                    <span id="cow-age" class="en" style="font-size:13px; color:rgba(255,255,255,0.92);">2.2 yrs</span>
+                    <span style="color:rgba(255,255,255,0.5);">·</span>
+                    <span id="cow-temp" class="en" style="font-size:13px; font-weight:700; color:#fff;">32°C</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:6px; margin-top:9px; flex-wrap:wrap;">
+                    <span id="cow-gender-chip" class="en" style="font-size:11px; font-weight:600; color:#fff; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.32); border-radius:8px; padding:2px 8px;">Female</span>
+                    <span id="cow-battery-chip" class="en" style="display:inline-flex; align-items:center; gap:3px; font-size:11px; font-weight:600; color:#fff; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.32); border-radius:8px; padding:2px 8px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 10v4"/></svg><span id="cow-battery-val">82%</span></span>
+                    <span id="cow-status-pill" style="display:inline-block; height:22px; padding:0 10px; border-radius:11px; font-size:11px; font-weight:600; line-height:22px;">Milking</span>
+                  </div>
                 </div>
+              </div>
+              <!-- Cow tabs bar -->
+              <div style="display:flex; background:var(--bgwarm); border-bottom:1px solid var(--divider);">
+                <button class="cow-tab on" data-tab="timeline" data-k="tabTimeline" style="flex:1; min-height:46px; border:none; background:transparent; font-size:13px; font-family:var(--font-hi); cursor:pointer; border-bottom:3px solid var(--greenink); color:var(--greenink); font-weight:600;">Timeline</button>
+                <button class="cow-tab" data-tab="overview" data-k="tabOverview" style="flex:1; min-height:46px; border:none; background:transparent; font-size:13px; font-family:var(--font-hi); cursor:pointer; border-bottom:3px solid transparent; color:var(--text2); font-weight:500;">Overview</button>
+                <button class="cow-tab" data-tab="activity" data-k="tabActivity" style="flex:1; min-height:46px; border:none; background:transparent; font-size:13px; font-family:var(--font-hi); cursor:pointer; border-bottom:3px solid transparent; color:var(--text2); font-weight:500;">Activity</button>
+                <button class="cow-tab" data-tab="milkdata" data-k="tabMilkData" style="flex:1; min-height:46px; border:none; background:transparent; font-size:13px; font-family:var(--font-hi); cursor:pointer; border-bottom:3px solid transparent; color:var(--text2); font-weight:500;">Milk Data</button>
+                <button class="cow-tab" data-tab="vetlogs" data-k="tabVetLogs" style="flex:1; min-height:46px; border:none; background:transparent; font-size:13px; font-family:var(--font-hi); cursor:pointer; border-bottom:3px solid transparent; color:var(--text2); font-weight:500;">Vet Logs</button>
               </div>
 
               <div style="padding:16px 16px 0;">
                 <div id="cow-pane-timeline"></div>
-                <div id="cow-overview-top" style="display:none;">
-                  <div style="display:flex; justify-content:center; margin-bottom:14px;">
-                    <img id="cow-photo" src="assets/images/milking_started_photo.jpg" alt="" style="width:120px; height:120px; border-radius:20px; object-fit:cover;">
-                  </div>
-                  <div style="display:flex; gap:8px; margin-bottom:16px;">
-                    <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 8px; text-align:center;">
-                      <span id="cow-status-pill" style="display:inline-block; height:24px; padding:0 10px; border-radius:12px; font-size:11px; font-weight:600; line-height:24px;">Milking</span>
-                      <p data-k="statusWord" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:5px 0 0;">Status</p>
-                    </div>
-                    <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 8px; text-align:center;">
-                      <p class="en" id="cow-temp" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">32°C</p>
-                      <p data-k="currentTemp" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0; white-space:pre-line;">Current Temp</p>
-                    </div>
-                  </div>
-                </div>
                 <div id="cow-pane-overview" style="display:none;"></div>
                 <div id="cow-pane-activity" style="display:none;"></div>
                 <div id="cow-pane-milk" style="display:none;"></div>
@@ -2919,6 +2913,15 @@
                 <button id="cow-add-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
               </div>
               <div id="cow-add-body" style="margin-top:12px; max-height:420px; overflow-y:auto;"></div>
+            </div>
+
+            <!-- Report type chooser (full / critical) -->
+            <div id="cow-reptype-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:48;"></div>
+            <div id="cow-reptype-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:49; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+              <h3 data-k="reportTypeTitle" style="font-size:19px; font-weight:700; color:var(--text1); margin:10px 0 12px;">Report type</h3>
+              <button class="cow-reptype-opt" data-rt="full" style="display:flex; align-items:center; gap:10px; width:100%; min-height:48px; padding:0 4px; border:none; border-bottom:1px solid var(--divider); background:transparent; font-size:15px; font-weight:500; color:var(--text1); text-align:start; cursor:pointer; font-family:var(--font-hi);"><span data-k="fullReport">Full report</span></button>
+              <button class="cow-reptype-opt" data-rt="critical" style="display:flex; align-items:center; gap:10px; width:100%; min-height:48px; padding:0 4px; border:none; background:transparent; font-size:15px; font-weight:500; color:var(--danger); text-align:start; cursor:pointer; font-family:var(--font-hi);"><span data-k="criticalReport">Critical report</span></button>
             </div>
 
             <!-- Individual cattle report — "Report period" bottom sheet -->
@@ -3377,7 +3380,7 @@
                histInsem:'Inseminated \u2014 Mohini', histInsemSub:'Within the 18h window \u2014 pregnancy check set for 3 Jul',
                stageMilking:'MILKING', stageHeatWatch:'HEAT WATCH', stageRecovered:'RECOVERED', stage21Day:'21-DAY WATCH',
                prioP0:'CRITICAL', prioP1:'MEDIUM', prioP2:'MEDIUM', prioP3:'LOW',
-               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters', dashGreeting:'Good morning,', dashAllFarms:'All Farms', dashLive:'Live', dashAddedToday:'added today', dashActiveAlerts:'Active Alerts', dashPendingTasks:'Pending Tasks', dashDueToday:'due today', dashOverdue:'overdue', dashPregnant:'Pregnant', dashDueThisWeek:'due this week', dashActionAlerts:'Action Alerts', dashWaiting:'waiting', dashYesFever:'Yes, fever', dashViewEvents:'View all in Events', dashEditsApproval:'Edits awaiting your approval', dashMilkMissing:'Milk sessions missing today', dashInsemWindow:'insemination window', dashLeft:'left', dashFarmsNeedAction:'Farms needing action', fdShareReport:'Share report', fdTabCattle:'Cattle', fdTabHerd:'Herd Activity', herdCowsBtn:'Cows', selectCowsWord:'Select cows', tabActivity:'Activity', fdDownloadReport:'Download report', durationWord:'Duration', customRangeWord:'Custom range', homeCowsPregnant:'Cows\nPregnant', homeCowsHeat:'Cows\nin Heat', homePendingApprovals:'Pending\nApprovals', homeMilkingsMissed:'Milking\nMissed', homeUnresolvedAlerts:'Unresolved\nAlerts', homeCowsInHeat:'Cows in heat', homeCowsInGestation:'Cows in gestation', dashOffline:'offline', dashTodaySchedule:"Today's Schedule", dashVaccDrive:'Vaccination Drive', dashVetVisit:'Vet Visit', dashMilkLogging:'Evening Milk Logging', dashThisWeek:'This Week', dashFmd:'FMD vaccination', dashCows:'cows', dashDays:'d', dashRemindersNote:'Items beyond 7 days stay in Events reminders', dashGoodNews:'Good News', dashRecovered:'recovered', dashFeverCaught:'fever caught by collar, treated by Dr. Sharma', dashDaysAgo:'days ago', dashConfPreg:'confirmed pregnant', dashInseminated:'Inseminated', dashConfYesterday:'confirmed yesterday', dashCalved:'calved', dashHealthyCalf:'healthy calf, now in the Milk Log', dashYesterday:'Yesterday', dashTriageDone:'Logged — thanks', dashUpdates:'Updates', dashToday:'Today',
+               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters', dashGreeting:'Good morning,', dashAllFarms:'All Farms', dashLive:'Live', dashAddedToday:'added today', dashActiveAlerts:'Active Alerts', dashPendingTasks:'Pending Tasks', dashDueToday:'due today', dashOverdue:'overdue', dashPregnant:'Pregnant', dashDueThisWeek:'due this week', dashActionAlerts:'Action Alerts', dashWaiting:'waiting', dashYesFever:'Yes, fever', dashViewEvents:'View all in Events', dashEditsApproval:'Edits awaiting your approval', dashMilkMissing:'Milk sessions missing today', dashInsemWindow:'insemination window', dashLeft:'left', dashFarmsNeedAction:'Farms needing action', fdShareReport:'Share report', downloadReport:'Download Report', shareReportVet:'Share Report with vet', reportTypeTitle:'Report type', fullReport:'Full report', criticalReport:'Critical report', activityLogWord:'Activity log', fdTabCattle:'Cattle', fdTabHerd:'Herd Activity', herdCowsBtn:'Cows', selectCowsWord:'Select cows', tabActivity:'Activity', fdDownloadReport:'Download report', durationWord:'Duration', customRangeWord:'Custom range', homeCowsPregnant:'Cows\nPregnant', homeCowsHeat:'Cows\nin Heat', homePendingApprovals:'Pending\nApprovals', homeMilkingsMissed:'Milking\nMissed', homeUnresolvedAlerts:'Unresolved\nAlerts', homeCowsInHeat:'Cows in heat', homeCowsInGestation:'Cows in gestation', dashOffline:'offline', dashTodaySchedule:"Today's Schedule", dashVaccDrive:'Vaccination Drive', dashVetVisit:'Vet Visit', dashMilkLogging:'Evening Milk Logging', dashThisWeek:'This Week', dashFmd:'FMD vaccination', dashCows:'cows', dashDays:'d', dashRemindersNote:'Items beyond 7 days stay in Events reminders', dashGoodNews:'Good News', dashRecovered:'recovered', dashFeverCaught:'fever caught by collar, treated by Dr. Sharma', dashDaysAgo:'days ago', dashConfPreg:'confirmed pregnant', dashInseminated:'Inseminated', dashConfYesterday:'confirmed yesterday', dashCalved:'calved', dashHealthyCalf:'healthy calf, now in the Milk Log', dashYesterday:'Yesterday', dashTriageDone:'Logged — thanks', dashUpdates:'Updates', dashToday:'Today',
                catFever:'Fever', catHeat:'Heat', catPregnancy:'Pregnancy', catGestation:'Gestation', catMilking:'Milking', catLactation:'Lactation', catPregLoss:'Pregnancy loss', catFreshCow:'Fresh cow',
                catMastitis:'Mastitis', catLameness:'Lameness', catKetosis:'Ketosis', catHeatStress:'Heat stress', catCalibration:'Calibration', farmGreenValley:'Green Valley Farm', farmSunrise:'Sunrise Dairy',
                farmsSubtitle:'Manage all your dairy farms in one place', yourFarms:'Your Farms', periodToday:'Today', period7:'Last 7 days', period30:'Last 30 days',
@@ -3459,7 +3462,7 @@
                histInsem:'गर्भाधान हुआ \u2014 मोहिनी', histInsemSub:'18 घंटे की विंडो में \u2014 गर्भ जांच 3 जुलाई को',
                stageMilking:'दूध दे रही', stageHeatWatch:'हीट निगरानी', stageRecovered:'स्वस्थ हुई', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें', dashGreeting:'सुप्रभात,', dashAllFarms:'सभी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़े गए', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'इस सप्ताह देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हाँ, बुखार', dashViewEvents:'सभी कार्यक्रम देखें', dashEditsApproval:'आपकी मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटे दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहिए खेत', fdShareReport:'रिपोर्ट साझा करें', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गायें', selectCowsWord:'गायें चुनें', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करें', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगायें', homeCowsHeat:'हीट में\nगायें', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटे दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझे\nअलर्ट', homeCowsInHeat:'हीट में गायें', homeCowsInGestation:'गर्भ में गायें', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज का कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'शाम की दूध लॉगिंग', dashThisWeek:'इस सप्ताह', dashFmd:'खुरपका टीकाकरण', dashCows:'गायें', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं', dashGoodNews:'अच्छी खबर', dashRecovered:'ठीक हो गई', dashFeverCaught:'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', dashDaysAgo:'दिन पहले', dashConfPreg:'गर्भ की पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'कल पुष्टि हुई', dashCalved:'ब्याई', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'कल', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
+               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें', dashGreeting:'सुप्रभात,', dashAllFarms:'सभी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़े गए', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'इस सप्ताह देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हाँ, बुखार', dashViewEvents:'सभी कार्यक्रम देखें', dashEditsApproval:'आपकी मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटे दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहिए खेत', fdShareReport:'रिपोर्ट साझा करें', downloadReport:'रिपोर्ट डाउनलोड करें', shareReportVet:'पशु चिकित्सक को रिपोर्ट भेजें', reportTypeTitle:'रिपोर्ट प्रकार', fullReport:'पूरी रिपोर्ट', criticalReport:'गंभीर रिपोर्ट', activityLogWord:'गतिविधि लॉग', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गायें', selectCowsWord:'गायें चुनें', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करें', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगायें', homeCowsHeat:'हीट में\nगायें', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटे दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझे\nअलर्ट', homeCowsInHeat:'हीट में गायें', homeCowsInGestation:'गर्भ में गायें', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज का कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'शाम की दूध लॉगिंग', dashThisWeek:'इस सप्ताह', dashFmd:'खुरपका टीकाकरण', dashCows:'गायें', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं', dashGoodNews:'अच्छी खबर', dashRecovered:'ठीक हो गई', dashFeverCaught:'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', dashDaysAgo:'दिन पहले', dashConfPreg:'गर्भ की पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'कल पुष्टि हुई', dashCalved:'ब्याई', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'कल', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताज़ा ब्याई',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
@@ -3541,7 +3544,7 @@
                histInsem:'गर्भाधान भइल \u2014 मोहिनी', histInsemSub:'18 घंटा के विंडो में \u2014 गर्भ जांच 3 जुलाई के',
                stageMilking:'दूध देत बिया', stageHeatWatch:'हीट निगरानी', stageRecovered:'ठीक भइल', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं', dashGreeting:'सुप्रभात,', dashAllFarms:'सगरी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़ल', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'ए हफ्ता देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हँ, बुखार', dashViewEvents:'सब कार्यक्रम देखीं', dashEditsApproval:'रउरा मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटल दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहीं खेत', fdShareReport:'रिपोर्ट साझा करीं', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गाई', selectCowsWord:'गाई चुनीं', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करीं', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगाई', homeCowsHeat:'हीट में\nगाई', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटल दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझल\nअलर्ट', homeCowsInHeat:'हीट में गाई', homeCowsInGestation:'गर्भ में गाई', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज के कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'सांझ के दूध लॉगिंग', dashThisWeek:'ए हफ्ता', dashFmd:'खुरपका टीकाकरण', dashCows:'गाई', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहेला', dashGoodNews:'अच्छा खबर', dashRecovered:'ठीक हो गइल', dashFeverCaught:'कॉलर बुखार पकड़लस, डॉ. शर्मा इलाज कइलन', dashDaysAgo:'दिन पहिले', dashConfPreg:'गर्भ के पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'काल्ह पुष्टि भइल', dashCalved:'ब्याइल', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'काल्ह', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
+               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं', dashGreeting:'सुप्रभात,', dashAllFarms:'सगरी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़ल', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'ए हफ्ता देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हँ, बुखार', dashViewEvents:'सब कार्यक्रम देखीं', dashEditsApproval:'रउरा मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटल दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहीं खेत', fdShareReport:'रिपोर्ट साझा करीं', downloadReport:'रिपोर्ट डाउनलोड करीं', shareReportVet:'पशु चिकित्सक के रिपोर्ट भेजीं', reportTypeTitle:'रिपोर्ट प्रकार', fullReport:'पूरा रिपोर्ट', criticalReport:'गंभीर रिपोर्ट', activityLogWord:'गतिविधि लॉग', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गाई', selectCowsWord:'गाई चुनीं', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करीं', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगाई', homeCowsHeat:'हीट में\nगाई', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटल दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझल\nअलर्ट', homeCowsInHeat:'हीट में गाई', homeCowsInGestation:'गर्भ में गाई', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज के कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'सांझ के दूध लॉगिंग', dashThisWeek:'ए हफ्ता', dashFmd:'खुरपका टीकाकरण', dashCows:'गाई', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहेला', dashGoodNews:'अच्छा खबर', dashRecovered:'ठीक हो गइल', dashFeverCaught:'कॉलर बुखार पकड़लस, डॉ. शर्मा इलाज कइलन', dashDaysAgo:'दिन पहिले', dashConfPreg:'गर्भ के पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'काल्ह पुष्टि भइल', dashCalved:'ब्याइल', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'काल्ह', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताजा बियाइल',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
@@ -6420,6 +6423,13 @@
           '<p style="font-size:9px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">' + window.t()[k] + '</p>' +
         '</div>';
       }
+      function ovStatCardNoIcon(big, labelK, accent) {
+        return '<div style="flex:1; min-width:0; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 6px; position:relative; overflow:hidden; text-align:center;">' +
+          '<span style="position:absolute; inset-inline-start:0; top:0; bottom:0; width:3px; background:' + accent + ';"></span>' +
+          '<p class="en" style="font-size:15px; font-weight:700; color:var(--text1); margin:0; line-height:1.1;">' + big + '</p>' +
+          '<p style="font-size:8px; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; color:var(--text2); margin:5px 0 0; line-height:1.25;">' + window.t()[labelK] + '</p>' +
+        '</div>';
+      }
       function ovStatCard(icon, big, unit, labelK, corner, accent, tint) {
         return '<div style="flex:1; min-width:0; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 14px 14px 16px; position:relative; overflow:hidden;">' +
           '<span style="position:absolute; inset-inline-start:0; top:0; bottom:0; width:4px; background:' + accent + ';"></span>' +
@@ -6463,13 +6473,11 @@
         var xlabels = rangeData.xlabels;
         var rangeLabel = cowTempRange === 'week' ? 'This week' : (cowTempRange === 'custom' ? (cowTempCustomLabel || 'Custom') : 'Today');
         document.getElementById('cow-pane-overview').innerHTML =
-          '<div style="display:flex; gap:8px;">' +
-            ovStatCard(cal, '19 Mar', '', 'ovLastHeat', upArrow, 'var(--warning)', 'rgba(232,160,32,0.14)') +
-            ovStatCard(cal, '14 Apr', '', 'ovNextHeat', cal, 'var(--greenink)', 'var(--activebg)') +
-          '</div>' +
-          '<div style="display:flex; gap:8px; margin-top:8px;">' +
-            ovStatCard(thermo, '18 Jun', '', 'ovLastSpike', upArrow, 'var(--danger)', 'rgba(212,76,58,0.12)') +
-            ovStatCard(cow, '1', '', 'ovNumCalving', cow, '#2563EB', 'rgba(37,99,235,0.12)') +
+          '<div style="display:flex; gap:6px;">' +
+            ovStatCardNoIcon('19 Mar', 'ovLastHeat', 'var(--warning)') +
+            ovStatCardNoIcon('14 Apr', 'ovNextHeat', 'var(--greenink)') +
+            ovStatCardNoIcon('18 Jun', 'ovLastSpike', 'var(--danger)') +
+            ovStatCardNoIcon('1', 'ovNumCalving', '#2563EB') +
           '</div>' +
           '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">' + t.tempWord + '</p>' +
           '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px;">' +
@@ -6522,20 +6530,55 @@
           });
         }
       }
+      function actTileNoIcon(val, labelK, withDivider) {
+        var t = window.t();
+        return '<div style="flex:1; min-width:0; padding:2px 6px; text-align:center;' + (withDivider ? ' border-inline-start:1px solid var(--divider);' : '') + '">' +
+          '<p style="margin:0;"><span class="en" style="font-size:18px; font-weight:700; color:var(--text1);">' + val + '</span> <span class="en" style="font-size:10px; color:var(--text2);">min</span></p>' +
+          '<p style="font-size:9px; font-weight:600; letter-spacing:0.03em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">' + t[labelK] + '</p>' +
+        '</div>';
+      }
       function renderCowActivity() {
         var t = window.t();
-        var cow = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c0 2 1.5 3 3 3M20 5c0 2-1.5 3-3 3M6 8c-1 0-2 1-2 3 0 4 3.5 7 8 7s8-3 8-7c0-2-1-3-2-3"/><circle cx="9.5" cy="13" r="1"/><circle cx="14.5" cy="13" r="1"/></svg>';
         document.getElementById('cow-pane-activity').innerHTML =
           '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">' + t.actStatus + '</p>' +
           '<div style="display:flex; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 6px;">' +
-            ovActTile(cow, '210', 'actRumination', false, 'var(--greenink)', 'var(--activebg)') +
-            ovActTile('<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16l-2 16H6z"/><path d="M4 9h16"/></svg>', '268', 'actFeeding', true, 'var(--warning)', 'rgba(232,160,32,0.14)') +
-            ovActTile(cow, '96', 'actStanding', true, '#2563EB', 'rgba(37,99,235,0.12)') +
-            ovActTile(cow, '512', 'actResting', true, '#7C3AED', 'rgba(124,58,237,0.12)') +
+            actTileNoIcon('210', 'actRumination', false) +
+            actTileNoIcon('268', 'actFeeding', true) +
+            actTileNoIcon('96', 'actStanding', true) +
+            actTileNoIcon('512', 'actResting', true) +
           '</div>' +
-          '<button id="cow-actlog-link" style="display:flex; align-items:center; justify-content:space-between; width:100%; min-height:48px; margin-top:4px; padding:0 2px; background:transparent; border:none; border-bottom:1px solid var(--border); font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;"><span>View full activity log ›</span></button>';
-        var actlogLink = document.getElementById('cow-actlog-link');
-        if (actlogLink) actlogLink.addEventListener('click', function() { openActivityLog(); });
+          '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">' + (t.activityLogWord || 'Activity log') + '</p>' +
+          '<div id="cow-actlog-strip" style="display:flex; gap:6px; overflow-x:auto; padding-bottom:4px;"></div>' +
+          '<div id="cow-actlog-list" style="margin-top:12px;"></div>';
+        // inline day strip + list (reuses the same per-date mock as the old page)
+        var chips = actlogDayChips();
+        if (!cowActlogDate) cowActlogDate = actlogDateKey(chips[chips.length - 1]);
+        renderCowActlog();
+      }
+      var cowActlogDate = null;
+      function renderCowActlog() {
+        var wk = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        var chips = actlogDayChips();
+        var strip = document.getElementById('cow-actlog-strip');
+        if (!strip) return;
+        strip.innerHTML = chips.map(function(d) {
+          var key = actlogDateKey(d);
+          var on = key === cowActlogDate;
+          return '<button class="cow-actlog-chip" data-key="' + key + '" style="flex-shrink:0; width:46px; min-height:56px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; border-radius:14px; border:1px solid ' + (on ? 'var(--greenink)' : 'var(--border)') + '; background:' + (on ? 'var(--activebg)' : 'var(--bgcard)') + '; cursor:pointer;">' +
+            '<span class="en" style="font-size:10px; font-weight:600; color:' + (on ? 'var(--greenink)' : 'var(--text2)') + ';">' + wk[d.getDay()] + '</span>' +
+            '<span class="en" style="font-size:14px; font-weight:700; color:' + (on ? 'var(--greenink)' : 'var(--text1)') + ';">' + d.getDate() + '</span>' +
+          '</button>';
+        }).join('');
+        var rows = actlogRowsForDate(cowActlogDate || '');
+        document.getElementById('cow-actlog-list').innerHTML = rows.map(function(r) {
+          return '<div style="display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border);">' +
+            '<span style="flex-shrink:0; width:32px; height:32px; border-radius:10px; background:' + r.bg + '; color:' + r.color + '; display:flex; align-items:center; justify-content:center;">' + r.icon + '</span>' +
+            '<div style="flex:1; min-width:0;"><p class="en" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">' + r.action + '</p><p class="en" style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + r.duration + ' \u00b7 ' + r.start + '</p></div>' +
+          '</div>';
+        }).join('');
+        document.querySelectorAll('.cow-actlog-chip').forEach(function(chip) {
+          chip.addEventListener('click', function() { cowActlogDate = chip.getAttribute('data-key'); renderCowActlog(); });
+        });
       }
       function openTempCustomSheet() {
         document.getElementById('cow-tempcustom-sheet').style.transform = 'translateY(0)';
@@ -6659,8 +6702,6 @@
         document.getElementById('cow-pane-vetlogs').style.display = cowTab === 'vetlogs' ? 'block' : 'none';
         var actPane = document.getElementById('cow-pane-activity');
         if (actPane) actPane.style.display = cowTab === 'activity' ? 'block' : 'none';
-        var ovTop = document.getElementById('cow-overview-top');
-        if (ovTop) ovTop.style.display = cowTab === 'overview' ? 'block' : 'none';
       }
       function renderCowPage() {
         if (!currentCow) return;
@@ -6679,8 +6720,8 @@
         var battPct = cowBatteryPct(c);
         document.getElementById('cow-battery-val').textContent = battPct + '%';
         var battChip = document.getElementById('cow-battery-chip');
-        battChip.style.color = battPct <= 30 ? 'var(--danger)' : 'var(--text2)';
-        battChip.style.borderColor = battPct <= 30 ? 'var(--danger)' : 'var(--border)';
+        battChip.style.color = battPct <= 30 ? '#FFD5CE' : '#FFFFFF';
+        battChip.style.borderColor = battPct <= 30 ? '#FFD5CE' : 'rgba(255,255,255,0.32)';
         renderCowTimeline();
         renderCowOverview();
         renderCowActivity();
@@ -6695,11 +6736,46 @@
         cowPage.style.display = 'block';
       }
       // ── Individual cattle report — "Report period" sheet ──
-      document.getElementById('cow-report-btn').addEventListener('click', function() {
+      function openCowReportSheet() {
         document.getElementById('cow-report-sheet').style.transform = 'translateY(0)';
         var bd = document.getElementById('cow-report-backdrop');
         bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
-      });
+      }
+      (function() {
+        var dl = document.getElementById('cow-kebab-download');
+        var sh = document.getElementById('cow-kebab-share');
+        if (dl) dl.addEventListener('click', function() {
+          document.getElementById('cow-kebab-menu').style.display = 'none';
+          openCowRepType();
+        });
+        if (sh) sh.addEventListener('click', function() {
+          document.getElementById('cow-kebab-menu').style.display = 'none';
+          window.openVetSheet(function(vetName) { showToast('Report shared with ' + vetName); });
+        });
+      })();
+      // Report-type chooser (full / critical) -> then the period sheet
+      function openCowRepType() {
+        document.getElementById('cow-reptype-sheet').style.transform = 'translateY(0)';
+        var bd = document.getElementById('cow-reptype-backdrop');
+        bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeCowRepType() {
+        document.getElementById('cow-reptype-sheet').style.transform = 'translateY(100%)';
+        var bd = document.getElementById('cow-reptype-backdrop');
+        bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      (function() {
+        var bd = document.getElementById('cow-reptype-backdrop');
+        if (bd) bd.addEventListener('click', closeCowRepType);
+        document.querySelectorAll('.cow-reptype-opt').forEach(function(o) {
+          o.addEventListener('click', function() {
+            cowRepCritical = o.getAttribute('data-rt') === 'critical';
+            closeCowRepType();
+            openCowReportSheet();
+          });
+        });
+      })();
+      var cowRepCritical = false;
       function closeCowReportSheet() {
         document.getElementById('cow-report-sheet').style.transform = 'translateY(100%)';
         var bd = document.getElementById('cow-report-backdrop');
