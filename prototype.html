@@ -7128,8 +7128,17 @@
         var minutesInDay = 24 * 60;
         var slot = 0;
         var i = 0;
+        // Real cattle stay in a state for a while, not switching every 30
+        // min — repeat each pick for a variable 1-3 slots (30/60/90 min) so
+        // merged intervals actually show varying durations, not a flat 30m.
+        var runLeft = 0, pick = ACTLOG_ACTIONS[0];
         while (slot < minutesInDay) {
-          var pick = ACTLOG_ACTIONS[(seed + i) % ACTLOG_ACTIONS.length];
+          if (runLeft <= 0) {
+            pick = ACTLOG_ACTIONS[(seed + i) % ACTLOG_ACTIONS.length];
+            runLeft = 1 + ((seed + i * 7) % 3);
+            i++;
+          }
+          runLeft--;
           var startH = Math.floor(slot / 60);
           var startM = slot % 60;
           rows.push({
@@ -7139,7 +7148,6 @@
             startMin: slot
           });
           slot += 30;
-          i++;
         }
         return rows;
       }
