@@ -1416,8 +1416,11 @@ class _ActionsSheetState extends State<_ActionsSheet> {
 
   // ── shared step widgets ──
   Widget _mainList() {
+    // "Change status" row removed — the sheet now starts directly with
+    // "Request a vet visit". The statusList/statusNote flow code below is
+    // left in place (unreferenced) — matches vanix_screens_preview.html
+    // leaving its viewStatusList/statusNote view functions unused too.
     final items = <(IconData, String, VoidCallback)>[
-      (Icons.sync, _t('changeStatus'), () => _go('statusList')),
       (Icons.medical_services_outlined, _t('reqVetVisit'), () { _flow = 'visit'; _go('vetPick'); }),
       (Icons.description_outlined, _t('addVetLog'), () { _flow = 'vetlog'; _attach = false; _go('vetPick'); }),
       (Icons.favorite_border, _t('addHeat'), () => _go('heatConfirm')),
