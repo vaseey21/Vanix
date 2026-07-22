@@ -197,6 +197,7 @@ class FS {
       'fdCustomRange': 'कस्टम सीमा', 'fdFrom': 'से', 'fdTo': 'तक', 'fdApply': 'लागू करें',
       'fdRuminationTitle': 'झुंड जुगाली — आज', 'fdNormalPattern': 'सामान्य पैटर्न', 'fdAnomaly': 'असामान्यता',
       'fdAnomalyNote': 'असामान्यता मिली — जुगाली 14:00–16:00 के बीच घटी',
+      'overlapWord': 'ओवरलैप', 'noOverlapWord': 'सक्रिय समय में कोई ओवरलैप नहीं',
       'setupFarmTitle': 'फार्म सेट करें', 'sfInviteTitle': 'फार्म प्रबंधक आमंत्रित करें',
       'sfInviteSub': 'उन्हें एक ईमेल निमंत्रण मिलता है और स्वीकार करने पर वे इस फार्म का प्रबंधन करते हैं।',
       'sfManagerNamePh': 'प्रबंधक का नाम', 'sfSendInvite': 'निमंत्रण भेजें',
