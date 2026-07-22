@@ -6044,11 +6044,8 @@
         nav.querySelectorAll('.vtab').forEach(function(x) { x.classList.toggle('on', +x.getAttribute('data-i') === i); });
       }
 
-      // Navigating to Events (via any bottom nav) reinvokes the alert flow,
-      // starting from the full-screen "push notification" card.
       function showEventsFromNav() {
         eventsPage.style.display = 'block';
-        if (window.evOpenFullCycle) window.evOpenFullCycle();
       }
       window.wireFarmerDash = function() {
         if (!window.__farmerWired) {
@@ -6122,7 +6119,6 @@
         if (i === 4) setTimeout(openAccountPage, 280);
       });
       wireNav(eventsNav, function(i) {
-        if (i === 3) { if (window.evOpenFullCycle) window.evOpenFullCycle(); return; }
         if (i === 0) setTimeout(function() {
           eventsPage.style.display = 'none';
           resetNav(eventsNav, 3); // events re-opens with Events active
