@@ -6044,6 +6044,12 @@
         nav.querySelectorAll('.vtab').forEach(function(x) { x.classList.toggle('on', +x.getAttribute('data-i') === i); });
       }
 
+      // Navigating to Events (via any bottom nav) reinvokes the alert flow,
+      // starting from the full-screen "push notification" card.
+      function showEventsFromNav() {
+        eventsPage.style.display = 'block';
+        if (window.evOpenFullCycle) window.evOpenFullCycle();
+      }
       window.wireFarmerDash = function() {
         if (!window.__farmerWired) {
           window.__farmerWired = true;
@@ -6055,7 +6061,7 @@
               resetNav(fnav, 0);
             }, 280);
             if (i === 2) setTimeout(function() { milkPage.style.display = 'block'; resetNav(fnav, 0); }, 280);
-            if (i === 3) setTimeout(function() { eventsPage.style.display = 'block'; resetNav(fnav, 0); }, 280);
+            if (i === 3) setTimeout(function() { showEventsFromNav(); resetNav(fnav, 0); }, 280);
             if (i === 4) setTimeout(function() { openAccountPage(); resetNav(fnav, 0); }, 280);
           });
           document.querySelectorAll('.fp-tab').forEach(function(tab) {
@@ -6093,7 +6099,7 @@
           resetNav(dashNav, 0); // dashboard shows Home again on return
         }, 280);
         if (i === 3) setTimeout(function() {
-          eventsPage.style.display = 'block';
+          showEventsFromNav();
           resetNav(dashNav, 0);
         }, 280);
         if (i === 4) setTimeout(function() { openAccountPage(); resetNav(dashNav, 0); }, 280);
@@ -6109,13 +6115,14 @@
           resetNav(milkNav, 2);
         }, 280);
         if (i === 3) setTimeout(function() {
-          eventsPage.style.display = 'block';
+          showEventsFromNav();
           milkPage.style.display = 'none';
           resetNav(milkNav, 2);
         }, 280);
         if (i === 4) setTimeout(openAccountPage, 280);
       });
       wireNav(eventsNav, function(i) {
+        if (i === 3) { if (window.evOpenFullCycle) window.evOpenFullCycle(); return; }
         if (i === 0) setTimeout(function() {
           eventsPage.style.display = 'none';
           resetNav(eventsNav, 3); // events re-opens with Events active
@@ -6144,7 +6151,7 @@
         }, 280);
         if (i === 3) setTimeout(function() {
           farmsPage.style.display = 'none';
-          eventsPage.style.display = 'block';
+          showEventsFromNav();
           resetNav(farmsNav, 1);
         }, 280);
         if (i === 4) setTimeout(openAccountPage, 280);
@@ -6170,7 +6177,7 @@
         if (i === 3) setTimeout(function() {
           farmDetailPage.style.display = 'none';
           farmsPage.style.display = 'none';
-          eventsPage.style.display = 'block';
+          showEventsFromNav();
           resetNav(farmDetailNav, 1);
           resetNav(farmsNav, 1);
         }, 280);
@@ -6185,7 +6192,7 @@
           eventsPage.style.display = 'none';
           if (i === 1) { farmsPage.style.display = 'block'; resetNav(farmsNav, 1); }
           if (i === 2) { milkPage.style.display = 'block'; resetNav(milkNav, 2); }
-          if (i === 3) { eventsPage.style.display = 'block'; resetNav(eventsNav, 3); }
+          if (i === 3) { showEventsFromNav(); resetNav(eventsNav, 3); }
           resetNav(dashNav, 0);   // dashboard underneath always resets to Home
           resetNav(accountNav, 4);
         }, 280);
