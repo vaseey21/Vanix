@@ -269,9 +269,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // ── Unactioned Alerts detail sheet (opened by the info button on the
-  // Unresolved-Alerts card) — mirrors #dash-alerts-sheet. ──
-  void _openAlertsSheet() {
+  // ── (Retired) Unactioned Alerts detail sheet — the Unresolved-Alerts
+  // stat tile that opened this was dropped from the 6-tile → 3-tile Farm
+  // Status grid (Home r3); "Critical Alerts" now routes straight to Events.
+  void _openAlertsSheetRETIRED() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
