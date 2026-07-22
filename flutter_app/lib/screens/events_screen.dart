@@ -1984,6 +1984,11 @@ class _ActionCard extends StatelessWidget {
           const SizedBox(height: 10),
         ],
         Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: titleColor)),
+        if (priority == _Priority.p1)
+          const Padding(
+            padding: EdgeInsets.only(top: 4),
+            child: _P1Chip(),
+          ),
         if (manager != null)
           Padding(
             padding: const EdgeInsets.only(top: 2),
