@@ -471,6 +471,8 @@ class _EventsScreenState extends State<EventsScreen> {
           priority: _Priority.p0,
           channel: 'Push + SMS · Immediate vet visit',
           manager: manager,
+          timeAgo: '2h ago',
+          showOwnerContext: !widget.appState.isFarmer,
           illustrationAssets: const ['assets/images/cow_icon.png'],
           imageMode: widget.appState.displayImageMode,
           photoBg: 'assets/images/fever_photo.jpg',
