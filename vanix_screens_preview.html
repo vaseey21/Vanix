@@ -7736,7 +7736,7 @@
             '<p style="font-size:18px; font-weight:700; color:' + (color || '#111') + '; margin:0;">' + val + '</p>' +
             '<p style="font-size:10px; font-weight:600; color:#888; text-transform:uppercase; letter-spacing:0.04em; margin:3px 0 0;">' + label + '</p></div>';
         }
-        statsHtml += stat(t.statTotalCattle.replace('\\n', ' '), farm.cattle != null ? farm.cattle : '—');
+        statsHtml += stat(t.statTotalCattle.replace('\n', ' '), farm.cattle != null ? farm.cattle : '—');
         var lvlHex = lvl.k === 'tempVeryHigh' ? '#D44C3A' : (lvl.k === 'tempHigh' ? '#8A5A00' : (lvl.k === 'tempNormal' ? '#1E7A52' : '#111'));
         statsHtml += stat(t[lvl.k], fmtTemp(farm.temp), lvlHex);
         if (critical) {

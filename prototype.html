@@ -7545,7 +7545,8 @@
       document.getElementById('farm-detail-back').addEventListener('click', function() {
         farmDetailPage.style.display = 'none';
       });
-      // Farm Detail hero kebab (Edit / Delete) — mirrors the cow-profile kebab pattern.
+      // Farm Detail hero kebab — Download Report / Download Critical Report /
+      // Share with vet / Manage Farm.
       (function() {
         var kebabBtn = document.getElementById('farm-detail-kebab');
         var kebabMenu = document.getElementById('farm-detail-kebab-menu');
@@ -7558,6 +7559,64 @@
           if (kebabMenu.style.display === 'block' && !kebabMenu.contains(e.target) && e.target !== kebabBtn) {
             kebabMenu.style.display = 'none';
           }
+        });
+        var dl = document.getElementById('farm-detail-kebab-download');
+        var dlc = document.getElementById('farm-detail-kebab-download-critical');
+        var sh = document.getElementById('farm-detail-kebab-share');
+        var mg = document.getElementById('farm-detail-kebab-manage');
+        if (dl) dl.addEventListener('click', function() { kebabMenu.style.display = 'none'; openReportPreview(false); });
+        if (dlc) dlc.addEventListener('click', function() { kebabMenu.style.display = 'none'; openReportPreview(true); });
+        if (sh) sh.addEventListener('click', function() {
+          kebabMenu.style.display = 'none';
+          window.openVetSheet(function(vetName) { showToast('Report shared with ' + vetName); });
+        });
+        if (mg) mg.addEventListener('click', function() {
+          kebabMenu.style.display = 'none';
+          farmDetailPage.style.display = 'none';
+          if (typeof renderFarmMgmt === 'function') renderFarmMgmt();
+          var pg = document.getElementById('page-farmmgmt');
+          if (pg) pg.style.display = 'block';
+        });
+      })();
+      // ── Report Preview page (Download Report / Download Critical Report) ──
+      function openReportPreview(critical) {
+        var farm = fdCurrentFarm();
+        if (!farm) return;
+        var t = window.t();
+        document.getElementById('report-preview-farmname').textContent = loc(farm, 'name');
+        document.getElementById('report-preview-titlerow').textContent = critical ? t.criticalReport : t.fullReport;
+        var now = new Date('2026-07-22T09:41:00');
+        document.getElementById('report-preview-date').textContent = now.toDateString();
+        var lvl = farmTempLevel(farm.temp);
+        var statsHtml = '';
+        function stat(label, val, color) {
+          return '<div style="flex:1; min-width:100px; background:#F7F5F0; border-radius:12px; padding:10px 12px;">' +
+            '<p style="font-size:18px; font-weight:700; color:' + (color || '#111') + '; margin:0;">' + val + '</p>' +
+            '<p style="font-size:10px; font-weight:600; color:#888; text-transform:uppercase; letter-spacing:0.04em; margin:3px 0 0;">' + label + '</p></div>';
+        }
+        statsHtml += stat(t.statTotalCattle.replace('\n', ' '), farm.cattle != null ? farm.cattle : '—');
+        var lvlHex = lvl.k === 'tempVeryHigh' ? '#D44C3A' : (lvl.k === 'tempHigh' ? '#8A5A00' : (lvl.k === 'tempNormal' ? '#1E7A52' : '#111'));
+        statsHtml += stat(t[lvl.k], fmtTemp(farm.temp), lvlHex);
+        if (critical) {
+          statsHtml += stat(t.rowCriticalAlerts, '3', '#D44C3A');
+        } else {
+          statsHtml += stat(t.rowCriticalAlerts, '14', '#D44C3A');
+          statsHtml += stat(t.rowPendingApprovals, '2', '#111');
+        }
+        document.getElementById('report-preview-stats').innerHTML = statsHtml;
+        var noteEl = document.getElementById('report-preview-critnote');
+        if (noteEl) noteEl.style.display = critical ? 'block' : 'none';
+        var page = document.getElementById('page-report-preview');
+        if (page) page.style.display = 'block';
+      }
+      (function() {
+        var backBtn = document.getElementById('report-preview-back');
+        if (backBtn) backBtn.addEventListener('click', function() {
+          document.getElementById('page-report-preview').style.display = 'none';
+        });
+        var dlBtn = document.getElementById('report-preview-download');
+        if (dlBtn) dlBtn.addEventListener('click', function() {
+          showToast(window.t().reportDownloaded);
         });
       })();
       // ── Add Cattle page ──
