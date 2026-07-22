@@ -419,33 +419,154 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                   ],
                 ),
               ),
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  tooltip: FS.t(_lang, 'fdDownloadReport'),
-                  onPressed: () => _openDownloadSheet(isDark),
-                  icon: Icon(Icons.file_download_outlined, size: 18, color: textColor),
-                ),
-              ),
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  tooltip: 'Share report with a vet',
-                  onPressed: () => _openShareVetSheet(isDark),
-                  icon: Icon(Icons.share_outlined, size: 18, color: textColor),
-                ),
-              ),
             ],
           ),
-          const SizedBox(height: 14),
-          _rangeChipRow(isDark),
-          const SizedBox(height: 10),
-          _fdStatGrid(isDark),
+          const SizedBox(height: 8),
+          _fdTabRow(isDark),
         ],
+      ),
+    );
+  }
+
+  // ── Cattle / Herd Activity tabs — mirrors .fd-tab in prototype.html ────
+  Widget _fdTabRow(bool isDark) {
+    return Row(
+      children: [
+        Expanded(child: _fdTabBtn(FS.t(_lang, 'fdTabCattle'), 'cattle', isDark)),
+        Expanded(child: _fdTabBtn(FS.t(_lang, 'fdTabHerd'), 'herd', isDark)),
+      ],
+    );
+  }
+
+  Widget _fdTabBtn(String label, String value, bool isDark) {
+    final active = _fdTab == value;
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    return InkWell(
+      onTap: () => setState(() => _fdTab = value),
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 44),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          border: BorderDirectional(bottom: BorderSide(color: active ? VanixColors.greenInk : Colors.transparent, width: 3)),
+        ),
+        child: Text(label,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: active ? FontWeight.w600 : FontWeight.w500,
+              color: active ? VanixColors.greenInk : (isDark ? const Color(0xB3FFFFFF) : VanixColors.textHint),
+            )),
+      ),
+    );
+  }
+
+  // ── Cattle pane: search + filter + cow list ─────────────────────────────
+  Widget _cattlePane(bool isDark) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _searchRow(isDark),
+        Padding(
+          padding: const EdgeInsetsDirectional.only(top: 12),
+          child: _cattleList(isDark),
+        ),
+      ],
+    );
+  }
+
+  // ── Herd Activity pane: filter + activity tiles + rumination graph ─────
+  Widget _herdPane(bool isDark) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Align(alignment: AlignmentDirectional.centerEnd, child: _herdFilterBtn(isDark)),
+        Padding(
+          padding: const EdgeInsetsDirectional.only(top: 10),
+          child: _herdSummaryGrid(isDark),
+        ),
+        if (widget.farm.cows.isNotEmpty)
+          Padding(
+            padding: const EdgeInsetsDirectional.only(top: 0),
+            child: _ruminationCard(isDark),
+          ),
+      ],
+    );
+  }
+
+  Widget _herdFilterBtn(bool isDark) {
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    return InkWell(
+      onTap: _openHerdFilterSheet,
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        width: 46,
+        height: 46,
+        decoration: BoxDecoration(
+          color: isDark ? VanixColors.darkSecond : VanixColors.bgCard,
+          border: Border.all(color: isDark ? VanixColors.darkBorder : VanixColors.border),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Icon(Icons.filter_alt_outlined, size: 18, color: textColor),
+      ),
+    );
+  }
+
+  Widget _herdSummaryGrid(bool isDark) {
+    final tiles = [
+      ('rumination', FS.t(_lang, 'actRumination'), VanixColors.greenInk),
+      ('standing', FS.t(_lang, 'actStanding'), const Color(0xFF2563EB)),
+      ('resting', FS.t(_lang, 'actResting'), const Color(0xFF7C3AED)),
+      ('feeding', FS.t(_lang, 'actFeeding'), VanixColors.warning),
+    ];
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 8,
+      childAspectRatio: 2.2,
+      children: [
+        for (final tile in tiles) _fdActivityTile(label: tile.$2, color: tile.$3, value: _kFdHerdHours[tile.$1] ?? '', isDark: isDark),
+      ],
+    );
+  }
+
+  Widget _fdActivityTile({required String label, required Color color, required String value, required bool isDark}) {
+    return Container(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 12),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: isDark ? VanixColors.darkSecond : VanixColors.bgCard,
+        border: Border.all(color: isDark ? VanixColors.darkBorder : VanixColors.border),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(value, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: isDark ? Colors.white : VanixColors.textPrimary, height: 1)),
+          const SizedBox(height: 5),
+          Text(label.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.3, color: color)),
+        ],
+      ),
+    );
+  }
+
+  void _openHerdFilterSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => _HerdFilterSheet(
+        lang: _lang,
+        isDark: widget.appState.isDark,
+        cows: widget.farm.cows,
+        activity: _fdActivity,
+        cow: _fdHerdCow,
+        onApply: (a, c) => setState(() {
+          _fdActivity = a;
+          _fdHerdCow = c;
+        }),
       ),
     );
   }
