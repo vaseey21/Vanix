@@ -23,6 +23,9 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
   int _tab = 0;
   final Set<int> _tlExpanded = {};
 
+  // Activity tab — selected day for the inline per-date activity log.
+  DateTime? _actlogSelected;
+
   // Overview temperature card range — Today (hourly, default) / This week
   // (7-point mock) / Custom (From/To -> 7-point mock, range-labelled).
   // Mirrors #cow-temp-range-btn in prototype.html.
