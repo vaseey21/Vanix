@@ -2666,13 +2666,23 @@
 
                 <p data-k="grpSupport" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:16px 0 8px;">Support</p>
                 <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
-                  <div style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
-                    <div style="flex:1; min-width:0;"><p data-k="rowHelp" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Help &amp; FAQs</p><p data-k="helpSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Common guides for common tasks</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  <div id="acct-contact-row" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;">
+                    <div style="flex:1; min-width:0;"><p data-k="rowHelp" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Contact Us</p></div><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
                   </div>
                 </div>
 
                 <div style="margin-top:16px; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
                   <div id="s1-logout" style="display:flex; align-items:center; gap:10px; padding:13px 14px; cursor:pointer;"><p data-k="rowLogout" style="flex:1; font-size:14px; font-weight:600; color:var(--danger); margin:0;">Log Out</p></div>
+          <!-- Logout confirmation -->
+          <div id="logout-confirm-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:58;"></div>
+          <div id="logout-confirm-sheet" style="position:absolute; left:16px; right:16px; top:50%; transform:translateY(120%); transition:transform 0.3s ease; background:#FFFFFF; border-radius:20px; padding:22px 20px; z-index:59; box-shadow:0 12px 32px rgba(0,0,0,0.25);">
+            <h3 data-k="logoutConfirmTitle" style="font-size:18px; font-weight:700; color:var(--text1); margin:0 0 8px;">Log out?</h3>
+            <p data-k="logoutConfirmBody" style="font-size:13px; color:var(--text2); margin:0 0 18px; line-height:1.5;">You will need to sign in again to access your farms.</p>
+            <div style="display:flex; gap:10px;">
+              <button id="logout-confirm-cancel" data-k="cancelWord" style="flex:1; min-height:46px; border-radius:23px; border:1px solid var(--border); background:var(--bgcard); font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Cancel</button>
+              <button id="logout-confirm-ok" data-k="logoutConfirmBtn" style="flex:1; min-height:46px; border-radius:23px; border:none; background:var(--danger); color:#FFFFFF; font-size:14px; font-weight:700; font-family:var(--font-hi); cursor:pointer;">Log Out</button>
+            </div>
+          </div>
                 </div>
 
               </div>
@@ -2717,12 +2727,22 @@
               <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
                 <div style="display:flex; align-items:center; gap:2px;">
                   <button class="acct-back" data-close="page-profile" style="flex-shrink:0; width:40px; height:40px; margin-inline-start:-10px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-                  <h2 data-k="profTitle" style="font-size:22px; font-weight:600; color:var(--text1); margin:0;">Profile</h2>
+                  <h2 data-k="profTitle" style="font-size:22px; font-weight:600; color:var(--greenink); margin:0;">Profile</h2>
                 </div>
               </div>
               <div style="padding:16px;">
                 <div style="text-align:center; margin-bottom:16px;">
-                  <span class="en" style="display:inline-flex; width:64px; height:64px; border-radius:50%; background:var(--activebg); color:var(--greenink); align-items:center; justify-content:center; font-size:18px; font-weight:700;">JR</span>
+                  <div style="position:relative; width:64px; height:64px; margin:0 auto;">
+                    <input type="file" id="prof-photo-input" accept="image/*" style="display:none;">
+                    <button id="prof-avatar-btn" style="width:64px; height:64px; border-radius:50%; background:var(--activebg); border:none; padding:0; cursor:pointer; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                      <span id="prof-avatar-initials" class="en" style="color:var(--greenink); font-size:18px; font-weight:700;">JR</span>
+                      <img id="prof-avatar-img" alt="" style="display:none; width:100%; height:100%; object-fit:cover;">
+                    </button>
+                    <button id="prof-avatar-remove" title="Remove photo" style="display:none; position:absolute; top:-2px; right:-2px; width:22px; height:22px; border-radius:50%; background:var(--danger); border:2px solid var(--bgwarm); color:#FFFFFF; font-size:11px; line-height:1; cursor:pointer; align-items:center; justify-content:center; padding:0;">✕</button>
+                    <button id="prof-avatar-camera" title="Add photo" style="position:absolute; bottom:-2px; right:-2px; width:24px; height:24px; border-radius:50%; background:var(--greenink); border:2px solid var(--bgwarm); display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0;">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    </button>
+                  </div>
                 </div>
                 <p data-k="fldName" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:0 0 5px;">Full Name</p>
                 <div class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text2); margin-bottom:12px;">James Redmark</div>
@@ -2733,10 +2753,7 @@
                 <div class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text2);">james@sunrisedairy.in</div>
                 <p data-k="emailHint" style="font-size:10px; color:var(--text2); margin:4px 0 12px;">Login email &amp; vet report copies</p>
                 <p data-k="fldRole" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:0 0 5px;">Role</p>
-                <div data-k="farmOwner" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text2); margin-bottom:18px;">Farm Owner</div>
-                <p data-k="grpDelete" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text2); margin:0 0 8px;">Delete Account</p>
-                <p data-k="delNote" style="font-size:12px; color:var(--text2); border:1px dashed var(--border); border-radius:12px; padding:10px 12px; margin:0 0 10px; line-height:1.5;">Permanently removes your profile, farm data &amp; connections.</p>
-                <button data-k="btnReqDelete" style="width:100%; min-height:48px; border-radius:24px; border:1px solid var(--danger); background:var(--dangerbg); color:var(--danger); font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Request Account Deletion</button>
+                <div data-k="farmOwner" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text2);">Farm Owner</div>
               </div>
             </div>
             </div>
@@ -2848,10 +2865,7 @@
               <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
                 <div style="display:flex; align-items:center; gap:2px;">
                   <button class="acct-back" data-close="page-farmmgmt" style="flex-shrink:0; width:40px; height:40px; margin-inline-start:-10px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-                  <div>
-                    <h2 data-k="grpFarmMgmt" style="font-size:22px; font-weight:600; color:var(--text1); margin:0;">Farm Management</h2>
-                    <p data-k="farmMgmtSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Assign or remove a manager for each farm</p>
-                  </div>
+                  <h2 data-k="grpFarmMgmt" style="font-size:22px; font-weight:600; color:var(--text1); margin:0;">Farm Management</h2>
                 </div>
               </div>
               <div style="padding:14px 16px 0;">
@@ -2868,22 +2882,31 @@
                 <button id="fm-choose-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
               </div>
               <p id="fm-choose-farm" class="en" style="font-size:12px; color:var(--text2); margin:6px 0 14px;"></p>
-              <button id="fm-choose-select" data-k="selectNewMgr" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; font-family:var(--font-hi); cursor:pointer; color:var(--text1);">Select a new farm manager</button>
+              <button id="fm-choose-select" data-k="selectNewMgr" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; font-family:var(--font-hi); cursor:pointer; color:var(--text1);">Select a farm manager</button>
               <button id="fm-choose-invite" data-k="sendMgrInvite" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; margin-bottom:8px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; font-family:var(--font-hi); cursor:pointer; color:var(--text1);">Send Invite to another farm manager</button>
               <button id="fm-choose-self" data-k="assignMe" style="display:block; width:100%; text-align:start; min-height:48px; padding:0 14px; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); font-size:14px; font-weight:500; font-family:var(--font-hi); cursor:pointer; color:var(--text1);">Assign to me</button>
             </div>
             <div id="fm-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
               <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
               <div style="display:flex; align-items:center; margin-top:10px;">
-                <h3 id="fm-sheet-title" data-k="assignManager" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Assign manager</h3>
+                <h3 id="fm-sheet-title" data-k="inviteFarmMgrTitle" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Invite Farm Manager</h3>
                 <button id="fm-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
               </div>
               <p id="fm-sheet-farm" class="en" style="font-size:12px; color:var(--text2); margin:6px 0 0;"></p>
-              <p id="fm-invite-hint" data-k="mgrInviteHint" style="display:none; font-size:11px; color:var(--text2); margin:6px 0 0; line-height:1.5;">An invite link is emailed to the manager — they confirm before being added.</p>
-              <input type="text" id="fm-name" placeholder="Manager name" data-k="mgrNamePh" data-k-placeholder style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px; margin-top:14px; font-family:var(--font-hi);">
-              <input type="tel" id="fm-phone" placeholder="Mobile number" data-k="phonePh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
+              <p data-k="mgrInviteHint" style="font-size:11px; color:var(--text2); margin:6px 0 0; line-height:1.5;">An invite link is emailed to the manager — they confirm before being added.</p>
+              <input type="tel" id="fm-phone" placeholder="Mobile number" data-k="phonePh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px; margin-top:14px;">
               <input type="email" id="fm-email" placeholder="Email address" data-k="emailPh" data-k-placeholder class="en" style="width:100%; min-height:44px; box-sizing:border-box; background:var(--bgwarm); border:1px solid var(--border); border-radius:10px; padding:0 12px; font-size:13px; color:var(--text1); margin-bottom:8px;">
               <button id="fm-assign-save" data-k="confirmAssign" style="width:100%; min-height:48px; margin-top:8px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Confirm &amp; assign</button>
+            </div>
+
+            <!-- Manager picker (list of farm managers already added) -->
+            <div id="fm-mgrlist-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 24px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+              <div style="display:flex; align-items:center; margin-top:10px;">
+                <h3 data-k="selectNewMgr" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Select a farm manager</h3>
+                <button id="fm-mgrlist-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+              </div>
+              <div id="fm-mgrlist" style="margin-top:10px; max-height:320px; overflow-y:auto;"></div>
             </div>
           </div>
 
@@ -3462,7 +3485,22 @@
         if (landingBtn) { landingBtn.style.opacity='1'; landingBtn.style.pointerEvents='auto'; }
       }
       var logoutBtn = document.getElementById('s1-logout');
-      if (logoutBtn) logoutBtn.addEventListener('click', logoutToLogin);
+      if (logoutBtn) logoutBtn.addEventListener('click', function() {
+        var sh = document.getElementById('logout-confirm-sheet'), bd = document.getElementById('logout-confirm-backdrop');
+        if (sh && bd) { sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto'; }
+        else { logoutToLogin(); }
+      });
+      var logoutConfirmSheet = document.getElementById('logout-confirm-sheet');
+      var logoutConfirmBackdrop = document.getElementById('logout-confirm-backdrop');
+      function closeLogoutConfirm() {
+        if (logoutConfirmSheet) logoutConfirmSheet.style.transform = 'translateY(120%)';
+        if (logoutConfirmBackdrop) { logoutConfirmBackdrop.style.opacity = '0'; logoutConfirmBackdrop.style.pointerEvents = 'none'; }
+      }
+      var logoutCancelBtn = document.getElementById('logout-confirm-cancel');
+      if (logoutCancelBtn) logoutCancelBtn.addEventListener('click', closeLogoutConfirm);
+      if (logoutConfirmBackdrop) logoutConfirmBackdrop.addEventListener('click', closeLogoutConfirm);
+      var logoutOkBtn = document.getElementById('logout-confirm-ok');
+      if (logoutOkBtn) logoutOkBtn.addEventListener('click', function() { closeLogoutConfirm(); logoutToLogin(); });
 
       // ── Sheet panel swap: Login → OTP → back ──
       var loginPanel = document.getElementById('s1-login-panel');
@@ -3519,7 +3557,7 @@
                histInsem:'Inseminated \u2014 Mohini', histInsemSub:'Within the 18h window \u2014 pregnancy check set for 3 Jul',
                stageMilking:'MILKING', stageHeatWatch:'HEAT WATCH', stageRecovered:'RECOVERED', stage21Day:'21-DAY WATCH',
                prioP0:'CRITICAL', prioP1:'MEDIUM', prioP2:'MEDIUM', prioP3:'LOW',
-               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters', dashGreeting:'Good morning,', dashAllFarms:'All Farms', dashLive:'Live', dashAddedToday:'added today', dashActiveAlerts:'Active Alerts', dashPendingTasks:'Pending Tasks', dashDueToday:'due today', dashOverdue:'overdue', dashPregnant:'Pregnant', dashDueThisWeek:'due this week', dashActionAlerts:'Action Alerts', dashWaiting:'waiting', dashYesFever:'Yes, fever', dashViewEvents:'View all in Events', dashEditsApproval:'Edits awaiting your approval', dashMilkMissing:'Milk sessions missing today', dashInsemWindow:'insemination window', dashLeft:'left', dashFarmsNeedAction:'Farms needing action', fdShareReport:'Share report', acTabCowDetails:'Cow Details', acTabDeviceDetails:'Device Details', acAddHistory:'Add cow history', acNodeMacId:'Node/MAC ID', genderWord:'Gender', activityWord:'Activity', downloadReport:'Download Report', shareReportVet:'Share Report with vet', reportTypeTitle:'Report type', fullReport:'Full report', criticalReport:'Critical report', activityLogWord:'Activity log', fdTabCattle:'Cattle', fdTabHerd:'Herd Activity', herdCowsBtn:'Cows', selectCowsWord:'Select cows', tabActivity:'Activity', fdDownloadReport:'Download report', durationWord:'Duration', customRangeWord:'Custom range', homeCowsPregnant:'Cows\nPregnant', homeCowsHeat:'Cows\nin Heat', homePendingApprovals:'Pending\nApprovals', homeMilkingsMissed:'Milking\nMissed', homeUnresolvedAlerts:'Unresolved\nAlerts', homeCowsInHeat:'Cows in heat', homeCowsInGestation:'Cows in gestation', dashOffline:'offline', dashTodaySchedule:"Today's Schedule", dashVaccDrive:'Vaccination Drive', dashVetVisit:'Vet Visit', dashMilkLogging:'Evening Milk Logging', dashThisWeek:'This Week', dashFmd:'FMD vaccination', dashCows:'cows', dashDays:'d', dashRemindersNote:'Items beyond 7 days stay in Events reminders', dashGoodNews:'Good News', dashRecovered:'recovered', dashFeverCaught:'fever caught by collar, treated by Dr. Sharma', dashDaysAgo:'days ago', dashConfPreg:'confirmed pregnant', dashInseminated:'Inseminated', dashConfYesterday:'confirmed yesterday', dashCalved:'calved', dashHealthyCalf:'healthy calf, now in the Milk Log', dashYesterday:'Yesterday', dashTriageDone:'Logged — thanks', dashUpdates:'Updates', dashToday:'Today',
+               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters', dashGreeting:'Good morning,', dashAllFarms:'All Farms', dashLive:'Live', dashAddedToday:'added today', dashActiveAlerts:'Active Alerts', dashPendingTasks:'Pending Tasks', dashDueToday:'due today', dashOverdue:'overdue', dashPregnant:'Pregnant', dashDueThisWeek:'due this week', dashActionAlerts:'Action Alerts', dashWaiting:'waiting', dashYesFever:'Yes, fever', dashViewEvents:'View all in Events', dashEditsApproval:'Edits awaiting your approval', dashMilkMissing:'Milk sessions missing today', dashInsemWindow:'insemination window', dashLeft:'left', dashFarmsNeedAction:'Farms needing action', fdShareReport:'Share report', inviteFarmMgrTitle:'Invite Farm Manager', noMgrsYet:'No farm managers added yet.', logoutConfirmTitle:'Log out?', logoutConfirmBody:'You will need to sign in again to access your farms.', logoutConfirmBtn:'Log Out', acTabCowDetails:'Cow Details', acTabDeviceDetails:'Device Details', acAddHistory:'Add cow history', acNodeMacId:'Node/MAC ID', genderWord:'Gender', activityWord:'Activity', downloadReport:'Download Report', shareReportVet:'Share Report with vet', reportTypeTitle:'Report type', fullReport:'Full report', criticalReport:'Critical report', activityLogWord:'Activity log', fdTabCattle:'Cattle', fdTabHerd:'Herd Activity', herdCowsBtn:'Cows', selectCowsWord:'Select cows', tabActivity:'Activity', fdDownloadReport:'Download report', durationWord:'Duration', customRangeWord:'Custom range', homeCowsPregnant:'Cows\nPregnant', homeCowsHeat:'Cows\nin Heat', homePendingApprovals:'Pending\nApprovals', homeMilkingsMissed:'Milking\nMissed', homeUnresolvedAlerts:'Unresolved\nAlerts', homeCowsInHeat:'Cows in heat', homeCowsInGestation:'Cows in gestation', dashOffline:'offline', dashTodaySchedule:"Today's Schedule", dashVaccDrive:'Vaccination Drive', dashVetVisit:'Vet Visit', dashMilkLogging:'Evening Milk Logging', dashThisWeek:'This Week', dashFmd:'FMD vaccination', dashCows:'cows', dashDays:'d', dashRemindersNote:'Items beyond 7 days stay in Events reminders', dashGoodNews:'Good News', dashRecovered:'recovered', dashFeverCaught:'fever caught by collar, treated by Dr. Sharma', dashDaysAgo:'days ago', dashConfPreg:'confirmed pregnant', dashInseminated:'Inseminated', dashConfYesterday:'confirmed yesterday', dashCalved:'calved', dashHealthyCalf:'healthy calf, now in the Milk Log', dashYesterday:'Yesterday', dashTriageDone:'Logged — thanks', dashUpdates:'Updates', dashToday:'Today',
                catFever:'Fever', catHeat:'Heat', catPregnancy:'Pregnancy', catGestation:'Gestation', catMilking:'Milking', catLactation:'Lactation', catPregLoss:'Pregnancy loss', catFreshCow:'Fresh cow',
                catMastitis:'Mastitis', catLameness:'Lameness', catKetosis:'Ketosis', catHeatStress:'Heat stress', catCalibration:'Calibration', farmGreenValley:'Green Valley Farm', farmSunrise:'Sunrise Dairy',
                farmsSubtitle:'Manage all your dairy farms in one place', yourFarms:'Your Farms', periodToday:'Today', period7:'Last 7 days', period30:'Last 30 days',
@@ -3550,7 +3588,7 @@
                tlAddedD:'Registered on Sunrise Dairy Farm by Ramesh C.',
                farmOwner:'Farm Owner', grpFarmMgmt:'Farm Management', acctFarmSub:'Sunrise Dairy Farm', rowCattleGroups:'Cattle Groups', acctGroupsSub:'Desi, Jersey, Holstein Friesian, Sahiwal', groupsSub:'Create groups and add cattle to them', newGroupBtn:'+ New Group', noGroupsYet:'No groups yet', groupNamePh:'Group name', createGroup:'Create group', addCattleBtn:'+ Add cattle', noCowsInGroup:'No cattle in this group yet', addToGroupTitle:'Add to group', saveWord:'Save', cowsWord:'cattle',
                grpAlerts:'Alerts & Contacts', rowSound:'Alert sound', soundSub:'Alerts always notify \u2014 sound can be muted', rowVets:'Vet Contacts', vetsSub:'Who gets called when you tap "Call Vet"',
-               grpApp:'App', rowLanguage:'Language', rowDark:'Dark mode', grpLegal:'Legal', rowPrivacy:'Privacy Policy', rowTerms:'Terms of Service', grpSupport:'Support', rowHelp:'Help & FAQs', helpSub:'Common guides for common tasks', rowLogout:'Log Out',
+               grpApp:'App', rowLanguage:'Language', rowDark:'Dark mode', grpLegal:'Legal', rowPrivacy:'Privacy Policy', rowTerms:'Terms of Service', grpSupport:'Support', rowHelp:'Contact Us', rowLogout:'Log Out',
                profTitle:'Profile', fldName:'Full Name', fldPhone:'Phone No.', phoneHint:'Used for SMS alerts & emergency contacts', fldEmail:'Email Address', emailHint:'Login email & vet report copies', fldRole:'Role',
                grpDelete:'Delete Account', delNote:'Permanently removes your profile, farm data & connections.', btnReqDelete:'Request Account Deletion',
                grpYourVets:'Your Vets', grpEmergency:'Emergency Contacts', vetConfirmed:'CONFIRMED', vetPending:'PENDING', vetDeclined:'DECLINED',
@@ -3601,7 +3639,7 @@
                histInsem:'गर्भाधान हुआ \u2014 मोहिनी', histInsemSub:'18 घंटे की विंडो में \u2014 गर्भ जांच 3 जुलाई को',
                stageMilking:'दूध दे रही', stageHeatWatch:'हीट निगरानी', stageRecovered:'स्वस्थ हुई', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें', dashGreeting:'सुप्रभात,', dashAllFarms:'सभी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़े गए', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'इस सप्ताह देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हाँ, बुखार', dashViewEvents:'सभी कार्यक्रम देखें', dashEditsApproval:'आपकी मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटे दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहिए खेत', fdShareReport:'रिपोर्ट साझा करें', acTabCowDetails:'गाय का विवरण', acTabDeviceDetails:'डिवाइस विवरण', acAddHistory:'गाय का इतिहास जोड़ें', acNodeMacId:'नोड/MAC आईडी', genderWord:'लिंग', activityWord:'गतिविधि', downloadReport:'रिपोर्ट डाउनलोड करें', shareReportVet:'पशु चिकित्सक को रिपोर्ट भेजें', reportTypeTitle:'रिपोर्ट प्रकार', fullReport:'पूरी रिपोर्ट', criticalReport:'गंभीर रिपोर्ट', activityLogWord:'गतिविधि लॉग', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गायें', selectCowsWord:'गायें चुनें', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करें', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगायें', homeCowsHeat:'हीट में\nगायें', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटे दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझे\nअलर्ट', homeCowsInHeat:'हीट में गायें', homeCowsInGestation:'गर्भ में गायें', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज का कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'शाम की दूध लॉगिंग', dashThisWeek:'इस सप्ताह', dashFmd:'खुरपका टीकाकरण', dashCows:'गायें', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं', dashGoodNews:'अच्छी खबर', dashRecovered:'ठीक हो गई', dashFeverCaught:'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', dashDaysAgo:'दिन पहले', dashConfPreg:'गर्भ की पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'कल पुष्टि हुई', dashCalved:'ब्याई', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'कल', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
+               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें', dashGreeting:'सुप्रभात,', dashAllFarms:'सभी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़े गए', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'इस सप्ताह देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हाँ, बुखार', dashViewEvents:'सभी कार्यक्रम देखें', dashEditsApproval:'आपकी मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटे दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहिए खेत', fdShareReport:'रिपोर्ट साझा करें', inviteFarmMgrTitle:'फार्म प्रबंधक आमंत्रित करें', noMgrsYet:'अभी तक कोई फार्म प्रबंधक नहीं जोड़ा गया।', logoutConfirmTitle:'लॉग आउट करें?', logoutConfirmBody:'अपने फार्म तक पहुँचने के लिए आपको फिर से साइन इन करना होगा।', logoutConfirmBtn:'लॉग आउट', acTabCowDetails:'गाय का विवरण', acTabDeviceDetails:'डिवाइस विवरण', acAddHistory:'गाय का इतिहास जोड़ें', acNodeMacId:'नोड/MAC आईडी', genderWord:'लिंग', activityWord:'गतिविधि', downloadReport:'रिपोर्ट डाउनलोड करें', shareReportVet:'पशु चिकित्सक को रिपोर्ट भेजें', reportTypeTitle:'रिपोर्ट प्रकार', fullReport:'पूरी रिपोर्ट', criticalReport:'गंभीर रिपोर्ट', activityLogWord:'गतिविधि लॉग', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गायें', selectCowsWord:'गायें चुनें', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करें', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगायें', homeCowsHeat:'हीट में\nगायें', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटे दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझे\nअलर्ट', homeCowsInHeat:'हीट में गायें', homeCowsInGestation:'गर्भ में गायें', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज का कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'शाम की दूध लॉगिंग', dashThisWeek:'इस सप्ताह', dashFmd:'खुरपका टीकाकरण', dashCows:'गायें', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं', dashGoodNews:'अच्छी खबर', dashRecovered:'ठीक हो गई', dashFeverCaught:'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', dashDaysAgo:'दिन पहले', dashConfPreg:'गर्भ की पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'कल पुष्टि हुई', dashCalved:'ब्याई', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'कल', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताज़ा ब्याई',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
@@ -3632,7 +3670,7 @@
                tlAddedD:'रमेश सी द्वारा सनराइज़ डेयरी फार्म पर पंजीकृत।',
                farmOwner:'फार्म मालिक', grpFarmMgmt:'फार्म प्रबंधन', acctFarmSub:'सनराइज़ डेयरी फार्म', rowCattleGroups:'पशु समूह', acctGroupsSub:'देसी, जर्सी, होल्स्टीन फ़्रीज़ियन, साहीवाल', groupsSub:'समूह बनाएं और उनमें पशु जोड़ें', newGroupBtn:'+ नया समूह', noGroupsYet:'अभी कोई समूह नहीं', groupNamePh:'समूह का नाम', createGroup:'समूह बनाएं', addCattleBtn:'+ पशु जोड़ें', noCowsInGroup:'इस समूह में अभी कोई पशु नहीं', addToGroupTitle:'समूह में जोड़ें', saveWord:'सहेजें', cowsWord:'पशु',
                grpAlerts:'अलर्ट और संपर्क', rowSound:'अलर्ट ध्वनि', soundSub:'अलर्ट हमेशा आते हैं \u2014 ध्वनि बंद की जा सकती है', rowVets:'पशु चिकित्सक संपर्क', vetsSub:'"पशु चिकित्सक बुलाएँ" दबाने पर किसे कॉल होती है',
-               grpApp:'ऐप', rowLanguage:'भाषा', rowDark:'डार्क मोड', grpLegal:'कानूनी', rowPrivacy:'गोपनीयता नीति', rowTerms:'सेवा की शर्तें', grpSupport:'सहायता', rowHelp:'सहायता और सामान्य प्रश्न', helpSub:'सामान्य कार्यों के लिए गाइड', rowLogout:'लॉग आउट',
+               grpApp:'ऐप', rowLanguage:'भाषा', rowDark:'डार्क मोड', grpLegal:'कानूनी', rowPrivacy:'गोपनीयता नीति', rowTerms:'सेवा की शर्तें', grpSupport:'सहायता', rowHelp:'संपर्क करें', rowLogout:'लॉग आउट',
                profTitle:'प्रोफ़ाइल', fldName:'पूरा नाम', fldPhone:'फ़ोन नंबर', phoneHint:'SMS अलर्ट और आपातकालीन संपर्क के लिए', fldEmail:'ईमेल पता', emailHint:'लॉगिन ईमेल और वेट रिपोर्ट प्रतियाँ', fldRole:'भूमिका',
                grpDelete:'खाता हटाएँ', delNote:'आपकी प्रोफ़ाइल, फार्म डेटा और कनेक्शन स्थायी रूप से हट जाएँगे।', btnReqDelete:'खाता हटाने का अनुरोध',
                grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
@@ -3683,7 +3721,7 @@
                histInsem:'गर्भाधान भइल \u2014 मोहिनी', histInsemSub:'18 घंटा के विंडो में \u2014 गर्भ जांच 3 जुलाई के',
                stageMilking:'दूध देत बिया', stageHeatWatch:'हीट निगरानी', stageRecovered:'ठीक भइल', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं', dashGreeting:'सुप्रभात,', dashAllFarms:'सगरी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़ल', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'ए हफ्ता देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हँ, बुखार', dashViewEvents:'सब कार्यक्रम देखीं', dashEditsApproval:'रउरा मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटल दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहीं खेत', fdShareReport:'रिपोर्ट साझा करीं', acTabCowDetails:'गाय के विवरण', acTabDeviceDetails:'डिवाइस विवरण', acAddHistory:'गाय के इतिहास जोड़ीं', acNodeMacId:'नोड/MAC आईडी', genderWord:'लिंग', activityWord:'गतिविधि', downloadReport:'रिपोर्ट डाउनलोड करीं', shareReportVet:'पशु चिकित्सक के रिपोर्ट भेजीं', reportTypeTitle:'रिपोर्ट प्रकार', fullReport:'पूरा रिपोर्ट', criticalReport:'गंभीर रिपोर्ट', activityLogWord:'गतिविधि लॉग', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गाई', selectCowsWord:'गाई चुनीं', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करीं', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगाई', homeCowsHeat:'हीट में\nगाई', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटल दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझल\nअलर्ट', homeCowsInHeat:'हीट में गाई', homeCowsInGestation:'गर्भ में गाई', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज के कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'सांझ के दूध लॉगिंग', dashThisWeek:'ए हफ्ता', dashFmd:'खुरपका टीकाकरण', dashCows:'गाई', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहेला', dashGoodNews:'अच्छा खबर', dashRecovered:'ठीक हो गइल', dashFeverCaught:'कॉलर बुखार पकड़लस, डॉ. शर्मा इलाज कइलन', dashDaysAgo:'दिन पहिले', dashConfPreg:'गर्भ के पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'काल्ह पुष्टि भइल', dashCalved:'ब्याइल', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'काल्ह', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
+               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं', dashGreeting:'सुप्रभात,', dashAllFarms:'सगरी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़ल', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'ए हफ्ता देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हँ, बुखार', dashViewEvents:'सब कार्यक्रम देखीं', dashEditsApproval:'रउरा मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटल दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहीं खेत', fdShareReport:'रिपोर्ट साझा करीं', inviteFarmMgrTitle:'फार्म प्रबंधक आमंत्रित करीं', noMgrsYet:'अबतक कवनो फार्म प्रबंधक ना जोड़ल गइल।', logoutConfirmTitle:'लॉग आउट करीं?', logoutConfirmBody:'रउरा फार्म तक पहुंचे खातिर फिर से साइन इन करे के होई।', logoutConfirmBtn:'लॉग आउट', acTabCowDetails:'गाय के विवरण', acTabDeviceDetails:'डिवाइस विवरण', acAddHistory:'गाय के इतिहास जोड़ीं', acNodeMacId:'नोड/MAC आईडी', genderWord:'लिंग', activityWord:'गतिविधि', downloadReport:'रिपोर्ट डाउनलोड करीं', shareReportVet:'पशु चिकित्सक के रिपोर्ट भेजीं', reportTypeTitle:'रिपोर्ट प्रकार', fullReport:'पूरा रिपोर्ट', criticalReport:'गंभीर रिपोर्ट', activityLogWord:'गतिविधि लॉग', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गाई', selectCowsWord:'गाई चुनीं', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करीं', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगाई', homeCowsHeat:'हीट में\nगाई', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटल दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझल\nअलर्ट', homeCowsInHeat:'हीट में गाई', homeCowsInGestation:'गर्भ में गाई', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज के कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'सांझ के दूध लॉगिंग', dashThisWeek:'ए हफ्ता', dashFmd:'खुरपका टीकाकरण', dashCows:'गाई', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहेला', dashGoodNews:'अच्छा खबर', dashRecovered:'ठीक हो गइल', dashFeverCaught:'कॉलर बुखार पकड़लस, डॉ. शर्मा इलाज कइलन', dashDaysAgo:'दिन पहिले', dashConfPreg:'गर्भ के पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'काल्ह पुष्टि भइल', dashCalved:'ब्याइल', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'काल्ह', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताजा बियाइल',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
@@ -3714,7 +3752,7 @@
                tlAddedD:'रमेश सी द्वारा सनराइज़ डेयरी फार्म पर पंजीकृत।',
                farmOwner:'फार्म मालिक', grpFarmMgmt:'फार्म प्रबंधन', acctFarmSub:'सनराइज़ डेयरी फार्म', rowCattleGroups:'पशु समूह', acctGroupsSub:'देसी, जर्सी, होल्स्टीन फ़्रीज़ियन, साहीवाल', groupsSub:'समूह बनाएं और उनमें पशु जोड़ें', newGroupBtn:'+ नया समूह', noGroupsYet:'अभी कोई समूह नहीं', groupNamePh:'समूह का नाम', createGroup:'समूह बनाएं', addCattleBtn:'+ पशु जोड़ें', noCowsInGroup:'इस समूह में अभी कोई पशु नहीं', addToGroupTitle:'समूह में जोड़ें', saveWord:'सहेजें', cowsWord:'पशु',
                grpAlerts:'अलर्ट और संपर्क', rowSound:'अलर्ट ध्वनि', soundSub:'अलर्ट हमेशा आते हैं \u2014 ध्वनि बंद की जा सकती है', rowVets:'पशु चिकित्सक संपर्क', vetsSub:'"पशु चिकित्सक बुलाएँ" दबाने पर किसे कॉल होती है',
-               grpApp:'ऐप', rowLanguage:'भाषा', rowDark:'डार्क मोड', grpLegal:'कानूनी', rowPrivacy:'गोपनीयता नीति', rowTerms:'सेवा की शर्तें', grpSupport:'सहायता', rowHelp:'सहायता और सामान्य प्रश्न', helpSub:'सामान्य कार्यों के लिए गाइड', rowLogout:'लॉग आउट',
+               grpApp:'ऐप', rowLanguage:'भाषा', rowDark:'डार्क मोड', grpLegal:'कानूनी', rowPrivacy:'गोपनीयता नीति', rowTerms:'सेवा की शर्तें', grpSupport:'सहायता', rowHelp:'संपर्क करें', rowLogout:'लॉग आउट',
                profTitle:'प्रोफ़ाइल', fldName:'पूरा नाम', fldPhone:'फ़ोन नंबर', phoneHint:'SMS अलर्ट और आपातकालीन संपर्क के लिए', fldEmail:'ईमेल पता', emailHint:'लॉगिन ईमेल और वेट रिपोर्ट प्रतियाँ', fldRole:'भूमिका',
                grpDelete:'खाता हटाएँ', delNote:'आपकी प्रोफ़ाइल, फार्म डेटा और कनेक्शन स्थायी रूप से हट जाएँगे।', btnReqDelete:'खाता हटाने का अनुरोध',
                grpYourVets:'आपके पशु चिकित्सक', grpEmergency:'आपातकालीन संपर्क', vetConfirmed:'पुष्ट', vetPending:'लंबित', vetDeclined:'अस्वीकृत',
@@ -7767,6 +7805,44 @@
           document.getElementById(btn.getAttribute('data-close')).style.display = 'none';
         });
       });
+      // Contact Us -> mailto with support@vanix.com prefilled
+      var acctContactRow = document.getElementById('acct-contact-row');
+      if (acctContactRow) acctContactRow.addEventListener('click', function() {
+        window.location.href = 'mailto:support@vanix.com';
+      });
+      // Profile photo — add / remove via a real file picker
+      (function() {
+        var btn = document.getElementById('prof-avatar-btn');
+        var camera = document.getElementById('prof-avatar-camera');
+        var removeBtn = document.getElementById('prof-avatar-remove');
+        var input = document.getElementById('prof-photo-input');
+        var img = document.getElementById('prof-avatar-img');
+        var initials = document.getElementById('prof-avatar-initials');
+        if (!btn || !input) return;
+        function openPicker() { input.click(); }
+        btn.addEventListener('click', openPicker);
+        camera.addEventListener('click', openPicker);
+        input.addEventListener('change', function() {
+          var file = input.files && input.files[0];
+          if (!file) return;
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            img.src = e.target.result;
+            img.style.display = 'block';
+            initials.style.display = 'none';
+            removeBtn.style.display = 'flex';
+          };
+          reader.readAsDataURL(file);
+        });
+        removeBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          img.src = '';
+          img.style.display = 'none';
+          initials.style.display = 'block';
+          removeBtn.style.display = 'none';
+          input.value = '';
+        });
+      })();
       // Alert sound toggle (alerts themselves are mandatory)
       function paintToggle(el, on) {
         el.style.background = on ? 'var(--greenink)' : 'var(--border)';
@@ -7843,38 +7919,25 @@
         if (!listEl) return;
         listEl.innerHTML = VETS.map(function(v, i) {
           var b = VET_BADGE[v.status];
-          var note = v.status === 'pending' ? window.t().vetPendingNote : v.status === 'declined' ? window.t().vetDeclinedNote : '';
-          var actions = '';
-          if (v.status === 'pending') {
-            actions = '<div style="display:flex; gap:8px; margin-top:8px;">' +
-              '<button class="vet-demo en" data-i="' + i + '" data-act="confirmed" style="flex:1; min-height:34px; border-radius:17px; border:1px solid var(--greendeep); background:transparent; color:var(--greenink); font-size:11px; font-weight:600; cursor:pointer;">' + window.t().demoConfirm + '</button>' +
-              '<button class="vet-demo en" data-i="' + i + '" data-act="declined" style="flex:1; min-height:34px; border-radius:17px; border:1px solid var(--border); background:transparent; color:var(--danger); font-size:11px; font-weight:600; cursor:pointer;">' + window.t().demoDecline + '</button>' +
-            '</div>';
-          } else if (v.status === 'declined') {
-            actions = '<button class="vet-demo" data-i="' + i + '" data-act="pending" style="width:100%; min-height:34px; margin-top:8px; border-radius:17px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:11px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + window.t().vetResend + '</button>';
-          }
           var itm = 'display:flex; align-items:center; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;';
           return '<div class="vet-card" data-i="' + i + '" style="position:relative; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px;">' +
             '<div style="display:flex; align-items:center; gap:10px;">' +
-              '<span class="en" style="width:38px; height:38px; border-radius:50%; background:var(--bgwarm); color:var(--text1); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0;">' + v.name.replace('Dr. ', '').slice(0, 2) + '</span>' +
-              '<div style="flex:1; min-width:0;">' +
-                '<p class="en" style="font-size:14px; font-weight:700; color:var(--text1); margin:0;">' + v.name + '</p>' +
-                '<p style="font-size:11px; color:var(--text2); margin:2px 0 0;">' + (v.specK ? window.t()[v.specK] : (v.phone || '')) + '</p>' +
-              '</div>' +
+              '<p class="en" style="flex:1; min-width:0; font-size:14px; font-weight:700; color:var(--text1); margin:0;">' + v.name + '</p>' +
               '<span class="en" style="flex-shrink:0; background:' + b.bg + '; border:1px solid ' + b.border + '; color:' + b.color + '; border-radius:12px; padding:3px 10px; font-size:9px; font-weight:700; letter-spacing:0.04em;">' + window.t()[b.k] + '</span>' +
               '<button class="vet-kebab" data-i="' + i + '" style="flex-shrink:0; width:30px; height:30px; border-radius:50%; border:none; background:transparent; color:var(--text2); font-size:16px; line-height:1; cursor:pointer;">\u22ee</button>' +
             '</div>' +
-            '<div class="vet-kebab-menu" style="display:none; position:absolute; top:44px; inset-inline-end:12px; z-index:6; min-width:150px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,0.2); padding:4px;">' +
+            '<div class="vet-kebab-menu" style="display:none; position:absolute; top:44px; inset-inline-end:12px; z-index:6; min-width:170px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,0.2); padding:4px;">' +
+              (v.status === 'pending' ? '<button class="vet-demo" data-i="' + i + '" data-act="confirmed" style="' + itm + '">' + window.t().demoConfirm + '</button><button class="vet-demo" data-i="' + i + '" data-act="declined" style="' + itm + ' color:var(--danger);">' + window.t().demoDecline + '</button>' : '') +
+              (v.status === 'declined' ? '<button class="vet-demo" data-i="' + i + '" data-act="pending" style="' + itm + '">' + window.t().vetResend + '</button>' : '') +
               '<button class="vet-del" data-i="' + i + '" style="' + itm + ' color:var(--danger);">' + window.t().deleteWord + '</button>' +
             '</div>' +
-            (note ? '<p style="font-size:11px; color:var(--text2); margin:8px 0 0;">' + note + '</p>' : '') +
-            actions +
           '</div>';
         }).join('');
         listEl.querySelectorAll('.vet-demo').forEach(function(btn) {
           btn.addEventListener('click', function(e) {
             e.stopPropagation();
             VETS[+btn.getAttribute('data-i')].status = btn.getAttribute('data-act');
+            document.querySelectorAll('.vet-kebab-menu').forEach(function(m) { m.style.display = 'none'; });
             renderVets();
           });
         });
@@ -7983,17 +8046,10 @@
             '<div style="display:flex; gap:8px; margin-top:12px;">' +
               '<button class="fm-choose" data-f="' + f.id + '" style="' + btn + ' border:1px solid var(--greenink); background:var(--activebg); color:var(--greenink);">' + (assigned ? window.t().reassignWord : window.t().assignManager) + '</button>' +
             '</div>' +
-            (assigned ? '<button class="fm-remove" data-f="' + f.id + '" style="width:100%; min-height:36px; margin-top:8px; border-radius:18px; border:1px solid var(--danger); background:transparent; color:var(--danger); font-size:12px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + window.t().removeManager + '</button>' : '') +
           '</div>';
         }).join('');
         listEl.querySelectorAll('.fm-choose').forEach(function(b) {
           b.addEventListener('click', function() { openFmChoose(b.getAttribute('data-f')); });
-        });
-        listEl.querySelectorAll('.fm-remove').forEach(function(b) {
-          b.addEventListener('click', function() {
-            var f = farmById(b.getAttribute('data-f'));
-            if (f) { f.manager = 'Unassigned'; f.managerHi = 'नियुक्त नहीं'; f.managerStatus = 'none'; f.managerInvite = ''; renderFarmMgmt(); renderFarmsList(); setFarmManagerLine(); }
-          });
         });
         listEl.querySelectorAll('.fm-resend').forEach(function(b) {
           b.addEventListener('click', function() {
@@ -8019,48 +8075,65 @@
         var sh = document.getElementById('fm-choose-sheet'), bd = document.getElementById('fm-backdrop');
         sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
-      var fmMode = 'assign';
-      function openFmSheet(farmId, mode) {
+      function openFmSheet(farmId) {
         fmFarmId = farmId;
-        fmMode = mode || 'assign';
         var f = farmById(farmId);
         document.getElementById('fm-sheet-farm').textContent = f ? loc(f, 'name') : '';
-        document.getElementById('fm-name').value = '';
         document.getElementById('fm-phone').value = '';
         document.getElementById('fm-email').value = '';
-        var invite = fmMode === 'invite';
-        document.getElementById('fm-sheet-title').textContent = window.t()[invite ? 'sendMgrInvite' : 'selectNewMgr'];
-        document.getElementById('fm-name').style.display = invite ? 'none' : 'block';
-        document.getElementById('fm-phone').style.display = invite ? 'none' : 'block';
-        document.getElementById('fm-invite-hint').style.display = invite ? 'block' : 'none';
         closeFmChoose();
         var sh = document.getElementById('fm-sheet'), bd = document.getElementById('fm-backdrop');
         sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
+      function openFmMgrList(farmId) {
+        fmFarmId = farmId;
+        var names = [];
+        FARMS.forEach(function(f) {
+          if (f.managerStatus !== 'pending' && f.manager && f.manager !== 'Unassigned' && names.indexOf(f.manager) === -1) names.push(f.manager);
+        });
+        var listEl = document.getElementById('fm-mgrlist');
+        listEl.innerHTML = names.length ? names.map(function(n) {
+          return '<button class="fm-mgr-opt" data-n="' + n + '" style="display:flex; align-items:center; width:100%; min-height:46px; padding:0 4px; border:none; background:transparent; font-size:15px; color:var(--text1); font-weight:500; font-family:var(--font-hi); cursor:pointer;">' + n + '</button>';
+        }).join('') : '<p style="font-size:13px; color:var(--text2); padding:8px 4px;">' + window.t().noMgrsYet + '</p>';
+        listEl.querySelectorAll('.fm-mgr-opt').forEach(function(o) {
+          o.addEventListener('click', function() {
+            var f = farmById(fmFarmId);
+            var n = o.getAttribute('data-n');
+            if (f) { f.manager = n; f.managerHi = n; f.managerStatus = 'active'; f.managerInvite = ''; renderFarmMgmt(); renderFarmsList(); setFarmManagerLine(); }
+            closeFmMgrList();
+            closeFmChoose();
+          });
+        });
+        closeFmChoose();
+        var sh = document.getElementById('fm-mgrlist-sheet'), bd = document.getElementById('fm-backdrop');
+        sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeFmMgrList() {
+        var sh = document.getElementById('fm-mgrlist-sheet');
+        sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none';
+      }
+      var fmMgrListCloseBtn = document.getElementById('fm-mgrlist-close');
+      if (fmMgrListCloseBtn) fmMgrListCloseBtn.addEventListener('click', closeFmMgrList);
       function closeFmSheet() {
         var sh = document.getElementById('fm-sheet'), bd = document.getElementById('fm-backdrop');
         sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
       }
       document.getElementById('fm-choose-close').addEventListener('click', closeFmChoose);
-      document.getElementById('fm-choose-select').addEventListener('click', function() { openFmSheet(fmFarmId, 'assign'); });
-      document.getElementById('fm-choose-invite').addEventListener('click', function() { openFmSheet(fmFarmId, 'invite'); });
+      document.getElementById('fm-choose-select').addEventListener('click', function() { openFmMgrList(fmFarmId); });
+      document.getElementById('fm-choose-invite').addEventListener('click', function() { openFmSheet(fmFarmId); });
       document.getElementById('fm-choose-self').addEventListener('click', function() {
         var f = farmById(fmFarmId);
         if (f) { f.manager = 'James Redmark'; f.managerHi = 'जेम्स रेडमार्क'; f.managerStatus = 'active'; f.managerInvite = ''; renderFarmMgmt(); renderFarmsList(); setFarmManagerLine(); }
         closeFmChoose();
       });
       document.getElementById('fm-close').addEventListener('click', closeFmSheet);
-      document.getElementById('fm-backdrop').addEventListener('click', function() { closeFmSheet(); closeFmChoose(); });
+      document.getElementById('fm-backdrop').addEventListener('click', function() { closeFmSheet(); closeFmChoose(); closeFmMgrList(); });
       document.getElementById('fm-assign-save').addEventListener('click', function() {
         var f = farmById(fmFarmId);
         if (!f) { closeFmSheet(); return; }
-        if (fmMode === 'invite') {
-          var em = (document.getElementById('fm-email').value || '').trim();
-          if (em) { f.managerStatus = 'pending'; f.managerInvite = em; }
-        } else {
-          var nm = (document.getElementById('fm-name').value || '').trim();
-          if (nm) { f.manager = nm; f.managerHi = nm; f.managerStatus = 'active'; f.managerInvite = ''; }
-        }
+        var em = (document.getElementById('fm-email').value || '').trim();
+        var ph = (document.getElementById('fm-phone').value || '').trim();
+        if (em || ph) { f.managerStatus = 'pending'; f.managerInvite = em || ph; }
         renderFarmMgmt(); renderFarmsList(); setFarmManagerLine();
         closeFmSheet();
       });
