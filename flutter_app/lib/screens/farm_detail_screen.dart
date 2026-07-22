@@ -202,14 +202,15 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                         isScrollControlled: true,
                         backgroundColor: Colors.transparent,
                         barrierColor: Colors.black.withValues(alpha: 0.35),
-                        builder: (_) => Padding(
-                          padding: const EdgeInsets.only(top: 64),
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                            child: SizedBox(
-                              height: MediaQuery.of(context).size.height - 64,
-                              child: AddCattleScreen(appState: widget.appState, farm: widget.farm),
-                            ),
+                        builder: (_) => ClipRRect(
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                          child: ConstrainedBox(
+                            // Sized to content, not full-screen — mirrors the
+                            // HTML fix (max-height cap instead of a fixed
+                            // top:64px stretch that left dead whitespace
+                            // below "Add cow history" on short forms).
+                            constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.75),
+                            child: AddCattleScreen(appState: widget.appState, farm: widget.farm),
                           ),
                         ),
                       );
