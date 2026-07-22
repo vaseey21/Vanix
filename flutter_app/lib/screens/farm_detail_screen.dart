@@ -712,27 +712,31 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
           Row(
             children: [
               Expanded(child: Text('${FS.t(_lang, 'fdHerdTitlePre')} $titleLabel — ${FS.t(_lang, 'fdHerdTitlePost')}', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: textColor))),
-              if (ruminationOn) _ruminationPill(anomaly),
+              if (ruminationOn && !noGraph) _ruminationPill(anomalyDrawn),
             ],
           ),
-          const SizedBox(height: 12),
-          SizedBox(
-            height: 180,
-            width: double.infinity,
-            child: CustomPaint(
-              painter: _MultiActivityPainter(lines: lines, overlapRange: overlapRange),
-              size: Size.infinite,
+          if (!noGraph) ...[
+            const SizedBox(height: 12),
+            SizedBox(
+              height: 180,
+              width: double.infinity,
+              child: CustomPaint(
+                painter: _MultiActivityPainter(lines: lines),
+                size: Size.infinite,
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              for (final l in const ['00:00', '06:00', '12:00', '18:00', '24:00'])
-                Text(l, style: const TextStyle(fontSize: 9, color: VanixColors.textHint)),
-            ],
-          ),
-          if (anomaly)
+            const SizedBox(height: 4),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                for (final l in (windowLo == 0 && windowHi == 24)
+                    ? const ['00:00', '06:00', '12:00', '18:00', '24:00']
+                    : ['${windowLo.toString().padLeft(2, '0')}:00', '${windowHi.toString().padLeft(2, '0')}:00'])
+                  Text(l, style: const TextStyle(fontSize: 9, color: VanixColors.textHint)),
+              ],
+            ),
+          ],
+          if (anomalyDrawn)
             Padding(
               padding: const EdgeInsetsDirectional.only(top: 10),
               child: Text(FS.t(_lang, 'fdAnomalyNote'), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, height: 1.5, color: VanixColors.warningInk)),
