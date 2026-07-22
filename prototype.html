@@ -2938,7 +2938,7 @@
           </div>
 
           <!-- COW PROFILE — opened by tapping a cattle card. Timeline / Overview / Vet Logs. -->
-          <div id="page-cow" style="position:absolute; inset:0; background:var(--bgwarm); z-index:42; display:none;">
+          <div id="page-cow" style="position:absolute; inset:0; background:var(--bgcard); z-index:42; display:none;">
             <div style="position:relative; height:100%; overflow:hidden;">
             <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
 
@@ -2978,7 +2978,7 @@
                 </div>
               </div>
               <!-- Cow tabs bar -->
-              <div style="display:flex; background:var(--bgwarm); border-bottom:1px solid var(--divider);">
+              <div style="display:flex; background:var(--bgcard); border-bottom:1px solid var(--divider);">
                 <button class="cow-tab on" data-tab="timeline" data-k="tabTimeline" style="flex:1; min-height:46px; border:none; background:transparent; font-size:13px; font-family:var(--font-hi); cursor:pointer; border-bottom:3px solid var(--greenink); color:var(--greenink); font-weight:600;">Timeline</button>
                 <button class="cow-tab" data-tab="overview" data-k="tabOverview" style="flex:1; min-height:46px; border:none; background:transparent; font-size:13px; font-family:var(--font-hi); cursor:pointer; border-bottom:3px solid transparent; color:var(--text2); font-weight:500;">Overview</button>
                 <button class="cow-tab" data-tab="activity" data-k="tabActivity" style="flex:1; min-height:46px; border:none; background:transparent; font-size:13px; font-family:var(--font-hi); cursor:pointer; border-bottom:3px solid transparent; color:var(--text2); font-weight:500;">Activity</button>
@@ -7260,7 +7260,6 @@
       caViews.main = function() {
         var t = window.t();
         var rows = [
-          ['ca-m-status', t.changeStatus, function() { caGo('statusList'); }],
           ['ca-m-vet', t.reqVetVisit, function() { caCtx.flow = 'visit'; caGo('vetPick'); }],
           ['ca-m-vetlog', t.addVetLog, function() { caCtx.flow = 'vetlog'; caGo('vetPick'); }],
           ['ca-m-heat', t.addHeat, function() { caGo('heatConfirm'); }],
