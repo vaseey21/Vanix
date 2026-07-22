@@ -7348,7 +7348,7 @@
       }
       function openActivityLog() {
         var chips = actlogDayChips();
-        actlogSelectedDate = actlogDateKey(chips[chips.length - 1]);
+        actlogSelectedDate = actlogDateKey(chips[0]);
         document.getElementById('actlog-title').textContent = 'Activity log \u2014 ' + caCowName();
         renderActivityLogStrip();
         renderActivityLogList();
