@@ -16,8 +16,10 @@ flutter pub get
 flutter run
 ```
 
-You'll need to add the actual font files before it runs cleanly (see
-"Missing assets" below) — `pubspec.yaml` already declares them.
+All fonts, the hero video, and every icon/photo asset referenced in `lib/`
+are bundled in `assets/` and declared in `pubspec.yaml` — see "Assets" below
+for what's covered and the one known gap (the logo SVG, fetched over the
+network instead).
 
 ## What's ported vs. pending
 
