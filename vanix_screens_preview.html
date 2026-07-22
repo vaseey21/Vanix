@@ -1791,11 +1791,11 @@
           <!-- REPORT PREVIEW PAGE — opened from a Farm's kebab Download / Download Critical -->
           <div id="page-report-preview" style="position:absolute; inset:0; background:var(--bgwarm); z-index:46; display:none;">
             <div style="position:relative; height:100%; overflow:hidden;">
-            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 100px;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 96px;">
               <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:14px 16px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
-                <div style="display:flex; align-items:center; gap:10px;">
-                  <button id="report-preview-back" style="flex-shrink:0; width:36px; height:36px; border-radius:50%; border:none; background:var(--bgcard); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
                   <h2 data-k="reportPreviewTitle" style="font-size:20px; font-weight:600; color:var(--text1); margin:0; font-family:var(--font-hi);">Report Preview</h2>
+                  <button id="report-preview-back" style="flex-shrink:0; width:36px; height:36px; border-radius:50%; border:none; background:var(--bgcard); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
                 </div>
               </div>
               <div style="padding:16px;">
@@ -1808,8 +1808,10 @@
                   <div id="report-preview-stats" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
                   <p id="report-preview-critnote" data-k="reportCriticalOnlyNote" style="display:none; font-size:12px; color:var(--danger); margin:14px 0 0; font-style:italic;">Includes only critical alerts and unresolved issues.</p>
                 </div>
-                <button id="report-preview-download" style="display:block; width:100%; min-height:48px; margin-top:16px; background:var(--greenink); border:none; border-radius:24px; font-size:14px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi); cursor:pointer;"><span data-k="downloadWord">Download</span></button>
               </div>
+            </div>
+            <div style="position:absolute; left:0; right:0; bottom:0; padding:12px 16px calc(16px + env(safe-area-inset-bottom, 0px)); background:var(--bgwarm); box-shadow:0 -8px 20px rgba(0,0,0,0.08);">
+              <button id="report-preview-download" style="display:block; width:100%; min-height:48px; background:var(--greenink); border:none; border-radius:24px; font-size:14px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi); cursor:pointer;"><span data-k="downloadWord">Download</span></button>
             </div>
             </div>
           </div>
@@ -3453,22 +3455,8 @@
               <h3 data-k="filterWord" style="font-size:20px; font-weight:700; color:var(--text1); margin:0; flex:1;">Filter</h3>
               <button id="fd-herd-filter-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
             </div>
-            <div style="display:flex; margin-top:14px; height:260px; border-top:1px solid var(--divider); border-bottom:1px solid var(--divider); margin-left:-24px; margin-right:-24px;">
-              <div class="fs-cats-rail" style="width:126px; flex-shrink:0; background:var(--bgwarm); display:flex; flex-direction:column; padding:8px 0;">
-                <button class="s7-cat fd-herd-fs-cat on" data-cat="activity" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);" data-k="activityWord">Activity</button>
-                <button class="s7-cat fd-herd-fs-cat" data-cat="cows" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);" data-k="herdCowsBtn">Cows</button>
-              </div>
-              <div class="fs-panes-wrap" style="flex:1; padding:12px 20px; overflow-y:auto; background:#FFFFFF;">
-                <div class="fd-herd-fs-pane" data-pane="activity">
-                  <button class="s7-chip fd-herd-act-opt on" data-val="rumination" data-k="actRumination">Rumination</button>
-                  <button class="s7-chip fd-herd-act-opt" data-val="standing" data-k="actStanding">Standing</button>
-                  <button class="s7-chip fd-herd-act-opt" data-val="resting" data-k="actResting">Resting</button>
-                  <button class="s7-chip fd-herd-act-opt" data-val="feeding" data-k="actFeeding">Feeding</button>
-                </div>
-                <div class="fd-herd-fs-pane" data-pane="cows" style="display:none;">
-                  <div id="fd-herd-cow-opts"></div>
-                </div>
-              </div>
+            <div style="margin-top:14px; max-height:260px; overflow-y:auto; border-top:1px solid var(--divider); border-bottom:1px solid var(--divider); padding:12px 0;">
+              <div id="fd-herd-cow-opts"></div>
             </div>
             <button id="fd-herd-filter-apply" data-k="applyFilters" style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:14px;">Apply filters</button>
           </div>
