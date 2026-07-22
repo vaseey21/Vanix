@@ -6833,13 +6833,26 @@
           '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">' + (t.activityLogWord || 'Activity log') + '</p>' +
           '<div id="cow-actlog-strip" style="display:flex; gap:6px; overflow-x:auto; padding-bottom:4px;"></div>' +
           '<div id="cow-actlog-list" style="margin-top:12px;"></div>';
-        // inline day strip + list (reuses the same per-date mock as the old page)
+        // inline day strip + expandable per-activity cards (reuses the same per-date mock as the old page)
         var chips = actlogDayChips();
-        if (!cowActlogDate) cowActlogDate = actlogDateKey(chips[chips.length - 1]);
+        if (!cowActlogDate) cowActlogDate = actlogDateKey(chips[0]);
         renderCowActlog();
       }
       var cowActlogDate = null;
+      var cowActlogExpanded = {};
+      // Order requested: Standing, Resting, Feeding, Ruminating.
+      // A function (not an eagerly-evaluated var) since ACTLOG_ACTIONS is
+      // declared further down the script \u2014 called lazily on first render.
+      function cowActlogCards() {
+        return [
+          { key: 'standing',   labelK: 'actStanding',   meta: ACTLOG_ACTIONS[3] },
+          { key: 'resting',    labelK: 'actResting',    meta: ACTLOG_ACTIONS[0] },
+          { key: 'feeding',    labelK: 'actFeeding',    meta: ACTLOG_ACTIONS[1] },
+          { key: 'rumination', labelK: 'actRumination', meta: ACTLOG_ACTIONS[2] }
+        ];
+      }
       function renderCowActlog() {
+        var t = window.t();
         var wk = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         var chips = actlogDayChips();
         var strip = document.getElementById('cow-actlog-strip');
@@ -6852,15 +6865,35 @@
             '<span class="en" style="font-size:14px; font-weight:700; color:' + (on ? 'var(--greenink)' : 'var(--text1)') + ';">' + d.getDate() + '</span>' +
           '</button>';
         }).join('');
-        var rows = actlogRowsForDate(cowActlogDate || '');
-        document.getElementById('cow-actlog-list').innerHTML = rows.map(function(r) {
-          return '<div style="display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border);">' +
-            '<span style="flex-shrink:0; width:32px; height:32px; border-radius:10px; background:' + r.bg + '; color:' + r.color + '; display:flex; align-items:center; justify-content:center;">' + r.icon + '</span>' +
-            '<div style="flex:1; min-width:0;"><p class="en" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">' + r.action + '</p><p class="en" style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + r.duration + ' \u00b7 ' + r.start + '</p></div>' +
+        document.getElementById('cow-actlog-list').innerHTML = cowActlogCards().map(function(card) {
+          var open = !!cowActlogExpanded[card.key];
+          var intervals = actlogIntervalsForActivity(cowActlogDate || '', card.meta.k);
+          var body = intervals.length ? intervals.map(function(iv) {
+            return '<div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--divider);">' +
+              '<span class="en" style="font-size:13px; color:var(--text1);">' + actlogFormatTime(iv.startMin) + '\u2013' + actlogFormatTime(iv.endMin) + '</span>' +
+              '<span class="en" style="font-size:13px; font-weight:600; color:var(--text2);">' + (iv.endMin - iv.startMin) + ' min</span>' +
+            '</div>';
+          }).join('') : '<p style="font-size:13px; color:var(--text2); margin:8px 0 0;">' + t.noActivityDay + '</p>';
+          return '<div class="cow-actlog-card" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; margin-top:10px; overflow:hidden;">' +
+            '<button class="cow-actlog-toggle" data-key="' + card.key + '" style="width:100%; box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px; background:none; border:none; cursor:pointer; text-align:start; min-height:48px;">' +
+              '<span style="display:flex; align-items:center; gap:10px; min-width:0;">' +
+                '<span style="flex-shrink:0; width:32px; height:32px; border-radius:10px; background:' + card.meta.bg + '; color:' + card.meta.color + '; display:flex; align-items:center; justify-content:center;">' + card.meta.icon + '</span>' +
+                '<span style="font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi);">' + t[card.labelK] + '</span>' +
+              '</span>' +
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; transform:rotate(' + (open ? '180' : '0') + 'deg); transition:transform 0.2s ease;"><path d="M6 9l6 6 6-6"/></svg>' +
+            '</button>' +
+            (open ? '<div style="padding:0 14px 14px;">' + body + '</div>' : '') +
           '</div>';
         }).join('');
         document.querySelectorAll('.cow-actlog-chip').forEach(function(chip) {
           chip.addEventListener('click', function() { cowActlogDate = chip.getAttribute('data-key'); renderCowActlog(); });
+        });
+        document.querySelectorAll('.cow-actlog-toggle').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var key = btn.getAttribute('data-key');
+            cowActlogExpanded[key] = !cowActlogExpanded[key];
+            renderCowActlog();
+          });
         });
       }
       function openTempCustomSheet() {
