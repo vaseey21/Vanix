@@ -46,20 +46,18 @@ class ReportPreviewScreen extends StatelessWidget {
               ),
               child: Row(
                 children: [
+                  Expanded(
+                    child: Text(FS.t(lang, 'reportPreviewTitle'), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: textColor)),
+                  ),
                   SizedBox(
                     width: 36,
                     height: 36,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(color: isDark ? VanixColors.darkSecond : VanixColors.bgCard, shape: BoxShape.circle),
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: Icon(Icons.chevron_left, size: 20, color: textColor),
-                      ),
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: Icon(Icons.close, size: 20, color: textColor),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Text(FS.t(lang, 'reportPreviewTitle'), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: textColor)),
                 ],
               ),
             ),
