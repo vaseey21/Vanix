@@ -546,15 +546,15 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(children: [
-          Expanded(child: _ovStatCard(Icons.calendar_today_outlined, '19 Mar', 'ovLastHeat', VanixColors.warning, VanixColors.warning.withValues(alpha: 0.14), corner: Icons.trending_up)),
+          Expanded(child: _ovStatCard('19 Mar', 'ovLastHeat', VanixColors.warning)),
           const SizedBox(width: VanixSpacing.sm),
-          Expanded(child: _ovStatCard(Icons.calendar_today_outlined, '14 Apr', 'ovNextHeat', VanixColors.greenInk, VanixColors.activeBg, corner: Icons.calendar_month_outlined)),
+          Expanded(child: _ovStatCard('14 Apr', 'ovNextHeat', VanixColors.greenInk)),
         ]),
         const SizedBox(height: VanixSpacing.sm),
         Row(children: [
-          Expanded(child: _ovStatCard(Icons.device_thermostat, '18 Jun', 'ovLastSpike', VanixColors.danger, VanixColors.danger.withValues(alpha: 0.12), corner: Icons.trending_up)),
+          Expanded(child: _ovStatCard('18 Jun', 'ovLastSpike', VanixColors.danger)),
           const SizedBox(width: VanixSpacing.sm),
-          Expanded(child: _ovStatCard(Icons.pets, '1', 'ovNumCalving', VanixColors.accentBlue, VanixColors.accentBlue.withValues(alpha: 0.12), corner: Icons.pets)),
+          Expanded(child: _ovStatCard('1', 'ovNumCalving', VanixColors.accentBlue)),
         ]),
         const SizedBox(height: VanixSpacing.xl),
         _sectionLabel('tempWord'),
