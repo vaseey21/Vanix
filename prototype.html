@@ -7507,10 +7507,31 @@
         var lvlEl = document.getElementById('farm-detail-temp-level');
         lvlEl.textContent = window.t()[lvl.k];
         lvlEl.style.color = lvl.color;
+        var durEl = document.getElementById('farm-detail-duration');
+        if (durEl) {
+          var h = 0; for (var i = 0; i < farm.id.length; i++) h = (h * 31 + farm.id.charCodeAt(i)) >>> 0;
+          var mins = 15 + (h % 225);
+          durEl.textContent = Math.floor(mins / 60) + 'h ' + (mins % 60) + 'm';
+        }
       }
       document.getElementById('farm-detail-back').addEventListener('click', function() {
         farmDetailPage.style.display = 'none';
       });
+      // Farm Detail hero kebab (Edit / Delete) — mirrors the cow-profile kebab pattern.
+      (function() {
+        var kebabBtn = document.getElementById('farm-detail-kebab');
+        var kebabMenu = document.getElementById('farm-detail-kebab-menu');
+        if (!kebabBtn || !kebabMenu) return;
+        kebabBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          kebabMenu.style.display = kebabMenu.style.display === 'block' ? 'none' : 'block';
+        });
+        document.addEventListener('click', function(e) {
+          if (kebabMenu.style.display === 'block' && !kebabMenu.contains(e.target) && e.target !== kebabBtn) {
+            kebabMenu.style.display = 'none';
+          }
+        });
+      })();
       // ── Add Cattle page ──
       var acPage = document.getElementById('page-add-cattle');
       function openAddCattle() {
