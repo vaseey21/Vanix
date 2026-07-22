@@ -173,16 +173,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                       _hero(isDark),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(16, 14, 16, 0),
-                        child: _searchRow(isDark),
-                      ),
-                      if (widget.farm.cows.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                          child: _ruminationCard(isDark),
-                        ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                        child: _cattleList(isDark),
+                        child: _fdTab == 'cattle' ? _cattlePane(isDark) : _herdPane(isDark),
                       ),
                     ],
                   ),
