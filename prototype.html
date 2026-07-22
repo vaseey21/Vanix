@@ -6654,17 +6654,20 @@
       var currentCow = null;
       var cowTab = 'timeline';
       var cowPage = document.getElementById('page-cow');
+      // Timeline dots standardised to one dark-gray fill — severity/stage
+      // colour previously carried per-event no longer needed here since the
+      // stage label + description text already carry that meaning.
       var COW_TIMELINE = [
-        { k:'tlMilking',  d:'2 Jul 2026',  c:'var(--greendeep)' },
-        { k:'tlCalved',   d:'1 Jul 2026',  c:'var(--greendeep)' },
-        { k:'tlVet9m',    d:'28 Jun 2026', c:'var(--warning)' },
-        { k:'tlPreg',     d:'10 Oct 2025', c:'var(--greendeep)' },
-        { k:'tlInsem',    d:'18 Sep 2025', c:'var(--greenink)' },
-        { k:'tlHeat',     d:'17 Sep 2025', c:'var(--warning)' },
-        { k:'tlHeatMiss', d:'27 Aug 2025', c:'var(--danger)' },
-        { k:'tlVetNote',  d:'20 Jul 2025', c:'var(--text2)' },
-        { k:'tlCollar',   d:'14 Jun 2025', c:'var(--text2)' },
-        { k:'tlAdded',    d:'12 Jun 2025', c:'var(--text2)' }
+        { k:'tlMilking',  d:'2 Jul 2026',  c:'#555555' },
+        { k:'tlCalved',   d:'1 Jul 2026',  c:'#555555' },
+        { k:'tlVet9m',    d:'28 Jun 2026', c:'#555555' },
+        { k:'tlPreg',     d:'10 Oct 2025', c:'#555555' },
+        { k:'tlInsem',    d:'18 Sep 2025', c:'#555555' },
+        { k:'tlHeat',     d:'17 Sep 2025', c:'#555555' },
+        { k:'tlHeatMiss', d:'27 Aug 2025', c:'#555555' },
+        { k:'tlVetNote',  d:'20 Jul 2025', c:'#555555' },
+        { k:'tlCollar',   d:'14 Jun 2025', c:'#555555' },
+        { k:'tlAdded',    d:'12 Jun 2025', c:'#555555' }
       ];
       var tlExpanded = {};
       function renderCowTimeline() {
