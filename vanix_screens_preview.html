@@ -8895,10 +8895,17 @@
 
 <script>
       /* Lift flow overlays out of the (display:none when inactive) #page-events
-         container up to #flow-root, so the shared event-card flow is visible
-         when launched from the Farmer dashboard or the Cow-profile timeline. */
+         container up to #s1-phone, so the shared event-card flow is visible
+         when launched from the Farmer dashboard or the Cow-profile timeline.
+         Reparenting to #flow-root (a flex item with overflow:hidden) used to
+         leave these absolute-positioned (inset:0) backdrops with a badly
+         offset box — height was right but the top edge landed ~600px above
+         the visible viewport, so only a thin sliver near the status bar was
+         actually clickable and "click outside to close" silently failed
+         everywhere else. #s1-phone is the plain, non-scrolling phone frame
+         itself, so inset:0 against it lands exactly on the visible bounds. */
       (function(){
-        var fr = document.getElementById('flow-root'); if(!fr) return;
+        var fr = document.getElementById('s1-phone'); if(!fr) return;
         var Z = {'ev-detail-page':45,'ev-seq-sheet':45,
                  'ev-cs-backdrop':46,'ev-cs-sheet':47,
                  'callvet-backdrop':46,'callvet-sheet':47,
