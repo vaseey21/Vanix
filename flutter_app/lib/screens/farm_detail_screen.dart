@@ -67,7 +67,10 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
   String _ageFilter = 'all';
 
   String _fdTab = 'cattle'; // cattle | herd
-  String _fdActivity = 'rumination'; // rumination | standing | resting | feeding
+  // Herd Activity chips — mirrors fdActiveSet in vanix_screens_preview.html.
+  // Rumination toggles independently; standing/resting/feeding are mutually
+  // exclusive among themselves (selecting one deselects any other of the three).
+  List<String> _fdActiveSet = ['rumination'];
   String _fdHerdCow = 'all';
 
   String get _lang => widget.appState.languageCode;
