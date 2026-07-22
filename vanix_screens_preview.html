@@ -3290,14 +3290,25 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
                   </button>
                   <div style="flex:1; min-width:0;">
-                    <p id="farm-detail-name" class="en" style="font-size:22px; font-weight:600; color:var(--text1); margin:0; line-height:1.2;">Sunrise Dairy Farm</p>
-                    <div style="display:flex; align-items:center; gap:5px; margin-top:4px;">
-                      <span id="farm-detail-temp" class="en" style="font-size:14px; font-weight:700; color:var(--text1);">33°C</span>
-                      <span id="farm-detail-temp-level" class="en" style="font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:#8A5A00;">High</span>
+                    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px;">
+                      <p id="farm-detail-name" class="en" style="font-size:22px; font-weight:600; color:var(--text1); margin:0; line-height:1.2;">Sunrise Dairy Farm</p>
+                      <div style="position:relative; flex-shrink:0; margin-top:-4px;">
+                        <button id="farm-detail-kebab" style="width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:15px; line-height:1; cursor:pointer;">&#8942;</button>
+                        <div id="farm-detail-kebab-menu" style="display:none; position:absolute; top:38px; inset-inline-end:0; z-index:10; min-width:160px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,0.2); padding:4px;">
+                          <button data-k="editWord" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Edit</button>
+                          <button data-k="deleteWord" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--danger); font-family:var(--font-hi); cursor:pointer;">Delete</button>
+                        </div>
+                      </div>
                     </div>
-                    <div style="display:flex; align-items:center; gap:5px; margin-top:4px;">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
-                      <p id="farm-detail-manager" class="en" style="font-size:13px; color:var(--text2); margin:0;">Ramesh C</p>
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:5px;">
+                      <div style="display:flex; align-items:center; gap:5px; min-width:0;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                        <p id="farm-detail-manager" class="en" style="font-size:13px; color:var(--text2); margin:0; flex-shrink:0;">Ramesh C</p>
+                        <span class="en" style="font-size:13px; color:var(--text2);">&nbsp;-&nbsp;</span>
+                        <span id="farm-detail-temp" class="en" style="font-size:13px; font-weight:700; color:var(--text1); flex-shrink:0;">33°C</span>
+                        <span id="farm-detail-temp-level" class="en" style="font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:#8A5A00; flex-shrink:0;">High</span>
+                      </div>
+                      <span id="farm-detail-duration" class="en" style="font-size:12px; font-weight:600; color:var(--text2); flex-shrink:0;">2h 15m</span>
                     </div>
                   </div>
                 </div>
@@ -7638,10 +7649,31 @@
         var lvlEl = document.getElementById('farm-detail-temp-level');
         lvlEl.textContent = window.t()[lvl.k];
         lvlEl.style.color = lvl.color;
+        var durEl = document.getElementById('farm-detail-duration');
+        if (durEl) {
+          var h = 0; for (var i = 0; i < farm.id.length; i++) h = (h * 31 + farm.id.charCodeAt(i)) >>> 0;
+          var mins = 15 + (h % 225);
+          durEl.textContent = Math.floor(mins / 60) + 'h ' + (mins % 60) + 'm';
+        }
       }
       document.getElementById('farm-detail-back').addEventListener('click', function() {
         farmDetailPage.style.display = 'none';
       });
+      // Farm Detail hero kebab (Edit / Delete) — mirrors the cow-profile kebab pattern.
+      (function() {
+        var kebabBtn = document.getElementById('farm-detail-kebab');
+        var kebabMenu = document.getElementById('farm-detail-kebab-menu');
+        if (!kebabBtn || !kebabMenu) return;
+        kebabBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          kebabMenu.style.display = kebabMenu.style.display === 'block' ? 'none' : 'block';
+        });
+        document.addEventListener('click', function(e) {
+          if (kebabMenu.style.display === 'block' && !kebabMenu.contains(e.target) && e.target !== kebabBtn) {
+            kebabMenu.style.display = 'none';
+          }
+        });
+      })();
       // ── Add Cattle page ──
       var acPage = document.getElementById('page-add-cattle');
       function openAddCattle() {
