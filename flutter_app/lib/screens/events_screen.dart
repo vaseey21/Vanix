@@ -1980,6 +1980,16 @@ class _ActionCard extends StatelessWidget {
               ],
             ),
           ),
+        if (showOwnerContext && (meta != null || timeAgo != null))
+          Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: Text(
+              [if (timeAgo != null) timeAgo, if (meta != null) meta].whereType<String>().join(' · '),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 11, color: VanixColors.textHint),
+            ),
+          ),
         child,
       ],
     );
