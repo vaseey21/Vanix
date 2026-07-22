@@ -35,6 +35,9 @@ You'll need to add the actual font files before it runs cleanly (see
 | Full-screen "push notification" Heat alert (MyGate-style, entry point of View full cycle) | ✅ Ported — `lib/screens/heat_alert_screen.dart` |
 | "View full cycle" — 8-step bottom-sheet walkthrough of the full breeding/lactation year | ✅ Ported — `_FullCycleSheet` in `lib/screens/events_screen.dart` |
 | Events badge/dot sync across every nav | ✅ Ported — `AppState.openEventsCount` + `resolveEvent()` |
+| Events title-tap no longer auto-opens the walkthrough; a dedicated "View full cycle ›" link under the title does instead | ✅ Ported — `events_screen.dart` header row |
+| Farm-owner-only card context: Fever/Heat show elapsed unactioned time + farm/manager meta, Heat reads "HIGH" (not "CRITICAL") until it's overdue | ✅ Ported — `_ActionCard.showOwnerContext`/`timeAgo`/`severityLabel` fields, gated on `!AppState.isFarmer` |
+| Home's "Cows in heat"/"Cows in gestation" cards open the walkthrough's real full-width alert step instead of a plain Events sheet | ❌ Pending — no target: `dashboard_screen.dart` is still a placeholder (see below), so there's no Home card to wire yet |
 | Dashboard (Home) | 🚧 Placeholder — content not designed yet in the HTML either |
 | Farms list — hero (Total Farms/Cattle/Alerts + activity ticker), search + two-pane filter sheet (Status/Location), farm cards (severity tag, chips row), Setup rows | ✅ Ported — `lib/screens/farms_screen.dart` |
 | Farm detail (cow list) — temp+level hero, Total Cattle/Unactioned tiles, search + filter sheet (Status/Breed/Age), cow cards + kebab, alerts-tile toggle | ✅ Ported — `lib/screens/farm_detail_screen.dart` |
