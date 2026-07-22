@@ -1263,19 +1263,20 @@ class _Opt {
 
 // ─────────────────────────────────────────────────────────────────────────
 // Herd-activity filter sheet — mirrors #fd-herd-filter-sheet in
-// prototype.html (Activity / Cows two-pane rail, single-select chips).
+// vanix_screens_preview.html. The Activity category was removed from this
+// sheet (activity selection now lives as chips under the graph) — the sheet
+// is Cows-only.
 // ─────────────────────────────────────────────────────────────────────────
 class _HerdFilterSheet extends StatefulWidget {
   final String lang;
   final bool isDark;
   final List<CowModel> cows;
-  final String activity, cow;
-  final void Function(String activity, String cow) onApply;
+  final String cow;
+  final void Function(String cow) onApply;
   const _HerdFilterSheet({
     required this.lang,
     required this.isDark,
     required this.cows,
-    required this.activity,
     required this.cow,
     required this.onApply,
   });
@@ -1285,8 +1286,6 @@ class _HerdFilterSheet extends StatefulWidget {
 }
 
 class _HerdFilterSheetState extends State<_HerdFilterSheet> {
-  int _cat = 0; // 0 activity, 1 cows
-  late String _activity = widget.activity;
   late String _cow = widget.cow;
 
   String t(String k) => FS.t(widget.lang, k);
@@ -1295,7 +1294,6 @@ class _HerdFilterSheetState extends State<_HerdFilterSheet> {
   Widget build(BuildContext context) {
     final isDark = widget.isDark;
     final bg = isDark ? VanixColors.darkSecond : Colors.white;
-    final railBg = isDark ? VanixColors.darkPrimary : VanixColors.bgWarm;
     final textColor = isDark ? Colors.white : VanixColors.textPrimary;
 
     return Container(
@@ -1325,27 +1323,10 @@ class _HerdFilterSheetState extends State<_HerdFilterSheet> {
           ),
           SizedBox(
             height: 260,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  width: 132,
-                  color: railBg,
-                  child: Column(
-                    children: [
-                      _herdRailTab(t('activityWord'), 0, isDark),
-                      _herdRailTab(t('herdCowsBtn'), 1, isDark),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    color: isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm,
-                    padding: const EdgeInsetsDirectional.all(12),
-                    child: _cat == 0 ? _activityPane(isDark) : _cowsPane(isDark),
-                  ),
-                ),
-              ],
+            child: Container(
+              color: isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm,
+              padding: const EdgeInsetsDirectional.all(12),
+              child: _cowsPane(isDark),
             ),
           ),
           const SizedBox(height: 16),
@@ -1353,34 +1334,13 @@ class _HerdFilterSheetState extends State<_HerdFilterSheet> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                widget.onApply(_activity, _cow);
+                widget.onApply(_cow);
                 Navigator.of(context).pop();
               },
               child: Text(t('applyFilters')),
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _herdRailTab(String label, int idx, bool isDark) {
-    final active = _cat == idx;
-    final activeColor = isDark ? VanixColors.textOnDarkDim : Colors.white;
-    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
-    return InkWell(
-      onTap: () => setState(() => _cat = idx),
-      child: Container(
-        width: double.infinity,
-        constraints: const BoxConstraints(minHeight: 48),
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 14, vertical: 14),
-        alignment: AlignmentDirectional.centerStart,
-        decoration: BoxDecoration(
-          color: active ? activeColor : Colors.transparent,
-          border: active ? const BorderDirectional(start: BorderSide(color: VanixColors.greenInk, width: 3)) : null,
-        ),
-        child: Text(label,
-            style: TextStyle(fontSize: 13, fontWeight: active ? FontWeight.w600 : FontWeight.w400, color: active && isDark ? VanixColors.darkPrimary : textColor)),
       ),
     );
   }
@@ -1422,17 +1382,6 @@ class _HerdFilterSheetState extends State<_HerdFilterSheet> {
     );
   }
 
-  Widget _activityPane(bool isDark) {
-    return ListView(
-      children: [
-        _herdOptRow(t('actRumination'), _activity == 'rumination', isDark, () => setState(() => _activity = 'rumination')),
-        _herdOptRow(t('actStanding'), _activity == 'standing', isDark, () => setState(() => _activity = 'standing')),
-        _herdOptRow(t('actResting'), _activity == 'resting', isDark, () => setState(() => _activity = 'resting')),
-        _herdOptRow(t('actFeeding'), _activity == 'feeding', isDark, () => setState(() => _activity = 'feeding')),
-      ],
-    );
-  }
-
   Widget _cowsPane(bool isDark) {
     return ListView(
       children: [
@@ -1444,12 +1393,94 @@ class _HerdFilterSheetState extends State<_HerdFilterSheet> {
   }
 }
 
-/// Paints the herd rumination sparkline (24 hourly points, 0–60 scale) with
-/// an optional 14:00–16:00 anomaly-dip segment in warning color.
-class _RuminationPainter extends CustomPainter {
+/// One activity's polyline data for the herd-activity graph.
+class _FdActLine {
+  final List<double> points;
+  final Color color;
+  final (int, int)? anomalySegment; // hour indices (inclusive) to highlight
+  const _FdActLine({required this.points, required this.color, this.anomalySegment});
+}
+
+/// Paints one polyline per active herd-activity (0–60 scale, 24 hourly
+/// points), an optional overlap-window shaded rect, and per-line
+/// anomaly-dip highlight segments. Mirrors renderFdRumination()'s SVG
+/// building in vanix_screens_preview.html.
+class _MultiActivityPainter extends CustomPainter {
+  final List<_FdActLine> lines;
+  final (int, int)? overlapRange; // hour range [0,24] to shade
+  const _MultiActivityPainter({required this.lines, this.overlapRange});
+
+  Offset _pt(List<double> points, int i, Size size) {
+    final x = i / (points.length - 1) * size.width;
+    final y = size.height - 4 - (points[i] / 60 * (size.height - 8));
+    return Offset(x, y);
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (overlapRange != null) {
+      final (oStart, oEnd) = overlapRange!;
+      final x1 = oStart / 24 * size.width;
+      final x2 = oEnd / 24 * size.width;
+      final rectPaint = Paint()..color = VanixColors.textPrimary.withValues(alpha: 0.07);
+      canvas.drawRect(Rect.fromLTWH(x1, 0, x2 - x1, size.height), rectPaint);
+    }
+
+    final baselinePaint = Paint()
+      ..color = VanixColors.divider
+      ..strokeWidth = 0.5;
+    canvas.drawLine(Offset(0, size.height - 4), Offset(size.width, size.height - 4), baselinePaint);
+
+    for (final line in lines) {
+      final basePaint = Paint()
+        ..color = line.color
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.6
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round;
+
+      final path = Path();
+      for (var i = 0; i < line.points.length; i++) {
+        final p = _pt(line.points, i, size);
+        if (i == 0) {
+          path.moveTo(p.dx, p.dy);
+        } else {
+          path.lineTo(p.dx, p.dy);
+        }
+      }
+      canvas.drawPath(path, basePaint);
+
+      if (line.anomalySegment != null) {
+        final (from, to) = line.anomalySegment!;
+        final dipPaint = Paint()
+          ..color = VanixColors.warning
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2.2
+          ..strokeCap = StrokeCap.round
+          ..strokeJoin = StrokeJoin.round;
+        final dipPath = Path();
+        for (var i = from; i <= to && i < line.points.length; i++) {
+          final p = _pt(line.points, i, size);
+          if (i == from) {
+            dipPath.moveTo(p.dx, p.dy);
+          } else {
+            dipPath.lineTo(p.dx, p.dy);
+          }
+        }
+        canvas.drawPath(dipPath, dipPaint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _MultiActivityPainter oldDelegate) =>
+      oldDelegate.lines != lines || oldDelegate.overlapRange != overlapRange;
+}
+
+class _UnusedOldRuminationPainter extends CustomPainter {
   final List<double> points;
   final bool anomaly;
-  const _RuminationPainter({required this.points, required this.anomaly});
+  const _UnusedOldRuminationPainter({required this.points, required this.anomaly});
 
   Offset _pt(Size size, int i) {
     final x = i / (points.length - 1) * size.width;
