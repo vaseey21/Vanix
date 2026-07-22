@@ -589,7 +589,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
         children: [
           Row(
             children: [
-              Expanded(child: Text(FS.t(_lang, 'fdRuminationTitle'), style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: textColor))),
+              Expanded(child: Text('${FS.t(_lang, 'fdHerdTitlePre')} ${_activityLabel()} — ${FS.t(_lang, 'fdHerdTitlePost')}', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: textColor))),
               _ruminationPill(isSunrise),
             ],
           ),
