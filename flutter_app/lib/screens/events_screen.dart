@@ -2195,6 +2195,29 @@ class _ActionCard extends StatelessWidget {
   }
 }
 
+/// Bell + "P1" pill shown on P1 (actionable) cards — mirrors the
+/// .ev-chip.ev-chip-p1 bell-icon chip in vanix_screens_preview.html
+/// (Heat/Pregnancy-check/Gestation/Milking-notification cards).
+class _P1Chip extends StatelessWidget {
+  const _P1Chip();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(color: VanixColors.warningBg, borderRadius: BorderRadius.circular(10)),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Icon(Icons.notifications_none, size: 11, color: VanixColors.warningInk),
+          SizedBox(width: 3),
+          Text('P1', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.4, color: VanixColors.warningInk)),
+        ],
+      ),
+    );
+  }
+}
+
 /// Single red circle + "!" badge for escalated P0 cards, replacing the old
 /// stacked "P0 · CRITICAL" + "ESCALATED" chips. Mirrors .ev-corner-badge in
 /// vanix_screens.html.
