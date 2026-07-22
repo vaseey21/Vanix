@@ -657,22 +657,13 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
     final ruminationOn = _fdActiveSet.contains('rumination');
     final anomaly = ruminationOn && isSunrise;
 
-    // Build one polyline per active key, sourcing rumination from the
-    // per-farm pts and everything else from _kFdActMeta.
-    final lines = <_FdActLine>[
-      for (final key in _fdActiveSet)
-        _FdActLine(
-          points: key == 'rumination' ? ruminationPts : _kFdActMeta[key]!.pts!,
-          color: _kFdActMeta[key]!.color,
-          anomalySegment: key == 'rumination' && anomaly ? const (13, 17) : null,
-        ),
-    ];
-
-    // Overlap: intersection of the two selected activities' active windows —
-    // only computed when exactly two are selected.
-    (int, int)? overlapRange;
+    // When exactly 2 activities are picked, the graph zooms into ONLY their
+    // overlapping active-hours window — no data outside it is drawn at all
+    // (not just highlighted). With 0/1 picked, show the full day.
+    int windowLo = 0, windowHi = 24;
     String overlapCaption = '';
     bool overlapFound = false;
+    bool noGraph = false;
     if (_fdActiveSet.length == 2) {
       final rA = _kFdActMeta[_fdActiveSet[0]]!.range;
       final rB = _kFdActMeta[_fdActiveSet[1]]!.range;
@@ -680,13 +671,29 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
       final oEnd = rA[1] < rB[1] ? rA[1] : rB[1];
       if (oStart < oEnd) {
         overlapFound = true;
-        overlapRange = (oStart, oEnd);
+        windowLo = oStart;
+        windowHi = oEnd;
         String pad(int n) => '${(n % 24).toString().padLeft(2, '0')}:00';
         overlapCaption = '${FS.t(_lang, 'overlapWord')}: ${pad(oStart)}–${pad(oEnd)} (${oEnd - oStart}h)';
       } else {
+        noGraph = true;
         overlapCaption = FS.t(_lang, 'noOverlapWord');
       }
     }
+    final anomalyDrawn = anomaly && windowLo == 0;
+
+    // Build one polyline per active key, sliced to [windowLo, windowHi] —
+    // sourcing rumination from the per-farm pts and everything else from
+    // _kFdActMeta.
+    final lines = <_FdActLine>[
+      if (!noGraph)
+        for (final key in _fdActiveSet)
+          _FdActLine(
+            points: (key == 'rumination' ? ruminationPts : _kFdActMeta[key]!.pts!).sublist(windowLo, windowHi + 1),
+            color: _kFdActMeta[key]!.color,
+            anomalySegment: key == 'rumination' && anomalyDrawn ? const (13, 17) : null,
+          ),
+    ];
 
     final titleLabel = _fdActiveSet.isEmpty
         ? FS.t(_lang, 'actRumination')
