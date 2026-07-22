@@ -95,18 +95,33 @@ No state-management package is pulled in yet — every screen is a plain
 `StatefulWidget` reading `AppState` via `AnimatedBuilder`. Fine at this size;
 reach for `provider`/`riverpod` if the app keeps growing.
 
-## Missing assets (must be added before first run)
+## Assets
+
+Verified (2026-07-22) that every `assets/...` path referenced anywhere in
+`lib/` is both declared in `pubspec.yaml` and present on disk, and that
+every path declared in `pubspec.yaml` exists — no dangling references,
+no undeclared files.
 
 - **Fonts** — `assets/fonts/NotoSans-{Regular,Medium,SemiBold}.ttf` and
-  `NotoSansDevanagari-{Regular,Medium,SemiBold}.ttf`. Download from Google
-  Fonts; `pubspec.yaml` already points at these paths.
-- **Hero video** — the HTML plays a looping `assets/hero.mp4` behind the
-  login sheet before it fades in. `login_screen.dart` has a
-  `_HeroBackground` gradient placeholder with a `video_player` TODO comment
-  — swap it in once the asset is available.
-- **Logo SVG** — `assets/logos/vanix-logo.svg` is declared in `pubspec.yaml`
-  but not present in this folder; copy it from the main repo's `assets/`.
-  Rendering an `.svg` needs the `flutter_svg` package (not yet added).
+  `NotoSansDevanagari-{Regular,Medium,SemiBold}.ttf` are present and
+  declared under `flutter: fonts:` in `pubspec.yaml`.
+- **Hero video** — `assets/images/hero.mp4` is present and played via
+  `video_player`'s `VideoPlayerController.asset(...)` in
+  `login_screen.dart`'s `_HeroBackground` (no placeholder — this is wired
+  up for real).
+- **Icons/photos** — `cow_icon.png`, `bull_icon.png`, `pregnancy_icon.png`,
+  `insemination_icon.png`, and the `*_photo.jpg` set (fever/heat/
+  insemination/delivery/vetvisit/milking_started/milking_ended/gestation)
+  are all present, declared, and referenced from `events_screen.dart` /
+  `models/farm_models.dart` / `cow_profile_screen.dart`. `cow_lying.png` is
+  present and declared but currently unreferenced in `lib/` — harmless
+  dead weight, kept in case a future Milking-notification illustration
+  pass (see root `CLAUDE.md`) needs it.
+- **Logo SVG** — `assets/logos/vanix-logo.svg` is intentionally NOT
+  bundled: `login_screen.dart` fetches the real SVG string over HTTPS from
+  `mybovine.ai` at runtime (via `flutter_svg`'s `SvgPicture.string`), the
+  same source the HTML landing page uses, so there's no local copy to keep
+  in sync. `flutter_svg` is already a `pubspec.yaml` dependency.
 
 ## Design-token parity
 
