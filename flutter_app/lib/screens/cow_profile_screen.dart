@@ -124,92 +124,101 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     );
   }
 
-  // ── Hero ──────────────────────────────────────────────────────────────
+  // ── Hero — full-bleed photo w/ gradient overlay (mirrors #page-cow's
+  // .m-hero in vanix_screens_preview.html: back + kebab float over the photo,
+  // name/breed/age/temp + gender/battery/status chips sit on the scrim at the
+  // bottom — no separate Status/Current-Temp tiles below it any more). ──
   Widget _buildHero() {
-    final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
-    final surface = _isDark ? VanixColors.darkSecond : VanixColors.bgCard;
     final st = _statusStyle();
+    final placeholder = Container(color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm, alignment: Alignment.center, child: const Text('🐄', style: TextStyle(fontSize: 40)));
 
     return Container(
-      decoration: BoxDecoration(
-        color: surface,
-        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(VanixRadius.lg)),
-        boxShadow: _isDark ? VanixShadow.cardDark : VanixShadow.card,
-      ),
-      padding: const EdgeInsetsDirectional.fromSTEB(VanixSpacing.lg, 20, VanixSpacing.lg, VanixSpacing.lg),
-      child: SafeArea(
-        bottom: false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      decoration: BoxDecoration(boxShadow: _isDark ? VanixShadow.cardDark : VanixShadow.card),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 224,
+            child: Stack(
+              fit: StackFit.expand,
               children: [
-                _circleBtn(Icons.chevron_left, () => Navigator.of(context).pop()),
-                const SizedBox(width: VanixSpacing.sm),
-                _cowPhoto(),
-                const SizedBox(width: VanixSpacing.md),
-                Expanded(
+                widget.cow.photo == null ? placeholder : Image.asset(widget.cow.photo!, fit: BoxFit.cover, errorBuilder: (_, __, ___) => placeholder),
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0x6B000000), Color(0x0D000000), Color(0x1F000000), Color(0xD1000000)],
+                      stops: [0.0, 0.32, 0.52, 1.0],
+                    ),
+                  ),
+                ),
+                SafeArea(
+                  bottom: false,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _heroCircleBtn(Icons.chevron_left, () => Navigator.of(context).pop()),
+                          _kebab(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                PositionedDirectional(
+                  start: 16, end: 16, bottom: 16,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(widget.cow.nm(_lang),
-                                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor), overflow: TextOverflow.ellipsis),
-                          ),
-                          const SizedBox(width: VanixSpacing.sm),
-                          _beltChip(),
-                        ],
-                      ),
+                      Text(widget.cow.nm(_lang), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white)),
                       const SizedBox(height: 5),
                       Wrap(
-                        spacing: VanixSpacing.sm,
-                        runSpacing: 4,
                         crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [_genderChip(), _batteryChip()],
+                        children: [
+                          Text(widget.cow.br(_lang), style: const TextStyle(fontSize: 13, color: Color(0xEBFFFFFF))),
+                          const Text('  ·  ', style: TextStyle(color: Color(0x80FFFFFF))),
+                          Text(widget.cow.ag(_lang), style: const TextStyle(fontSize: 13, color: Color(0xEBFFFFFF))),
+                          const Text('  ·  ', style: TextStyle(color: Color(0x80FFFFFF))),
+                          Text(widget.appState.fmtTemp(widget.cow.temp), style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: Colors.white)),
+                        ],
                       ),
-                      const SizedBox(height: 3),
-                      Text(widget.cow.br(_lang), style: TextStyle(fontSize: 14, color: _isDark ? VanixColors.textOnDarkDim : VanixColors.textPrimary)),
-                      Text(widget.cow.ag(_lang), style: const TextStyle(fontSize: 13, color: VanixColors.textHint)),
+                      const SizedBox(height: 9),
+                      Wrap(spacing: 6, runSpacing: 6, children: [_onPhotoChip(FS.t(_lang, 'genderFemale')), _batteryChip(), _statusPillChip(st)]),
                     ],
                   ),
                 ),
-                _reportDownloadBtn(),
-                _kebab(),
               ],
             ),
-            const SizedBox(height: VanixSpacing.lg),
-            Row(
-              children: [
-                Expanded(child: _statusTile(st)),
-                const SizedBox(width: VanixSpacing.sm),
-                Expanded(child: _tempTile()),
-              ],
-            ),
-            const SizedBox(height: VanixSpacing.lg),
-            _buildTabBar(),
-          ],
-        ),
+          ),
+          _buildTabBar(),
+        ],
       ),
     );
   }
 
-  Widget _cowPhoto() {
-    final placeholder = Container(
-      width: 64, height: 64,
-      color: _isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm,
-      alignment: Alignment.center,
-      child: const Text('🐄', style: TextStyle(fontSize: 26)),
-    );
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(VanixRadius.md),
-      child: widget.cow.photo == null
-          ? placeholder
-          : Image.asset(widget.cow.photo!, width: 64, height: 64, fit: BoxFit.cover, errorBuilder: (_, __, ___) => placeholder),
-    );
-  }
+  Widget _heroCircleBtn(IconData icon, VoidCallback onTap) => SizedBox(
+        width: 38, height: 38,
+        child: Material(
+          color: const Color(0x59000000),
+          shape: const CircleBorder(),
+          child: InkWell(customBorder: const CircleBorder(), onTap: onTap, child: Icon(icon, size: 20, color: Colors.white)),
+        ),
+      );
+
+  Widget _onPhotoChip(String text) => Container(
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 8, vertical: 2),
+        decoration: BoxDecoration(color: const Color(0x2EFFFFFF), border: Border.all(color: const Color(0x52FFFFFF)), borderRadius: BorderRadius.circular(VanixRadius.sm)),
+        child: Text(text, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.white)),
+      );
+
+  Widget _statusPillChip(({String key, Color bg, Color ink}) st) => Container(
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 3),
+        decoration: BoxDecoration(color: st.bg, borderRadius: BorderRadius.circular(VanixRadius.pill)),
+        child: Text(FS.t(_lang, st.key), style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: st.ink)),
+      );
 
   Widget _beltChip() {
     return Container(
