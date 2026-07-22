@@ -1168,13 +1168,71 @@ class _HerdFilterSheetState extends State<_HerdFilterSheet> {
     );
   }
 
+  Widget _herdRailTab(String label, int idx, bool isDark) {
+    final active = _cat == idx;
+    final activeColor = isDark ? VanixColors.textOnDarkDim : Colors.white;
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    return InkWell(
+      onTap: () => setState(() => _cat = idx),
+      child: Container(
+        width: double.infinity,
+        constraints: const BoxConstraints(minHeight: 48),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 14, vertical: 14),
+        alignment: AlignmentDirectional.centerStart,
+        decoration: BoxDecoration(
+          color: active ? activeColor : Colors.transparent,
+          border: active ? const BorderDirectional(start: BorderSide(color: VanixColors.greenInk, width: 3)) : null,
+        ),
+        child: Text(label,
+            style: TextStyle(fontSize: 13, fontWeight: active ? FontWeight.w600 : FontWeight.w400, color: active && isDark ? VanixColors.darkPrimary : textColor)),
+      ),
+    );
+  }
+
+  Widget _herdOptRow(String label, bool active, bool isDark, VoidCallback onTap) {
+    final rowBg = isDark ? VanixColors.darkSecond : VanixColors.bgCard;
+    final borderCol = isDark ? VanixColors.darkBorder : VanixColors.border;
+    final textColor = active ? Colors.white : (isDark ? Colors.white : VanixColors.textPrimary);
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(bottom: 8),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 44),
+          padding: const EdgeInsetsDirectional.symmetric(horizontal: 14),
+          decoration: BoxDecoration(
+            color: active ? VanixColors.greenInk : rowBg,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: active ? VanixColors.greenInk : borderCol),
+          ),
+          child: Row(
+            children: [
+              Expanded(child: Text(label, style: TextStyle(fontSize: 13, color: textColor))),
+              Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: active ? Colors.white : Colors.transparent,
+                  border: Border.all(color: active ? Colors.white : borderCol, width: 1.5),
+                ),
+                child: active ? const Icon(Icons.check, size: 13, color: VanixColors.greenInk) : null,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _activityPane(bool isDark) {
     return ListView(
       children: [
-        _OptRow(label: t('actRumination'), active: _activity == 'rumination', isDark: isDark, onTap: () => setState(() => _activity = 'rumination')),
-        _OptRow(label: t('actStanding'), active: _activity == 'standing', isDark: isDark, onTap: () => setState(() => _activity = 'standing')),
-        _OptRow(label: t('actResting'), active: _activity == 'resting', isDark: isDark, onTap: () => setState(() => _activity = 'resting')),
-        _OptRow(label: t('actFeeding'), active: _activity == 'feeding', isDark: isDark, onTap: () => setState(() => _activity = 'feeding')),
+        _herdOptRow(t('actRumination'), _activity == 'rumination', isDark, () => setState(() => _activity = 'rumination')),
+        _herdOptRow(t('actStanding'), _activity == 'standing', isDark, () => setState(() => _activity = 'standing')),
+        _herdOptRow(t('actResting'), _activity == 'resting', isDark, () => setState(() => _activity = 'resting')),
+        _herdOptRow(t('actFeeding'), _activity == 'feeding', isDark, () => setState(() => _activity = 'feeding')),
       ],
     );
   }
@@ -1182,9 +1240,9 @@ class _HerdFilterSheetState extends State<_HerdFilterSheet> {
   Widget _cowsPane(bool isDark) {
     return ListView(
       children: [
-        _OptRow(label: t('allWord'), active: _cow == 'all', isDark: isDark, onTap: () => setState(() => _cow = 'all')),
+        _herdOptRow(t('allWord'), _cow == 'all', isDark, () => setState(() => _cow = 'all')),
         for (final c in widget.cows)
-          _OptRow(label: c.nm(widget.lang), active: _cow == '${c.no}', isDark: isDark, onTap: () => setState(() => _cow = '${c.no}')),
+          _herdOptRow(c.nm(widget.lang), _cow == '${c.no}', isDark, () => setState(() => _cow = '${c.no}')),
       ],
     );
   }
