@@ -613,6 +613,19 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
     );
   }
 
+  String _activityLabel() {
+    switch (_fdActivity) {
+      case 'standing':
+        return FS.t(_lang, 'actStanding');
+      case 'resting':
+        return FS.t(_lang, 'actResting');
+      case 'feeding':
+        return FS.t(_lang, 'actFeeding');
+      default:
+        return FS.t(_lang, 'actRumination');
+    }
+  }
+
   Color _tempLevelColor(String key) {
     switch (key) {
       case 'tempVeryHigh':
