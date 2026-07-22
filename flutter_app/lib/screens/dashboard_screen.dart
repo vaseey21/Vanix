@@ -10,6 +10,7 @@ import 'milk_log_screen.dart';
 import 'events_screen.dart';
 import 'farms_screen.dart';
 import 'account_screen.dart';
+import 'approvals_screen.dart';
 
 /// Home dashboard — Screen 03 (Farm Owner). Mirrors #s1-dash /
 /// #dash-scroll in vanix_screens_preview.html (Home r2): header (logo +
