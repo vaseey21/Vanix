@@ -2356,6 +2356,34 @@ class _HistoryRow extends StatelessWidget {
 /// AppState.resolveEvent() and never touches the real inline Heat/Preg/
 /// Gestation cards on the Events screen, so running the demo never
 /// consumes any of the farmer's actual pending alerts.
+// Entry point for the Events "View full cycle" link AND Home's "Cows in
+// heat" row cards — opens the full-screen heat alert carousel first, then
+// drops into the bottom-sheet walkthrough (mirrors window.evOpenFullCycle
+// in vanix_screens_preview.html).
+Future<void> openFullCycleFlow(BuildContext context, AppState appState) async {
+  final result = await Navigator.of(context).push<String?>(MaterialPageRoute(builder: (_) => HeatAlertScreen(isDark: appState.isDark), fullscreenDialog: true));
+  if (!context.mounted) return;
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) => _FullCycleSheet(isDark: appState.isDark, heatPreDecision: result, restricted: result == null),
+  );
+}
+
+// Direct entry into the walkthrough's gestation step — used by Home's "Cows
+// in gestation" cards so they open the same full-width alert-style step card
+// the walkthrough uses, not the plain Events sheet (mirrors
+// window.evOpenGestationSlider in vanix_screens_preview.html).
+void openGestationSliderFlow(BuildContext context, AppState appState) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) => _FullCycleSheet(isDark: appState.isDark, initialStep: _SeqStep.gestation9),
+  );
+}
+
 class _FullCycleSheet extends StatefulWidget {
   final bool isDark;
   /// 'yes' / 'no' if the farmer already resolved the heat question on the
@@ -2364,7 +2392,10 @@ class _FullCycleSheet extends StatefulWidget {
   /// True when entered via dismiss-without-resolving — the heat step renders
   /// a trimmed "restricted" detail view until the farmer taps Yes/No here.
   final bool restricted;
-  const _FullCycleSheet({required this.isDark, this.heatPreDecision, this.restricted = false});
+  /// When set, the sheet opens directly at this step (skipping the heat
+  /// timer setup) — used to deep-link into e.g. the gestation step from Home.
+  final _SeqStep? initialStep;
+  const _FullCycleSheet({required this.isDark, this.heatPreDecision, this.restricted = false, this.initialStep});
 
   @override
   State<_FullCycleSheet> createState() => _FullCycleSheetState();
