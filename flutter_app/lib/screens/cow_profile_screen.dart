@@ -589,7 +589,9 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     );
   }
 
-  Widget _ovStatCard(IconData icon, String big, String labelKey, Color accent, Color tint, {IconData? corner}) {
+  // Mirrors ovStatCardNoIcon() in vanix_screens_preview.html — just the
+  // coloured left-edge stripe + big number + label, no icon of any kind.
+  Widget _ovStatCard(String big, String labelKey, Color accent) {
     final textColor = _isDark ? Colors.white : VanixColors.textPrimary;
     return ClipRRect(
       borderRadius: BorderRadius.circular(VanixRadius.lg),
@@ -598,19 +600,6 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 34, height: 34,
-                    decoration: BoxDecoration(color: tint, borderRadius: BorderRadius.circular(11)),
-                    child: Icon(icon, size: 18, color: accent),
-                  ),
-                  if (corner != null) Icon(corner, size: 18, color: accent.withValues(alpha: 0.5)),
-                ],
-              ),
-              const SizedBox(height: VanixSpacing.md),
               Text(big, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: textColor)),
               const SizedBox(height: 4),
               Text(FS.t(_lang, labelKey).toUpperCase(),
