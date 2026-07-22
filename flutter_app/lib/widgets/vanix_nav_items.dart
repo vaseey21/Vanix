@@ -15,6 +15,9 @@ List<VanixNavItem> buildVanixNavItems(VanixStrings t, AppState appState) {
     VanixNavItem(iconBuilder: (color) => CowHeadIcon(color: color, size: 20), label: t.navFarms),
     VanixNavItem(icon: Icons.water_drop_outlined, label: t.navMilk),
     VanixNavItem(icon: Icons.calendar_today_outlined, label: t.navEvents, badgeCount: count),
-    VanixNavItem(icon: Icons.account_circle_outlined, label: t.navAccount),
+    // Plain person silhouette (head + shoulders, no outer ring) — matches the
+    // bust-only SVG in vanix_screens_preview.html's nav; account_circle_outlined
+    // draws an extra circular frame the HTML icon doesn't have.
+    VanixNavItem(icon: Icons.person_outline, label: t.navAccount),
   ];
 }
