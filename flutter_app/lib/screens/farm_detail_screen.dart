@@ -1065,6 +1065,131 @@ class _Opt {
   const _Opt(this.value, this.label);
 }
 
+// ─────────────────────────────────────────────────────────────────────────
+// Herd-activity filter sheet — mirrors #fd-herd-filter-sheet in
+// prototype.html (Activity / Cows two-pane rail, single-select chips).
+// ─────────────────────────────────────────────────────────────────────────
+class _HerdFilterSheet extends StatefulWidget {
+  final String lang;
+  final bool isDark;
+  final List<CowModel> cows;
+  final String activity, cow;
+  final void Function(String activity, String cow) onApply;
+  const _HerdFilterSheet({
+    required this.lang,
+    required this.isDark,
+    required this.cows,
+    required this.activity,
+    required this.cow,
+    required this.onApply,
+  });
+
+  @override
+  State<_HerdFilterSheet> createState() => _HerdFilterSheetState();
+}
+
+class _HerdFilterSheetState extends State<_HerdFilterSheet> {
+  int _cat = 0; // 0 activity, 1 cows
+  late String _activity = widget.activity;
+  late String _cow = widget.cow;
+
+  String t(String k) => FS.t(widget.lang, k);
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = widget.isDark;
+    final bg = isDark ? VanixColors.darkSecond : Colors.white;
+    final railBg = isDark ? VanixColors.darkPrimary : VanixColors.bgWarm;
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+
+    return Container(
+      decoration: BoxDecoration(color: bg, borderRadius: const BorderRadius.vertical(top: Radius.circular(24))),
+      padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 28),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 36,
+            height: 4,
+            margin: const EdgeInsetsDirectional.only(top: 12),
+            decoration: BoxDecoration(color: VanixColors.greenInk, borderRadius: BorderRadius.circular(2)),
+          ),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(t('filterWord'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: textColor)),
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: Icon(Icons.close, size: 18, color: isDark ? const Color(0xA6FFFFFF) : VanixColors.textHint),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 260,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  width: 132,
+                  color: railBg,
+                  child: Column(
+                    children: [
+                      _CatTab(label: t('activityWord'), active: _cat == 0, isDark: isDark, onTap: () => setState(() => _cat = 0)),
+                      _CatTab(label: t('herdCowsBtn'), active: _cat == 1, isDark: isDark, onTap: () => setState(() => _cat = 1)),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    color: isDark ? VanixColors.darkSubSurface : VanixColors.bgWarm,
+                    padding: const EdgeInsetsDirectional.all(12),
+                    child: _cat == 0 ? _activityPane(isDark) : _cowsPane(isDark),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                widget.onApply(_activity, _cow);
+                Navigator.of(context).pop();
+              },
+              child: Text(t('applyFilters')),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _activityPane(bool isDark) {
+    return ListView(
+      children: [
+        _OptRow(label: t('actRumination'), active: _activity == 'rumination', isDark: isDark, onTap: () => setState(() => _activity = 'rumination')),
+        _OptRow(label: t('actStanding'), active: _activity == 'standing', isDark: isDark, onTap: () => setState(() => _activity = 'standing')),
+        _OptRow(label: t('actResting'), active: _activity == 'resting', isDark: isDark, onTap: () => setState(() => _activity = 'resting')),
+        _OptRow(label: t('actFeeding'), active: _activity == 'feeding', isDark: isDark, onTap: () => setState(() => _activity = 'feeding')),
+      ],
+    );
+  }
+
+  Widget _cowsPane(bool isDark) {
+    return ListView(
+      children: [
+        _OptRow(label: t('allWord'), active: _cow == 'all', isDark: isDark, onTap: () => setState(() => _cow = 'all')),
+        for (final c in widget.cows)
+          _OptRow(label: c.nm(widget.lang), active: _cow == '${c.no}', isDark: isDark, onTap: () => setState(() => _cow = '${c.no}')),
+      ],
+    );
+  }
+}
+
 /// Paints the herd rumination sparkline (24 hourly points, 0–60 scale) with
 /// an optional 14:00–16:00 anomaly-dip segment in warning color.
 class _RuminationPainter extends CustomPainter {
