@@ -2016,23 +2016,29 @@ class _ActionCard extends StatelessWidget {
   }
 
   Widget _buildFullBleedPhotoCard() {
-    // Severity badge — CRITICAL (p0) / MEDIUM (p1) / LOW (p2,p3).
+    // Severity badge — CRITICAL (p0) / MEDIUM (p1) / LOW (p2,p3), unless
+    // `severityLabel` overrides it (Fever/Heat: CRITICAL/HIGH by elapsed time).
     String badgeText;
     Color badgeColor;
-    switch (priority) {
-      case _Priority.p0:
-        badgeText = 'CRITICAL';
-        badgeColor = VanixColors.danger;
-        break;
-      case _Priority.p1:
-        badgeText = 'MEDIUM';
-        badgeColor = VanixColors.warning;
-        break;
-      case _Priority.p2:
-      case _Priority.p3:
-        badgeText = 'LOW';
-        badgeColor = VanixColors.textHint;
-        break;
+    if (severityLabel != null) {
+      badgeText = severityLabel!;
+      badgeColor = severityColor ?? VanixColors.warning;
+    } else {
+      switch (priority) {
+        case _Priority.p0:
+          badgeText = 'CRITICAL';
+          badgeColor = VanixColors.danger;
+          break;
+        case _Priority.p1:
+          badgeText = 'MEDIUM';
+          badgeColor = VanixColors.warning;
+          break;
+        case _Priority.p2:
+        case _Priority.p3:
+          badgeText = 'LOW';
+          badgeColor = VanixColors.textHint;
+          break;
+      }
     }
 
     final cowBreed = photoCowBreed ?? '';
