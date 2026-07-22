@@ -43,17 +43,8 @@ class _AddCattleScreenState extends State<AddCattleScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 48,
-                      height: 48,
-                      child: IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        padding: EdgeInsets.zero,
-                        alignment: AlignmentDirectional.centerStart,
-                        icon: Icon(Icons.chevron_left, color: textColor),
-                      ),
-                    ),
-                    const SizedBox(width: 2),
+                    // No back chevron — Cancel in the footer already closes
+                    // this sheet, so a redundant back button was removed.
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
