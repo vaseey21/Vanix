@@ -2491,7 +2491,6 @@
 
               <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
                 <h2 data-k="farmsTitle" style="font-size:22px; font-weight:600; color:var(--text1); margin:0;">Farms</h2>
-                <p data-k="farmsSubtitle" style="font-size:13px; color:var(--text2); margin:4px 0 0;">Manage all your dairy farms in one place</p>
                 <div style="display:flex; gap:8px; margin-top:14px;">
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 8px; text-align:center;">
                     <p class="en" id="farms-stat-farms" style="font-size:26px; font-weight:700; color:var(--text1); margin:0;">3</p>
@@ -6170,9 +6169,9 @@
       }
 
       function farmChip(bg, color, val, label) {
-        return '<div style="flex:1; min-width:0; background:' + bg + '; border-radius:12px; padding:8px 4px; text-align:center;">' +
-          '<p class="en" style="font-size:14px; font-weight:700; color:' + color + '; margin:0;">' + val + '</p>' +
-          '<p style="font-size:9px; font-weight:600; color:' + color + '; opacity:0.8; margin:2px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + label + '</p>' +
+        return '<div style="flex:1; min-width:0; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:8px 4px; text-align:center;">' +
+          '<p class="en" style="font-size:14px; font-weight:700; color:var(--text1); margin:0;">' + val + '</p>' +
+          '<p style="font-size:9px; font-weight:600; color:var(--text2); margin:2px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + label + '</p>' +
         '</div>';
       }
       function cornerTag(bg, label) {
@@ -6181,6 +6180,8 @@
       var PIN_SVG = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-inline-end:3px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
       var PERSON_SVG = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px; margin-inline-end:3px;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>';
       var COWHEAD_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M6 5.5a6.3 3.6 0 0 1 12 0"/><path d="M6 5.5C5.4 8.5 6.8 10.8 8.2 12.8c1 1.4 1.3 2.7 1.3 4.2a2.6 2.6 0 0 0 5 0c0-1.5.3-2.8 1.3-4.2 1.4-2 2.8-4.3 2.2-7.3"/><path d="M6 5.5C4.5 5.8 3 5 3 5s.8 2.3 3 2.3M18 5.5C19.5 5.8 21 5 21 5s-.8 2.3-3 2.3"/><path d="M9.9 16.3h4.2"/><path d="M10.6 18.4h0M13.4 18.4h0"/></svg>';
+      var GROUPCOW_SVG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M14.5 4.2a4.6 2.6 0 0 1 8.5 0" opacity="0.55"/><path d="M14.5 4.2c-.4 2.1.6 3.8 1.6 5.2.7 1 .9 1.9.9 3a1.85 1.85 0 0 0 3.6 0c0-1.1.2-2 .9-3 1-1.4 2-3.1 1.6-5.2" opacity="0.55"/><path d="M1 9.5a5.4 3.1 0 0 1 10.2 0"/><path d="M1 9.5c-.5 2.5.7 4.4 1.9 6.1.85 1.2 1.1 2.3 1.1 3.6a2.2 2.2 0 0 0 4.3 0c0-1.3.25-2.4 1.1-3.6 1.2-1.7 2.4-3.6 1.9-6.1"/><path d="M1 9.5C-.3 9.75 1 9.1 1 9.1s.7 2 2.6 2M11.2 9.5C12.5 9.75 11.2 9.1 11.2 9.1s-.7 2-2.6 2"/><path d="M4.4 18.7h3.6"/></svg>';
+      var FARM_ICON_SVG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:5px;"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 9.8V20h14V9.8"/><path d="M9.5 20v-5h5v5"/><path d="M9.5 12.2h5"/></svg>';
       var farmsLocFilter = 'all';
       function renderFarmsList() {
         var q = (document.getElementById('farms-search').value || '').trim().toLowerCase();
@@ -6192,7 +6193,7 @@
         });
         document.getElementById('farms-list').innerHTML = list.map(function(f) {
           if (f.status === 'setup') {
-            return '<div class="farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; gap:10px; background:var(--bgcard); border-radius:18px; padding:14px; margin-bottom:12px; cursor:pointer;">' +
+            return '<div class="farm-row" data-farm="' + f.id + '" style="display:flex; align-items:center; gap:10px; background:var(--bgcard); border:1px dashed var(--border); border-radius:18px; padding:14px; margin-bottom:12px; cursor:pointer;">' +
               '<div style="flex:1; min-width:0;">' +
                 '<p style="font-size:16px; font-weight:700; color:var(--text1); margin:0;">' + loc(f, 'name') + '</p>' +
                 '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + window.t().notSetUp + ' · 0 ' + window.t().wordCattle + '</p>' +
@@ -6203,14 +6204,14 @@
           var attention = f.status === 'attention';
           var sevCol = attention ? 'var(--danger)' : 'var(--greendeep)';
           var tag = attention ? cornerTag('var(--danger)', window.t().sevCritical) : cornerTag('var(--greenink)', window.t().healthyWord);
-          return '<div class="farm-row" data-farm="' + f.id + '" style="position:relative; overflow:hidden; background:var(--bgcard); border-radius:18px; padding:14px; margin-bottom:12px; cursor:pointer;">' + tag +
+          return '<div class="farm-row" data-farm="' + f.id + '" style="position:relative; overflow:hidden; background:var(--bgcard); border:1px solid var(--border); border-radius:18px; padding:14px; margin-bottom:12px; cursor:pointer;">' + tag +
             '<div style="display:flex; align-items:flex-start; gap:10px;">' +
               '<div style="flex:1; min-width:0;">' +
-                '<p style="font-size:16px; font-weight:700; color:var(--text1); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + loc(f, 'name') + '</p>' +
+                '<p style="font-size:16px; font-weight:700; color:var(--text1); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + FARM_ICON_SVG + loc(f, 'name') + '</p>' +
                 '<p style="font-size:12px; color:var(--text2); margin:3px 0 0;">' + PIN_SVG + loc(f, 'location') + '</p>' +
                 '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + PERSON_SVG + loc(f, 'manager') + '</p>' +
               '</div>' +
-              '<p class="en" style="flex-shrink:0; font-size:14px; font-weight:700; color:var(--text1); margin:28px 4px 0 0;">' + COWHEAD_SVG + f.cattle + '</p>' +
+              '<p class="en" style="flex-shrink:0; font-size:14px; font-weight:700; color:var(--text1); margin:28px 4px 0 0;">' + GROUPCOW_SVG + f.cattle + '</p>' +
             '</div>' +
             '<div style="display:flex; gap:6px; margin-top:12px;">' +
               farmChip('var(--dangerbg)', 'var(--danger)', f.heat, window.t().cattleHeat) +
