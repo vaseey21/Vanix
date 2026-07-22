@@ -288,14 +288,7 @@ class _EventsScreenState extends State<EventsScreen> {
   // Entry point for the "View full cycle" link — opens the full-screen heat
   // alert carousel first, then drops into the bottom-sheet walkthrough.
   Future<void> _showFullCycleSheet(BuildContext context) async {
-    final result = await Navigator.of(context).push<String?>(MaterialPageRoute(builder: (_) => HeatAlertScreen(isDark: widget.appState.isDark), fullscreenDialog: true));
-    if (!context.mounted) return;
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => _FullCycleSheet(isDark: widget.appState.isDark, heatPreDecision: result, restricted: result == null),
-    );
+    await openFullCycleFlow(context, widget.appState);
   }
 
   // Lightweight filter sheet stub — keeps the Filter button functional
