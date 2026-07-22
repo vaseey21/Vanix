@@ -53,11 +53,6 @@ const List<double> _kRuminationNormal = [
   38, 40, 42, 41, 39, 36, 34, 37, 41, 44, 46, 45, 43, 42, 41, 40, 42, 44, 45, 43, 41, 40, 39, 38
 ];
 
-/// Herd-activity summary hours, mirrors FD_HERD_HOURS in prototype.html.
-const Map<String, String> _kFdHerdHours = {
-  'rumination': '7.2h', 'standing': '3.6h', 'resting': '8.9h', 'feeding': '4.1h',
-};
-
 /// Per-activity color + nominal "active window" (hour range) + mock hourly
 /// points (0–23h) — mirrors FD_ACT_META in vanix_screens_preview.html.
 /// Rumination's points come from _kRuminationSunrise/_kRuminationNormal
