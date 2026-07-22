@@ -294,7 +294,7 @@ class FS {
       'genderWord': 'लिंग', 'yearsWord': 'साल', 'monthsWord': 'महीने', 'optionalWord': '(वैकल्पिक)',
       'acSubPre': 'इस खेत में नई गाय जोड़ें —', 'acPhotoLabel': 'गाय की फ़ोटो', 'acPhotoHint': 'गाय की PNG / JPG अपलोड करें',
       'acCattleType': 'पशु प्रकार', 'acTypeCow': 'गाय', 'acTypeHint': 'गाय · भेड़ · बकरी — गैर-गाय स्वास्थ्य स्कोरिंग चिह्नित होती है।',
-      'acCowName': 'गाय का नाम (आसानी से पहचानने योग्य)', 'cowStatusWord': 'गाय की स्थिति', 'genderFemale': 'मादा',
+      'acCowName': 'नाम', 'cowStatusWord': 'गाय की स्थिति', 'genderFemale': 'मादा',
       'acDeviceDetails': 'डिवाइस विवरण', 'acBeltNo': 'पशु बेल्ट नंबर', 'acMacId': 'MAC आईडी',
       'acCowHistory': 'गाय का इतिहास', 'acFillHistory': 'गाय का इतिहास भरें', 'acHistUnknown': 'इतिहास अज्ञात',
       'acLastHeat': 'अंतिम हीट', 'acLastInsem': 'अंतिम गर्भाधान', 'acLastPreg': 'अंतिम गर्भावस्था',
