@@ -1468,6 +1468,6 @@ class _MultiActivityPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _MultiActivityPainter oldDelegate) =>
-      oldDelegate.lines != lines || oldDelegate.overlapRange != overlapRange;
+      oldDelegate.lines != lines;
 }
 
