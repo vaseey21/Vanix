@@ -349,57 +349,96 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsetsDirectional.only(top: 4),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(farm.nm(_lang), style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, height: 1.2, color: textColor)),
-                      const SizedBox(height: 2),
-                      Row(children: [
-                        Flexible(
-                          child: Text(
-                            farm.managerInvitePending
-                                ? '${FS.t(_lang, 'invitePending')} — ${farm.managerInviteEmail}'
-                                : '${farm.mgr(_lang)} · ${FS.t(_lang, 'managerWord')}',
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 13, color: farm.managerInvitePending ? VanixColors.warning : subColor, fontWeight: farm.managerInvitePending ? FontWeight.w600 : FontWeight.w400),
-                          ),
-                        ),
-                        // Manager edit is owner-only
-                        if (!widget.appState.isFarmer) ...[
-                          const SizedBox(width: 5),
-                          InkWell(
-                            onTap: () => _openManagerChooser(farm),
-                            borderRadius: BorderRadius.circular(11),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4),
-                              child: Icon(Icons.edit_outlined, size: 13, color: subColor),
-                            ),
-                          ),
-                        ],
-                      ]),
-                    ],
-                  ),
+                  child: Text(farm.nm(_lang), style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, height: 1.2, color: textColor)),
                 ),
               ),
-              const SizedBox(width: 8),
-              Padding(
-                padding: const EdgeInsetsDirectional.only(top: 4),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+              _farmKebab(isDark),
+            ],
+          ),
+          const SizedBox(height: 5),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Row(
                   children: [
-                    Text(widget.appState.fmtTemp(farm.temp), style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700, color: textColor)),
-                    const SizedBox(height: 2),
-                    Text(
-                      FS.t(_lang, levelKey).toUpperCase(),
-                      style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.4, color: levelColor),
+                    Flexible(
+                      child: Text(
+                        farm.managerInvitePending
+                            ? '${FS.t(_lang, 'invitePending')} — ${farm.managerInviteEmail}'
+                            : farm.mgr(_lang),
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 13, color: farm.managerInvitePending ? VanixColors.warning : subColor, fontWeight: farm.managerInvitePending ? FontWeight.w600 : FontWeight.w400),
+                      ),
                     ),
+                    // Manager edit is owner-only
+                    if (!widget.appState.isFarmer && !farm.managerInvitePending) ...[
+                      const SizedBox(width: 4),
+                      InkWell(
+                        onTap: () => _openManagerChooser(farm),
+                        borderRadius: BorderRadius.circular(11),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Icon(Icons.edit_outlined, size: 13, color: subColor),
+                        ),
+                      ),
+                    ],
+                    if (!farm.managerInvitePending) ...[
+                      Text('  -  ', style: TextStyle(fontSize: 13, color: subColor)),
+                      Text(widget.appState.fmtTemp(farm.temp), style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: textColor)),
+                      const SizedBox(width: 5),
+                      Text(
+                        FS.t(_lang, levelKey).toUpperCase(),
+                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 0.4, color: levelColor),
+                      ),
+                    ],
                   ],
                 ),
               ),
+              const SizedBox(width: 10),
+              Text(_farmTempDuration(farm.id), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: subColor)),
             ],
           ),
           const SizedBox(height: 8),
           _fdTabRow(isDark),
+        ],
+      ),
+    );
+  }
+
+  // Mock "how long in this temperature state" duration — deterministic per
+  // farm id, mirrors the hash-based mock in vanix_screens_preview.html.
+  String _farmTempDuration(String farmId) {
+    var h = 0;
+    for (final code in farmId.codeUnits) { h = (h * 31 + code) & 0x7fffffff; }
+    final mins = 15 + (h % 225);
+    return '${mins ~/ 60}h ${mins % 60}m';
+  }
+
+  Widget _farmKebab(bool isDark) {
+    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    return SizedBox(
+      width: 32,
+      height: 32,
+      child: PopupMenuButton<String>(
+        tooltip: '',
+        padding: EdgeInsets.zero,
+        color: isDark ? VanixColors.darkSecond : VanixColors.bgCard,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: BorderSide(color: isDark ? VanixColors.darkBorder : VanixColors.border),
+        ),
+        icon: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isDark ? VanixColors.darkSecond : VanixColors.bgCard,
+            border: Border.all(color: isDark ? VanixColors.darkBorder : VanixColors.border),
+          ),
+          child: Icon(Icons.more_vert, size: 16, color: textColor),
+        ),
+        itemBuilder: (_) => [
+          PopupMenuItem(value: 'edit', height: 40, child: Text(FS.t(_lang, 'editWord'), style: TextStyle(fontSize: 13, color: textColor))),
+          PopupMenuItem(value: 'delete', height: 40, child: Text(FS.t(_lang, 'deleteWord'), style: const TextStyle(fontSize: 13, color: VanixColors.danger))),
         ],
       ),
     );
