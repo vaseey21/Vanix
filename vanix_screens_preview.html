@@ -170,6 +170,15 @@
     /* Persona gating — owner-only surfaces hidden for the Farmer persona */
     #flow-root.persona-farmer [data-owner-only] { display:none !important; }
     #flow-root.persona-farmer .m-sub-actions { display:none !important; }
+    #flow-root:not(.persona-farmer) #ev-fever .ev-timeago, #flow-root:not(.persona-farmer) #ev-heat .ev-timeago,
+    #flow-root:not(.persona-farmer) #ev-fever .ev-meta, #flow-root:not(.persona-farmer) #ev-heat .ev-meta {
+      display:inline-flex !important; align-items:center; width:fit-content; margin:2px 0 0;
+      background:rgba(255,255,255,0.82); color:var(--text1) !important; border-radius:8px; padding:2px 8px; font-size:11px;
+    }
+    #flow-root.dark:not(.persona-farmer) #ev-fever .ev-timeago, #flow-root.dark:not(.persona-farmer) #ev-heat .ev-timeago,
+    #flow-root.dark:not(.persona-farmer) #ev-fever .ev-meta, #flow-root.dark:not(.persona-farmer) #ev-heat .ev-meta {
+      background:rgba(0,0,0,0.55); color:#F5F5F5 !important;
+    }
     .vnav { position:absolute; left:14px; right:14px; bottom:26px; z-index:5; background:rgba(255,255,255,0.42); -webkit-backdrop-filter:blur(18px) saturate(1.4); backdrop-filter:blur(18px) saturate(1.4); border:1px solid rgba(255,255,255,0.55); border-radius:36px; display:flex; padding:5px; box-shadow:0 14px 36px rgba(0,0,0,0.20); }
     .vcap { position:absolute; top:5px; inset-inline-start:5px; width:calc((100% - 10px) / 5); height:56px; background:#FFFFFF; border-radius:28px; box-shadow:0 4px 14px rgba(0,0,0,0.10); transition:transform 0.34s cubic-bezier(0.32,1.04,0.36,1); will-change:transform; }
     .vcap.squish { animation: vsquish 0.34s cubic-bezier(0.32,1.04,0.36,1); }
@@ -495,6 +504,8 @@
       border-color: transparent var(--danger) transparent transparent;
     }
     #flow-root.display-image .ev-photo-card.p1 .ev-crit-label { border-right-color: var(--warning); }
+    #flow-root.display-image .ev-photo-card.sev-high .ev-crit-label { border-color: transparent var(--warning) transparent transparent !important; }
+    #flow-root.display-image .ev-photo-card.sev-critical .ev-crit-label { border-color: transparent var(--danger) transparent transparent !important; }
     #flow-root.display-image .ev-photo-card .ev-crit-label .ev-crit-dot { display: none !important; }
     /* time-ago now sits under the breed (row 3, middle column) */
     #flow-root.display-image .ev-photo-card .ev-timeago {
@@ -699,6 +710,8 @@
       box-shadow: none;
     }
     #flow-root.display-fullbleed .ev-photo-card.p1 .ev-crit-label { background: var(--warning); }
+    #flow-root.display-fullbleed .ev-photo-card.sev-high .ev-crit-label { background: var(--warning) !important; }
+    #flow-root.display-fullbleed .ev-photo-card.sev-critical .ev-crit-label { background: var(--danger) !important; }
     #flow-root.display-fullbleed .ev-photo-card.p2 .ev-crit-label,
     #flow-root.display-fullbleed .ev-photo-card.p3 .ev-crit-label { background: var(--text2); }
     #flow-root.display-fullbleed .ev-photo-card .ev-crit-label .ev-crit-dot { display: none !important; }
@@ -706,6 +719,8 @@
       content: var(--i18n-critical); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
     }
     #flow-root.display-fullbleed .ev-photo-card.p1 .ev-crit-label::after { content: var(--i18n-medium); }
+    #flow-root.display-fullbleed .ev-photo-card.sev-high .ev-crit-label::after { content: var(--i18n-high) !important; }
+    #flow-root.display-fullbleed .ev-photo-card.sev-critical .ev-crit-label::after { content: var(--i18n-critical) !important; }
     #flow-root.display-fullbleed .ev-photo-card.p2 .ev-crit-label::after,
     #flow-root.display-fullbleed .ev-photo-card.p3 .ev-crit-label::after { content: var(--i18n-low); }
     /* cow name / breed — white caption, top-left */
@@ -1794,9 +1809,9 @@
               <p data-k="qfNeedsAction" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs action</p>
 
               <!-- 1. Suspected fever -->
-              <div class="ev-card ev-photo-card p0" id="ev-fever" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; cursor:pointer;" onclick="openCardSheet('ev-fever','p0')">
+              <div class="ev-card ev-photo-card p0 sev-critical" id="ev-fever" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; cursor:pointer;" onclick="openCardSheet('ev-fever','p0')">
                 <span class="ev-corner-badge">!</span>
-                <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span><span data-k="sevCritical">CRITICAL</span></span>
+                <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span><span id="ev-fever-sevtext">CRITICAL</span></span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2h ago</span>
                 <p class="ev-title" data-k="titleFever" style="display:none;">Suspected fever — Kajri</p>
                 <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg><span data-k="mgrRamesh">Ramesh Kumar</span></p>
@@ -1818,8 +1833,8 @@
               </div>
 
               <!-- 2. Heat cycle detected -->
-              <div class="ev-card ev-photo-card p0" id="ev-heat" style="position:relative; background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; cursor:pointer;" onclick="openCardSheet('ev-heat','p1')">
-                <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span><span data-k="sevCritical">CRITICAL</span></span>
+              <div class="ev-card ev-photo-card p1 sev-high" id="ev-heat" style="position:relative; background:var(--warnbg); border:1px solid var(--warning); border-left:4px solid var(--warning); border-radius:16px; padding:14px 16px; margin-bottom:10px; cursor:pointer;" onclick="openCardSheet('ev-heat','p1')">
+                <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span><span id="ev-heat-sevtext">CRITICAL</span></span>
                 <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>20 min ago</span>
                 <p class="ev-title" data-k="titleHeat" style="display:none;">Heat cycle detected — Gauri</p>
                 <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg><span data-k="mgrRamesh">Ramesh Kumar</span></p>
@@ -3519,7 +3534,7 @@
                enterotp:'ENTER OTP', timer:'Time Remaining', nootp:"Didn't receive OTP?", resend:'Resend', confirm:'Confirm',
                phEmail:'you@example.com',
                navHome:'Home', navFarms:'Farms', navMilk:'Milk', navEvents:'Events', navAccount:'Account',
-               sevCritical:'CRITICAL', sevMedium:'MEDIUM', sevLow:'LOW',
+               sevCritical:'CRITICAL', sevHigh:'HIGH', sevMedium:'MEDIUM', sevLow:'LOW',
                farmsTitle:'Farms', statTotalFarms:'Total\nFarms', statMilkToday:'Milk Today', statUnactionedAlerts:'Unactioned Alerts',
                searchFarms:'Search farms', filterAllFarms:'All Farms', filterHealthy:'Healthy Farms', filterAttention:'Need Attention', filterSetup:'Setup Required',
                wordCattle:'cattle', setupBadge:'Setup', noFarmsMatch:'No farms match this filter.',
@@ -3601,7 +3616,7 @@
                enterotp:'OTP डालें', timer:'समय शेष', nootp:'OTP नहीं मिला?', resend:'फिर से भेजें', confirm:'पुष्टि करें',
                phEmail:'अपना ईमेल डालें',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता',
-               sevCritical:'गंभीर', sevMedium:'मध्यम', sevLow:'कम',
+               sevCritical:'गंभीर', sevHigh:'उच्च', sevMedium:'मध्यम', sevLow:'कम',
                farmsTitle:'खेत', statTotalFarms:'कुल\nखेत', statMilkToday:'आज का दूध', statUnactionedAlerts:'अनसुलझी चेतावनी',
                searchFarms:'खेत खोजें', filterAllFarms:'सभी खेत', filterHealthy:'स्वस्थ खेत', filterAttention:'ध्यान चाहिए', filterSetup:'सेटअप ज़रूरी',
                wordCattle:'पशु', setupBadge:'सेटअप', noFarmsMatch:'इस फ़िल्टर से कोई खेत नहीं मिला।',
@@ -3683,7 +3698,7 @@
                enterotp:'OTP डालीं', timer:'समय बाकी', nootp:'OTP ना मिलल?', resend:'फिर से भेजीं', confirm:'पुष्टि करीं',
                phEmail:'आपन ईमेल डालीं',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता',
-               sevCritical:'गंभीर', sevMedium:'मध्यम', sevLow:'कम',
+               sevCritical:'गंभीर', sevHigh:'उच्च', sevMedium:'मध्यम', sevLow:'कम',
                farmsTitle:'खेत', statTotalFarms:'कुल\nखेत', statMilkToday:'आज के दूध', statUnactionedAlerts:'ना सुलझल चेतावनी',
                searchFarms:'खेत खोजीं', filterAllFarms:'सगरी खेत', filterHealthy:'स्वस्थ खेत', filterAttention:'ध्यान के जरूरत', filterSetup:'सेटअप जरूरी',
                wordCattle:'पशु', setupBadge:'सेटअप', noFarmsMatch:'ए फ़िल्टर से कवनो खेत ना मिलल।',
@@ -3806,13 +3821,28 @@
         r.setProperty('--i18n-no', '"' + t().ctaNo + '"');
         r.setProperty('--i18n-yes', '"' + t().ctaYes + '"');
         r.setProperty('--i18n-critical', '"' + t().sevCritical + '"');
+        r.setProperty('--i18n-high', '"' + t().sevHigh + '"');
         r.setProperty('--i18n-medium', '"' + t().sevMedium + '"');
         r.setProperty('--i18n-low', '"' + t().sevLow + '"');
         r.setProperty('--i18n-viewdetails', '"' + t().viewDetailsLabel + '"');
         r.setProperty('--i18n-actionable', '" \u00b7 ' + t().chipActionable + '"');
       }
+      function applyCardSeverity() {
+        var CRIT_MIN = 120;
+        var defs = [ { id:'ev-fever', minutes:120 }, { id:'ev-heat', minutes:20 } ];
+        defs.forEach(function(d){
+          var card = document.getElementById(d.id);
+          if (!card) return;
+          var critical = d.minutes >= CRIT_MIN;
+          card.classList.toggle('sev-critical', critical);
+          card.classList.toggle('sev-high', !critical);
+          var txt = document.getElementById(d.id + '-sevtext');
+          if (txt) txt.textContent = critical ? t().sevCritical : t().sevHigh;
+        });
+      }
       function applyLang() {
         applyImgModeVars();
+        applyCardSeverity();
         document.getElementById('s1-title').textContent   = t().title;
         document.getElementById('s1-l-email').textContent = t().email;
         document.getElementById('s1-continue').textContent = t().cont;
@@ -3899,6 +3929,7 @@
         var farmer = window.VANIX_PERSONA === 'farmer';
         var root = document.getElementById('flow-root');
         root.classList.toggle('persona-farmer', farmer);
+        applyCardSeverity();
         root.classList.toggle('persona-owner', !farmer);
         root.classList.toggle('farms-single', farmer && window.VANIX_FARMS === 'single');
         var pl = document.getElementById('s1-persona-label');
