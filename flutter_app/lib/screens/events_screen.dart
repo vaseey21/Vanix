@@ -1834,6 +1834,17 @@ class _ActionCard extends StatelessWidget {
   final String title, sub;
   final String? meta;
   final String? manager;
+  // How long this card has been unactioned (e.g. "2h ago") — shown to the
+  // Farm Owner persona only, alongside `meta` (farm + manager context),
+  // mirroring the vanix_screens.html farm-owner-only reveal.
+  final String? timeAgo;
+  final bool showOwnerContext;
+  // Overrides the priority-derived severity badge text/color on the
+  // full-bleed photo card — used by Fever/Heat so they read "CRITICAL"/"HIGH"
+  // based on how long they've been unactioned, rather than reusing the
+  // generic P0="CRITICAL"/P1="MEDIUM" labels other cards show.
+  final String? severityLabel;
+  final Color? severityColor;
   // Cow + condition emoji "illustration" leading the card (e.g. 🐄⚠️ for
   // abortion) — farmer-friendly pictorial cue, in place of a plain text-only
   // header. Legacy combo-emoji tile, still used by cards not yet swapped to
