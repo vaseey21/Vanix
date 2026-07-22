@@ -1154,36 +1154,37 @@
                 </div>
               </div>
 
-              <!-- Summary cards (6 compact, number + label only) -->
+              <!-- Farm Status (3 compact stat cards) -->
               <div style="padding:8px 16px 0;">
+                <p data-k="farmStatusTitle" style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Farm Status</p>
                 <div style="display:flex; gap:10px;">
                   <div class="m-stat-card" style="flex:1; min-width:0; background:var(--bgcard); border-radius:16px; padding:14px 10px; text-align:center;"><p class="en" style="font-size:26px; font-weight:700; color:var(--text1); margin:0; line-height:1;">77</p><p data-k="statTotalCattle" style="font-size:11px; font-weight:600; color:var(--text1); margin:7px 0 0; line-height:1.3; white-space:pre-line;">Total Cattle</p></div>
                   <div class="m-stat-card" style="flex:1; min-width:0; background:var(--bgcard); border-radius:16px; padding:14px 10px; text-align:center;"><p class="en" style="font-size:26px; font-weight:700; color:var(--text1); margin:0; line-height:1;">2</p><p data-k="homeCowsPregnant" style="font-size:11px; font-weight:600; color:var(--text1); margin:7px 0 0; line-height:1.3; white-space:pre-line;">Cows Pregnant</p></div>
                   <div class="m-stat-card" style="flex:1; min-width:0; background:var(--bgcard); border-radius:16px; padding:14px 10px; text-align:center;"><p class="en" style="font-size:26px; font-weight:700; color:var(--text1); margin:0; line-height:1;">4</p><p data-k="homeCowsHeat" style="font-size:11px; font-weight:600; color:var(--text1); margin:7px 0 0; line-height:1.3; white-space:pre-line;">Cows in Heat</p></div>
                 </div>
-                <div style="display:flex; gap:10px; margin-top:10px;">
-                  <div class="m-stat-card" style="flex:1; min-width:0; background:var(--bgcard); border-radius:16px; padding:14px 10px; text-align:center;"><p class="en" style="font-size:26px; font-weight:700; color:var(--text1); margin:0; line-height:1;">2</p><p data-k="homePendingApprovals" style="font-size:11px; font-weight:600; color:var(--text1); margin:7px 0 0; line-height:1.3; white-space:pre-line;">Pending Approvals</p></div>
-                  <div class="m-stat-card" style="flex:1; min-width:0; background:var(--bgcard); border-radius:16px; padding:14px 10px; text-align:center;"><p class="en" style="font-size:26px; font-weight:700; color:var(--text1); margin:0; line-height:1;">3</p><p data-k="homeMilkingsMissed" style="font-size:11px; font-weight:600; color:var(--text1); margin:7px 0 0; line-height:1.3; white-space:pre-line;">Milkings Missed</p></div>
-                  <div class="m-stat-card" style="flex:1; min-width:0; background:var(--bgcard); border-radius:16px; padding:14px 10px; text-align:center;"><p class="en" style="font-size:26px; font-weight:700; color:var(--text1); margin:0; line-height:1;">14</p><p data-k="homeUnresolvedAlerts" style="font-size:11px; font-weight:600; color:var(--text1); margin:7px 0 0; line-height:1.3; white-space:pre-line;">Unresolved Alerts</p></div>
-                </div>
               </div>
 
-              <!-- Schedule with Today / This week tabs -->
+              <!-- Needs Attention (under Today / This week tabs) -->
               <div style="padding:20px 16px 0;">
                 <div style="display:flex; gap:8px; margin-bottom:12px;">
                   <button class="dash-sch-tab on" data-tab="today" data-k="dashToday" style="min-height:34px; padding:0 16px; border-radius:17px; border:1px solid var(--greenink); background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Today</button>
                   <button class="dash-sch-tab" data-tab="week" data-k="dashThisWeek" style="min-height:34px; padding:0 16px; border-radius:17px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">This Week</button>
                 </div>
-                <div id="dash-sch-today" style="background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); padding:4px 16px;">
-                  <div style="display:flex; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid var(--divider);"><span class="en" style="font-size:13px; font-weight:700; color:var(--greenink); width:64px; flex-shrink:0;">9h <span data-k="dashLeft" style="font-weight:600;">left</span></span><div style="width:3px; align-self:stretch; background:var(--greenink); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Gauri <span style="font-weight:400; color:var(--text2);">— <span data-k="dashInsemWindow">insemination window</span></span></p></div></div>
-                  <div style="display:flex; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid var(--divider);"><span class="en" style="font-size:13px; font-weight:700; color:var(--text1); width:64px; flex-shrink:0;">11:00 AM</span><div style="width:3px; align-self:stretch; background:var(--greendeep); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="dashVaccDrive">Vaccination Drive</p><p class="en" style="font-size:11px; color:var(--greenink); margin:2px 0 0; font-weight:600;">Starts in 15 mins</p></div></div>
-                  <div style="display:flex; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid var(--divider);"><span class="en" style="font-size:13px; font-weight:700; color:var(--text1); width:64px; flex-shrink:0;">4:30 PM</span><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px;"></div><div style="flex:1;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="dashVetVisit">Vet Visit</p></div></div>
-                  <div style="display:flex; align-items:center; gap:14px; padding:12px 0;"><span class="en" style="font-size:13px; font-weight:700; color:var(--text1); width:64px; flex-shrink:0;">6:00 PM</span><div style="width:3px; align-self:stretch; background:var(--border); border-radius:2px;"></div><div style="flex:1;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;" data-k="dashMilkLogging">Evening Milk Logging</p></div></div>
+                <p data-k="needsAttentionTitle" style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs Attention</p>
+                <div style="background:var(--bgcard); border-radius:18px; padding:4px 16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0; border-bottom:1px solid var(--divider);">
+                    <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;"><span class="en">2</span> <span data-k="rowPendingApprovals">Pending Approvals</span></p>
+                    <button class="dash-viewall-btn" data-target="approvals" style="flex-shrink:0; background:none; border:none; padding:0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;"><span data-k="viewAllWord">View All</span> &rsaquo;</button>
+                  </div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0; border-bottom:1px solid var(--divider);">
+                    <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;"><span class="en">3</span> <span data-k="rowMilkingMissed">Milking Sessions Missed</span></p>
+                    <button class="dash-viewall-btn" data-target="milk" style="flex-shrink:0; background:none; border:none; padding:0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;"><span data-k="viewAllWord">View All</span> &rsaquo;</button>
+                  </div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0;">
+                    <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;"><span class="en">14</span> <span data-k="rowCriticalAlerts">Critical Alerts</span></p>
+                    <button class="dash-viewall-btn" data-target="events" style="flex-shrink:0; background:none; border:none; padding:0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;"><span data-k="viewAllWord">View All</span> &rsaquo;</button>
+                  </div>
                 </div>
-                <div id="dash-sch-week" style="display:none; background:var(--bgcard); border-radius:18px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); padding:4px 16px;">
-                  <div style="display:flex; align-items:center; gap:14px; padding:12px 0;"><span class="en" style="font-size:13px; font-weight:700; color:var(--warning); width:64px; flex-shrink:0;">5<span data-k="dashDays" style="font-weight:600;">d</span></span><div style="width:3px; align-self:stretch; background:var(--warning); border-radius:2px;"></div><div style="flex:1; min-width:0;"><p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;"><span data-k="dashFmd">FMD vaccination</span></p><p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0;">5 <span data-k="dashCows">cows</span>, Green Villa</p></div></div>
-                </div>
-                <p data-k="dashRemindersNote" style="font-size:11px; color:var(--text2); margin:8px 16px 0; font-style:italic; display:none;" id="dash-sch-week-note">Items beyond 7 days stay in Events reminders</p>
               </div>
 
 
@@ -4016,10 +4017,10 @@
             if (box) box.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:2px 0;">\u2713 ' + (window.t ? window.t().dashTriageDone : 'Logged — thanks') + '</p>';
           });
         });
-        // Schedule Today / This week tabs
+        // Today / This week tabs above Needs Attention — same list either way,
+        // tabs just reflect which window the farm owner is scoping to.
         document.querySelectorAll('.dash-sch-tab').forEach(function(tab) {
           tab.addEventListener('click', function() {
-            var which = tab.getAttribute('data-tab');
             document.querySelectorAll('.dash-sch-tab').forEach(function(t) {
               var on = t === tab;
               t.classList.toggle('on', on);
@@ -4028,9 +4029,16 @@
               t.style.borderColor = on ? 'var(--greenink)' : 'var(--border)';
               t.style.fontWeight = on ? '600' : '500';
             });
-            document.getElementById('dash-sch-today').style.display = which === 'today' ? 'block' : 'none';
-            document.getElementById('dash-sch-week').style.display = which === 'week' ? 'block' : 'none';
-            var wn = document.getElementById('dash-sch-week-note'); if (wn) wn.style.display = which === 'week' ? 'block' : 'none';
+          });
+        });
+        // Needs Attention "View All" rows — route to the dedicated Approvals
+        // page, or the Milk Log / Events tab for the other two rows.
+        document.querySelectorAll('.dash-viewall-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var target = btn.getAttribute('data-target');
+            if (target === 'approvals' && window.openApprovalsPage) { window.openApprovalsPage(); }
+            else if (target === 'milk') { var nav = document.getElementById('dash-nav'); var t = nav ? nav.querySelector('.vtab[data-i="2"]') : null; if (t) t.click(); }
+            else if (target === 'events') { var nav2 = document.getElementById('dash-nav'); var t2 = nav2 ? nav2.querySelector('.vtab[data-i="3"]') : null; if (t2) t2.click(); }
           });
         });
         var goEvents = function() {
