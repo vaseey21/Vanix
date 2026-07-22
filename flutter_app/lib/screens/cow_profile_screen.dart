@@ -52,18 +52,22 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
     return List.generate(7, (i) => 29.5 + ((h >> (i * 3)) % 7) * 0.7);
   }
 
-  // Timeline events — (key, date, dot color).
+  // Timeline events — (key, date, dot color). All dots are now standardized
+  // to a single dark-gray fill (#555555) — mirrors every COW_TIMELINE entry's
+  // `c` field in vanix_screens_preview.html (previously per-event severity
+  // colors).
+  static const Color _tlDotColor = Color(0xFF555555);
   static final List<TimelineEvent> _timeline = [
-    const TimelineEvent('tlMilking', '2 Jul 2026', VanixColors.greenDeep),
-    const TimelineEvent('tlCalved', '1 Jul 2026', VanixColors.greenDeep),
-    const TimelineEvent('tlVet9m', '28 Jun 2026', VanixColors.warning),
-    const TimelineEvent('tlPreg', '10 Oct 2025', VanixColors.greenDeep),
-    const TimelineEvent('tlInsem', '18 Sep 2025', VanixColors.greenInk),
-    const TimelineEvent('tlHeat', '17 Sep 2025', VanixColors.warning),
-    const TimelineEvent('tlHeatMiss', '27 Aug 2025', VanixColors.danger),
-    const TimelineEvent('tlVetNote', '20 Jul 2025', VanixColors.textHint),
-    const TimelineEvent('tlCollar', '14 Jun 2025', VanixColors.textHint),
-    const TimelineEvent('tlAdded', '12 Jun 2025', VanixColors.textHint),
+    const TimelineEvent('tlMilking', '2 Jul 2026', _tlDotColor),
+    const TimelineEvent('tlCalved', '1 Jul 2026', _tlDotColor),
+    const TimelineEvent('tlVet9m', '28 Jun 2026', _tlDotColor),
+    const TimelineEvent('tlPreg', '10 Oct 2025', _tlDotColor),
+    const TimelineEvent('tlInsem', '18 Sep 2025', _tlDotColor),
+    const TimelineEvent('tlHeat', '17 Sep 2025', _tlDotColor),
+    const TimelineEvent('tlHeatMiss', '27 Aug 2025', _tlDotColor),
+    const TimelineEvent('tlVetNote', '20 Jul 2025', _tlDotColor),
+    const TimelineEvent('tlCollar', '14 Jun 2025', _tlDotColor),
+    const TimelineEvent('tlAdded', '12 Jun 2025', _tlDotColor),
   ];
 
   static const List<VetLog> _vetLogs = [
