@@ -197,9 +197,27 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                     heroTag: 'addCattleFab',
                     backgroundColor: VanixColors.greenInk,
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => AddCattleScreen(appState: widget.appState, farm: widget.farm),
-                      ));
+                      // Bottom slide-up sheet (leaves the farm-detail hero
+                      // peeking through at the top) — mirrors #page-add-cattle
+                      // / #ac-backdrop in vanix_screens_preview.html (top:64px,
+                      // rounded top corners, dimming backdrop) rather than a
+                      // full-screen page push.
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        barrierColor: Colors.black.withValues(alpha: 0.35),
+                        builder: (_) => Padding(
+                          padding: const EdgeInsets.only(top: 64),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height - 64,
+                              child: AddCattleScreen(appState: widget.appState, farm: widget.farm),
+                            ),
+                          ),
+                        ),
+                      );
                     },
                     child: const Icon(Icons.add, color: Colors.white),
                   ),
