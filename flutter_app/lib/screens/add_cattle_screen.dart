@@ -128,7 +128,7 @@ class _AddCattleScreenState extends State<AddCattleScreen> {
               Container(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                 decoration: BoxDecoration(
-                  color: _isDark ? VanixColors.darkPrimary : VanixColors.bgWarm,
+                  color: _isDark ? VanixColors.darkSecond : Colors.white,
                   border: Border(top: BorderSide(color: _isDark ? VanixColors.darkBorder : VanixColors.border)),
                 ),
                 child: Row(children: [
