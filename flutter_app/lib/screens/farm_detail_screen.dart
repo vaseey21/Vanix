@@ -396,8 +396,6 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                   ],
                 ),
               ),
-              const SizedBox(width: 10),
-              Text(_farmTempDuration(farm.id), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: subColor)),
             ],
           ),
           const SizedBox(height: 8),
@@ -405,15 +403,6 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
         ],
       ),
     );
-  }
-
-  // Mock "how long in this temperature state" duration — deterministic per
-  // farm id, mirrors the hash-based mock in vanix_screens_preview.html.
-  String _farmTempDuration(String farmId) {
-    var h = 0;
-    for (final code in farmId.codeUnits) { h = (h * 31 + code) & 0x7fffffff; }
-    final mins = 15 + (h % 225);
-    return '${mins ~/ 60}h ${mins % 60}m';
   }
 
   Widget _farmKebab(bool isDark) {
