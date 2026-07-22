@@ -3906,10 +3906,10 @@
             if (box) box.innerHTML = '<p style="font-size:13px; font-weight:600; color:var(--greenink); margin:2px 0;">\u2713 ' + (window.t ? window.t().dashTriageDone : 'Logged — thanks') + '</p>';
           });
         });
-        // Schedule Today / This week tabs
+        // Today / This week tabs above Needs Attention — same list either way,
+        // tabs just reflect which window the farm owner is scoping to.
         document.querySelectorAll('.dash-sch-tab').forEach(function(tab) {
           tab.addEventListener('click', function() {
-            var which = tab.getAttribute('data-tab');
             document.querySelectorAll('.dash-sch-tab').forEach(function(t) {
               var on = t === tab;
               t.classList.toggle('on', on);
@@ -3918,9 +3918,16 @@
               t.style.borderColor = on ? 'var(--greenink)' : 'var(--border)';
               t.style.fontWeight = on ? '600' : '500';
             });
-            document.getElementById('dash-sch-today').style.display = which === 'today' ? 'block' : 'none';
-            document.getElementById('dash-sch-week').style.display = which === 'week' ? 'block' : 'none';
-            var wn = document.getElementById('dash-sch-week-note'); if (wn) wn.style.display = which === 'week' ? 'block' : 'none';
+          });
+        });
+        // Needs Attention "View All" rows — route to the dedicated Approvals
+        // page, or the Milk Log / Events tab for the other two rows.
+        document.querySelectorAll('.dash-viewall-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var target = btn.getAttribute('data-target');
+            if (target === 'approvals' && window.openApprovalsPage) { window.openApprovalsPage(); }
+            else if (target === 'milk') { var nav = document.getElementById('dash-nav'); var t = nav ? nav.querySelector('.vtab[data-i="2"]') : null; if (t) t.click(); }
+            else if (target === 'events') { var nav2 = document.getElementById('dash-nav'); var t2 = nav2 ? nav2.querySelector('.vtab[data-i="3"]') : null; if (t2) t2.click(); }
           });
         });
         var goEvents = function() {
