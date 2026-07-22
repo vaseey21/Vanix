@@ -607,34 +607,12 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Align(alignment: AlignmentDirectional.centerEnd, child: _herdFilterBtn(isDark)),
-        if (widget.farm.cows.isNotEmpty)
-          Padding(
-            padding: const EdgeInsetsDirectional.only(top: 10),
-            child: _ruminationCard(isDark),
-          ),
+        if (widget.farm.cows.isNotEmpty) _ruminationCard(isDark),
       ],
     );
   }
 
-  Widget _herdFilterBtn(bool isDark) {
-    final textColor = isDark ? Colors.white : VanixColors.textPrimary;
-    return InkWell(
-      onTap: _openHerdFilterSheet,
-      borderRadius: BorderRadius.circular(14),
-      child: Container(
-        width: 46,
-        height: 46,
-        decoration: BoxDecoration(
-          color: isDark ? VanixColors.darkSecond : VanixColors.bgCard,
-          border: Border.all(color: isDark ? VanixColors.darkBorder : VanixColors.border),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Icon(Icons.filter_alt_outlined, size: 18, color: textColor),
-      ),
-    );
-  }
-
+  // ignore: unused_element
   void _openHerdFilterSheet() {
     showModalBottomSheet(
       context: context,
