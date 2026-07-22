@@ -1788,6 +1788,29 @@
           </div>
           </div>
 
+          <!-- APPROVALS PAGE — opened from Home's "Pending Approvals" View All -->
+          <div id="page-approvals" style="position:absolute; inset:0; background:var(--bgwarm); z-index:41; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 40px;">
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:14px 16px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <button id="approvals-back" style="flex-shrink:0; width:36px; height:36px; border-radius:50%; border:none; background:var(--bgcard); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                  <h2 data-k="approvalsPageTitle" style="font-size:22px; font-weight:600; color:var(--text1); margin:0; font-family:var(--font-hi);">Approvals</h2>
+                </div>
+              </div>
+              <div style="padding:14px 16px 0;">
+                <div style="display:flex; gap:8px; overflow-x:auto;">
+                  <button class="s7-bchip on" data-filter="all" style="flex-shrink:0; height:34px; padding:0 16px; border-radius:17px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:500; font-family:var(--font-hi);"><span data-k="allWord">All</span></button>
+                  <button class="s7-bchip" data-filter="pending" style="flex-shrink:0; height:34px; padding:0 16px; border-radius:17px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);"><span data-k="statusPending">Pending</span></button>
+                  <button class="s7-bchip" data-filter="approved" style="flex-shrink:0; height:34px; padding:0 16px; border-radius:17px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);"><span data-k="approvedWord">Approved</span></button>
+                  <button class="s7-bchip" data-filter="denied" style="flex-shrink:0; height:34px; padding:0 16px; border-radius:17px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-family:var(--font-hi);"><span data-k="deniedWord">Denied</span></button>
+                </div>
+              </div>
+              <div id="approvals-list" style="padding:16px 16px 0;"></div>
+            </div>
+            </div>
+          </div>
+
           <!-- EVENTS PAGE — opened from the Events tab -->
           <div id="page-events" style="position:absolute; inset:0; background:var(--bgwarm); z-index:40; display:none;">
             <div style="position:relative; height:100%; overflow:hidden;">
