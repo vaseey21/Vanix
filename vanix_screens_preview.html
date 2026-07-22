@@ -8493,18 +8493,16 @@
         fmFarmId = farmId;
         var f = farmById(farmId);
         document.getElementById('fm-sheet-farm').textContent = f ? loc(f, 'name') : '';
-        document.getElementById('fm-phone').value = '';
+        document.getElementById('fm-name').value = '';
         document.getElementById('fm-email').value = '';
         closeFmChoose();
         var sh = document.getElementById('fm-sheet'), bd = document.getElementById('fm-backdrop');
         sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
-      function openFmMgrList(farmId) {
-        fmFarmId = farmId;
-        var names = [];
-        FARMS.forEach(function(f) {
-          if (f.managerStatus !== 'pending' && f.manager && f.manager !== 'Unassigned' && names.indexOf(f.manager) === -1) names.push(f.manager);
-        });
+      var fmMgrListNames = [];
+      function renderFmMgrList(filter) {
+        var q = (filter || '').trim().toLowerCase();
+        var names = q ? fmMgrListNames.filter(function(n) { return n.toLowerCase().indexOf(q) > -1; }) : fmMgrListNames;
         var listEl = document.getElementById('fm-mgrlist');
         listEl.innerHTML = names.length ? names.map(function(n) {
           return '<button class="fm-mgr-opt" data-n="' + n + '" style="display:flex; align-items:center; width:100%; min-height:46px; padding:0 4px; border:none; background:transparent; font-size:15px; color:var(--text1); font-weight:500; font-family:var(--font-hi); cursor:pointer;">' + n + '</button>';
@@ -8516,12 +8514,24 @@
             if (f) { f.manager = n; f.managerHi = n; f.managerStatus = 'active'; f.managerInvite = ''; renderFarmMgmt(); renderFarmsList(); setFarmManagerLine(); }
             closeFmMgrList();
             closeFmChoose();
+            showToast(n + ' assigned as farm manager');
           });
         });
+      }
+      function openFmMgrList(farmId) {
+        fmFarmId = farmId;
+        fmMgrListNames = [];
+        FARMS.forEach(function(f) {
+          if (f.managerStatus !== 'pending' && f.manager && f.manager !== 'Unassigned' && fmMgrListNames.indexOf(f.manager) === -1) fmMgrListNames.push(f.manager);
+        });
+        var search = document.getElementById('fm-mgrlist-search');
+        search.value = '';
+        renderFmMgrList('');
         closeFmChoose();
         var sh = document.getElementById('fm-mgrlist-sheet'), bd = document.getElementById('fm-backdrop');
         sh.style.transform = 'translateY(0)'; sh.style.pointerEvents = 'auto'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
+      document.getElementById('fm-mgrlist-search').addEventListener('input', function(e) { renderFmMgrList(e.target.value); });
       function closeFmMgrList() {
         var sh = document.getElementById('fm-mgrlist-sheet');
         sh.style.transform = 'translateY(100%)'; sh.style.pointerEvents = 'none';
