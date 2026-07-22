@@ -6983,12 +6983,16 @@
       var cowActlogDate = null;
       var cowActlogExpanded = {};
       // Order requested: Standing, Resting, Feeding, Ruminating.
-      var COW_ACTLOG_CARDS = [
-        { key: 'standing',   labelK: 'actStanding',   meta: ACTLOG_ACTIONS[3] },
-        { key: 'resting',    labelK: 'actResting',    meta: ACTLOG_ACTIONS[0] },
-        { key: 'feeding',    labelK: 'actFeeding',    meta: ACTLOG_ACTIONS[1] },
-        { key: 'rumination', labelK: 'actRumination', meta: ACTLOG_ACTIONS[2] }
-      ];
+      // A function (not an eagerly-evaluated var) since ACTLOG_ACTIONS is
+      // declared further down the script — called lazily on first render.
+      function cowActlogCards() {
+        return [
+          { key: 'standing',   labelK: 'actStanding',   meta: ACTLOG_ACTIONS[3] },
+          { key: 'resting',    labelK: 'actResting',    meta: ACTLOG_ACTIONS[0] },
+          { key: 'feeding',    labelK: 'actFeeding',    meta: ACTLOG_ACTIONS[1] },
+          { key: 'rumination', labelK: 'actRumination', meta: ACTLOG_ACTIONS[2] }
+        ];
+      }
       function renderCowActlog() {
         var t = window.t();
         var wk = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
