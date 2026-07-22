@@ -418,14 +418,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
           borderRadius: BorderRadius.circular(12),
           side: BorderSide(color: isDark ? VanixColors.darkBorder : VanixColors.border),
         ),
-        icon: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: isDark ? VanixColors.darkSecond : VanixColors.bgCard,
-            border: Border.all(color: isDark ? VanixColors.darkBorder : VanixColors.border),
-          ),
-          child: Icon(Icons.more_vert, size: 16, color: textColor),
-        ),
+        icon: Icon(Icons.more_vert, size: 20, color: textColor),
         onSelected: (v) {
           switch (v) {
             case 'download':
