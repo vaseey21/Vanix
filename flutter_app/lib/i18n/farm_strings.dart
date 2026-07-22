@@ -24,6 +24,7 @@ class FS {
       'fdCustomRange': 'Custom range', 'fdFrom': 'From', 'fdTo': 'To', 'fdApply': 'Apply',
       'fdRuminationTitle': 'Herd rumination — today', 'fdNormalPattern': 'Normal pattern', 'fdAnomaly': 'Anomaly',
       'fdAnomalyNote': 'Anomaly detected — rumination dipped 14:00–16:00',
+      'overlapWord': 'Overlap', 'noOverlapWord': 'No overlap in active hours',
       // Setup Farm
       'setupFarmTitle': 'Setup Farm', 'sfInviteTitle': 'Invite a farm manager',
       'sfInviteSub': 'They get an email invite and manage this farm once they accept.',
