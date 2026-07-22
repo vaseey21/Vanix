@@ -287,6 +287,9 @@ class FS {
       'dashGoodNews': 'अच्छी खबर', 'dashRecovered': 'ठीक हो गई', 'dashFeverCaught': 'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', 'dashDaysAgo': 'दिन पहले',
       'dashConfPreg': 'गर्भ की पुष्टि', 'dashInseminated': 'गर्भाधान', 'dashConfYesterday': 'कल पुष्टि हुई',
       'dashCalved': 'ब्याई', 'dashHealthyCalf': 'स्वस्थ बछड़ा, अब दूध लॉग में', 'dashYesterday': 'कल', 'dashTriageDone': 'दर्ज — धन्यवाद', 'dashUpdates': 'अपडेट', 'dashToday': 'आज',
+      'homeCowsPregnant': 'गर्भवती\nगायें', 'homeCowsHeat': 'गर्मी में\nगायें', 'homePendingApprovals': 'लंबित\nमंज़ूरियाँ',
+      'homeMilkingsMissed': 'छूटी\nदूध दुहाई', 'homeUnresolvedAlerts': 'अनसुलझी\nचेतावनी',
+      'homeCowsInHeat': 'गर्मी में गायें', 'homeCowsInGestation': 'गर्भावस्था में गायें',
       // Cow action flow engine
       'eventDate': 'घटना की तारीख', 'eventTime': 'समय', 'caConfirm': 'पुष्टि करें', 'caDone': 'हो गया',
       'caYes': 'हाँ', 'caNo': 'नहीं', 'pickVet': 'पशु चिकित्सक चुनें', 'schedVisit': 'भेंट निर्धारित करें',
