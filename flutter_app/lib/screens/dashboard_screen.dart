@@ -219,28 +219,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // ── Summary cards: 6 compact tiles (number + 2-line label), 3 per row —
-  // Total Cattle / Cows Pregnant / Cows in Heat, then Pending Approvals /
-  // Milkings Missed / Unresolved Alerts. Mirrors the `.m-stat-card` grid in
-  // #dash-scroll (Home r2) — plain number + label, no icons, no sub-line. ──
+  // ── Farm Status: 3 compact stat tiles (number + label) — Total Cattle /
+  // Cows Pregnant / Cows in Heat. Mirrors the `.m-stat-card` row under the
+  // "Farm Status" heading in #dash-scroll (Home r3). ──
   Widget _statGrid() {
-    return Column(children: [
-      Row(children: [
-        Expanded(child: _statTile('77', 'statTotalCattle')),
-        const SizedBox(width: 10),
-        Expanded(child: _statTile('2', 'homeCowsPregnant')),
-        const SizedBox(width: 10),
-        Expanded(child: _statTile('4', 'homeCowsHeat')),
-      ]),
-      const SizedBox(height: 10),
-      Row(children: [
-        Expanded(child: _statTile('2', 'homePendingApprovals')),
-        const SizedBox(width: 10),
-        Expanded(child: _statTile('3', 'homeMilkingsMissed')),
-        const SizedBox(width: 10),
-        Expanded(child: _statTile('14', 'homeUnresolvedAlerts', onInfo: _openAlertsSheet)),
-      ]),
-    ]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(padding: const EdgeInsetsDirectional.only(bottom: 10), child: Text(_t('farmStatusTitle').toUpperCase(), style: _secLbl)),
+        Row(children: [
+          Expanded(child: _statTile('77', 'statTotalCattle')),
+          const SizedBox(width: 10),
+          Expanded(child: _statTile('2', 'homeCowsPregnant')),
+          const SizedBox(width: 10),
+          Expanded(child: _statTile('4', 'homeCowsHeat')),
+        ]),
+      ],
+    );
   }
 
   Widget _statTile(String num, String labelKey, {VoidCallback? onInfo}) {
