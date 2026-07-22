@@ -1680,6 +1680,32 @@
           </div>
           </div>
 
+          <!-- REPORT PREVIEW PAGE — opened from a Farm's kebab Download / Download Critical -->
+          <div id="page-report-preview" style="position:absolute; inset:0; background:var(--bgwarm); z-index:46; display:none;">
+            <div style="position:relative; height:100%; overflow:hidden;">
+            <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 100px;">
+              <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:14px 16px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <button id="report-preview-back" style="flex-shrink:0; width:36px; height:36px; border-radius:50%; border:none; background:var(--bgcard); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                  <h2 data-k="reportPreviewTitle" style="font-size:20px; font-weight:600; color:var(--text1); margin:0; font-family:var(--font-hi);">Report Preview</h2>
+                </div>
+              </div>
+              <div style="padding:16px;">
+                <div id="report-preview-doc" style="background:#FFFFFF; border:1px solid var(--border); border-radius:16px; padding:20px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);">
+                  <p id="report-preview-farmname" style="font-size:18px; font-weight:700; color:#111; margin:0;">Sunrise Dairy Farm</p>
+                  <p id="report-preview-titlerow" style="font-size:13px; font-weight:600; color:var(--danger); margin:4px 0 0;"></p>
+                  <p style="font-size:11px; color:#666; margin:4px 0 14px;"><span data-k="reportGeneratedOn">Generated on</span> <span id="report-preview-date"></span></p>
+                  <div style="height:1px; background:var(--divider); margin:0 0 14px;"></div>
+                  <p data-k="reportSummaryWord" style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#999; margin:0 0 8px;">Summary</p>
+                  <div id="report-preview-stats" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+                  <p id="report-preview-critnote" data-k="reportCriticalOnlyNote" style="display:none; font-size:12px; color:var(--danger); margin:14px 0 0; font-style:italic;">Includes only critical alerts and unresolved issues.</p>
+                </div>
+                <button id="report-preview-download" style="display:block; width:100%; min-height:48px; margin-top:16px; background:var(--greenink); border:none; border-radius:24px; font-size:14px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi); cursor:pointer;"><span data-k="downloadWord">Download</span></button>
+              </div>
+            </div>
+            </div>
+          </div>
+
           <!-- APPROVALS PAGE — opened from Home's "Pending Approvals" View All -->
           <div id="page-approvals" style="position:absolute; inset:0; background:var(--bgwarm); z-index:41; display:none;">
             <div style="position:relative; height:100%; overflow:hidden;">
