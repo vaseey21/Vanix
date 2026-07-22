@@ -8744,12 +8744,18 @@
     </script>
 <script>
       /* Lift flow overlays out of the (display:none when inactive) #page-events
-         container up to #flow-root, so the shared event-card flow is visible
+         container up to <body>, so the shared event-card flow is visible
          when launched from the Farmer dashboard or the Cow-profile timeline —
          not just from the active Events screen. z-index band sits above every
-         screen (max 44): detail-page/walkthrough 45, backdrops 46, sheets 47. */
+         screen (max 44): detail-page/walkthrough 45, backdrops 46, sheets 47.
+         Reparenting to #flow-root (height:100%; overflow:hidden) used to leave
+         these absolute-positioned (inset:0) backdrops badly offset — height was
+         right but the box sat far above the visible viewport, so only a thin
+         sliver was actually clickable and "click outside to close" silently
+         failed almost everywhere. <body> spans the real full-viewport bounds
+         this file is built for, so inset:0 against it lands correctly. */
       (function(){
-        var fr = document.getElementById('flow-root'); if(!fr) return;
+        var fr = document.body; if(!fr) return;
         var Z = {'ev-detail-page':45,'ev-seq-sheet':45,
                  'ev-cs-backdrop':46,'ev-cs-sheet':47,
                  'callvet-backdrop':46,'callvet-sheet':47,
