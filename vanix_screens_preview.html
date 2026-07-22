@@ -1780,9 +1780,9 @@
             <!-- HERO -->
             <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:14px 16px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
               <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-                <!-- Plain title — no longer opens the full-cycle walkthrough -->
                 <div id="ev-title-btn" style="padding:0; font-family:var(--font-hi);">
                   <h2 data-k="evTitle" style="font-size:22px; font-weight:600; color:var(--text1); margin:0;">Events</h2>
+                  <button id="ev-walkthrough-btn" onclick="window.evOpenFullCycle && window.evOpenFullCycle()" style="margin-top:2px; padding:0; border:none; background:none; font-family:var(--font-hi); font-size:12px; font-weight:600; color:var(--greenink); cursor:pointer;"><span data-k="evViewFullCycle">View full cycle</span> &rsaquo;</button>
                 </div>
                 <button id="ev-filter-btn" style="flex-shrink:0; display:flex; align-items:center; gap:6px; height:34px; padding:0 14px; background:var(--bgcard); border:1px solid var(--border); border-radius:17px; font-size:13px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg><span data-k="filterWord">Filter</span></button>
               </div>
