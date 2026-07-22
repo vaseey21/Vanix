@@ -42,6 +42,8 @@ class FS {
       // Farm detail
       'managerWord': 'Manager', 'searchCattle': 'Search cattle', 'criticalWord': 'critical',
       'tempVeryHigh': 'Very High', 'tempHigh': 'High', 'tempNormal': 'Normal', 'tempLow': 'Low',
+      'fdTabCattle': 'Cattle', 'fdTabHerd': 'Herd Activity', 'activityWord': 'Activity', 'herdCowsBtn': 'Cows',
+      'selectCowsWord': 'Select cows', 'fdHerdTitlePre': 'Herd', 'fdHerdTitlePost': 'today',
       'statusMilking': 'Milking', 'statusPregnant': 'Pregnant', 'statusHeatCycle': 'Heat Cycle', 'statusFeverAlert': 'Fever Alert',
       'cowTempCaption': 'cow temp', 'noCattleYet': 'No cattle yet on this farm.', 'tapAddCattle': 'Tap "Add Cattle" below to get started.',
       'noCattleMatch': 'No cattle match this filter.', 'breedWord': 'Breed', 'ageWord': 'Age',
