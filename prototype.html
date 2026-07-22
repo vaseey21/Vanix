@@ -3347,22 +3347,8 @@
               <h3 data-k="filterWord" style="font-size:20px; font-weight:700; color:var(--text1); margin:0; flex:1;">Filter</h3>
               <button id="fd-herd-filter-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
             </div>
-            <div style="display:flex; margin-top:14px; height:260px; border-top:1px solid var(--divider); border-bottom:1px solid var(--divider); margin-left:-24px; margin-right:-24px;">
-              <div class="fs-cats-rail" style="width:126px; flex-shrink:0; background:var(--bgwarm); display:flex; flex-direction:column; padding:8px 0;">
-                <button class="s7-cat fd-herd-fs-cat on" data-cat="activity" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);" data-k="activityWord">Activity</button>
-                <button class="s7-cat fd-herd-fs-cat" data-cat="cows" style="text-align:start; border:none; padding:14px 14px; font-size:13px; font-family:var(--font-hi);" data-k="herdCowsBtn">Cows</button>
-              </div>
-              <div class="fs-panes-wrap" style="flex:1; padding:12px 20px; overflow-y:auto; background:#FFFFFF;">
-                <div class="fd-herd-fs-pane" data-pane="activity">
-                  <button class="s7-chip fd-herd-act-opt on" data-val="rumination" data-k="actRumination">Rumination</button>
-                  <button class="s7-chip fd-herd-act-opt" data-val="standing" data-k="actStanding">Standing</button>
-                  <button class="s7-chip fd-herd-act-opt" data-val="resting" data-k="actResting">Resting</button>
-                  <button class="s7-chip fd-herd-act-opt" data-val="feeding" data-k="actFeeding">Feeding</button>
-                </div>
-                <div class="fd-herd-fs-pane" data-pane="cows" style="display:none;">
-                  <div id="fd-herd-cow-opts"></div>
-                </div>
-              </div>
+            <div style="margin-top:14px; max-height:260px; overflow-y:auto; border-top:1px solid var(--divider); border-bottom:1px solid var(--divider); padding:12px 0;">
+              <div id="fd-herd-cow-opts"></div>
             </div>
             <button id="fd-herd-filter-apply" data-k="applyFilters" style="width:100%; height:52px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:26px; font-size:16px; font-weight:600; font-family:var(--font-hi); margin-top:14px;">Apply filters</button>
           </div>
