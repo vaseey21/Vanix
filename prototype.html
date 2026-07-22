@@ -935,6 +935,13 @@
     #flow-root.display-fullbleed .ev-photo-card .ev-photo-viewdetails,
     #flow-root .ev-photo-card .ev-photo-viewdetails,
     #flow-root .ev-viewdetails { display:none !important; }
+    /* Closed bottom sheets are moved off-screen via translateY(100%), but a
+       negative-y box-shadow still paints above the element's *current*
+       (post-transform) position — inside a fixed-height container that
+       lands back in the visible viewport near the bottom edge. ~32 sheets
+       share this pattern app-wide, so kill the shadow globally rather than
+       patching each one. */
+    [id$="-sheet"], #page-add-cattle { box-shadow: none !important; }
   </style>
 </head>
 <body>
