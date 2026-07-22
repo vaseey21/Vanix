@@ -417,8 +417,10 @@ class _CowProfileScreenState extends State<CowProfileScreen> {
       case 1:
         return _buildOverview();
       case 2:
-        return _buildMilkData();
+        return _buildActivity();
       case 3:
+        return _buildMilkData();
+      case 4:
         return _buildVetLogs();
       case 0:
       default:
