@@ -3063,13 +3063,15 @@
           </div>
 
           <!-- ADD CATTLE — full-screen form, opened by the Farm Detail + FAB -->
-          <div id="page-add-cattle" style="position:absolute; inset:0; background:var(--bgwarm); z-index:50; transform:translateY(100%); transition:transform 0.5s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column;">
-            <div style="flex-shrink:0; display:flex; align-items:center; gap:4px; padding:16px 16px 10px; background:var(--bgwarm);">
+          <div id="ac-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:49;"></div>
+          <div id="page-add-cattle" style="position:absolute; left:0; right:0; bottom:0; top:64px; background:#FFFFFF; border-radius:24px 24px 0 0; z-index:50; transform:translateY(100%); transition:transform 0.5s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column; overflow:hidden; box-shadow:0 -10px 32px rgba(0,0,0,0.22);">
+            <div style="flex-shrink:0; display:flex; justify-content:center; padding:8px 0 0; background:#FFFFFF;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+            <div style="flex-shrink:0; display:flex; align-items:center; gap:4px; padding:10px 16px 10px; background:#FFFFFF;">
               <button id="ac-back" style="flex-shrink:0; width:34px; height:34px; border-radius:50%; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
               <p data-k="addCattle" style="font-size:22px; font-weight:600; color:var(--text1); margin:0; line-height:1.2;">Add Cattle</p>
             </div>
-            <div style="flex-shrink:0; display:flex; gap:8px; padding:0 16px; background:var(--bgwarm); border-bottom:1px solid var(--divider);">
-              <button class="ac-tab on" data-actab="cow" data-k="acTabCowDetails" style="flex:1; min-height:44px; border:none; border-bottom:3px solid var(--greenink); background:transparent; color:var(--greenink); font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Cow Details</button>
+            <div style="flex-shrink:0; display:flex; gap:8px; padding:0 16px; background:#FFFFFF; border-bottom:1px solid var(--divider);">
+              <button class="ac-tab on" data-actab="cow" data-k="acTabCowDetails" style="flex:1; min-height:44px; border:none; border-bottom:3px solid var(--greenink); background:transparent; color:var(--greenink); font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Cattle Detail</button>
               <button class="ac-tab" data-actab="device" data-k="acTabDeviceDetails" style="flex:1; min-height:44px; border:none; border-bottom:3px solid transparent; background:transparent; color:var(--text2); font-size:14px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Device Details</button>
             </div>
             <div style="flex:1; overflow-y:auto; padding:16px 16px 120px;">
@@ -3080,7 +3082,7 @@
                     <span data-k="acPhotoHint" style="font-size:11px; color:var(--text2); text-align:center; line-height:1.3;">Upload a PNG / JPG of the cow</span>
                   </button>
                   <div style="flex:1; min-width:0; height:132px; display:flex; flex-direction:column; justify-content:space-between;">
-                    <input id="ac-name-input" type="text" placeholder="Cow Name" data-k="acCowName" data-k-placeholder style="width:100%; box-sizing:border-box; height:30px; background:var(--bgcard); border:1px solid var(--border); border-radius:8px; padding:0 10px; font-size:12px; color:var(--text1); font-family:var(--font-hi);">
+                    <input id="ac-name-input" type="text" placeholder="Name" data-k="acCowName" data-k-placeholder style="width:100%; box-sizing:border-box; height:30px; background:var(--bgcard); border:1px solid var(--border); border-radius:8px; padding:0 10px; font-size:12px; color:var(--text1); font-family:var(--font-hi);">
                     <button id="ac-type-btn" style="width:100%; box-sizing:border-box; height:30px; background:var(--bgcard); border:1px solid var(--border); border-radius:8px; padding:0 10px; font-size:12px; color:var(--text1); font-family:var(--font-hi); display:flex; align-items:center; justify-content:space-between; cursor:pointer;"><span><span style="color:var(--text2); font-weight:500;">Type</span> <span id="ac-type-val" class="en" style="color:var(--text1); font-weight:600;">Cow</span></span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M6 9l6 6 6-6"/></svg></button>
                     <button id="ac-breed-btn" style="width:100%; box-sizing:border-box; height:30px; background:var(--bgcard); border:1px solid var(--border); border-radius:8px; padding:0 10px; font-size:12px; color:var(--text1); font-family:var(--font-hi); display:flex; align-items:center; justify-content:space-between; cursor:pointer;"><span><span style="color:var(--text2); font-weight:500;"><span data-k="breedWord">Breed</span></span> <span id="ac-breed-val" class="en" style="color:var(--text1); font-weight:600;">Select</span></span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M6 9l6 6 6-6"/></svg></button>
                     <button id="ac-gender-btn" style="width:100%; box-sizing:border-box; height:30px; background:var(--bgcard); border:1px solid var(--border); border-radius:8px; padding:0 10px; font-size:12px; color:var(--text1); font-family:var(--font-hi); display:flex; align-items:center; justify-content:space-between; cursor:pointer;"><span><span style="color:var(--text2); font-weight:500;"><span data-k="genderWord">Gender</span></span> <span id="ac-gender-val" class="en" style="color:var(--text1); font-weight:600;">Select</span></span><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M6 9l6 6 6-6"/></svg></button>
@@ -3110,7 +3112,7 @@
                 <input id="ac-mac-input" type="text" placeholder="A4:C1:38:2B:9F:11" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
               </div>
             </div>
-            <div style="flex-shrink:0; padding:12px 16px calc(12px + env(safe-area-inset-bottom)); background:var(--bgwarm); border-top:1px solid var(--border); display:flex; gap:10px;">
+            <div style="flex-shrink:0; padding:12px 16px calc(12px + env(safe-area-inset-bottom)); background:#FFFFFF; border-top:1px solid var(--border); display:flex; gap:10px;">
               <button id="ac-cancel" data-k="cancelWord" style="flex:1; min-height:50px; border-radius:25px; border:1px solid var(--border); background:var(--bgcard); font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Cancel</button>
               <button id="ac-save" data-k="saveWord" style="flex:1.6; min-height:50px; border-radius:25px; border:none; background:var(--greenink); color:#FFFFFF; font-size:15px; font-weight:700; font-family:var(--font-hi); cursor:pointer;">Save</button>
             </div>
@@ -3479,7 +3481,7 @@
                wordCattle:'cattle', setupBadge:'Setup', noFarmsMatch:'No farms match this filter.',
                managerWord:'Manager', farmTempCaption:'Farm temp', searchCattle:'Search cattle',
                cattleAll:'All', cattleMilking:'Milking', cattleFever:'Fever', cattleHeat:'Heat',
-               cowTempCaption:'cow temp', addCattle:'Add Cattle', noCattleYet:'No cattle yet on this farm.', tapAddCattle:'Tap "Add Cattle" below to get started.', noCattleMatch:'No cattle match this filter.', acSubPre:'Add a new cow to', acPhotoHint:'Upload a PNG / JPG of the cow', acTypeHint:'Cow \u00b7 Sheep \u00b7 Goat \u2014 non-cow health scoring is flagged.', selectWord:'Select', genderFemale:'Female', genderMale:'Male', acCowName:'Cow Name (easily recognisable)', yearsWord:'Years', monthsWord:'Months', cowStatusWord:'Cow Status', statusUnknown:'Before Estrus', calfWord:'Calf', acDeviceDetails:'Device Details', acBeltNo:'Cattle Belt Number', acCowHistory:'Cow History', optionalWord:'(optional)', acFillHistory:'Fill cow history', acHistUnknown:'History unknown', acLastHeat:'Last Heat', acLastInsem:'Last Insemination', acLastPreg:'Last Pregnancy', acLastCalving:'Last Calving', acLactationNo:'Lactation Number', acLactHint:'Number stepper, not a date. Fields show only while "Fill cow history" is selected.', saveWord:'Save',
+               cowTempCaption:'cow temp', addCattle:'Add Cattle', noCattleYet:'No cattle yet on this farm.', tapAddCattle:'Tap "Add Cattle" below to get started.', noCattleMatch:'No cattle match this filter.', acSubPre:'Add a new cow to', acPhotoHint:'Upload a PNG / JPG of the cow', acTypeHint:'Cow \u00b7 Sheep \u00b7 Goat \u2014 non-cow health scoring is flagged.', selectWord:'Select', genderFemale:'Female', genderMale:'Male', acCowName:'Name', yearsWord:'Years', monthsWord:'Months', cowStatusWord:'Cow Status', statusUnknown:'Before Estrus', calfWord:'Calf', acDeviceDetails:'Device Details', acBeltNo:'Cattle Belt Number', acCowHistory:'Cow History', optionalWord:'(optional)', acFillHistory:'Fill cow history', acHistUnknown:'History unknown', acLastHeat:'Last Heat', acLastInsem:'Last Insemination', acLastPreg:'Last Pregnancy', acLastCalving:'Last Calving', acLactationNo:'Lactation Number', acLactHint:'Number stepper, not a date. Fields show only while "Fill cow history" is selected.', saveWord:'Save',
                statusMilking:'Milking', statusPregnant:'Pregnant', statusHeatCycle:'Heat Cycle',
                evTitle:'Events', evSubtitle:'Health, breeding and reminders across all your farms', evViewFullCycle:'View full cycle', evNeedAction:'need action',
                qfType:'Type', qfUnactioned:'Unactioned', qfCriticality:'Criticality', qfCategory:'Category',
@@ -3512,7 +3514,7 @@
                histInsem:'Inseminated \u2014 Mohini', histInsemSub:'Within the 18h window \u2014 pregnancy check set for 3 Jul',
                stageMilking:'MILKING', stageHeatWatch:'HEAT WATCH', stageRecovered:'RECOVERED', stage21Day:'21-DAY WATCH',
                prioP0:'CRITICAL', prioP1:'MEDIUM', prioP2:'MEDIUM', prioP3:'LOW',
-               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters', dashGreeting:'Good morning,', dashAllFarms:'All Farms', dashLive:'Live', dashAddedToday:'added today', dashActiveAlerts:'Active Alerts', dashPendingTasks:'Pending Tasks', dashDueToday:'due today', dashOverdue:'overdue', dashPregnant:'Pregnant', dashDueThisWeek:'due this week', dashActionAlerts:'Action Alerts', dashWaiting:'waiting', dashYesFever:'Yes, fever', dashViewEvents:'View all in Events', dashEditsApproval:'Edits awaiting your approval', dashMilkMissing:'Milk sessions missing today', dashInsemWindow:'insemination window', dashLeft:'left', dashFarmsNeedAction:'Farms needing action', fdShareReport:'Share report', inviteFarmMgrTitle:'Invite Farm Manager', noMgrsYet:'No farm managers added yet.', logoutConfirmTitle:'Log out?', logoutConfirmBody:'You will need to sign in again to access your farms.', logoutConfirmBtn:'Log Out', acTabCowDetails:'Cow Details', acTabDeviceDetails:'Device Details', acAddHistory:'Add cow history', acNodeMacId:'Node/MAC ID', genderWord:'Gender', activityWord:'Activity', downloadReport:'Download Report', shareReportVet:'Share Report with vet', reportTypeTitle:'Report type', fullReport:'Full report', criticalReport:'Critical report', activityLogWord:'Activity log', fdTabCattle:'Cattle', fdTabHerd:'Herd Activity', herdCowsBtn:'Cows', selectCowsWord:'Select cows', tabActivity:'Activity', fdDownloadReport:'Download report', durationWord:'Duration', customRangeWord:'Custom range', homeCowsPregnant:'Cows\nPregnant', homeCowsHeat:'Cows\nin Heat', homePendingApprovals:'Pending\nApprovals', homeMilkingsMissed:'Milking\nMissed', homeUnresolvedAlerts:'Unresolved\nAlerts', homeCowsInHeat:'Cows in heat', homeCowsInGestation:'Cows in gestation', dashOffline:'offline', dashTodaySchedule:"Today's Schedule", dashVaccDrive:'Vaccination Drive', dashVetVisit:'Vet Visit', dashMilkLogging:'Evening Milk Logging', dashThisWeek:'This Week', dashFmd:'FMD vaccination', dashCows:'cows', dashDays:'d', dashRemindersNote:'Items beyond 7 days stay in Events reminders', dashGoodNews:'Good News', dashRecovered:'recovered', dashFeverCaught:'fever caught by collar, treated by Dr. Sharma', dashDaysAgo:'days ago', dashConfPreg:'confirmed pregnant', dashInseminated:'Inseminated', dashConfYesterday:'confirmed yesterday', dashCalved:'calved', dashHealthyCalf:'healthy calf, now in the Milk Log', dashYesterday:'Yesterday', dashTriageDone:'Logged — thanks', dashUpdates:'Updates', dashToday:'Today', farmStatusTitle:'Farm Status', needsAttentionTitle:'Needs Attention', viewAllWord:'View All', rowPendingApprovals:'Pending Approvals', rowMilkingMissed:'Milking Sessions Missed', rowCriticalAlerts:'Critical Alerts', approvalsPageTitle:'Approvals', approvalsPendingHeader:'Pending Approvals', approvalsHistoryHeader:'History', approvedWord:'Approved', deniedWord:'Denied', approveWord:'Approve', denyWord:'Deny', bucketThisWeek:'This Week', bucketLastWeek:'Last Week', bucketLastMonth:'Last Month', noApprovalsWord:'No approvals in this filter', downloadCriticalReport:'Download Critical Report', manageFarmWord:'Manage Farm', reportPreviewTitle:'Report Preview', reportGeneratedOn:'Generated on', downloadWord:'Download', reportDownloaded:'Report downloaded', reportSummaryWord:'Summary', reportCriticalOnlyNote:'Includes only critical alerts and unresolved issues.',
+               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters', dashGreeting:'Good morning,', dashAllFarms:'All Farms', dashLive:'Live', dashAddedToday:'added today', dashActiveAlerts:'Active Alerts', dashPendingTasks:'Pending Tasks', dashDueToday:'due today', dashOverdue:'overdue', dashPregnant:'Pregnant', dashDueThisWeek:'due this week', dashActionAlerts:'Action Alerts', dashWaiting:'waiting', dashYesFever:'Yes, fever', dashViewEvents:'View all in Events', dashEditsApproval:'Edits awaiting your approval', dashMilkMissing:'Milk sessions missing today', dashInsemWindow:'insemination window', dashLeft:'left', dashFarmsNeedAction:'Farms needing action', fdShareReport:'Share report', inviteFarmMgrTitle:'Invite Farm Manager', noMgrsYet:'No farm managers added yet.', logoutConfirmTitle:'Log out?', logoutConfirmBody:'You will need to sign in again to access your farms.', logoutConfirmBtn:'Log Out', acTabCowDetails:'Cattle Detail', acTabDeviceDetails:'Device Details', acAddHistory:'Add cow history', acNodeMacId:'Node/MAC ID', genderWord:'Gender', activityWord:'Activity', downloadReport:'Download Report', shareReportVet:'Share Report with vet', reportTypeTitle:'Report type', fullReport:'Full report', criticalReport:'Critical report', activityLogWord:'Activity log', fdTabCattle:'Cattle', fdTabHerd:'Herd Activity', herdCowsBtn:'Cows', selectCowsWord:'Select cows', tabActivity:'Activity', fdDownloadReport:'Download report', durationWord:'Duration', customRangeWord:'Custom range', homeCowsPregnant:'Cows\nPregnant', homeCowsHeat:'Cows\nin Heat', homePendingApprovals:'Pending\nApprovals', homeMilkingsMissed:'Milking\nMissed', homeUnresolvedAlerts:'Unresolved\nAlerts', homeCowsInHeat:'Cows in heat', homeCowsInGestation:'Cows in gestation', dashOffline:'offline', dashTodaySchedule:"Today's Schedule", dashVaccDrive:'Vaccination Drive', dashVetVisit:'Vet Visit', dashMilkLogging:'Evening Milk Logging', dashThisWeek:'This Week', dashFmd:'FMD vaccination', dashCows:'cows', dashDays:'d', dashRemindersNote:'Items beyond 7 days stay in Events reminders', dashGoodNews:'Good News', dashRecovered:'recovered', dashFeverCaught:'fever caught by collar, treated by Dr. Sharma', dashDaysAgo:'days ago', dashConfPreg:'confirmed pregnant', dashInseminated:'Inseminated', dashConfYesterday:'confirmed yesterday', dashCalved:'calved', dashHealthyCalf:'healthy calf, now in the Milk Log', dashYesterday:'Yesterday', dashTriageDone:'Logged — thanks', dashUpdates:'Updates', dashToday:'Today', farmStatusTitle:'Farm Status', needsAttentionTitle:'Needs Attention', viewAllWord:'View All', rowPendingApprovals:'Pending Approvals', rowMilkingMissed:'Milking Sessions Missed', rowCriticalAlerts:'Critical Alerts', approvalsPageTitle:'Approvals', approvalsPendingHeader:'Pending Approvals', approvalsHistoryHeader:'History', approvedWord:'Approved', deniedWord:'Denied', approveWord:'Approve', denyWord:'Deny', bucketThisWeek:'This Week', bucketLastWeek:'Last Week', bucketLastMonth:'Last Month', noApprovalsWord:'No approvals in this filter', downloadCriticalReport:'Download Critical Report', manageFarmWord:'Manage Farm', reportPreviewTitle:'Report Preview', reportGeneratedOn:'Generated on', downloadWord:'Download', reportDownloaded:'Report downloaded', reportSummaryWord:'Summary', reportCriticalOnlyNote:'Includes only critical alerts and unresolved issues.', overlapWord:'Overlap', noOverlapWord:'No overlap in active hours',
                catFever:'Fever', catHeat:'Heat', catPregnancy:'Pregnancy', catGestation:'Gestation', catMilking:'Milking', catLactation:'Lactation', catPregLoss:'Pregnancy loss', catFreshCow:'Fresh cow',
                catMastitis:'Mastitis', catLameness:'Lameness', catKetosis:'Ketosis', catHeatStress:'Heat stress', catCalibration:'Calibration', farmGreenValley:'Green Valley Farm', farmSunrise:'Sunrise Dairy',
                farmsSubtitle:'Manage all your dairy farms in one place', yourFarms:'Your Farms', periodToday:'Today', period7:'Last 7 days', period30:'Last 30 days',
@@ -3561,7 +3563,7 @@
                wordCattle:'पशु', setupBadge:'सेटअप', noFarmsMatch:'इस फ़िल्टर से कोई खेत नहीं मिला।',
                managerWord:'प्रबंधक', farmTempCaption:'खेत का तापमान', searchCattle:'पशु खोजें',
                cattleAll:'सभी', cattleMilking:'दूध देने वाली', cattleFever:'बुखार', cattleHeat:'हीट',
-               cowTempCaption:'पशु का तापमान', addCattle:'पशु जोड़ें', noCattleYet:'इस खेत में अभी कोई पशु नहीं है।', tapAddCattle:'शुरू करने के लिए "पशु जोड़ें" दबाएँ।', noCattleMatch:'इस फ़िल्टर से कोई पशु नहीं मिला।', acSubPre:'इस खेत में नई गाय जोड़ें —', acPhotoHint:'गाय की PNG / JPG अपलोड करें', acTypeHint:'गाय \u00b7 भेड़ \u00b7 बकरी \u2014 गैर-गाय स्वास्थ्य स्कोरिंग चिह्नित होती है।', selectWord:'चुनें', genderFemale:'मादा', genderMale:'नर', acCowName:'गाय का नाम (आसानी से पहचानने योग्य)', yearsWord:'साल', monthsWord:'महीने', cowStatusWord:'गाय की स्थिति', statusUnknown:'एस्ट्रस से पहले', calfWord:'बछड़ा', acDeviceDetails:'डिवाइस विवरण', acBeltNo:'पशु बेल्ट नंबर', acCowHistory:'गाय का इतिहास', optionalWord:'(वैकल्पिक)', acFillHistory:'गाय का इतिहास भरें', acHistUnknown:'इतिहास अज्ञात', acLastHeat:'अंतिम हीट', acLastInsem:'अंतिम गर्भाधान', acLastPreg:'अंतिम गर्भावस्था', acLastCalving:'अंतिम प्रसव', acLactationNo:'स्तनपान संख्या', acLactHint:'संख्या स्टेपर, तारीख नहीं। ये फ़ील्ड केवल "गाय का इतिहास भरें" चुनने पर दिखते हैं।', saveWord:'सहेजें',
+               cowTempCaption:'पशु का तापमान', addCattle:'पशु जोड़ें', noCattleYet:'इस खेत में अभी कोई पशु नहीं है।', tapAddCattle:'शुरू करने के लिए "पशु जोड़ें" दबाएँ।', noCattleMatch:'इस फ़िल्टर से कोई पशु नहीं मिला।', acSubPre:'इस खेत में नई गाय जोड़ें —', acPhotoHint:'गाय की PNG / JPG अपलोड करें', acTypeHint:'गाय \u00b7 भेड़ \u00b7 बकरी \u2014 गैर-गाय स्वास्थ्य स्कोरिंग चिह्नित होती है।', selectWord:'चुनें', genderFemale:'मादा', genderMale:'नर', acCowName:'नाम', yearsWord:'साल', monthsWord:'महीने', cowStatusWord:'गाय की स्थिति', statusUnknown:'एस्ट्रस से पहले', calfWord:'बछड़ा', acDeviceDetails:'डिवाइस विवरण', acBeltNo:'पशु बेल्ट नंबर', acCowHistory:'गाय का इतिहास', optionalWord:'(वैकल्पिक)', acFillHistory:'गाय का इतिहास भरें', acHistUnknown:'इतिहास अज्ञात', acLastHeat:'अंतिम हीट', acLastInsem:'अंतिम गर्भाधान', acLastPreg:'अंतिम गर्भावस्था', acLastCalving:'अंतिम प्रसव', acLactationNo:'स्तनपान संख्या', acLactHint:'संख्या स्टेपर, तारीख नहीं। ये फ़ील्ड केवल "गाय का इतिहास भरें" चुनने पर दिखते हैं।', saveWord:'सहेजें',
                statusMilking:'दूध दे रही', statusPregnant:'गर्भवती', statusHeatCycle:'हीट साइकिल',
                evTitle:'कार्यक्रम', evSubtitle:'आपके सभी खेतों में स्वास्थ्य, प्रजनन और अनुस्मारक', evViewFullCycle:'पूरा चक्र देखें', evNeedAction:'को कार्रवाई चाहिए',
                qfType:'प्रकार', qfUnactioned:'अनसुलझे', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
@@ -3594,7 +3596,7 @@
                histInsem:'गर्भाधान हुआ \u2014 मोहिनी', histInsemSub:'18 घंटे की विंडो में \u2014 गर्भ जांच 3 जुलाई को',
                stageMilking:'दूध दे रही', stageHeatWatch:'हीट निगरानी', stageRecovered:'स्वस्थ हुई', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें', dashGreeting:'सुप्रभात,', dashAllFarms:'सभी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़े गए', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'इस सप्ताह देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हाँ, बुखार', dashViewEvents:'सभी कार्यक्रम देखें', dashEditsApproval:'आपकी मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटे दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहिए खेत', fdShareReport:'रिपोर्ट साझा करें', inviteFarmMgrTitle:'फार्म प्रबंधक आमंत्रित करें', noMgrsYet:'अभी तक कोई फार्म प्रबंधक नहीं जोड़ा गया।', logoutConfirmTitle:'लॉग आउट करें?', logoutConfirmBody:'अपने फार्म तक पहुँचने के लिए आपको फिर से साइन इन करना होगा।', logoutConfirmBtn:'लॉग आउट', acTabCowDetails:'गाय का विवरण', acTabDeviceDetails:'डिवाइस विवरण', acAddHistory:'गाय का इतिहास जोड़ें', acNodeMacId:'नोड/MAC आईडी', genderWord:'लिंग', activityWord:'गतिविधि', downloadReport:'रिपोर्ट डाउनलोड करें', shareReportVet:'पशु चिकित्सक को रिपोर्ट भेजें', reportTypeTitle:'रिपोर्ट प्रकार', fullReport:'पूरी रिपोर्ट', criticalReport:'गंभीर रिपोर्ट', activityLogWord:'गतिविधि लॉग', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गायें', selectCowsWord:'गायें चुनें', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करें', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगायें', homeCowsHeat:'हीट में\nगायें', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटे दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझे\nअलर्ट', homeCowsInHeat:'हीट में गायें', homeCowsInGestation:'गर्भ में गायें', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज का कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'शाम की दूध लॉगिंग', dashThisWeek:'इस सप्ताह', dashFmd:'खुरपका टीकाकरण', dashCows:'गायें', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं', dashGoodNews:'अच्छी खबर', dashRecovered:'ठीक हो गई', dashFeverCaught:'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', dashDaysAgo:'दिन पहले', dashConfPreg:'गर्भ की पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'कल पुष्टि हुई', dashCalved:'ब्याई', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'कल', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज', farmStatusTitle:'फार्म स्थिति', needsAttentionTitle:'ध्यान चाहिए', viewAllWord:'सभी देखें', rowPendingApprovals:'मंज़ूरी बाकी', rowMilkingMissed:'छूटे दूध सत्र', rowCriticalAlerts:'गंभीर अलर्ट', approvalsPageTitle:'मंज़ूरी', approvalsPendingHeader:'मंज़ूरी बाकी', approvalsHistoryHeader:'इतिहास', approvedWord:'मंज़ूर', deniedWord:'अस्वीकृत', approveWord:'मंज़ूर करें', denyWord:'अस्वीकार करें', bucketThisWeek:'इस सप्ताह', bucketLastWeek:'पिछला सप्ताह', bucketLastMonth:'पिछला महीना', noApprovalsWord:'इस फ़िल्टर में कुछ नहीं', downloadCriticalReport:'गंभीर रिपोर्ट डाउनलोड करें', manageFarmWord:'फार्म प्रबंधित करें', reportPreviewTitle:'रिपोर्ट पूर्वावलोकन', reportGeneratedOn:'जनरेट किया गया', downloadWord:'डाउनलोड करें', reportDownloaded:'रिपोर्ट डाउनलोड हुई', reportSummaryWord:'सारांश', reportCriticalOnlyNote:'केवल गंभीर अलर्ट और अनसुलझे मुद्दे शामिल हैं।',
+               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें', dashGreeting:'सुप्रभात,', dashAllFarms:'सभी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़े गए', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'इस सप्ताह देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हाँ, बुखार', dashViewEvents:'सभी कार्यक्रम देखें', dashEditsApproval:'आपकी मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटे दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहिए खेत', fdShareReport:'रिपोर्ट साझा करें', inviteFarmMgrTitle:'फार्म प्रबंधक आमंत्रित करें', noMgrsYet:'अभी तक कोई फार्म प्रबंधक नहीं जोड़ा गया।', logoutConfirmTitle:'लॉग आउट करें?', logoutConfirmBody:'अपने फार्म तक पहुँचने के लिए आपको फिर से साइन इन करना होगा।', logoutConfirmBtn:'लॉग आउट', acTabCowDetails:'पशु विवरण', acTabDeviceDetails:'डिवाइस विवरण', acAddHistory:'गाय का इतिहास जोड़ें', acNodeMacId:'नोड/MAC आईडी', genderWord:'लिंग', activityWord:'गतिविधि', downloadReport:'रिपोर्ट डाउनलोड करें', shareReportVet:'पशु चिकित्सक को रिपोर्ट भेजें', reportTypeTitle:'रिपोर्ट प्रकार', fullReport:'पूरी रिपोर्ट', criticalReport:'गंभीर रिपोर्ट', activityLogWord:'गतिविधि लॉग', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गायें', selectCowsWord:'गायें चुनें', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करें', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगायें', homeCowsHeat:'हीट में\nगायें', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटे दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझे\nअलर्ट', homeCowsInHeat:'हीट में गायें', homeCowsInGestation:'गर्भ में गायें', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज का कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'शाम की दूध लॉगिंग', dashThisWeek:'इस सप्ताह', dashFmd:'खुरपका टीकाकरण', dashCows:'गायें', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं', dashGoodNews:'अच्छी खबर', dashRecovered:'ठीक हो गई', dashFeverCaught:'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', dashDaysAgo:'दिन पहले', dashConfPreg:'गर्भ की पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'कल पुष्टि हुई', dashCalved:'ब्याई', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'कल', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज', farmStatusTitle:'फार्म स्थिति', needsAttentionTitle:'ध्यान चाहिए', viewAllWord:'सभी देखें', rowPendingApprovals:'मंज़ूरी बाकी', rowMilkingMissed:'छूटे दूध सत्र', rowCriticalAlerts:'गंभीर अलर्ट', approvalsPageTitle:'मंज़ूरी', approvalsPendingHeader:'मंज़ूरी बाकी', approvalsHistoryHeader:'इतिहास', approvedWord:'मंज़ूर', deniedWord:'अस्वीकृत', approveWord:'मंज़ूर करें', denyWord:'अस्वीकार करें', bucketThisWeek:'इस सप्ताह', bucketLastWeek:'पिछला सप्ताह', bucketLastMonth:'पिछला महीना', noApprovalsWord:'इस फ़िल्टर में कुछ नहीं', downloadCriticalReport:'गंभीर रिपोर्ट डाउनलोड करें', manageFarmWord:'फार्म प्रबंधित करें', reportPreviewTitle:'रिपोर्ट पूर्वावलोकन', reportGeneratedOn:'जनरेट किया गया', downloadWord:'डाउनलोड करें', reportDownloaded:'रिपोर्ट डाउनलोड हुई', reportSummaryWord:'सारांश', reportCriticalOnlyNote:'केवल गंभीर अलर्ट और अनसुलझे मुद्दे शामिल हैं।', overlapWord:'ओवरलैप', noOverlapWord:'सक्रिय समय में कोई ओवरलैप नहीं',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताज़ा ब्याई',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
@@ -3643,7 +3645,7 @@
                wordCattle:'पशु', setupBadge:'सेटअप', noFarmsMatch:'ए फ़िल्टर से कवनो खेत ना मिलल।',
                managerWord:'प्रबंधक', farmTempCaption:'खेत के तापमान', searchCattle:'पशु खोजीं',
                cattleAll:'सगरी', cattleMilking:'दूध देवे वाली', cattleFever:'बुखार', cattleHeat:'हीट',
-               cowTempCaption:'पशु के तापमान', addCattle:'पशु जोड़ीं', noCattleYet:'ए खेत में अबतक कवनो पशु नइखे।', tapAddCattle:'शुरू करे खातिर "पशु जोड़ीं" दबाईं।', noCattleMatch:'ए फ़िल्टर से कवनो पशु ना मिलल।', acSubPre:'इस खेत में नई गाय जोड़ें —', acPhotoHint:'गाय की PNG / JPG अपलोड करें', acTypeHint:'गाय \u00b7 भेड़ \u00b7 बकरी \u2014 गैर-गाय स्वास्थ्य स्कोरिंग चिह्नित होती है।', selectWord:'चुनें', genderFemale:'मादा', genderMale:'नर', acCowName:'गाय का नाम (आसानी से पहचानने योग्य)', yearsWord:'साल', monthsWord:'महीने', cowStatusWord:'गाय की स्थिति', statusUnknown:'एस्ट्रस से पहले', calfWord:'बछड़ा', acDeviceDetails:'डिवाइस विवरण', acBeltNo:'पशु बेल्ट नंबर', acCowHistory:'गाय का इतिहास', optionalWord:'(वैकल्पिक)', acFillHistory:'गाय का इतिहास भरें', acHistUnknown:'इतिहास अज्ञात', acLastHeat:'अंतिम हीट', acLastInsem:'अंतिम गर्भाधान', acLastPreg:'अंतिम गर्भावस्था', acLastCalving:'अंतिम प्रसव', acLactationNo:'स्तनपान संख्या', acLactHint:'संख्या स्टेपर, तारीख नहीं। ये फ़ील्ड केवल "गाय का इतिहास भरें" चुनने पर दिखते हैं।', saveWord:'सहेजें',
+               cowTempCaption:'पशु के तापमान', addCattle:'पशु जोड़ीं', noCattleYet:'ए खेत में अबतक कवनो पशु नइखे।', tapAddCattle:'शुरू करे खातिर "पशु जोड़ीं" दबाईं।', noCattleMatch:'ए फ़िल्टर से कवनो पशु ना मिलल।', acSubPre:'इस खेत में नई गाय जोड़ें —', acPhotoHint:'गाय की PNG / JPG अपलोड करें', acTypeHint:'गाय \u00b7 भेड़ \u00b7 बकरी \u2014 गैर-गाय स्वास्थ्य स्कोरिंग चिह्नित होती है।', selectWord:'चुनें', genderFemale:'मादा', genderMale:'नर', acCowName:'नाम', yearsWord:'साल', monthsWord:'महीने', cowStatusWord:'गाय की स्थिति', statusUnknown:'एस्ट्रस से पहले', calfWord:'बछड़ा', acDeviceDetails:'डिवाइस विवरण', acBeltNo:'पशु बेल्ट नंबर', acCowHistory:'गाय का इतिहास', optionalWord:'(वैकल्पिक)', acFillHistory:'गाय का इतिहास भरें', acHistUnknown:'इतिहास अज्ञात', acLastHeat:'अंतिम हीट', acLastInsem:'अंतिम गर्भाधान', acLastPreg:'अंतिम गर्भावस्था', acLastCalving:'अंतिम प्रसव', acLactationNo:'स्तनपान संख्या', acLactHint:'संख्या स्टेपर, तारीख नहीं। ये फ़ील्ड केवल "गाय का इतिहास भरें" चुनने पर दिखते हैं।', saveWord:'सहेजें',
                statusMilking:'दूध देत बा', statusPregnant:'गर्भवती', statusHeatCycle:'हीट साइकिल',
                evTitle:'कार्यक्रम', evSubtitle:'रउरा सगरी खेत में स्वास्थ्य, प्रजनन आ अनुस्मारक', evViewFullCycle:'पूरा चक्र देखीं', evNeedAction:'के कार्रवाई के जरूरत',
                qfType:'प्रकार', qfUnactioned:'ना सुलझल', qfCriticality:'गंभीरता', qfCategory:'श्रेणी',
@@ -3676,7 +3678,7 @@
                histInsem:'गर्भाधान भइल \u2014 मोहिनी', histInsemSub:'18 घंटा के विंडो में \u2014 गर्भ जांच 3 जुलाई के',
                stageMilking:'दूध देत बिया', stageHeatWatch:'हीट निगरानी', stageRecovered:'ठीक भइल', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं', dashGreeting:'सुप्रभात,', dashAllFarms:'सगरी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़ल', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'ए हफ्ता देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हँ, बुखार', dashViewEvents:'सब कार्यक्रम देखीं', dashEditsApproval:'रउरा मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटल दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहीं खेत', fdShareReport:'रिपोर्ट साझा करीं', inviteFarmMgrTitle:'फार्म प्रबंधक आमंत्रित करीं', noMgrsYet:'अबतक कवनो फार्म प्रबंधक ना जोड़ल गइल।', logoutConfirmTitle:'लॉग आउट करीं?', logoutConfirmBody:'रउरा फार्म तक पहुंचे खातिर फिर से साइन इन करे के होई।', logoutConfirmBtn:'लॉग आउट', acTabCowDetails:'गाय के विवरण', acTabDeviceDetails:'डिवाइस विवरण', acAddHistory:'गाय के इतिहास जोड़ीं', acNodeMacId:'नोड/MAC आईडी', genderWord:'लिंग', activityWord:'गतिविधि', downloadReport:'रिपोर्ट डाउनलोड करीं', shareReportVet:'पशु चिकित्सक के रिपोर्ट भेजीं', reportTypeTitle:'रिपोर्ट प्रकार', fullReport:'पूरा रिपोर्ट', criticalReport:'गंभीर रिपोर्ट', activityLogWord:'गतिविधि लॉग', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गाई', selectCowsWord:'गाई चुनीं', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करीं', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगाई', homeCowsHeat:'हीट में\nगाई', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटल दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझल\nअलर्ट', homeCowsInHeat:'हीट में गाई', homeCowsInGestation:'गर्भ में गाई', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज के कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'सांझ के दूध लॉगिंग', dashThisWeek:'ए हफ्ता', dashFmd:'खुरपका टीकाकरण', dashCows:'गाई', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहेला', dashGoodNews:'अच्छा खबर', dashRecovered:'ठीक हो गइल', dashFeverCaught:'कॉलर बुखार पकड़लस, डॉ. शर्मा इलाज कइलन', dashDaysAgo:'दिन पहिले', dashConfPreg:'गर्भ के पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'काल्ह पुष्टि भइल', dashCalved:'ब्याइल', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'काल्ह', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज', farmStatusTitle:'फार्म स्थिति', needsAttentionTitle:'ध्यान चाहिए', viewAllWord:'सभी देखें', rowPendingApprovals:'मंज़ूरी बाकी', rowMilkingMissed:'छूटे दूध सत्र', rowCriticalAlerts:'गंभीर अलर्ट', approvalsPageTitle:'मंज़ूरी', approvalsPendingHeader:'मंज़ूरी बाकी', approvalsHistoryHeader:'इतिहास', approvedWord:'मंज़ूर', deniedWord:'अस्वीकृत', approveWord:'मंज़ूर करें', denyWord:'अस्वीकार करें', bucketThisWeek:'इस सप्ताह', bucketLastWeek:'पिछला सप्ताह', bucketLastMonth:'पिछला महीना', noApprovalsWord:'इस फ़िल्टर में कुछ नहीं', downloadCriticalReport:'गंभीर रिपोर्ट डाउनलोड करें', manageFarmWord:'फार्म प्रबंधित करें', reportPreviewTitle:'रिपोर्ट पूर्वावलोकन', reportGeneratedOn:'जनरेट किया गया', downloadWord:'डाउनलोड करें', reportDownloaded:'रिपोर्ट डाउनलोड हुई', reportSummaryWord:'सारांश', reportCriticalOnlyNote:'केवल गंभीर अलर्ट और अनसुलझे मुद्दे शामिल हैं।',
+               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं', dashGreeting:'सुप्रभात,', dashAllFarms:'सगरी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़ल', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'ए हफ्ता देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हँ, बुखार', dashViewEvents:'सब कार्यक्रम देखीं', dashEditsApproval:'रउरा मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटल दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहीं खेत', fdShareReport:'रिपोर्ट साझा करीं', inviteFarmMgrTitle:'फार्म प्रबंधक आमंत्रित करीं', noMgrsYet:'अबतक कवनो फार्म प्रबंधक ना जोड़ल गइल।', logoutConfirmTitle:'लॉग आउट करीं?', logoutConfirmBody:'रउरा फार्म तक पहुंचे खातिर फिर से साइन इन करे के होई।', logoutConfirmBtn:'लॉग आउट', acTabCowDetails:'पशु के विवरण', acTabDeviceDetails:'डिवाइस विवरण', acAddHistory:'गाय के इतिहास जोड़ीं', acNodeMacId:'नोड/MAC आईडी', genderWord:'लिंग', activityWord:'गतिविधि', downloadReport:'रिपोर्ट डाउनलोड करीं', shareReportVet:'पशु चिकित्सक के रिपोर्ट भेजीं', reportTypeTitle:'रिपोर्ट प्रकार', fullReport:'पूरा रिपोर्ट', criticalReport:'गंभीर रिपोर्ट', activityLogWord:'गतिविधि लॉग', fdTabCattle:'पशु', fdTabHerd:'झुंड गतिविधि', herdCowsBtn:'गाई', selectCowsWord:'गाई चुनीं', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करीं', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती\nगाई', homeCowsHeat:'हीट में\nगाई', homePendingApprovals:'मंज़ूरी\nबाकी', homeMilkingsMissed:'छूटल दूध\nसत्र', homeUnresolvedAlerts:'अनसुलझल\nअलर्ट', homeCowsInHeat:'हीट में गाई', homeCowsInGestation:'गर्भ में गाई', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज के कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'सांझ के दूध लॉगिंग', dashThisWeek:'ए हफ्ता', dashFmd:'खुरपका टीकाकरण', dashCows:'गाई', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहेला', dashGoodNews:'अच्छा खबर', dashRecovered:'ठीक हो गइल', dashFeverCaught:'कॉलर बुखार पकड़लस, डॉ. शर्मा इलाज कइलन', dashDaysAgo:'दिन पहिले', dashConfPreg:'गर्भ के पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'काल्ह पुष्टि भइल', dashCalved:'ब्याइल', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'काल्ह', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज', farmStatusTitle:'फार्म स्थिति', needsAttentionTitle:'ध्यान चाहिए', viewAllWord:'सभी देखें', rowPendingApprovals:'मंज़ूरी बाकी', rowMilkingMissed:'छूटे दूध सत्र', rowCriticalAlerts:'गंभीर अलर्ट', approvalsPageTitle:'मंज़ूरी', approvalsPendingHeader:'मंज़ूरी बाकी', approvalsHistoryHeader:'इतिहास', approvedWord:'मंज़ूर', deniedWord:'अस्वीकृत', approveWord:'मंज़ूर करें', denyWord:'अस्वीकार करें', bucketThisWeek:'इस सप्ताह', bucketLastWeek:'पिछला सप्ताह', bucketLastMonth:'पिछला महीना', noApprovalsWord:'इस फ़िल्टर में कुछ नहीं', downloadCriticalReport:'गंभीर रिपोर्ट डाउनलोड करें', manageFarmWord:'फार्म प्रबंधित करें', reportPreviewTitle:'रिपोर्ट पूर्वावलोकन', reportGeneratedOn:'जनरेट किया गया', downloadWord:'डाउनलोड करें', reportDownloaded:'रिपोर्ट डाउनलोड हुई', reportSummaryWord:'सारांश', reportCriticalOnlyNote:'केवल गंभीर अलर्ट और अनसुलझे मुद्दे शामिल हैं।', overlapWord:'ओवरलैप', noOverlapWord:'सक्रिय समय में कोई ओवरलैप नहीं',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताजा बियाइल',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
@@ -7502,7 +7504,7 @@
         cattleStatusFilter = 'all'; cattleBreedFilter = 'all'; cattleAgeFilter = 'all'; cattleAlertsOnly = false;
         fdRange = 'today';
         fdTab = 'cattle';
-        fdActivity = 'rumination';
+        fdActiveSet = ['rumination'];
         document.getElementById('cattle-search').value = '';
         document.getElementById('farm-detail-name').textContent = loc(farm, 'name');
         document.getElementById('farm-detail-temp').textContent = fmtTemp(farm.temp);
@@ -7600,10 +7602,15 @@
       })();
       // ── Add Cattle page ──
       var acPage = document.getElementById('page-add-cattle');
+      var acBackdrop = document.getElementById('ac-backdrop');
       function openAddCattle() {
         acPage.style.transform = 'translateY(0)';
+        if (acBackdrop) { acBackdrop.style.opacity = '1'; acBackdrop.style.pointerEvents = 'auto'; }
       }
-      function closeAddCattle() { acPage.style.transform = 'translateY(100%)'; }
+      function closeAddCattle() {
+        acPage.style.transform = 'translateY(100%)';
+        if (acBackdrop) { acBackdrop.style.opacity = '0'; acBackdrop.style.pointerEvents = 'none'; }
+      }
       document.getElementById('farm-detail-fab').addEventListener('click', openAddCattle);
       document.getElementById('ac-back').addEventListener('click', closeAddCattle);
       document.getElementById('ac-cancel').addEventListener('click', closeAddCattle);
@@ -7743,7 +7750,10 @@
         '</div>';
       }
       var fdTab = 'cattle';
-      var fdActivity = 'rumination';
+      // Multi-select activity set — Rumination is the base signal; at most one
+      // of Standing/Resting/Feeding can be paired with it at a time, so
+      // selecting a second secondary activity swaps out the first.
+      var fdActiveSet = ['rumination'];
       function syncFdTabs() {
         document.querySelectorAll('.fd-tab').forEach(function(t) {
           var on = t.getAttribute('data-fdtab') === fdTab;
@@ -7776,11 +7786,6 @@
         var sh = document.getElementById('fd-herd-filter-sheet');
         var bd = document.getElementById('fd-herd-filter-backdrop');
         if (!btn || !sh || !bd) return;
-        function paintActOpts() {
-          document.querySelectorAll('.fd-herd-act-opt').forEach(function(o) {
-            o.classList.toggle('on', o.getAttribute('data-val') === fdActivity);
-          });
-        }
         function paintCowOpts() {
           var wrap = document.getElementById('fd-herd-cow-opts');
           var farm = fdCurrentFarm();
@@ -7797,7 +7802,6 @@
           });
         }
         function open() {
-          paintActOpts();
           paintCowOpts();
           sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
         }
@@ -7805,25 +7809,27 @@
         btn.addEventListener('click', open);
         bd.addEventListener('click', close);
         document.getElementById('fd-herd-filter-close').addEventListener('click', close);
-        document.querySelectorAll('.fd-herd-fs-cat').forEach(function(cat) {
-          cat.addEventListener('click', function() {
-            document.querySelectorAll('.fd-herd-fs-cat').forEach(function(c) { c.classList.toggle('on', c === cat); });
-            var pane = cat.getAttribute('data-cat');
-            document.querySelectorAll('.fd-herd-fs-pane').forEach(function(p) { p.style.display = p.getAttribute('data-pane') === pane ? 'block' : 'none'; });
-          });
-        });
-        document.querySelectorAll('.fd-herd-act-opt').forEach(function(o) {
-          o.addEventListener('click', function() {
-            fdActivity = o.getAttribute('data-val');
-            paintActOpts();
-          });
-        });
         document.getElementById('fd-herd-filter-apply').addEventListener('click', function() {
           close();
           var farm = fdCurrentFarm();
           if (farm) renderFdRumination(farm);
         });
       })();
+      // Inline activity chips under the graph — toggling Rumination just
+      // shows/hides its line; tapping a secondary activity swaps it in,
+      // replacing any other secondary already selected.
+      function fdToggleActivity(key) {
+        if (key === 'rumination') {
+          var i = fdActiveSet.indexOf('rumination');
+          if (i > -1) fdActiveSet.splice(i, 1); else fdActiveSet.unshift('rumination');
+        } else {
+          var already = fdActiveSet.indexOf(key) > -1;
+          fdActiveSet = fdActiveSet.filter(function(k) { return k === 'rumination'; });
+          if (!already) fdActiveSet.push(key);
+        }
+        var farm = fdCurrentFarm();
+        if (farm) renderFdRumination(farm);
+      }
       function renderFdTiles(farm) {
         var grid = document.getElementById('fd-stat-grid');
         if (!grid) return;
@@ -7858,36 +7864,82 @@
           closeFdRangeSheet();
         });
       });
-      // Daily herd rumination pattern + anomaly detection (read-only)
+      // Daily herd activity patterns (read-only). Rumination keeps its
+      // per-farm anomaly annotation; Standing/Resting/Feeding are mock
+      // patterns each with a nominal "active window" (range, in hours) used
+      // to compute the overlap highlighted when paired with Rumination.
       var FD_RUMINATION = {
         sunrise: { pts:[38,41,43,42,39,36,34,38,42,45,46,44,43,42,18,14,20,40,43,44,42,40,39,38], anomaly:{ from:14, to:16, note:'Anomaly detected — rumination dipped 14:00–16:00' } },
         normal:  { pts:[38,40,42,41,39,36,34,37,41,44,46,45,43,42,41,40,42,44,45,43,41,40,39,38] }
       };
+      var FD_ACT_META = {
+        rumination: { color:'var(--greendeep)', range:[6, 20] },
+        standing:   { color:'#2563EB', range:[8, 18], pts:[10,9,8,8,9,10,12,18,28,34,36,35,33,32,34,36,35,30,20,14,11,10,9,10] },
+        resting:    { color:'#7C3AED', range:[20, 24], pts:[12,10,9,10,12,16,20,24,30,28,25,22,20,18,16,15,14,16,20,28,36,44,46,45] },
+        feeding:    { color:'var(--warning)', range:[6, 9], pts:[5,5,6,8,10,14,30,42,38,20,12,10,9,9,10,12,20,34,30,16,10,8,6,5] }
+      };
+      function fdActPts(farm, key) {
+        if (key === 'rumination') { return (FD_RUMINATION[farm.id] || FD_RUMINATION.normal).pts; }
+        return FD_ACT_META[key].pts;
+      }
       function renderFdRumination(farm) {
         var box = document.getElementById('fd-rumination');
         if (!farm.cows.length) { box.innerHTML = ''; return; }
-        var data = FD_RUMINATION[farm.id] || FD_RUMINATION.normal;
-        var anomaly = data.anomaly || null;
-        function xy(v, i) { return (i / (data.pts.length - 1) * 100).toFixed(1) + ',' + (42 - v / 60 * 40).toFixed(1); }
-        var pts = data.pts.map(xy).join(' ');
-        var dipPts = anomaly ? data.pts.slice(anomaly.from - 1, anomaly.to + 2).map(function(v, j) { return xy(v, anomaly.from - 1 + j); }).join(' ') : '';
+        var t = window.t();
+        var rumData = FD_RUMINATION[farm.id] || FD_RUMINATION.normal;
+        var anomaly = fdActiveSet.indexOf('rumination') > -1 ? (rumData.anomaly || null) : null;
+        function xy(pts, v, i) { return (i / (pts.length - 1) * 100).toFixed(1) + ',' + (42 - v / 60 * 40).toFixed(1); }
+        var lines = fdActiveSet.map(function(key) {
+          var pts = fdActPts(farm, key);
+          var line = '<polyline points="' + pts.map(function(v, i) { return xy(pts, v, i); }).join(' ') + '" fill="none" stroke="' + FD_ACT_META[key].color + '" stroke-width="1.3" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>';
+          if (key === 'rumination' && anomaly) {
+            var dipPts = rumData.pts.slice(anomaly.from - 1, anomaly.to + 2).map(function(v, j) { return xy(rumData.pts, v, anomaly.from - 1 + j); }).join(' ');
+            line += '<polyline points="' + dipPts + '" fill="none" stroke="var(--warning)" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>';
+          }
+          return line;
+        }).join('');
+        // Overlap band: intersection of the two selected activities' active windows.
+        var overlapRect = '', overlapCaption = '';
+        if (fdActiveSet.length === 2) {
+          var rA = FD_ACT_META[fdActiveSet[0]].range, rB = FD_ACT_META[fdActiveSet[1]].range;
+          var oStart = Math.max(rA[0], rB[0]), oEnd = Math.min(rA[1], rB[1]);
+          if (oStart < oEnd) {
+            var x1 = (oStart / 24 * 100).toFixed(1), x2 = (oEnd / 24 * 100).toFixed(1);
+            overlapRect = '<rect x="' + x1 + '" y="0" width="' + (x2 - x1).toFixed(1) + '" height="42" fill="var(--text1)" opacity="0.07"/>';
+            var pad = function(n) { return (n % 24).toString().padStart(2, '0') + ':00'; };
+            overlapCaption = '<p class="en" style="font-size:12px; font-weight:600; color:var(--text1); margin:10px 0 0;">' + t.overlapWord + ': ' + pad(oStart) + '–' + pad(oEnd) + ' (' + (oEnd - oStart) + 'h)</p>';
+          } else {
+            overlapCaption = '<p style="font-size:12px; color:var(--text2); margin:10px 0 0;">' + t.noOverlapWord + '</p>';
+          }
+        }
         var pill = anomaly
-          ? '<span class="en" style="display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:14px; background:var(--warnbg); font-size:12px; font-weight:600; color:#8A5A00;"><span style="width:7px; height:7px; border-radius:50%; background:var(--warning);"></span>Anomaly</span>'
-          : '<span class="en" style="display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:14px; background:var(--activebg); font-size:12px; font-weight:600; color:var(--greenink);"><span style="width:7px; height:7px; border-radius:50%; background:var(--greendeep);"></span>Normal pattern</span>';
+          ? '<span class="en" style="display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:14px; background:var(--warnbg); font-size:12px; font-weight:600; color:#8A5A00; flex-shrink:0;"><span style="width:7px; height:7px; border-radius:50%; background:var(--warning);"></span>Anomaly</span>'
+          : (fdActiveSet.indexOf('rumination') > -1 ? '<span class="en" style="display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:14px; background:var(--activebg); font-size:12px; font-weight:600; color:var(--greenink); flex-shrink:0;"><span style="width:7px; height:7px; border-radius:50%; background:var(--greendeep);"></span>Normal pattern</span>' : '');
+        var titleLabel = fdActiveSet.map(function(k) { return t['act' + k.charAt(0).toUpperCase() + k.slice(1)]; }).join(' & ') || t.actRumination;
         var xlabels = ['00:00', '06:00', '12:00', '18:00', '24:00'];
+        var chips = ['rumination', 'standing', 'resting', 'feeding'].map(function(key) {
+          var on = fdActiveSet.indexOf(key) > -1;
+          var color = FD_ACT_META[key].color;
+          return '<button class="fd-act-chip" data-act="' + key + '" style="flex-shrink:0; display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px; border-radius:17px; border:1px solid ' + (on ? color : 'var(--border)') + '; background:' + (on ? color : 'var(--bgcard)') + '; color:' + (on ? '#FFFFFF' : 'var(--text1)') + '; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + t['act' + key.charAt(0).toUpperCase() + key.slice(1)] + '</button>';
+        }).join('');
         box.innerHTML =
           '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px; margin-top:12px;">' +
             '<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">' +
-              '<p class="en" style="font-size:13px; font-weight:700; color:var(--text1); margin:0;">Herd ' + (window.t()['act' + fdActivity.charAt(0).toUpperCase() + fdActivity.slice(1)] || 'Rumination') + ' — today</p>' + pill +
+              '<p class="en" style="font-size:13px; font-weight:700; color:var(--text1); margin:0;">Herd ' + titleLabel + ' — today</p>' + pill +
             '</div>' +
             '<svg viewBox="0 0 100 44" preserveAspectRatio="none" style="display:block; width:100%; height:180px; margin-top:12px;">' +
+              overlapRect +
               '<line x1="0" y1="42" x2="100" y2="42" stroke="var(--divider)" stroke-width="0.5"/>' +
-              '<polyline points="' + pts + '" fill="none" stroke="var(--greendeep)" stroke-width="1.3" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>' +
-              (dipPts ? '<polyline points="' + dipPts + '" fill="none" stroke="var(--warning)" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>' : '') +
+              lines +
             '</svg>' +
             '<div class="en" style="display:flex; justify-content:space-between; font-size:9px; color:var(--text2); margin-top:4px;">' + xlabels.map(function(x) { return '<span>' + x + '</span>'; }).join('') + '</div>' +
             (anomaly ? '<p class="en" style="font-size:12px; font-weight:600; color:#8A5A00; margin:10px 0 0; line-height:1.5;">' + anomaly.note + '</p>' : '') +
-          '</div>';
+            overlapCaption +
+          '</div>' +
+          '<div style="display:flex; gap:8px; overflow-x:auto; margin-top:12px; padding-bottom:2px;">' + chips + '</div>';
+        box.querySelectorAll('.fd-act-chip').forEach(function(chip) {
+          chip.addEventListener('click', function() { fdToggleActivity(chip.getAttribute('data-act')); });
+        });
       }
       // ── Setup Farm page (Highland) ──
       var sfPage = document.getElementById('page-setup-farm');
