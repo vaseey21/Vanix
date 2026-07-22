@@ -1137,8 +1137,8 @@ class _HerdFilterSheetState extends State<_HerdFilterSheet> {
                   color: railBg,
                   child: Column(
                     children: [
-                      _CatTab(label: t('activityWord'), active: _cat == 0, isDark: isDark, onTap: () => setState(() => _cat = 0)),
-                      _CatTab(label: t('herdCowsBtn'), active: _cat == 1, isDark: isDark, onTap: () => setState(() => _cat = 1)),
+                      _herdRailTab(t('activityWord'), 0, isDark),
+                      _herdRailTab(t('herdCowsBtn'), 1, isDark),
                     ],
                   ),
                 ),
