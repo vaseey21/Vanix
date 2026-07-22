@@ -3953,6 +3953,121 @@
             else if (target === 'events') { var nav2 = document.getElementById('dash-nav'); var t2 = nav2 ? nav2.querySelector('.vtab[data-i="3"]') : null; if (t2) t2.click(); }
           });
         });
+
+        // ── Approvals page — pending farmer edits + full approve/deny history ──
+        (function() {
+          var APPROVALS_TODAY = new Date('2026-07-22T00:00:00');
+          var APPROVALS_DATA = [
+            { id:'a1', title:'Milk entry edit — Kajri', sub:'Morning session, 8.2L → 8.6L', farm:'Green Valley Farm', date:'2026-07-22', status:'pending' },
+            { id:'a2', title:'Milk entry edit — Gauri', sub:'Evening session correction requested', farm:'Sunrise Dairy', date:'2026-07-21', status:'pending' },
+            { id:'a3', title:'Milk entry edit — Ganga', sub:'Morning session, 6.0L → 6.4L', farm:'Sunrise Dairy', date:'2026-07-22', status:'approved' },
+            { id:'a4', title:'Milk entry delete — Mohini', sub:'Duplicate evening entry', farm:'Sunrise Dairy', date:'2026-07-21', status:'denied' },
+            { id:'a5', title:'Cattle detail edit — Chandni', sub:'Belt number correction', farm:'Stones Dairy', date:'2026-07-18', status:'approved' },
+            { id:'a6', title:'Milk entry edit — Rani', sub:'Evening session, 5.1L → 7.0L', farm:'Sunrise Dairy', date:'2026-07-16', status:'denied' },
+            { id:'a7', title:'Cattle detail edit — Lakshmi', sub:'Breed field correction', farm:'Green Villa', date:'2026-07-10', status:'approved' },
+            { id:'a8', title:'Milk entry edit — Devi', sub:'Morning session, 7.4L → 7.9L', farm:'Stones Dairy', date:'2026-07-08', status:'approved' },
+            { id:'a9', title:'Cattle detail edit — Meera', sub:'Age correction', farm:'Green Villa', date:'2026-06-15', status:'denied' },
+            { id:'a10', title:'Milk entry edit — Kaveri', sub:'Evening session, 6.6L → 6.8L', farm:'Green Villa', date:'2026-06-10', status:'approved' }
+          ];
+          var approvalsFilter = 'all';
+
+          function daysAgo(iso) {
+            var d = new Date(iso + 'T00:00:00');
+            return Math.round((APPROVALS_TODAY - d) / 86400000);
+          }
+          function bucketFor(iso) {
+            var n = daysAgo(iso);
+            if (n <= 0) return 'today';
+            if (n === 1) return 'yesterday';
+            if (n <= 6) return 'thisWeek';
+            if (n <= 13) return 'lastWeek';
+            return 'lastMonth';
+          }
+          var BUCKET_ORDER = ['today', 'yesterday', 'thisWeek', 'lastWeek', 'lastMonth'];
+          var BUCKET_KEY = { today:'dashToday', yesterday:'dashYesterday', thisWeek:'bucketThisWeek', lastWeek:'bucketLastWeek', lastMonth:'bucketLastMonth' };
+
+          function statusPill(status) {
+            var color = status === 'pending' ? 'var(--warning)' : (status === 'approved' ? 'var(--greenink)' : 'var(--danger)');
+            var key = status === 'pending' ? 'statusPending' : (status === 'approved' ? 'approvedWord' : 'deniedWord');
+            var label = window.t ? window.t()[key] : status;
+            return '<span style="font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:' + color + ';">' + label + '</span>';
+          }
+
+          function approvalRow(item, showActions) {
+            var actions = showActions ?
+              '<div style="display:flex; gap:8px; margin-top:10px;">' +
+                '<button class="approval-deny-btn" data-id="' + item.id + '" style="flex:1; min-height:40px; border-radius:20px; border:1px solid var(--border); background:var(--bgcard); font-size:13px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">✕ <span data-k="denyWord">Deny</span></button>' +
+                '<button class="approval-approve-btn" data-id="' + item.id + '" style="flex:1; min-height:40px; border-radius:20px; border:none; background:var(--greenink); font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi); cursor:pointer;">✓ <span data-k="approveWord">Approve</span></button>' +
+              '</div>' : '';
+            return '<div class="approval-row" style="background:var(--bgcard); border-radius:16px; padding:14px 16px; margin-bottom:8px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);">' +
+              '<div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px;">' +
+                '<p style="font-size:14px; font-weight:600; color:var(--text1); margin:0; flex:1;">' + item.title + '</p>' +
+                statusPill(item.status) +
+              '</div>' +
+              '<p style="font-size:12px; color:var(--text2); margin:3px 0 0;">' + item.sub + '</p>' +
+              '<p class="en" style="font-size:11px; color:var(--text2); margin:4px 0 0;">' + item.farm + '</p>' +
+              actions +
+            '</div>';
+          }
+
+          function renderApprovals() {
+            var list = document.getElementById('approvals-list');
+            if (!list) return;
+            var t = window.t ? window.t() : {};
+            var matches = APPROVALS_DATA.filter(function(it) { return approvalsFilter === 'all' || it.status === approvalsFilter; });
+            var html = '';
+            var pending = matches.filter(function(it) { return it.status === 'pending'; });
+            var rest = matches.filter(function(it) { return it.status !== 'pending'; });
+            if (pending.length) {
+              html += '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">' + (t.approvalsPendingHeader || 'Pending Approvals') + '</p>';
+              pending.forEach(function(it) { html += approvalRow(it, true); });
+            }
+            var buckets = {};
+            rest.forEach(function(it) { var b = bucketFor(it.date); (buckets[b] = buckets[b] || []).push(it); });
+            var hasHistory = BUCKET_ORDER.some(function(b) { return buckets[b] && buckets[b].length; });
+            if (hasHistory) {
+              html += '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:' + (pending.length ? '20px' : '0') + ' 0 10px;">' + (t.approvalsHistoryHeader || 'History') + '</p>';
+              BUCKET_ORDER.forEach(function(b) {
+                if (!buckets[b] || !buckets[b].length) return;
+                html += '<p style="font-size:12px; font-weight:600; color:var(--text2); margin:14px 0 8px;">' + (t[BUCKET_KEY[b]] || b) + '</p>';
+                buckets[b].forEach(function(it) { html += approvalRow(it, false); });
+              });
+            }
+            if (!pending.length && !hasHistory) {
+              html = '<p style="font-size:13px; color:var(--text2); text-align:center; margin:32px 0;">' + (t.noApprovalsWord || 'No approvals in this filter') + '</p>';
+            }
+            list.innerHTML = html;
+            list.querySelectorAll('.approval-approve-btn, .approval-deny-btn').forEach(function(btn) {
+              btn.addEventListener('click', function() {
+                var id = btn.getAttribute('data-id');
+                var rec = APPROVALS_DATA.find(function(it) { return it.id === id; });
+                if (rec) { rec.status = btn.classList.contains('approval-approve-btn') ? 'approved' : 'denied'; rec.date = '2026-07-22'; }
+                renderApprovals();
+              });
+            });
+          }
+
+          document.querySelectorAll('#page-approvals .s7-bchip').forEach(function(chip) {
+            chip.addEventListener('click', function() {
+              document.querySelectorAll('#page-approvals .s7-bchip').forEach(function(c) { c.classList.remove('on'); });
+              chip.classList.add('on');
+              approvalsFilter = chip.getAttribute('data-filter');
+              renderApprovals();
+            });
+          });
+
+          window.openApprovalsPage = function() {
+            var page = document.getElementById('page-approvals');
+            if (!page) return;
+            page.style.display = 'block';
+            renderApprovals();
+          };
+          var backBtn = document.getElementById('approvals-back');
+          if (backBtn) backBtn.addEventListener('click', function() {
+            var page = document.getElementById('page-approvals');
+            if (page) page.style.display = 'none';
+          });
+        })();
         var goEvents = function() {
           var nav = document.getElementById('dash-nav');
           var evtab = nav ? nav.querySelector('.vtab[data-i="3"]') : null;
