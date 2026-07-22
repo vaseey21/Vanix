@@ -2855,7 +2855,6 @@
                   <button id="cow-back" style="flex-shrink:0; width:40px; height:40px; margin-inline-start:-10px; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
                   </button>
-                  <img id="cow-photo" src="assets/images/milking_started_photo.jpg" alt="" style="width:64px; height:64px; border-radius:16px; object-fit:cover; flex-shrink:0;">
                   <div style="flex:1; min-width:0; margin-inline-start:4px;">
                     <p id="cow-name" style="font-size:22px; font-weight:600; color:var(--text1); margin:0; line-height:1.2;">Gowri</p>
                     <p id="cow-breed" style="font-size:12px; color:var(--text2); margin:2px 0 0;">Jersey</p>
@@ -2877,19 +2876,10 @@
                     </div>
                   </div>
                 </div>
-                <div style="display:flex; gap:8px; margin-top:14px;">
-                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:none; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); border-radius:16px; padding:12px 8px; text-align:center;">
-                    <span id="cow-status-pill" style="display:inline-block; height:24px; padding:0 10px; border-radius:12px; font-size:11px; font-weight:600; line-height:24px;">Milking</span>
-                    <p data-k="statusWord" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:5px 0 0;">Status</p>
-                  </div>
-                  <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:none; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04); border-radius:16px; padding:12px 8px; text-align:center;">
-                    <p class="en" id="cow-temp" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">32°C</p>
-                    <p data-k="currentTemp" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Current Temp</p>
-                  </div>
-                </div>
                 <div style="display:flex; margin:14px -16px -18px;">
                   <button class="cow-tab on" data-tab="timeline" data-k="tabTimeline" style="flex:1; min-height:44px; border:none; border-bottom:3px solid var(--greenink); background:transparent; color:var(--greenink); font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Timeline</button>
                   <button class="cow-tab" data-tab="overview" data-k="tabOverview" style="flex:1; min-height:44px; border:none; border-bottom:3px solid transparent; background:transparent; color:var(--text2); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Overview</button>
+                  <button class="cow-tab" data-tab="activity" data-k="tabActivity" style="flex:1; min-height:44px; border:none; border-bottom:3px solid transparent; background:transparent; color:var(--text2); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Activity</button>
                   <button class="cow-tab" data-tab="milkdata" data-k="tabMilkData" style="flex:1; min-height:44px; border:none; border-bottom:3px solid transparent; background:transparent; color:var(--text2); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Milk Data</button>
                   <button class="cow-tab" data-tab="vetlogs" data-k="tabVetLogs" style="flex:1; min-height:44px; border:none; border-bottom:3px solid transparent; background:transparent; color:var(--text2); font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;">Vet Logs</button>
                 </div>
@@ -2897,7 +2887,23 @@
 
               <div style="padding:16px 16px 0;">
                 <div id="cow-pane-timeline"></div>
+                <div id="cow-overview-top" style="display:none;">
+                  <div style="display:flex; justify-content:center; margin-bottom:14px;">
+                    <img id="cow-photo" src="assets/images/milking_started_photo.jpg" alt="" style="width:120px; height:120px; border-radius:20px; object-fit:cover;">
+                  </div>
+                  <div style="display:flex; gap:8px; margin-bottom:16px;">
+                    <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 8px; text-align:center;">
+                      <span id="cow-status-pill" style="display:inline-block; height:24px; padding:0 10px; border-radius:12px; font-size:11px; font-weight:600; line-height:24px;">Milking</span>
+                      <p data-k="statusWord" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:5px 0 0;">Status</p>
+                    </div>
+                    <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 8px; text-align:center;">
+                      <p class="en" id="cow-temp" style="font-size:20px; font-weight:700; color:var(--text1); margin:0;">32°C</p>
+                      <p data-k="currentTemp" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0;">Current Temp</p>
+                    </div>
+                  </div>
+                </div>
                 <div id="cow-pane-overview" style="display:none;"></div>
+                <div id="cow-pane-activity" style="display:none;"></div>
                 <div id="cow-pane-milk" style="display:none;"></div>
                 <div id="cow-pane-vetlogs" style="display:none;"></div>
               </div>
@@ -3353,7 +3359,7 @@
                histInsem:'Inseminated \u2014 Mohini', histInsemSub:'Within the 18h window \u2014 pregnancy check set for 3 Jul',
                stageMilking:'MILKING', stageHeatWatch:'HEAT WATCH', stageRecovered:'RECOVERED', stage21Day:'21-DAY WATCH',
                prioP0:'CRITICAL', prioP1:'MEDIUM', prioP2:'MEDIUM', prioP3:'LOW',
-               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters', dashGreeting:'Good morning,', dashAllFarms:'All Farms', dashLive:'Live', dashAddedToday:'added today', dashActiveAlerts:'Active Alerts', dashPendingTasks:'Pending Tasks', dashDueToday:'due today', dashOverdue:'overdue', dashPregnant:'Pregnant', dashDueThisWeek:'due this week', dashActionAlerts:'Action Alerts', dashWaiting:'waiting', dashYesFever:'Yes, fever', dashViewEvents:'View all in Events', dashEditsApproval:'Edits awaiting your approval', dashMilkMissing:'Milk sessions missing today', dashInsemWindow:'insemination window', dashLeft:'left', dashFarmsNeedAction:'Farms needing action', fdShareReport:'Share report', fdDownloadReport:'Download report', durationWord:'Duration', customRangeWord:'Custom range', homeCowsPregnant:'Cows Pregnant', homeCowsHeat:'Cows in Heat', homePendingApprovals:'Pending Approvals', homeMilkingsMissed:'Milkings Missed', homeUnresolvedAlerts:'Unresolved Alerts', homeCowsInHeat:'Cows in heat', homeCowsInGestation:'Cows in gestation', dashOffline:'offline', dashTodaySchedule:"Today's Schedule", dashVaccDrive:'Vaccination Drive', dashVetVisit:'Vet Visit', dashMilkLogging:'Evening Milk Logging', dashThisWeek:'This Week', dashFmd:'FMD vaccination', dashCows:'cows', dashDays:'d', dashRemindersNote:'Items beyond 7 days stay in Events reminders', dashGoodNews:'Good News', dashRecovered:'recovered', dashFeverCaught:'fever caught by collar, treated by Dr. Sharma', dashDaysAgo:'days ago', dashConfPreg:'confirmed pregnant', dashInseminated:'Inseminated', dashConfYesterday:'confirmed yesterday', dashCalved:'calved', dashHealthyCalf:'healthy calf, now in the Milk Log', dashYesterday:'Yesterday', dashTriageDone:'Logged — thanks', dashUpdates:'Updates', dashToday:'Today',
+               chipActionable:'ACTIONABLE', detBaseline:'\u00b0C baseline', detToday:'\u00b0C today', filterWord:'Filter', allWord:'All', statusWord:'Status', statusActioned:'Actioned', statusPending:'Pending', farmWord:'Farm', applyFilters:'Apply filters', dashGreeting:'Good morning,', dashAllFarms:'All Farms', dashLive:'Live', dashAddedToday:'added today', dashActiveAlerts:'Active Alerts', dashPendingTasks:'Pending Tasks', dashDueToday:'due today', dashOverdue:'overdue', dashPregnant:'Pregnant', dashDueThisWeek:'due this week', dashActionAlerts:'Action Alerts', dashWaiting:'waiting', dashYesFever:'Yes, fever', dashViewEvents:'View all in Events', dashEditsApproval:'Edits awaiting your approval', dashMilkMissing:'Milk sessions missing today', dashInsemWindow:'insemination window', dashLeft:'left', dashFarmsNeedAction:'Farms needing action', fdShareReport:'Share report', tabActivity:'Activity', fdDownloadReport:'Download report', durationWord:'Duration', customRangeWord:'Custom range', homeCowsPregnant:'Cows Pregnant', homeCowsHeat:'Cows in Heat', homePendingApprovals:'Pending Approvals', homeMilkingsMissed:'Milkings Missed', homeUnresolvedAlerts:'Unresolved Alerts', homeCowsInHeat:'Cows in heat', homeCowsInGestation:'Cows in gestation', dashOffline:'offline', dashTodaySchedule:"Today's Schedule", dashVaccDrive:'Vaccination Drive', dashVetVisit:'Vet Visit', dashMilkLogging:'Evening Milk Logging', dashThisWeek:'This Week', dashFmd:'FMD vaccination', dashCows:'cows', dashDays:'d', dashRemindersNote:'Items beyond 7 days stay in Events reminders', dashGoodNews:'Good News', dashRecovered:'recovered', dashFeverCaught:'fever caught by collar, treated by Dr. Sharma', dashDaysAgo:'days ago', dashConfPreg:'confirmed pregnant', dashInseminated:'Inseminated', dashConfYesterday:'confirmed yesterday', dashCalved:'calved', dashHealthyCalf:'healthy calf, now in the Milk Log', dashYesterday:'Yesterday', dashTriageDone:'Logged — thanks', dashUpdates:'Updates', dashToday:'Today',
                catFever:'Fever', catHeat:'Heat', catPregnancy:'Pregnancy', catGestation:'Gestation', catMilking:'Milking', catLactation:'Lactation', catPregLoss:'Pregnancy loss', catFreshCow:'Fresh cow',
                catMastitis:'Mastitis', catLameness:'Lameness', catKetosis:'Ketosis', catHeatStress:'Heat stress', catCalibration:'Calibration', farmGreenValley:'Green Valley Farm', farmSunrise:'Sunrise Dairy',
                farmsSubtitle:'Manage all your dairy farms in one place', yourFarms:'Your Farms', periodToday:'Today', period7:'Last 7 days', period30:'Last 30 days',
@@ -3435,7 +3441,7 @@
                histInsem:'गर्भाधान हुआ \u2014 मोहिनी', histInsemSub:'18 घंटे की विंडो में \u2014 गर्भ जांच 3 जुलाई को',
                stageMilking:'दूध दे रही', stageHeatWatch:'हीट निगरानी', stageRecovered:'स्वस्थ हुई', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें', dashGreeting:'सुप्रभात,', dashAllFarms:'सभी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़े गए', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'इस सप्ताह देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हाँ, बुखार', dashViewEvents:'सभी कार्यक्रम देखें', dashEditsApproval:'आपकी मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटे दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहिए खेत', fdShareReport:'रिपोर्ट साझा करें', fdDownloadReport:'रिपोर्ट डाउनलोड करें', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती गायें', homeCowsHeat:'हीट में गायें', homePendingApprovals:'मंज़ूरी बाकी', homeMilkingsMissed:'छूटे दूध सत्र', homeUnresolvedAlerts:'अनसुलझे अलर्ट', homeCowsInHeat:'हीट में गायें', homeCowsInGestation:'गर्भ में गायें', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज का कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'शाम की दूध लॉगिंग', dashThisWeek:'इस सप्ताह', dashFmd:'खुरपका टीकाकरण', dashCows:'गायें', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं', dashGoodNews:'अच्छी खबर', dashRecovered:'ठीक हो गई', dashFeverCaught:'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', dashDaysAgo:'दिन पहले', dashConfPreg:'गर्भ की पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'कल पुष्टि हुई', dashCalved:'ब्याई', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'कल', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
+               chipActionable:'कार्रवाई चाहिए', detBaseline:'\u00b0C आधार रेखा', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सभी', statusWord:'स्थिति', statusActioned:'कार्रवाई हो गई', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करें', dashGreeting:'सुप्रभात,', dashAllFarms:'सभी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़े गए', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'इस सप्ताह देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हाँ, बुखार', dashViewEvents:'सभी कार्यक्रम देखें', dashEditsApproval:'आपकी मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटे दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहिए खेत', fdShareReport:'रिपोर्ट साझा करें', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करें', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती गायें', homeCowsHeat:'हीट में गायें', homePendingApprovals:'मंज़ूरी बाकी', homeMilkingsMissed:'छूटे दूध सत्र', homeUnresolvedAlerts:'अनसुलझे अलर्ट', homeCowsInHeat:'हीट में गायें', homeCowsInGestation:'गर्भ में गायें', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज का कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'शाम की दूध लॉगिंग', dashThisWeek:'इस सप्ताह', dashFmd:'खुरपका टीकाकरण', dashCows:'गायें', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहते हैं', dashGoodNews:'अच्छी खबर', dashRecovered:'ठीक हो गई', dashFeverCaught:'कॉलर ने बुखार पकड़ा, डॉ. शर्मा ने इलाज किया', dashDaysAgo:'दिन पहले', dashConfPreg:'गर्भ की पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'कल पुष्टि हुई', dashCalved:'ब्याई', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'कल', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताज़ा ब्याई',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
@@ -3517,7 +3523,7 @@
                histInsem:'गर्भाधान भइल \u2014 मोहिनी', histInsemSub:'18 घंटा के विंडो में \u2014 गर्भ जांच 3 जुलाई के',
                stageMilking:'दूध देत बिया', stageHeatWatch:'हीट निगरानी', stageRecovered:'ठीक भइल', stage21Day:'21-दिन निगरानी',
                prioP0:'गंभीर', prioP1:'मध्यम', prioP2:'मध्यम', prioP3:'कम',
-               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं', dashGreeting:'सुप्रभात,', dashAllFarms:'सगरी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़ल', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'ए हफ्ता देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हँ, बुखार', dashViewEvents:'सब कार्यक्रम देखीं', dashEditsApproval:'रउरा मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटल दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहीं खेत', fdShareReport:'रिपोर्ट साझा करीं', fdDownloadReport:'रिपोर्ट डाउनलोड करीं', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती गाई', homeCowsHeat:'हीट में गाई', homePendingApprovals:'मंज़ूरी बाकी', homeMilkingsMissed:'छूटल दूध सत्र', homeUnresolvedAlerts:'अनसुलझल अलर्ट', homeCowsInHeat:'हीट में गाई', homeCowsInGestation:'गर्भ में गाई', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज के कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'सांझ के दूध लॉगिंग', dashThisWeek:'ए हफ्ता', dashFmd:'खुरपका टीकाकरण', dashCows:'गाई', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहेला', dashGoodNews:'अच्छा खबर', dashRecovered:'ठीक हो गइल', dashFeverCaught:'कॉलर बुखार पकड़लस, डॉ. शर्मा इलाज कइलन', dashDaysAgo:'दिन पहिले', dashConfPreg:'गर्भ के पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'काल्ह पुष्टि भइल', dashCalved:'ब्याइल', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'काल्ह', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
+               chipActionable:'कार्रवाई के जरूरत', detBaseline:'\u00b0C आधार', detToday:'\u00b0C आज', filterWord:'फ़िल्टर', allWord:'सगरी', statusWord:'स्थिति', statusActioned:'कार्रवाई भइल', statusPending:'बाकी', farmWord:'खेत', applyFilters:'फ़िल्टर लागू करीं', dashGreeting:'सुप्रभात,', dashAllFarms:'सगरी खेत', dashLive:'लाइव', dashAddedToday:'आज जोड़ल', dashActiveAlerts:'सक्रिय अलर्ट', dashPendingTasks:'बाकी काम', dashDueToday:'आज देय', dashOverdue:'बकाया', dashPregnant:'गर्भवती', dashDueThisWeek:'ए हफ्ता देय', dashActionAlerts:'कार्रवाई अलर्ट', dashWaiting:'से इंतज़ार', dashYesFever:'हँ, बुखार', dashViewEvents:'सब कार्यक्रम देखीं', dashEditsApproval:'रउरा मंज़ूरी बाकी संपादन', dashMilkMissing:'आज छूटल दूध सत्र', dashInsemWindow:'गर्भाधान विंडो', dashLeft:'बाकी', dashFarmsNeedAction:'ध्यान चाहीं खेत', fdShareReport:'रिपोर्ट साझा करीं', tabActivity:'गतिविधि', fdDownloadReport:'रिपोर्ट डाउनलोड करीं', durationWord:'अवधि', customRangeWord:'कस्टम अवधि', homeCowsPregnant:'गर्भवती गाई', homeCowsHeat:'हीट में गाई', homePendingApprovals:'मंज़ूरी बाकी', homeMilkingsMissed:'छूटल दूध सत्र', homeUnresolvedAlerts:'अनसुलझल अलर्ट', homeCowsInHeat:'हीट में गाई', homeCowsInGestation:'गर्भ में गाई', dashOffline:'ऑफ़लाइन', dashTodaySchedule:'आज के कार्यक्रम', dashVaccDrive:'टीकाकरण अभियान', dashVetVisit:'पशु चिकित्सक भेंट', dashMilkLogging:'सांझ के दूध लॉगिंग', dashThisWeek:'ए हफ्ता', dashFmd:'खुरपका टीकाकरण', dashCows:'गाई', dashDays:'दि', dashRemindersNote:'7 दिन से आगे के आइटम कार्यक्रम रिमाइंडर में रहेला', dashGoodNews:'अच्छा खबर', dashRecovered:'ठीक हो गइल', dashFeverCaught:'कॉलर बुखार पकड़लस, डॉ. शर्मा इलाज कइलन', dashDaysAgo:'दिन पहिले', dashConfPreg:'गर्भ के पुष्टि', dashInseminated:'गर्भाधान', dashConfYesterday:'काल्ह पुष्टि भइल', dashCalved:'ब्याइल', dashHealthyCalf:'स्वस्थ बछड़ा, अब दूध लॉग में', dashYesterday:'काल्ह', dashTriageDone:'दर्ज — धन्यवाद', dashUpdates:'अपडेट', dashToday:'आज',
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताजा बियाइल',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
@@ -6474,14 +6480,6 @@
               '</div>' +
             '</div>' +
           '</div>' +
-          '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">' + t.actStatus + '</p>' +
-          '<div style="display:flex; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 6px;">' +
-            ovActTile(cow, '210', 'actRumination', false, 'var(--greenink)', 'var(--activebg)') +
-            ovActTile('<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16l-2 16H6z"/><path d="M4 9h16"/></svg>', '268', 'actFeeding', true, 'var(--warning)', 'rgba(232,160,32,0.14)') +
-            ovActTile(cow, '96', 'actStanding', true, '#2563EB', 'rgba(37,99,235,0.12)') +
-            ovActTile(cow, '512', 'actResting', true, '#7C3AED', 'rgba(124,58,237,0.12)') +
-          '</div>' +
-          '<button id="cow-actlog-link" style="display:flex; align-items:center; justify-content:space-between; width:100%; min-height:48px; margin-top:4px; padding:0 2px; background:transparent; border:none; border-bottom:1px solid var(--border); font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;"><span>View full activity log ›</span></button>' +
           '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:20px 0 10px;">' + t.remindersWord + '</p>' +
           '<div style="border:1.5px dashed var(--border); border-radius:16px; padding:20px; display:flex; align-items:center; justify-content:center; gap:8px; color:var(--text2);">' +
             '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>' +
@@ -6504,6 +6502,19 @@
             });
           });
         }
+      }
+      function renderCowActivity() {
+        var t = window.t();
+        var cow = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c0 2 1.5 3 3 3M20 5c0 2-1.5 3-3 3M6 8c-1 0-2 1-2 3 0 4 3.5 7 8 7s8-3 8-7c0-2-1-3-2-3"/><circle cx="9.5" cy="13" r="1"/><circle cx="14.5" cy="13" r="1"/></svg>';
+        document.getElementById('cow-pane-activity').innerHTML =
+          '<p style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">' + t.actStatus + '</p>' +
+          '<div style="display:flex; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 6px;">' +
+            ovActTile(cow, '210', 'actRumination', false, 'var(--greenink)', 'var(--activebg)') +
+            ovActTile('<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16l-2 16H6z"/><path d="M4 9h16"/></svg>', '268', 'actFeeding', true, 'var(--warning)', 'rgba(232,160,32,0.14)') +
+            ovActTile(cow, '96', 'actStanding', true, '#2563EB', 'rgba(37,99,235,0.12)') +
+            ovActTile(cow, '512', 'actResting', true, '#7C3AED', 'rgba(124,58,237,0.12)') +
+          '</div>' +
+          '<button id="cow-actlog-link" style="display:flex; align-items:center; justify-content:space-between; width:100%; min-height:48px; margin-top:4px; padding:0 2px; background:transparent; border:none; border-bottom:1px solid var(--border); font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer;"><span>View full activity log ›</span></button>';
         var actlogLink = document.getElementById('cow-actlog-link');
         if (actlogLink) actlogLink.addEventListener('click', function() { openActivityLog(); });
       }
@@ -6627,6 +6638,10 @@
         document.getElementById('cow-pane-overview').style.display = cowTab === 'overview' ? 'block' : 'none';
         document.getElementById('cow-pane-milk').style.display = cowTab === 'milkdata' ? 'block' : 'none';
         document.getElementById('cow-pane-vetlogs').style.display = cowTab === 'vetlogs' ? 'block' : 'none';
+        var actPane = document.getElementById('cow-pane-activity');
+        if (actPane) actPane.style.display = cowTab === 'activity' ? 'block' : 'none';
+        var ovTop = document.getElementById('cow-overview-top');
+        if (ovTop) ovTop.style.display = cowTab === 'overview' ? 'block' : 'none';
       }
       function renderCowPage() {
         if (!currentCow) return;
@@ -6649,6 +6664,7 @@
         battChip.style.borderColor = battPct <= 30 ? 'var(--danger)' : 'var(--border)';
         renderCowTimeline();
         renderCowOverview();
+        renderCowActivity();
         renderCowMilk();
         renderCowVetlogs();
         syncCowTabs();
