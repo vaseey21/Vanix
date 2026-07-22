@@ -585,19 +585,18 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
     );
   }
 
-  // ── Herd Activity pane: filter + activity tiles + rumination graph ─────
+  // ── Herd Activity pane: filter + rumination graph + activity chips ─────
+  // Funnel sheet is Cows-only now (Activity category removed) — the 4
+  // activity chips render directly under the graph card instead. Mirrors
+  // renderFdRumination()/fdToggleActivity() in vanix_screens_preview.html.
   Widget _herdPane(bool isDark) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Align(alignment: AlignmentDirectional.centerEnd, child: _herdFilterBtn(isDark)),
-        Padding(
-          padding: const EdgeInsetsDirectional.only(top: 10),
-          child: _herdSummaryGrid(isDark),
-        ),
         if (widget.farm.cows.isNotEmpty)
           Padding(
-            padding: const EdgeInsetsDirectional.only(top: 0),
+            padding: const EdgeInsetsDirectional.only(top: 10),
             child: _ruminationCard(isDark),
           ),
       ],
@@ -622,48 +621,6 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
     );
   }
 
-  Widget _herdSummaryGrid(bool isDark) {
-    final tiles = [
-      ('rumination', FS.t(_lang, 'actRumination'), VanixColors.greenInk),
-      ('standing', FS.t(_lang, 'actStanding'), const Color(0xFF2563EB)),
-      ('resting', FS.t(_lang, 'actResting'), const Color(0xFF7C3AED)),
-      ('feeding', FS.t(_lang, 'actFeeding'), VanixColors.warning),
-    ];
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 8,
-      crossAxisSpacing: 8,
-      childAspectRatio: 2.2,
-      children: [
-        for (final tile in tiles) _fdActivityTile(label: tile.$2, color: tile.$3, value: _kFdHerdHours[tile.$1] ?? '', isDark: isDark),
-      ],
-    );
-  }
-
-  Widget _fdActivityTile({required String label, required Color color, required String value, required bool isDark}) {
-    return Container(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: 10, vertical: 12),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: isDark ? VanixColors.darkSecond : VanixColors.bgCard,
-        border: Border.all(color: isDark ? VanixColors.darkBorder : VanixColors.border),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(value, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: isDark ? Colors.white : VanixColors.textPrimary, height: 1)),
-          const SizedBox(height: 5),
-          Text(label.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 0.3, color: color)),
-        ],
-      ),
-    );
-  }
-
   void _openHerdFilterSheet() {
     showModalBottomSheet(
       context: context,
@@ -673,22 +630,76 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
         lang: _lang,
         isDark: widget.appState.isDark,
         cows: widget.farm.cows,
-        activity: _fdActivity,
         cow: _fdHerdCow,
-        onApply: (a, c) => setState(() {
-          _fdActivity = a;
+        onApply: (c) => setState(() {
           _fdHerdCow = c;
         }),
       ),
     );
   }
 
+  // Toggling Rumination just shows/hides its line; tapping a secondary
+  // activity (Standing/Resting/Feeding) swaps it in, replacing any other
+  // secondary already selected. Mirrors fdToggleActivity() exactly.
+  void _fdToggleActivity(String key) {
+    setState(() {
+      if (key == 'rumination') {
+        if (_fdActiveSet.contains('rumination')) {
+          _fdActiveSet.remove('rumination');
+        } else {
+          _fdActiveSet.insert(0, 'rumination');
+        }
+      } else {
+        final already = _fdActiveSet.contains(key);
+        _fdActiveSet = _fdActiveSet.where((k) => k == 'rumination').toList();
+        if (!already) _fdActiveSet.add(key);
+      }
+    });
+  }
 
-  // ── Herd rumination card ────────────────────────────────────────────────
+  // ── Herd rumination / activity card ─────────────────────────────────────
   Widget _ruminationCard(bool isDark) {
     final isSunrise = widget.farm.id == 'sunrise';
-    final pts = isSunrise ? _kRuminationSunrise : _kRuminationNormal;
+    final ruminationPts = isSunrise ? _kRuminationSunrise : _kRuminationNormal;
     final textColor = isDark ? Colors.white : VanixColors.textPrimary;
+    final ruminationOn = _fdActiveSet.contains('rumination');
+    final anomaly = ruminationOn && isSunrise;
+
+    // Build one polyline per active key, sourcing rumination from the
+    // per-farm pts and everything else from _kFdActMeta.
+    final lines = <_FdActLine>[
+      for (final key in _fdActiveSet)
+        _FdActLine(
+          points: key == 'rumination' ? ruminationPts : _kFdActMeta[key]!.pts!,
+          color: _kFdActMeta[key]!.color,
+          anomalySegment: key == 'rumination' && anomaly ? const (13, 17) : null,
+        ),
+    ];
+
+    // Overlap: intersection of the two selected activities' active windows —
+    // only computed when exactly two are selected.
+    (int, int)? overlapRange;
+    String overlapCaption = '';
+    bool overlapFound = false;
+    if (_fdActiveSet.length == 2) {
+      final rA = _kFdActMeta[_fdActiveSet[0]]!.range;
+      final rB = _kFdActMeta[_fdActiveSet[1]]!.range;
+      final oStart = rA[0] > rB[0] ? rA[0] : rB[0];
+      final oEnd = rA[1] < rB[1] ? rA[1] : rB[1];
+      if (oStart < oEnd) {
+        overlapFound = true;
+        overlapRange = (oStart, oEnd);
+        String pad(int n) => '${(n % 24).toString().padLeft(2, '0')}:00';
+        overlapCaption = '${FS.t(_lang, 'overlapWord')}: ${pad(oStart)}–${pad(oEnd)} (${oEnd - oStart}h)';
+      } else {
+        overlapCaption = FS.t(_lang, 'noOverlapWord');
+      }
+    }
+
+    final titleLabel = _fdActiveSet.isEmpty
+        ? FS.t(_lang, 'actRumination')
+        : _fdActiveSet.map(_activityLabel).join(' & ');
+
     return Container(
       padding: const EdgeInsetsDirectional.all(14),
       decoration: BoxDecoration(
@@ -701,16 +712,16 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
         children: [
           Row(
             children: [
-              Expanded(child: Text('${FS.t(_lang, 'fdHerdTitlePre')} ${_activityLabel()} — ${FS.t(_lang, 'fdHerdTitlePost')}', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: textColor))),
-              _ruminationPill(isSunrise),
+              Expanded(child: Text('${FS.t(_lang, 'fdHerdTitlePre')} $titleLabel — ${FS.t(_lang, 'fdHerdTitlePost')}', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: textColor))),
+              if (ruminationOn) _ruminationPill(anomaly),
             ],
           ),
           const SizedBox(height: 12),
           SizedBox(
-            height: 96,
+            height: 180,
             width: double.infinity,
             child: CustomPaint(
-              painter: _RuminationPainter(points: pts, anomaly: isSunrise),
+              painter: _MultiActivityPainter(lines: lines, overlapRange: overlapRange),
               size: Size.infinite,
             ),
           ),
@@ -722,12 +733,59 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                 Text(l, style: const TextStyle(fontSize: 9, color: VanixColors.textHint)),
             ],
           ),
-          if (isSunrise)
+          if (anomaly)
             Padding(
               padding: const EdgeInsetsDirectional.only(top: 10),
               child: Text(FS.t(_lang, 'fdAnomalyNote'), style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, height: 1.5, color: VanixColors.warningInk)),
             ),
+          if (_fdActiveSet.length == 2)
+            Padding(
+              padding: const EdgeInsetsDirectional.only(top: 10),
+              child: Text(
+                overlapCaption,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: overlapFound ? FontWeight.w600 : FontWeight.w400,
+                  color: overlapFound ? textColor : VanixColors.textHint,
+                ),
+              ),
+            ),
+          const SizedBox(height: 12),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for (final key in const ['rumination', 'standing', 'resting', 'feeding']) ...[
+                  _fdActivityChip(key, isDark),
+                  const SizedBox(width: 8),
+                ],
+              ],
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _fdActivityChip(String key, bool isDark) {
+    final on = _fdActiveSet.contains(key);
+    final color = _kFdActMeta[key]!.color;
+    return InkWell(
+      onTap: () => _fdToggleActivity(key),
+      borderRadius: BorderRadius.circular(17),
+      child: Container(
+        height: 34,
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 14),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(17),
+          border: Border.all(color: on ? color : (isDark ? VanixColors.darkBorder : VanixColors.border)),
+          color: on ? color : (isDark ? VanixColors.darkSecond : VanixColors.bgCard),
+        ),
+        child: Text(
+          _activityLabel(key),
+          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: on ? Colors.white : (isDark ? Colors.white : VanixColors.textPrimary)),
+        ),
       ),
     );
   }
@@ -751,8 +809,8 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
     );
   }
 
-  String _activityLabel() {
-    switch (_fdActivity) {
+  String _activityLabel(String key) {
+    switch (key) {
       case 'standing':
         return FS.t(_lang, 'actStanding');
       case 'resting':
