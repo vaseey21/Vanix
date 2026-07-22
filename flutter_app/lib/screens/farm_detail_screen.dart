@@ -437,11 +437,91 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
           ),
           child: Icon(Icons.more_vert, size: 16, color: textColor),
         ),
+        onSelected: (v) {
+          switch (v) {
+            case 'download':
+              _openReportPreview(critical: false);
+              break;
+            case 'download-critical':
+              _openReportPreview(critical: true);
+              break;
+            case 'share':
+              _openShareWithVetSheet();
+              break;
+            case 'manage':
+              Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => FarmMgmtPage(appState: widget.appState)));
+              break;
+          }
+        },
         itemBuilder: (_) => [
-          PopupMenuItem(value: 'edit', height: 40, child: Text(FS.t(_lang, 'editWord'), style: TextStyle(fontSize: 13, color: textColor))),
-          PopupMenuItem(value: 'delete', height: 40, child: Text(FS.t(_lang, 'deleteWord'), style: const TextStyle(fontSize: 13, color: VanixColors.danger))),
+          PopupMenuItem(value: 'download', height: 40, child: Text(FS.t(_lang, 'downloadReport'), style: TextStyle(fontSize: 13, color: textColor))),
+          PopupMenuItem(value: 'download-critical', height: 40, child: Text(FS.t(_lang, 'downloadCriticalReport'), style: TextStyle(fontSize: 13, color: textColor))),
+          PopupMenuItem(value: 'share', height: 40, child: Text(FS.t(_lang, 'shareReportVet'), style: TextStyle(fontSize: 13, color: textColor))),
+          PopupMenuItem(value: 'manage', height: 40, child: Text(FS.t(_lang, 'manageFarmWord'), style: TextStyle(fontSize: 13, color: textColor))),
         ],
       ),
+    );
+  }
+
+  // Download Report / Download Critical Report -> full-screen Report Preview.
+  // Mirrors openReportPreview() in vanix_screens_preview.html.
+  void _openReportPreview({required bool critical}) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => ReportPreviewScreen(appState: widget.appState, farm: widget.farm, critical: critical),
+    ));
+  }
+
+  // Share Report with vet -> vet picker sheet -> toast. Mirrors
+  // farm-detail-kebab-share -> window.openVetSheet() in
+  // vanix_screens_preview.html.
+  void _openShareWithVetSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (sheetCtx) {
+        final isDark = widget.appState.isDark;
+        final bg = isDark ? VanixColors.darkSecond : Colors.white;
+        final text1 = isDark ? Colors.white : VanixColors.textPrimary;
+        final border = isDark ? VanixColors.darkBorder : VanixColors.border;
+        const vets = ['Dr. Sharma', 'Dr. Rao', 'Dr. Iyer'];
+        return Container(
+          decoration: BoxDecoration(color: bg, borderRadius: const BorderRadius.vertical(top: Radius.circular(VanixRadius.pill))),
+          padding: const EdgeInsets.fromLTRB(VanixSpacing.xl, VanixSpacing.md, VanixSpacing.xl, 24),
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: border, borderRadius: BorderRadius.circular(2)))),
+            const SizedBox(height: VanixSpacing.md),
+            Text(FS.t(_lang, 'pickVet'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: text1)),
+            const SizedBox(height: VanixSpacing.md),
+            for (final v in vets)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(sheetCtx).pop();
+                    _snack('${FS.t(_lang, 'reportSharedWith')} $v');
+                  },
+                  borderRadius: BorderRadius.circular(14),
+                  child: Container(
+                    constraints: const BoxConstraints(minHeight: 48),
+                    alignment: AlignmentDirectional.centerStart,
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    decoration: BoxDecoration(color: isDark ? VanixColors.darkSubSurface : VanixColors.bgCard, borderRadius: BorderRadius.circular(14), border: Border.all(color: border)),
+                    child: Text(v, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: text1)),
+                  ),
+                ),
+              ),
+          ]),
+        );
+      },
+    );
+  }
+
+  void _snack(String msg) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), duration: const Duration(seconds: 1)),
     );
   }
 
