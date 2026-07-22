@@ -1410,8 +1410,7 @@ class _FdActLine {
 /// building in vanix_screens_preview.html.
 class _MultiActivityPainter extends CustomPainter {
   final List<_FdActLine> lines;
-  final (int, int)? overlapRange; // hour range [0,24] to shade
-  const _MultiActivityPainter({required this.lines, this.overlapRange});
+  const _MultiActivityPainter({required this.lines});
 
   Offset _pt(List<double> points, int i, Size size) {
     final x = i / (points.length - 1) * size.width;
@@ -1421,14 +1420,6 @@ class _MultiActivityPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (overlapRange != null) {
-      final (oStart, oEnd) = overlapRange!;
-      final x1 = oStart / 24 * size.width;
-      final x2 = oEnd / 24 * size.width;
-      final rectPaint = Paint()..color = VanixColors.textPrimary.withValues(alpha: 0.07);
-      canvas.drawRect(Rect.fromLTWH(x1, 0, x2 - x1, size.height), rectPaint);
-    }
-
     final baselinePaint = Paint()
       ..color = VanixColors.divider
       ..strokeWidth = 0.5;
