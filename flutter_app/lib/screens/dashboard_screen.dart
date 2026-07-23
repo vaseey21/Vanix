@@ -140,7 +140,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return kFarms.firstWhere((f) => f.id == _farmSel).nm(_lang);
   }
 
+  // Manager viewing a single farm sees a plain farm-name label instead of
+  // the interactive All-Farms dropdown (mirrors the HTML's dash-farmsel
+  // swap in applyPersona()).
+  bool get _isSingleFarmManager => widget.appState.isManager && widget.appState.isSingleFarm;
+
   void _openFarmSelector() {
+    if (_isSingleFarmManager) return;
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
