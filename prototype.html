@@ -4172,6 +4172,7 @@
       function openAdd()  { addPage.style.transform = 'translateY(0)'; }
       function closeAdd() { addPage.style.transform = 'translateY(100%)'; }
       document.getElementById('s7-fab').addEventListener('click', function() { editTarget = null; resetAddPage(); openAdd(); });
+      window.openAddMilkEntry = function() { editTarget = null; resetAddPage(); openAdd(); };
       document.getElementById('s8-back').addEventListener('click', closeAdd);
       document.getElementById('s8-cancel').addEventListener('click', closeAdd);
       fBack.addEventListener('click', closeF);
