@@ -410,17 +410,21 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
               Expanded(
                 child: Row(
                   children: [
-                    Flexible(
-                      child: Text(
-                        farm.managerInvitePending
-                            ? '${FS.t(_lang, 'invitePending')} — ${farm.managerInviteEmail}'
-                            : farm.mgr(_lang),
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 13, color: farm.managerInvitePending ? VanixColors.warning : subColor, fontWeight: farm.managerInvitePending ? FontWeight.w600 : FontWeight.w400),
+                    // Manager persona viewing their own farm doesn't need to
+                    // see their own name — mirrors #farm-detail-manager-wrap
+                    // being hidden for persona-manager in the HTML.
+                    if (!widget.appState.isManager)
+                      Flexible(
+                        child: Text(
+                          farm.managerInvitePending
+                              ? '${FS.t(_lang, 'invitePending')} — ${farm.managerInviteEmail}'
+                              : farm.mgr(_lang),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 13, color: farm.managerInvitePending ? VanixColors.warning : subColor, fontWeight: farm.managerInvitePending ? FontWeight.w600 : FontWeight.w400),
+                        ),
                       ),
-                    ),
                     // Manager edit is owner-only
-                    if (!widget.appState.isFarmer && !farm.managerInvitePending) ...[
+                    if (widget.appState.isOwner && !farm.managerInvitePending) ...[
                       const SizedBox(width: 4),
                       InkWell(
                         onTap: () => _openManagerChooser(farm),
@@ -431,7 +435,7 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                         ),
                       ),
                     ],
-                    if (!farm.managerInvitePending) ...[
+                    if (!widget.appState.isManager && !farm.managerInvitePending) ...[
                       Text('  -  ', style: TextStyle(fontSize: 13, color: subColor)),
                       Text(widget.appState.fmtTemp(farm.temp), style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: textColor)),
                       const SizedBox(width: 5),
