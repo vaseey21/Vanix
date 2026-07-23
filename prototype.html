@@ -106,6 +106,8 @@
     /* Manager-only Home content (hidden by default; shown only for persona-manager) */
     [data-manager-only] { display:none !important; }
     #flow-root.persona-manager [data-manager-only] { display:block !important; }
+    /* Manager persona viewing their own farm doesn't need to see their own name */
+    #flow-root.persona-manager #farm-detail-manager-wrap { display:none !important; }
     /* Stale owner-persona timeago/meta pill rule removed — that info now lives
        in the unified Name|Breed|Belt / Farm|Time header on the alert card
        itself, so the old pill duplicated it (and its ID-selector !important
