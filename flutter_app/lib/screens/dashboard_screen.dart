@@ -207,16 +207,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: Align(
               alignment: AlignmentDirectional.centerEnd,
               child: InkWell(
-                onTap: _openFarmSelector,
+                onTap: _isSingleFarmManager ? null : _openFarmSelector,
                 borderRadius: BorderRadius.circular(19),
                 child: Container(
                   height: 38,
                   padding: const EdgeInsetsDirectional.symmetric(horizontal: 14),
                   decoration: BoxDecoration(color: _cardBg, borderRadius: BorderRadius.circular(19), border: Border.all(color: _border)),
                   child: Row(mainAxisSize: MainAxisSize.min, children: [
-                    Flexible(child: Text(_farmSelLabel, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1))),
-                    const SizedBox(width: 4),
-                    Icon(Icons.keyboard_arrow_down, size: 16, color: _text1),
+                    Flexible(
+                      child: Text(
+                        _isSingleFarmManager ? kFarms.first.nm(_lang) : _farmSelLabel,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1),
+                      ),
+                    ),
+                    if (!_isSingleFarmManager) ...[
+                      const SizedBox(width: 4),
+                      Icon(Icons.keyboard_arrow_down, size: 16, color: _text1),
+                    ],
                   ]),
                 ),
               ),
