@@ -1195,6 +1195,21 @@
               <button id="dash-viewevents" style="display:block; width:100%; min-height:48px; margin-top:14px; background:var(--greenink); border:none; border-radius:24px; font-size:14px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi); cursor:pointer;"><span data-k="dashViewEvents">View all in Events</span> &nbsp;&rarr;</button>
             </div>
 
+            <!-- All Farms picker — bottom sheet with search -->
+            <div id="dash-farmsel-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:46;"></div>
+            <div id="dash-farmsel-sheet" style="position:absolute; left:0; right:0; bottom:0; max-height:78vh; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 24px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:47; overflow-y:auto; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+              <div style="display:flex; align-items:center; margin-top:10px;">
+                <h3 data-k="dashAllFarms" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">All Farms</h3>
+                <button id="dash-farmsel-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; height:44px; margin-top:12px; padding:0 14px; border-radius:22px; background:var(--bgwarm);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input id="dash-farmsel-search" type="text" placeholder="Search farms" data-k="searchFarms" data-k-placeholder style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
+              </div>
+              <div id="dash-farmsel-list" style="margin-top:8px;"></div>
+            </div>
+
             <!-- ── BOTTOM NAV — frosted floating bar, active tab = white capsule (Starbucks style) ── -->
             <nav class="vnav" id="dash-nav">
               <div class="vcap"></div>
@@ -3492,7 +3507,7 @@
                catFever:'Fever', catHeat:'Heat', catPregnancy:'Pregnancy', catGestation:'Gestation', catMilking:'Milking', catLactation:'Lactation', catPregLoss:'Pregnancy loss', catFreshCow:'Fresh cow',
                catMastitis:'Mastitis', catLameness:'Lameness', catKetosis:'Ketosis', catHeatStress:'Heat stress', catCalibration:'Calibration', farmGreenValley:'Green Valley Farm', farmSunrise:'Sunrise Dairy',
                farmsSubtitle:'Manage all your dairy farms in one place', yourFarms:'Your Farms', periodToday:'Today', period7:'Last 7 days', period30:'Last 30 days',
-               statTotalCattle:'Total Cattle', statTotalMilk:'Total Milk', healthyWord:'HEALTHY', insemWord:'Insemination', notSetUp:'Not set up yet', setupFarm:'Setup Farm', farmAddedSuccess:'Farm added successfully', backToHome:'Back to Home', viewFarmWord:'View Farm',
+               statTotalCattle:'Total Cattle', statTotalMilk:'Total Milk', healthyWord:'HEALTHY', insemWord:'Insemination', notSetUp:'Not set up yet', setupFarm:'Setup Farm', farmAddedSuccess:'Farm added successfully', backToHome:'Back to Home', viewFarmWord:'View Farm', aiChatComingSoon:'AI Chat Bot — coming soon',
                avgTempLabel:'Avg Temp', vsYesterday:'vs yesterday', criticalWord:'critical', statusFeverAlert:'Fever Alert',
                labelMilkToday:'Milk Today', labelLastMilking:'Last Milking', labelLactation:'Lactation', labelDueDate:'Due Date', labelPregnancy:'Pregnancy', labelLastCheck:'Last Check',
                labelHeatDetected:'Heat Detected', labelInsemination:'Insemination', labelHeatStage:'Heat Stage', labelTempRecorded:'Temp Recorded', labelRecordedAt:'Recorded At', labelSeverity:'Severity',
@@ -3575,7 +3590,7 @@
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताज़ा ब्याई',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
-               statTotalCattle:'कुल पशु', statTotalMilk:'कुल दूध', healthyWord:'स्वस्थ', insemWord:'गर्भाधान', notSetUp:'अभी सेट अप नहीं', setupFarm:'फार्म सेट करें', farmAddedSuccess:'फार्म सफलतापूर्वक जोड़ल गइल', backToHome:'होम पर वापस जाईं', viewFarmWord:'फार्म देखीं', farmAddedSuccess:'फार्म सफलतापूर्वक जोड़ा गया', backToHome:'होम पर वापस जाएं', viewFarmWord:'फार्म देखें',
+               statTotalCattle:'कुल पशु', statTotalMilk:'कुल दूध', healthyWord:'स्वस्थ', insemWord:'गर्भाधान', notSetUp:'अभी सेट अप नहीं', setupFarm:'फार्म सेट करें', farmAddedSuccess:'फार्म सफलतापूर्वक जोड़ा गया', backToHome:'होम पर वापस जाएं', viewFarmWord:'फार्म देखें', aiChatComingSoon:'एआई चैट बॉट — जल्द आ रहा है',
                avgTempLabel:'औसत तापमान', vsYesterday:'कल की तुलना में', criticalWord:'गंभीर', statusFeverAlert:'बुखार अलर्ट',
                labelMilkToday:'आज का दूध', labelLastMilking:'पिछली दुहाई', labelLactation:'दुग्ध अवधि', labelDueDate:'नियत तारीख', labelPregnancy:'गर्भावस्था', labelLastCheck:'पिछली जांच',
                labelHeatDetected:'हीट मिली', labelInsemination:'गर्भाधान', labelHeatStage:'हीट चरण', labelTempRecorded:'तापमान दर्ज', labelRecordedAt:'दर्ज समय', labelSeverity:'गंभीरता',
@@ -3658,7 +3673,7 @@
                catFever:'बुखार', catHeat:'हीट', catPregnancy:'गर्भावस्था', catGestation:'गर्भकाल', catMilking:'दूध', catLactation:'दुग्ध अवधि', catPregLoss:'गर्भ हानि', catFreshCow:'ताजा बियाइल',
                catMastitis:'थनैला', catLameness:'लंगड़ापन', catKetosis:'कीटोसिस', catHeatStress:'गर्मी तनाव', catCalibration:'कैलिब्रेशन', farmGreenValley:'ग्रीन वैली फार्म', farmSunrise:'सनराइज़ डेयरी',
                farmsSubtitle:'अपने सभी डेयरी फार्म एक जगह प्रबंधित करें', yourFarms:'आपके खेत', periodToday:'आज', period7:'पिछले 7 दिन', period30:'पिछले 30 दिन',
-               statTotalCattle:'कुल पशु', statTotalMilk:'कुल दूध', healthyWord:'स्वस्थ', insemWord:'गर्भाधान', notSetUp:'अभी सेट अप नहीं', setupFarm:'फार्म सेट करें',
+               statTotalCattle:'कुल पशु', statTotalMilk:'कुल दूध', healthyWord:'स्वस्थ', insemWord:'गर्भाधान', notSetUp:'अभी सेट अप नहीं', setupFarm:'फार्म सेट करें', farmAddedSuccess:'फार्म सफलतापूर्वक जोड़ल गइल', backToHome:'होम पर वापस जाईं', viewFarmWord:'फार्म देखीं', aiChatComingSoon:'एआई चैट बॉट — जल्द आ रहा है',
                avgTempLabel:'औसत तापमान', vsYesterday:'कल की तुलना में', criticalWord:'गंभीर', statusFeverAlert:'बुखार अलर्ट',
                labelMilkToday:'आज का दूध', labelLastMilking:'पिछली दुहाई', labelLactation:'दुग्ध अवधि', labelDueDate:'नियत तारीख', labelPregnancy:'गर्भावस्था', labelLastCheck:'पिछली जांच',
                labelHeatDetected:'हीट मिली', labelInsemination:'गर्भाधान', labelHeatStage:'हीट चरण', labelTempRecorded:'तापमान दर्ज', labelRecordedAt:'दर्ज समय', labelSeverity:'गंभीरता',
