@@ -7881,16 +7881,37 @@
         bd.addEventListener('click', close);
         document.getElementById('ac-picker-close').addEventListener('click', close);
       })();
-      // Cow History bottom sheet
+      // Cow History — a page inside the same Add Cattle sheet (not a separate
+      // stacked sheet), reached via the back button.
       (function() {
-        var sh = document.getElementById('ac-history-sheet'), bd = document.getElementById('ac-history-backdrop');
-        function open() { sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto'; }
-        function close() { sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
+        var tabsRow = document.getElementById('ac-tabs-row');
+        var paneCow = document.getElementById('ac-pane-cow');
+        var paneDevice = document.getElementById('ac-pane-device');
+        var paneHistory = document.getElementById('ac-pane-history');
+        var backBtn = document.getElementById('ac-history-back');
+        var titleEl = document.getElementById('ac-header-title');
+        var prevTab = 'cow';
+        function open() {
+          prevTab = document.querySelector('.ac-tab.on').getAttribute('data-actab');
+          tabsRow.style.display = 'none';
+          paneCow.style.display = 'none';
+          paneDevice.style.display = 'none';
+          paneHistory.style.display = 'block';
+          backBtn.style.display = 'flex';
+          titleEl.setAttribute('data-k', 'acCowHistory');
+          titleEl.textContent = window.t().acCowHistory;
+        }
+        function close() {
+          tabsRow.style.display = 'flex';
+          paneHistory.style.display = 'none';
+          paneCow.style.display = prevTab === 'cow' ? 'block' : 'none';
+          paneDevice.style.display = prevTab === 'device' ? 'block' : 'none';
+          backBtn.style.display = 'none';
+          titleEl.setAttribute('data-k', 'addCattle');
+          titleEl.textContent = window.t().addCattle;
+        }
         document.getElementById('ac-history-link').addEventListener('click', open);
-        bd.addEventListener('click', close);
-        document.getElementById('ac-history-close').addEventListener('click', close);
-        document.getElementById('ac-history-cancel').addEventListener('click', close);
-        document.getElementById('ac-history-save').addEventListener('click', close);
+        backBtn.addEventListener('click', close);
         var lact = 2, valEl = document.getElementById('ac-lact-val');
         document.getElementById('ac-lact-minus').addEventListener('click', function() { if (lact > 0) { lact--; valEl.textContent = lact; } });
         document.getElementById('ac-lact-plus').addEventListener('click', function() { lact++; valEl.textContent = lact; });
