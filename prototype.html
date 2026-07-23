@@ -100,9 +100,12 @@
     #flow-root.dark #s1-dash { background: #111111 !important; }
     #flow-root.dark #s1-dash > div > p { color: #8C8780 !important; }
     /* ── Unified frosted nav: identical metrics everywhere; sliding droplet capsule ── */
-    /* Persona gating — owner-only surfaces hidden for the Farmer persona */
-    #flow-root.persona-farmer [data-owner-only] { display:none !important; }
+    /* Persona gating — owner-only surfaces hidden for the Farmer and Manager personas */
+    #flow-root.persona-farmer [data-owner-only], #flow-root.persona-manager [data-owner-only] { display:none !important; }
     #flow-root.persona-farmer .m-sub-actions { display:none !important; }
+    /* Manager-only Home content (hidden by default; shown only for persona-manager) */
+    [data-manager-only] { display:none !important; }
+    #flow-root.persona-manager [data-manager-only] { display:block !important; }
     /* Stale owner-persona timeago/meta pill rule removed — that info now lives
        in the unified Name|Breed|Belt / Farm|Time header on the alert card
        itself, so the old pill duplicated it (and its ID-selector !important
