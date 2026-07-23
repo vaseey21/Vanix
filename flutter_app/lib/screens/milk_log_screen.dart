@@ -19,7 +19,11 @@ import 'milk_summary_screen.dart';
 /// banners, date-grouped entry cards, filter bottom sheet, FAB → add entry.
 class MilkLogScreen extends StatefulWidget {
   final AppState appState;
-  const MilkLogScreen({super.key, required this.appState});
+  // When true (e.g. tapping the Manager persona's "Milking (Morning)" Home
+  // row), the Add Entry sheet opens immediately on top of the list —
+  // mirrors window.openAddMilkEntry() in prototype.html.
+  final bool openAddOnStart;
+  const MilkLogScreen({super.key, required this.appState, this.openAddOnStart = false});
 
   @override
   State<MilkLogScreen> createState() => _MilkLogScreenState();
