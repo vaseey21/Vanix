@@ -38,6 +38,17 @@
       min-height: 100vh;
     }
 
+    /* On an actual phone, drop the desktop gallery padding entirely so the
+       phone frame (now full-viewport, see .phone's mobile rule) starts at the
+       true top/left of the screen — otherwise this padding pushes it down/in,
+       and its bottom overflows past the real viewport by the same amount. */
+    @media (max-width: 500px) {
+      body { padding: 0 !important; }
+      .screen-grid { gap: 0 !important; }
+      .screen-wrap { gap: 0 !important; }
+      .screen-label { display: none !important; }
+    }
+
     /* ── Layout ── */
     .screen-grid {
       display: flex;
