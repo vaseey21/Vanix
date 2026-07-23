@@ -8198,41 +8198,45 @@
           chip.addEventListener('click', function() { fdToggleActivity(chip.getAttribute('data-act')); });
         });
       }
-      // ── Setup Farm page (Highland) ──
-      var sfPage = document.getElementById('page-setup-farm');
-      var sfFarmId = null;
+      // ── Setup Farm flow: assign manager (shared sheet) -> add cattle -> success popup ──
+      var sfActiveFarmId = null;
       function openSetupFarm(farmId) {
         var farm = FARMS.filter(function(f) { return f.id === farmId; })[0];
         if (!farm) return;
-        sfFarmId = farmId;
-        document.getElementById('sf-farm-name').textContent = loc(farm, 'name');
-        document.getElementById('sf-invite-form').style.display = 'block';
-        document.getElementById('sf-invite-pending').style.display = 'none';
-        document.getElementById('sf-assign-self').style.display = 'block';
-        document.getElementById('sf-assigned').style.display = 'none';
-        document.getElementById('sf-done').style.display = 'none';
-        ['sf-inv-name', 'sf-inv-email', 'sf-inv-phone'].forEach(function(id) { document.getElementById(id).value = ''; });
-        sfPage.style.transform = 'translateY(0)';
+        sfActiveFarmId = farmId;
+        openFmChoose(farmId);
       }
-      function closeSetupFarm() { sfPage.style.transform = 'translateY(100%)'; }
-      document.getElementById('sf-back').addEventListener('click', closeSetupFarm);
-      document.getElementById('sf-inv-send').addEventListener('click', function() {
-        var name = document.getElementById('sf-inv-name').value.trim() || 'Farm manager';
-        document.getElementById('sf-pending-name').textContent = name;
-        document.getElementById('sf-invite-form').style.display = 'none';
-        document.getElementById('sf-invite-pending').style.display = 'flex';
-        document.getElementById('sf-done').style.display = 'block';
+      function sfManagerAssigned(farmId) {
+        if (sfActiveFarmId && sfActiveFarmId === farmId) {
+          var f = FARMS.filter(function(x) { return x.id === farmId; })[0];
+          if (f) f.status = 'healthy';
+          renderFarmsList();
+          openAddCattle();
+          return true;
+        }
+        return false;
+      }
+      function openSfSuccess() {
+        var bd = document.getElementById('sf-success-backdrop'), sh = document.getElementById('sf-success-sheet');
+        bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+        sh.style.opacity = '1'; sh.style.pointerEvents = 'auto'; sh.style.transform = 'translate(0,-50%) scale(1)';
+      }
+      function closeSfSuccess() {
+        var bd = document.getElementById('sf-success-backdrop'), sh = document.getElementById('sf-success-sheet');
+        bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+        sh.style.opacity = '0'; sh.style.pointerEvents = 'none'; sh.style.transform = 'translate(0,-50%) scale(0.9)';
+      }
+      document.getElementById('sf-success-home').addEventListener('click', function() {
+        var fid = sfActiveFarmId;
+        sfActiveFarmId = null;
+        closeSfSuccess();
+        document.querySelectorAll('.vnav').forEach(function(n) { var b = n.querySelector('[data-i="0"]'); if (b) b.click(); });
       });
-      document.getElementById('sf-assign-self').addEventListener('click', function() {
-        this.style.display = 'none';
-        document.getElementById('sf-assigned').style.display = 'block';
-        document.getElementById('sf-done').style.display = 'block';
-        var f = FARMS.filter(function(x) { return x.id === sfFarmId; })[0];
-        if (f) { f.status = 'healthy'; f.manager = 'James Redmark'; f.managerHi = 'जेम्स रेडमार्क'; f.managerStatus = 'active'; }
-      });
-      document.getElementById('sf-done').addEventListener('click', function() {
-        closeSetupFarm();
-        renderFarmsList();
+      document.getElementById('sf-success-view').addEventListener('click', function() {
+        var fid = sfActiveFarmId;
+        sfActiveFarmId = null;
+        closeSfSuccess();
+        if (fid && typeof openFarmDetail === 'function') openFarmDetail(fid);
       });
 
 
