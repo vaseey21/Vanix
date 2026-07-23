@@ -787,9 +787,7 @@
     /* View Details — white link with text (reset the native button chrome so the
        cards that lack an inline background:none don't show a white button box) */
     .display-fullbleed .ev-photo-card .ev-photo-viewdetails {
-      display: block !important; text-align: left !important; font-size: 0 !important;
-      color: rgba(255,255,255,0.9) !important; margin: 0 0 16px !important; padding: 0 !important;
-      background: none !important; border: none !important; width: auto !important; box-shadow: none !important;
+      display: none !important;
     }
     .display-fullbleed .ev-photo-card .ev-photo-viewdetails::after {
       content: var(--i18n-viewdetails); font-size: 14px; font-weight: 600;
@@ -876,10 +874,7 @@
     .display-fullbleed .ev-photo-step .ev-photo-time { color: rgba(255,255,255,0.85); }
     /* Row 2 — name · breed (left) white + View Details (right) white */
     .display-fullbleed .ev-photo-step .ev-photo-namebreed { color: #fff; }
-    .display-fullbleed .ev-photo-step .ev-photo-vd {
-      font-size: 14px !important; font-weight: 600; color: rgba(255,255,255,0.92) !important;
-    }
-    .display-fullbleed .ev-photo-step .ev-photo-vd::after { content: none !important; }
+    .display-fullbleed .ev-photo-step .ev-photo-vd { display: none !important; }
     /* Row 3 — CTAs sit directly on the scrim (no panel / white padding). */
     .display-fullbleed .ev-photo-step .ev-seq-bottom { margin-top: 14px; }
     /* lighten the detail text (phase label endpoints, segment labels) on the photo */
@@ -5176,13 +5171,8 @@
           evResolve();
         });
         card.querySelector('.ev-yes').addEventListener('click', function() {
-          // Image-mode events card is a triage card — tapping Yes opens the
-          // bottom slider, which runs the timer → Start Insemination → type
-          // flow. Text mode keeps the older inline vet/insemination flow.
-          if (window.evOpenHeatSlider) {
-            window.evOpenHeatSlider();
-            return;
-          }
+          // Tapping "Yes" goes straight to the vet picker (call a vet, choose
+          // which one) — no intermediate timer/segmented-bar card.
           confirmed = true;
           confirmEl.style.display = 'none';
           if (questionEl) questionEl.style.display = 'none';
