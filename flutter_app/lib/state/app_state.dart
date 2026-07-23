@@ -36,8 +36,9 @@ class AppState extends ChangeNotifier {
   String get persona => _persona;
   String get farmCount => _farmCount;
   bool get isFarmer => _persona == 'farmer';
+  bool get isManager => _persona == 'manager';
   bool get isOwner => _persona == 'owner';
-  bool get isSingleFarm => _persona == 'farmer' && _farmCount == 'single';
+  bool get isSingleFarm => (_persona == 'farmer' || _persona == 'manager') && _farmCount == 'single';
   String get tempUnit => _tempUnit;
 
   void setTempUnit(String u) {
