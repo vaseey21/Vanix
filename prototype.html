@@ -8279,13 +8279,11 @@
         listEl.innerHTML = VETS.map(function(v, i) {
           var b = VET_BADGE[v.status];
           return '<div class="vet-card" data-i="' + i + '" style="position:relative; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px;">' +
-            '<div style="display:flex; align-items:center; gap:8px;">' +
-              '<span class="en" style="font-size:14px; font-weight:700; color:var(--text1);">' + v.name + '</span>' +
-              '<span class="en" style="flex-shrink:0; background:#E5E5E5; color:#111111; border-radius:12px; padding:3px 10px; font-size:9px; font-weight:700; letter-spacing:0.04em;">' + window.t()[b.k] + '</span>' +
-            '</div>' +
+            '<p class="en" style="font-size:14px; font-weight:700; color:var(--text1); margin:0;">' + v.name + '</p>' +
+            '<span class="en" style="display:inline-block; margin-top:5px; background:#E5E5E5; color:#111111; border-radius:12px; padding:3px 10px; font-size:9px; font-weight:700; letter-spacing:0.04em;">' + window.t()[b.k] + '</span>' +
             '<div style="display:flex; gap:8px; margin-top:10px;">' +
               '<button class="vet-del" data-i="' + i + '" style="flex:1; min-height:40px; border-radius:20px; border:1px solid var(--danger); background:transparent; color:var(--danger); font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + window.t().deleteWord + '</button>' +
-              '<a href="tel:' + v.phone.replace(/\s+/g, '') + '" class="vet-call" style="flex:1; min-height:40px; border-radius:20px; border:1.5px solid var(--greenink); background:var(--activebg); color:var(--greenink); font-size:13px; font-weight:700; font-family:var(--font-hi); display:flex; align-items:center; justify-content:center; text-decoration:none; cursor:pointer;">' + window.t().callWord + '</a>' +
+              '<a href="tel:' + v.phone.replace(/\s+/g, '') + '" class="vet-call" style="flex:1; min-height:40px; border-radius:20px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:13px; font-weight:600; font-family:var(--font-hi); display:flex; align-items:center; justify-content:center; text-decoration:none; cursor:pointer;">' + window.t().callWord + '</a>' +
             '</div>' +
           '</div>';
         }).join('');
