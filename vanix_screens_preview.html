@@ -7556,7 +7556,9 @@
           ['ca-m-insem', t.addInsem, function() { caCtx.flow = 'insem'; caGo('vetPick'); }],
           ['ca-m-preg', t.addPreg, function() { caGo('pregConfirm'); }],
           ['ca-m-delivery', t.addDelivery, function() { caGo('deliveryConfirm'); }],
-          ['ca-m-vaccine', 'Add Vaccination', function() { caGo('vaccineType'); }]
+          ['ca-m-vaccine', 'Add Vaccination', function() { caGo('vaccineType'); }],
+          ['ca-m-milking', t.addMilkingPeriod, function() { caGo('milkingWhen'); }],
+          ['ca-m-dry', t.addDryPeriod, function() { caGo('dryWhen'); }]
         ];
         return { title: t.cowActions,
           html: rows.map(function(r) { return caRowHtml(r[0], r[1]); }).join(''),
