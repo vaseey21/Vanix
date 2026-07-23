@@ -510,20 +510,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // ── Cows in heat (horizontal scroll) — tapping any card opens the same
-  // full-screen heat-alert carousel + walkthrough as Events' "View full
-  // cycle" link (window.evOpenFullCycle in the HTML). ──
+  // ── Cows in Fever (horizontal scroll, compact photo alert cards) — photo
+  // vertically centered against a 3-line block (Name | Belt / time-ago /
+  // Farm). Tapping opens the Events page. Mirrors the "Cows in fever
+  // (horizontal scroll photo alert cards)" row in prototype.html. ──
+  Widget _cowsInFeverRow() {
+    final cards = [
+      _AlertCardData('Gauri', 'Belt 41', 'Sunrise Dairy', 'assets/images/cows/gowri.jpg', '20 mins ago'),
+      _AlertCardData('Kajri', 'Belt 12', 'Green Villa', 'assets/images/cows/kaveri.jpg', '2 hrs ago'),
+      _AlertCardData('Rani', 'Belt 23', 'Stones Dairy', 'assets/images/cows/chinnu.jpg', '1 hr ago'),
+      _AlertCardData('Chandni', 'Belt 34', 'Green Villa', 'assets/images/cows/giri.jpg', '4 hrs ago'),
+    ];
+    return _alertCardRow('homeCowsInFever', cards, () {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => EventsScreen(appState: widget.appState))).then((_) => setState(() {}));
+    });
+  }
+
+  // ── Cows in Heat (horizontal scroll, compact photo alert cards) — same
+  // layout as Cows in Fever. Mirrors the "Cows in heat (horizontal scroll
+  // photo alert cards)" row in prototype.html. ──
   Widget _cowsInHeatRow() {
     final cards = [
-      _HeatCardData('Gauri', 'Gir', 'Sunrise Dairy', 'assets/images/heat_photo.jpg'),
-      _HeatCardData('Kajri', 'Sahiwal', 'Green Villa', 'assets/images/insemination_photo.jpg'),
-      _HeatCardData('Rani', 'Ongole', 'Sunrise Dairy', 'assets/images/milking_started_photo.jpg'),
-      _HeatCardData('Chandni', 'Jersey', 'Stones Dairy', 'assets/images/milking_ended_photo.jpg'),
+      _AlertCardData('Lakshmi', 'Belt 08', 'Green Villa', 'assets/images/cows/nandini.jpg', '45 mins ago'),
+      _AlertCardData('Mohini', 'Belt 91', 'Sunrise Dairy', 'assets/images/cows/ramya.jpg', '3 hrs ago'),
+      _AlertCardData('Ganga', 'Belt 56', 'Stones Dairy', 'assets/images/cows/giri.jpg', '5 hrs ago'),
+      _AlertCardData('Bhoori', 'Belt 19', 'Sunrise Dairy', 'assets/images/cows/chinnu.jpg', '6 hrs ago'),
     ];
+    return _alertCardRow('homeCowsInHeat', cards, () {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => EventsScreen(appState: widget.appState))).then((_) => setState(() {}));
+    });
+  }
+
+  Widget _alertCardRow(String titleKey, List<_AlertCardData> cards, VoidCallback onTapCard) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(padding: const EdgeInsetsDirectional.only(start: 16, end: 16, bottom: 10), child: Text(_t('homeCowsInHeat').toUpperCase(), style: _secLbl)),
+        Padding(padding: const EdgeInsetsDirectional.only(start: 16, end: 16, bottom: 10), child: Text(_t(titleKey).toUpperCase(), style: _secLbl)),
         SizedBox(
           height: 78,
           child: ListView.separated(
@@ -534,113 +556,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
             itemBuilder: (context, i) {
               final c = cards[i];
               return InkWell(
-                onTap: () => openFullCycleFlow(context, widget.appState),
-                borderRadius: BorderRadius.circular(16),
+                onTap: onTapCard,
+                borderRadius: BorderRadius.circular(14),
                 child: Container(
-                  width: 214,
+                  width: 190,
                   decoration: _cardDeco(),
-                  padding: const EdgeInsets.all(12),
-                  child: Row(children: [
-                    Container(
-                      width: 52, height: 52,
-                      decoration: BoxDecoration(color: VanixColors.bgWarm, borderRadius: BorderRadius.circular(12)),
-                      clipBehavior: Clip.antiAlias,
-                      child: Image.asset(c.photo, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox()),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(c.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: _text1)),
-                          const SizedBox(height: 2),
-                          Text(c.breed, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
-                          const SizedBox(height: 2),
-                          Text(c.farm, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
-                        ],
-                      ),
-                    ),
-                  ]),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  // ── Cows in gestation (horizontal scroll) — each card shows a "Day N of
-  // 283" progress bar; tapping opens the walkthrough sheet directly at its
-  // gestation step (window.evOpenGestationSlider in the HTML). ──
-  Widget _cowsInGestationRow() {
-    final cards = [
-      _GestationCardData('Lakshmi', 'HF Cross', 'Green Villa', 'assets/images/gestation_photo.jpg', 186, 283),
-      _GestationCardData('Mohini', 'Gir', 'Sunrise Dairy', 'assets/images/delivery_photo.jpg', 94, 283),
-    ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(padding: const EdgeInsetsDirectional.only(start: 16, end: 16, bottom: 10), child: Text(_t('homeCowsInGestation').toUpperCase(), style: _secLbl)),
-        SizedBox(
-          height: 128,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
-            itemCount: cards.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 12),
-            itemBuilder: (context, i) {
-              final c = cards[i];
-              final frac = c.day / c.total;
-              return InkWell(
-                onTap: () => openGestationSliderFlow(context, widget.appState),
-                borderRadius: BorderRadius.circular(16),
-                child: Container(
-                  width: 214,
-                  decoration: _cardDeco(),
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(children: [
-                        Container(
-                          width: 52, height: 52,
-                          decoration: BoxDecoration(color: VanixColors.bgWarm, borderRadius: BorderRadius.circular(12)),
-                          clipBehavior: Clip.antiAlias,
-                          child: Image.asset(c.photo, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox()),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(c.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: _text1)),
-                              const SizedBox(height: 2),
-                              Text(c.breed, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, color: VanixColors.textHint)),
-                              const SizedBox(height: 2),
-                              Text(c.farm, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
-                            ],
-                          ),
-                        ),
-                      ]),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Day ${c.day}', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-                          Text('of ${c.total}', style: const TextStyle(fontSize: 10, color: VanixColors.textHint)),
-                        ],
+                      Container(
+                        width: 56, height: 56,
+                        decoration: BoxDecoration(color: VanixColors.bgWarm, borderRadius: BorderRadius.circular(10)),
+                        clipBehavior: Clip.antiAlias,
+                        child: Image.asset(c.photo, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const SizedBox()),
                       ),
-                      const SizedBox(height: 4),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(3),
-                        child: LinearProgressIndicator(
-                          value: frac.clamp(0, 1),
-                          minHeight: 6,
-                          backgroundColor: _divider,
-                          valueColor: const AlwaysStoppedAnimation(VanixColors.greenDeep),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            RichText(
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              text: TextSpan(children: [
+                                TextSpan(text: c.name, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: _text1)),
+                                TextSpan(text: ' | ${c.belt}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: VanixColors.textHint)),
+                              ]),
+                            ),
+                            const SizedBox(height: 3),
+                            Text(c.timeAgo, style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
+                            const SizedBox(height: 3),
+                            Text(c.farm, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
+                          ],
                         ),
                       ),
                     ],

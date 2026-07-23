@@ -146,7 +146,7 @@ class FS {
       'dashCalved': 'calved', 'dashHealthyCalf': 'healthy calf, now in the Milk Log', 'dashYesterday': 'Yesterday', 'dashTriageDone': 'Logged — thanks', 'dashUpdates': 'Updates', 'dashToday': 'Today',
       'homeCowsPregnant': 'Cows\nPregnant', 'homeCowsHeat': 'Cows in\nHeat', 'homePendingApprovals': 'Pending\nApprovals',
       'homeMilkingsMissed': 'Milkings\nMissed', 'homeUnresolvedAlerts': 'Unresolved\nAlerts',
-      'homeCowsInHeat': 'Cows in heat', 'homeCowsInGestation': 'Cows in gestation',
+      'homeCowsInFever': 'Cows in Fever', 'homeCowsInHeat': 'Cows in Heat', 'homeCowsInGestation': 'Cows in gestation',
       // Dashboard — Farm Status / Needs Attention / Approvals page (Screen 03 r3)
       'farmStatusTitle': 'Farm Status', 'needsAttentionTitle': 'Needs Attention', 'viewAllWord': 'View All',
       'rowPendingApprovals': 'Pending Approvals', 'rowMilkingMissed': 'Milking Sessions Missed', 'rowCriticalAlerts': 'Critical Alerts',
@@ -314,7 +314,7 @@ class FS {
       'dashCalved': 'ब्याई', 'dashHealthyCalf': 'स्वस्थ बछड़ा, अब दूध लॉग में', 'dashYesterday': 'कल', 'dashTriageDone': 'दर्ज — धन्यवाद', 'dashUpdates': 'अपडेट', 'dashToday': 'आज',
       'homeCowsPregnant': 'गर्भवती\nगायें', 'homeCowsHeat': 'गर्मी में\nगायें', 'homePendingApprovals': 'लंबित\nमंज़ूरियाँ',
       'homeMilkingsMissed': 'छूटी\nदूध दुहाई', 'homeUnresolvedAlerts': 'अनसुलझी\nचेतावनी',
-      'homeCowsInHeat': 'गर्मी में गायें', 'homeCowsInGestation': 'गर्भावस्था में गायें',
+      'homeCowsInFever': 'बुखार में गायें', 'homeCowsInHeat': 'गर्मी में गायें', 'homeCowsInGestation': 'गर्भावस्था में गायें',
       // Dashboard — Farm Status / Needs Attention / Approvals page (Screen 03 r3)
       'farmStatusTitle': 'फार्म स्थिति', 'needsAttentionTitle': 'ध्यान चाहिए', 'viewAllWord': 'सभी देखें',
       'rowPendingApprovals': 'मंज़ूरी बाकी', 'rowMilkingMissed': 'छूटे दूध सत्र', 'rowCriticalAlerts': 'गंभीर अलर्ट',
