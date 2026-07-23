@@ -435,8 +435,8 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
                         ),
                       ),
                     ],
-                    if (!widget.appState.isManager && !farm.managerInvitePending) ...[
-                      Text('  -  ', style: TextStyle(fontSize: 13, color: subColor)),
+                    if (!farm.managerInvitePending) ...[
+                      if (!widget.appState.isManager) Text('  -  ', style: TextStyle(fontSize: 13, color: subColor)),
                       Text(widget.appState.fmtTemp(farm.temp), style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: textColor)),
                       const SizedBox(width: 5),
                       Text(
