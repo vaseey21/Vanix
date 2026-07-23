@@ -8924,6 +8924,7 @@
         window.openRealCardSlot = function(cardId) {
           var card = document.getElementById(cardId);
           if (!card || card.parentNode === slotBody) return;
+          if (window.closeAllEventSheets) window.closeAllEventSheets('ev-cardslot-sheet');
           slotReturn = { card: card, parent: card.parentNode, next: card.nextSibling };
           slotBody.appendChild(card);
           slotSheet.style.transform = 'translateY(0)';
