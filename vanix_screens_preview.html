@@ -8439,9 +8439,9 @@
         listEl.innerHTML = VETS.map(function(v, i) {
           var b = VET_BADGE[v.status];
           return '<div class="vet-card" data-i="' + i + '" style="position:relative; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px;">' +
-            '<div style="display:flex; align-items:center; gap:10px;">' +
-              '<p class="en" style="flex:1; min-width:0; font-size:14px; font-weight:700; color:var(--text1); margin:0;">' + v.name + '</p>' +
-              '<span class="en" style="flex-shrink:0; background:' + b.bg + '; border:1px solid ' + b.border + '; color:' + b.color + '; border-radius:12px; padding:3px 10px; font-size:9px; font-weight:700; letter-spacing:0.04em;">' + window.t()[b.k] + '</span>' +
+            '<div style="display:flex; align-items:center; gap:8px;">' +
+              '<span class="en" style="font-size:14px; font-weight:700; color:var(--text1);">' + v.name + '</span>' +
+              '<span class="en" style="flex-shrink:0; background:#E5E5E5; color:#111111; border-radius:12px; padding:3px 10px; font-size:9px; font-weight:700; letter-spacing:0.04em;">' + window.t()[b.k] + '</span>' +
             '</div>' +
             '<div style="display:flex; gap:8px; margin-top:10px;">' +
               '<button class="vet-del" data-i="' + i + '" style="flex:1; min-height:40px; border-radius:20px; border:1px solid var(--danger); background:transparent; color:var(--danger); font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + window.t().deleteWord + '</button>' +
