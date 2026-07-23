@@ -149,9 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _PersonaToggle(
                           label: widget.appState.isOwner
                               ? 'Owner'
-                              : (widget.appState.isManager
-                                  ? (widget.appState.isSingleFarm ? 'Manager · 1' : 'Manager · N')
-                                  : (widget.appState.isSingleFarm ? 'Farmer · 1' : 'Farmer · N')),
+                              : (widget.appState.isSingleFarm ? 'Manager · 1' : 'Manager · N'),
                           onTap: widget.appState.cyclePersona,
                         ),
                         const Spacer(),
