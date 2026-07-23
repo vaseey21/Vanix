@@ -7683,6 +7683,26 @@
             document.getElementById('ca-preg-when-ok').addEventListener('click', function() { caDone(t.gest9); });
           } };
       };
+      caViews.milkingWhen = function() {
+        var t = window.t();
+        return { title: t.addMilkingPeriod,
+          html: '<p style="font-size:13px; color:var(--text2); margin:0 0 12px;">' + caCowName() + '</p>' +
+            caLabel(t.eventDate) + caDateInput('ca-milk-date') +
+            caCta('ca-milk-ok', t.caConfirm),
+          wire: function() {
+            document.getElementById('ca-milk-ok').addEventListener('click', function() { caDone(t.milkingStarted); });
+          } };
+      };
+      caViews.dryWhen = function() {
+        var t = window.t();
+        return { title: t.addDryPeriod,
+          html: '<p style="font-size:13px; color:var(--text2); margin:0 0 12px;">' + caCowName() + '</p>' +
+            caLabel(t.eventDate) + caDateInput('ca-dry-date') +
+            caCta('ca-dry-ok', t.caConfirm),
+          wire: function() {
+            document.getElementById('ca-dry-ok').addEventListener('click', function() { caDone(t.dryStarted); });
+          } };
+      };
       caViews.insemType = function() {
         var t = window.t();
         var types = ['Artificial', 'Conventional', 'IVF', 'Embryo Transfer'];
