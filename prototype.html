@@ -4150,6 +4150,22 @@
           var ftab = nav ? nav.querySelector('.vtab[data-i="1"]') : null;
           if (ftab) ftab.click();
         });
+        // Manager persona — Milking morning progress / Critical alerts / Contact Vet
+        var mgrMilkRow = document.getElementById('mgr-milking-row');
+        if (mgrMilkRow) mgrMilkRow.addEventListener('click', function() {
+          if (window.openAddMilkEntry) window.openAddMilkEntry();
+        });
+        var mgrCritRow = document.getElementById('mgr-critical-row');
+        if (mgrCritRow) mgrCritRow.addEventListener('click', goEvents);
+        var mgrVetCard = document.getElementById('mgr-contact-vet');
+        if (mgrVetCard) mgrVetCard.addEventListener('click', function() {
+          if (!window.openVetSheet) return;
+          window.openVetSheet(function(vetName) {
+            var vet = (window.VETS || []).filter(function(v) { return v.name === vetName; })[0];
+            var phone = vet ? vet.phone.replace(/\s+/g, '') : '';
+            if (phone) window.location.href = 'tel:' + phone;
+          });
+        });
       };
       window.wireDash();
 
