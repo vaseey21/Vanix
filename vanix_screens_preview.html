@@ -8816,8 +8816,8 @@
         function rows() {
           document.getElementById('callvet-rows').innerHTML = VETS_LOCAL.map(function(n, i) {
             var on = i === picked;
-            return '<button class="callvet-row en" data-i="' + i + '" style="width:100%; display:flex; align-items:center; gap:10px; min-height:46px; padding:0 12px; margin-top:8px; border-radius:12px; border:1px solid ' + (on ? 'var(--greendeep)' : 'var(--border)') + '; background:' + (on ? 'var(--activebg)' : 'var(--bgcard)') + '; font-size:14px; font-weight:' + (on ? '600' : '500') + '; color:var(--text1); text-align:start; cursor:pointer;">' +
-              '<span style="width:16px; height:16px; border-radius:50%; border:2px solid ' + (on ? 'var(--greendeep)' : 'var(--border)') + '; background:' + (on ? 'var(--greendeep)' : 'transparent') + '; flex-shrink:0;"></span>' + n + '</button>';
+            return '<button class="callvet-row en" data-i="' + i + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:46px; padding:0 14px; margin-top:8px; border-radius:12px; border:1px solid var(--border); background:var(--bgcard); font-size:14px; font-weight:' + (on ? '600' : '500') + '; color:var(--text1); text-align:start; cursor:pointer;">' +
+              '<span>' + n + '</span><span style="color:var(--greenink); font-size:16px; line-height:1; ' + (on ? '' : 'visibility:hidden;') + '">✓</span></button>';
           }).join('');
           document.querySelectorAll('.callvet-row').forEach(function(r) {
             r.addEventListener('click', function() { picked = +r.getAttribute('data-i'); rows(); });
