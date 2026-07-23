@@ -311,7 +311,7 @@ class _ProfilePage extends StatelessWidget {
                       _HintLine(FS.t(lang, 'emailHint'), isDark: isDark),
                       const SizedBox(height: 12),
                       _FieldLabel(FS.t(lang, 'fldRole'), isDark: isDark),
-                      _GrayBox(FS.t(lang, 'farmOwner'), isDark: isDark),
+                      _GrayBox(FS.t(lang, appState.isOwner ? 'farmOwner' : 'farmManagerRole'), isDark: isDark),
                       const SizedBox(height: 18),
                       _GroupLabel(FS.t(lang, 'grpDelete'), isDark: isDark, topPad: 0),
                       Container(
