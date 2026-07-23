@@ -502,16 +502,11 @@
     #flow-root.display-image .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 700; }
     #flow-root.display-image #ev-fever .ev-btn-full { display: none; }
     #flow-root.display-image #ev-fever .ev-btn-short { display: inline; }
-    /* image-mode events cards are pure triage — hide the inline evolving heat
-       UI (timer bar / vet picker / insemination form); that flow now lives in
-       the bottom slider opened by tapping Yes. */
-    #flow-root.display-image #ev-heat #ev-heat-phase,
-    #flow-root.display-image #ev-heat #ev-heat-bar-wrap,
-    #flow-root.display-image #ev-heat #ev-heat-note,
-    #flow-root.display-image #ev-heat #ev-heat-start,
-    #flow-root.display-image #ev-heat #ev-heat-vet,
-    #flow-root.display-image #ev-heat #ev-heat-offwin,
-    #flow-root.display-image #ev-heat #ev-heat-form { display: none !important; }
+    /* Heat card's evolving timer/vet-picker/insemination-form UI is shown/hidden
+       by its own JS (each element defaults to inline display:none in markup) —
+       no CSS override needed here; a stale !important block used to force
+       these permanently hidden even after "Yes" was tapped, which broke the
+       whole vet-first-then-insemination-type flow. */
     /* Walkthrough / alert Heat card (image mode) — a full-width white card
        flush to the sheet edges: photo on top (rounded, contained), a red
        question title below, a Gauri / breed·age + View-details row, a divider,
