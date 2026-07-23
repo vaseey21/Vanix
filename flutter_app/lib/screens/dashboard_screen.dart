@@ -351,6 +351,135 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  // ── Manager persona: Milking (Morning) progress / Critical Alerts /
+  // Contact Vet. Replaces the owner's Today/This-week tabs + Needs
+  // Attention + Cows-in-heat/gestation + Updates sections entirely.
+  // Mirrors [data-manager-only] in prototype.html. ──
+  Widget _managerAttention() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(padding: const EdgeInsetsDirectional.only(bottom: 10), child: Text(_t('needsAttentionTitle').toUpperCase(), style: _secLbl)),
+        Container(
+          decoration: _cardDeco(),
+          padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+          child: Column(children: [
+            _managerChevronRow('${_t('mgrMilkingMorning')} — 0/20', () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => MilkLogScreen(appState: widget.appState, openAddOnStart: true)))
+                  .then((_) => setState(() {}));
+            }, divider: true),
+            _managerChevronRow('14 ${_t('rowCriticalAlerts')}', () => _onNavTap(3), divider: false),
+          ]),
+        ),
+        const SizedBox(height: 14),
+        _contactVetCard(),
+      ],
+    );
+  }
+
+  Widget _managerChevronRow(String label, VoidCallback onTap, {required bool divider}) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(border: divider ? Border(bottom: BorderSide(color: _divider)) : null),
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        child: Row(children: [
+          Expanded(child: Text(label, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _text1))),
+          Icon(Icons.chevron_right, size: 18, color: _text2),
+        ]),
+      ),
+    );
+  }
+
+  Widget _contactVetCard() {
+    return InkWell(
+      onTap: _openContactVet,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        decoration: BoxDecoration(color: VanixColors.activeBg, borderRadius: BorderRadius.circular(16), border: Border.all(color: VanixColors.greenInk, width: 1.5)),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Row(children: [
+          Container(
+            width: 40, height: 40,
+            decoration: const BoxDecoration(color: VanixColors.greenInk, shape: BoxShape.circle),
+            child: const Icon(Icons.phone, size: 20, color: Colors.white),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(_t('mgrContactVet'), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: VanixColors.greenInk)),
+                const SizedBox(height: 2),
+                Text(_t('mgrContactVetSub'), style: const TextStyle(fontSize: 11, color: VanixColors.textHint)),
+              ],
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  void _openContactVet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return StatefulBuilder(builder: (ctx, setSheetState) {
+          var picked = kVets.first;
+          return Container(
+            decoration: BoxDecoration(color: _cardBg, borderRadius: const BorderRadius.vertical(top: Radius.circular(24))),
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(width: 36, height: 4, margin: const EdgeInsets.only(bottom: 14), decoration: BoxDecoration(color: _border, borderRadius: BorderRadius.circular(2))),
+                Align(alignment: Alignment.centerLeft, child: Text(_t('mgrContactVet'), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: _text1))),
+                const SizedBox(height: 12),
+                for (final vet in kVets)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: InkWell(
+                      onTap: () => setSheetState(() => picked = vet),
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        constraints: const BoxConstraints(minHeight: 46),
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        decoration: BoxDecoration(border: Border.all(color: _border), borderRadius: BorderRadius.circular(12)),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                          Text(vet.name, style: TextStyle(fontSize: 14, fontWeight: picked == vet ? FontWeight.w600 : FontWeight.w500, color: _text1)),
+                          if (picked == vet) const Icon(Icons.check, size: 16, color: VanixColors.greenInk),
+                        ]),
+                      ),
+                    ),
+                  ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                      _callVet(picked.phone);
+                    },
+                    style: ElevatedButton.styleFrom(backgroundColor: VanixColors.greenInk, foregroundColor: Colors.white, minimumSize: const Size(0, 48), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
+                    child: Text(_t('callWord')),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+      },
+    );
+  }
+
+  void _callVet(String phone) {
+    final uri = Uri(scheme: 'tel', path: phone.replaceAll(RegExp(r'\s+'), ''));
+    launchUrl(uri);
+  }
+
   Widget _needsAttentionRow(String count, String labelKey, VoidCallback onViewAll, {bool divider = true}) {
     return Container(
       decoration: BoxDecoration(border: divider ? Border(bottom: BorderSide(color: _divider)) : null),
