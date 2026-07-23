@@ -688,8 +688,8 @@
     .display-fullbleed .ev-photo-card .ev-question-big { display: block; }
     .display-fullbleed .ev-photo-card .ev-anchor-bottom {
       display: block !important; text-align: left !important;
-      color: #fff !important; font-size: 24px !important; font-weight: 800 !important;
-      letter-spacing: -0.02em; margin: 0 0 10px !important; padding: 0 !important;
+      color: #fff !important; font-size: 17px !important; font-weight: 600 !important;
+      letter-spacing: -0.01em; margin: 0 0 10px !important; padding: 0 !important;
     }
     /* View Details — white link with text (reset native button chrome) */
     .display-fullbleed .ev-photo-card .ev-photo-viewdetails {
@@ -718,10 +718,12 @@
     .display-fullbleed .ev-photo-card .ev-ack,
     .display-fullbleed .ev-photo-card #ev-milk-add,
     .display-fullbleed .ev-photo-card #ev-lact-resting { background: var(--greenink) !important; color: #fff !important; border: none !important; }
-    .display-fullbleed .ev-photo-card .ev-no svg, .display-fullbleed .ev-photo-card .ev-yes svg { display: none !important; }
+    .display-fullbleed .ev-photo-card .ev-body button svg { display: none !important; }
     .display-fullbleed .ev-photo-card .ev-body .ev-no, .display-fullbleed .ev-photo-card .ev-body .ev-yes { font-size: 0 !important; }
-    .display-fullbleed .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 16px; font-weight: 700; }
-    .display-fullbleed .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 700; }
+    .display-fullbleed .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 15px; font-weight: 500; }
+    .display-fullbleed .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 15px; font-weight: 500; }
+    .display-fullbleed .ev-photo-card .ev-body button { font-size: 15px !important; font-weight: 500 !important; }
+    .display-fullbleed .ev-photo-step button svg, .ev-flow-photo button svg, #ev-cs-actions button svg { display: none !important; }
     .display-fullbleed #ev-fever .ev-btn-full { display: none; }
     .display-fullbleed #ev-fever .ev-btn-short { display: inline; }
 
@@ -1331,9 +1333,7 @@
               <div style="display:flex; align-items:center; gap:10px; margin-top:6px;">
                 <span class="en" style="font-size:32px; font-weight:700; color:var(--text1); line-height:1;">38.6 L</span>
                 <span class="en m-delta" style="font-size:13px; font-weight:600; color:var(--greenink);">▲ 8% vs yesterday</span>
-                <button id="s7-download" title="Download report" style="margin-inline-start:auto; width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:transparent; box-shadow:0 2px 6px rgba(0,0,0,0.08); display:flex; align-items:center; justify-content:center; padding:0;">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-                </button>
+                
               </div>
               <div style="display:flex; gap:8px; margin-top:16px;">
                 <div class="m-tile" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px;">
@@ -1354,24 +1354,6 @@
             </div><!-- /hero -->
 
             <div style="padding:12px 16px 0;">
-            <!-- Status banners — horizontal row, dismissible; row removes itself when empty -->
-            <div id="s7-banners" style="display:flex; gap:8px; margin:0; overflow-x:auto; padding-bottom:2px;">
-              <div class="m-banner" style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:var(--warnbg); border:1px solid var(--warning); border-left:3px solid var(--warning); border-radius:12px; padding:12px 12px 12px 14px;">
-                <div style="min-width:0; flex:1;">
-                  <strong style="font-size:13px; color:var(--text1);">3 cows below 7-day average</strong>
-                  <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">Kajri, Dhauli and Mohini need attention</p>
-                </div>
-                <button onclick="var r=document.getElementById('s7-banners'); this.parentElement.remove(); if(!r.children.length) r.remove();" style="border:none; background:transparent; color:var(--text2); font-size:15px; line-height:1; padding:2px;">✕</button>
-              </div>
-              <div class="m-banner" style="flex-shrink:0; width:262px; display:flex; gap:10px; align-items:flex-start; background:var(--activebg); border:1px solid var(--greendeep); border-left:3px solid var(--greendeep); border-radius:12px; padding:12px 12px 12px 14px;">
-                <div style="min-width:0; flex:1;">
-                  <strong style="font-size:13px; color:var(--text1);">Morning session complete</strong>
-                  <p style="font-size:12px; color:var(--text2); margin:2px 0 0;">All 18 assigned cows logged before 09:00</p>
-                </div>
-                <button onclick="var r=document.getElementById('s7-banners'); this.parentElement.remove(); if(!r.children.length) r.remove();" style="border:none; background:transparent; color:var(--text2); font-size:15px; line-height:1; padding:2px;">✕</button>
-              </div>
-            </div>
-
             <!-- Log cards by date -->
             <p class="en" style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text2); margin:12px 0 10px;">Today — 2 Jul</p>
               <div class="m-card m-entry" data-cow="Gauri" data-breed="Jersey" data-belt="112" data-sess="Morning" data-time="07:30" data-litres="12.5" style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 16px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-bottom:10px; cursor:pointer;">
@@ -2006,30 +1988,6 @@
                 </div>
               </div>
 
-
-              <!-- 4. Abortion / pregnancy loss -->
-              <div class="ev-card ev-photo-card p0" id="ev-abort" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardSheet('ev-abort','p0')">
-                <span class="ev-corner-badge">!</span>
-                <span class="ev-crit-label" aria-hidden="true"><span class="ev-crit-dot">!</span><span data-k="sevCritical">CRITICAL</span></span>
-                <span class="en ev-timeago"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>15 min ago</span>
-                <p class="en ev-anchor-bottom" data-k="cardAbortQ">Loss signs?</p>
-                <button class="en ev-photo-viewdetails" data-k="viewDetailsLabel" onclick="event.stopPropagation(); openCardSheet('ev-abort','p0');">View details ›</button>
-                <p class="ev-title" data-k="titleAbort" style="display:none;">Possible pregnancy loss — Mohini</p>
-                <p class="en ev-manager" style="display:none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg><span data-k="mgrSuresh">Suresh Yadav</span></p>
-                <p class="ev-sub">Sudden drop in rumination with a sustained temperature rise over the last 3 hours.</p>
-                <p class="en ev-meta">Sunrise Dairy · Belt 91 · Day 48 of pregnancy</p>
-                <p class="en ev-cow-breed"><span class="ev-cow-name" data-k="cowMohini">Mohini</span><span class="ev-cow-sub" data-k="breedGirSahiwal">Gir/Sahiwal</span><span class="ev-photo-belt">Belt 91</span></p>
-                <p class="en ev-photo-farmtime">Sunrise Dairy · 15 min ago</p>
-                <div class="ev-avatar" style="width:96px; height:88px; margin:8px auto 0; border-radius:20px; background:var(--dangerbg); border:1px solid var(--danger); display:flex; align-items:center; justify-content:center; font-size:40px;" aria-hidden="true">🐄⚠️</div>
-                <p class="en ev-imhide" style="text-align:center; font-size:14px; font-weight:600; color:var(--text1); margin:10px 0 0;" data-k="qAbortSigns">Does Mohini show these signs?</p>
-                <div class="ev-body" onclick="event.stopPropagation();">
-                  <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span data-k="ctaNo">No</span></button>
-                    <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M20 6 9 17l-5-5"/></svg><span data-k="ctaYesNotifyVet">Yes, notify vet</span></button>
-                  </div>
-                </div>
-              </div>
-
               <!-- 5. Fresh cow / post-calving monitor -->
               <div class="ev-card ev-photo-card p0" id="ev-freshcow" style="position:relative; background:var(--dangerbg); border:1px solid var(--danger); border-left:4px solid var(--danger); border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardSheet('ev-freshcow','p0')">
                 <span class="ev-corner-badge">!</span>
@@ -2049,29 +2007,6 @@
                   <div style="display:flex; gap:8px; margin-top:10px;">
                     <button class="ev-no" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg><span data-k="ctaNo">No</span></button>
                     <button class="ev-yes" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M20 6 9 17l-5-5"/></svg><span data-k="ctaYesNotifyVet">Yes, notify vet</span></button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Vaccination due -->
-              <div class="ev-card ev-card-p2" id="ev-vaccination" style="border-radius:16px; padding:14px 16px; margin-bottom:10px; display:none; cursor:pointer;" onclick="openCardSheet('ev-vaccination','p2')">
-                <img src="assets/images/vetvisit_photo.jpg" alt="" style="width:100%; height:110px; object-fit:cover; border-radius:12px; margin-bottom:10px;">
-                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px;">
-                  <div style="min-width:0;">
-                    <p class="ev-title" style="display:none;">Vaccination due — Dhauli</p>
-                    <p class="en ev-p2-namebreed"><span>Dhauli</span><span class="ev-p2-sep">Desi</span><span class="ev-p2-sep">Belt 09</span></p>
-                    <p class="en ev-p2-farmtime">Green Valley Farm · 2d ago</p>
-                    <button class="en ev-viewdetails" onclick="event.stopPropagation(); openCardSheet('ev-vaccination','p2')">View Details ›</button>
-                    <p class="ev-sub">FMD booster due this week per the vaccination schedule.</p>
-                    <p class="en ev-meta">Green Valley Farm · Belt 09</p>
-                  </div>
-                  <span class="en ev-chip ev-chip-p2" style="display:inline-flex; align-items:center; gap:4px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 17h.01"/></svg><span data-k="sevMedium">MEDIUM</span></span>
-                </div>
-                <div class="ev-body">
-                  <p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">FMD vaccination due — done?</p>
-                  <div style="display:flex; gap:8px; margin-top:10px;">
-                    <button class="ev-vacc-notyet" style="flex:1; min-height:44px; background:transparent; border:1px solid var(--border); border-radius:22px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi);">Not yet</button>
-                    <button class="ev-vacc-done" style="flex:1.3; min-height:44px; background:var(--greenink); border:none; border-radius:22px; font-size:13px; font-weight:600; color:#FFFFFF; font-family:var(--font-hi);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-inline-end:4px;"><path d="M20 6 9 17l-5-5"/></svg>Mark done</button>
                   </div>
                 </div>
               </div>
@@ -3560,7 +3495,7 @@
                qMastitis:'Does Bhoori show swelling or milk changes?', qLameness:'Does Dhauli seem to be limping?', qKetosis:'Does Lakshmi seem lethargic or off her feed?',
                qAbortSigns:'Does Mohini show these signs?', qFreshcowOff:'Does Ganga seem off to you?', qMilkAdd:'Add her to the milking list?',
                ctaFlagIt:'Flag it', ctaGotIt:'Got it', ctaGotItWatching:'Got it, watching', ctaCheckedCooling:'Checked cooling / shade', ctaVetCheckDone:'Vet check completed',
-               ctaRemindLater:'Remind me later', ctaYesAdd:'Yes, add', ctaStillMilking:'Still milking', ctaResting:'Entered resting period', ctaYesInHeat:'Yes, in heat', ctaCallVet:'Call vet',
+               ctaRemindLater:'Not now', ctaYesAdd:'Yes', ctaStillMilking:'No', ctaResting:'Yes', ctaYesInHeat:'Yes, in heat', ctaCallVet:'Call vet',
                ctaNotPregnant:'Not pregnant', ctaConfirmPregnant:'Confirm \u2014 pregnant', ctaYesNotifyVet:'Yes, notify vet', feverNoFull:"No, she's fine", feverYesFull:"Yes, it's fever", feverYesShort:'Yes, fever',
                msgRecheck10d:"Got it \u2014 we'll check again in 10 days.",
                remDeliveryTitle:'Delivery approaching \u2014 Dhauli', remDeliverySub:'Expected around 12 Jul \u2014 prepare the calving pen. She starts milking after calving.',
@@ -3643,7 +3578,7 @@
                qMastitis:'क्या भूरी में सूजन या दूध में बदलाव है?', qLameness:'क्या धौली लंगड़ा रही है?', qKetosis:'क्या लक्ष्मी सुस्त है या चारा नहीं खा रही?',
                qAbortSigns:'क्या मोहिनी में ये संकेत दिख रहे हैं?', qFreshcowOff:'क्या गंगा आपको अस्वस्थ लग रही है?', qMilkAdd:'क्या उसे दूध सूची में जोड़ें?',
                ctaFlagIt:'फ्लैग करें', ctaGotIt:'ठीक है', ctaGotItWatching:'ठीक है, नज़र रखेंगे', ctaCheckedCooling:'ठंडक/छाया जाँच ली', ctaVetCheckDone:'पशु चिकित्सक जांच पूरी',
-               ctaRemindLater:'बाद में याद दिलाएँ', ctaYesAdd:'हाँ, जोड़ें', ctaStillMilking:'अभी दूध दे रही', ctaResting:'आराम अवधि शुरू', ctaYesInHeat:'हाँ, हीट में है', ctaCallVet:'पशु चिकित्सक बुलाएँ',
+               ctaRemindLater:'अभी नहीं', ctaYesAdd:'हाँ', ctaStillMilking:'नहीं', ctaResting:'हाँ', ctaYesInHeat:'हाँ, हीट में है', ctaCallVet:'पशु चिकित्सक बुलाएँ',
                ctaNotPregnant:'गर्भवती नहीं', ctaConfirmPregnant:'पुष्टि \u2014 गर्भवती', ctaYesNotifyVet:'हाँ, पशु चिकित्सक को बताएँ', feverNoFull:'नहीं, वह ठीक है', feverYesFull:'हाँ, बुखार है', feverYesShort:'हाँ, बुखार',
                msgRecheck10d:'ठीक है \u2014 10 दिन बाद फिर जाँचेंगे।',
                remDeliveryTitle:'प्रसव नज़दीक \u2014 धौली', remDeliverySub:'12 जुलाई के आसपास अपेक्षित \u2014 ब्याने का बाड़ा तैयार करें। ब्याने के बाद वह दूध देना शुरू करेगी।',
@@ -3726,7 +3661,7 @@
                qMastitis:'का भूरी में सूजन भा दूध में बदलाव बा?', qLameness:'का धौली लंगड़ात बिया?', qKetosis:'का लक्ष्मी सुस्त बिया भा चारा नइखे खात?',
                qAbortSigns:'का मोहिनी में ई संकेत लउकत बा?', qFreshcowOff:'का गंगा रउरा के बेमार लागत बिया?', qMilkAdd:'का ओकरा के दूध सूची में जोड़ीं?',
                ctaFlagIt:'फ्लैग करीं', ctaGotIt:'ठीक बा', ctaGotItWatching:'ठीक बा, नजर रखेम', ctaCheckedCooling:'ठंडक/छाया देख लिहनी', ctaVetCheckDone:'पशु डॉक्टर जांच पूरा',
-               ctaRemindLater:'बाद में याद दिलाईं', ctaYesAdd:'हाँ, जोड़ीं', ctaStillMilking:'अबहूँ दूध देत बिया', ctaResting:'आराम अवधि शुरू', ctaYesInHeat:'हाँ, हीट में बिया', ctaCallVet:'पशु डॉक्टर बोलाईं',
+               ctaRemindLater:'अभी ना', ctaYesAdd:'हँ', ctaStillMilking:'ना', ctaResting:'हँ', ctaYesInHeat:'हाँ, हीट में बिया', ctaCallVet:'पशु डॉक्टर बोलाईं',
                ctaNotPregnant:'गर्भवती ना', ctaConfirmPregnant:'पुष्टि \u2014 गर्भवती', ctaYesNotifyVet:'हाँ, पशु डॉक्टर के बताईं', feverNoFull:'ना, ऊ ठीक बिया', feverYesFull:'हाँ, बुखार बा', feverYesShort:'हाँ, बुखार',
                msgRecheck10d:'ठीक बा \u2014 10 दिन बाद फिर जाँचब।',
                remDeliveryTitle:'बियान नजदीक \u2014 धौली', remDeliverySub:'12 जुलाई के आसपास उमेद बा \u2014 बियाए के बाड़ा तइयार करीं। बियाए के बाद ऊ दूध देवे लागी।',
