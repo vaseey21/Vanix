@@ -6495,7 +6495,7 @@
         var half = items.map(function(it) {
           return '<span class="farms-ticker-item"><span style="width:7px; height:7px; border-radius:50%; background:' + it.c + '; flex-shrink:0;"></span>' + window.t()[it.k] + '</span>';
         }).join('');
-        document.getElementById('farms-ticker-track').innerHTML = half + half;
+        var _ft = document.getElementById('farms-ticker-track'); if (_ft) _ft.innerHTML = half + half;
       }
       document.getElementById('farms-search').addEventListener('input', renderFarmsList);
       function wireFilterSheet(prefix, triggerId, onApply) {
