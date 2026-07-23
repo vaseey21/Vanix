@@ -3131,6 +3131,27 @@
                 <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin-top:16px;" data-k="acNodeMacId">Node/MAC ID</label>
                 <input id="ac-mac-input" type="text" placeholder="A4:C1:38:2B:9F:11" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
               </div>
+              <!-- Cow History pane — pushed onto the same Add Cattle sheet via the back button, not a separate stacked sheet -->
+              <div id="ac-pane-history" style="display:none;">
+                <div style="display:flex; gap:12px;">
+                  <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="acLastHeat">Last Heat</label>
+                    <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div>
+                  <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="acLastInsem">Last Insemination</label>
+                    <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div>
+                </div>
+                <div style="display:flex; gap:12px; margin-top:14px;">
+                  <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="acLastPreg">Last Pregnancy</label>
+                    <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div>
+                  <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="acLastCalving">Last Calving</label>
+                    <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div>
+                </div>
+                <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin-top:14px;" data-k="acLactationNo">Calving Number</label>
+                <div style="display:flex; align-items:center; gap:0; width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; font-size:15px; color:var(--text1); font-family:var(--font-hi); overflow:hidden;">
+                  <span id="ac-lact-val" class="en" style="flex:1; padding:0 14px; font-size:15px; color:var(--text1);">2</span>
+                  <button id="ac-lact-minus" style="width:48px; align-self:stretch; border:none; border-inline-start:1px solid var(--border); background:transparent; font-size:20px; color:var(--text1); cursor:pointer;">–</button>
+                  <button id="ac-lact-plus" style="width:48px; align-self:stretch; border:none; border-inline-start:1px solid var(--border); background:transparent; font-size:20px; color:var(--text1); cursor:pointer;">+</button>
+                </div>
+              </div>
             </div>
             <div style="flex-shrink:0; padding:12px 16px calc(12px + env(safe-area-inset-bottom)); background:#FFFFFF; border-top:1px solid var(--border); display:flex; gap:10px;">
               <button id="ac-cancel" data-k="cancelWord" style="flex:1; min-height:50px; border-radius:25px; border:1px solid var(--border); background:var(--bgcard); font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Cancel</button>
@@ -3146,38 +3167,6 @@
                 <button id="ac-picker-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
               </div>
               <div id="ac-picker-list" style="margin-top:8px; max-height:320px; overflow-y:auto;"></div>
-            </div>
-
-            <!-- Cow History bottom sheet (opened via "+ Add cow history") -->
-            <div id="ac-history-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:56;"></div>
-            <div id="ac-history-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 20px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:57; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
-              <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
-              <div style="display:flex; align-items:center; gap:12px; margin-top:10px;">
-                <h3 data-k="acCowHistory" style="font-size:19px; font-weight:700; color:var(--text1); margin:0; flex:1;">Cow History</h3>
-                <button id="ac-history-close" style="width:38px; height:38px; border-radius:50%; border:none; background:var(--bgwarm); font-size:15px; color:var(--text1); cursor:pointer; flex-shrink:0;">✕</button>
-              </div>
-              <div style="display:flex; gap:12px; margin-top:14px;">
-                <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="acLastHeat">Last Heat</label>
-                  <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div>
-                <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="acLastInsem">Last Insemination</label>
-                  <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div>
-              </div>
-              <div style="display:flex; gap:12px; margin-top:14px;">
-                <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="acLastPreg">Last Pregnancy</label>
-                  <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div>
-                <div style="flex:1;"><label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px;" data-k="acLastCalving">Last Calving</label>
-                  <input type="date" class="en" style="width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);"></div>
-              </div>
-              <label style="display:block; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 7px; margin-top:14px;" data-k="acLactationNo">Lactation Number</label>
-              <div style="display:flex; align-items:center; gap:0; width:100%; box-sizing:border-box; min-height:48px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; font-size:15px; color:var(--text1); font-family:var(--font-hi); overflow:hidden;">
-                <span id="ac-lact-val" class="en" style="flex:1; padding:0 14px; font-size:15px; color:var(--text1);">2</span>
-                <button id="ac-lact-minus" style="width:48px; align-self:stretch; border:none; border-inline-start:1px solid var(--border); background:transparent; font-size:20px; color:var(--text1); cursor:pointer;">–</button>
-                <button id="ac-lact-plus" style="width:48px; align-self:stretch; border:none; border-inline-start:1px solid var(--border); background:transparent; font-size:20px; color:var(--text1); cursor:pointer;">+</button>
-              </div>
-              <div style="display:flex; gap:10px; margin-top:18px;">
-                <button id="ac-history-cancel" data-k="cancelWord" style="flex:1; min-height:50px; border-radius:25px; border:1px solid var(--border); background:var(--bgcard); font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Cancel</button>
-                <button id="ac-history-save" data-k="saveWord" style="flex:1.6; min-height:50px; border-radius:25px; border:none; background:var(--greenink); color:#FFFFFF; font-size:15px; font-weight:700; font-family:var(--font-hi); cursor:pointer;">Save</button>
-              </div>
             </div>
           </div>
 
