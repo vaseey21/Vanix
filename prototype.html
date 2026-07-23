@@ -8272,6 +8272,7 @@
         var sh = document.getElementById('vet-delete-sheet'), bd = document.getElementById('vet-delete-backdrop');
         if (!sh || !bd) return;
         document.getElementById('vet-delete-name').textContent = VETS[i] ? VETS[i].name : '';
+        document.getElementById('vet-delete-body-suffix').textContent = ' ' + window.t().deleteVetBody;
         sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
       function closeVetDeleteConfirm() {
