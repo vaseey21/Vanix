@@ -664,14 +664,11 @@
       flex-direction: column;
       justify-content: flex-end;
     }
-    /* Tapped from Home/Events, a card slides up as a genuine full-screen
-       takeover (per explicit "not a floating rounded modal" request) — no
-       corner radius, fills the whole slot instead of a fixed min-height. */
+    /* Tapped from Home/Events, a card slides up as a full-width, full-bleed
+       bottom sheet at its natural (~40-50vh) content height — NOT a full-
+       screen takeover — with no corner radius so it reads flush/edge-to-edge. */
     #ev-cardslot-body .ev-photo-card {
-      min-height: 0 !important;
-      flex: 1;
       border-radius: 0 !important;
-      padding: 20px 20px calc(20px + env(safe-area-inset-bottom)) !important;
       margin: 0 !important;
     }
     /* photo fills the card */
