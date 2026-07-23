@@ -4007,8 +4007,168 @@
             if (target === 'approvals' && window.openApprovalsPage) { window.openApprovalsPage(); }
             else if (target === 'milk') { var nav = document.getElementById('dash-nav'); var t = nav ? nav.querySelector('.vtab[data-i="2"]') : null; if (t) t.click(); }
             else if (target === 'events') { var nav2 = document.getElementById('dash-nav'); var t2 = nav2 ? nav2.querySelector('.vtab[data-i="3"]') : null; if (t2) t2.click(); }
+            else if (target === 'heatconfirm' && window.openMassConfirm) { window.openMassConfirm('heat'); }
+            else if (target === 'feverconfirm' && window.openMassConfirm) { window.openMassConfirm('fever'); }
+            else if (target === 'insemconfirm' && window.openMassConfirm) { window.openMassConfirm('insem'); }
           });
         });
+
+        // ── Mass Confirm — Heat / Fever confirmations and Insemination list ──
+        // Large-scale demo: bulk-checkbox multi-select with a collective
+        // Yes/No (single shared note) or a collective "Start Insemination".
+        (function() {
+          var HEAT_NAMES = ['Gauri','Kajri','Rani','Chandni','Mohini','Lakshmi','Gowri','Giri','Ramya','Bhoori','Ganga','Radha','Sita','Meera'];
+          var FEVER_NAMES = ['Kajri','Gauri','Chandni','Mohini','Rani','Bhoori'];
+          var INSEM_NAMES = ['Ramya','Ganga','Sita'];
+          var BREEDS = ['Jersey','Gir','Sahiwal','Ongole','Desi','HF Cross'];
+          function genCows(prefix, names) {
+            return names.map(function(n, i) {
+              var h = Math.floor(4 + (i * 37) % 6);
+              var m = (i * 17) % 60;
+              return {
+                id: prefix + '-' + i,
+                name: n,
+                belt: 'Belt ' + (10 + i * 7 % 90),
+                breed: BREEDS[i % BREEDS.length],
+                time: (h < 10 ? '0' + h : h) + ':' + (m < 10 ? '0' + m : m)
+              };
+            });
+          }
+          var MC_DATA = {
+            heat:  { title: 'Heat Confirmations',  kind: 'confirm', cows: genCows('heat', HEAT_NAMES) },
+            fever: { title: 'Fever Confirmations', kind: 'confirm', cows: genCows('fever', FEVER_NAMES) },
+            insem: { title: 'Inseminations Awaiting', kind: 'insem', cows: genCows('insem', INSEM_NAMES) }
+          };
+          var currentKind = null;
+          var selected = {};
+          var resolved = {};
+          var pendingNotesAction = null;
+
+          function selectedIds() {
+            return Object.keys(selected).filter(function(k) { return selected[k]; });
+          }
+
+          function rowHtml(c, data, anySelected) {
+            if (resolved[c.id]) {
+              var msg = resolved[c.id] === 'yes' ? 'Confirmed ✓' : resolved[c.id] === 'no' ? 'Marked No' : 'Insemination started ✓';
+              return '<div style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:10px; opacity:0.5;">' +
+                '<div style="flex:1; min-width:0;">' +
+                  '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:0;">' + c.name + ' <span style="font-weight:500; color:var(--text2); font-size:12px;">&middot; ' + c.belt + '</span></p>' +
+                  '<p style="font-size:11px; color:var(--greenink); font-weight:600; margin:3px 0 0;">' + msg + '</p>' +
+                '</div>' +
+              '</div>';
+            }
+            var checked = !!selected[c.id];
+            var actionsHtml;
+            if (data.kind === 'insem') {
+              actionsHtml = '<button class="mc-start" data-id="' + c.id + '" style="min-width:120px; min-height:38px; padding:0 14px; border-radius:19px; border:none; background:var(--greenink); color:#FFFFFF; font-size:12px; font-weight:700; font-family:var(--font-hi); cursor:pointer;">Start Insemination</button>';
+            } else {
+              actionsHtml =
+                '<button class="mc-no" data-id="' + c.id + '" style="min-width:44px; min-height:36px; padding:0 12px; border-radius:18px; border:1px solid var(--border); background:transparent; color:var(--text1); font-size:12px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">No</button>' +
+                '<button class="mc-yes" data-id="' + c.id + '" style="min-width:44px; min-height:36px; padding:0 12px; border-radius:18px; border:none; background:var(--greenink); color:#FFFFFF; font-size:12px; font-weight:700; font-family:var(--font-hi); cursor:pointer;">Yes</button>';
+            }
+            return '<div class="mc-row" style="display:flex; align-items:center; gap:12px; background:var(--bgcard); border:1px solid ' + (checked ? 'var(--greenink)' : 'var(--border)') + '; border-radius:14px; padding:12px 14px; margin-bottom:10px;">' +
+              '<input type="checkbox" class="mc-check" data-id="' + c.id + '" ' + (checked ? 'checked' : '') + ' style="width:20px; height:20px; accent-color:var(--greenink); flex-shrink:0; cursor:pointer;">' +
+              '<div style="flex:1; min-width:0;">' +
+                '<p style="font-size:14px; font-weight:700; color:var(--text1); margin:0;">' + c.name + ' <span style="font-weight:500; color:var(--text2); font-size:12px;">&middot; ' + c.belt + '</span></p>' +
+                '<p style="font-size:11px; color:var(--text2); margin:3px 0 0;">Detected ' + c.time + '</p>' +
+              '</div>' +
+              '<div class="mc-row-actions" style="display:' + (anySelected ? 'none' : 'flex') + '; gap:6px; flex-shrink:0;">' + actionsHtml + '</div>' +
+            '</div>';
+          }
+
+          function renderList() {
+            var data = MC_DATA[currentKind];
+            var listEl = document.getElementById('mc-list');
+            var anySelected = selectedIds().length > 0;
+            var remaining = data.cows.filter(function(c) { return !resolved[c.id]; });
+            listEl.innerHTML = data.cows.map(function(c) { return rowHtml(c, data, anySelected); }).join('') ||
+              '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">All done — nothing left here.</p>';
+            if (!remaining.length) {
+              listEl.innerHTML = '<p style="text-align:center; color:var(--text2); font-size:13px; margin-top:24px;">All caught up — nothing left to confirm.</p>';
+            }
+            listEl.querySelectorAll('.mc-check').forEach(function(chk) {
+              chk.addEventListener('change', function() {
+                selected[chk.getAttribute('data-id')] = chk.checked;
+                renderList();
+              });
+            });
+            listEl.querySelectorAll('.mc-yes').forEach(function(btn) {
+              btn.addEventListener('click', function() { resolveOne(btn.getAttribute('data-id'), 'yes'); });
+            });
+            listEl.querySelectorAll('.mc-no').forEach(function(btn) {
+              btn.addEventListener('click', function() { resolveOne(btn.getAttribute('data-id'), 'no'); });
+            });
+            listEl.querySelectorAll('.mc-start').forEach(function(btn) {
+              btn.addEventListener('click', function() { resolveOne(btn.getAttribute('data-id'), 'insem'); });
+            });
+            updateFooter();
+          }
+
+          function resolveOne(id, action) {
+            resolved[id] = action;
+            delete selected[id];
+            renderList();
+          }
+
+          function resolveMany(ids, action) {
+            ids.forEach(function(id) { resolved[id] = action; delete selected[id]; });
+            renderList();
+          }
+
+          function updateFooter() {
+            var ids = selectedIds();
+            var footer = document.getElementById('mc-footer');
+            if (!ids.length) { footer.style.display = 'none'; return; }
+            footer.style.display = 'block';
+            document.getElementById('mc-selected-count').textContent = ids.length + ' selected';
+            var actionsEl = document.getElementById('mc-footer-actions');
+            var data = MC_DATA[currentKind];
+            if (data.kind === 'insem') {
+              actionsEl.innerHTML = '<button id="mc-collective-start" style="width:100%; min-height:48px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:700; font-family:var(--font-hi); cursor:pointer;">Start Insemination (' + ids.length + ')</button>';
+              document.getElementById('mc-collective-start').addEventListener('click', function() {
+                resolveMany(selectedIds(), 'insem');
+              });
+            } else {
+              actionsEl.innerHTML =
+                '<button id="mc-collective-no" style="flex:1; min-height:48px; border-radius:24px; border:1px solid var(--border); background:var(--bgcard); color:var(--text1); font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">No (' + ids.length + ')</button>' +
+                '<button id="mc-collective-yes" style="flex:1.3; min-height:48px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:700; font-family:var(--font-hi); cursor:pointer;">Yes (' + ids.length + ')</button>';
+              document.getElementById('mc-collective-no').addEventListener('click', function() { openNotes('no'); });
+              document.getElementById('mc-collective-yes').addEventListener('click', function() { openNotes('yes'); });
+            }
+          }
+
+          function openNotes(action) {
+            pendingNotesAction = action;
+            document.getElementById('mc-notes-input').value = '';
+            document.getElementById('mc-notes-title').textContent = action === 'yes' ? 'Confirm — add a note (optional)' : 'Mark as No — add a note (optional)';
+            var sh = document.getElementById('mc-notes-sheet'), bd = document.getElementById('mc-notes-backdrop');
+            sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+          }
+          function closeNotes() {
+            var sh = document.getElementById('mc-notes-sheet'), bd = document.getElementById('mc-notes-backdrop');
+            sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+          }
+          document.getElementById('mc-notes-cancel').addEventListener('click', closeNotes);
+          document.getElementById('mc-notes-backdrop').addEventListener('click', closeNotes);
+          document.getElementById('mc-notes-confirm').addEventListener('click', function() {
+            var ids = selectedIds();
+            resolveMany(ids, pendingNotesAction);
+            closeNotes();
+          });
+
+          window.openMassConfirm = function(kind) {
+            currentKind = kind;
+            selected = {};
+            resolved = {};
+            document.getElementById('mc-title').textContent = MC_DATA[kind].title;
+            document.getElementById('page-mass-confirm').style.display = 'block';
+            renderList();
+          };
+          document.getElementById('mc-back').addEventListener('click', function() {
+            document.getElementById('page-mass-confirm').style.display = 'none';
+          });
+        })();
 
         // ── Approvals page — pending farmer edits + full approve/deny history ──
         (function() {
