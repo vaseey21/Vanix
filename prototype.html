@@ -668,7 +668,9 @@
     .display-fullbleed .ev-photo-card.p3 .ev-crit-label::after { content: var(--i18n-low); }
     /* Alert (opened, full-width) state drops the criticality tag entirely —
        it's an in-list-only signal; the full-bleed card reads via tint/border. */
-    #ev-cardslot-body .ev-crit-label, #ev-seq-body .ev-crit-label { display: none !important; }
+    #ev-cardslot-body .ev-crit-label, #ev-seq-body .ev-crit-label,
+    #ev-cardslot-body .ev-chip-p2, #ev-seq-body .ev-chip-p2,
+    #ev-cardslot-body .ev-chip-p3, #ev-seq-body .ev-chip-p3 { display: none !important; }
     /* cow name | breed | belt — white caption row, top-left */
     .display-fullbleed .ev-photo-card .ev-cow-breed {
       display: flex !important; flex-direction: row; align-items: baseline; flex-wrap: wrap;
