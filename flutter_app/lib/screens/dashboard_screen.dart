@@ -56,11 +56,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => MilkLogScreen(appState: widget.appState))).then((_) => setState(() {}));
       return;
     }
-    if (i == -2) {
-      // Manager persona: "Milking (Morning)" row opens straight to Add Entry.
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => MilkLogScreen(appState: widget.appState, openAddOnStart: true))).then((_) => setState(() {}));
-      return;
-    }
     if (i == 3) {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => EventsScreen(appState: widget.appState))).then((_) => setState(() {}));
       return;
