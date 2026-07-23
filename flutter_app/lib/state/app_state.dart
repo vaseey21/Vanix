@@ -11,8 +11,10 @@ class AppState extends ChangeNotifier {
   bool _isDark = false;
   String _languageCode = 'en'; // default locale (per design call: English)
   int _openEventsCount = 15; // 14 existing + Vaccination due (new)
-  // Persona: 'owner' (full access) or 'farmer' (action-first, restricted).
-  // farmCount 'single' vs 'multi' controls the Farmer's Farms behaviour.
+  // Persona: 'owner' (full access), 'manager' (owner-dashboard shell,
+  // scoped-down Needs Attention + no farm-management surfaces), or
+  // 'farmer' (action-first, restricted). farmCount 'single' vs 'multi'
+  // controls both Manager's and Farmer's Farms/Home behaviour.
   String _persona = 'owner';
   String _farmCount = 'multi';
   // "text" = plain description-first Events cards (no icons/photos — the
