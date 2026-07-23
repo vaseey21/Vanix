@@ -981,6 +981,14 @@
        share this pattern app-wide, so kill the shadow globally rather than
        patching each one. */
     [id$="-sheet"], #page-add-cattle { box-shadow: none !important; }
+  
+    /* Horizontal scroll rows (Cows in Fever / Cows in Heat) — scrollbar hidden
+       by default, only shown briefly while actively scrolling. */
+    .hscroll-row { scrollbar-width: thin; scrollbar-color: transparent transparent; }
+    .hscroll-row::-webkit-scrollbar { height: 4px; }
+    .hscroll-row::-webkit-scrollbar-thumb { background: transparent; border-radius: 2px; }
+    .hscroll-row.scrolling { scrollbar-color: rgba(0,0,0,0.25) transparent; }
+    .hscroll-row.scrolling::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.25); }
   </style>
 </head>
 <body>
@@ -1130,7 +1138,7 @@
               <!-- Cows in heat (horizontal scroll) -->
               <div style="padding:20px 0 0;">
                 <p data-k="homeCowsInFever" style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 16px 10px;">Cows in Fever</p>
-                <div style="display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-left:16px; padding:0 16px 4px; -webkit-overflow-scrolling:touch;">
+                <div class="hscroll-row" style="display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-left:16px; padding:0 16px 4px; -webkit-overflow-scrolling:touch;">
                   <div onclick="window.openRealCardSlot('ev-fever')" style="flex:0 0 auto; width:214px; height:150px; scroll-snap-align:start; border-radius:16px; overflow:hidden; position:relative; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.10);"><img src="assets/images/heat_photo.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0) 55%);"></div><div style="position:absolute; left:12px; right:12px; bottom:10px;"><p style="font-size:16px; font-weight:700; color:#fff; margin:0; line-height:1.2;">Gauri</p><p style="font-size:12px; color:rgba(255,255,255,0.85); margin:2px 0 0;">Gir · Sunrise Dairy</p></div></div><div onclick="window.openRealCardSlot('ev-fever')" style="flex:0 0 auto; width:214px; height:150px; scroll-snap-align:start; border-radius:16px; overflow:hidden; position:relative; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.10);"><img src="assets/images/insemination_photo.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0) 55%);"></div><div style="position:absolute; left:12px; right:12px; bottom:10px;"><p style="font-size:16px; font-weight:700; color:#fff; margin:0; line-height:1.2;">Kajri</p><p style="font-size:12px; color:rgba(255,255,255,0.85); margin:2px 0 0;">Sahiwal · Green Villa</p></div></div><div onclick="window.openRealCardSlot('ev-fever')" style="flex:0 0 auto; width:214px; height:150px; scroll-snap-align:start; border-radius:16px; overflow:hidden; position:relative; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.10);"><img src="assets/images/milking_started_photo.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0) 55%);"></div><div style="position:absolute; left:12px; right:12px; bottom:10px;"><p style="font-size:16px; font-weight:700; color:#fff; margin:0; line-height:1.2;">Rani</p><p style="font-size:12px; color:rgba(255,255,255,0.85); margin:2px 0 0;">Ongole · Sunrise Dairy</p></div></div><div onclick="window.openRealCardSlot('ev-fever')" style="flex:0 0 auto; width:214px; height:150px; scroll-snap-align:start; border-radius:16px; overflow:hidden; position:relative; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.10);"><img src="assets/images/milking_ended_photo.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0) 55%);"></div><div style="position:absolute; left:12px; right:12px; bottom:10px;"><p style="font-size:16px; font-weight:700; color:#fff; margin:0; line-height:1.2;">Chandni</p><p style="font-size:12px; color:rgba(255,255,255,0.85); margin:2px 0 0;">Jersey · Stones Dairy</p></div></div>
                 </div>
               </div>
@@ -1138,7 +1146,7 @@
               <!-- Cows in gestation (horizontal scroll) -->
               <div style="padding:20px 0 0;">
                 <p data-k="homeCowsInHeat" style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 16px 10px;">Cows in Heat</p>
-                <div style="display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-left:16px; padding:0 16px 4px; -webkit-overflow-scrolling:touch;">
+                <div class="hscroll-row" style="display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-left:16px; padding:0 16px 4px; -webkit-overflow-scrolling:touch;">
                   <div onclick="window.openRealCardSlot('ev-heat')" style="flex:0 0 auto; width:214px; height:170px; scroll-snap-align:start; border-radius:16px; overflow:hidden; position:relative; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.10);"><img src="assets/images/gestation_photo.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 60%);"></div><div style="position:absolute; left:12px; right:12px; bottom:10px;"><p style="font-size:16px; font-weight:700; color:#fff; margin:0; line-height:1.2;">Lakshmi</p><p style="font-size:12px; color:rgba(255,255,255,0.85); margin:2px 0 8px;">HF Cross · Green Villa</p><div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:3px;"><span class="en" style="font-size:10px; font-weight:600; color:#fff;">Detected 05:40</span><span class="en" style="font-size:10px; color:rgba(255,255,255,0.75);">of 6h</span></div><div style="height:5px; background:rgba(255,255,255,0.3); border-radius:3px; overflow:hidden;"><div style="width:8%; height:100%; background:var(--greendeep); border-radius:3px;"></div></div></div></div><div onclick="window.openRealCardSlot('ev-heat')" style="flex:0 0 auto; width:214px; height:170px; scroll-snap-align:start; border-radius:16px; overflow:hidden; position:relative; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.10);"><img src="assets/images/delivery_photo.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"><div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 60%);"></div><div style="position:absolute; left:12px; right:12px; bottom:10px;"><p style="font-size:16px; font-weight:700; color:#fff; margin:0; line-height:1.2;">Mohini</p><p style="font-size:12px; color:rgba(255,255,255,0.85); margin:2px 0 8px;">Gir · Sunrise Dairy</p><div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:3px;"><span class="en" style="font-size:10px; font-weight:600; color:#fff;">Detected 01:15</span><span class="en" style="font-size:10px; color:rgba(255,255,255,0.75);">of 6h</span></div><div style="height:5px; background:rgba(255,255,255,0.3); border-radius:3px; overflow:hidden;"><div style="width:75%; height:100%; background:var(--danger); border-radius:3px;"></div></div></div></div>
                 </div>
               </div>
@@ -8899,6 +8907,16 @@
           el.style.zIndex = String(Z[id]);
         });
       })();
-    </script>
+    
+      // Show the horizontal-scroll scrollbar only while actively scrolling.
+      document.querySelectorAll('.hscroll-row').forEach(function(row) {
+        var t;
+        row.addEventListener('scroll', function() {
+          row.classList.add('scrolling');
+          clearTimeout(t);
+          t = setTimeout(function() { row.classList.remove('scrolling'); }, 700);
+        }, { passive: true });
+      });
+</script>
 </body>
 </html>
