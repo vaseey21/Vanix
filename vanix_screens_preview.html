@@ -6382,6 +6382,7 @@
             var mgrFarms = FARMS.filter(function(f) { return f.status !== 'setup'; });
             if (mgrFarms.length) openFarmDetail(mgrFarms[0].id);
           } else {
+            renderFarmsList();
             farmsPage.style.display = 'block';
           }
           resetNav(dashNav, 0); // dashboard shows Home again on return
