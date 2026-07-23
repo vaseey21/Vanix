@@ -101,14 +101,14 @@ class _AccountScreenState extends State<AccountScreen> {
                                   isDark: isDark,
                                   leading: _Avatar(initials: 'JR', size: 40, isDark: isDark),
                                   title: 'James Redmark',
-                                  subtitle: FS.t(lang, 'farmOwner'),
+                                  subtitle: FS.t(lang, widget.appState.isOwner ? 'farmOwner' : 'farmManagerRole'),
                                   onTap: () => _push(_ProfilePage(appState: widget.appState)),
                                 ),
                               ],
                             ),
 
-                            // Farm Management group — owner only
-                            if (!widget.appState.isFarmer) ...[
+                            // Farm Management group — owner only (hidden for Manager and Farmer)
+                            if (widget.appState.isOwner) ..[
                               _GroupLabel(FS.t(lang, 'grpFarmMgmt'), isDark: isDark),
                               _GroupCard(
                                 isDark: isDark,
@@ -144,7 +144,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                   ),
                                   onTap: () => setState(() => _soundOn = !_soundOn),
                                 ),
-                                if (!widget.appState.isFarmer)
+                                if (widget.appState.isOwner)
                                   _AccountRow(
                                     isDark: isDark,
                                     title: FS.t(lang, 'rowVets'),
