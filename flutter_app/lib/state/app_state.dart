@@ -66,9 +66,15 @@ class AppState extends ChangeNotifier {
     return '$s°C';
   }
 
-  /// Cycle Owner → Farmer(multi) → Farmer(single) → Owner (demo control).
+  /// Cycle Owner → Manager(multi) → Manager(single) → Farmer(multi) →
+  /// Farmer(single) → Owner (demo control).
   void cyclePersona() {
     if (_persona == 'owner') {
+      _persona = 'manager';
+      _farmCount = 'multi';
+    } else if (_persona == 'manager' && _farmCount == 'multi') {
+      _farmCount = 'single';
+    } else if (_persona == 'manager') {
       _persona = 'farmer';
       _farmCount = 'multi';
     } else if (_farmCount == 'multi') {
