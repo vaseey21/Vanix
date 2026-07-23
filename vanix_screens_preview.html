@@ -8813,17 +8813,26 @@
         slotBody.addEventListener('click', function(e) { if (e.target.closest && e.target.closest('.ev-body button')) setTimeout(closeCardSlot, 60); });
         window.closeCardSlot = closeCardSlot;
         var CS_PHOTO_CARDS = { 'ev-fever':1,'ev-heat':1,'ev-preg':1,'ev-gestation':1,'ev-abort':1,'ev-freshcow':1,'ev-milk-notif':1,'ev-lactation-check':1 };
+        // Slide up the ACTUAL alert card (illustration + question + Yes/No),
+        // not the generic title/sub/meta proxy — used by anything that wants
+        // the real alert experience regardless of the current display mode
+        // (e.g. Home's "Cows in Fever"/"Cows in Heat" rows, which should open
+        // the real confirmation alert, not a stripped-down "event card").
+        window.openRealCardSlot = function(cardId) {
+          var card = document.getElementById(cardId);
+          if (!card || card.parentNode === slotBody) return;
+          slotReturn = { card: card, parent: card.parentNode, next: card.nextSibling };
+          slotBody.appendChild(card);
+          slotSheet.style.transform = 'translateY(0)';
+          slotBd.style.opacity = '1'; slotBd.style.pointerEvents = 'auto';
+        };
         window.openCardSheet = function(cardId, pri) {
           var card = document.getElementById(cardId);
           if (!card) return;
           // Image (full-bleed) mode + a photo card: present the REAL card in a
           // slide-up so it is literally the same card as on the Events screen.
           if (document.getElementById('flow-root').classList.contains('display-fullbleed') && CS_PHOTO_CARDS[cardId] && card.classList.contains('ev-photo-card')) {
-            if (card.parentNode === slotBody) return;
-            slotReturn = { card: card, parent: card.parentNode, next: card.nextSibling };
-            slotBody.appendChild(card);
-            slotSheet.style.transform = 'translateY(0)';
-            slotBd.style.opacity = '1'; slotBd.style.pointerEvents = 'auto';
+            window.openRealCardSlot(cardId);
             return;
           }
           curId = cardId; curPri = pri;
