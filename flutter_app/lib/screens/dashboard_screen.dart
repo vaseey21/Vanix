@@ -356,9 +356,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   // ── Manager persona: Milking (Morning) progress / Critical Alerts /
-  // Contact Vet. Replaces the owner's Today/This-week tabs + Needs
-  // Attention + Cows-in-heat/gestation + Updates sections entirely.
-  // Mirrors [data-manager-only] in prototype.html. ──
+  // Contact Vet. Replaces only the owner's Today/This-week tabs + Needs
+  // Attention block — Cows-in-heat/gestation + Updates stay visible for
+  // both personas. Mirrors [data-manager-only] in prototype.html. ──
   Widget _managerAttention() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
