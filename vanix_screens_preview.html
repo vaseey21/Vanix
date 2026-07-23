@@ -635,7 +635,7 @@
        types get a photo; same tap-Yes→bottom-slider flow. Locked tokens only. */
 
     /* ── events-page list cards ── */
-    #flow-root.display-fullbleed .ev-photo-card {
+    .display-fullbleed .ev-photo-card {
       position: relative;
       min-height: 300px;
       background: #0A2318 !important;
@@ -648,60 +648,60 @@
       justify-content: flex-end;
     }
     /* photo fills the card */
-    #flow-root.display-fullbleed .ev-photo-card::before {
+    .display-fullbleed .ev-photo-card::before {
       content: ""; position: absolute; inset: 0; z-index: 0;
       background-size: cover; background-repeat: no-repeat; background-position: center;
     }
-    #flow-root.display-fullbleed #ev-fever::before { background-image: url('assets/images/fever_photo.jpg'); background-position: center 30%; }
-    #flow-root.display-fullbleed #ev-heat::before { background-image: url('assets/images/heat_photo.jpg'); background-position: center 15%; }
-    #flow-root.display-fullbleed #ev-heat.ev-heat-inseminating::before { background-image: url('assets/images/insemination_photo.jpg'); background-position: center 25%; }
-    #flow-root.display-fullbleed #ev-preg::before { background-image: url('assets/images/gestation_photo.jpg'); }
-    #flow-root.display-fullbleed #ev-gestation::before { background-image: url('assets/images/gestation_photo.jpg'); }
-    #flow-root.display-fullbleed #ev-abort::before { background-image: url('assets/images/vetvisit_photo.jpg'); }
-    #flow-root.display-fullbleed #ev-freshcow::before { background-image: url('assets/images/vetvisit_photo.jpg'); }
-    #flow-root.display-fullbleed #ev-milk-notif::before { background-image: url('assets/images/milking_started_photo.jpg'); }
-    #flow-root.display-fullbleed #ev-lactation-check::before { background-image: url('assets/images/milking_ended_photo.jpg'); }
+    .display-fullbleed #ev-fever::before { background-image: url('assets/images/fever_photo.jpg'); background-position: center 30%; }
+    .display-fullbleed #ev-heat::before { background-image: url('assets/images/heat_photo.jpg'); background-position: center 15%; }
+    .display-fullbleed #ev-heat.ev-heat-inseminating::before { background-image: url('assets/images/insemination_photo.jpg'); background-position: center 25%; }
+    .display-fullbleed #ev-preg::before { background-image: url('assets/images/gestation_photo.jpg'); }
+    .display-fullbleed #ev-gestation::before { background-image: url('assets/images/gestation_photo.jpg'); }
+    .display-fullbleed #ev-abort::before { background-image: url('assets/images/vetvisit_photo.jpg'); }
+    .display-fullbleed #ev-freshcow::before { background-image: url('assets/images/vetvisit_photo.jpg'); }
+    .display-fullbleed #ev-milk-notif::before { background-image: url('assets/images/milking_started_photo.jpg'); }
+    .display-fullbleed #ev-lactation-check::before { background-image: url('assets/images/milking_ended_photo.jpg'); }
     /* dark scrim: two darker bands — top wash behind the name/breed caption,
        clear middle so the photo shows, then a heavy band from where the question
        starts down to the bottom of the card. */
-    #flow-root.display-fullbleed .ev-photo-card::after {
+    .display-fullbleed .ev-photo-card::after {
       content: ""; position: absolute; inset: 0; z-index: 1;
       background: linear-gradient(to bottom,
         rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 20%, rgba(0,0,0,0) 33%,
         rgba(0,0,0,0) 46%, rgba(0,0,0,0.72) 58%, rgba(0,0,0,0.95) 100%);
     }
     /* everything except the photo sits above the scrim */
-    #flow-root.display-fullbleed .ev-photo-card > *,
-    #flow-root.display-fullbleed .ev-photo-card .ev-anchor-bottom,
-    #flow-root.display-fullbleed .ev-photo-card .ev-cow-breed,
-    #flow-root.display-fullbleed .ev-photo-card .ev-photo-viewdetails,
-    #flow-root.display-fullbleed .ev-photo-card .ev-body { position: relative; z-index: 2; }
+    .display-fullbleed .ev-photo-card > *,
+    .display-fullbleed .ev-photo-card .ev-anchor-bottom,
+    .display-fullbleed .ev-photo-card .ev-cow-breed,
+    .display-fullbleed .ev-photo-card .ev-photo-viewdetails,
+    .display-fullbleed .ev-photo-card .ev-body { position: relative; z-index: 2; }
     /* hide text-mode-only bits (same set as Text mode) */
-    #flow-root.display-fullbleed .ev-photo-card .ev-imhide,
-    #flow-root.display-fullbleed .ev-photo-card > div:has(> .ev-chip),
-    #flow-root.display-fullbleed .ev-photo-card > div:has(> .ev-title),
-    #flow-root.display-fullbleed .ev-photo-card .ev-title,
-    #flow-root.display-fullbleed .ev-photo-card .ev-manager,
-    #flow-root.display-fullbleed .ev-photo-card .ev-sub,
-    #flow-root.display-fullbleed .ev-photo-card .ev-meta,
-    #flow-root.display-fullbleed .ev-photo-card .ev-chip-wrap,
-    #flow-root.display-fullbleed .ev-photo-card .ev-viewdetails,
-    #flow-root.display-fullbleed .ev-photo-card .ev-illus-row,
-    #flow-root.display-fullbleed .ev-photo-card .ev-avatar,
-    #flow-root.display-fullbleed .ev-photo-card .ev-cond-icon,
-    #flow-root.display-fullbleed .ev-photo-card .ev-corner-badge,
-    #flow-root.display-fullbleed .ev-photo-card .ev-timeago { display: none !important; }
+    .display-fullbleed .ev-photo-card .ev-imhide,
+    .display-fullbleed .ev-photo-card > div:has(> .ev-chip),
+    .display-fullbleed .ev-photo-card > div:has(> .ev-title),
+    .display-fullbleed .ev-photo-card .ev-title,
+    .display-fullbleed .ev-photo-card .ev-manager,
+    .display-fullbleed .ev-photo-card .ev-sub,
+    .display-fullbleed .ev-photo-card .ev-meta,
+    .display-fullbleed .ev-photo-card .ev-chip-wrap,
+    .display-fullbleed .ev-photo-card .ev-viewdetails,
+    .display-fullbleed .ev-photo-card .ev-illus-row,
+    .display-fullbleed .ev-photo-card .ev-avatar,
+    .display-fullbleed .ev-photo-card .ev-cond-icon,
+    .display-fullbleed .ev-photo-card .ev-corner-badge,
+    .display-fullbleed .ev-photo-card .ev-timeago { display: none !important; }
     /* hide the inline evolving heat UI — that flow lives in the bottom slider */
-    #flow-root.display-fullbleed #ev-heat #ev-heat-phase,
-    #flow-root.display-fullbleed #ev-heat #ev-heat-bar-wrap,
-    #flow-root.display-fullbleed #ev-heat #ev-heat-note,
-    #flow-root.display-fullbleed #ev-heat #ev-heat-start,
-    #flow-root.display-fullbleed #ev-heat #ev-heat-vet,
-    #flow-root.display-fullbleed #ev-heat #ev-heat-offwin,
-    #flow-root.display-fullbleed #ev-heat #ev-heat-form { display: none !important; }
+    .display-fullbleed #ev-heat #ev-heat-phase,
+    .display-fullbleed #ev-heat #ev-heat-bar-wrap,
+    .display-fullbleed #ev-heat #ev-heat-note,
+    .display-fullbleed #ev-heat #ev-heat-start,
+    .display-fullbleed #ev-heat #ev-heat-vet,
+    .display-fullbleed #ev-heat #ev-heat-offwin,
+    .display-fullbleed #ev-heat #ev-heat-form { display: none !important; }
     /* severity banner (top-right) — text label instead of the red "!" circle:
        CRITICAL (p0/danger), MEDIUM (p1/warning), LOW (p2/p3). */
-    #flow-root.display-fullbleed .ev-photo-card .ev-crit-label {
+    .display-fullbleed .ev-photo-card .ev-crit-label {
       display: inline-flex !important; align-items: center; justify-content: center;
       position: absolute; top: 0 !important; right: 0 !important; z-index: 2;
       width: auto !important; height: auto !important; border: none;
@@ -710,71 +710,71 @@
       background: var(--danger); font-size: 0 !important;
       box-shadow: none;
     }
-    #flow-root.display-fullbleed .ev-photo-card.p1 .ev-crit-label { background: var(--warning); }
-    #flow-root.display-fullbleed .ev-photo-card.sev-high .ev-crit-label { background: var(--warning) !important; }
-    #flow-root.display-fullbleed .ev-photo-card.sev-critical .ev-crit-label { background: var(--danger) !important; }
-    #flow-root.display-fullbleed .ev-photo-card.p2 .ev-crit-label,
-    #flow-root.display-fullbleed .ev-photo-card.p3 .ev-crit-label { background: var(--text2); }
-    #flow-root.display-fullbleed .ev-photo-card .ev-crit-label .ev-crit-dot { display: none !important; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-crit-label::after {
+    .display-fullbleed .ev-photo-card.p1 .ev-crit-label { background: var(--warning); }
+    .display-fullbleed .ev-photo-card.sev-high .ev-crit-label { background: var(--warning) !important; }
+    .display-fullbleed .ev-photo-card.sev-critical .ev-crit-label { background: var(--danger) !important; }
+    .display-fullbleed .ev-photo-card.p2 .ev-crit-label,
+    .display-fullbleed .ev-photo-card.p3 .ev-crit-label { background: var(--text2); }
+    .display-fullbleed .ev-photo-card .ev-crit-label .ev-crit-dot { display: none !important; }
+    .display-fullbleed .ev-photo-card .ev-crit-label::after {
       content: var(--i18n-critical); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
     }
-    #flow-root.display-fullbleed .ev-photo-card.p1 .ev-crit-label::after { content: var(--i18n-medium); }
-    #flow-root.display-fullbleed .ev-photo-card.sev-high .ev-crit-label::after { content: var(--i18n-high) !important; }
-    #flow-root.display-fullbleed .ev-photo-card.sev-critical .ev-crit-label::after { content: var(--i18n-critical) !important; }
-    #flow-root.display-fullbleed .ev-photo-card.p2 .ev-crit-label::after,
-    #flow-root.display-fullbleed .ev-photo-card.p3 .ev-crit-label::after { content: var(--i18n-low); }
+    .display-fullbleed .ev-photo-card.p1 .ev-crit-label::after { content: var(--i18n-medium); }
+    .display-fullbleed .ev-photo-card.sev-high .ev-crit-label::after { content: var(--i18n-high) !important; }
+    .display-fullbleed .ev-photo-card.sev-critical .ev-crit-label::after { content: var(--i18n-critical) !important; }
+    .display-fullbleed .ev-photo-card.p2 .ev-crit-label::after,
+    .display-fullbleed .ev-photo-card.p3 .ev-crit-label::after { content: var(--i18n-low); }
     /* cow name / breed — white caption, top-left */
-    #flow-root.display-fullbleed .ev-photo-card .ev-cow-breed {
+    .display-fullbleed .ev-photo-card .ev-cow-breed {
       display: flex !important; flex-direction: column; text-align: left !important;
       position: absolute; top: 18px; left: 20px; right: 68px; margin: 0 !important;
     }
-    #flow-root.display-fullbleed .ev-cow-name { color: #fff; font-size: 22px; font-weight: 700; line-height: 1.2; }
-    #flow-root.display-fullbleed .ev-cow-sub { color: rgba(255,255,255,0.82); font-size: 15px; font-weight: 500; margin-top: 2px; }
+    .display-fullbleed .ev-cow-name { color: #fff; font-size: 22px; font-weight: 700; line-height: 1.2; }
+    .display-fullbleed .ev-cow-sub { color: rgba(255,255,255,0.82); font-size: 15px; font-weight: 500; margin-top: 2px; }
     /* question — white, above the CTAs */
-    #flow-root.display-fullbleed .ev-photo-card .ev-question-big { display: block; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-anchor-bottom {
+    .display-fullbleed .ev-photo-card .ev-question-big { display: block; }
+    .display-fullbleed .ev-photo-card .ev-anchor-bottom {
       display: block !important; text-align: left !important;
       color: #fff !important; font-size: 24px !important; font-weight: 800 !important;
       letter-spacing: -0.02em; margin: 0 0 10px !important; padding: 0 !important;
     }
     /* View Details — white link with text (reset the native button chrome so the
        cards that lack an inline background:none don't show a white button box) */
-    #flow-root.display-fullbleed .ev-photo-card .ev-photo-viewdetails {
+    .display-fullbleed .ev-photo-card .ev-photo-viewdetails {
       display: block !important; text-align: left !important; font-size: 0 !important;
       color: rgba(255,255,255,0.9) !important; margin: 0 0 16px !important; padding: 0 !important;
       background: none !important; border: none !important; width: auto !important; box-shadow: none !important;
     }
-    #flow-root.display-fullbleed .ev-photo-card .ev-photo-viewdetails::after {
+    .display-fullbleed .ev-photo-card .ev-photo-viewdetails::after {
       content: var(--i18n-viewdetails); font-size: 14px; font-weight: 600;
     }
     /* CTAs — full width, translucent-outline No + green Yes */
-    #flow-root.display-fullbleed .ev-photo-card .ev-body {
+    .display-fullbleed .ev-photo-card .ev-body {
       margin: 0; padding-top: 0; border-top: none;
     }
-    #flow-root.display-fullbleed .ev-photo-card .ev-body > div,
-    #flow-root.display-fullbleed .ev-photo-card .ev-body > button { margin-top: 0 !important; gap: 12px !important; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-body button {
+    .display-fullbleed .ev-photo-card .ev-body > div,
+    .display-fullbleed .ev-photo-card .ev-body > button { margin-top: 0 !important; gap: 12px !important; }
+    .display-fullbleed .ev-photo-card .ev-body button {
       min-height: 52px !important; font-size: 16px !important; font-weight: 700 !important;
       border-radius: 14px !important; flex: 1 1 0 !important;
     }
-    #flow-root.display-fullbleed .ev-photo-card .ev-no,
-    #flow-root.display-fullbleed .ev-photo-card .ev-body button[style*="transparent"] {
+    .display-fullbleed .ev-photo-card .ev-no,
+    .display-fullbleed .ev-photo-card .ev-body button[style*="transparent"] {
       background: rgba(255,255,255,0.12) !important; border: 1px solid rgba(255,255,255,0.5) !important; color: #fff !important;
     }
-    #flow-root.display-fullbleed .ev-photo-card .ev-yes,
-    #flow-root.display-fullbleed .ev-photo-card .ev-ack,
-    #flow-root.display-fullbleed .ev-photo-card #ev-milk-add,
-    #flow-root.display-fullbleed .ev-photo-card #ev-lact-resting { background: var(--greenink) !important; color: #fff !important; border: none !important; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-no svg, #flow-root.display-fullbleed .ev-photo-card .ev-yes svg { display: none !important; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-no, #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-yes { font-size: 0 !important; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 16px; font-weight: 700; }
-    #flow-root.display-fullbleed .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 700; }
-    #flow-root.display-fullbleed #ev-fever .ev-btn-full { display: none; }
-    #flow-root.display-fullbleed #ev-fever .ev-btn-short { display: inline; }
+    .display-fullbleed .ev-photo-card .ev-yes,
+    .display-fullbleed .ev-photo-card .ev-ack,
+    .display-fullbleed .ev-photo-card #ev-milk-add,
+    .display-fullbleed .ev-photo-card #ev-lact-resting { background: var(--greenink) !important; color: #fff !important; border: none !important; }
+    .display-fullbleed .ev-photo-card .ev-no svg, .display-fullbleed .ev-photo-card .ev-yes svg { display: none !important; }
+    .display-fullbleed .ev-photo-card .ev-body .ev-no, .display-fullbleed .ev-photo-card .ev-body .ev-yes { font-size: 0 !important; }
+    .display-fullbleed .ev-photo-card .ev-body .ev-no::after { content: var(--i18n-no); font-size: 16px; font-weight: 700; }
+    .display-fullbleed .ev-photo-card .ev-body .ev-yes::after { content: var(--i18n-yes); font-size: 16px; font-weight: 700; }
+    .display-fullbleed #ev-fever .ev-btn-full { display: none; }
+    .display-fullbleed #ev-fever .ev-btn-short { display: inline; }
 
     /* ── walkthrough / alert step cards (match the 4 reference mockups) ── */
-    #flow-root.display-fullbleed .ev-photo-step {
+    .display-fullbleed .ev-photo-step {
       position: relative;
       min-height: 496px;
       border: none;
@@ -790,55 +790,55 @@
       box-shadow: 0 -16px 36px rgba(0,0,0,0.55);
     }
     /* photo fills the whole step (media block goes absolute) */
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-media {
+    .display-fullbleed .ev-photo-step .ev-photo-media {
       position: absolute; inset: 0; z-index: 0;
       height: auto; border-radius: 0;
     }
     /* milking photo: pull the cow (mid-frame) up into the visible (un-scrimmed)
        area rather than framing the barn ceiling */
-    #flow-root.display-fullbleed .ev-photo-step.milking .ev-photo-media { background-position: center 62%; }
+    .display-fullbleed .ev-photo-step.milking .ev-photo-media { background-position: center 62%; }
     /* light top vignette only — the heavy black is carried by .ev-photo-foot,
        which begins exactly at the title (see below). */
-    #flow-root.display-fullbleed .ev-photo-step::before {
+    .display-fullbleed .ev-photo-step::before {
       content: ""; position: absolute; inset: 0; z-index: 1;
       background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 28%);
     }
     /* drop the corner triangle in fullbleed (roundel replaces it) */
-    #flow-root.display-fullbleed .ev-photo-step::after { display: none; }
+    .display-fullbleed .ev-photo-step::after { display: none; }
     /* everything except the photo sits above the scrim */
-    #flow-root.display-fullbleed .ev-photo-step > *:not(.ev-photo-media) { position: relative; z-index: 2; }
+    .display-fullbleed .ev-photo-step > *:not(.ev-photo-media) { position: relative; z-index: 2; }
     /* the black readability wash starts where the title starts and deepens to
        the bottom — the foot wraps title + name/breed + CTAs and bleeds to the
        card edges (card padding is 20px). */
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-foot {
+    .display-fullbleed .ev-photo-step .ev-photo-foot {
       margin: 0 -20px -20px; padding: 44px 20px 34px;
       background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.72) 38%, rgba(0,0,0,0.92) 100%);
     }
     /* Row 1 — title (left) white + time (right, centred with title) white */
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-titlerow { margin-top: 0; }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-title { color: #fff; }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-time { color: rgba(255,255,255,0.85); }
+    .display-fullbleed .ev-photo-step .ev-photo-titlerow { margin-top: 0; }
+    .display-fullbleed .ev-photo-step .ev-photo-title { color: #fff; }
+    .display-fullbleed .ev-photo-step .ev-photo-time { color: rgba(255,255,255,0.85); }
     /* Row 2 — name · breed (left) white + View Details (right) white */
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-namebreed { color: #fff; }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-vd {
+    .display-fullbleed .ev-photo-step .ev-photo-namebreed { color: #fff; }
+    .display-fullbleed .ev-photo-step .ev-photo-vd {
       font-size: 14px !important; font-weight: 600; color: rgba(255,255,255,0.92) !important;
     }
-    #flow-root.display-fullbleed .ev-photo-step .ev-photo-vd::after { content: none !important; }
+    .display-fullbleed .ev-photo-step .ev-photo-vd::after { content: none !important; }
     /* Row 3 — CTAs sit directly on the scrim (no panel / white padding). */
-    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom { margin-top: 14px; }
+    .display-fullbleed .ev-photo-step .ev-seq-bottom { margin-top: 14px; }
     /* lighten the detail text (phase label endpoints, segment labels) on the photo */
-    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom span,
-    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom p:not(.ev-phase-label) { color: rgba(255,255,255,0.88) !important; }
+    .display-fullbleed .ev-photo-step .ev-seq-bottom span,
+    .display-fullbleed .ev-photo-step .ev-seq-bottom p:not(.ev-phase-label) { color: rgba(255,255,255,0.88) !important; }
     /* outline/secondary buttons (No / Not pregnant / Remind me later / Still
        milking) are transparent-on-dark → invisible. Make them a translucent
        white pill with white text so they read on the photo. */
-    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom button[style*="transparent"] {
+    .display-fullbleed .ev-photo-step .ev-seq-bottom button[style*="transparent"] {
       background: rgba(255,255,255,0.14) !important; border-color: rgba(255,255,255,0.55) !important; color: #fff !important;
     }
     /* one green for every primary CTA across the alert experience — the darker
        greenInk (events cards, walkthrough steps, flow-page Submit, full-screen) */
-    #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom button[style*="greendeep"],
-    #flow-root.display-fullbleed .ev-photo-card button[style*="greendeep"],
+    .display-fullbleed .ev-photo-step .ev-seq-bottom button[style*="greendeep"],
+    .display-fullbleed .ev-photo-card button[style*="greendeep"],
     .ev-flow-photo button[style*="greendeep"],
     #ev-alert-fullscreen .ev-fs-card button[style*="greendeep"] {
       background: var(--greenink) !important;
@@ -1022,7 +1022,7 @@
     /* View Details removed per design — cards open the alert sheet directly.
        Matches the display-mode selectors' specificity, placed last to win. */
     #flow-root.display-image .ev-photo-card .ev-photo-viewdetails,
-    #flow-root.display-fullbleed .ev-photo-card .ev-photo-viewdetails,
+    .display-fullbleed .ev-photo-card .ev-photo-viewdetails,
     #flow-root .ev-photo-card .ev-photo-viewdetails,
     #flow-root .ev-viewdetails { display:none !important; }
     /* Closed bottom sheets are moved off-screen via translateY(100%), but a
@@ -3975,7 +3975,7 @@
         document.getElementById('flow-root').classList.add('display-fullbleed');
         // Reparented alert-card overlays (callvet-sheet, ev-cardslot-sheet, …)
         // now live under #s1-phone instead of #flow-root (fixed the click-
-        // outside-to-close bug), so the `#flow-root.display-fullbleed
+        // outside-to-close bug), so the `.display-fullbleed
         // #ev-fever::before`-style CSS selectors need the class here too,
         // or a card moved into the slot silently loses its photo background.
         var phone = document.getElementById('s1-phone');
