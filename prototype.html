@@ -2278,26 +2278,26 @@
 
           <!-- CALL VET sheet — pick one of the onboarded vets -->
           <div id="callvet-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
-          <div id="callvet-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
-            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+          <div id="callvet-sheet" class="ev-flow-photo callvet" style="position:absolute; left:0; right:0; bottom:0; border-radius:24px 24px 0 0; padding:8px 24px 28px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45;">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:rgba(255,255,255,0.4); border-radius:2px;"></div></div>
             <div style="display:flex; align-items:center; margin-top:10px;">
-              <h3 data-k="callVetTitle" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Call a vet</h3>
-              <button id="callvet-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+              <h3 data-k="callVetTitle" style="font-size:18px; font-weight:700; margin:0; flex:1;">Call a vet</h3>
+              <button id="callvet-close" style="width:36px; height:36px; border-radius:50%; border:none; font-size:14px; cursor:pointer;">✕</button>
             </div>
-            <p data-k="callVetSub" style="font-size:12px; color:var(--text2); margin:6px 0 4px;">Pick a vet — they'll be sent the details.</p>
+            <p data-k="callVetSub" style="font-size:12px; margin:6px 0 4px;">Pick a vet — they'll be sent the details.</p>
             <div id="callvet-rows"></div>
             <button id="callvet-send" data-k="sendVetReq" style="width:100%; min-height:48px; margin-top:10px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">Send request</button>
           </div>
 
           <!-- Generic event-form sheet — card inputs (vet logs, delivery notes) slide up here -->
           <div id="evform-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:44;"></div>
-          <div id="evform-sheet" style="position:absolute; left:0; right:0; bottom:0; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 20px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
-            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+          <div id="evform-sheet" class="ev-flow-photo callvet" style="position:absolute; left:0; right:0; bottom:0; border-radius:24px 24px 0 0; padding:8px 24px 20px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:45;">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:rgba(255,255,255,0.4); border-radius:2px;"></div></div>
             <div style="display:flex; align-items:center; margin-top:10px;">
-              <h3 id="evform-title" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Log</h3>
-              <button id="evform-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+              <h3 id="evform-title" style="font-size:18px; font-weight:700; margin:0; flex:1;">Log</h3>
+              <button id="evform-close" style="width:36px; height:36px; border-radius:50%; border:none; font-size:14px; cursor:pointer;">✕</button>
             </div>
-            <p id="evform-sub" style="font-size:12px; color:var(--text2); margin:6px 0 0;"></p>
+            <p id="evform-sub" style="font-size:12px; margin:6px 0 0;"></p>
             <div id="evform-body" style="max-height:420px; overflow-y:auto;"></div>
           </div>
 
