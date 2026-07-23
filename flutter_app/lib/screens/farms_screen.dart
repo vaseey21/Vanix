@@ -407,8 +407,9 @@ class _FarmCard extends StatelessWidget {
   final FarmModel farm;
   final String lang;
   final bool isDark;
+  final bool isOwner;
   final VoidCallback onTap;
-  const _FarmCard({required this.farm, required this.lang, required this.isDark, required this.onTap});
+  const _FarmCard({required this.farm, required this.lang, required this.isDark, required this.isOwner, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
