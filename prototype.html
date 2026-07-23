@@ -8362,10 +8362,14 @@
               '</div>' +
             '</div>';
           }
+          var callBtn = assigned && f.managerPhone
+            ? '<a href="tel:' + f.managerPhone.replace(/\s+/g, '') + '" style="' + btn + ' display:flex; align-items:center; justify-content:center; text-decoration:none; border:1px solid var(--border); background:var(--bgcard); color:var(--text1);">' + window.t().callWord + '</a>'
+            : '';
           return '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px; margin-bottom:12px;">' +
             '<p style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">' + loc(f, 'name') + '</p>' + mgrLine +
             '<div style="display:flex; gap:8px; margin-top:12px;">' +
               '<button class="fm-choose" data-f="' + f.id + '" style="' + btn + ' border:1px solid var(--greenink); background:var(--activebg); color:var(--greenink);">' + (assigned ? window.t().reassignWord : window.t().assignManager) + '</button>' +
+              callBtn +
             '</div>' +
           '</div>';
         }).join('');
