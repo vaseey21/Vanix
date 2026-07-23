@@ -3862,6 +3862,13 @@
       function applyDisplayMode() {
         document.getElementById('flow-root').classList.remove('display-image');
         document.getElementById('flow-root').classList.add('display-fullbleed');
+        // Reparented alert-card overlays (callvet-sheet, ev-cardslot-sheet, …)
+        // now live under <body> instead of #flow-root (fixed the click-
+        // outside-to-close bug), so the `#flow-root.display-fullbleed
+        // #ev-fever::before`-style CSS selectors need the class here too,
+        // or a card moved into the slot silently loses its photo background.
+        document.body.classList.remove('display-image');
+        document.body.classList.add('display-fullbleed');
       }
       applyDisplayMode();
 
