@@ -78,12 +78,21 @@
       flex-direction: column;
     }
 
-    /* Responsive: shrink phone on smaller viewports */
+    /* Responsive: on an actual phone, the bezel mockup IS the screen — make
+       .phone fill the real viewport height (not a fixed 800px box) so that
+       bottom sheets/alert cards anchored to its bottom always reach the true
+       bottom of the device instead of leaving a gap on taller phones (or
+       requiring a scroll on shorter ones). 100dvh accounts for the mobile
+       browser's collapsing address bar; 100vh is the fallback for browsers
+       that don't support dvh yet. */
     @media (max-width: 500px) {
       .phone {
-        width: calc(100vw - 48px);
-        border-radius: 36px;
-        min-height: 640px;
+        width: 100vw;
+        min-height: 100vh;
+        min-height: 100dvh;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
       }
     }
 
