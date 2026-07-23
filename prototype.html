@@ -2517,24 +2517,19 @@
             <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 120px;">
 
               <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
-                <h2 data-k="farmsTitle" style="font-size:22px; font-weight:600; color:var(--text1); margin:0;">Farms</h2>
-                <div style="display:flex; gap:8px; margin-top:14px;">
+                <div style="display:flex; gap:8px;">
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 8px; text-align:center;">
                     <p class="en" id="farms-stat-farms" style="font-size:26px; font-weight:700; color:var(--text1); margin:0;">3</p>
-                    <p data-k="statTotalFarms" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0; white-space:pre-line;">Total Farms</p>
+                    <p data-k="wordFarmsShort" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0; white-space:nowrap;">Farms</p>
                   </div>
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 8px; text-align:center;">
                     <p class="en" id="farms-stat-cattle" style="font-size:26px; font-weight:700; color:var(--text1); margin:0;">77</p>
-                    <p data-k="statTotalCattle" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0; white-space:pre-line;">Total Cattle</p>
+                    <p data-k="wordCattleShort" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0; white-space:nowrap;">Cattle</p>
                   </div>
                   <div class="m-stat-card" style="flex:1; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px 8px; text-align:center;">
                     <p class="en" id="farms-stat-alerts" style="font-size:26px; font-weight:700; color:var(--text1); margin:0;">3</p>
-                    <p data-k="statUnactionedAlerts" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0; white-space:pre-line;">Unactioned Alerts</p>
+                    <p data-k="wordAlertsShort" style="font-size:10px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text2); margin:4px 0 0; white-space:nowrap;">Alerts</p>
                   </div>
-                </div>
-                <!-- Auto-scrolling one-line activity ticker -->
-                <div style="overflow:hidden; margin-top:12px;">
-                  <div id="farms-ticker-track" class="farms-ticker-track"></div>
                 </div>
               </div>
 
@@ -2547,7 +2542,7 @@
                   <button id="farms-filter-btn" style="flex-shrink:0; width:46px; height:46px; border-radius:14px; border:1px solid var(--border); background:var(--bgcard); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></button>
                 </div>
 
-                <p data-k="yourFarms" style="font-size:15px; font-weight:700; color:var(--text1); margin:16px 0 0;">Your Farms</p>
+                
                 <div id="farms-list" style="margin-top:10px;"></div>
               </div>
 
@@ -3540,7 +3535,7 @@
                phEmail:'you@example.com',
                navHome:'Home', navFarms:'Farms', navMilk:'Milk', navEvents:'Events', navAccount:'Account',
                sevCritical:'CRITICAL', sevHigh:'HIGH', sevMedium:'MEDIUM', sevLow:'LOW',
-               farmsTitle:'Farms', statTotalFarms:'Total\nFarms', statMilkToday:'Milk Today', statUnactionedAlerts:'Unactioned Alerts',
+               farmsTitle:'Farms', wordFarmsShort:'Farms', wordCattleShort:'Cattle', wordAlertsShort:'Alerts', statTotalFarms:'Total\nFarms', statMilkToday:'Milk Today', statUnactionedAlerts:'Unactioned Alerts',
                searchFarms:'Search farms', filterAllFarms:'All Farms', filterHealthy:'Healthy Farms', filterAttention:'Need Attention', filterSetup:'Setup Required',
                wordCattle:'cattle', setupBadge:'Setup', noFarmsMatch:'No farms match this filter.',
                managerWord:'Manager', farmTempCaption:'Farm temp', searchCattle:'Search cattle', searchFarms:'Search farms', searchFarms:'Search farms',
@@ -3623,7 +3618,7 @@
                phEmail:'अपना ईमेल डालें',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता',
                sevCritical:'गंभीर', sevHigh:'उच्च', sevMedium:'मध्यम', sevLow:'कम',
-               farmsTitle:'खेत', statTotalFarms:'कुल\nखेत', statMilkToday:'आज का दूध', statUnactionedAlerts:'अनसुलझी चेतावनी',
+               farmsTitle:'खेत', wordFarmsShort:'खेत', wordCattleShort:'पशु', wordAlertsShort:'चेतावनी', statTotalFarms:'कुल\nखेत', statMilkToday:'आज का दूध', statUnactionedAlerts:'अनसुलझी चेतावनी',
                searchFarms:'खेत खोजें', filterAllFarms:'सभी खेत', filterHealthy:'स्वस्थ खेत', filterAttention:'ध्यान चाहिए', filterSetup:'सेटअप ज़रूरी',
                wordCattle:'पशु', setupBadge:'सेटअप', noFarmsMatch:'इस फ़िल्टर से कोई खेत नहीं मिला।',
                managerWord:'प्रबंधक', farmTempCaption:'खेत का तापमान', searchCattle:'पशु खोजें', searchFarms:'फार्म खोजें',
@@ -3706,7 +3701,7 @@
                phEmail:'आपन ईमेल डालीं',
                navHome:'होम', navFarms:'खेत', navMilk:'दूध', navEvents:'कार्यक्रम', navAccount:'खाता',
                sevCritical:'गंभीर', sevHigh:'उच्च', sevMedium:'मध्यम', sevLow:'कम',
-               farmsTitle:'खेत', statTotalFarms:'कुल\nखेत', statMilkToday:'आज के दूध', statUnactionedAlerts:'ना सुलझल चेतावनी',
+               farmsTitle:'खेत', wordFarmsShort:'खेत', wordCattleShort:'पशु', wordAlertsShort:'चेतावनी', statTotalFarms:'कुल\nखेत', statMilkToday:'आज के दूध', statUnactionedAlerts:'ना सुलझल चेतावनी',
                searchFarms:'खेत खोजीं', filterAllFarms:'सगरी खेत', filterHealthy:'स्वस्थ खेत', filterAttention:'ध्यान के जरूरत', filterSetup:'सेटअप जरूरी',
                wordCattle:'पशु', setupBadge:'सेटअप', noFarmsMatch:'ए फ़िल्टर से कवनो खेत ना मिलल।',
                managerWord:'प्रबंधक', farmTempCaption:'खेत के तापमान', searchCattle:'पशु खोजीं', searchFarms:'फार्म खोजीं',
@@ -6457,7 +6452,7 @@
           return '<div class="farm-row" data-farm="' + f.id + '" style="position:relative; overflow:hidden; background:var(--bgcard); border:1px solid var(--border); border-radius:18px; padding:14px; margin-bottom:12px; cursor:pointer;">' + tag +
             '<div style="display:flex; align-items:flex-start; gap:10px;">' +
               '<div style="flex:1; min-width:0;">' +
-                '<p style="font-size:16px; font-weight:700; color:var(--text1); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + FARM_ICON_SVG + loc(f, 'name') + '</p>' +
+                '<p style="font-size:16px; font-weight:700; color:var(--text1); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + loc(f, 'name') + '</p>' +
                 '<p style="font-size:12px; color:var(--text2); margin:3px 0 0;">' + PIN_SVG + loc(f, 'location') + '</p>' +
                 '<p style="font-size:12px; color:var(--text2); margin:2px 0 0;">' + PERSON_SVG + loc(f, 'manager') + '</p>' +
               '</div>' +
