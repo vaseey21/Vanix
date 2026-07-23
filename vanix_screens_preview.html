@@ -8853,8 +8853,10 @@
         slotBd.addEventListener('click', closeCardSlot);
         // Close immediately (not after a delay) so a subsequent sheet the
         // button opens (e.g. Yes → insemination walkthrough) never briefly
-        // overlaps this one mid-transition.
-        slotBody.addEventListener('click', function(e) { if (e.target.closest && e.target.closest('.ev-body button')) closeCardSlot(); });
+        // overlaps this one mid-transition. Capture phase, since `.ev-body`
+        // calls event.stopPropagation() on click — a bubble-phase listener
+        // here would never fire at all.
+        slotBody.addEventListener('click', function(e) { if (e.target.closest && e.target.closest('.ev-body button')) closeCardSlot(); }, true);
         window.closeCardSlot = closeCardSlot;
         var CS_PHOTO_CARDS = { 'ev-fever':1,'ev-heat':1,'ev-preg':1,'ev-gestation':1,'ev-abort':1,'ev-freshcow':1,'ev-milk-notif':1,'ev-lactation-check':1 };
         // Slide up the ACTUAL alert card (illustration + question + Yes/No),
