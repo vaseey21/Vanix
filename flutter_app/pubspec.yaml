@@ -41,6 +41,7 @@ flutter:
     - assets/images/milking_started_photo.jpg
     - assets/images/milking_ended_photo.jpg
     - assets/images/gestation_photo.jpg
+    - assets/images/cows/
 
   fonts:
     - family: NotoSans
