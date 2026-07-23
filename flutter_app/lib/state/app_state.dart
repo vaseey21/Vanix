@@ -66,16 +66,12 @@ class AppState extends ChangeNotifier {
     return '$s°C';
   }
 
-  /// Cycle Owner → Manager(multi) → Manager(single) → Farmer(multi) →
-  /// Farmer(single) → Owner (demo control).
+  /// Cycle Owner → Manager(multi) → Manager(single) → Owner (demo control).
+  /// There is no separate "farmer" persona — the Farm Manager IS the farmer
+  /// role; Manager·N = multi-farm, Manager·1 = single-farm.
   void cyclePersona() {
     if (_persona == 'owner') {
       _persona = 'manager';
-      _farmCount = 'multi';
-    } else if (_persona == 'manager' && _farmCount == 'multi') {
-      _farmCount = 'single';
-    } else if (_persona == 'manager') {
-      _persona = 'farmer';
       _farmCount = 'multi';
     } else if (_farmCount == 'multi') {
       _farmCount = 'single';
