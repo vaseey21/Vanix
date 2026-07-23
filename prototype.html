@@ -8407,17 +8407,19 @@
         var f = farmById(fmFarmId);
         if (f) { f.manager = 'James Redmark'; f.managerHi = 'जेम्स रेडमार्क'; f.managerStatus = 'active'; f.managerInvite = ''; renderFarmMgmt(); renderFarmsList(); setFarmManagerLine(); }
         closeFmChoose();
+        showToast('You have been assigned as farm manager');
       });
       document.getElementById('fm-close').addEventListener('click', closeFmSheet);
       document.getElementById('fm-backdrop').addEventListener('click', function() { closeFmSheet(); closeFmChoose(); closeFmMgrList(); });
       document.getElementById('fm-assign-save').addEventListener('click', function() {
         var f = farmById(fmFarmId);
         if (!f) { closeFmSheet(); return; }
+        var nm = (document.getElementById('fm-name').value || '').trim();
         var em = (document.getElementById('fm-email').value || '').trim();
-        var ph = (document.getElementById('fm-phone').value || '').trim();
-        if (em || ph) { f.managerStatus = 'pending'; f.managerInvite = em || ph; }
+        if (em || nm) { f.managerStatus = 'pending'; f.managerInvite = em || nm; }
         renderFarmMgmt(); renderFarmsList(); setFarmManagerLine();
         closeFmSheet();
+        showToast('Invite sent to ' + (nm || 'the new manager'));
       });
       var fdMgrEdit = document.getElementById('farm-detail-manager-edit');
       if (fdMgrEdit) fdMgrEdit.addEventListener('click', function() {
