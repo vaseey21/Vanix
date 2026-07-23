@@ -8171,20 +8171,53 @@
       document.getElementById('acct-tempunit-c').addEventListener('click', function() { setTempUnit('C'); });
       document.getElementById('acct-tempunit-f').addEventListener('click', function() { setTempUnit('F'); });
       paintTempUnitBtns();
-      // Language selector
+      // Language selector — bottom sheet with search
       var ACCT_LANG_LABEL = { en:'English', hi:'हिंदी', bho:'भोजपुरी' };
-      document.getElementById('acct-lang-row').addEventListener('click', function() {
-        var o = document.getElementById('acct-lang-opts');
-        o.style.display = o.style.display === 'none' ? 'block' : 'none';
-      });
-      document.querySelectorAll('.acct-lang-opt').forEach(function(opt) {
-        opt.addEventListener('click', function(e) {
-          e.stopPropagation();
-          if (window.vanixSetLang) window.vanixSetLang(opt.getAttribute('data-lang'));
-          document.getElementById('acct-lang-opts').style.display = 'none';
-          syncAccountUi();
-        });
-      });
+      var ACCT_LANG_SEARCH = { en:'english', hi:'हिंदी hindi', bho:'भोजपुरी bhojpuri' };
+      (function() {
+        var row = document.getElementById('acct-lang-row');
+        var sheet = document.getElementById('acct-lang-sheet');
+        var bd = document.getElementById('acct-lang-backdrop');
+        var closeBtn = document.getElementById('acct-lang-close');
+        var search = document.getElementById('acct-lang-search');
+        var list = document.getElementById('acct-lang-list');
+        if (!row || !sheet) return;
+        function renderList() {
+          var q = (search.value || '').toLowerCase();
+          var cur = localStorage.getItem('vanixLang') || 'en';
+          var codes = ['en', 'hi', 'bho'].filter(function(c) {
+            return !q || ACCT_LANG_SEARCH[c].indexOf(q) !== -1;
+          });
+          list.innerHTML = codes.map(function(c) {
+            var active = c === cur;
+            return '<button class="acct-lang-opt-row" data-lang="' + c + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; min-height:48px; padding:0 4px; border:none; border-bottom:1px solid var(--divider); background:transparent; font-size:15px; font-weight:600; color:' + (active ? 'var(--greenink)' : 'var(--text1)') + '; font-family:var(--font-hi); text-align:start; cursor:pointer;">' + ACCT_LANG_LABEL[c] + (active ? ' <span>✓</span>' : '') + '</button>';
+          }).join('');
+          list.querySelectorAll('.acct-lang-opt-row').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+              if (window.vanixSetLang) window.vanixSetLang(opt.getAttribute('data-lang'));
+              close();
+              syncAccountUi();
+            });
+          });
+        }
+        function open() {
+          if (window.closeAllEventSheets) window.closeAllEventSheets();
+          search.value = '';
+          renderList();
+          sheet.style.transform = 'translateY(0)';
+          bd.style.opacity = '1';
+          bd.style.pointerEvents = 'auto';
+        }
+        function close() {
+          sheet.style.transform = 'translateY(100%)';
+          bd.style.opacity = '0';
+          bd.style.pointerEvents = 'none';
+        }
+        row.addEventListener('click', open);
+        closeBtn.addEventListener('click', close);
+        bd.addEventListener('click', close);
+        search.addEventListener('input', renderList);
+      })();
       function syncAccountUi() {
         paintToggle(soundToggle, soundOn);
         paintToggle(darkToggle, document.getElementById('flow-root').classList.contains('dark'));
