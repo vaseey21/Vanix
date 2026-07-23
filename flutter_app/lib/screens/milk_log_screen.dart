@@ -53,6 +53,9 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
   void initState() {
     super.initState();
     _entries = MilkSeed.entries(_today);
+    if (widget.openAddOnStart) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _openAddEntry());
+    }
   }
 
   void _onNavTap(int i) {
