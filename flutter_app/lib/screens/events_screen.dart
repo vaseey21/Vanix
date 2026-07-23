@@ -340,19 +340,10 @@ class _EventsScreenState extends State<EventsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('Events', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
-                            GestureDetector(
-                              onTap: () => _showFullCycleSheet(context),
-                              child: const Padding(
-                                padding: EdgeInsets.only(top: 2),
-                                child: Text('View full cycle ›', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: VanixColors.greenInk)),
-                              ),
-                            ),
-                          ],
+                        child: GestureDetector(
+                          onTap: () => _showFullCycleSheet(context),
+                          behavior: HitTestBehavior.opaque,
+                          child: Text('Events', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: textColor)),
                         ),
                       ),
                       const SizedBox(width: 8),
