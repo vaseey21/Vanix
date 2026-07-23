@@ -465,8 +465,12 @@ class _FarmCard extends StatelessWidget {
                                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: textColor)),
                               const SizedBox(height: 3),
                               _MetaLine(icon: Icons.place_outlined, text: farm.loc(lang)),
-                              const SizedBox(height: 2),
-                              _MetaLine(icon: Icons.person_outline, text: farm.mgr(lang)),
+                              // Manager name — owner-only (a Manager doesn't
+                              // need to see their own name on their own farm).
+                              if (widget.appState.isOwner) ...[
+                                const SizedBox(height: 2),
+                                _MetaLine(icon: Icons.person_outline, text: farm.mgr(lang)),
+                              ],
                             ],
                           ),
                         ),
