@@ -748,13 +748,22 @@
     .display-fullbleed .ev-photo-card.sev-critical .ev-crit-label::after { content: var(--i18n-critical) !important; }
     .display-fullbleed .ev-photo-card.p2 .ev-crit-label::after,
     .display-fullbleed .ev-photo-card.p3 .ev-crit-label::after { content: var(--i18n-low); }
-    /* cow name / breed — white caption, top-left */
+    /* cow name | breed | belt — white caption row, top-left */
     .display-fullbleed .ev-photo-card .ev-cow-breed {
-      display: flex !important; flex-direction: column; text-align: left !important;
+      display: flex !important; flex-direction: row; align-items: baseline; flex-wrap: wrap;
+      gap: 6px; text-align: left !important;
       position: absolute; top: 18px; left: 20px; right: 68px; margin: 0 !important;
     }
-    .display-fullbleed .ev-cow-name { color: #fff; font-size: 22px; font-weight: 700; line-height: 1.2; }
-    .display-fullbleed .ev-cow-sub { color: rgba(255,255,255,0.82); font-size: 15px; font-weight: 500; margin-top: 2px; }
+    .display-fullbleed .ev-cow-name { color: #fff; font-size: 18px; font-weight: 700; line-height: 1.2; }
+    .display-fullbleed .ev-cow-sub { color: rgba(255,255,255,0.82); font-size: 14px; font-weight: 500; margin-top: 0; }
+    .display-fullbleed .ev-cow-sub::before,
+    .display-fullbleed .ev-photo-belt::before { content: "|"; color: rgba(255,255,255,0.5); margin-inline-end: 6px; font-weight: 400; }
+    .display-fullbleed .ev-photo-belt { color: rgba(255,255,255,0.82); font-size: 14px; font-weight: 500; }
+    /* farm name | time — second header line, below the name row */
+    .display-fullbleed .ev-photo-card .ev-photo-farmtime {
+      display: block !important; position: absolute; top: 44px; left: 20px; right: 68px;
+      margin: 0 !important; color: rgba(255,255,255,0.72); font-size: 12px; font-weight: 500;
+    }
     /* question — white, above the CTAs */
     .display-fullbleed .ev-photo-card .ev-question-big { display: block; }
     .display-fullbleed .ev-photo-card .ev-anchor-bottom {
