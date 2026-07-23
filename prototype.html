@@ -2631,6 +2631,20 @@
               <button id="logout-confirm-ok" data-k="logoutConfirmBtn" style="flex:1; min-height:46px; border-radius:23px; border:none; background:var(--danger); color:#FFFFFF; font-size:14px; font-weight:700; font-family:var(--font-hi); cursor:pointer;">Log Out</button>
             </div>
           </div>
+          <!-- Language picker — bottom sheet with search -->
+          <div id="acct-lang-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:56;"></div>
+          <div id="acct-lang-sheet" style="position:absolute; left:0; right:0; bottom:0; max-height:70vh; background:#FFFFFF; border-radius:24px 24px 0 0; padding:8px 24px 24px; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.32,0.72,0,1); z-index:57; overflow-y:auto; box-shadow:0 -8px 32px rgba(0,0,0,0.18);">
+            <div style="display:flex; justify-content:center; padding:6px 0 2px;"><div style="width:36px; height:4px; background:var(--border); border-radius:2px;"></div></div>
+            <div style="display:flex; align-items:center; margin-top:10px;">
+              <h3 data-k="rowLanguage" style="font-size:18px; font-weight:700; color:var(--text1); margin:0; flex:1;">Language</h3>
+              <button id="acct-lang-close" style="width:36px; height:36px; border-radius:50%; border:none; background:var(--bgwarm); font-size:14px; color:var(--text1); cursor:pointer;">✕</button>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; height:44px; margin-top:12px; padding:0 14px; border-radius:22px; background:var(--bgwarm);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input id="acct-lang-search" type="text" placeholder="Search language" data-k="searchLanguage" data-k-placeholder style="flex:1; border:none; background:transparent; font-size:14px; color:var(--text1); font-family:var(--font-hi); outline:none;">
+            </div>
+            <div id="acct-lang-list" style="margin-top:8px;"></div>
+          </div>
             </div>
 
             <!-- Frosted nav — Account active -->
