@@ -8636,6 +8636,7 @@
         var f = farmById(fmFarmId);
         if (f) { f.manager = 'James Redmark'; f.managerHi = 'जेम्स रेडमार्क'; f.managerStatus = 'active'; f.managerInvite = ''; renderFarmMgmt(); renderFarmsList(); setFarmManagerLine(); }
         closeFmChoose();
+        if (sfManagerAssigned(fmFarmId)) return;
         showToast('You have been assigned as farm manager');
       });
       document.getElementById('fm-close').addEventListener('click', closeFmSheet);
