@@ -7665,6 +7665,27 @@
       function openAddCattle() {
         acPage.style.transform = 'translateY(0)';
         if (acBackdrop) { acBackdrop.style.opacity = '1'; acBackdrop.style.pointerEvents = 'auto'; }
+        // Always reset to the Cattle Detail tab, in case a previous open was
+        // left mid-way through the Cow History page.
+        var hist = document.getElementById('ac-pane-history');
+        var backBtn = document.getElementById('ac-history-back');
+        if (hist && hist.style.display !== 'none') {
+          document.getElementById('ac-tabs-row').style.display = 'flex';
+          hist.style.display = 'none';
+          document.getElementById('ac-pane-cow').style.display = 'block';
+          document.getElementById('ac-pane-device').style.display = 'none';
+          backBtn.style.display = 'none';
+          var titleEl = document.getElementById('ac-header-title');
+          titleEl.setAttribute('data-k', 'addCattle');
+          titleEl.textContent = window.t().addCattle;
+          document.querySelectorAll('.ac-tab').forEach(function(x, i) {
+            var on = i === 0;
+            x.classList.toggle('on', on);
+            x.style.borderBottomColor = on ? 'var(--greenink)' : 'transparent';
+            x.style.color = on ? 'var(--greenink)' : 'var(--text2)';
+            x.style.fontWeight = on ? '600' : '500';
+          });
+        }
       }
       function closeAddCattle() {
         acPage.style.transform = 'translateY(100%)';
