@@ -471,6 +471,9 @@
     #ev-fever .ev-no .ev-btn-svg, #ev-fever .ev-yes .ev-btn-svg,
     #ev-heat .ev-no .ev-btn-svg, #ev-heat .ev-yes .ev-btn-svg { display: none; }
     #ev-fever .ev-btn-short { display: none; }
+    /* No icons on any CTA — Yes/No/Call vet — anywhere in the app, in any
+       display mode or card type (list card, detail page, walkthrough). */
+    .ev-no svg, .ev-yes svg, .ev-callvet svg { display: none !important; }
 
     /* image mode: reference-style EVENTS-PAGE card. Layout (matches the mockup):
        ── Row 1: red question title (full width) · CRITICAL + time-ago top-right
