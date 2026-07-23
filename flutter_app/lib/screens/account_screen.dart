@@ -108,7 +108,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
 
                             // Farm Management group — owner only (hidden for Manager and Farmer)
-                            if (widget.appState.isOwner) ..[
+                            if (widget.appState.isOwner) ...[
                               _GroupLabel(FS.t(lang, 'grpFarmMgmt'), isDark: isDark),
                               _GroupCard(
                                 isDark: isDark,
