@@ -8463,6 +8463,7 @@
         sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
       }
       function closeVetDeleteConfirm() {
+        console.log('DEBUG closeVetDeleteConfirm called', new Error().stack);
         var sh = document.getElementById('vet-delete-sheet'), bd = document.getElementById('vet-delete-backdrop');
         if (!sh || !bd) return;
         sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
