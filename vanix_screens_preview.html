@@ -7856,7 +7856,10 @@
       }
       document.getElementById('farm-detail-fab').addEventListener('click', openAddCattle);
             document.getElementById('ac-cancel').addEventListener('click', closeAddCattle);
-      document.getElementById('ac-save').addEventListener('click', closeAddCattle);
+      document.getElementById('ac-save').addEventListener('click', function() {
+        closeAddCattle();
+        if (sfActiveFarmId) openSfSuccess();
+      });
       // Cow Details / Device Details tabs
       document.querySelectorAll('.ac-tab').forEach(function(t) {
         t.addEventListener('click', function() {
