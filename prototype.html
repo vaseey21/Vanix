@@ -8736,6 +8736,20 @@
         // here would never fire at all.
         slotBody.addEventListener('click', function(e) { if (e.target.closest && e.target.closest('.ev-body button')) closeCardSlot(); }, true);
         window.closeCardSlot = closeCardSlot;
+        // Only one alert/event sheet may be open at once — closing every other
+        // known sheet before a new one opens prevents the "background card is
+        // still interactive/visible underneath" bug.
+        window.closeAllEventSheets = function(except) {
+          if (except !== 'ev-cardslot-sheet') closeCardSlot();
+          if (except !== 'ev-seq-sheet' && window.closeSeq) window.closeSeq();
+          ['callvet-sheet', 'evform-sheet', 'ev-cs-sheet', 'hist-sheet'].forEach(function(id) {
+            if (id === except) return;
+            var sh = document.getElementById(id);
+            var bd = document.getElementById(id.replace('-sheet', '-backdrop'));
+            if (sh) sh.style.transform = 'translateY(100%)';
+            if (bd) { bd.style.opacity = '0'; bd.style.pointerEvents = 'none'; }
+          });
+        };
         var CS_PHOTO_CARDS = { 'ev-fever':1,'ev-heat':1,'ev-preg':1,'ev-gestation':1,'ev-abort':1,'ev-freshcow':1,'ev-milk-notif':1,'ev-lactation-check':1 };
         // Slide up the ACTUAL alert card (illustration + question + Yes/No),
         // not the generic title/sub/meta proxy — used by anything that wants
@@ -8745,6 +8759,14 @@
         window.openRealCardSlot = function(cardId) {
           var card = document.getElementById(cardId);
           if (!card || card.parentNode === slotBody) return;
+          if (window.closeAllEventSheets) window.closeAllEventSheets('ev-cardslot-sheet');
+          // A different card was left inside the slot (e.g. two Home thumbnails
+          // tapped in quick succession) — return it to its original place first
+          // so the slot never silently holds two cards at once.
+          if (slotReturn && slotReturn.card.parentNode === slotBody) {
+            if (slotReturn.next && slotReturn.next.parentNode === slotReturn.parent) slotReturn.parent.insertBefore(slotReturn.card, slotReturn.next);
+            else slotReturn.parent.appendChild(slotReturn.card);
+          }
           slotReturn = { card: card, parent: card.parentNode, next: card.nextSibling };
           slotBody.appendChild(card);
           slotSheet.style.transform = 'translateY(0)';
