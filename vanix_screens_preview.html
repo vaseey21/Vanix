@@ -3973,6 +3973,13 @@
       function applyDisplayMode() {
         document.getElementById('flow-root').classList.remove('display-image');
         document.getElementById('flow-root').classList.add('display-fullbleed');
+        // Reparented alert-card overlays (callvet-sheet, ev-cardslot-sheet, …)
+        // now live under #s1-phone instead of #flow-root (fixed the click-
+        // outside-to-close bug), so the `#flow-root.display-fullbleed
+        // #ev-fever::before`-style CSS selectors need the class here too,
+        // or a card moved into the slot silently loses its photo background.
+        var phone = document.getElementById('s1-phone');
+        if (phone) { phone.classList.remove('display-image'); phone.classList.add('display-fullbleed'); }
       }
       applyDisplayMode();
 
