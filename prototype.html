@@ -5764,8 +5764,9 @@
           heatTicker = null;
           scrim.style.opacity = '0';
           scrim.style.pointerEvents = 'none';
-          sheet.style.transform = 'translateY(100%)'; window.closeSeq = closeSeq;
+          sheet.style.transform = 'translateY(100%)';
         }
+        window.closeSeq = closeSeq;
         scrim.addEventListener('click', closeSeq);
         // Events title no longer triggers the walkthrough (openSeq kept, dormant).
 
