@@ -8249,12 +8249,12 @@
       function openSfSuccess() {
         var bd = document.getElementById('sf-success-backdrop'), sh = document.getElementById('sf-success-sheet');
         bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
-        sh.style.opacity = '1'; sh.style.pointerEvents = 'auto'; sh.style.transform = 'translate(0,-50%) scale(1)';
+        sh.style.pointerEvents = 'auto'; sh.style.transform = 'translateY(0)';
       }
       function closeSfSuccess() {
         var bd = document.getElementById('sf-success-backdrop'), sh = document.getElementById('sf-success-sheet');
         bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
-        sh.style.opacity = '0'; sh.style.pointerEvents = 'none'; sh.style.transform = 'translate(0,-50%) scale(0.9)';
+        sh.style.pointerEvents = 'none'; sh.style.transform = 'translateY(100%)';
       }
       document.getElementById('sf-success-home').addEventListener('click', function() {
         var fid = sfActiveFarmId;
