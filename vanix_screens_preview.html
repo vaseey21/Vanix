@@ -9109,7 +9109,8 @@
         if (!btn || !sheet) return;
         function renderList() {
           var q = (search.value || '').trim().toLowerCase();
-          var rows = [{ id: 'all', name: 'All Farms' }].concat((FARMS || []).map(function(f) { return { id: f.id, name: loc(f, 'name') }; }));
+          var allFarms = (window.FARMS || []).filter(function(f) { return f.status !== 'setup'; });
+          var rows = [{ id: 'all', name: 'All Farms' }].concat(allFarms.map(function(f) { return { id: f.id, name: window.loc ? window.loc(f, 'name') : f.name }; }));
           rows = rows.filter(function(r) { return r.name.toLowerCase().indexOf(q) !== -1; });
           list.innerHTML = rows.map(function(r) {
             return '<button class="dash-farmsel-row" data-id="' + r.id + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; min-height:48px; padding:0 4px; border:none; border-bottom:1px solid var(--divider); background:transparent; font-size:15px; font-weight:600; color:var(--text1); font-family:var(--font-hi); text-align:start; cursor:pointer;">' + r.name + '</button>';
@@ -9119,9 +9120,9 @@
               var id = row.getAttribute('data-id');
               btn.querySelector('span[data-k="dashAllFarms"]') ? (btn.querySelector('span[data-k="dashAllFarms"]').textContent = (id === 'all' ? window.t().dashAllFarms : row.textContent)) : null;
               var countSpan = btn.querySelector('span.en');
-              if (countSpan) countSpan.textContent = id === 'all' ? '\u00a0(' + (FARMS || []).length + ')' : '';
+              if (countSpan) countSpan.textContent = id === 'all' ? '\u00a0(' + allFarms.length + ')' : '';
               close();
-              if (id !== 'all' && typeof openFarmDetail === 'function') openFarmDetail(id);
+              if (id !== 'all' && typeof window.openFarmDetail === 'function') window.openFarmDetail(id);
             });
           });
         }
