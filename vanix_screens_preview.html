@@ -285,6 +285,17 @@
     /* Cards trimmed to Title/Manager/View Details/CTA — full description +
        meta only render on the Card Detail page (#ev-detail-page). */
     .ev-sub, .ev-meta { display:none; }
+    /* P2/P3 event-card header — same order as the photo alert cards:
+       Name | Breed | Belt, then Farm | time, top-right criticality chip. */
+    .ev-p2-namebreed {
+      display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px;
+      font-size: 15px; font-weight: 700; color: var(--text1); margin: 0;
+    }
+    .ev-p2-namebreed .ev-p2-sep {
+      font-size: 13px; font-weight: 500; color: var(--text2);
+    }
+    .ev-p2-namebreed .ev-p2-sep::before { content: "|"; color: var(--border); margin-inline-end: 6px; font-weight: 400; }
+    .ev-p2-farmtime { font-size: 12px; color: var(--text2); margin: 2px 0 0; }
     .ev-viewdetails { background:none; border:none; padding:0; margin:4px 0 0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer; text-align:left; display:block; }
     #flow-root.dark .ev-viewdetails { color:var(--greendeep); }
     .ev-viewdetails, .ev-photo-viewdetails { display:none !important; }
