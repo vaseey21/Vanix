@@ -4863,11 +4863,8 @@
             picker.querySelectorAll('.ev-vet-row').forEach(function(r) {
               var on = r === row;
               r.classList.toggle('on', on);
-              r.style.borderColor = on ? 'var(--greendeep)' : 'var(--border)';
-              r.style.background = on ? 'var(--activebg)' : 'var(--bgcard)';
               r.style.fontWeight = on ? '600' : '500';
-              r.querySelector('span').style.borderColor = on ? 'var(--greendeep)' : 'var(--border)';
-              r.querySelector('span').style.background = on ? 'var(--greendeep)' : 'transparent';
+              r.querySelector('.ev-vet-row-check').style.visibility = on ? 'visible' : 'hidden';
             });
           });
         });
