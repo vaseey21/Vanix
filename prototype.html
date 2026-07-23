@@ -5744,6 +5744,7 @@
         }
         function openWalkthroughSheet() {
           step = 1;
+          if (window.closeAllEventSheets) window.closeAllEventSheets('ev-seq-sheet');
           scrim.style.opacity = '1';
           scrim.style.pointerEvents = 'auto';
           sheet.style.transform = 'translateY(0)';
