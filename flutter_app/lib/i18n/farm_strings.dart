@@ -101,7 +101,7 @@ class FS {
       'vl2t': 'Pregnancy check', 'vl2n': 'Confirmed 5 months; growth normal.',
       'vl3t': 'FMD vaccination', 'vl3n': 'Annual FMD dose given.',
       // Account
-      'navAccount': 'Account', 'farmOwner': 'Farm Owner', 'farmManagerRole': 'Farm Manager', 'mgrMilkingMorning': 'Milking (Morning)', 'mgrContactVet': 'Contact Vet', 'mgrContactVetSub': 'Call a vet anytime', 'grpFarmMgmt': 'Farm Management', 'acctFarmSub': 'Sunrise Dairy Farm',
+      'navAccount': 'Account', 'farmOwner': 'Farm Owner', 'farmManagerRole': 'Farm Manager', 'mgrMilkingMorning': 'Milking (Morning)', 'mgrContactVet': 'Contact Vet', 'mgrContactVetSub': 'Call a vet anytime', 'callWord': 'Call', 'grpFarmMgmt': 'Farm Management', 'acctFarmSub': 'Sunrise Dairy Farm',
       'rowCattleGroups': 'Cattle Groups', 'acctGroupsSub': 'Desi, Jersey, Holstein Friesian, Sahiwal',
       'grpAlerts': 'Alerts & Contacts', 'rowSound': 'Alert sound', 'soundSub': 'Alerts always notify — sound can be muted',
       'rowVets': 'Vet Contacts', 'vetsSub': 'Who gets called when you tap "Call Vet"',
@@ -269,7 +269,7 @@ class FS {
       'vl1t': 'बुखार का इलाज', 'vl1n': 'एंटीबायोटिक दी गई; 48 घंटे में तापमान सामान्य।',
       'vl2t': 'गर्भ जांच', 'vl2n': 'पुष्टि: 5 महीने; विकास सामान्य।',
       'vl3t': 'खुरपका टीकाकरण', 'vl3n': 'वार्षिक FMD खुराक दी गई।',
-      'navAccount': 'खाता', 'farmOwner': 'फार्म मालिक', 'farmManagerRole': 'फार्म प्रबंधक', 'mgrMilkingMorning': 'दुहाई (सुबह)', 'mgrContactVet': 'पशु चिकित्सक बुलाएँ', 'mgrContactVetSub': 'कभी भी पशु चिकित्सक को कॉल करें', 'grpFarmMgmt': 'फार्म प्रबंधन', 'acctFarmSub': 'सनराइज़ डेयरी फार्म',
+      'navAccount': 'खाता', 'farmOwner': 'फार्म मालिक', 'farmManagerRole': 'फार्म प्रबंधक', 'mgrMilkingMorning': 'दुहाई (सुबह)', 'mgrContactVet': 'पशु चिकित्सक बुलाएँ', 'mgrContactVetSub': 'कभी भी पशु चिकित्सक को कॉल करें', 'callWord': 'कॉल करें', 'grpFarmMgmt': 'फार्म प्रबंधन', 'acctFarmSub': 'सनराइज़ डेयरी फार्म',
       'rowCattleGroups': 'पशु समूह', 'acctGroupsSub': 'देसी, जर्सी, होल्स्टीन फ़्रीज़ियन, साहीवाल',
       'grpAlerts': 'अलर्ट और संपर्क', 'rowSound': 'अलर्ट ध्वनि', 'soundSub': 'अलर्ट हमेशा आते हैं — ध्वनि बंद की जा सकती है',
       'rowVets': 'पशु चिकित्सक संपर्क', 'vetsSub': '"पशु चिकित्सक बुलाएँ" दबाने पर किसे कॉल होती है',

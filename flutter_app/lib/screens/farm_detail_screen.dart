@@ -487,7 +487,10 @@ class _FarmDetailScreenState extends State<FarmDetailScreen> {
           PopupMenuItem(value: 'download', height: 40, child: Text(FS.t(_lang, 'downloadReport'), style: TextStyle(fontSize: 13, color: textColor))),
           PopupMenuItem(value: 'download-critical', height: 40, child: Text(FS.t(_lang, 'downloadCriticalReport'), style: TextStyle(fontSize: 13, color: textColor))),
           PopupMenuItem(value: 'share', height: 40, child: Text(FS.t(_lang, 'shareReportVet'), style: TextStyle(fontSize: 13, color: textColor))),
-          PopupMenuItem(value: 'manage', height: 40, child: Text(FS.t(_lang, 'manageFarmWord'), style: TextStyle(fontSize: 13, color: textColor))),
+          // Manage Farm — owner-only; Manager/Farmer personas manage their
+          // own assigned farm day-to-day, not reassign its manager.
+          if (widget.appState.isOwner)
+            PopupMenuItem(value: 'manage', height: 40, child: Text(FS.t(_lang, 'manageFarmWord'), style: TextStyle(fontSize: 13, color: textColor))),
         ],
       ),
     );
