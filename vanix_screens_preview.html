@@ -187,9 +187,14 @@
     #flow-root.dark #s1-dash { background: #111111 !important; }
     #flow-root.dark #s1-dash > div > p { color: #8C8780 !important; }
     /* ── Unified frosted nav: identical metrics everywhere; sliding droplet capsule ── */
-    /* Persona gating — owner-only surfaces hidden for the Farmer persona */
-    #flow-root.persona-farmer [data-owner-only] { display:none !important; }
+    /* Persona gating — owner-only surfaces hidden for the Farmer and Manager personas */
+    #flow-root.persona-farmer [data-owner-only], #flow-root.persona-manager [data-owner-only] { display:none !important; }
     #flow-root.persona-farmer .m-sub-actions { display:none !important; }
+    /* Manager-only Home content (hidden by default; shown only for persona-manager) */
+    [data-manager-only] { display:none !important; }
+    #flow-root.persona-manager [data-manager-only] { display:block !important; }
+    /* Manager persona viewing their own farm doesn't need to see their own name */
+    #flow-root.persona-manager #farm-detail-manager-wrap { display:none !important; }
     /* Stale owner-persona timeago/meta pill rule removed — that info now lives
        in the unified Name|Breed|Belt / Farm|Time header on the alert card
        itself, so the old pill duplicated it (and its ID-selector !important
@@ -2697,7 +2702,7 @@
                     <span class="en" style="width:40px; height:40px; border-radius:50%; background:var(--activebg); color:var(--greenink); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">JR</span>
                     <div style="flex:1; min-width:0;">
                       <p class="en" style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">James Redmark</p>
-                      <p data-k="farmOwner" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Farm Owner</p>
+                      <p id="acct-role-label" data-k="farmOwner" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Farm Owner</p>
                     </div>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
                   </div>
@@ -2852,7 +2857,7 @@
                 <div class="en" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text2);">james@sunrisedairy.in</div>
                 <p data-k="emailHint" style="font-size:10px; color:var(--text2); margin:4px 0 12px;">Login email &amp; vet report copies</p>
                 <p data-k="fldRole" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text2); margin:0 0 5px;">Role</p>
-                <div data-k="farmOwner" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text2);">Farm Owner</div>
+                <div id="profile-role-label" data-k="farmOwner" style="background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; color:var(--text2);">Farm Owner</div>
               </div>
             </div>
             </div>
@@ -3333,14 +3338,13 @@
                           <button id="farm-detail-kebab-download" data-k="downloadReport" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Download Report</button>
                           <button id="farm-detail-kebab-download-critical" data-k="downloadCriticalReport" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Download Critical Report</button>
                           <button id="farm-detail-kebab-share" data-k="shareReportVet" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Share Report with vet</button>
-                          <button id="farm-detail-kebab-manage" data-k="manageFarmWord" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Manage Farm</button>
+                          <button id="farm-detail-kebab-manage" data-owner-only data-k="manageFarmWord" style="display:block; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Manage Farm</button>
                         </div>
                       </div>
                     </div>
                     <div style="display:flex; align-items:center; gap:5px; margin-top:5px; min-width:0;">
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
-                      <p id="farm-detail-manager" class="en" style="font-size:13px; color:var(--text2); margin:0; flex-shrink:0;">Ramesh C</p>
-                      <span class="en" style="font-size:13px; color:var(--text2);">&nbsp;-&nbsp;</span>
+                      <span id="farm-detail-manager-wrap" style="display:contents;"><p id="farm-detail-manager" class="en" style="font-size:13px; color:var(--text2); margin:0; flex-shrink:0;">Ramesh C</p><span class="en" style="font-size:13px; color:var(--text2);">&nbsp;-&nbsp;</span></span>
                       <span id="farm-detail-temp" class="en" style="font-size:13px; font-weight:700; color:var(--text1); flex-shrink:0;">33°C</span>
                       <span id="farm-detail-temp-level" class="en" style="font-size:10px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:#8A5A00; flex-shrink:0;">High</span>
                     </div>
