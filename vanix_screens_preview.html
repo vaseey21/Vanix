@@ -8650,6 +8650,7 @@
         if (em || nm) { f.managerStatus = 'pending'; f.managerInvite = em || nm; }
         renderFarmMgmt(); renderFarmsList(); setFarmManagerLine();
         closeFmSheet();
+        if (sfManagerAssigned(f.id)) return;
         showToast('Invite sent to ' + (nm || 'the new manager'));
       });
       var fdMgrEdit = document.getElementById('farm-detail-manager-edit');
