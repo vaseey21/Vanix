@@ -1133,9 +1133,32 @@
                 </div>
               </div>
 
+              <!-- Manager persona: Milking progress / Critical alerts / Contact Vet -->
+              <div data-manager-only style="padding:20px 16px 0;">
+                <p data-k="needsAttentionTitle" style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 0 10px;">Needs Attention</p>
+                <div style="background:var(--bgcard); border-radius:18px; padding:4px 16px; box-shadow:0 4px 16px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);">
+                  <div id="mgr-milking-row" style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0; border-bottom:1px solid var(--divider); cursor:pointer;">
+                    <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;"><span data-k="mgrMilkingMorning">Milking (Morning)</span> — <span class="en">0/20</span></p>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  </div>
+                  <div id="mgr-critical-row" style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 0; cursor:pointer;">
+                    <p style="font-size:14px; font-weight:600; color:var(--text1); margin:0;"><span class="en">14</span> <span data-k="rowCriticalAlerts">Critical Alerts</span></p>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+                  </div>
+                </div>
+                <div id="mgr-contact-vet" style="display:flex; align-items:center; gap:12px; background:var(--activebg); border:1.5px solid var(--greenink); border-radius:16px; padding:14px 16px; margin-top:14px; cursor:pointer;">
+                  <div style="width:40px; height:40px; border-radius:50%; background:var(--greenink); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  </div>
+                  <div style="flex:1; min-width:0;">
+                    <p data-k="mgrContactVet" style="font-size:14px; font-weight:700; color:var(--greenink); margin:0;">Contact Vet</p>
+                    <p data-k="mgrContactVetSub" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Call a vet anytime</p>
+                  </div>
+                </div>
+              </div>
 
               <!-- Cows in fever (horizontal scroll photo alert cards) -->
-              <div style="padding:20px 0 0;">
+              <div data-owner-only style="padding:20px 0 0;">
                 <p data-k="homeCowsInFever" style="font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text2); margin:0 16px 10px;">Cows in Fever</p>
                 <div class="hscroll-row" style="display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-left:16px; padding:0 16px 4px; -webkit-overflow-scrolling:touch;"><div onclick="window.openRealCardSlot('ev-fever')" style="flex:0 0 auto; width:220px; scroll-snap-align:start; display:flex; gap:10px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:10px; cursor:pointer;"><img src="assets/images/cows/gowri.jpg" alt="" style="width:64px; height:96px; border-radius:10px; object-fit:cover; flex-shrink:0;"><div style="flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center;"><p style="font-size:13px; font-weight:700; color:var(--danger); margin:0;">Fever detected</p><p class="en" style="font-size:10px; color:var(--text2); margin:2px 0 0;">20 mins ago</p><p style="font-size:12px; font-weight:600; color:var(--text1); margin:8px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Gauri <span style="color:var(--text2); font-weight:400;">| Belt 41</span></p><p style="font-size:11px; color:var(--text2); margin:2px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Sunrise Dairy</p></div></div><div onclick="window.openRealCardSlot('ev-fever')" style="flex:0 0 auto; width:220px; scroll-snap-align:start; display:flex; gap:10px; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:10px; cursor:pointer;"><img src="assets/images/cows/kaveri.jpg" alt="" style="width:64px; height:96px; border-radius:10px; object-fit:cover; flex-shrink:0;"><div style="flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center;"><p style="font-size:13px; font-weight:700; color:var(--danger); margin:0;">Fever detected</p><p class="en" style="font-size:10px; color:var(--text2); margin:2px 0 0;">2 hrs ago</p><p style="font-size:12px; font-weight:600; color:var(--text1); margin:8px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Kajri <span style="color:var(--text2); font-weight:400;">| Belt 12</span></p><p style="font-size:11px; color:var(--text2); margin:2px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Green Villa</p></div></div></div>
               </div>
