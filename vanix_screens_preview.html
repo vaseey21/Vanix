@@ -8851,7 +8851,10 @@
           slotBd.style.opacity = '0'; slotBd.style.pointerEvents = 'none';
         }
         slotBd.addEventListener('click', closeCardSlot);
-        slotBody.addEventListener('click', function(e) { if (e.target.closest && e.target.closest('.ev-body button')) setTimeout(closeCardSlot, 60); });
+        // Close immediately (not after a delay) so a subsequent sheet the
+        // button opens (e.g. Yes → insemination walkthrough) never briefly
+        // overlaps this one mid-transition.
+        slotBody.addEventListener('click', function(e) { if (e.target.closest && e.target.closest('.ev-body button')) closeCardSlot(); });
         window.closeCardSlot = closeCardSlot;
         var CS_PHOTO_CARDS = { 'ev-fever':1,'ev-heat':1,'ev-preg':1,'ev-gestation':1,'ev-abort':1,'ev-freshcow':1,'ev-milk-notif':1,'ev-lactation-check':1 };
         // Slide up the ACTUAL alert card (illustration + question + Yes/No),
