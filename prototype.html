@@ -371,13 +371,13 @@
        part of text mode — hidden unconditionally in both modes. */
     #ev-fever .ev-illus-row, #ev-heat .ev-illus-row { display: none !important; }
 
-    /* text mode (default): title/manager visible, plain chip/buttons */
-    #ev-fever .ev-title, #ev-fever .ev-manager,
-    #ev-heat .ev-title, #ev-heat .ev-manager { display: flex !important; }
+    /* Text mode is retired (display mode is permanently Image/fullbleed) — the
+       old "text mode default" rule that force-showed title/manager via an
+       ID-selector !important (beating the fullbleed hiding rules below,
+       since ID specificity always wins) has been removed; it was causing
+       the old title/manager text to bleed through under the new header. */
     #ev-fever .ev-manager svg, #ev-heat .ev-manager svg { display: none; }
     #ev-fever .ev-manager::before, #ev-heat .ev-manager::before { content: "Manager:\00a0"; }
-    #ev-fever .ev-cow-breed, #ev-fever .ev-question-big,
-    #ev-heat .ev-cow-breed, #ev-heat .ev-question-big { display: none; }
     #ev-heat .ev-chip svg { display: none; }
     #ev-heat .ev-chip-p1::after { content: var(--i18n-actionable, " · ACTIONABLE"); }
     #ev-fever .ev-no .ev-btn-svg, #ev-fever .ev-yes .ev-btn-svg,
