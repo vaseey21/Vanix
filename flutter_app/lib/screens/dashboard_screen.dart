@@ -98,22 +98,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
                           child: _statGrid(),
                         ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
-                          child: _scheduleTabs(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: _cowsInHeatRow(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: _cowsInGestationRow(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
-                          child: _updates(),
-                        ),
+                        if (widget.appState.isManager)
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
+                            child: _managerAttention(),
+                          )
+                        else ...[
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
+                            child: _scheduleTabs(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            child: _cowsInHeatRow(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                            child: _cowsInGestationRow(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
+                            child: _updates(),
+                          ),
+                        ],
                       ],
                     ),
                   ),
