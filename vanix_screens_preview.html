@@ -8601,6 +8601,7 @@
             if (f) { f.manager = n; f.managerHi = n; f.managerStatus = 'active'; f.managerInvite = ''; renderFarmMgmt(); renderFarmsList(); setFarmManagerLine(); }
             closeFmMgrList();
             closeFmChoose();
+            if (sfManagerAssigned(fmFarmId)) return;
             showToast(n + ' assigned as farm manager');
           });
         });
