@@ -8924,6 +8924,13 @@
           var card = document.getElementById(cardId);
           if (!card || card.parentNode === slotBody) return;
           if (window.closeAllEventSheets) window.closeAllEventSheets('ev-cardslot-sheet');
+          // A different card was left inside the slot (e.g. two Home thumbnails
+          // tapped in quick succession) — return it to its original place first
+          // so the slot never silently holds two cards at once.
+          if (slotReturn && slotReturn.card.parentNode === slotBody) {
+            if (slotReturn.next && slotReturn.next.parentNode === slotReturn.parent) slotReturn.parent.insertBefore(slotReturn.card, slotReturn.next);
+            else slotReturn.parent.appendChild(slotReturn.card);
+          }
           slotReturn = { card: card, parent: card.parentNode, next: card.nextSibling };
           slotBody.appendChild(card);
           slotSheet.style.transform = 'translateY(0)';
