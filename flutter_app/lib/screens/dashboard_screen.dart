@@ -648,13 +648,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 }
 
-class _HeatCardData {
-  final String name, breed, farm, photo;
-  const _HeatCardData(this.name, this.breed, this.farm, this.photo);
-}
-
-class _GestationCardData {
-  final String name, breed, farm, photo;
-  final int day, total;
-  const _GestationCardData(this.name, this.breed, this.farm, this.photo, this.day, this.total);
+class _AlertCardData {
+  final String name, belt, farm, photo, timeAgo;
+  const _AlertCardData(this.name, this.belt, this.farm, this.photo, this.timeAgo);
 }
