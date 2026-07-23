@@ -3166,43 +3166,16 @@
             </div>
           </div>
 
-          <!-- SETUP FARM — full-screen slide-up opened from the "Setup Farm" pill on the Farms list -->
-          <div id="page-setup-farm" style="position:absolute; inset:0; background:var(--bgwarm); z-index:50; transform:translateY(100%); transition:transform 0.5s cubic-bezier(0.32,0.72,0,1); display:flex; flex-direction:column;">
-            <div style="flex-shrink:0; display:flex; align-items:center; gap:4px; padding:16px 16px 12px; background:var(--bgwarm);">
-              <button id="sf-back" style="flex-shrink:0; width:34px; height:34px; border-radius:50%; border:none; background:transparent; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-              <div style="flex:1; min-width:0;">
-                <p class="en" style="font-size:22px; font-weight:600; color:var(--text1); margin:0; line-height:1.2;">Setup Farm</p>
-                <p id="sf-farm-name" class="en" style="font-size:13px; color:var(--text2); margin:2px 0 0;">Highland Farm</p>
-              </div>
+          <!-- FARM SETUP SUCCESS — shown after the assign-manager -> add-cattle flow completes for a newly set-up farm -->
+          <div id="sf-success-backdrop" style="position:absolute; inset:0; background:rgba(0,0,0,0.4); opacity:0; pointer-events:none; transition:opacity 0.3s ease; z-index:70;"></div>
+          <div id="sf-success-sheet" style="position:absolute; left:16px; right:16px; top:50%; transform:translate(0,-50%) scale(0.9); opacity:0; pointer-events:none; transition:opacity 0.25s ease, transform 0.25s ease; z-index:71; background:#FFFFFF; border-radius:20px; padding:28px 22px; text-align:center; box-shadow:0 20px 48px rgba(0,0,0,0.28);">
+            <div style="width:56px; height:56px; margin:0 auto 14px; border-radius:50%; background:var(--activebg); display:flex; align-items:center; justify-content:center;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--greenink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
             </div>
-            <div style="flex:1; overflow-y:auto; padding:4px 16px 40px;">
-              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:16px;">
-                <p class="en" style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">Invite a farm manager</p>
-                <p class="en" style="font-size:12px; color:var(--text2); margin:4px 0 0; line-height:1.5;">They get an email invite and manage this farm once they accept.</p>
-                <div id="sf-invite-form" style="margin-top:12px;">
-                  <input id="sf-inv-name" class="en" placeholder="Manager name" style="display:block; width:100%; box-sizing:border-box; min-height:48px; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); margin-bottom:10px;">
-                  <input id="sf-inv-email" type="email" class="en" placeholder="Email" style="display:block; width:100%; box-sizing:border-box; min-height:48px; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); margin-bottom:10px;">
-                  <input id="sf-inv-phone" type="tel" class="en" placeholder="Phone" style="display:block; width:100%; box-sizing:border-box; min-height:48px; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">
-                  <button id="sf-inv-send" class="en" style="width:100%; min-height:48px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:15px; font-weight:600; font-family:var(--font-hi); margin-top:12px; cursor:pointer;">Send invite</button>
-                </div>
-                <div id="sf-invite-pending" style="display:none; margin-top:12px; align-items:center; gap:10px; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:12px 14px;">
-                  <div style="flex:1; min-width:0;">
-                    <p id="sf-pending-name" class="en" style="font-size:14px; font-weight:600; color:var(--text1); margin:0;">Farm manager</p>
-                    <p class="en" style="font-size:11px; color:var(--text2); margin:2px 0 0;">Invite sent — waiting for them to accept</p>
-                  </div>
-                  <span class="en" style="flex-shrink:0; font-size:10px; font-weight:700; letter-spacing:0.05em; color:#8A5A00; background:var(--warnbg); border-radius:10px; padding:4px 10px;">PENDING</span>
-                </div>
-              </div>
-              <p class="en" style="text-align:center; font-size:11px; font-weight:700; letter-spacing:0.08em; color:var(--text2); margin:14px 0;">OR</p>
-              <div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:16px;">
-                <p class="en" style="font-size:15px; font-weight:700; color:var(--text1); margin:0;">Assign myself</p>
-                <p class="en" style="font-size:12px; color:var(--text2); margin:4px 0 0; line-height:1.5;">You manage this farm yourself — no invite needed.</p>
-                <button id="sf-assign-self" class="en" style="display:block; width:100%; min-height:48px; border-radius:24px; border:1px solid var(--greenink); background:transparent; color:var(--greenink); font-size:15px; font-weight:600; font-family:var(--font-hi); margin-top:12px; cursor:pointer;">Assign myself</button>
-                <div id="sf-assigned" style="display:none; margin-top:12px; text-align:center; background:var(--activebg); border-radius:12px; padding:16px;">
-                  <p class="en" style="font-size:14px; font-weight:700; color:var(--greenink); margin:0;">✓ You manage this farm</p>
-                </div>
-              </div>
-              <button id="sf-done" class="en" style="display:none; width:100%; min-height:50px; border-radius:25px; border:none; background:var(--greenink); color:#FFFFFF; font-size:15px; font-weight:700; font-family:var(--font-hi); margin-top:18px; cursor:pointer;">Done</button>
+            <p data-k="farmAddedSuccess" style="font-size:17px; font-weight:700; color:var(--text1); margin:0 0 20px;">Farm added successfully</p>
+            <div style="display:flex; gap:10px;">
+              <button id="sf-success-home" data-k="backToHome" style="flex:1; min-height:48px; border-radius:24px; border:1px solid var(--border); background:var(--bgcard); font-size:14px; font-weight:600; color:var(--text1); font-family:var(--font-hi); cursor:pointer;">Back to Home</button>
+              <button id="sf-success-view" data-k="viewFarmWord" style="flex:1; min-height:48px; border-radius:24px; border:none; background:var(--greenink); color:#FFFFFF; font-size:14px; font-weight:700; font-family:var(--font-hi); cursor:pointer;">View Farm</button>
             </div>
           </div>
 
