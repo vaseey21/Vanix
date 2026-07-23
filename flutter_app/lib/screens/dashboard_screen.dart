@@ -9,6 +9,7 @@ import '../widgets/vanix_nav_items.dart';
 import 'milk_log_screen.dart';
 import 'events_screen.dart';
 import 'farms_screen.dart';
+import 'farm_detail_screen.dart';
 import 'account_screen.dart';
 import 'approvals_screen.dart';
 
