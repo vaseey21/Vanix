@@ -5000,8 +5000,8 @@
       function vetPickerHtml(idPrefix) {
         var rows = ONBOARDED_VETS.map(function(name, i) {
           var on = i === 0;
-          return '<button class="ev-vet-row' + (on ? ' on' : '') + '" data-vet="' + name + '" style="width:100%; display:flex; align-items:center; gap:10px; min-height:44px; padding:0 12px; margin-top:6px; border-radius:12px; border:1px solid ' + (on ? 'var(--greendeep)' : 'var(--border)') + '; background:' + (on ? 'var(--activebg)' : 'var(--bgcard)') + '; font-size:14px; font-weight:' + (on ? '600' : '500') + '; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
-            '<span style="width:16px; height:16px; border-radius:50%; border:2px solid ' + (on ? 'var(--greendeep)' : 'var(--border)') + '; background:' + (on ? 'var(--greendeep)' : 'transparent') + '; flex-shrink:0;"></span>' + name + '</button>';
+          return '<button class="ev-vet-row' + (on ? ' on' : '') + '" data-vet="' + name + '" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:44px; padding:0 14px; margin-top:6px; border-radius:12px; border:1px solid var(--border); background:var(--bgcard); font-size:14px; font-weight:' + (on ? '600' : '500') + '; color:var(--text1); font-family:var(--font-hi); text-align:start;">' +
+            '<span>' + name + '</span><span class="en ev-vet-row-check" style="color:var(--greenink); font-size:16px; line-height:1; ' + (on ? '' : 'visibility:hidden;') + '">✓</span></button>';
         }).join('');
         return '<p style="font-size:13px; font-weight:500; color:var(--text1); margin:12px 0 0;">Request a vet appointment</p>' +
           '<div id="ev-vet-picker-' + idPrefix + '">' + rows + '</div>' +
