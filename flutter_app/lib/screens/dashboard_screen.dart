@@ -104,11 +104,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
                             child: _managerAttention(),
                           )
-                        else ...[
+                        else
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
                             child: _scheduleTabs(),
                           ),
+                        // Cows in heat / gestation / Updates — shown to both
+                        // Owner and Manager personas (Manager just also gets
+                        // the Milking/Critical-Alerts/Contact-Vet block above).
+                        ...[
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                             child: _cowsInHeatRow(),
