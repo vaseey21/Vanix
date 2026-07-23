@@ -8243,50 +8243,53 @@
         declined:  { bg:'var(--dangerbg)', border:'var(--danger)',    color:'var(--danger)',   k:'vetDeclined' }
       };
       var vetEditIdx = null;
+      var vetDeleteIdx = null;
       function renderVets() {
         var listEl = document.getElementById('vets-list');
         if (!listEl) return;
         listEl.innerHTML = VETS.map(function(v, i) {
           var b = VET_BADGE[v.status];
-          var itm = 'display:flex; align-items:center; width:100%; text-align:start; min-height:40px; padding:0 12px; border:none; background:transparent; border-radius:9px; font-size:13px; font-weight:500; font-family:var(--font-hi); cursor:pointer;';
           return '<div class="vet-card" data-i="' + i + '" style="position:relative; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px;">' +
             '<div style="display:flex; align-items:center; gap:10px;">' +
               '<p class="en" style="flex:1; min-width:0; font-size:14px; font-weight:700; color:var(--text1); margin:0;">' + v.name + '</p>' +
               '<span class="en" style="flex-shrink:0; background:' + b.bg + '; border:1px solid ' + b.border + '; color:' + b.color + '; border-radius:12px; padding:3px 10px; font-size:9px; font-weight:700; letter-spacing:0.04em;">' + window.t()[b.k] + '</span>' +
-              '<button class="vet-kebab" data-i="' + i + '" style="flex-shrink:0; width:30px; height:30px; border-radius:50%; border:none; background:transparent; color:var(--text2); font-size:16px; line-height:1; cursor:pointer;">\u22ee</button>' +
             '</div>' +
-            '<div class="vet-kebab-menu" style="display:none; position:absolute; top:44px; inset-inline-end:12px; z-index:6; min-width:170px; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,0.2); padding:4px;">' +
-              (v.status === 'pending' ? '<button class="vet-demo" data-i="' + i + '" data-act="confirmed" style="' + itm + '">' + window.t().demoConfirm + '</button><button class="vet-demo" data-i="' + i + '" data-act="declined" style="' + itm + ' color:var(--danger);">' + window.t().demoDecline + '</button>' : '') +
-              (v.status === 'declined' ? '<button class="vet-demo" data-i="' + i + '" data-act="pending" style="' + itm + '">' + window.t().vetResend + '</button>' : '') +
-              '<button class="vet-del" data-i="' + i + '" style="' + itm + ' color:var(--danger);">' + window.t().deleteWord + '</button>' +
+            '<div style="display:flex; gap:8px; margin-top:10px;">' +
+              '<button class="vet-del" data-i="' + i + '" style="flex:0 0 25%; min-height:40px; border-radius:20px; border:1px solid var(--danger); background:transparent; color:var(--danger); font-size:12px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + window.t().deleteWord + '</button>' +
+              '<a href="tel:' + v.phone.replace(/\s+/g, '') + '" class="vet-call" style="flex:1; min-height:40px; border-radius:20px; border:none; background:var(--greenink); color:#FFFFFF; font-size:13px; font-weight:700; font-family:var(--font-hi); display:flex; align-items:center; justify-content:center; text-decoration:none; cursor:pointer;">' + window.t().callWord + '</a>' +
             '</div>' +
           '</div>';
         }).join('');
-        listEl.querySelectorAll('.vet-demo').forEach(function(btn) {
-          btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            VETS[+btn.getAttribute('data-i')].status = btn.getAttribute('data-act');
-            document.querySelectorAll('.vet-kebab-menu').forEach(function(m) { m.style.display = 'none'; });
-            renderVets();
-          });
-        });
-        listEl.querySelectorAll('.vet-kebab').forEach(function(kb) {
-          kb.addEventListener('click', function(e) {
-            e.stopPropagation();
-            var menu = kb.parentElement.parentElement.querySelector('.vet-kebab-menu');
-            var open = menu.style.display === 'block';
-            listEl.querySelectorAll('.vet-kebab-menu').forEach(function(m) { m.style.display = 'none'; });
-            menu.style.display = open ? 'none' : 'block';
-          });
-        });
         listEl.querySelectorAll('.vet-del').forEach(function(btn) {
           btn.addEventListener('click', function(e) {
             e.stopPropagation();
-            VETS.splice(+btn.getAttribute('data-i'), 1);
-            renderVets();
+            openVetDeleteConfirm(+btn.getAttribute('data-i'));
           });
         });
       }
+      function openVetDeleteConfirm(i) {
+        vetDeleteIdx = i;
+        var sh = document.getElementById('vet-delete-sheet'), bd = document.getElementById('vet-delete-backdrop');
+        if (!sh || !bd) return;
+        document.getElementById('vet-delete-name').textContent = VETS[i] ? VETS[i].name : '';
+        sh.style.transform = 'translateY(0)'; bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeVetDeleteConfirm() {
+        var sh = document.getElementById('vet-delete-sheet'), bd = document.getElementById('vet-delete-backdrop');
+        if (!sh || !bd) return;
+        sh.style.transform = 'translateY(100%)'; bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      (function() {
+        var cancelBtn = document.getElementById('vet-delete-cancel');
+        var okBtn = document.getElementById('vet-delete-ok');
+        var bd = document.getElementById('vet-delete-backdrop');
+        if (cancelBtn) cancelBtn.addEventListener('click', closeVetDeleteConfirm);
+        if (bd) bd.addEventListener('click', closeVetDeleteConfirm);
+        if (okBtn) okBtn.addEventListener('click', function() {
+          if (vetDeleteIdx != null) { VETS.splice(vetDeleteIdx, 1); renderVets(); }
+          closeVetDeleteConfirm();
+        });
+      })();
       function openVetEdit(i) {
         vetEditIdx = i;
         var v = VETS[i];
