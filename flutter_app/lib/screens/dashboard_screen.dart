@@ -43,6 +43,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void _onNavTap(int i) {
     if (i == 1) {
+      if (widget.appState.isManager && widget.appState.isSingleFarm) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => FarmDetailScreen(appState: widget.appState, farm: kFarms.first))).then((_) => setState(() {}));
+        return;
+      }
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => FarmsScreen(appState: widget.appState))).then((_) => setState(() {}));
       return;
     }
