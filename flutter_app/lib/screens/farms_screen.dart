@@ -61,6 +61,9 @@ class _FarmsScreenState extends State<FarmsScreen> with SingleTickerProviderStat
   List<FarmModel> get _filtered {
     final q = _query.trim().toLowerCase();
     return kFarms.where((f) {
+      // Setting up a new farm is owner-only — Manager persona never sees
+      // the dashed "Setup Farm" row.
+      if (widget.appState.isManager && f.status == FarmStatus.setup) return false;
       if (_statusFilter != 'all' && _statusKey(f.status) != _statusFilter) return false;
       if (_locFilter != 'all' && f.locKey != _locFilter) return false;
       if (q.isNotEmpty && !('${f.name} ${f.nameHi}').toLowerCase().contains(q)) return false;
