@@ -112,7 +112,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
       MaterialPageRoute(builder: (_) => MilkAddEntryScreen(appState: widget.appState, allEntries: _entries, today: _today, editing: editing)),
     );
     if (result == null) return;
-    final farmer = widget.appState.isFarmer;
+    final farmer = !widget.appState.isOwner;
     setState(() {
       if (result.delete && editing != null) {
         if (farmer) {
@@ -197,7 +197,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('${entry.cow} — ${entry.session.label} · ${entry.litres} L', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: textColor)),
-              if (widget.appState.isFarmer)
+              if (!widget.appState.isOwner)
                 const Padding(padding: EdgeInsets.only(top: 4), child: Text('Changes are sent to the Farm Owner for approval', style: TextStyle(fontSize: 12, color: VanixColors.textHint))),
               const SizedBox(height: 16),
               ListTile(
@@ -221,7 +221,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                 onTap: () {
                   Navigator.pop(context);
                   setState(() {
-                    if (widget.appState.isFarmer) {
+                    if (!widget.appState.isOwner) {
                       _requestDelete(entry);
                     } else {
                       _entries.removeWhere((e) => e.id == entry.id);
@@ -302,7 +302,7 @@ class _MilkLogScreenState extends State<MilkLogScreen> {
                           _EntryCard(
                             entry: entry,
                             isDark: isDark,
-                            isFarmer: widget.appState.isFarmer,
+                            isFarmer: !widget.appState.isOwner,
                             lang: widget.appState.languageCode,
                             onTap: () => _openEntryActions(entry),
                             onApprove: () => _approvePending(entry),

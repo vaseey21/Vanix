@@ -4449,37 +4449,52 @@
         sub.querySelector('.m-reject').addEventListener('click', function(e) { e.stopPropagation(); sub.remove(); });
         sub.querySelector('.m-approve').addEventListener('click', function(e) {
           e.stopPropagation();
-          if (kind === 'delete') { card.remove(); return; }
-          var total = kind === 'edit' ? litres : parseFloat(card.dataset.litres) + litres;
-          card.dataset.litres = String(Math.round(total * 10) / 10);
-          var big = card.querySelector('div[style*="width:64px"] span.en');
-          if (big) big.textContent = card.dataset.litres;
-          var row = card.querySelector('p[style*="align-items:center"]');
-          if (row) {
-            var timeEl = row.querySelector('span.en:not(.m-pill)');
-            if (timeEl) timeEl.textContent = nowHM();
-            if (!row.querySelector('.m-upd')) {
-              var updEl = document.createElement('span');
-              updEl.className = 'en m-upd';
-              updEl.title = 'Tap for details';
-              var updIcon = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>';
-              updEl.innerHTML = updIcon;
-              updEl.style.cursor = 'pointer';
-              updEl.style.display = 'inline-flex';
-              updEl.style.alignItems = 'center';
-              updEl.style.gap = '4px';
-              var updAt = nowHM();
-              var updOpen = false;
-              updEl.addEventListener('click', function(e) {
-                e.stopPropagation();
-                updOpen = !updOpen;
-                updEl.innerHTML = updOpen ? updIcon + '<span>Updated ' + updAt + '</span>' : updIcon;
-              });
-              row.appendChild(updEl);
-            }
-          }
+          applyMilkChange(card, kind, litres);
           sub.remove();
         });
+      }
+
+      // Applies the actual mutation to a milk entry card — shared by the
+      // owner's approve button (pending flow) and the direct-apply path
+      // used when an Owner themself makes the change (no approval needed).
+      function applyMilkChange(card, kind, litres) {
+        if (kind === 'delete') { card.remove(); return; }
+        var total = kind === 'edit' ? litres : parseFloat(card.dataset.litres) + litres;
+        card.dataset.litres = String(Math.round(total * 10) / 10);
+        var big = card.querySelector('div[style*="width:64px"] span.en');
+        if (big) big.textContent = card.dataset.litres;
+        var row = card.querySelector('p[style*="align-items:center"]');
+        if (row) {
+          var timeEl = row.querySelector('span.en:not(.m-pill)');
+          if (timeEl) timeEl.textContent = nowHM();
+          if (!row.querySelector('.m-upd')) {
+            var updEl = document.createElement('span');
+            updEl.className = 'en m-upd';
+            updEl.title = 'Tap for details';
+            var updIcon = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>';
+            updEl.innerHTML = updIcon;
+            updEl.style.cursor = 'pointer';
+            updEl.style.display = 'inline-flex';
+            updEl.style.alignItems = 'center';
+            updEl.style.gap = '4px';
+            var updAt = nowHM();
+            var updOpen = false;
+            updEl.addEventListener('click', function(e) {
+              e.stopPropagation();
+              updOpen = !updOpen;
+              updEl.innerHTML = updOpen ? updIcon + '<span>Updated ' + updAt + '</span>' : updIcon;
+            });
+            row.appendChild(updEl);
+          }
+        }
+      }
+
+      // Manager persona → pending owner-approval sub-card; Owner persona →
+      // change applies immediately (an owner doesn't need to approve their
+      // own edit).
+      function saveMilkChange(card, kind, litres) {
+        if (window.VANIX_PERSONA === 'manager') { addPending(card, kind, litres); }
+        else { applyMilkChange(card, kind, litres); }
       }
 
 
