@@ -7328,6 +7328,16 @@
         document.getElementById('page-activity-log').style.transform = 'translateY(100%)';
       }
       document.getElementById('actlog-back').addEventListener('click', closeActivityLog);
+      // Scrollbar stays hidden at rest, fades in only while actively scrolling.
+      (function() {
+        var list = document.getElementById('actlog-list');
+        var hideTimer = null;
+        list.addEventListener('scroll', function() {
+          list.classList.add('is-scrolling');
+          clearTimeout(hideTimer);
+          hideTimer = setTimeout(function() { list.classList.remove('is-scrolling'); }, 800);
+        });
+      })();
 
       document.getElementById('cattle-search').addEventListener('input', function() {
         var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
