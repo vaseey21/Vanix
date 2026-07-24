@@ -7733,7 +7733,58 @@
           if (pg) pg.style.display = 'block';
         });
       })();
-      // ── Report Preview page (Download Report / Download Critical Report) ──
+      // ── Farm report — type chooser (Full / Critical) → period sheet for
+      // Full reports (mirrors the cow profile's report flow exactly). ──
+      function openFarmRepType() {
+        document.getElementById('farm-reptype-sheet').style.transform = 'translateY(0)';
+        var bd = document.getElementById('farm-reptype-backdrop');
+        bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeFarmRepType() {
+        document.getElementById('farm-reptype-sheet').style.transform = 'translateY(100%)';
+        var bd = document.getElementById('farm-reptype-backdrop');
+        bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      function openFarmReportSheet() {
+        document.getElementById('farm-report-sheet').style.transform = 'translateY(0)';
+        var bd = document.getElementById('farm-report-backdrop');
+        bd.style.opacity = '1'; bd.style.pointerEvents = 'auto';
+      }
+      function closeFarmReportSheet() {
+        document.getElementById('farm-report-sheet').style.transform = 'translateY(100%)';
+        var bd = document.getElementById('farm-report-backdrop');
+        bd.style.opacity = '0'; bd.style.pointerEvents = 'none';
+      }
+      (function() {
+        var bd = document.getElementById('farm-reptype-backdrop');
+        if (bd) bd.addEventListener('click', closeFarmRepType);
+        document.querySelectorAll('.farm-reptype-opt').forEach(function(o) {
+          o.addEventListener('click', function() {
+            closeFarmRepType();
+            if (o.getAttribute('data-rt') === 'critical') {
+              // Critical report is always "right now" — no period to choose.
+              showToast('Report downloaded');
+            } else {
+              openFarmReportSheet();
+            }
+          });
+        });
+        var rbd = document.getElementById('farm-report-backdrop');
+        if (rbd) rbd.addEventListener('click', closeFarmReportSheet);
+        document.querySelectorAll('input[name="farm-report-period"]').forEach(function(r) {
+          r.addEventListener('change', function() {
+            var checked = document.querySelector('input[name="farm-report-period"]:checked');
+            document.getElementById('farm-report-custom').style.display = (checked && checked.value === 'custom') ? 'flex' : 'none';
+          });
+        });
+        var dlBtn = document.getElementById('farm-report-download');
+        if (dlBtn) dlBtn.addEventListener('click', function() {
+          closeFarmReportSheet();
+          showToast('Report downloaded');
+        });
+      })();
+      // ── Report Preview page (unused — kept for reference; Download Report
+      // now opens the bottom-sheet flow above, mirroring the cow profile) ──
       function openReportPreview(critical) {
         var farm = fdCurrentFarm();
         if (!farm) return;
