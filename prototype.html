@@ -8220,11 +8220,13 @@
         var xlabels = noGraph ? [] : (windowLo === 0 && windowHi === 24 ? ['00:00', '06:00', '12:00', '18:00', '24:00'] : [pad(windowLo), pad(windowHi)]);
         var chips = ['rumination', 'standing', 'resting', 'feeding'].map(function(key) {
           var on = fdActiveSet.indexOf(key) > -1;
-          var color = FD_ACT_META[key].color;
-          return '<button class="fd-act-chip" data-act="' + key + '" style="flex-shrink:0; display:inline-flex; align-items:center; gap:6px; height:34px; padding:0 14px; border-radius:17px; border:1px solid ' + (on ? color : 'var(--border)') + '; background:' + (on ? color : 'var(--bgcard)') + '; color:' + (on ? '#FFFFFF' : 'var(--text1)') + '; font-size:13px; font-weight:600; font-family:var(--font-hi); cursor:pointer;">' + t['act' + key.charAt(0).toUpperCase() + key.slice(1)] + '</button>';
+          return '<button class="fd-act-chip" data-act="' + key + '" style="flex:1; min-width:0; display:inline-flex; align-items:center; justify-content:center; height:30px; padding:0 6px; border-radius:15px; border:1px solid ' + (on ? 'var(--greenink)' : 'var(--border)') + '; background:' + (on ? 'var(--greenink)' : 'var(--bgcard)') + '; color:' + (on ? '#FFFFFF' : 'var(--text1)') + '; font-size:11px; font-weight:600; font-family:var(--font-hi); cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + t['act' + key.charAt(0).toUpperCase() + key.slice(1)] + '</button>';
         }).join('');
+        // Fixed min-height so the card's footprint stays static regardless of
+        // whether the anomaly note / overlap caption line is present —
+        // otherwise the graph appears to resize on every chip selection.
         box.innerHTML =
-          '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px; margin-top:12px;">' +
+          '<div style="background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:14px; margin-top:12px; min-height:300px;">' +
             '<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">' +
               '<p class="en" style="font-size:13px; font-weight:700; color:var(--text1); margin:0;">Herd ' + titleLabel + ' — today</p>' + pill +
             '</div>' +
@@ -8237,10 +8239,12 @@
               lines +
             '</svg>' +
             '<div class="en" style="display:flex; justify-content:space-between; font-size:9px; color:var(--text2); margin-top:4px;">' + xlabels.map(function(x) { return '<span>' + x + '</span>'; }).join('') + '</div>') +
-            (anomaly ? '<p class="en" style="font-size:12px; font-weight:600; color:#8A5A00; margin:10px 0 0; line-height:1.5;">' + anomaly.note + '</p>' : '') +
-            overlapCaption +
+            '<div style="min-height:40px;">' +
+              (anomaly ? '<p class="en" style="font-size:12px; font-weight:600; color:#8A5A00; margin:10px 0 0; line-height:1.5;">' + anomaly.note + '</p>' : '') +
+              overlapCaption +
+            '</div>' +
           '</div>' +
-          '<div style="display:flex; gap:8px; overflow-x:auto; margin-top:12px; padding-bottom:2px;">' + chips + '</div>';
+          '<div style="display:flex; gap:6px; margin-top:12px;">' + chips + '</div>';
         box.querySelectorAll('.fd-act-chip').forEach(function(chip) {
           chip.addEventListener('click', function() { fdToggleActivity(chip.getAttribute('data-act')); });
         });
