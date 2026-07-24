@@ -4368,13 +4368,13 @@
       // delete → confirm → pending owner approval
       document.getElementById('s7-act-del').addEventListener('click', function() {
         closeAct();
-        document.getElementById('s7-del-text').textContent = cardLabel(activeCard) + ' will be removed after the Farm Owner approves.';
+        document.getElementById('s7-del-text').textContent = window.VANIX_PERSONA === 'manager' ? (cardLabel(activeCard) + ' will be removed after the Farm Owner approves.') : (cardLabel(activeCard) + ' will be removed.');
         show(delBack);
       });
       document.getElementById('s7-del-cancel').addEventListener('click', function() { hide(delBack); });
       document.getElementById('s7-del-confirm').addEventListener('click', function() {
         hide(delBack);
-        addPending(activeCard, 'delete', null);
+        saveMilkChange(activeCard, 'delete', null);
       });
 
       // edit → same page as add, prefilled
@@ -4402,7 +4402,7 @@
       document.getElementById('s8-save').addEventListener('click', function() {
         var litres = Math.round((parseFloat(document.getElementById('s8-litres').value) || 0) * 10) / 10;
         if (editTarget) {
-          addPending(editTarget, 'edit', litres);
+          saveMilkChange(editTarget, 'edit', litres);
           editTarget = null; closeAdd(); return;
         }
         var cow = document.getElementById('s8-cow').value.split(' — ')[0];
@@ -4413,8 +4413,9 @@
           });
         }
         if (dup) {
-          document.getElementById('s7-dup-text').textContent =
-            cow + ' already has a ' + selected + ' entry today (' + dup.dataset.litres + ' L). Your entry will be added to it after the Farm Owner approves. Continue?';
+          document.getElementById('s7-dup-text').textContent = window.VANIX_PERSONA === 'manager'
+            ? (cow + ' already has a ' + selected + ' entry today (' + dup.dataset.litres + ' L). Your entry will be added to it after the Farm Owner approves. Continue?')
+            : (cow + ' already has a ' + selected + ' entry today (' + dup.dataset.litres + ' L). Your entry will be added to it. Continue?');
           pendingSave = { card: dup, litres: litres };
           show(dupBack); return;
         }
@@ -4423,7 +4424,7 @@
       document.getElementById('s7-dup-cancel').addEventListener('click', function() { pendingSave = null; hide(dupBack); });
       document.getElementById('s7-dup-proceed').addEventListener('click', function() {
         hide(dupBack); closeAdd();
-        if (pendingSave) { addPending(pendingSave.card, 'add', pendingSave.litres); pendingSave = null; }
+        if (pendingSave) { saveMilkChange(pendingSave.card, 'add', pendingSave.litres); pendingSave = null; }
       });
 
       // pending sub-card — farmer's change nested under the cow's entry, owner approves/rejects
@@ -8604,11 +8605,14 @@
         if (!f) { closeFmSheet(); return; }
         var nm = (document.getElementById('fm-name').value || '').trim();
         var em = (document.getElementById('fm-email').value || '').trim();
-        if (em || nm) { f.managerStatus = 'pending'; f.managerInvite = em || nm; }
+        // A farm manager is assigned immediately — there's no confirmation
+        // step to wait on (unlike a vet invite, which stays "pending" until
+        // the vet accepts).
+        if (em || nm) { f.manager = nm || em; f.managerHi = nm || em; f.managerStatus = 'active'; f.managerInvite = ''; }
         renderFarmMgmt(); renderFarmsList(); setFarmManagerLine();
         closeFmSheet();
         if (sfManagerAssigned(f.id)) return;
-        showToast('Invite sent to ' + (nm || 'the new manager'));
+        showToast((nm || em) + ' assigned as farm manager');
       });
       var fdMgrEdit = document.getElementById('farm-detail-manager-edit');
       if (fdMgrEdit) fdMgrEdit.addEventListener('click', function() {
