@@ -7884,11 +7884,9 @@
           }
         });
         var dl = document.getElementById('farm-detail-kebab-download');
-        var dlc = document.getElementById('farm-detail-kebab-download-critical');
         var sh = document.getElementById('farm-detail-kebab-share');
         var mg = document.getElementById('farm-detail-kebab-manage');
-        if (dl) dl.addEventListener('click', function() { kebabMenu.style.display = 'none'; openReportPreview(false); });
-        if (dlc) dlc.addEventListener('click', function() { kebabMenu.style.display = 'none'; openReportPreview(true); });
+        if (dl) dl.addEventListener('click', function() { kebabMenu.style.display = 'none'; openFarmRepType(); });
         if (sh) sh.addEventListener('click', function() {
           kebabMenu.style.display = 'none';
           window.openVetSheet(function(vetName) { showToast('Report shared with ' + vetName); });
