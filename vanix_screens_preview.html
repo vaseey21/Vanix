@@ -31,6 +31,14 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* Activity log list — scrollbar stays hidden at rest, fades in only
+       while the user is actively scrolling (see #actlog-list JS listener). */
+    #actlog-list { scrollbar-width: none; }
+    #actlog-list::-webkit-scrollbar { width: 0; }
+    #actlog-list.is-scrolling { scrollbar-width: thin; }
+    #actlog-list.is-scrolling::-webkit-scrollbar { width: 4px; }
+    #actlog-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
     body {
       background: #1A1A1A;
       font-family: var(--font-hi);
@@ -7486,6 +7494,16 @@
         document.getElementById('page-activity-log').style.transform = 'translateY(100%)';
       }
       document.getElementById('actlog-back').addEventListener('click', closeActivityLog);
+      // Scrollbar stays hidden at rest, fades in only while actively scrolling.
+      (function() {
+        var list = document.getElementById('actlog-list');
+        var hideTimer = null;
+        list.addEventListener('scroll', function() {
+          list.classList.add('is-scrolling');
+          clearTimeout(hideTimer);
+          hideTimer = setTimeout(function() { list.classList.remove('is-scrolling'); }, 800);
+        });
+      })();
 
       document.getElementById('cattle-search').addEventListener('input', function() {
         var farm = FARMS.filter(function(f) { return f.id === currentFarmId; })[0];
