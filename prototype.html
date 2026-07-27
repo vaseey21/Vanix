@@ -7688,9 +7688,18 @@
       caViews.insemLog = function() {
         var t = window.t();
         var ty = caCtx.insemType;
-        var fieldsHtml = ty.fields.map(function(f) {
-          return caLabel(f.label) + '<input type="text" id="ca-il-' + f.id + '" placeholder="' + f.ph + '" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">';
-        }).join('');
+        function ilField(f) {
+          return '<div style="flex:1; min-width:0;">' + caLabel(f.label) +
+            '<input type="text" id="ca-il-' + f.id + '" placeholder="' + f.ph + '" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);"></div>';
+        }
+        var fieldsHtml = '';
+        for (var i = 0; i < ty.fields.length; i += 2) {
+          if (i + 1 < ty.fields.length) {
+            fieldsHtml += '<div style="display:flex; gap:10px;">' + ilField(ty.fields[i]) + ilField(ty.fields[i + 1]) + '</div>';
+          } else {
+            fieldsHtml += ilField(ty.fields[i]);
+          }
+        }
         return { title: t.logDetails,
           html: '<p style="font-size:13px; color:var(--text2); margin:0 0 10px;">' + caCtx.vet + ' · ' + ty.label + ' — ' + caCowName() + '</p>' +
             fieldsHtml +
