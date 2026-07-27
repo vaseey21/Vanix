@@ -6099,7 +6099,7 @@
               '<p style="font-size:18px; font-weight:800; color:var(--text1); margin:0;">Insemination logged</p>' +
               '<p style="font-size:13px; color:var(--text2); margin:6px 0 0; line-height:1.6;">' + heatInsemType.label + ' recorded for Gauri.</p>' +
             '</div>' +
-            '<button id="ev-seq-insem-done" style="width:100%; min-height:50px; margin-top:16px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Done</button>';
+            '<div style="position:sticky; bottom:-34px; background:#FFFFFF; padding:16px 0 34px;"><button id="ev-seq-insem-done" style="width:100%; min-height:50px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Done</button></div>';
           document.getElementById('ev-seq-insem-done').addEventListener('click', function() {
             if (heatFromEventsCard) closeSeq();
             else goTo(2);
