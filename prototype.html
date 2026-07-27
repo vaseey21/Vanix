@@ -7672,10 +7672,10 @@
       };
       caViews.insemType = function() {
         var t = window.t();
-        var types = ['Artificial', 'Conventional', 'IVF', 'Embryo Transfer'];
+        var types = window.INSEM_TYPES || [];
         return { title: t.insemTypeTitle,
           html: '<p style="font-size:13px; color:var(--text2); margin:0 0 10px;">' + caCtx.vet + '</p>' +
-            types.map(function(ty, i) { return caRowHtml('ca-it-' + i, ty); }).join(''),
+            types.map(function(ty, i) { return caRowHtml('ca-it-' + i, ty.label); }).join(''),
           wire: function() {
             types.forEach(function(ty, i) {
               document.getElementById('ca-it-' + i).addEventListener('click', function() {
@@ -7687,23 +7687,26 @@
       };
       caViews.insemLog = function() {
         var t = window.t();
-        var isBull = caCtx.insemType === 'Conventional';
-        var detailLabel = isBull ? 'Bull ID' : 'Straw / Batch ID';
+        var ty = caCtx.insemType;
+        var fieldsHtml = ty.fields.map(function(f) {
+          return caLabel(f.label) + '<input type="text" id="ca-il-' + f.id + '" placeholder="' + f.ph + '" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">';
+        }).join('');
         return { title: t.logDetails,
-          html: '<p style="font-size:13px; color:var(--text2); margin:0 0 10px;">' + caCtx.vet + ' · ' + caCtx.insemType + ' — ' + caCowName() + '</p>' +
-            '<input type="date" id="ca-il-date" class="en" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">' +
-            '<input type="time" id="ca-il-time" class="en" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">' +
-            caLabel(detailLabel) +
-            '<input type="text" id="ca-il-detail" placeholder="' + detailLabel + '" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">' +
-            caTextarea('ca-il-notes', t.notesPh) +
+          html: '<p style="font-size:13px; color:var(--text2); margin:0 0 10px;">' + caCtx.vet + ' · ' + ty.label + ' — ' + caCowName() + '</p>' +
+            fieldsHtml +
+            caLabel(t.eventDate) + caDateInput('ca-il-date') +
+            caLabel(t.notesPh) + caTextarea('ca-il-notes', t.notesPh) +
             caCta('ca-il-save', t.saveLog),
           wire: function() {
             document.getElementById('ca-il-save').addEventListener('click', function() {
               var notes = document.getElementById('ca-il-notes').value.trim();
-              var detail = document.getElementById('ca-il-detail').value.trim();
+              var detailParts = ty.fields.map(function(f) {
+                var v = document.getElementById('ca-il-' + f.id).value.trim();
+                return v ? f.label + ': ' + v : null;
+              }).filter(Boolean);
               COW_VETLOGS.unshift({
-                title: 'Insemination — ' + caCtx.insemType,
-                note: (detail ? detailLabel + ': ' + detail + '. ' : '') + notes,
+                title: 'Insemination — ' + ty.label,
+                note: (detailParts.length ? detailParts.join('. ') + '. ' : '') + notes,
                 vet: caCtx.vet,
                 d: '15 Jul 2026',
                 att: null
