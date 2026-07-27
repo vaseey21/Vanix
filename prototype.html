@@ -5791,11 +5791,6 @@
           fsBuildCards();
           fsGo(0);
           fsEl.style.display = 'flex';
-          // Single-card alert — no counter/arrows needed to page between cows.
-          var onlyOne = FS_ALERTS.length <= 1;
-          fsCount.style.display = onlyOne ? 'none' : '';
-          document.getElementById('ev-fs-prev').style.display = onlyOne ? 'none' : '';
-          document.getElementById('ev-fs-next').style.display = onlyOne ? 'none' : '';
         }
         function closeFullScreenAlert() {
           fsEl.style.display = 'none';
