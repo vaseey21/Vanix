@@ -7476,13 +7476,31 @@
           html: rows.map(function(r) { return caRowHtml(r[0], r[1]); }).join(''),
           wire: function() { rows.forEach(function(r) { document.getElementById(r[0]).addEventListener('click', r[2]); }); } };
       };
+      var CA_ILLNESSES = ['Lameness', 'Ketosis', 'Mastitis', 'Fever'];
       caViews.illnessNote = function() {
         var t = window.t();
         return { title: t.addIllness,
           html: '<p style="font-size:13px; color:var(--text2); margin:0 0 10px;">' + t.illnessNoteTitle + '</p>' +
-            caTextarea('ca-illness-note', t.illnessNotePh) + caCta('ca-illness-ok', t.caConfirm, true),
+            CA_ILLNESSES.map(function(ill, i) { return caRowHtml('ca-ill-' + i, ill); }).join(''),
           wire: function() {
-            caRequire('ca-illness-note', 'ca-illness-ok', function() { caDone(t.illnessLogged + ' ✓'); });
+            CA_ILLNESSES.forEach(function(ill, i) {
+              document.getElementById('ca-ill-' + i).addEventListener('click', function() {
+                caCtx.illness = ill;
+                caGo('illnessWhen');
+              });
+            });
+          } };
+      };
+      caViews.illnessWhen = function() {
+        var t = window.t();
+        return { title: t.addIllness,
+          html: '<p style="font-size:13px; color:var(--text2); margin:0 0 10px;">' + caCowName() + ' — <strong style="color:var(--text1);">' + caCtx.illness + '</strong></p>' +
+            caLabel(t.eventDate) + caDateInput('ca-ill-date') +
+            caCta('ca-ill-when-ok', t.caConfirm),
+          wire: function() {
+            document.getElementById('ca-ill-when-ok').addEventListener('click', function() {
+              caDone(t.illnessLogged + ' — ' + caCtx.illness + ' ✓');
+            });
           } };
       };
       var CA_STATUSES = ['Normal', 'Before Estrus', 'Inseminated', 'Pregnant', 'Milking', 'Dry'];
