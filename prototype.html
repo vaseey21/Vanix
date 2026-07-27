@@ -7653,14 +7653,32 @@
       };
       caViews.insemLog = function() {
         var t = window.t();
+        var isBull = caCtx.insemType === 'Conventional';
+        var detailLabel = isBull ? 'Bull ID' : 'Straw / Batch ID';
         return { title: t.logDetails,
           html: '<p style="font-size:13px; color:var(--text2); margin:0 0 10px;">' + caCtx.vet + ' · ' + caCtx.insemType + ' — ' + caCowName() + '</p>' +
             '<input type="date" id="ca-il-date" class="en" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">' +
             '<input type="time" id="ca-il-time" class="en" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">' +
+            caLabel(detailLabel) +
+            '<input type="text" id="ca-il-detail" placeholder="' + detailLabel + '" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">' +
             caTextarea('ca-il-notes', t.notesPh) +
             caCta('ca-il-save', t.saveLog),
           wire: function() {
-            document.getElementById('ca-il-save').addEventListener('click', function() { caDone(t.obs21); });
+            document.getElementById('ca-il-save').addEventListener('click', function() {
+              var notes = document.getElementById('ca-il-notes').value.trim();
+              var detail = document.getElementById('ca-il-detail').value.trim();
+              COW_VETLOGS.unshift({
+                title: 'Insemination — ' + caCtx.insemType,
+                note: (detail ? detailLabel + ': ' + detail + '. ' : '') + notes,
+                vet: caCtx.vet,
+                d: '15 Jul 2026',
+                att: null
+              });
+              renderCowVetlogs();
+              cowTab = 'vetlogs';
+              syncCowTabs();
+              caDone(t.obs21 + ' — logged to Vet Logs ✓');
+            });
           } };
       };
       caViews.vaccineType = function() {
