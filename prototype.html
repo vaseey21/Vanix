@@ -7421,7 +7421,7 @@
         return '<textarea id="' + id + '" rows="3" placeholder="' + ph + '" style="width:100%; box-sizing:border-box; border:1px solid var(--border); border-radius:14px; background:var(--bgcard); padding:12px 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>';
       }
       function caCta(id, label, disabled) {
-        return '<button id="' + id + '"' + (disabled ? ' disabled' : '') + ' style="width:100%; min-height:48px; margin-top:12px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:24px; font-size:15px; font-weight:600; font-family:var(--font-hi); cursor:pointer; opacity:' + (disabled ? '0.45' : '1') + ';">' + label + '</button>';
+        return '<div style="position:sticky; bottom:-1px; background:var(--bgcard); padding-top:10px; margin-top:2px;"><button id="' + id + '"' + (disabled ? ' disabled' : '') + ' style="width:100%; min-height:48px; background:var(--greenink); color:#FFFFFF; border:none; border-radius:24px; font-size:15px; font-weight:600; font-family:var(--font-hi); cursor:pointer; opacity:' + (disabled ? '0.45' : '1') + ';">' + label + '</button></div>';
       }
       function caLabel(txt) { return '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:0 0 6px;">' + txt + '</label>'; }
       function caDateInput(id) { return '<input type="date" id="' + id + '" class="en" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); margin-bottom:8px; font-family:var(--font-hi);">'; }
