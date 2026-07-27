@@ -6023,7 +6023,7 @@
         }
 
         function renderInsemTypeSelect() {
-          body.innerHTML = '<div class="ev-flow-photo insem">' +
+          body.innerHTML = '<div>' +
             flowTitleRow('ev-seq-itype-back', 'Select insemination type') +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0 0 4px;">Gauri · Desi</p>' +
             INSEM_TYPES.map(function(t) {
@@ -6042,7 +6042,7 @@
         }
 
         function renderInsemVetSelect() {
-          body.innerHTML = '<div class="ev-flow-photo insem">' +
+          body.innerHTML = '<div>' +
             flowTitleRow('ev-seq-vet-back', 'Select vet') +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0 0 4px;">' + heatInsemType.label + ' · Gauri</p>' +
             ONBOARDED_VETS.map(function(name) {
@@ -6075,7 +6075,7 @@
 
         function renderInsemDetails() {
           var t = heatInsemType;
-          body.innerHTML = '<div class="ev-flow-photo insem">' +
+          body.innerHTML = '<div>' +
             flowTitleRow('ev-seq-insem-back', 'Log · Insemination') +
             '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">' + t.label + ' · Gauri · Vet: ' + heatVetSel + '</p>' +
             insemFieldsPaired(t.fields) +
