@@ -7485,27 +7485,39 @@
             caRequire('ca-illness-note', 'ca-illness-ok', function() { caDone(t.illnessLogged + ' ✓'); });
           } };
       };
+      var CA_STATUSES = ['Normal', 'Before Estrus', 'Inseminated', 'Pregnant', 'Milking', 'Dry'];
       caViews.statusList = function() {
         var t = window.t();
-        var sts = ['stInHeat', 'stInsem', 'stPreg', 'stDelivered', 'stCalvInt', 'stMilking', 'stDry'];
         return { title: t.changeStatus,
-          html: sts.map(function(k, i) { return caRowHtml('ca-st-' + i, t[k]); }).join(''),
+          html: CA_STATUSES.map(function(s, i) { return caRowHtml('ca-st-' + i, s); }).join(''),
           wire: function() {
-            sts.forEach(function(k, i) {
+            CA_STATUSES.forEach(function(s, i) {
               document.getElementById('ca-st-' + i).addEventListener('click', function() {
-                caCtx.status = window.t()[k];
-                caGo('statusNote');
+                caCtx.status = s;
+                if (s === 'Inseminated') { caCtx.flow = 'insem'; caGo('vetPick'); }
+                else caGo('statusDuration');
               });
             });
           } };
       };
-      caViews.statusNote = function() {
+      caViews.statusDuration = function() {
         var t = window.t();
         return { title: t.changeStatus,
-          html: '<p style="font-size:13px; color:var(--text2); margin:0 0 10px;">' + t.statusNoteTitle + ' — <strong style="color:var(--text1);">' + caCtx.status + '</strong></p>' +
-            caTextarea('ca-note', t.statusNotePh) + caCta('ca-note-ok', t.caConfirm, true),
+          html: '<p style="font-size:13px; color:var(--text2); margin:0 0 10px;">How long has ' + caCowName() + ' been in this status? — <strong style="color:var(--text1);">' + caCtx.status + '</strong></p>' +
+            caLabel('Duration') +
+            '<div style="display:flex; gap:8px; margin-bottom:8px;">' +
+              '<input type="number" min="0" id="ca-dur-num" placeholder="e.g. 3" style="flex:1; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi);">' +
+              '<select id="ca-dur-unit" style="flex:1; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:14px; padding:0 14px; font-size:14px; color:var(--text1); font-family:var(--font-hi);">' +
+                '<option value="days">Days</option><option value="weeks">Weeks</option><option value="months">Months</option>' +
+              '</select>' +
+            '</div>' +
+            caCta('ca-dur-ok', t.caConfirm),
           wire: function() {
-            caRequire('ca-note', 'ca-note-ok', function() { caDone(t.statusChanged + ' — ' + caCtx.status); });
+            document.getElementById('ca-dur-ok').addEventListener('click', function() {
+              var num = document.getElementById('ca-dur-num').value.trim() || '0';
+              var unit = document.getElementById('ca-dur-unit').value;
+              caDone(t.statusChanged + ' — ' + caCtx.status + ' (' + num + ' ' + unit + ')');
+            });
           } };
       };
       caViews.vetPick = function() {
