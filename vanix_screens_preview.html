@@ -2,11 +2,13 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vanix — Screens</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#111111" />
+  <title>MyBovine</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* ── Tokens (keep in sync with vanix_theme.dart) ── */
     :root {
       --green:    #4DDE95;
       --greendeep:#2EBD7E; /* focus accents, success accents */
@@ -37,81 +39,11 @@
       min-height: 100vh;
     }
 
-    /* ── Layout ── */
-    .screen-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 48px;
-      justify-content: center;
-      align-items: flex-start;
-      max-width: 1600px;
-      margin: 0 auto;
-    }
-
-    .screen-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .screen-label {
-      font-family: var(--font-en);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: none;
-      color: #555;
-    }
-
-    /* ── Phone frame ── */
-    .phone {
-      width: 390px;
-      background: var(--bgwarm);
-      border-radius: 48px;
-      overflow: hidden;
-      border: 8px solid #2A2A2A;
-      box-shadow: 0 0 0 1px #3A3A3A, 0 32px 64px rgba(0,0,0,0.5);
-      min-height: 720px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Responsive: shrink phone on smaller viewports */
-    @media (max-width: 500px) {
-      .phone {
-        width: calc(100vw - 48px);
-        border-radius: 36px;
-        min-height: 640px;
-      }
-    }
-
-    /* ── Status bar ── */
-    .status-bar {
-      background: var(--dark1);
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      flex-shrink: 0;
-    }
-    .status-time {
-      font-family: var(--font-en);
-      font-size: 13px;
-      font-weight: 600;
-      color: white;
-    }
-    .status-icons {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-    .status-icons span {
-      font-size: 12px;
-      color: white;
-    }
-
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overscroll-behavior: none; }
+    body { background: var(--bgwarm) !important; font-family: var(--font-hi); height: 100dvh; overflow: hidden; padding: 0 !important; min-height: 0 !important; }
+    #app { position: relative; height: 100dvh; overflow: hidden; }
     /* ── Components ── */
     .hi { font-family: var(--font-hi); }
     .en { font-family: var(--font-en); }
@@ -161,6 +93,7 @@
     #s1-sheet.dark ~ #s1-lang-sheet .s1-ls-row > span > span:last-child { color: rgba(255,255,255,0.55) !important; }
     #s1-sheet.dark ~ #s1-lang-sheet .s1-ls-row { border-bottom-color: rgba(255,255,255,0.10) !important; }
     #s1-sheet.dark ~ #s1-lang-sheet > div[style*="align-items:center"] { background: rgba(0,0,0,0.30) !important; border-color: rgba(255,255,255,0.25) !important; }
+    #s1-sheet.dark select option { color: #111111; }
 
     /* ── App-wide dark mode (tap Account tab anywhere to toggle) ── */
     #flow-root.dark #s1-dash { background: #111111 !important; }
@@ -212,8 +145,6 @@
     #flow-root.display-image #ev-alert-fullscreen #ev-fs-viewinapp { color:#fff; }
     #flow-root.display-image #ev-alert-fullscreen .fs-panel { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.22); }
     #flow-root.display-image #ev-alert-fullscreen .fs-panel-label { color:rgba(255,255,255,0.7); }
-    /* full-screen alert sits over a photo — panels are a 30% white translucent
-       fill (not solid) and its chrome buttons/labels are white for contrast */
     #ev-alert-fullscreen .fs-panel { background:rgba(255,255,255,0.05) !important; border:1px solid rgba(255,255,255,0.6) !important; }
     #ev-alert-fullscreen .fs-panel-label { color:#fff !important; }
     #ev-alert-fullscreen .fs-circle-btn { background:rgba(0,0,0,0.4); color:#fff; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
@@ -239,8 +170,6 @@
     .ev-crit-label, .ev-timeago { display: none; }
     .ev-card-p2 { background:var(--bgcard); border:1px solid var(--border); border-left:2px solid var(--warning); }
     .ev-card-p3 { background:var(--bgcard); border:1px solid var(--border); }
-    /* Cards trimmed to Title/Manager/View Details/CTA — full description +
-       meta only render on the Card Detail page (#ev-detail-page). */
     .ev-sub, .ev-meta { display:none; }
     .ev-viewdetails { background:none; border:none; padding:0; margin:4px 0 0; font-size:12px; font-weight:600; color:var(--greenink); font-family:var(--font-hi); cursor:pointer; text-align:left; display:block; }
     #flow-root.dark .ev-viewdetails { color:var(--greendeep); }
@@ -581,8 +510,7 @@
     #flow-root.display-fullbleed #ev-milk-notif::before { background-image: url('assets/images/milking_started_photo.jpg'); }
     #flow-root.display-fullbleed #ev-lactation-check::before { background-image: url('assets/images/milking_ended_photo.jpg'); }
     /* dark scrim: two darker bands — top wash behind the name/breed caption,
-       clear middle so the photo shows, then a heavy band from where the question
-       starts down to the bottom of the card. */
+       clear middle, heavy band from where the question starts to the bottom. */
     #flow-root.display-fullbleed .ev-photo-card::after {
       content: ""; position: absolute; inset: 0; z-index: 1;
       background: linear-gradient(to bottom,
@@ -618,8 +546,7 @@
     #flow-root.display-fullbleed #ev-heat #ev-heat-vet,
     #flow-root.display-fullbleed #ev-heat #ev-heat-offwin,
     #flow-root.display-fullbleed #ev-heat #ev-heat-form { display: none !important; }
-    /* severity banner (top-right) — text label instead of the red "!" circle:
-       CRITICAL (p0/danger), MEDIUM (p1/warning), LOW (p2/p3). */
+    /* severity banner (top-right) — CRITICAL (p0) / MEDIUM (p1) / LOW (p2,p3). */
     #flow-root.display-fullbleed .ev-photo-card .ev-crit-label {
       display: inline-flex !important; align-items: center; justify-content: center;
       position: absolute; top: 0 !important; right: 0 !important; z-index: 2;
@@ -653,8 +580,7 @@
       color: #fff !important; font-size: 24px !important; font-weight: 800 !important;
       letter-spacing: -0.02em; margin: 0 0 10px !important; padding: 0 !important;
     }
-    /* View Details — white link with text (reset the native button chrome so the
-       cards that lack an inline background:none don't show a white button box) */
+    /* View Details — white link with text (reset native button chrome) */
     #flow-root.display-fullbleed .ev-photo-card .ev-photo-viewdetails {
       display: block !important; text-align: left !important; font-size: 0 !important;
       color: rgba(255,255,255,0.9) !important; margin: 0 0 16px !important; padding: 0 !important;
@@ -701,7 +627,6 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      /* upward "negative" shadow so the card reads as floating above the sheet */
       box-shadow: 0 -16px 36px rgba(0,0,0,0.55);
     }
     /* photo fills the whole step (media block goes absolute) */
@@ -709,11 +634,8 @@
       position: absolute; inset: 0; z-index: 0;
       height: auto; border-radius: 0;
     }
-    /* milking photo: pull the cow (mid-frame) up into the visible (un-scrimmed)
-       area rather than framing the barn ceiling */
     #flow-root.display-fullbleed .ev-photo-step.milking .ev-photo-media { background-position: center 62%; }
-    /* light top vignette only — the heavy black is carried by .ev-photo-foot,
-       which begins exactly at the title (see below). */
+    /* light top vignette only — the heavy black is carried by .ev-photo-foot. */
     #flow-root.display-fullbleed .ev-photo-step::before {
       content: ""; position: absolute; inset: 0; z-index: 1;
       background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 28%);
@@ -722,9 +644,7 @@
     #flow-root.display-fullbleed .ev-photo-step::after { display: none; }
     /* everything except the photo sits above the scrim */
     #flow-root.display-fullbleed .ev-photo-step > *:not(.ev-photo-media) { position: relative; z-index: 2; }
-    /* the black readability wash starts where the title starts and deepens to
-       the bottom — the foot wraps title + name/breed + CTAs and bleeds to the
-       card edges (card padding is 20px). */
+    /* black readability wash starts at the title and deepens to the bottom */
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-foot {
       margin: 0 -20px -20px; padding: 44px 20px 34px;
       background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.72) 38%, rgba(0,0,0,0.92) 100%);
@@ -741,17 +661,11 @@
     #flow-root.display-fullbleed .ev-photo-step .ev-photo-vd::after { content: none !important; }
     /* Row 3 — CTAs sit directly on the scrim (no panel / white padding). */
     #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom { margin-top: 14px; }
-    /* lighten the detail text (phase label endpoints, segment labels) on the photo */
     #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom span,
     #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom p:not(.ev-phase-label) { color: rgba(255,255,255,0.88) !important; }
-    /* outline/secondary buttons (No / Not pregnant / Remind me later / Still
-       milking) are transparent-on-dark → invisible. Make them a translucent
-       white pill with white text so they read on the photo. */
     #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom button[style*="transparent"] {
       background: rgba(255,255,255,0.14) !important; border-color: rgba(255,255,255,0.55) !important; color: #fff !important;
     }
-    /* one green for every primary CTA across the alert experience — the darker
-       greenInk (events cards, walkthrough steps, flow-page Submit, full-screen) */
     #flow-root.display-fullbleed .ev-photo-step .ev-seq-bottom button[style*="greendeep"],
     #flow-root.display-fullbleed .ev-photo-card button[style*="greendeep"],
     .ev-flow-photo button[style*="greendeep"],
@@ -759,9 +673,7 @@
       background: var(--greenink) !important;
     }
 
-    /* ── blurred-photo background for the plain flow pages (Select insemination
-       type / Select vet / Log / Call vet) — a darkened, blurred photo sits
-       behind so the WHITE form text/controls read clearly on top. ── */
+    /* ── darkened, blurred-photo background for the plain flow pages ── */
     #ev-seq-body:has(.ev-flow-photo) { padding: 0 !important; }
     #ev-seq-sheet:has(.ev-flow-photo) > div:first-child { display: none !important; }
     .ev-flow-photo {
@@ -773,7 +685,6 @@
       background-size: cover; background-position: center;
       filter: blur(6px); opacity: 0.4;
     }
-    /* dark wash over the blurred photo → text in front is legible */
     .ev-flow-photo::after {
       content: ""; position: absolute; inset: 0; z-index: -1;
       background: rgba(0,0,0,0.5);
@@ -781,12 +692,8 @@
     .ev-flow-photo.insem::before { background-image: url('assets/images/insemination_photo.jpg'); }
     .ev-flow-photo.callvet::before { background-image: url('assets/images/vetvisit_photo.jpg'); }
     .ev-flow-photo.delivery::before { background-image: url('assets/images/delivery_photo.jpg'); }
-    /* white text for headings/labels/back on the dark blurred pages */
     .ev-flow-photo p, .ev-flow-photo label { color: #fff !important; }
     .ev-flow-photo button[id$="-back"] { color: #fff !important; }
-    /* selection rows, inputs, textareas and the attachment button all use the
-       same treatment: white border + 20% white fill + white text */
-    /* selection rows + inputs are outline-only (transparent fill, white border) */
     .ev-flow-photo .ev-seq-itype,
     .ev-flow-photo .ev-seq-vetrow,
     .ev-flow-photo .ev-vet-row,
@@ -798,7 +705,6 @@
     }
     .ev-flow-photo input::placeholder, .ev-flow-photo textarea::placeholder { color: rgba(255,255,255,0.7); }
     .ev-flow-photo .ev-seq-itype .en, .ev-flow-photo .ev-seq-vetrow .en { color: #fff !important; }
-    /* Add-attachment: compact green-outline pill (no fill), left-aligned */
     .ev-flow-photo [id*="attach"] {
       display: inline-flex !important; width: auto !important; align-self: flex-start;
       min-height: 34px !important; padding: 0 14px !important; margin-top: 12px !important;
@@ -806,9 +712,10 @@
       color: var(--greendeep) !important; border-radius: 18px !important;
       font-size: 12px !important; font-weight: 600 !important; gap: 6px !important;
     }
-    /* two-column field row for the log form */
     .ev-field-row { display: flex; gap: 10px; }
     .ev-field-row > * { flex: 1 1 0; min-width: 0; }
+
+
 
     /* filter sheet — option rows (tinted, never white) + category rail */
     .s7-chip { display:block; width:100%; text-align:start; min-height:44px; padding:0 14px; margin-bottom:8px; border-radius:12px; border:1px solid var(--border); background:var(--bgwarm); color:var(--text1); font-size:13px; font-weight:400; font-family:var(--font-hi); }
@@ -908,30 +815,13 @@
     #flow-root.dark #s8-page #s8-back { background: #1C1C1C !important; border-color: #3A3A3A !important; color: #F5F5F5 !important; }
     #flow-root.dark #s8-page #s8-cancel { color: #F5F5F5 !important; border-color: #3A3A3A !important; }
     #flow-root.dark #s8-page .en[style*="baseline"] { border-bottom-color: #3A3A3A !important; }
+  
   </style>
 </head>
 <body>
-
-
-
-  <div class="screen-grid">
-
-    <!-- ─────────────────────────────────────────────
-         FULL FLOW — splash → login → OTP → dashboard → milk log (single phone)
-         ───────────────────────────────────────────── -->
-    <div class="screen-wrap">
-      <div class="phone" id="s1-phone" style="min-height:800px; background:var(--bgwarm); position:relative;">
-
-        <!-- Status bar -->
-        <div class="status-bar" style="position:relative; z-index:10;">
-          <span class="status-time en">9:41</span>
-          <div class="status-icons">
-            <span>●●●</span><span>WiFi</span><span>100%</span>
-          </div>
-        </div>
-
+  <div id="app">
         <!-- ── Layer stack (sits below status bar, fills rest of phone) ── -->
-        <div id="flow-root" style="position:relative; flex:1; overflow:hidden;">
+        <div id="flow-root" style="position:relative; height:100%; overflow:hidden;">
 
           <!-- THEME TOGGLE — top-right over video -->
           <button id="s1-theme" title="Dark / light mode" style="position:absolute; top:16px; right:14px; z-index:5; width:54px; height:30px; border-radius:15px; border:1px solid rgba(255,255,255,0.35); background:rgba(0,0,0,0.28); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding:0; display:flex; align-items:center;">
@@ -1618,7 +1508,7 @@
             <div class="m-hero" style="background:var(--bgwarm); border-radius:0 0 14px 14px; padding:18px 16px 18px; box-shadow:0 12px 28px rgba(0,0,0,0.18); position:relative; z-index:2;">
               <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
                 <h2 data-k="evTitle" style="font-size:24px; font-weight:600; color:var(--text1); margin:0;">Events</h2>
-                <span id="ev-count-pill" style="background:var(--dangerbg); border:1px solid var(--danger); border-radius:14px; padding:4px 12px; font-size:12px; font-weight:600; color:#8B2800;">14 need action</span>
+                <span id="ev-count-pill" class="en" style="background:var(--dangerbg); border:1px solid var(--danger); border-radius:14px; padding:4px 12px; font-size:12px; font-weight:600; color:#8B2800;">14 need action</span>
               </div>
               <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
                 <p data-k="evSubtitle" style="font-size:12px; color:var(--text2); margin:0;">Health, breeding and reminders across all your farms</p>
@@ -1627,6 +1517,7 @@
             </div>
 
             <div style="padding:14px 16px 0;">
+
 
               <!-- ── Quick filters (Swiggy-style dropdown chips) ── -->
               <div id="ev-quickfilters">
@@ -1713,7 +1604,7 @@
                 <button class="en ev-photo-viewdetails" data-k="viewDetailsLabel" onclick="event.stopPropagation(); openCardDetail('ev-heat','p1');" style="display:none; background:none; border:none; padding:0; margin:6px auto 0; font-size:12px; font-weight:600; color:#8FE6B8; font-family:var(--font-hi); cursor:pointer; text-align:center;">View Details ›</button>
                 <div class="ev-body" onclick="event.stopPropagation();">
                   <p id="ev-heat-phase" class="en" style="display:none; font-size:12px; font-weight:600; color:var(--text1); margin:8px 0 0;"></p>
-                  <!-- Segmented 24h window bar: 6h pre / 12h optimal / 6h suboptimal, one fill travelling across all three. Hidden until a vet is called (the Insemination Window stage). -->
+                  <!-- Segmented 24h window bar: 6h pre / 12h optimal / 6h suboptimal, one fill travelling across all three -->
                   <div id="ev-heat-bar-wrap" style="display:none; margin-top:6px;">
                     <div class="en" style="display:flex; font-size:9px; font-weight:600; letter-spacing:0.04em; color:var(--text2);">
                       <span style="flex:0 0 25%; text-align:center;">PRE 6h</span>
@@ -2107,7 +1998,6 @@
             <div style="position:absolute; inset:0; overflow:hidden;">
               <div id="ev-fs-strip" style="display:flex; height:100%; transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);"></div>
             </div>
-            <!-- overlaid on the photo -->
             <span id="ev-fs-count" class="en" style="position:absolute; top:18px; left:22px; z-index:5; font-size:12px; font-weight:600; color:#fff; text-shadow:0 1px 4px rgba(0,0,0,0.5);">1 of 3</span>
             <button id="ev-fs-close" class="fs-circle-btn" style="position:absolute; top:14px; right:18px; z-index:5; width:32px; height:32px; border-radius:50%; border:none; font-size:16px; line-height:1;">✕</button>
             <button id="ev-fs-prev" class="fs-circle-btn" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); z-index:5; width:34px; height:34px; border-radius:50%; border:none; font-size:18px; line-height:1;">‹</button>
@@ -2387,6 +2277,8 @@
             </nav>
           </div>
 
+
+
           <!-- ══ COW PROFILE (screen 06) ══ -->
           <div id="page-cow-detail" style="position:absolute; inset:0; background:var(--bgwarm); z-index:42; display:none;">
             <div style="position:absolute; inset:0; overflow-y:auto; padding:0 0 40px;">
@@ -2546,11 +2438,8 @@
             </div>
           </div>
         </div><!-- /layer stack -->
-
-      </div><!-- /phone -->
-    </div><!-- /screen-wrap -->
-
-    <script>
+  </div>
+<script>
     (function() {
       var video   = document.getElementById('s1-video');
       var splash  = document.getElementById('s1-splash-bg');
@@ -3301,8 +3190,6 @@
           closeLangSheet();
         });
       });
-      // Apply the persisted language (or default 'en') across every screen —
-      // nav labels everywhere, login/OTP — as soon as the language table exists.
       setLang(lang);
 
       // ── App dark mode: tap Account tab anywhere (temporary home for the switch) ──
@@ -3326,28 +3213,18 @@
       });
 
       // ── Text / Image display mode toggle ──
-      // App-wide preference: "text" = plain description-first Events cards
-      // (no icons, no photos — the pre-illustration-pass design); "image" =
-      // the whiteboard-sketched photo-illustration cards. Applied via a
-      // `.display-image`/no-class root toggle (default = text) so existing
-      // markup/CSS added for each card's photo variant only activates when
-      // this class is present, keeping the plain-text version as the base.
       window.VANIX_DISPLAY_MODE = localStorage.getItem('vanixDisplayMode') || 'text';
       var dmBtn = document.getElementById('s1-displaymode');
       function applyDisplayMode() {
         var img = window.VANIX_DISPLAY_MODE === 'image';
-        // The polished photo-card design now lives in the NON-image (Text)
-        // toggle position, so the `.display-image` class (which drives it) is
-        // applied when NOT in image mode. Image mode is the fresh canvas.
-        var showPhoto = !img;
+        // Photo-card design lives in the NON-image (Text) position now, so the
+        // `.display-image` class is applied when NOT in image mode.
         var knob = document.getElementById('s1-dm-knob');
         knob.style.transform = img ? 'translateX(24px)' : 'translateX(0)';
         document.getElementById('s1-dm-text').style.display = img ? 'none' : 'block';
         document.getElementById('s1-dm-image').style.display = img ? 'block' : 'none';
-        document.getElementById('flow-root').classList.toggle('display-image', showPhoto);
+        document.getElementById('flow-root').classList.toggle('display-image', !img);
         document.getElementById('flow-root').classList.toggle('display-fullbleed', img);
-        var er = document.getElementById('ev-flow-root');
-        if (er) { er.classList.toggle('display-image', showPhoto); er.classList.toggle('display-fullbleed', img); }
       }
       applyDisplayMode();
       dmBtn.addEventListener('click', function() {
@@ -3419,9 +3296,7 @@
 
       // Keep the login sheet above the on-screen keyboard by lifting it exactly
       // the keyboard's height via the VisualViewport API — smooth (rides the
-      // sheet's existing transform transition), no frame reflow/jump. Only
-      // active while an input inside the sheet is focused, so it never fights
-      // the sheet's own show/hide transforms.
+      // sheet's existing transform transition), no frame reflow/jump.
       //
       // offsetTop is a layout value unaffected by a CSS transform, so
       // reading it live (instead of a live getBoundingClientRect() on an
@@ -3464,13 +3339,7 @@
       if (window.visualViewport) window.visualViewport.addEventListener('resize', scheduleLift);
     })();
     </script>
-
-
-
-      </div>
-    </div>
-
-    <script>
+<script>
     (function() {
       // ── Screen 07: filter bottom sheet ──
       var fBtn = document.getElementById('s7-filter');
@@ -3908,12 +3777,11 @@
       window.evUpdateBadges = evUpdateBadges;
       evUpdateBadges();
 
-      // Reminders "days left" + relative "time ago" labels. DEMO: "today" is
-      // fixed to match the History "YESTERDAY — 2 JUL" reference (today = 3 Jul)
-      // — replace with the real current date once wired to a backend. Recomputed
-      // on every language switch (via vanixRefreshApp) so both fully localize.
-      function evLocalizeDynamic() {
-        var T = window.t();
+      // Reminders — static "days left" computed once from each card's due
+      // date vs. today. DEMO: "today" is fixed to match the History section's
+      // "YESTERDAY — 2 JUL" reference (i.e. today = 3 Jul) — replace with the
+      // real current date once wired to a backend.
+      (function() {
         var today = new Date('2026-07-03T00:00:00');
         document.querySelectorAll('#ev-sec-rem [data-due]').forEach(function(row) {
           var due = new Date(row.getAttribute('data-due') + 'T00:00:00');
@@ -3921,10 +3789,10 @@
           if (!dueEl) return;
           var days = Math.round((due - today) / 86400000);
           var label, color;
-          if (days < 0) { label = (-days) + ' ' + T.remDaysOverdue; color = 'var(--danger)'; }
-          else if (days === 0) { label = T.remDueToday; color = 'var(--danger)'; }
-          else if (days <= 2) { label = days + ' ' + T.remDaysLeft; color = '#8A5A00'; }
-          else { label = days + ' ' + T.remDaysLeft; color = 'var(--text2)'; }
+          if (days < 0) { label = 'Overdue by ' + (-days) + 'd'; color = 'var(--danger)'; }
+          else if (days === 0) { label = 'Due today'; color = 'var(--danger)'; }
+          else if (days <= 2) { label = days + ' day' + (days === 1 ? '' : 's') + ' left'; color = '#8A5A00'; }
+          else { label = days + ' days left'; color = 'var(--text2)'; }
           dueEl.textContent = label;
           dueEl.style.color = color;
 
@@ -3938,21 +3806,7 @@
             barEl.style.background = color;
           }
         });
-        // relative "time ago" on alert cards — cache the english original once
-        // (in data-ago), then localise its number + unit each language switch.
-        document.querySelectorAll('.ev-timeago').forEach(function(el) {
-          if (!el.hasAttribute('data-ago')) el.setAttribute('data-ago', (el.textContent || '').trim());
-          var raw = el.getAttribute('data-ago'), out = raw, m;
-          if ((m = raw.match(/^(\d+)\s*min ago$/))) out = m[1] + ' ' + T.minAgo;
-          else if ((m = raw.match(/^(\d+)\s*h ago$/))) out = m[1] + ' ' + T.hAgo;
-          else if ((m = raw.match(/^(\d+)\s*d ago$/))) out = m[1] + ' ' + T.dAgo;
-          var last = el.lastChild;
-          if (last && last.nodeType === 3) last.nodeValue = out;
-          else el.appendChild(document.createTextNode(out));
-        });
-      }
-      window.evLocalizeDynamic = evLocalizeDynamic;
-      evLocalizeDynamic();
+      })();
 
       // Events tabs: All / Needs action / Reminders
       document.querySelectorAll('.ev-tab').forEach(function(tab) {
@@ -3969,8 +3823,6 @@
 
       // ── Quick filters (type / criticality / category) ──
       (function() {
-        // Per-card metadata for the visible photo cards; criticality is read from
-        // the p0/p1 class (critical / medium), everything else counts as low.
         var CARD_META = {
           'ev-fever':          { cat:'Fever',          type:'Health' },
           'ev-heat':           { cat:'Heat',           type:'Breeding' },
@@ -3982,9 +3834,6 @@
           'ev-freshcow':       { cat:'Fresh cow',      type:'Health' }
         };
         var evFilter = { crit:'all', cat:'all' };
-        // Baseline visibility is captured lazily (on first filter use) — by then
-        // any load-time card reveals have run, so cards hidden until triggered
-        // (e.g. the milking notification) stay hidden and never leak into a filter.
         var evBaseVisible = null;
         function snapshotBaseline() {
           evBaseVisible = {};
@@ -4006,9 +3855,6 @@
             card.style.display = ok ? '' : 'none';
           });
         }
-        // The Type filter (all / action / warn / rem) drives section visibility
-        // directly now that the old tab row is gone; the Unactioned toggle hides
-        // the resolved-history section.
         var evSectionType = 'all', evUnactioned = false;
         function applyEvSections() {
           var t = evSectionType;
@@ -4029,8 +3875,6 @@
           if (!on || on.getAttribute('data-val') === 'all') {
             label.textContent = window.t()[label.getAttribute('data-k')];
           } else {
-            // Category names (Fever/Heat/Pregnancy…) have no data-k yet — they
-            // stay untranslated for now and just show their raw option text.
             var k = on.getAttribute('data-k');
             label.textContent = k ? window.t()[k] : on.textContent;
           }
@@ -4066,7 +3910,6 @@
         window.evSyncQfLabels = function() {
           document.querySelectorAll('.ev-qf').forEach(syncQfLabel);
         };
-        // "Unactioned" toggle — enable to show only open alerts (hide resolved history)
         var unBtn = document.getElementById('ev-qf-unactioned');
         if (unBtn) {
           unBtn.addEventListener('click', function(e) {
@@ -4075,7 +3918,6 @@
             applyEvSections();
           });
         }
-        // tapping elsewhere closes any open menu
         document.addEventListener('click', function() {
           document.querySelectorAll('.ev-qf').forEach(function(o) { o.classList.remove('open'); });
         });
@@ -4126,7 +3968,7 @@
           '<input type="text" value="' + vetName + '" readonly style="' + inp + ' background:var(--bgwarm);">' +
           '<label style="' + lbl + '">Notes</label>' +
           '<textarea rows="3" placeholder="Add notes (optional)" style="width:100%; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
-          '<button id="ev-vetlog-attach-' + idPrefix + '" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; margin-top:8px; background:transparent; border:1px dashed var(--border); border-radius:12px; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi);">📎 Add attachment</button>' +
+          '<button id="ev-vetlog-attach-' + idPrefix + '" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; margin-top:8px; background:var(--bgcard); border:1px dashed var(--border); border-radius:12px; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi);">📎 Add attachment</button>' +
           '<button id="ev-vetlog-submit-' + idPrefix + '" style="width:100%; min-height:50px; margin-top:12px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Submit log</button>';
       }
       function wireVetLog(idPrefix, onSubmit) {
@@ -4250,9 +4092,6 @@
         function render() {
           if (resolved) return;
           var h = elapsedSimHours();
-          // Expiry only matters once heat is confirmed and we're in the
-          // insemination window — before that the card is just the cow+bull
-          // Yes/No question and the clock is irrelevant to the farmer.
           if (h >= 24 && confirmed) {
             resolved = true;
             clearInterval(ticker);
@@ -4309,10 +4148,8 @@
           vetEl.style.display = 'block';
           wireVetPicker('heat', function(vetName) {
             vetEl.style.display = 'none';
-            // Vet called → the card now becomes the Insemination Window:
-            // swap to the vet+syringe photo, reveal the 24h timer window and
-            // the log form. This is the "goes to insemination where the time
-            // window is" step the farmer described.
+            // Vet called → the card becomes the Insemination Window: swap to
+            // the vet+syringe photo, reveal the 24h timer window + log form.
             card.classList.add('ev-heat-inseminating');
             if (questionEl) { questionEl.textContent = 'Insemination window'; questionEl.style.display = 'block'; }
             phaseEl.style.display = 'block';
@@ -5215,10 +5052,8 @@
 
         // Shared back-button markup for the plain (no-photo) insemination pages.
         function insemBack(id) {
-          // icon-only chevron; sits inline next to the page title (no "Back" text)
           return '<button id="' + id + '" class="en" style="flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; background:none; border:none; padding:0; margin:0; font-size:26px; line-height:1; color:var(--text2); font-family:var(--font-hi); cursor:pointer;">‹</button>';
         }
-        // page title row: icon-only back chevron next to the title
         function flowTitleRow(backId, title) {
           return '<div style="display:flex; align-items:center; gap:8px; margin:0 0 2px;">' +
             insemBack(backId) +
@@ -5290,8 +5125,6 @@
             '<input type="text" placeholder="' + (f.ph || '') + '" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">' +
             '</div>';
         }
-        // Lay the type-specific fields out two-per-row (so Donor Cow ID + Breed
-        // share a line, and Embryo ID + Number of Embryos share the next).
         function insemFieldsPaired(fields) {
           var out = '';
           for (var i = 0; i < fields.length; i += 2) {
@@ -5314,7 +5147,7 @@
             '<input type="date" value="2026-07-09" style="width:100%; min-height:46px; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:0 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi);">' +
             '<label style="display:block; font-size:12px; font-weight:600; color:var(--text2); margin:12px 0 5px;">Notes</label>' +
             '<textarea rows="3" placeholder="Add notes (optional)" style="width:100%; box-sizing:border-box; background:var(--bgcard); border:1px solid var(--border); border-radius:12px; padding:10px 14px; font-size:15px; color:var(--text1); font-family:var(--font-hi); resize:none;"></textarea>' +
-            '<button id="ev-seq-insem-attach" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; margin-top:8px; background:var(--bgcard); border:1px dashed var(--border); border-radius:12px; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi);">📎 Add attachment</button>' +
+            '<button id="ev-seq-insem-attach" style="width:100%; display:flex; align-items:center; justify-content:center; gap:6px; min-height:44px; margin-top:8px; background:transparent; border:1px dashed var(--border); border-radius:12px; font-size:13px; font-weight:600; color:var(--greenink); font-family:var(--font-hi);">📎 Add attachment</button>' +
             '<button id="ev-seq-insem-submit" style="width:100%; min-height:52px; margin-top:14px; background:var(--greendeep); border:none; border-radius:25px; font-size:15px; font-weight:700; color:#FFFFFF; font-family:var(--font-hi);">Submit</button>' +
             '</div>';
           document.getElementById('ev-seq-insem-back').addEventListener('click', renderInsemVetSelect);
@@ -5354,9 +5187,8 @@
 
         function renderGestationStep() {
           // 9-month checkpoint. Call-vet is a follow-up card → blurred-photo flow
-          // page (not a full-bleed alert). Then "Was the delivery successful?" is
-          // still a question, so it uses the pregnant-photo alert card. Finally the
-          // delivery log is a blurred-photo flow page.
+          // page. Then "Was the delivery successful?" is still a question, so it
+          // uses the pregnant-photo alert card. Delivery log is a blurred flow page.
           if (seqImageMode()) {
             body.innerHTML = '<div class="ev-flow-photo callvet">' +
               '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Call vet for delivery</p>' +
@@ -5383,7 +5215,6 @@
               interrupt('Cycle interrupted — delivery unsuccessful. ' + vetName + ' has been notified for an urgent check.');
             });
             document.getElementById('ev-seq-gest-ok').addEventListener('click', function() {
-              // Delivery log — blurred-photo flow page.
               body.innerHTML = '<div class="ev-flow-photo delivery">' +
                 '<p style="font-size:20px; font-weight:800; color:var(--text1); margin:0 0 2px; letter-spacing:-0.02em;">Log · Delivery success</p>' +
                 '<p style="font-size:13px; font-weight:500; color:var(--text2); margin:0;">Gauri · Desi · Vet: ' + vetName + '</p>' +
@@ -5795,20 +5626,10 @@
           if (farm) { renderCattleList(farm); refreshFarmDetailHeader(farm); }
         }
         if (window.evSyncQfLabels) window.evSyncQfLabels();
-        if (window.evLocalizeDynamic) window.evLocalizeDynamic();
         evUpdateBadges();
       };
     })();
     </script>
-
-    <!-- ─────────────────────────────────────────────
-         ADD MORE SCREENS BELOW
-         Copy the screen-wrap block above and update the label + content.
-         ───────────────────────────────────────────── -->
-
-
-  </div><!-- /screen-grid -->
-
 
     <script>
       (function(){
