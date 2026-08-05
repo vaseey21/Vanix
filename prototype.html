@@ -991,6 +991,15 @@
     .hscroll-row::-webkit-scrollbar { height: 4px; }
     .hscroll-row::-webkit-scrollbar-thumb { background: transparent; border-radius: 2px; }
     .hscroll-row.scrolling { scrollbar-color: rgba(0,0,0,0.25) transparent; }
+
+    /* Quick Log pill slider — flowing diagonal-stripe fill, like liquid moving
+       through a tube. */
+    .ql-fill {
+      background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.32) 0 8px, transparent 8px 16px), var(--greenink);
+      background-size: 22px 22px, auto;
+      animation: ql-flow 0.9s linear infinite;
+    }
+    @keyframes ql-flow { from { background-position: 0 0, 0 0; } to { background-position: -22px 0, 0 0; } }
     .hscroll-row.scrolling::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.25); }
   </style>
 </head>
