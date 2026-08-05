@@ -4093,6 +4093,63 @@
           });
         });
 
+        // ── Quick Log — stacked cards, one cow at a time; Go slides the top
+        // card out and pushes it to the back of the stack (loops through the
+        // whole herd rather than dropping cows once logged). ──
+        (function() {
+          var stackEl = document.getElementById('dash-quicklog-stack');
+          if (!stackEl) return;
+          var QL_COWS = [
+            { name: 'Gauri', breed: 'Jersey', belt: '112', photo: 'assets/images/cows/gowri.jpg' },
+            { name: 'Lakshmi', breed: 'Ongole', belt: '08', photo: 'assets/images/cows/nandini.jpg' },
+            { name: 'Dhauli', breed: 'Gir/Sahiwal', belt: '208', photo: 'assets/images/cows/kaveri.jpg' },
+            { name: 'Kajri', breed: 'Jersey', belt: '12', photo: 'assets/images/cows/chinnu.jpg' },
+            { name: 'Mohini', breed: 'Desi', belt: '91', photo: 'assets/images/cows/ramya.jpg' }
+          ];
+          function cardHtml(c, depth) {
+            var offset = depth * 8;
+            var scale = 1 - depth * 0.04;
+            return '<div class="ql-card" style="position:absolute; left:0; right:0; top:' + offset + 'px; height:134px; background:var(--bgcard); border:1px solid var(--border); border-radius:16px; padding:12px 14px; box-shadow:0 ' + (6 - depth * 2) + 'px 16px rgba(0,0,0,' + (0.14 - depth * 0.04) + '); transform:scale(' + scale + '); transform-origin:top center; z-index:' + (10 - depth) + '; transition:transform 0.32s cubic-bezier(0.32,0.72,0,1), opacity 0.32s ease, top 0.32s cubic-bezier(0.32,0.72,0,1);">' +
+              (depth === 0 ?
+                '<div style="display:flex; align-items:center; gap:12px;">' +
+                  '<img src="' + c.photo + '" alt="" style="width:52px; height:52px; flex-shrink:0; border-radius:12px; object-fit:cover;">' +
+                  '<div style="min-width:0;">' +
+                    '<p style="font-size:16px; font-weight:600; color:var(--text1); margin:0;">' + c.name + ' <span style="font-weight:400; color:var(--text2);">— ' + c.breed + '</span></p>' +
+                    '<p class="en" style="font-size:12px; color:var(--text2); margin:2px 0 0;">Belt ' + c.belt + '</p>' +
+                  '</div>' +
+                '</div>' +
+                '<div style="display:flex; align-items:center; gap:8px; margin-top:12px;">' +
+                  '<div style="flex:1; display:flex; align-items:center; background:var(--bgwarm); border:1px solid var(--border); border-radius:12px; padding:0 12px; min-height:44px;">' +
+                    '<input type="number" min="0" step="0.1" class="en ql-input" inputmode="decimal" placeholder="Milk Qty" style="flex:1; min-width:0; border:none; background:transparent; font-size:15px; color:var(--text1); font-family:var(--font-hi);">' +
+                    '<span class="en" style="font-size:12px; font-weight:600; color:var(--text2); padding-inline-start:8px; border-inline-start:1px solid var(--border); margin-inline-start:8px;">Ltr</span>' +
+                  '</div>' +
+                  '<button class="ql-go" title="Log and next" style="width:44px; height:44px; flex-shrink:0; border-radius:50%; border:none; background:var(--greenink); display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>' +
+                '</div>'
+              : '') +
+            '</div>';
+          }
+          function render() {
+            stackEl.innerHTML = QL_COWS.slice(0, 3).map(function(c, i) { return cardHtml(c, i); }).join('');
+            var top = stackEl.querySelector('.ql-card');
+            if (!top) return;
+            var go = top.querySelector('.ql-go');
+            var input = top.querySelector('.ql-input');
+            go.addEventListener('click', function() { commit(); });
+            input.addEventListener('keydown', function(e) { if (e.key === 'Enter') commit(); });
+          }
+          function commit() {
+            var top = stackEl.querySelector('.ql-card');
+            if (!top) return;
+            top.style.transform = 'scale(1) translateX(-120%) rotate(-8deg)';
+            top.style.opacity = '0';
+            setTimeout(function() {
+              QL_COWS.push(QL_COWS.shift());
+              render();
+            }, 320);
+          }
+          render();
+        })();
+
         // ── Approvals page — pending farmer edits + full approve/deny history ──
         (function() {
           var APPROVALS_TODAY = new Date('2026-07-22T00:00:00');
