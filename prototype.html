@@ -4145,13 +4145,11 @@
           function wirePill(top) {
             var pill = top.querySelector('.ql-pill');
             var fill = top.querySelector('.ql-fill');
-            var thumb = top.querySelector('.ql-thumb');
             var val = top.querySelector('.ql-val');
             var value = PILL_INIT;
             function paint() {
               var pct = (value - PILL_MIN) / (PILL_MAX - PILL_MIN) * 100;
               fill.style.width = pct + '%';
-              thumb.style.left = pct + '%';
               val.textContent = value.toFixed(1) + ' Ltr';
             }
             function setFromClientX(clientX) {
