@@ -992,15 +992,18 @@
     .hscroll-row::-webkit-scrollbar-thumb { background: transparent; border-radius: 2px; }
     .hscroll-row.scrolling { scrollbar-color: rgba(0,0,0,0.25) transparent; }
 
-    /* Quick Log pill slider — flowing diagonal-stripe fill, like liquid moving
-       through a tube. */
+    /* Quick Log pill slider — the fill's leading edge wobbles like the
+       surface of milk sloshing inside a container, rather than a flat line. */
     .ql-fill {
       background-color: var(--greenink);
-      background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.32) 0 8px, transparent 8px 16px);
-      background-size: 22px 22px;
-      animation: ql-flow 0.9s linear infinite;
+      border-radius: 0 45% 45% 0 / 0 60% 60% 0;
+      animation: ql-wave 1.6s ease-in-out infinite alternate;
     }
-    @keyframes ql-flow { from { background-position: 0 0, 0 0; } to { background-position: -22px 0, 0 0; } }
+    @keyframes ql-wave {
+      0%   { border-radius: 0 28% 28% 0 / 0 58% 42% 0; }
+      50%  { border-radius: 0 48% 48% 0 / 0 38% 62% 0; }
+      100% { border-radius: 0 28% 28% 0 / 0 58% 42% 0; }
+    }
     .hscroll-row.scrolling::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.25); }
   </style>
 </head>
